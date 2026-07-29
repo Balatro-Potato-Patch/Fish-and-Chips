@@ -94,7 +94,7 @@ local function fac_profile_from_center(center)
 end
 
 local function fac_pick_profile()
-    local key = FishAndChips.poll_fish()
+    local key = G.GAME.fac_forced_fish or FishAndChips.poll_fish()
     local center = key and G.P_CENTERS[key]
     if not center then
         return nil
