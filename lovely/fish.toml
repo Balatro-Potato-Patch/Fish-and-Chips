@@ -61,7 +61,7 @@ elseif set == 'Blind' then default = "bl_hook"
 '''
 position = 'after'
 payload = '''
-elseif set == 'fac_Fish' then default = "fish_fac_bass"
+elseif set == 'fac_Fish' then default = "fish_fac_test"
 '''
 match_indent = true
 times = 1
