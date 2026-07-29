@@ -4,10 +4,14 @@ return {
             fish_fac_one = {
                 name = "One Fish",
                 text = {
-                    "One"
+                    "Played {C:attention}Aces{}",
+                    "give {C:mult}+#1#{} Mult",
+                    "when scored",
                 },
                 flavour = {
-                    "One"
+                    "Its name seems redundant.",
+                    "I mean, it's not like you can",
+                    "catch multiple fish at once..."
                 }
             },
             fish_fac_two = {
