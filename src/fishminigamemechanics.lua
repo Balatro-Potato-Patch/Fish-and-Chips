@@ -252,6 +252,9 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     if not (profile.center and G.fac_fish_area) then
         return nil
     end
+    local treasure_type = state.treasure_type
+    local treasure_reward = treasure_type == "dollars"
+        and state.result_dollars_reward or state.result_reward
     local profile_data = G.PROFILES[G.SETTINGS.profile].fac_fishing
     profile_data.fish_data = profile_data.fish_data or {}
     local fish_data = profile_data.fish_data[profile.key] or {}
@@ -398,11 +401,9 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
             end
             caught_box.states.visible = true
             caught_box:juice_up()
-            if state.treasure_type == "sand_dollars" or state.treasure_type == "dollars" then
-                local reward_amount = state.treasure_type == "dollars"
-                    and state.result_dollars_reward or state.result_reward
+            if treasure_type == "sand_dollars" or treasure_type == "dollars" then
                 treasure_box = UIBox {
-                    definition = G.UIDEF.fac_treasure_reward(reward_amount, state.treasure_type),
+                    definition = G.UIDEF.fac_treasure_reward(treasure_reward, treasure_type),
                     config = {
                         align = "cl",
                         major = added_card,
@@ -529,13 +530,11 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
             if discovery_text then discovery_text:remove() end
             if perfect_catch_text then perfect_catch_text:remove() end
             if treasure_catch_text then treasure_catch_text:remove() end
-            if treasure_box then
-                treasure_box:remove()
-                if state.treasure_type == "dollars" then
-                    ease_dollars(state.result_dollars_reward)
-                else
-                    ease_sand_dollars(state.result_reward)
-                end
+            if treasure_box then treasure_box:remove() end
+            if treasure_type == "dollars" then
+                ease_dollars(treasure_reward)
+            elseif treasure_type == "sand_dollars" then
+                ease_sand_dollars(treasure_reward)
             end
             return true
         end
