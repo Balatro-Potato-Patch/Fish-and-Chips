@@ -12,18 +12,19 @@ return {
             },
         },
         PotatoPatch = {
-            --[[PotatoPatchDev_eremel_1 = {
-                name = 'Eremel!',
+            PotatoPatchDev_fo_alexi = {
+                name = "Alexi",
                 text = {
-                    "I made this book"
+                    "hiiiiii",
+                    "also see slimestuff she's really cute or something"
                 }
             },
-            PotatoPatchDev_eremel_2 = {
-                name = 'WilsonTheWolf',
+            PotatoPatchDev_fo_grahkon = {
+                name = "Grahkon",
                 text = {
-                    "I made this book"
+                    "placeholder text"
                 }
-            }]]
+            }
         }
     },
     misc = {
