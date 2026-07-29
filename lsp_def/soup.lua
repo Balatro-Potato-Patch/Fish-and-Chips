@@ -28,6 +28,7 @@
 ---@field ppu_artist? string[] key(s) for the artist(s) who drew this fish
 ---@field use? fun(self: FishAndChips.Fish, card: Card) Defines behaviour when this fish is used. 
 ---@field can_use? fun(self: FishAndChips.Fish, card: Card): boolean? Return `true` if the fish is allowed to be used.
+---@field keep_on_use? fun(self: FishAndChips.Fish, card: Card): boolean? return `true` if the fish should be kept when used.
 ---@field treasure? boolean mark as true if this can be caught as a treasure 
 ---@overload fun(self: FishAndChips.Fish): FishAndChips.Fish
 FishAndChips.Fish = setmetatable({}, {
