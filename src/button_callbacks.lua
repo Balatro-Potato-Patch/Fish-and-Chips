@@ -1,7 +1,7 @@
 function G.FUNCS.fac_open_fishing_menu (e)
 	if G.STATE == G.STATES.HAND_PLAYED then return end
 	if not G.GAME.fac_fish_expanded and not G.fac_fish_area.cards[1] then
-		return card_eval_status_text(G.fac_fishing_bucket_bottom, 'extra', nil, nil, nil, {message = localize('k_fac_empty')})
+		return card_eval_status_text(G.fac_fishing_bucket_bottom, 'extra', nil, nil, nil, {message = localize('k_fac_empty'), instant = true})
 	end
 	G.GAME.fac_fish_expanded = not G.GAME.fac_fish_expanded
 	G.fac_fish_area:unhighlight_all()
