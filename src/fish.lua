@@ -36,6 +36,7 @@ G.C.SECONDARY_SET.fac_Fish = FishAndChips.C.FISH
 function FishAndChips.verify_submissions()
 	local fac_count = 0
 	local developer_ids = {}
+	local contributors = {}
 	local built_in_developers = {
 		fac_Mack = true,
 		fac_Snapper = true,
@@ -45,10 +46,20 @@ function FishAndChips.verify_submissions()
 		if dev.mod_id == 'FishAndChips' then
 			assert(not developer_ids[id], 'Duplicate developer ID registered: ' .. id)
 			developer_ids[id] = true
-			if not built_in_developers[id] then fac_count = fac_count + 1 end
+			if not built_in_developers[id] then
+				fac_count = fac_count + 1
+				contributors[#contributors + 1] = dev
+			end
 		end
 	end
 	assert(fac_count <= 2, 'Too many devs registered, submissions are limited to two participants.')
+	if fac_count == 2 then
+		local first, second = contributors[1], contributors[2]
+		assert(
+			first.fac_partner == second.name and second.fac_partner == first.name,
+			'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
+		)
+	end
 
 	local devs = {}
 	-- TODO: handle duo submissions
