@@ -15,6 +15,7 @@ FishAndChips.Fish({
 		volcano = 1,
         wormhole = 1,
 	},
+    attributes = { "copying", "chance" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
 	config = { extra = { odds = 6 } },
