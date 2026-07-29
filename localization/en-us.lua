@@ -567,6 +567,20 @@ return {
                 text = {
                     "I made this book"
                 }
+            },
+            PotatoPatchDev_lanedarushpy = {
+                name = "Lizzie",
+                text = {
+                    "I am the lanedarushpy",
+                    "I made the balacats",
+                    "banana fih"
+                }
+            },
+            PotatoPatchDev_pangaea47 = {
+                name = "pangaea47",
+                text = {
+                    "im a spider i think"
+                }
             }
         }
     },
