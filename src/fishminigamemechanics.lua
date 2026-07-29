@@ -1293,7 +1293,8 @@ local function fac_draw_panel()
     love.graphics.setCanvas(FAC_SCENE_CANVAS)
     love.graphics.clear(0, 0, 0, 0)
     fac_draw_scene_content(state, 0, 0, cw, ch)
-    love.graphics.setCanvas(prev_canvas)
+    love.graphics.setCanvas({ prev_canvas, stencil = true })
+    SMODS.reload_stencil_stack()
 
     local blit_alpha = 1
     if G.FISHING_STATE == G.FISHING_STATES.RESULTS and state.round_success then
@@ -1303,10 +1304,4 @@ local function fac_draw_panel()
     love.graphics.draw(FAC_SCENE_CANVAS, px, py, 0, pw / cw, ph / ch)
 end
 
-local old_fac_draw = love.draw
-function love.draw()
-    if old_fac_draw then
-        old_fac_draw()
-    end
-    fac_draw_panel()
-end
+FishAndChips.render_fishing_minigame = fac_draw_panel
