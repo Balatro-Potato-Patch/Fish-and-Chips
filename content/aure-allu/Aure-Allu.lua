@@ -26,3 +26,33 @@ SMODS.Atlas({
 	px = 71,
 	py = 95,
 })
+
+
+--#region Fish
+
+FishAndChips.Fish {
+	key = "the_original___starfish",
+	atlas = "aure-allu_fish",
+	pos = { x = 1, y = 0 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = {  },
+	config = {
+		extra = {
+			sand_dollars = 2,
+		},
+        immutable = {
+            star_odds = 2,
+        }
+	},
+	environments = {
+		
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+		
+	end,
+}
