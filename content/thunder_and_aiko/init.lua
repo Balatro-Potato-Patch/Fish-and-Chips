@@ -8,16 +8,18 @@ local thunderedge_gradient = SMODS.Gradient({
 })
 
 PotatoPatchUtils.Developer({
-	name = "ThunderEdge",
+	name = "thunderedge",
+    loc = true,
 	atlas = "fac_cards",
 	colour = thunderedge_gradient,
-	fac_partner = "Aikoyori", -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+	fac_partner = "aikoyori",
 })
 
 PotatoPatchUtils.Developer({
-	name = "Aikoyori",
+	name = "aikoyori",
+    loc = true,
 	atlas = "fac_cards",
 	pos = { x = 1, y = 0 },
 	colour = G.C.YELLOW,
-	fac_partner = "ThunderEdge",
+	fac_partner = "thunderedge",
 })
