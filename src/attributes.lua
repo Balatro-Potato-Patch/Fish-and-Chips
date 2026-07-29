@@ -1,0 +1,3 @@
+SMODS.Attribute {
+    key = 'usable'
+}

@@ -1,0 +1,72 @@
+[manifest]
+version = "0.1.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = "self.children.center = SMODS.create_sprite(self.T.x, self.T.y, self.T.w, self.T.h, atlas, pos)"
+position = "before"
+payload = '''
+if _center.set == "fac_Fish" or _center.set == "fac_Bait" then
+    pos = _center.pos
+    atlas = _center.atlas
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = "self.children.center = SMODS.create_sprite(self.T.x, self.T.y, self.T.w, self.T.h, atlas, pos)"
+position = "after"
+payload = '''
+if _center.set == "fac_Fish" or _center.set == "fac_Bait" then
+    if _center.pixel_size and _center.pixel_size.h and _center.unlocked and not (_center.discovered or self.bypass_discovery_center) then
+        self.children.center.scale.y = self.children.center.scale.y*(_center.pixel_size.h/95)
+    end
+    if _center.pixel_size and _center.pixel_size.w and _center.unlocked and not (_center.discovered or self.bypass_discovery_center) then
+        self.children.center.scale.x = self.children.center.scale.x*(_center.pixel_size.w/71)
+    end
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = "if delay_sprites then"
+position = "before"
+payload = '''
+if center.set == "fac_Fish" or center.set == "fac_Bait" then
+    if center.display_size and center.display_size.h and center.unlocked and not (center.discovered or self.bypass_discovery_center) then
+        H = H*(center.display_size.h/95)
+        self.T.h = H
+    elseif center.pixel_size and center.pixel_size.h and center.unlocked and not (center.discovered or self.bypass_discovery_center) then
+        H = H*(center.pixel_size.h/95)
+        self.T.h = H
+    end
+    if center.display_size and center.display_size.w and center.unlocked and not (center.discovered or self.bypass_discovery_center) then
+        W = W*(center.display_size.w/71)
+        self.T.w = W
+    elseif center.pixel_size and center.pixel_size.w and center.unlocked and not (center.discovered or self.bypass_discovery_center) then
+        W = W*(center.pixel_size.w/71)
+        self.T.w = W
+    end
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = '''
+if card.set == 'Back' then discover_card(card) end
+'''
+position = 'before'
+payload = '''
+if card.set == 'fac_Rod' then discover_card(card) end
+'''
+match_indent = true
+times = 1

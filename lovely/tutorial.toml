@@ -1,0 +1,44 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+dump_lua = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+local pos = args.pos or {x=attach.major.T.x + attach.major.T.w/2, y=attach.major.T.y + attach.major.T.h/2}
+'''
+position = "after"
+payload = '''
+if args.fac_tutorial then
+    pos.center = "j_fac_mack"
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+G.OVERLAY_TUTORIAL = G.OVERLAY_TUTORIAL or UIBox{
+'''
+position = "before"
+payload = '''
+if args.fac_tutorial then
+    G.OVERLAY_TUTORIAL = G.OVERLAY_TUTORIAL or UIBox{
+        definition = {n=G.UIT.ROOT, config = {align = "cm", padding = 32.05, r=0.1, colour = overlay_colour, emboss = 0.05}, nodes={
+            {n=G.UIT.R, config={align = "cm", minh = G.ROOM.T.h, minw = G.ROOM.T.w}, nodes={
+                UIBox_button{label = {localize('b_skip').." >"}, button = "skip_tutorial_section", minw = 1.3, scale = 0.45, colour = G.C.JOKER_GREY}
+            }}
+        }},
+        config = {
+            align = "cm",
+            offset = {x=0,y=-3.9},
+            major = G.FISHING.fishing_buttons,
+            bond = 'Weak'
+        }
+    }
+end
+'''
+match_indent = true

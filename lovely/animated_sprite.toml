@@ -1,0 +1,19 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 50
+
+# disable buttons
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = '''if frame_finished then'''
+position = 'after'
+payload = '''
+if SMODS.get_new_frame(self, self.sprite_args.frame_order) == 0 and self.atlas.name == "fac_jibmo_2" then
+	FishAndChips.update_jimbo_state(FishAndChips.JIMBO_ANIMATION_STATES.WAIT)
+end
+'''
+match_indent = true
+
+

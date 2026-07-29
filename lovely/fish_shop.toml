@@ -1,0 +1,54 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''
+{n=G.UIT.R,config={id = 'next_round_button', align = "cm", minw = 2.8, minh = 1.5, r=0.15,colour = G.C.RED, one_press = true, button = 'toggle_shop', hover = true,shadow = true}, nodes = {
+'''
+position = 'at'
+payload = '''
+{n=G.UIT.R,config={id = 'next_round_button', align = "cm", minw = 2.8, minh = 1.5, r=0.15,colour = G.GAME.fishing and G.C.RED or FishAndChips.C.FISHING_BUTTONS_ACTIVE, one_press = true, button = 'toggle_shop', hover = true,shadow = true}, nodes = {
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''
+{n=G.UIT.T, config={text = localize('b_next_round_1'), scale = 0.4, colour = G.C.WHITE, shadow = true}}
+'''
+position = 'at'
+payload = '''
+{n=G.UIT.T, config={text = G.GAME.fishing and localize('b_next_round_1') or localize('b_fac_go_fishing_1'), scale = 0.4, colour = G.C.WHITE, shadow = true}}
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''
+{n=G.UIT.T, config={text = localize('b_next_round_2'), scale = 0.4, colour = G.C.WHITE, shadow = true}}
+'''
+position = 'at'
+payload = '''
+{n=G.UIT.T, config={text = G.GAME.fishing and localize('b_next_round_2') or localize('b_fac_go_fishing_2'), scale = 0.4, colour = G.C.WHITE, shadow = true}}
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'cardarea.lua'
+pattern = '''
+local desired_y = G.TILE_H - G.hand.T.h - 1.9*((not G.deck_preview and (G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND)) and 1 or 0)
+'''
+position = 'after'
+payload = '''
+if not G.deck_preview and G.STATE == G.STATES.FAC_FISHING then
+    desired_y = G.TILE_H - G.hand.T.h + 4.3
+end
+desired_y = desired_y + FishAndChips.hand_offset()'''
+match_indent = true

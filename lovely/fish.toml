@@ -1,0 +1,135 @@
+[manifest]
+version = "0.1.0"
+dump_lua = true
+priority = 0
+
+# Add debug give for fish, rods, and bait
+[[patches]]
+[patches.pattern]
+target = "engine/controller.lua"
+pattern = 'if key == "3" then'
+position = "after"
+payload = '''
+if _card.ability.set == 'fac_Fish' and G.fac_fish_area then
+    SMODS.add_card({area = G.fac_fish_area, key = _card.config.center.key})
+    _card:set_sprites(_card.config.center)
+end
+if _card.ability.set == 'fac_Rod' and G.fac_rod_area then
+    if G.fac_rod_area.cards[1] then G.fac_rod_area.cards[1]:remove() end
+    SMODS.add_card({area = G.fac_rod_area, key = _card.config.center.key})
+    _card:set_sprites(_card.config.center)
+end
+if _card.ability.set == 'fac_Bait' and G.fac_bait_area then
+    FishAndChips.add_bait_to_inventory(_card.config.center_key)
+end
+'''
+match_indent = true
+
+# Add calculation
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = "-- TARGET: add your own CardAreas for joker evaluation"
+position = "after"
+payload = '''
+if G.fac_fish_area then table.insert(t,1,G.fac_fish_area) end
+if G.fac_rod_area then table.insert(t,1,G.fac_rod_area) end
+if G.fac_bait_area then table.insert(t,1,G.fac_bait_area) end
+'''
+match_indent = true
+
+# Let fish get debuffed by blinds
+[[patches]]
+[patches.pattern]
+target = "blind.lua"
+pattern = "--add new debuffs"
+position = 'after'
+payload = '''
+if G.fac_fish_area then
+    for _, v in ipairs(G.fac_fish_area.cards) do
+        if not reset then self:debuff_card(v, true) end
+    end
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils/weights.lua"]'
+pattern = '''
+elseif set == 'Blind' then default = "bl_hook"
+'''
+position = 'after'
+payload = '''
+elseif set == 'fac_Fish' then default = "fish_fac_bass"
+'''
+match_indent = true
+times = 1
+
+# Fix Fish copying with no jokers held
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = "if (context.blueprint or 0) > #G.jokers.cards then return end"
+position = "at"
+payload = '''
+if (context.blueprint or 0) > (#G.jokers.cards + #G.fac_fish_area.cards) then return end
+'''
+match_indent = true
+
+# Fix bucket alignment on status text
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "elseif card.area == G.discard or card.area == G.vouchers then"
+position = "before"
+payload = '''
+elseif card == G.fac_fishing_bucket_bottom then
+    y_off = -0.05*G.CARD_H
+    card_aligned = 'tm'
+'''
+match_indent = true
+
+# Flavour Text Parsing
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+center.name_parsed = {}
+'''
+payload = '''
+if (center.flavour or center.flavor) then
+    center.fac_flavour_parsed = {}
+    for _, line in ipairs(center.flavour or center.flavor) do
+        if type(line) == 'table' then
+            center.fac_flavour_parsed[#center.fac_flavour_parsed+1] = {}
+            for _, new_line in ipairs(line) do
+                center.fac_flavour_parsed[#center.fac_flavour_parsed][#center.fac_flavour_parsed[#center.fac_flavour_parsed]+1] = loc_parse_string(new_line)
+            end
+        else
+            center.fac_flavour_parsed[#center.fac_flavour_parsed+1] = loc_parse_string(line)
+        end
+    end
+end
+'''
+
+# Flavour Text Localize
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+if (args.type == 'descriptions' or args.type == 'other') and type(loc_target.text) == 'table' and type(loc_target.text[1]) == 'table' then
+'''
+payload = '''
+if args.type == 'flavour' then
+    for _, lines in ipairs(loc_target.fac_flavour_parsed) do
+        local final_line = SMODS.localize_box(lines, args)
+        args.nodes[#args.nodes+1] = final_line
+    end
+    return
+end
+'''

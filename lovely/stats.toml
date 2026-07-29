@@ -1,0 +1,31 @@
+[manifest]
+version = "0.1.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+progress = {
+
+},
+'''
+position = 'after'
+payload = '''
+fac_fishing = {
+    career_fish_caught = 0,
+    career_perfect_catch = 0,
+    career_treasure_caught = 0,
+    career_lines_snapped = 0,
+    career_sand_dollars = 0,
+    career_fish_sold = 0,
+    environments_fished = {},
+    baits_used = {},
+    fish_data = {},
+    rod_data = {},
+    bait_data = {},
+},
+'''
+match_indent = true
+times = 1
