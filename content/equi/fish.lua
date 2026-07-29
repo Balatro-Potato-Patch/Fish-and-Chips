@@ -68,7 +68,7 @@ FishAndChips.Fish {
     end,
 
     calculate = function(self, card, context)
-        if context.joker_main and #G.jokers.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        if context.joker_main and #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
             if G.GAME.fac_sand_dollars >= card.ability.extra.sand_dollar_req then
                 G.GAME.joker_buffer = G.GAME.joker_buffer + 1
                 G.E_MANAGER:add_event(Event({
