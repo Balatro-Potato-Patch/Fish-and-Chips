@@ -1,6 +1,6 @@
 ---@meta
 
----@alias ValidPools "calm_pond"|"chocolate_river"|"styx"|"pier"|"swamp"|"aquifer"|"volcano"|"city_river"|"soup"|"garden"|"backroom"
+---@alias ValidPools "calm_pond"|"chocolate_river"|"styx"|"pier"|"swamp"|"aquifer"|"volcano"|"city_river"|"soup"|"garden"|"backroom"|"wormhole"
 
 ---@class Environments
 ---@field calm_pond? number
@@ -14,6 +14,7 @@
 ---@field soup? number
 ---@field garden? number
 ---@field backroom? number
+---@field wormhole? number
 
 ---@class FishAndChips.Fish: SMODS.Center
 ---@field environments Environments where this fish can appear, key = weight
@@ -27,6 +28,7 @@
 ---@field ppu_artist? string[] key(s) for the artist(s) who drew this fish
 ---@field use? fun(self: FishAndChips.Fish, card: Card) Defines behaviour when this fish is used. 
 ---@field can_use? fun(self: FishAndChips.Fish, card: Card): boolean? Return `true` if the fish is allowed to be used.
+---@field keep_on_use? fun(self: FishAndChips.Fish, card: Card): boolean? return `true` if the fish should be kept when used.
 ---@field treasure? boolean mark as true if this can be caught as a treasure 
 ---@overload fun(self: FishAndChips.Fish): FishAndChips.Fish
 FishAndChips.Fish = setmetatable({}, {

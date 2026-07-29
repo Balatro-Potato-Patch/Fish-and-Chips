@@ -207,15 +207,15 @@ local function all_env()
 	return ret
 end
 
--- FishAndChips.Fish {
--- 	key = "test",
--- 	weight = 10,
--- 	ppu_artist = { "squeax09" },
--- 	ppu_coder = { "Mack" },
--- 	in_pool = function() return false end,
--- 	no_collection = true,
--- 	discovered = true,
--- 	environments = all_env(),
--- }
+FishAndChips.Fish {
+	key = "test",
+	weight = 10,
+	ppu_artist = { "squeax09" },
+	ppu_coder = { "Mack" },
+	in_pool = function() return false end,
+	no_collection = true,
+	discovered = true,
+	environments = all_env(),
+}
 
 --#endregion
