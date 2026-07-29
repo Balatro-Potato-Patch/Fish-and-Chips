@@ -13,6 +13,7 @@ FishAndChips.Fish({
 		styx = 1,
 		swamp = 1,
 		volcano = 1,
+        wormhole = 1,
 	},
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
@@ -85,6 +86,7 @@ FishAndChips.Fish({
 			and SMODS.pseudorandom_probability(card, "fac_trojan_fish", 1, card.ability.extra.odds)
 		then
 			SMODS.destroy_cards(card, nil, nil, true)
+            SMODS.add_card({ set = "Joker" })
 			return {
 				message = localize("k_fac_boom_ex"),
 				colour = G.C.RED,
@@ -93,3 +95,6 @@ FishAndChips.Fish({
 		return ret
 	end,
 })
+
+local function calc_moai_mult()
+end
