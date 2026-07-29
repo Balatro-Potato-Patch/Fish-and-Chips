@@ -1,6 +1,6 @@
 ---@meta
 
----@alias ValidPools "calm_pond"|"chocolate_river"|"styx"|"pier"|"swamp"|"aquifer"|"volcano"|"city_river"|"soup"|"garden"|"backroom"
+---@alias ValidPools "calm_pond"|"chocolate_river"|"styx"|"pier"|"swamp"|"aquifer"|"volcano"|"city_river"|"soup"|"garden"|"backroom"|"wormhole"
 
 ---@class Environments
 ---@field calm_pond? number
@@ -14,6 +14,7 @@
 ---@field soup? number
 ---@field garden? number
 ---@field backroom? number
+---@field wormhole? number
 
 ---@class FishAndChips.Fish: SMODS.Center
 ---@field environments Environments where this fish can appear, key = weight
