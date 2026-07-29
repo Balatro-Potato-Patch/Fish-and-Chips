@@ -97,5 +97,46 @@ FishAndChips.Fish({
 	end,
 })
 
-local function calc_moai_mult()
+local function calc_moai_mult(card)
+    local min_mult = card.ability.extra.min
+    local max_mult = card.ability.extra.max
+
+    local current_date = os.date("*t")
+    local current_day = current_date.yday
+    local current_year = current_date.year
+    local target_day_1 = os.date("*t", os.time({ year = current_year, month = 4, day = 5 })).yday
+    local target_day_2 = os.date("*t", os.time({ year = current_year + 1, month = 4, day = 5 })).yday
+    local diff = math.min(math.abs(current_day - target_day_1), math.abs(current_day - target_day_2))
+    local max_diff = 183
+    local final_mult = min_mult + (diff / max_diff) * (max_mult - min_mult)
+    return math.floor(final_mult * 100) / 100
 end
+
+FishAndChips.Fish({
+	key = "moai_statue",
+	weight = 5,
+	environments = {
+		pier = 1,
+        calm_pond = 1,
+	},
+    attributes = { "xmult" },
+	ppu_coder = { "thunderedge" },
+	ppu_artist = { "aikoyori" },
+	config = { extra = { min = 1.5, max = 3 } },
+	loc_vars = function(self, info_queue, card)
+		return {
+            vars = {
+                card.ability.extra.min,
+                card.ability.extra.max,
+                calc_moai_mult(card)
+            }
+        }
+	end,
+	calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                xmult = calc_moai_mult(card)
+            }
+        end
+	end,
+})
