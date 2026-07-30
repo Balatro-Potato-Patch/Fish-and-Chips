@@ -21,7 +21,7 @@ FishAndChips.Fish{
 			card.ability.extra.scale,
 			localize{type = "name_text", set = "PotatoPatch", key = G.GAME.fac_FooSqueax and ("PotatoPatchDev_" .. G.GAME.fac_FooSqueax.wormholes.target) or "fac_fas_dev"},
 			card.ability.extra.xmult,
-			card.ability.extra.bai
+			card.ability.extra.bait
 		}}
 	end,
 	calculate = function(self, card, context)

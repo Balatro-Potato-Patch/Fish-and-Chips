@@ -100,7 +100,7 @@ return {
 						"{C:inactive}[Currently {X:mult,C:white}X#3#{C:inactive} Mult]   {C:inactive}[Target changes every round]"
 					},
 					{
-						"Use this Fish to convert it into {C:attention}45#{} bait per {C:attention}#1# {X:mult,C:white}XMult{}"
+						"Use this Fish to convert it into {C:attention}#4#{} bait per {C:attention}#1# {X:mult,C:white}XMult{} gained"
 					}
 				}
 			}
