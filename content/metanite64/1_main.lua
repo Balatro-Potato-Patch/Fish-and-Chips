@@ -12,3 +12,13 @@ SMODS.Atlas {
 
 SMODS.current_mod.optional_features = SMODS.current_mod.optional_features or {}
 SMODS.current_mod.optional_features.post_trigger = true
+
+local rgg_ref = SMODS.current_mod.reset_game_globals or function(run_start) return end
+SMODS.current_mod.reset_game_globals = function(run_start)
+    rgg_ref(run_start)
+    if run_start then
+        G.GAME.fac_meta = {
+            tsuchi_bonus = 0
+        }
+    end
+end

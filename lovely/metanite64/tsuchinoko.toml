@@ -1,0 +1,15 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 2
+
+# Add tsuchinoko bonus to sand dollar cashout
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+position = "after"
+pattern = "local sand_dollars_to_add = FAC_CASHOUT_REWARD[G.GAME.blind_on_deck] or FAC_CASHOUT_REWARD.Small"
+payload = """
+sand_dollars_to_add = sand_dollars_to_add + G.GAME.fac_meta.tsuchi_bonus
+"""
+match_indent = true
