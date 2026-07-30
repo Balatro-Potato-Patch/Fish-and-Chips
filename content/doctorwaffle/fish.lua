@@ -33,6 +33,7 @@ FishAndChips.Fish {
         pier = 1,
         calm_pond = 0.2
     },
+    blueprint_compat = false,
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     cost = 5,
@@ -201,7 +202,7 @@ FishAndChips.Fish {
         return true
     end,
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval and not context.game_over and card.ability.extra.used_this_round then
+        if context.end_of_round and context.main_eval and not context.game_over and card.ability.extra.used_this_round and not context.blueprint then
             card.ability.extra.used_this_round = false
             card:juice_up()
             return {
@@ -210,7 +211,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    attributes = {"generation", "joker", "chance"}
+    attributes = { "generation", "joker", "chance" }
 }
 
 -- Percheo
@@ -223,10 +224,10 @@ FishAndChips.Fish {
         wormhole = 0.6
     },
     cost = 9,
-    pos = {x = 1, y = 0},
+    pos = { x = 1, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    calculate = function (self, card, context)
+    calculate = function(self, card, context)
         if context.fac_end_fishing and context.treasure and G.consumeables.cards[1] then
             G.E_MANAGER:add_event(Event({
                 func = function()
@@ -242,31 +243,33 @@ FishAndChips.Fish {
     vel_limit = 0.58,
     decision_max = 0.4,
     decision_min = 0.14,
-    attributes = {"generation"}
+    attributes = { "generation" }
 }
 
 -- Dead Fish
 FishAndChips.Fish {
     key = "waffle_dead_fish",
     atlas = "waffle_fish",
-    pos = {x = 2, y = 0},
+    pos = { x = 2, y = 0 },
     environments = {
         styx = 1,
         backroom = 1
     },
     weight = 10,
     cost = 4,
-    ppu_coder = {"waffle"},
-    ppu_artist = {"waffle"},
-    config = {extra = {
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    config = { extra = {
         sand_dollars = 2
-    }},
-    loc_vars = function (self, info_queue, card)
-        return {vars = {
-            card.ability.extra.sand_dollars
-        }}
+    } },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.sand_dollars
+            }
+        }
     end,
-    calculate = function (self, card, context)
+    calculate = function(self, card, context)
         if context.discard and context.other_card:get_id() == 2 then
             --context.other_card:remove()
             --SMODS.destroy_cards(context.other_card)
@@ -276,4 +279,71 @@ FishAndChips.Fish {
             }
         end
     end,
+}
+
+-- Squid Ink Cookie
+FishAndChips.Fish {
+    key = "waffle_squid_ink_cookie",
+    atlas = "waffle_fish",
+    pos = { x = 3, y = 0 },
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    weight = 10,
+    cost = 3,
+    environments = {
+        chocolate_river = 1,
+        pier = 0.8,
+    },
+    loc_vars = function(self, info_queue, card)
+        local quotes = {
+            "Hungry...",
+            "Sorrow...",
+            "Sob... sob...",
+            "Don't know...",
+            "Who... am...",
+            "Sob sob...",
+            "Shiny... things...",
+            "Dark... lonely...",
+            "Lost... everything...",
+            "Haaah...",
+            "Into... water...",
+            "Remember... nothing..."
+        }
+        return {
+            vars = {
+                card.ability.extra.dollars,
+                card.ability.extra.conv_amount,
+                card.ability.extra.conv_amount > 1 and "s" or "",
+                card.ability.extra.conv_suit,
+                quotes[math.random(1, #quotes)],
+                colours = { G.C.SUITS[card.ability.extra.conv_suit] }
+            }
+        }
+    end,
+    config = { extra = {
+        conv_suit = "Spades",
+        dollars = 1,
+        conv_amount = 2,
+    } },
+    calculate = function(self, card, context)
+        if context.before then
+            for i = 1, card.ability.extra.conv_amount do
+                local nonSpadesCards = {}
+                for _, cardInDeck in pairs(G.deck.cards) do
+                    if not cardInDeck:is_suit(card.ability.extra.conv_suit) then
+                        nonSpadesCards[#nonSpadesCards + 1] = cardInDeck
+                    end
+                end
+                if nonSpadesCards[1] then
+                    local chosenCard = pseudorandom_element(nonSpadesCards, "fac_waffle_squid_ink_card")
+                    SMODS.change_base(chosenCard, card.ability.extra.conv_suit)
+                end
+            end
+            return {
+                dollars = -card.ability.extra.dollars,
+                colour = G.C.SUITS[card.ability.extra.conv_suit]
+            }
+        end
+    end,
+    pronouns = "they_them"
 }

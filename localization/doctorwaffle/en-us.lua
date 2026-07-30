@@ -46,11 +46,23 @@ return {
             fish_fac_waffle_dead_fish = {
                 name = "Dead Fish",
                 text = {
-                    "Discarded {C:attention}2s{} earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} and",
-                    "are {C:attention}destroyed{} when discarded"
+                    "Discarded {C:attention}2s{} earn",
+                    "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} and are {C:attention}destroyed{}"
                 },
                 flavor = {
                     "2 x 2 = ?"
+                }
+            },
+
+            fish_fac_waffle_squid_ink_cookie = {
+                name = "Squid Ink Cookie",
+                text = {
+                    "When hand is played, spend {C:money}$#1#{}",
+                    "to convert {C:attention}#2#{} random card#3#",
+                    "in deck into {V:1}#4#{} suit"
+                },
+                flavor = {
+                    "#5#"
                 }
             }
 
