@@ -1,20 +1,20 @@
 PotatoPatchUtils.Developer({
 	name = 'F404',
-	--atlas = 'DoodlenautsAvatar',
-    --pos = {x = 0, y = 0},
+	atlas = 'DoodlenautsAvatar',
+    pos = {x = 0, y = 0},
 	colour = HEX('ff00ff'),
 	fac_partner = 'Buckaroodle' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
 })
 
 PotatoPatchUtils.Developer({
 	name = 'Buckaroodle',
-	--atlas = 'DoodlenautsAvatar',
-	--pos = {x = 1, y = 0},
+	atlas = 'DoodlenautsAvatar',
+	pos = {x = 1, y = 0},
 	colour = G.C.GREEN,
 	fac_partner = 'F404'
 })
 
---[[SMODS.Atlas({
+SMODS.Atlas({
 	key = "DoodlenautsFish", 
 	path = "Doodlenauts/fish.png",
 	px = 71,
@@ -26,7 +26,7 @@ SMODS.Atlas({
 	path = "Doodlenauts/avatars.png",
 	px = 71,
 	py = 95,
-})]]
+})
 
 -- Bottom Feeder
 FishAndChips.Fish {
@@ -35,7 +35,7 @@ FishAndChips.Fish {
 	pos = { x = 0, y = 0 },
 	weight = 75, --this will be updated when more fish are added
 	ppu_coder = { 'Buckaroodle'},
-	--ppu_artist = { 'F404' },
+	ppu_artist = { 'F404' },
 	attributes = { 'chips', 'rank' },
 	config = {
 		extra = {
