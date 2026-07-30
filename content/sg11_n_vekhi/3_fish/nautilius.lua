@@ -8,8 +8,8 @@ FishAndChips.Fish({
 	config = {},
 	weight = 10,
 	environments = {
-		pier = 80,
-		garden = 20,
+		pier = 4,
+		garden = 1,
 	},
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval then

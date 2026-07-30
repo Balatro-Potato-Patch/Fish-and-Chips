@@ -3,10 +3,17 @@ SMODS.Sound({
 	path = "sg11_n_vekhi/photo_shot.ogg",
 })
 
+SMODS.Atlas({
+	key = "sg11_n_vekhi_quantum_fish",
+	path = "sg11_n_vekhi/quantum_fish.png",
+	px = 71,
+	py = 95,
+})
+
 local center = FishAndChips.Fish({
 	key = "sg11_n_vekhi_quantum_fish",
-	atlas = "fish",
-	pos = { x = 0, y = 0 },
+	atlas = "fac_sg11_n_vekhi_quantum_fish",
+	pos = { x = 1, y = 0 },
 	ppu_coder = { "sleepyg11" },
 	ppu_artist = { "vevekhi" },
 	attributes = { "xmult" },
@@ -17,7 +24,7 @@ local center = FishAndChips.Fish({
 	},
 	weight = 2,
 	environments = {
-		wormhole = 100,
+		wormhole = 1,
 	},
 	loc_vars = function(self, info_queue, card)
 		return {
@@ -106,7 +113,7 @@ local function start_quantum_fish_sequence(card)
 	card.ability.extra.wild = true
 	G.E_MANAGER:add_event(Event({
 		func = function()
-			card.children.center:set_sprite_pos({ x = 1, y = 0 })
+			card.children.center:set_sprite_pos({ x = 0, y = 0 })
 			card:start_materialize(nil, true, 4)
 			return true
 		end,
@@ -161,7 +168,7 @@ local function start_quantum_fish_sequence(card)
 		delay = 1.25,
 		func = function()
 			card.ability.extra.wild = nil
-			card.children.center:set_sprite_pos({ x = 0, y = 0 })
+			card.children.center:set_sprite_pos({ x = 1, y = 0 })
 			return true
 		end,
 	}))
