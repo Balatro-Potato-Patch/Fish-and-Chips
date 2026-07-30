@@ -4,7 +4,8 @@ return {
             fish_fac_Whale = {
                 name = "Whale",
                 text = {
-                    "-1 space in bucket"
+                    "Retriggers {c:attention}first played hand{}",
+                    "{c:attention}-1 space{} in bucket"
                 },
                 flavor = {
                     "THE WHALE IN SEARCH OF THE 8 FISH I AM '~knzyvo}' IN HAMBURG",
@@ -26,6 +27,15 @@ return {
                 },
                 flavor = {
                     "God he's so cool",
+                }
+            },
+            fish_fac_jojacola = {
+                name = "Joja Cola",
+                text = {
+                    "Does nothing"
+                },
+                flavor = {
+                    "Fuck You",
                 }
             },
         },
