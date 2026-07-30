@@ -38,6 +38,18 @@ return {
                     "Why speed through the moment?",
                     "Sit back and savor the time you spend."
                 }
+            },
+            fish_fac_blamperer_shfi = {
+                name = "shFi",
+                text = {
+                    "Swap {C:chips}Chips{} and {C:mult}Mult",
+                    "{C:attention}before{} any scoring"
+                },
+                flavor = {
+                    "It seems relatively happy,",
+                    "which is a wonder when",
+                    "it's bisected like that."
+                }
             }
         },
         PotatoPatch = {
