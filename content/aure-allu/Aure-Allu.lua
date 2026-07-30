@@ -174,3 +174,30 @@ FishAndChips.Fish {
 		
 	end,
 }
+
+-- Moldfish
+FishAndChips.Fish {
+	key = "shrimp",
+	atlas = "aure-allu_fish",
+	pos = { x = 0, y = 1 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = {  },
+	config = {
+		extra = {
+			
+		},
+	},
+	environments = {
+		
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+		
+	end,
+}
+
+-- #endregion

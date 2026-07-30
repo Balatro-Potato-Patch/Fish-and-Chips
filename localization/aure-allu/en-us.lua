@@ -29,6 +29,33 @@ return {
                     ""
                 }
             },
+            fish_fac_goldfish = {
+                name = {"Goldfish"},
+                text = {
+                    ""
+                },
+                flavor = {
+                    ""
+                }
+            },
+            fish_fac_moldfish = {
+                name = {"Moldfish"},
+                text = {
+                    ""
+                },
+                flavor = {
+                    ""
+                }
+            },
+            fish_fac_shrimp = {
+                name = {"Shrimp"},
+                text = {
+                    ""
+                },
+                flavor = {
+                    ""
+                }
+            },
         },
     }
 }
