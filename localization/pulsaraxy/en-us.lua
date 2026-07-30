@@ -23,6 +23,14 @@ return {
                     "CLOTHES AT THE SOUP STORE",
                 }
             },
+            fish_fac_heatshield = {
+                name = "Heatshield Tile",
+                text = {
+                    "Gains {X:chips,C:white}+#2#{} free Location Reroll",
+                    "for each used Planet card",
+                    "{C:inactive}(Rerolls left: #1#){}"
+                }
+            },
         },
     }
 }
