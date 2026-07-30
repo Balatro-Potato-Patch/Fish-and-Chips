@@ -394,6 +394,7 @@ FishAndChips.Fish {
 		volcano = 10,
 		aquifer = 8,
 		swamp = 8,
+		styx = 3,
 	},
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS.e_foil
@@ -559,7 +560,7 @@ FishAndChips.Fish {
 	requires_hand = true,
 	config = {
 		extra = {
-			max_cards = 5
+			max_cards = 4
 		},
 	},
 	environments = {
