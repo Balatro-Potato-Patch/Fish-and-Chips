@@ -170,7 +170,7 @@ FishAndChips.Fish({
 	environments = {
 		wormhole = 1,
 	},
-	attributes = { "sell_value", "scaling", "economy" },
+	attributes = { "sell_value", "scaling", "economy", "mult" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
 	config = { extra = { min_mult = 1, min = -1, max = 2 } },
@@ -286,6 +286,7 @@ FishAndChips.Fish({
 				else
 					prefix = "-$"
 				end
+				-- idk how to use SMODS.scale_card here properly
 				card.ability.extra_value = card.ability.extra_value
 					+ pseudorandom("fac_nft_secret", card.ability.extra.min, card.ability.extra.max)
 			end
@@ -296,5 +297,82 @@ FishAndChips.Fish({
 				colour = FishAndChips.C.SAND_DOLLAR,
 			}
 		end
+	end,
+})
+
+FishAndChips.Fish({
+	key = "soul_fysh",
+	weight = 5,
+	environments = {
+		styx = 1,
+		wormhole = 1,
+	},
+	attributes = { "xmult", "generation", "scaling", "usable" },
+	ppu_coder = { "thunderedge" },
+	ppu_artist = { "aikoyori" },
+	config = { extra = { xmult = 1, xmult_gain = 0.25, cards = 2, used = false } },
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.cards,
+				card.ability.extra.xmult_gain,
+				card.ability.extra.xmult,
+				localize(card.ability.extra.used and "k_fac_was_used" or "k_fac_not_used"),
+			},
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			return {
+				xmult = card.ability.extra.xmult,
+			}
+		end
+		if context.end_of_round and context.main_eval and not context.blueprint and not context.game_over then
+			card.ability.extra.used = false
+			print("reached")
+			local eval = function()
+				return not card.ability.extra.used and not G.RESET_JIGGLES
+			end
+			juice_card_until(card, eval, true)
+		end
+	end,
+	can_use = function(self, card)
+		return not card.ability.extra.used
+	end,
+	add_to_deck = function(self, card, from_debuff)
+		if not card.ability.extra.used then
+			local eval = function()
+				return not card.ability.extra.used and not G.RESET_JIGGLES
+			end
+			juice_card_until(card, eval, true)
+		end
+	end,
+	use = function(self, card)
+		card.ability.extra.used = true
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				local _first_dissolve = nil
+				local new_cards = {}
+				for _ = 1, card.ability.extra.cards do
+					local _card = SMODS.add_card({
+						set = "Enhanced",
+						no_edition = true,
+						area = G.deck,
+						silent = _first_dissolve,
+						key_append = "fac_soul_fysh",
+					})
+					new_cards[#new_cards + 1] = _card
+				end
+				SMODS.calculate_context({ playing_card_added = true, cards = new_cards })
+				SMODS.scale_card(card, {
+					ref_value = "xmult",
+					scalar_value = "xmult_gain",
+				})
+				return true
+			end,
+		}))
+	end,
+	keep_on_use = function(self, card)
+		return true
 	end,
 })

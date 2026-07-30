@@ -6,32 +6,31 @@ return {
 				text = {
 					"Copies the ability",
 					"of {C:attention}Fish{} to the right",
-					"{C:green}#1# in #2#{} chance to",
-					"{C:red,E:1}self-destruct{} and",
-					"create a random Joker",
-					"at end of round",
+					"{C:green}#1# in #2#{} chance to create",
+					"a random {C:attention}Joker{} at end of",
+					"round and {C:red,E:2}self destruct",
 					"{C:inactive}(Must have room)",
 				},
 				flavor = {
 					"A suspiciously wooden",
 					"fish. Surely it doesn't",
-                    "contain anything",
-                    "strange inside...",
+					"contain anything",
+					"strange inside...",
 				},
 			},
-            fish_fac_moai_statue = {
+			fish_fac_moai_statue = {
 				name = "Moai Statue",
 				text = {
 					"Gives more {X:mult,C:white}XMult{} the",
-                    "closer your date is",
-                    "to {C:attention}April 5th",
-                    "{C:inactive}(Gives {X:mult,C:white}X#1#{C:inactive}-{X:mult,C:white}X#2#{C:inactive} Mult)",
-                    "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
+					"closer your date is",
+					"to {C:attention}April 5th",
+					"{C:inactive}(Gives {X:mult,C:white}X#1#{C:inactive}-{X:mult,C:white}X#2#{C:inactive} Mult)",
+					"{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
 				},
 				flavor = {
 					"Somehow, this fell off",
 					"of Easter Island and",
-                    "sunk into the water",
+					"sunk into the water",
 				},
 			},
 			fish_fac_nft = {
@@ -46,8 +45,28 @@ return {
 				flavor = {
 					"This fish is going to",
 					"to be worth millions",
-                    "in the future",
+					"in the future",
 					"trust me bro",
+				},
+			},
+			fish_fac_soul_fysh = {
+				name = "Soul Fysh",
+				text = {
+					{
+						"This {C:attention}Fish{} can be",
+						"used {C:attention}once{} per round",
+						"{C:inactive}(#4#)",
+					},
+					{
+						"When used, adds {C:attention}#1#",
+						"{C:attention}Enhanced{} cards to your deck",
+						"and this {C:attention}Fish{} gains {X:mult,C:white}X#2#{} Mult",
+						"{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
+					},
+				},
+				flavor = {
+					"May or may not beckon",
+					"you to your doom",
 				},
 			},
 		},
@@ -74,6 +93,8 @@ return {
 			k_fac_boom_ex = "Boom!",
 			k_fac_nft_sell_value1 = "Gains",
 			k_fac_nft_sell_value2 = "of sell value",
+			k_fac_was_used = "Was used this round",
+			k_fac_not_used = "Not used this round",
 		},
 	},
 }
