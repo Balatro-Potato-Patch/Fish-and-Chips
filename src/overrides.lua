@@ -272,12 +272,12 @@ function G.UIDEF.card_h_popup(card)
 		}})
 		ret.nodes[#ret.nodes].nodes[2] = {n=G.UIT.C, nodes = {ret.nodes[#ret.nodes].nodes[2]}}
     end
-    if card.ability and card.ability.set == 'fac_Fish' and not FishAndChips.mod.config.disable_flavour and card.config.center.discovered and G.localization.descriptions.fac_Fish[card.config.center_key].fac_flavour_parsed then
+    if card.ability and card.ability.set == 'fac_Fish' and not FishAndChips.mod.config.disable_flavour and card.config.center.discovered and G.localization.descriptions.fac_Fish[card.config.center_key] and G.localization.descriptions.fac_Fish[card.config.center_key].fac_flavour_parsed then
         local name = SMODS.deepfind(ret, 'tooltip_name')[1]
         local name_node = name.objtree
         local flavour_node = {}
         local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}
-        localize({type = 'flavour', nodes = flavour_node, loc_target = G.localization.descriptions.fac_Fish[card.config.center_key], scale = 0.8, text_colour = G.C.JOKER_GREY, shadow = true, vars = loc_vars.vars})
+        localize({type = 'flavour', nodes = flavour_node, loc_target = G.localization.descriptions.fac_Fish[loc_vars.key or card.config.center_key], scale = 0.8, text_colour = G.C.JOKER_GREY, shadow = true, vars = loc_vars.vars})
         local final_flavour = {{n=G.UIT.R, config = {minh = 0.1}}}
         for i, line in ipairs(flavour_node) do
             local node = {n=G.UIT.R, config = {align = 'cm'}, nodes = {}}
