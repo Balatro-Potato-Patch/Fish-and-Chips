@@ -23,6 +23,26 @@ PotatoPatchUtils.Developer {
     end
 }
 
+-- Hoosks
+local rgg_ref = FishAndChips.mod.reset_game_globals()
+function FishAndChips.mod.reset_game_globals (run_start)
+    rgg_ref(run_start)
+    if run_start then
+        G.GAME.blamperer_hook_time = 0.0
+    end
+end
+
+local game_update_ref = Game.update
+function Game:update(dt)
+    game_update_ref(self, dt)
+    if G.STATE == G.STATES.FAC_FISHING then
+        if G.FISHING_STATE == G.FISHING_STATES.HOOKING then
+            G.GAME.blamperer_hook_time = G.GAME.blamperer_hook_time + dt
+        end
+    end
+end
+
+
 -- tf (this fish) templating me
 -- FishAndChips.Fish {
 --     key = "blamperer_",

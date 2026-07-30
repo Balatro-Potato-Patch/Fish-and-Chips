@@ -26,6 +26,18 @@ return {
                     "neither err or hesitation.",
                     "Go for a Perfish!"
                 }
+            },
+            fish_fac_blamperer_timer = {
+                name = "Delayed Gratipiscation",
+                text = { 
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for every {C:attention}5 seconds",
+                    "you have a fish on your hook",
+                    "{C:inactive}(Maximum of {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{C:inactive})"
+                },
+                flavor = {
+                    "Why speed through the moment?",
+                    "Sit back and savor the time you spend."
+                }
             }
         },
         PotatoPatch = {
