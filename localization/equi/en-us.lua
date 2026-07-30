@@ -24,6 +24,19 @@ return {
                     "A Dangerous Pack of critters."
                 }
             }
+        },
+        PotatoPatch = {
+            PotatoPatchDev_Equi = {
+                name = "Equi",
+                text = {
+                    "if i had a nickel for every sentient",
+                    "triangle that got into balatro modding...",
+                    " ",
+                    "this is my first balatro modding event, if",
+                    "you happen to like my content then check out",
+                    "my other mod SuperAutoJokers :3",
+                }
+            }
         }
-    }
+    },
 }

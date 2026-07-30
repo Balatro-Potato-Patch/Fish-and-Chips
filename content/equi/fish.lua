@@ -1,17 +1,33 @@
 --yippee fish
 
---TODO: this needs something done with the joker or whatever
-PotatoPatchUtils.Developer({
-    name = "Equi",
-    colour = G.C.BLUE
-})
 
 --TODO: set up atlas
+SMODS.Atlas ({
+    key = "equi_fish",
+    path = "equi/fish.png",
+    px = 71,
+    py = 95
+})
+
+SMODS.Atlas ({
+    key = "equi_credits",
+    path = "equi/equicredits.png",
+    px = 71,
+    py = 95
+})
+
+PotatoPatchUtils.Developer {
+    name = "Equi",
+    atlas = "fac_equi_credits",
+    pos = { x = 0, y = 0 }, -- temp
+    colour = G.C.BLUE,
+    loc = true
+}
 
 --Mr Chips
 FishAndChips.Fish {
     key = "mrchips",
-    --atlas
+    atlas = "equi_fish",
     pos = { x = 0, y = 0 },
     weight = 20,
     cost = 3,
