@@ -1,5 +1,6 @@
 FishAndChips.Fish{
 	key = "fas_chimera",
+	atlas = "fas_credits_foo",
 	config = {
 		extra = {
 			scaling = 0.401,
