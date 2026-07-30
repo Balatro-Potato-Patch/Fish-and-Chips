@@ -665,7 +665,7 @@ FishAndChips.Fish {
     key = "am_chocolat",
     atlas = "astra-missingno-fish",
     pos = { x = 2, y = 2 },
-    weight = 4,
+    weight = 5,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
     attributes = { "passive", "food", "modify_card", "edition" },
