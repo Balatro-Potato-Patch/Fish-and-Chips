@@ -60,7 +60,7 @@ FishAndChips.Fish {
 	key = "bombfish",
 	atlas = pez,
 	pos = { x = 3, y = 0 },
-	weight = 5, --testestest
+	weight = 5,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
 	attributes = { "hands", "economy", "generation" },
@@ -68,7 +68,7 @@ FishAndChips.Fish {
 		extra = {
 			poker_hand = 'High Card',
 			defuse = 0,
-			goal = 3,
+			goal = 4,
 			attempts = 4,
 			minplayed = false
 		}
