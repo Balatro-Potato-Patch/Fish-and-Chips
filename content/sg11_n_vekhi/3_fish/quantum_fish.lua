@@ -181,10 +181,9 @@ FishAndChips.QuantumFish = {
 	cards_to_score = {},
 	center = center,
 	calculate = function(context)
-		if context.fac_fishing_reward_reveal then
-			local card = context.fac_reward_card
-			if card.config.center == center then
-				start_quantum_fish_sequence(card)
+		if context.fac_fish_caught then
+			if context.fac_fish_caught.config.center == center then
+				start_quantum_fish_sequence(context.fac_fish_caught)
 			end
 		end
 	end,

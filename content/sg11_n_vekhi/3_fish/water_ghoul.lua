@@ -32,8 +32,8 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.fac_fishing_reward_reveal and card.ability.extra.primed then
-			local reward = context.fac_reward_card
+		if context.fac_fish_caught and card.ability.extra.primed then
+			local reward = context.fac_fish_caught
 			if not (reward.edition and reward.edition.key == "e_negative") then
 				reward:set_edition("e_negative", true, true)
 				SMODS.destroy_cards(card)
