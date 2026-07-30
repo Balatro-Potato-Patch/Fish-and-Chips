@@ -68,7 +68,7 @@ FishAndChips.Fish{
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		return {vars = {card.ability.extra.repetitions, localize(G.GAME.fac_FooSqueax.bucket.on and "k_fac_fas_submerged" or "k_fac_fas_unsubmerged")}}
+		return {vars = {card.ability.extra.repetitions, localize(G.GAME.fac_FooSqueax and G.GAME.fac_FooSqueax.bucket.on and "k_fac_fas_submerged" or "k_fac_fas_unsubmerged")}}
 	end,
 	can_use = function (self, card)
 		return true
