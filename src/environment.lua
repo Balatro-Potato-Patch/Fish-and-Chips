@@ -118,7 +118,7 @@ SMODS.Atlas {
 	key = "calm_pond_waterfall",
 	path = "core/calm pond/waterfall.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 5,
+	fps = 5,
 	frames = 3,
 	px = 116,
 	py = 172,
@@ -128,7 +128,7 @@ SMODS.Atlas {
 	key = "calm_pond_sparkles",
 	path = "core/calm pond/sparkles.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 3,
+	fps = 3,
 	frames = 3,
 	px = 494,
 	py = 77
@@ -180,7 +180,7 @@ SMODS.Atlas {
 	key = "city_river_river",
 	path = "core/city river/river.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 3,
+	fps = 3,
 	frames = 3,
 	px = 518,
 	py = 195
@@ -190,7 +190,7 @@ SMODS.Atlas {
 	key = "city_river_casino",
 	path = "core/city river/casino.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 4,
+	fps = 4,
 	frames = 16,
 	px = 116,
 	py = 37
@@ -200,7 +200,7 @@ SMODS.Atlas {
 	key = "city_river_smoker",
 	path = "core/city river/smoker.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 3,
+	fps = 3,
 	frames = 4,
 	px = 25,
 	py = 53
@@ -268,7 +268,7 @@ SMODS.Atlas {
 	key = "swamp_mushes_a",
 	path = "core/swamp/mushes a.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 2,
+	fps = 2,
 	frames = 8,
 	px = 136,
 	py = 66
@@ -278,7 +278,7 @@ SMODS.Atlas {
 	key = "swamp_mushes_b",
 	path = "core/swamp/mushes b.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 1.75,
+	fps = 1.75,
 	frames = 8,
 	px = 171,
 	py = 47
@@ -288,7 +288,7 @@ SMODS.Atlas {
 	key = "swamp_mushes_c",
 	path = "core/swamp/mushes c.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 3.5,
+	fps = 3.5,
 	frames = 10,
 	px = 103,
 	py = 51
@@ -356,7 +356,7 @@ SMODS.Atlas {
 	key = "volcano_bubbles",
 	path = "core/volcano/bubbles.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 4,
+	fps = 4,
 	frames = 3,
 	px = 515,
 	py = 110
@@ -366,7 +366,7 @@ SMODS.Atlas {
 	key = "volcano_smoke",
 	path = "core/volcano/smoke.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 5,
+	fps = 5,
 	frames = 3,
 	px = 192,
 	py = 116
@@ -422,7 +422,7 @@ SMODS.Atlas {
 	key = "aquifer_waves_a",
 	path = "core/aquifer/waves a.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 3,
+	fps = 3,
 	frames = 3,
 	px = 163,
 	py = 22
@@ -432,7 +432,7 @@ SMODS.Atlas {
 	key = "aquifer_waves_b",
 	path = "core/aquifer/waves b.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 3,
+	fps = 3,
 	frames = 3,
 	px = 311,
 	py = 35
@@ -442,7 +442,7 @@ SMODS.Atlas {
 	key = "aquifer_waves_c",
 	path = "core/aquifer/waves c.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 3,
+	fps = 3,
 	frames = 3,
 	px = 58,
 	py = 20
@@ -513,7 +513,7 @@ SMODS.Atlas {
 	key = "pier_ripples",
 	path = "core/pier/ripples.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 3,
+	fps = 3,
 	frames = 3,
 	px = 424,
 	py = 40
@@ -523,7 +523,7 @@ SMODS.Atlas {
 	key = "pier_waves",
 	path = "core/pier/waves.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 3,
+	fps = 3,
 	frames = 3,
 	px = 480,
 	py = 161
@@ -611,7 +611,7 @@ SMODS.Atlas {
 	key = "styx_crystal",
 	path = "core/styx/crystal.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 6,
+	fps = 6,
 	frames = 20,
 	px = 170,
 	py = 121
@@ -621,7 +621,7 @@ SMODS.Atlas {
 	key = "styx_ferryman",
 	path = "core/styx/ferryman.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 2,
+	fps = 2,
 	frames = 7,
 	px = 14,
 	py = 9
@@ -631,7 +631,7 @@ SMODS.Atlas {
 	key = "styx_waves",
 	path = "core/styx/waves.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 3,
+	fps = 3,
 	frames = 3,
 	px = 99,
 	py = 32
@@ -700,7 +700,7 @@ SMODS.Atlas {
 	key = "chocolate_river_close_part",
 	path = "core/chocolate river/close part.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 4,
+	fps = 4,
 	frames = 3,
 	px = 491,
 	py = 209
@@ -710,7 +710,7 @@ SMODS.Atlas {
 	key = "chocolate_river_mid_part",
 	path = "core/chocolate river/mid part.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 4,
+	fps = 4,
 	frames = 3,
 	px = 193,
 	py = 78
@@ -720,7 +720,7 @@ SMODS.Atlas {
 	key = "chocolate_river_far_part",
 	path = "core/chocolate river/far part.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 4,
+	fps = 4,
 	frames = 3,
 	px = 113,
 	py = 29
@@ -841,7 +841,7 @@ SMODS.Atlas {
 	key = "wormhole_hole",
 	path = "core/Wormhole/Hole.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 4,
+	fps = 4,
 	frames = 3,
 	px = 563,
 	py = 326
@@ -851,7 +851,7 @@ SMODS.Atlas {
 	key = "wormhole_potato",
 	path = "core/Wormhole/Potato.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 4,
+	fps = 4,
 	frames = 3,
 	px = 111,
 	py = 89
@@ -861,7 +861,7 @@ SMODS.Atlas {
 	key = "wormhole_rocket",
 	path = "core/Wormhole/Rocket.png",
 	atlas_table = "ANIMATION_ATLAS",
-	FPS = 4,
+	fps = 4,
 	frames = 3,
 	px = 114,
 	py = 56
@@ -1127,14 +1127,16 @@ FishAndChips.Environment {
 		y = -2.75
 	},
 	update = function (self, dt)
-		if G.FISHING.banana_ad then
-			G.FISHING.banana_ad.alignment.offset.y = -2 - 0.1 * math.sin(G.TIMERS.REAL)
+		if G.FISHING then
+			if G.FISHING.banana_ad then
+				G.FISHING.banana_ad.alignment.offset.y = -2 - 0.1 * math.sin(G.TIMERS.REAL)
+			end
+			if G.FISHING.other_ad then
+				G.FISHING.other_ad.alignment.offset.y = -0.2 - 0.1 * math.sin(G.TIMERS.REAL * 0.99 + 0.1)
+			end
+			fac_wormhole_update_rocket()
+			fac_wormhole_update_potato()
 		end
-		if G.FISHING.other_ad then
-			G.FISHING.other_ad.alignment.offset.y = -0.2 - 0.1 * math.sin(G.TIMERS.REAL * 0.99 + 0.1)
-		end
-		fac_wormhole_update_rocket()
-		fac_wormhole_update_potato()
 	end,
 	generate_ui = function(self)
 		local scale_h = FAC_WORMHOLE_SCALE
