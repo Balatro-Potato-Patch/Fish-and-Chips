@@ -1,14 +1,29 @@
 return {
     descriptions = {
         fac_Fish = {
-                fish_fac_vv_vesselfish = {
-                    name = "Malevolent Fish",
+                fish_fac_vv_fireicefish = {
+                    name = "Benevolent Fish",
                     text = {
-                        "{X:attention,C:white}^#1#{} Blind Requirement",
-                        "{C:inactive,s:0.8}How did it get here? Maybe you can sell it?"
+                        {
+                            "{X:attention,C:white}X#1#{} Blind Requirement",
+                            "{C:inactive}Temporary Effect"
+                        }
                     },
                     flavour = {
-                        "It happened. It fished. {C:red}It snew."
+                        "{C:purple}Somehow... I wound up here, don't ask."
+                    }
+                },
+                fish_fac_vv_size2 = {
+                    name = "Size 2 Fish",
+                    text = {
+                        {
+                            "Effect not implemented!"
+                        }
+                    },
+                    flavour = {
+                        "I HAVE TO SEE.",
+                        "I HAVE TO KNOW.",
+                        "{C:red,s:1.5}SIZE 2"
                     }
                 },
         }
