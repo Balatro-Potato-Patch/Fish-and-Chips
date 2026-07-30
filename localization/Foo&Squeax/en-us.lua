@@ -30,7 +30,7 @@ return {
 				}
 			},
 			PotatoPatchDev_squeax09 = {
-				name = "squax09",
+				name = "squeax09",
 				text = {
 					"temp"
 				}
