@@ -10,7 +10,7 @@ return {
         },
         fac_Fish = {
             fish_fac_videogame = {
-                name = "Fishing Video Game",
+                name = "Fishing Simulator 2007",
                 text = {
                     "Gains {X:mult,C:white}X#1#{} Mult if",
                     "fish is caught perfectly",
@@ -29,6 +29,12 @@ return {
                     "Gains {X:chips,C:white}+#1#{} free Location Reroll",
                     "for each used Planet card",
                     "{C:inactive}(Rerolls left: #2#){}"
+                },
+                flavour = {
+                    "Fell off of a reusable",
+                    "rocket's upper stage",
+                    "during a test flight.",
+                    "It's still slightly warm"
                 }
             },
         },
