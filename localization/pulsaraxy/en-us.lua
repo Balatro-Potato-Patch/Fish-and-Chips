@@ -26,9 +26,9 @@ return {
             fish_fac_heatshield = {
                 name = "Heatshield Tile",
                 text = {
-                    "Gains {X:chips,C:white}+#1#{} free Location Reroll",
-                    "for each used Planet card",
-                    "{C:inactive}(Rerolls left: #2#){}"
+                    "Gains {X:chips,C:white}+#1#{} free {C:attention}Location Reroll{}",
+                    "for each used {C:planet}Planet{} card",
+                    "{C:inactive}(Refunds left: #2#){}"
                 },
                 flavour = {
                     "Fell off of a reusable",
