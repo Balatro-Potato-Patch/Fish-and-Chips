@@ -222,6 +222,7 @@ FishAndChips.Fish {
         garden = 1,
         wormhole = 0.6
     },
+    cost = 9,
     pos = {x = 1, y = 0},
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -238,5 +239,41 @@ FishAndChips.Fish {
             return { message = localize('k_duplicated_ex') }
         end
     end,
+    vel_limit = 0.58,
+    decision_max = 0.4,
+    decision_min = 0.14,
     attributes = {"generation"}
+}
+
+-- Dead Fish
+FishAndChips.Fish {
+    key = "waffle_dead_fish",
+    atlas = "waffle_fish",
+    pos = {x = 2, y = 0},
+    environments = {
+        styx = 1,
+        backroom = 1
+    },
+    weight = 10,
+    cost = 4,
+    ppu_coder = {"waffle"},
+    ppu_artist = {"waffle"},
+    config = {extra = {
+        sand_dollars = 2
+    }},
+    loc_vars = function (self, info_queue, card)
+        return {vars = {
+            card.ability.extra.sand_dollars
+        }}
+    end,
+    calculate = function (self, card, context)
+        if context.discard and context.other_card:get_id() == 2 then
+            --context.other_card:remove()
+            --SMODS.destroy_cards(context.other_card)
+            return {
+                remove = true,
+                sand_dollars = card.ability.extra.sand_dollars
+            }
+        end
+    end,
 }

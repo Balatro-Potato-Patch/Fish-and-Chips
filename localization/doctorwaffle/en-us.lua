@@ -20,13 +20,13 @@ return {
             fish_fac_waffle_magic_conch = {
                 name = "Magic Conch",
                 text = {
-                    "{C:attention}Once per round{}, ask the ",
+                    "{C:attention}Once per round{}, ask the",
                     "Magic Conch for a {C:attention}Food Joker{},",
                     "{C:green}#1# in #2#{} chance for it to say {C:attention}yes{}"
                 },
                 flavor = {
-                    "Oh, Magic Conch Shell, what do",
-                    "we need to do to defeat The Plant?"
+                    "Oh, Magic Conch Shell, what do we",
+                    "need to do to defeat The Plant?"
                 }
             },
 
@@ -40,6 +40,17 @@ return {
                 },
                 flavor = {
                     "Chat, is this nanefish?"
+                }
+            },
+
+            fish_fac_waffle_dead_fish = {
+                name = "Dead Fish",
+                text = {
+                    "Discarded {C:attention}2s{} earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} and",
+                    "are {C:attention}destroyed{} when discarded"
+                },
+                flavor = {
+                    "2 x 2 = ?"
                 }
             }
 
