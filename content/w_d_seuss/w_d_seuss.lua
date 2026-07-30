@@ -252,7 +252,7 @@ FishAndChips.Fish {
 	key = "spalmon",
 	atlas = "w_d_seuss_fish",
 	pos = { x = 0, y = 1 },
-	weight = 1000,
+	weight = 6,
 	ppu_coder = { "Moby Nick" },
 	ppu_artist = { "Moby Nick" },
 	attributes = { },
@@ -286,5 +286,28 @@ FishAndChips.Fish {
                 message = "[[BIG TROUT]]",
             }
 		end
+	end
+}
+
+FishAndChips.Fish {
+	key = "forgotten",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 1, y = 1 },
+	weight = 1,
+	ppu_coder = { "Moby Nick" },
+	ppu_artist = { "Moby Nick" },
+	attributes = { },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		wormhole = 5,
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
 	end
 }

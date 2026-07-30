@@ -72,6 +72,15 @@ return {
                     "BE A {s:2,C:spalmon_pink}BIG {s:2,C:spalmon_gold}TROUT{s:2}!!!{}"
                 }
             },
+            fish_fac_forgotten = {
+                name = "Forgotten Fish",
+                text = {
+                    "{C:inactive}Does nothing?"
+                },
+                flavour = {
+                    "Well, there is a fish here."
+                }
+            },
         },
         Other = {
         },
