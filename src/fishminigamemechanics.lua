@@ -420,6 +420,10 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
             return true
         end
     }), queue)
+    if added_card and added_card.ability.set == "fac_Fish" and type(added_card.config.center.on_catch) == "function" then
+        local center = added_card.config.center
+        center:on_catch(added_card)
+    end
     delay(G.SETTINGS.GAMESPEED * ((first_catch or state.perfect) and 1 or 2), queue)
     if first_catch and added_card.ability.set == 'fac_Fish' then
         G.E_MANAGER:add_event(Event({
