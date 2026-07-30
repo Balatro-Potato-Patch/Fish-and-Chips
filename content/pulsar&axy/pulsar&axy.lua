@@ -84,15 +84,15 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult, } }
 	end,
 	calculate = function(self, card, context)
-        if context.using_consumeable and context.consumeable.set == 'Planet' then
+        if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == 'Planet' then
             -- 1 Free Location Reroll
-            print("Planeted")
+            sendDebugMessage("Planeted")
         end
 
 		if context.joker_main then
-			return {
-				xmult = card.ability.extra.xmult
-			}
+			-- return {
+			-- 	xmult = card.ability.extra.xmult
+			-- }
 		end
 	end,
 }
