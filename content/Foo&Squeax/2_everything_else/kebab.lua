@@ -278,16 +278,6 @@ FishAndChips.Fish{
 					}
 					card.ability.immutable.fish = card.ability.immutable.fish + 1
 					FishAndChips.FooSqueax.link_kebab(card, _card)
-
-					-- less evil value manip
-					for key, value in pairs(_card.ability) do
-						pcall(function() _card.ability[key] = value / 2 end)
-					end
-					if _card.ability.extra and type(_card.ability.extra) == "table" then
-						for key, value in pairs(_card.ability.extra) do
-							pcall(function() _card.ability.extra[key] = value / 2 end)
-						end
-					end
 				end
 				if _card == card then found = true end
 			end
@@ -329,6 +319,8 @@ FishAndChips.Fish{
 				SMODS.calculate_effect({message = localize("k_fac_fas_yum")}, highest)
 			end
 		end
-		return SMODS.merge_effects(effects), retrigger or nil
+		local eff = SMODS.merge_effects(effects)
+		if retrigger then return eff, retrigger
+		else return eff end
 	end,
 }
