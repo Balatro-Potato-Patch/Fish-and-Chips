@@ -15,7 +15,7 @@ PotatoPatchUtils.Developer({
 
 SMODS.Atlas({
 	key = "aure-allu_cards",
-	path = "core/cards.png",
+	path = "aure-allu/cards.png",
 	px = 71,
 	py = 95,
 })
@@ -48,7 +48,18 @@ FishAndChips.Fish {
         }
 	},
 	environments = {
-		
+		pond = 10,
+		pier = 10,
+		city_river = 10,
+		swamp = 10,
+		volcano = 10,
+		aquifer = 10,
+		garden = 10,
+		styx = 10,
+		chocolate_river = 10,
+		wormhole = 10,
+		backroom = 10,
+		soup = 10,
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
@@ -76,7 +87,10 @@ FishAndChips.Fish {
         }
 	},
 	environments = {
-		
+		pier = 10,
+		swamp = 5,
+		city_river = 8,
+		garden = 7,
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
@@ -101,7 +115,10 @@ FishAndChips.Fish {
 		},
 	},
 	environments = {
-		
+		pier = 8,
+		swamp = 8,
+		city_river = 10,
+		aquifer = 4,
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
@@ -140,7 +157,10 @@ FishAndChips.Fish {
 		},
 	},
 	environments = {
-		
+		pond = 10,
+		garden = 10,
+		aquifer = 7,
+		chocolate_river = 3,
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
@@ -165,7 +185,11 @@ FishAndChips.Fish {
 		},
 	},
 	environments = {
-		
+		backroom = 10,
+		city_river = 8,
+		aquifer = 6,
+		swamp = 6,
+		styx = 2,
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
@@ -190,7 +214,11 @@ FishAndChips.Fish {
 		},
 	},
 	environments = {
-		
+		city_river = 10,
+		pier = 10,
+		backroom = 4,
+		soup = 5,
+		wormhole = 9, 
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
@@ -208,14 +236,19 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = {  },
+	attributes = { "mult" },
 	config = {
 		extra = {
 			mult_per_slot = 9
 		},
 	},
 	environments = {
-		
+		pier = 10,
+		city_river = 8,
+		volcano = 3,
+		aquifer = 6,
+		wormhole = 2,
+		soup = 1,
 	},
 	loc_vars = function(self, info_queue, card)
 		local empty = G.fac_fish_area.card_limit - #G.fac_fish_area.cards
@@ -246,7 +279,11 @@ FishAndChips.Fish {
 		},
 	},
 	environments = {
-		
+		pond = 3,
+		pier = 5,
+		volcano = 10,
+		aquifer = 8,
+		styx = 1,
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = {  } }
