@@ -314,7 +314,7 @@ FishAndChips.Fish{
 				retrigger = retrigger or ret
 			end
 		end
-		if context.end_of_round and not context.blueprint then
+		if context.end_of_round and context.main_eval and not context.blueprint then
 			local highest = {ability = {fac_fas_kebab = {order = -1}}}
 			for _, _card in ipairs(G.fac_fas_fish_kebab_area.cards) do
 				if _card.ability.fac_fas_kebab.id == card.ability.immutable.id and _card.config.center.key ~= "fish_fac_fas_fish_kebab_top" then
