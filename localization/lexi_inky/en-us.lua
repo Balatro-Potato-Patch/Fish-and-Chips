@@ -4,7 +4,12 @@ return {
 			PotatoPatchDev_lexi = {
 				name = "lexi",
 				text = {
-					"hi",
+					{
+						"I pretend to know how to code",
+					},
+					{
+						"click me to open a link to my socials",
+					},
 				},
 			},
 			PotatoPatchDev_inky = {
@@ -28,13 +33,30 @@ return {
 			fish_fac_l_i_smartass = {
 				name = "Smartass Fish",
 				text = {
-					"hi",
-					--[["Fish will sometimes fly across the screen",
-					"This fish gains {C:mult}+#2#{} when you click a flying fish",
-					"{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",]]
+					"This fish will sometimes",
+					"jump out of the water",
+					"clicking it before it goes back",
+					"does some BULLSHIT",
 				},
 				flavour = {
 					"{element:1}",
+				},
+			},
+			fish_fac_l_i_wood = {},
+			fish_fac_l_i_plastic = {},
+			fish_fac_l_i_cat = {},
+			fish_fac_l_i_yhsifishy = {},
+			fish_fac_l_i_freddy = {
+				name = "Freddy Fishbear",
+				text = {
+					"If played hand is exactly {C:attention}4{} cards",
+					"and all cards are scoring",
+					"change their ranks to",
+					"{C:attention}Ace{}, {C:attention}9{}, {C:attention}8{}, and {C:attention}7{} based on their",
+					"respective to their position in your hand",
+				},
+				flavour = {
+					"har har har",
 				},
 			},
 		},
