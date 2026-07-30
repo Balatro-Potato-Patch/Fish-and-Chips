@@ -55,9 +55,9 @@ FishAndChips.Fish = setmetatable({}, {
 ---@class FishAndChips.FishingProfile
 ---@field key string key of the fish being caught
 ---@field name string name of the fish being caught
----@field bar_size number catch-zone size that will be used for this catch, taken from the rod or default; higher values are easier
----@field catch_gain number catch progress gained per second for this catch, taken from the rod or default; higher values are easier
----@field catch_loss number catch progress lost per second for this catch, taken from the rod or default; lower values are easier
+---@field bar_size number rod-only catch-zone size, taken from the rod or default; higher values are easier
+---@field catch_gain number rod-only catch progress gained per second, taken from the rod or default; higher values are easier
+---@field catch_loss number rod-only catch progress lost per second, taken from the rod or default; lower values are easier
 ---@field treasure_gain number treasure progress gained per second for this catch, taken from the rod or default; higher values are easier
 ---@field vel_limit number maximum fish speed that will be used for this catch, after applying the fish/default base and rod multiplier; lower values are easier
 ---@field impulse_min number minimum movement distance that will be used for this catch, after applying the fish/default base and rod multiplier; lower values are easier
@@ -69,9 +69,18 @@ FishAndChips.Fish = setmetatable({}, {
 ---@field rod_key string key of the active rod
 ---@field center FishAndChips.Fish center object of the fish being caught
 
+---@class FishAndChips.ModifiableFishingProfile
+---@field treasure_gain number treasure progress gained per second; higher values are easier
+---@field vel_limit number maximum fish speed; lower values are easier
+---@field impulse_min number minimum movement distance; lower values are easier
+---@field impulse_max number maximum movement distance; lower values are easier
+---@field decision_min number minimum time before changing movement; higher values are easier
+---@field decision_max number maximum time before changing movement; higher values are easier
+---@field colour number[] Sweet Spot colour
+
 ---@class FishAndChips.ModifyFishingProfileContext
 ---@field fac_modify_fishing_profile true identifies the pre-minigame profile modification context
----@field fishing_profile FishAndChips.FishingProfile values prepared for the upcoming catch; change these fields to alter that catch before the minigame begins
+---@field fishing_profile FishAndChips.ModifiableFishingProfile values fish may change for the upcoming catch
 ---@field hooked_fish FishAndChips.Fish hooked fish center object; use `.key` to identify its species
 
 ---@class FishAndChips.Rod: SMODS.Center

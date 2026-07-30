@@ -94,13 +94,30 @@ local function fac_profile_from_center(center)
 end
 
 function FishAndChips.modify_fishing_profile(profile)
+    local fish_profile = {
+        treasure_gain = profile.treasure_gain,
+        vel_limit = profile.vel_limit,
+        impulse_min = profile.impulse_min,
+        impulse_max = profile.impulse_max,
+        decision_min = profile.decision_min,
+        decision_max = profile.decision_max,
+        colour = profile.colour,
+    }
     local context = {
         fac_modify_fishing_profile = true,
-        fishing_profile = profile,
+        fishing_profile = fish_profile,
         hooked_fish = profile.center,
     }
     SMODS.calculate_context(context)
-    return context.fishing_profile or profile
+    local modified_profile = context.fishing_profile or fish_profile
+    if modified_profile.treasure_gain ~= nil then profile.treasure_gain = modified_profile.treasure_gain end
+    if modified_profile.vel_limit ~= nil then profile.vel_limit = modified_profile.vel_limit end
+    if modified_profile.impulse_min ~= nil then profile.impulse_min = modified_profile.impulse_min end
+    if modified_profile.impulse_max ~= nil then profile.impulse_max = modified_profile.impulse_max end
+    if modified_profile.decision_min ~= nil then profile.decision_min = modified_profile.decision_min end
+    if modified_profile.decision_max ~= nil then profile.decision_max = modified_profile.decision_max end
+    if modified_profile.colour ~= nil then profile.colour = modified_profile.colour end
+    return profile
 end
 
 local function fac_pick_profile()
