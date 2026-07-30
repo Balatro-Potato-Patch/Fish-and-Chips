@@ -58,7 +58,7 @@ return {
 						"{C:inactive}(#4#)",
 					},
 					{
-						"When used, adds {C:attention}#1#",
+						"When used, adds {C:attention}#1#{} random",
 						"{C:attention}Enhanced{} cards to your deck",
 						"and this {C:attention}Fish{} gains {X:mult,C:white}X#2#{} Mult",
 						"{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
@@ -69,6 +69,17 @@ return {
 					"you to your doom",
 				},
 			},
+			fish_fac_fish_flavored_fish = {
+				name = "Fish Flavored Fish",
+				text = {
+					"After a {C:attention}Fish{} is caught,",
+					"create a random {C:attention}Fish",
+					"{C:inactive}(Must have room)",
+				},
+				flavor = {
+					"Tastes like fish"
+				}
+			}
 		},
 		Other = {},
 		PotatoPatch = {
