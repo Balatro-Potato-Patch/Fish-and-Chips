@@ -31,7 +31,8 @@ SMODS.Sound {
 
 SMODS.Sound {
 	key = 'am_jerry_chips',
-	path = 'astra-missingno/am_jerry_chips.ogg'
+	path = 'astra-missingno/am_jerry_chips.ogg',
+	volume = 0.65
 }
 
 SMODS.Sound {

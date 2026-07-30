@@ -81,6 +81,7 @@ function FishAndChips.verify_submissions()
 			total_weight = total_weight + fish.weight
 			if fish.treasure then treasure_fish_count = treasure_fish_count + 1 end
 		end
+		print(total_weight)
 		local scalar = math.min(1, FishAndChips.submission_weight_limit / total_weight)
 		assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
 		assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")

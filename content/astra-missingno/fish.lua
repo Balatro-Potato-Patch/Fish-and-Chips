@@ -24,10 +24,29 @@ FishAndChips.Fish {
         local stg = card.ability.extra
 
         if context.joker_main then
+            local og_music_volume = G.SETTINGS.SOUND.music_volume
+
             G.E_MANAGER:add_event(Event({
+                blocking = false,
                 func = function()
+                    G.SETTINGS.SOUND.music_volume = og_music_volume * 0.25
                     play_sound('fac_am_jerry_chips')
                     return true;
+                end
+            }))
+            G.E_MANAGER:add_event(Event({
+                blocking = false,
+                delay = 1.5 * G.SPEEDFACTOR,
+                trigger = 'after',
+                func = function()
+                    if G.SETTINGS.SOUND.music_volume >= og_music_volume then
+                        G.SETTINGS.SOUND.music_volume = og_music_volume
+                        G:save_settings()
+                        return true
+                    else
+                        G.SETTINGS.SOUND.music_volume = G.SETTINGS.SOUND.music_volume + 1
+                        return false
+                    end
                 end
             }))
             return {
@@ -36,10 +55,29 @@ FishAndChips.Fish {
         end
     end,
     on_catch = function(self, card)
+        local og_music_volume = G.SETTINGS.SOUND.music_volume
+
         G.E_MANAGER:add_event(Event({
+            blocking = false,
             func = function()
+                G.SETTINGS.SOUND.music_volume = og_music_volume * 0.25
                 play_sound('fac_am_jerry_intro')
                 return true;
+            end
+        }))
+        G.E_MANAGER:add_event(Event({
+            blocking = false,
+            delay = 3 * G.SPEEDFACTOR,
+            trigger = 'after',
+            func = function()
+                if G.SETTINGS.SOUND.music_volume >= og_music_volume then
+                    G.SETTINGS.SOUND.music_volume = og_music_volume
+                    G:save_settings()
+                    return true
+                else
+                    G.SETTINGS.SOUND.music_volume = G.SETTINGS.SOUND.music_volume + 1
+                    return false
+                end
             end
         }))
     end
