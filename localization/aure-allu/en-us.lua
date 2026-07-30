@@ -56,6 +56,17 @@ return {
                     ""
                 }
             },
+            fish_fac_mult_mola = {
+                name = {"Mult Mola"},
+                text = {
+                    "Blubs {C:mult}#1#{} Mult for",
+                    "each empty {C:chips}Fish {C:attention}slot",
+                    "{C:inactive}(Currently {C:mult}#2#{C:inactive} Mult)"
+                },
+                flavor = {
+                    ""
+                }
+            },
         },
     }
 }

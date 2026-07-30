@@ -175,7 +175,7 @@ FishAndChips.Fish {
 	end,
 }
 
--- Moldfish
+-- Shrimp
 FishAndChips.Fish {
 	key = "shrimp",
 	atlas = "aure-allu_fish",
@@ -197,6 +197,37 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		
+	end,
+}
+
+-- Mult Mola
+FishAndChips.Fish {
+	key = "mult_mola",
+	atlas = "aure-allu_fish",
+	pos = { x = 1, y = 1 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = {  },
+	config = {
+		extra = {
+			mult_per_slot = 9
+		},
+	},
+	environments = {
+		
+	},
+	loc_vars = function(self, info_queue, card)
+		local empty = G.fac_fish_area.card_limit - #G.fac_fish_area.cards
+		return { vars = { SMODS.signed(card.ability.extra.mult_per_slot), SMODS.signed(empty * card.ability.extra.mult_per_slot) } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			local empty = G.fac_fish_area.card_limit - #G.fac_fish_area.cards
+			return {
+				mult = empty * card.ability.extra.mult_per_slot
+			}
+		end
 	end,
 }
 
