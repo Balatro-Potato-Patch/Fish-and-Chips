@@ -22,14 +22,14 @@ SMODS.Sound({
 
 PotatoPatchUtils.Developer({
 	name = "Ellen (Haya)",
-	atlas = "hayayaya_credits",
+	atlas = "fac_hayayaya_credits",
 	colour = G.C.PURPLE,
 	fac_partner = "Pepix",
 })
 
 PotatoPatchUtils.Developer({
 	name = "Pepix",
-	atlas = "hayayaya_credits",
+	atlas = "fac_hayayaya_credits",
 	pos = { x = 1, y = 0 },
 	colour = G.C.GOLD,
 	fac_partner = "Ellen (Haya)",
