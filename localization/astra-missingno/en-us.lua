@@ -62,7 +62,10 @@ return {
             fish_fac_am_teabag = {
                 name = "Teabag",
                 text = {
-                    " "
+                    "Gives {C:attention}1",
+                    "selected card ",
+                    "permanent {C:money}$#1#{}",
+                    "when scored"
                 },
                 flavor = {
                     "Finding one of these in",

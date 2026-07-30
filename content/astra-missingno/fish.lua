@@ -232,16 +232,32 @@ FishAndChips.Fish {
     weight = 10,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
-    attributes = { "" },
+    attributes = { "usable", "economy" },
+    requires_hand = true,
     config = {
-
+        extra = {
+            dollars = 1
+        }
     },
     environments = {
         pier = 10
     },
     loc_vars = function(self, info_queue, card)
+        local stg = card.ability.extra
 
+        return { vars = { stg.dollars } }
     end,
+    can_use = function(self, card)
+        return G.hand and #G.hand.highlighted == 1
+    end,
+    use = function(self, card)
+        local stg = card.ability.extra
+        local affected_card = G.hand.highlighted[1]
+
+        affected_card.ability.perma_p_dollars = affected_card.ability.perma_p_dollars + stg.dollars
+        affected_card:juice_up()
+        play_sound('tarot1')
+    end
 }
 
 FishAndChips.Fish {
