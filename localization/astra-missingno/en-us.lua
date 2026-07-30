@@ -26,7 +26,7 @@ return {
             fish_fac_am_missingno = {
                 name = "MissingNo.",
                 text = {
-                    "Next opened {C:attention} Booster Pack",
+                    "Next opened {C:attention}Booster Pack",
                     "will contain a random"
                 },
                 flavor = {
@@ -48,7 +48,9 @@ return {
             fish_fac_am_ascii = {
                 name = "Ascii Fish",
                 text = {
-
+                    "{C:attention}Retriggers{} played cards",
+                    "with non-number ranks",
+                    "{C:attention}#1#{} time"
                 },
                 flavor = {
                     " _",

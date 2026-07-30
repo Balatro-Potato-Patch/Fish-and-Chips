@@ -72,7 +72,7 @@ FishAndChips.Fish {
     weight = 5,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
-    attributes = { "" },
+    attributes = { "generation" },
     config = {
         extra = {
             ctype = "Planet",
@@ -86,8 +86,11 @@ FishAndChips.Fish {
         local stg = card.ability.extra
         local loc_ctypes = {}
         for k, v in pairs(AM_Missingno_Get_CTypes()) do
-            if v == 'Spectral' then table.insert(loc_ctypes, localize('k_spectral'))
-            else table.insert(loc_ctypes, localize(v:lower(), 'labels')) end
+            if v == 'Spectral' then
+                table.insert(loc_ctypes, localize('k_spectral'))
+            else
+                table.insert(loc_ctypes, localize(v:lower(), 'labels'))
+            end
         end
         table.insert(loc_ctypes, '$@#%')
         table.insert(loc_ctypes, '$^&Q*()@')
@@ -98,22 +101,22 @@ FishAndChips.Fish {
         local colour = SMODS.ConsumableTypes[stg.ctype].secondary_colour
         return {
             main_end = {
-                {n=G.UIT.O, config={object = DynaText({string = loc_ctypes, colours = {colour},pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0})}},
-                {n=G.UIT.T, config={text = loc_cards,colour = G.C.JOKER_GREY, scale = 0.32}},
+                { n = G.UIT.O, config = { object = DynaText({ string = loc_ctypes, colours = { colour }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0 }) } },
+                { n = G.UIT.T, config = { text = loc_cards, colour = G.C.JOKER_GREY, scale = 0.32 } },
             }
         }
     end,
     calculate = function(self, card, context)
         local stg = card.ability.extra
-    
+
         if context.open_booster then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    local _card = SMODS.create_card({set = stg.ctype, area = G.pack_cards})
+                    local _card = SMODS.create_card({ set = stg.ctype, area = G.pack_cards })
                     _card.created_by_missingno = true
                     G.pack_cards:emplace(_card)
                     stg.uses = stg.uses + 1
-                    stg.ctype = pseudorandom_element(AM_Missingno_Get_CTypes(), 'MissingnoCard'..stg.uses)
+                    stg.ctype = pseudorandom_element(AM_Missingno_Get_CTypes(), 'MissingnoCard' .. stg.uses)
                     return true;
                 end
             }))
@@ -125,7 +128,7 @@ FishAndChips.Fish {
     end,
     set_ability = function(self, card, initial, delay_sprites)
         local stg = card.ability.extra
-        stg.ctype = pseudorandom_element(AM_Missingno_Get_CTypes(), 'MissingnoCard'..stg.uses)
+        stg.ctype = pseudorandom_element(AM_Missingno_Get_CTypes(), 'MissingnoCard' .. stg.uses)
     end
 }
 
@@ -153,18 +156,30 @@ FishAndChips.Fish {
     atlas = "astra-missingno-fish",
     pos = { x = 4, y = 0 },
     pixel_size = { w = 55, h = 87 },
-    weight = 10,
+    weight = 5,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
-    attributes = { "" },
+    attributes = { "retrigger" },
     config = {
-
+        extra = {
+            retriggers = 1
+        }
     },
     environments = {
-        wormhole = 10
+        wormhole = 5
     },
     loc_vars = function(self, info_queue, card)
+        local stg = card.ability.extra
+        return { vars = { stg.retriggers } }
+    end,
+    calculate = function(self, card, context)
+        local stg = card.ability.extra
 
+        if context.repetitio and context.cardarea == G.play and not tonumber(localize(context.other_card.base.value, 'ranks')) then
+            return {
+                repetitions = stg.retriggers
+            }
+        end
     end,
 }
 
