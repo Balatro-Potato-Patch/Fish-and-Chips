@@ -76,17 +76,22 @@ FishAndChips.Fish {
 	blueprint_compat = true,
 	config = {
 		extra = {
-			xmult = 1,
-            xmult_gain = 0.5
+			rerolls = 0,
+            reroll_gain = 1
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult, } }
+		return { vars = { card.ability.extra.reroll_gain, card.ability.extra.rerolls, } }
 	end,
 	calculate = function(self, card, context)
         if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == 'Planet' then
             -- 1 Free Location Reroll
-            print("Planeted")
+            sendDebugMessage(context.consumeable.ability.set .. " detected", "HeatshieldLogger")
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "rerolls",
+                scalar_value = "reroll_gain"
+            })
         end
 
 		if context.joker_main then
