@@ -29,8 +29,9 @@ return {
 				text = {
 					{
 						"While Submerged:",
-						"All Jokers are debuffed",
-						"All fish retrigger 3 times"
+						"All {C:attention}Jokers{} are debuffed",
+						"All Fish retrigger {C:attention}#1#{} times",
+						"{C:inactive}[#2#]"
 					},
 					{
 						"Use to submerge/unsubmerge"
@@ -51,6 +52,14 @@ return {
 					"temp"
 				}
 			}
+		}
+	},
+	misc = {
+		dictionary = {
+			k_fac_fas_submerged = "Submerged!",
+			k_fac_fas_unsubmerged = "Unsubmerged!",
+			k_fac_fas_resurface = "Going Up!",
+			k_fac_fas_dive = "Dive! Dive! Dive!"
 		}
 	}
 }

@@ -62,6 +62,14 @@ FishAndChips.Fish{
 		backroom = 0.4,
 		aquifer = 0.01
 	},
+	config = {
+		extra = {
+			repetitions = 2,
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		return {vars = {card.ability.extra.repetitions, localize(G.GAME.fac_FooSqueax.bucket.on and "k_fac_fas_submerged" or "k_fac_fas_unsubmerged")}}
+	end,
 	can_use = function (self, card)
 		return true
 	end,
@@ -76,6 +84,24 @@ FishAndChips.Fish{
 	end,
 	use = function(self, card)
 		FishAndChips.FooSqueax.toggle_bucket_shader()
+		SMODS.calculate_effect({message = localize(G.GAME.fac_FooSqueax.bucket.on and "k_fac_fas_dive" or "k_fac_fas_resurface"), colour = G.C.BLUE}, card)
+		for _, _card in ipairs(G.jokers.cards) do
+			SMODS.debuff_card(_card, G.GAME.fac_FooSqueax.bucket.on, "fac_fas_submarine")
+		end
+	end,
+	calculate = function(self, card, context)
+		if G.GAME.fac_FooSqueax.bucket.on then
+			if context.card_added and not context.blueprint then
+				if context.card.config.center.set == "Joker" then
+					SMODS.debuff_card(context.card, true, "fac_fas_submarine")
+				end
+			end
+			if context.retrigger_joker_check and context.other_card.config.center.set == "fac_Fish" then
+				return {
+					repetitions = card.ability.extra.repetitions
+				}
+			end
+		end
 	end,
 }
 

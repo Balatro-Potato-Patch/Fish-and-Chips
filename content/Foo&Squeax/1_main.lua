@@ -29,3 +29,5 @@ PotatoPatchUtils.Developer{
 	loc = true
 }
 
+FishAndChips.mod.optional_features = FishAndChips.mod.optional_features or {}
+FishAndChips.mod.optional_features.retrigger_joker = true
