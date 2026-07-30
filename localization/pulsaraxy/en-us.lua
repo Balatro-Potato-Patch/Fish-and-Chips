@@ -12,8 +12,9 @@ return {
             fish_fac_videogame = {
                 name = "Fishing Video Game",
                 text = {
-                    "{X:mult,C:white}X#1#{} Mult if caught",
-                    "fish was perfect"
+                    "Gains {X:mult,C:white}X#1#{} Mult if",
+                    "fish is caught perfectly",
+                    "Currently {X:mult,C:white}X#1#{} Mult"
                 },
                 flavour = {
                     "WHAT STORE ARE YOU IN",

@@ -38,15 +38,21 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			xmult = 1,
+            xmult_gain = 0.5
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.xmult, } }
+		return { vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult, } }
 	end,
 	calculate = function(self, card, context)
-        if context.fac_end_fishing and context.perfect then
-            card.ability.extra.xmult = card.ability.extra.xmult + 0.5
+        if context.fac_end_fishing and context.perfect and not context.blueprint then
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "xmult",
+                scalar_value = "xmult_gain"
+            })
         end
+
 		if context.joker_main then
 			return {
 				xmult = card.ability.extra.xmult
