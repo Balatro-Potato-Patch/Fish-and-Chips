@@ -134,7 +134,25 @@ return {
                     "and moving near them"
                 }
             },
-        },
+            fish_fac_am_piscis = {
+                name = "Piscis Austrinus",
+                text = {
+                    {"Use this Fish to upgrade",
+                    "the level of the {C:attention}last played{}",
+                    "poker hand #1# times"},
+                    {"{S:0.8}({S:0.8,V:1}lvl.#2#{S:0.8}){} Level up",
+                    "{C:attention}#3#",
+                    "{C:mult}+#4#{} Mult and",
+                    "{C:chips}+#5#{} chips",}
+                },
+                flavor = {
+                    "It is said that gazing at the ",
+                    "dazzling scales of this fish",
+                    "gives you a glimpse into",
+                    "another universe"
+                }
+            },
+        }
     },
     misc = {
         dictionary = {

@@ -492,16 +492,16 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
 
-        return { vars = { stg.xmult, stg.gain }}
+        return { vars = { stg.xmult, stg.gain } }
     end,
     calculate = function(self, card, context)
         local stg = card.ability.extra
-    
+
         if context.setting_blind then
             local cards_to_destroy = {}
 
             for i = 1, #G.fac_fish_area.cards do
-				if G.fac_fish_area.cards[i] == card then
+                if G.fac_fish_area.cards[i] == card then
                     if i ~= 1 and not G.fac_fish_area.cards[i - 1].getting_sliced then
                         table.insert(cards_to_destroy, G.fac_fish_area.cards[i - 1])
                     end
@@ -509,7 +509,7 @@ FishAndChips.Fish {
                         table.insert(cards_to_destroy, G.fac_fish_area.cards[i + 1])
                     end
                 end
-			end
+            end
 
             if next(cards_to_destroy) then
                 SMODS.destroy_cards(cards_to_destroy)
@@ -525,7 +525,7 @@ FishAndChips.Fish {
                     scalar_value = "gain",
                     scalar_factor = #cards_to_destroy,
                     scaling_message = {
-                        message = localize{type='variable',key='a_xmult',vars={ stg.xmult + (stg.gain * #cards_to_destroy)}},
+                        message = localize { type = 'variable', key = 'a_xmult', vars = { stg.xmult + (stg.gain * #cards_to_destroy) } },
                         colour = G.C.FILTER,
                         sound = 'fac_am_chomp',
                         pitch = 1,
@@ -540,4 +540,60 @@ FishAndChips.Fish {
             }
         end
     end,
+}
+
+FishAndChips.Fish {
+    key = "am_piscis",
+    atlas = "astra-missingno-fish",
+    pos = { x = 1, y = 2 },
+    weight = 5,
+    ppu_coder = { "theAstra" },
+    ppu_artist = { "MissingNumber" },
+    attributes = { "usable", "hand_level" },
+    config = {
+        extra = {
+            levels = 2,
+            last_hand = nil
+        }
+    },
+    environments = {
+        wormhole = 5,
+        styx = 5
+    },
+    loc_vars = function(self, info_queue, card)
+        local stg = card.ability.extra
+
+        local hand = G.GAME.last_hand_played or 'High Card'
+
+        return { vars = {
+            stg.levels,
+            G.GAME.hands[hand].level,
+            localize(hand, 'poker_hands'),
+            G.GAME.hands[hand].l_mult * stg.levels,
+            G.GAME.hands[hand].l_chips * stg.levels,
+            colours = {
+                (G.GAME.hands[hand].level == 1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, G.GAME.hands[hand].level)])
+            }
+        } }
+    end,
+    calculate = function(self, card, context)
+        local stg = card.ability.extra
+    
+        if context.before then
+            stg.last_hand = context.scoring_name
+        end
+    end,
+    can_use = function(self, card)
+        return card.ability.extra.last_hand
+    end,
+    use = function(self, card)
+        local stg = card.ability.extra
+        
+        SMODS.upgrade_poker_hands({hands = G.GAME.last_hand_played, level_up = stg.levels, from = card })
+    end,
+    set_ability = function(self, card, initial, delay_sprites)
+        local stg = card.ability.extra
+
+        stg.last_hand = G.GAME.last_hand_played or 'High Card'
+    end
 }
