@@ -32,7 +32,7 @@ FishAndChips.Fish {
 	attributes = { "mult, ace, rank" },
 	config = {
 		extra = {
-			mult = 4
+			mult = 1
 		}
 	},
 	environments = {
@@ -61,15 +61,22 @@ FishAndChips.Fish {
 	attributes = { "chips" },
 	config = {
 		extra = {
+			mult = 2
 		}
 	},
 	environments = {
 		calm_pond = 10,
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		return { vars = { card.ability.extra.mult } }
 	end,
 	calculate = function(self, card, context)
+		if context.individual and context.cardarea == G.play
+			and context.other_card:get_id() == 2 then
+			return {
+				mult = card.ability.extra.mult
+			}
+		end
 	end,
 }
 
