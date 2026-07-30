@@ -11,6 +11,21 @@ return {
                 flavor = {
                     "tenpo la, lili li pona"
                 }
+            },
+            fish_fac_blamperer_perfish = {
+                name = "Perfish",
+                text = {
+                    "Earn {C:money}$#1#{} when returning",
+                    "from fishing based on your",
+                    "best streak of {C:gold}Perfect Catches",
+                    "{C:inactive}(Highest streak: {C:gold}#2#{C:inactive} in a row)"
+                },
+                flavor = {
+                    "This Fish only rewards those",
+                    "who can perform with",
+                    "neither err or hesitation.",
+                    "Go for a Perfish!"
+                }
             }
         },
         PotatoPatch = {
@@ -25,4 +40,12 @@ return {
             },
         }
     },
+    misc = {
+        dictionary = {
+            k_fac_blamperer_str_broke = "Streak Broken!"
+        },
+        v_dictionary = {
+            a_fac_blamperer_str_gain = "#1#X Streak!"
+        }
+    }
 }
