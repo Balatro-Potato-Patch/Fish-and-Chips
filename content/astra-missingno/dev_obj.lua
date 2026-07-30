@@ -20,6 +20,11 @@ SMODS.Atlas({
 for i = 1, 3 do
 	SMODS.Sound {
 		key = 'am_shrimp_' .. i,
-		path = 'astra-missingno/am_shrimp_' .. i ..'.ogg'
+		path = 'astra-missingno/am_shrimp_' .. i .. '.ogg'
 	}
 end
+
+SMODS.Sound {
+	key = 'am_jerry_intro',
+	path = 'astra-missingno/am_jerry_intro.ogg'
+}

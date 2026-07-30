@@ -17,6 +17,14 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
 
     end,
+    on_catch = function(self, card)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                play_sound('fac_am_jerry_intro')
+                return true;
+            end
+        }))
+    end
 }
 
 FishAndChips.Fish {
