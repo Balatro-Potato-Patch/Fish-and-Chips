@@ -108,7 +108,8 @@ FishAndChips.Fish {
     },
     environments = {
         pier = 5,
-        city_river = 5
+        city_river = 5,
+        backroom = 5,
     },
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -263,7 +264,7 @@ FishAndChips.Fish {
     key = "am_teabag",
     atlas = "astra-missingno-fish",
     pos = { x = 0, y = 1 },
-    weight = 10,
+    weight = 5,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
     attributes = { "usable", "economy" },
@@ -274,8 +275,8 @@ FishAndChips.Fish {
         }
     },
     environments = {
-        pier = 10,
-        city_river = 10,
+        pier = 5,
+        city_river = 5,
     },
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
