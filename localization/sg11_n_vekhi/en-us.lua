@@ -9,6 +9,22 @@ return {
 					"if any {C:attention}Consumable{} held",
 				},
 			},
+			fish_fac_sg11_n_vekhi_water_ghoul = {
+				name = "Water Ghoul",
+				text = {
+					"When {C:attention}primed{}, next caught fish",
+					"will be {C:dark_edition}Negative{}, then",
+					"{S:1.1,C:red,E:2}self destructs{}",
+				},
+			},
+			fish_fac_sg11_n_vekhi_water_ghoul_primed = {
+				name = "Water Ghoul",
+				text = {
+					"Next caught fish",
+					"will be {C:dark_edition}Negative{}, then",
+					"{S:1.1,C:red,E:2}self destructs{}",
+				},
+			},
 		},
 		PotatoPatch = {
 			fac_sleepyg11 = {
