@@ -10,8 +10,10 @@ FishAndChips.Fish({
 			primed = false,
 		},
 	},
-	weight = 3,
-	environments = {},
+	weight = 2,
+	environments = {
+		styx = 100,
+	},
 	can_use = function(self, card)
 		return not card.ability.extra.primed
 	end,
