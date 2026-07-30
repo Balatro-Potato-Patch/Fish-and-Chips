@@ -671,7 +671,7 @@ FishAndChips.Fish {
     attributes = { "passive", "food", "modify_card", "edition" },
     config = {
         extra = {
-            times = 2,
+            times = 3,
         }
     },
     environments = {
