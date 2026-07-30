@@ -119,7 +119,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = {  },
+	attributes = { "chance", },
 	config = {
 		extra = {
 			refund_sand_dollars = 2,
@@ -382,7 +382,8 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = {  },
+	attributes = { "usable", "chance", "modify_card" },
+	blueprint_compat = false,
 	config = {
 		extra = {
 			eel_odds = 4
@@ -455,7 +456,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "chips" },
+	attributes = { "chips", "chance", },
 	config = {
 		extra = {
 			chips = 61,
@@ -504,7 +505,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "x_chips" },
+	attributes = { "x_chips", "chance", },
 	config = {
 		extra = {
 			x_chips = 3,
@@ -543,6 +544,77 @@ FishAndChips.Fish {
 	in_pool = function(self, args)
         return G.GAME.pool_flags.fac_aure_allu_gouramichel
     end
+}
+
+-- Hammerjaw
+FishAndChips.Fish {
+	key = "hammerjaw",
+	atlas = "aure-allu_fish",
+	pos = { x = 0, y = 2 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "usable" },
+	blueprint_compat = false,
+	requires_hand = true,
+	config = {
+		extra = {
+			max_cards = 5
+		},
+	},
+	environments = {
+		pier = 5,
+		city_river = 10,
+		volcano = 8,
+		aquifer = 6,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.max_cards } }
+	end,
+	use = function (self, card)
+		--Thanks https://github.com/nh6574/VanillaRemade/blob/main/src/tarots.lua The Hanged Man
+        G.E_MANAGER:add_event(Event({
+			trigger = "after", 
+			delay = 0.1, 
+			func = function()
+				play_sound('tarot1')
+				card:juice_up(0.3, 0.5)
+				return true
+			end
+		}))
+        G.E_MANAGER:add_event(Event({
+			trigger = "after", 
+			delay = 0.1, 
+			func = function()
+				SMODS.destroy_cards(G.hand.highlighted)
+				return true
+			end
+		}))
+        delay(0.1)
+        G.E_MANAGER:add_event(Event({
+			trigger = "after", 
+			delay = 0.5, 
+			func = function()
+				local count = math.max(#G.hand.highlighted, G.hand.config.card_limit - #G.hand.cards + #G.hand.highlighted)
+				for i=1, count do
+					local percent = 1.15 - (i - 0.999) / (count - 0.998) * 0.3
+					G.E_MANAGER:add_event(Event({
+						trigger = "after", 
+						delay = 0.2, 
+						func = function()
+							play_sound('card1', percent)
+							G.hand:draw_card_from(G.deck, false, false)
+							return true
+						end
+					}))
+				end
+				return true
+			end
+		}))
+	end,
+	can_use = function (self, card)
+		return G.hand and #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.max_cards
+	end
 }
 
 -- #endregion

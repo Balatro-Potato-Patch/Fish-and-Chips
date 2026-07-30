@@ -120,6 +120,18 @@ return {
                     ""
                 }
             },
+            fish_fac_hammerjaw = {
+                name = {"Hammerjaw"},
+                text = {
+                    "Use this {C:attention}Fish{} to",
+                    "{C:attention}destroy{} up to {C:attention}#1#{}",
+                    "selected cards,",
+                    "and then {C:attention}redraw"
+                },
+                flavor = {
+                    "Stop! Hammer time."
+                }
+            },
         },
     },
     misc = {
