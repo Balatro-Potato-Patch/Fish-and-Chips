@@ -85,3 +85,42 @@ FishAndChips.Fish {
 		
 	end,
 }
+
+-- Blooper
+FishAndChips.Fish {
+	key = "blooper",
+	atlas = "aure-allu_fish",
+	pos = { x = 2, y = 0 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = {  },
+	config = {
+		extra = {
+			face_down_x_chips = 0.1,
+		},
+	},
+	environments = {
+		
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+		if context.stay_flipped and context.from_area == G.deck and context.to_area == G.hand and G.GAME.current_round.hands_played == 0 then
+            return {
+                stay_flipped = true
+            }
+        elseif context.joker_main then 
+            local total = 1
+            for _, pcard in ipairs(G.hand.cards) do
+                if pcard.facing == "back" then
+                    total = total + card.ability.extra.face_down_x_chips
+                end
+            end
+            return {
+                x_chips = total
+            }
+        end
+	end,
+}
