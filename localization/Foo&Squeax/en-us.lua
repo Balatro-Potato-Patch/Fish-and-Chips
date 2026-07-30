@@ -76,6 +76,18 @@ return {
 						"if it's pet too much"
 					}
 				}
+			},
+			fish_fac_fas_john_cod = {
+				name = "John Cod",
+				flavour = {
+					"he's john cod"
+				},
+				text = {
+					"Use to instantly {C:attention}win",
+					"current non-boss blind",
+					"or gain {X:purple,C:white}#1#%{} of",
+					"required chips"
+				}
 			}
 		},
 		PotatoPatch = {

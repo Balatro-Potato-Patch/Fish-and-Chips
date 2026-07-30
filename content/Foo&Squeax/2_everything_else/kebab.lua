@@ -231,6 +231,7 @@ FishAndChips.Fish{
 			fish = 0
 		}
 	},
+	attributes = {"copy", "useable", "food"},
 	ppu_coder = {"Foo54"},
 	environments = {
 		soup = 1
