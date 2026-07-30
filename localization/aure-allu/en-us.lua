@@ -132,6 +132,16 @@ return {
                     "Stop! Hammer time."
                 }
             },
+            fish_fac_blue_garden_gnome = {
+                name = {"Blue Garden Gnome"},
+                text = {
+                    "{C:white,X:money}X#1#{C:money} Treasure{} rewards",
+                    "and catch speed"                
+                },
+                flavor = {
+                    "Hooh!"
+                }
+            },
         },
     },
     misc = {

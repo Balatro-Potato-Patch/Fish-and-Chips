@@ -456,7 +456,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "chips", "chance", },
+	attributes = { "chips", "chance", "food"  },
 	config = {
 		extra = {
 			chips = 61,
@@ -505,7 +505,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "x_chips", "chance", },
+	attributes = { "x_chips", "chance", "food" },
 	config = {
 		extra = {
 			x_chips = 3,
@@ -615,6 +615,37 @@ FishAndChips.Fish {
 	can_use = function (self, card)
 		return G.hand and #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.max_cards
 	end
+}
+
+-- Blue Garden Gnome
+FishAndChips.Fish {
+	key = "blue_garden_gnome",
+	atlas = "aure-allu_fish",
+	pos = { x = 1, y = 2 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = {  },
+	config = {
+		extra = {
+			x_treasure = 1.5
+		},
+	},
+	environments = {
+		garden = 10,
+		city_river = 2,
+		styx = 1
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.x_treasure } }
+	end,
+	calculate = function(self, card, context)
+		if context.fishing_profile then
+			context.fishing_profile.treasure_gain = context.fishing_profile.treasure_gain * card.ability.extra.x_treasure
+		elseif context.fac_treasure_reward then
+			context.fac_treasure_reward = math.floor(context.fac_treasure_reward * card.ability.extra.x_treasure)
+		end
+	end,
 }
 
 -- #endregion
