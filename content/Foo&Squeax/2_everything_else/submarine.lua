@@ -12,7 +12,7 @@ SMODS.Shader{
 	path = FishAndChips.FooSqueax.file_path .. "water_card.fs",
 	send_vars = function (sprite, card)
 		return {
-			water_height = G.GAME.fac_FooSqueax.bucket.water_height
+			water_height = G.GAME.fac_FooSqueax and G.GAME.fac_FooSqueax.bucket.water_height or 0.1
 		}
 	end
 }
@@ -77,7 +77,7 @@ FishAndChips.Fish{
 		return true
 	end,
 	update = function (self, card, dt)
-		if G.GAME.fac_FooSqueax.bucket.on then
+		if G.GAME.fac_FooSqueax and G.GAME.fac_FooSqueax.bucket.on then
 			G.fac_fishing_bucket_top.definition.nodes[1].config.shader = "fac_fas_water"
 			G.fac_fishing_bucket_bottom.definition.nodes[1].config.shader = "fac_fas_water"
 		end

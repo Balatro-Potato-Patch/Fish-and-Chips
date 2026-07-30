@@ -37,6 +37,26 @@ return {
 						"Use to submerge/unsubmerge"
 					}
 				}
+			},
+			fish_fac_fas_chimera = {
+				name = "Water Chimera",
+				flavour = {
+					"Often mistaken for",
+					"birds, bugs, drugs, drills",
+					"and baguettes (somehow???)"
+				},
+				text = {
+					{
+						"{C:attention}#1#{} are {X:attention,C:white}#2#X{}",
+						"more likely to appear"
+					},
+					{
+						"This Fish consumes",
+						"caught {C:attention}Food{} Fish",
+						"and gains {X:mult,C:white}X#3#{} Mult",
+						"{C:inactive}[Currently {X:mult,C:white}X#4#{C:inactive} Mult]"
+					}
+				}
 			}
 		},
 		PotatoPatch = {
