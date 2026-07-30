@@ -41,7 +41,7 @@ FishAndChips.Fish {
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.xmult, "#" } }
+		return { vars = { card.ability.extra.xmult, } }
 	end,
 	calculate = function(self, card, context)
         if context.fac_end_fishing and context.perfect then
