@@ -154,7 +154,7 @@ FishAndChips.Fish {
 --end inscryption
 --garfield phone
 FishAndChips.Fish {
-	key = "nxkooli_ins_more_fish",
+	key = "nxkooli_ins_garfield_fish",
 	atlas = "fish",
 	pos = { x = 2, y = 0 },
 	weight = 5,
@@ -164,23 +164,25 @@ FishAndChips.Fish {
 	attributes = { "generation", "mult" },
 	config = {
 		extra = {
-
+			sand_dollars = 1,
+			sand_dollars_perf = 2,
 		}
 	},
 	environments = {
 		city_river = 5,
-		pier = 10
+		chocolate_river = 10,
+		soup = 10,
 	},
 
 	loc_vars = function(self, info_queue, card)
 		return { vars = { 
-
+			card.ability.extra.sand_dollars, card.ability.extra.sand_dollars_perf
 		 } }
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main then 
+		if context.fac_end_fishing then 
 			return { 
-
+				sand_dollars = (context.perfect and card.ability.extra.sand_dollars_perf) or card.ability.extra.sand_dollars
 		 	} 
 		end
 	end,

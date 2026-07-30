@@ -63,6 +63,24 @@ return{
                     "in the depths of Brittany's waters."
                 }
             },
+            fish_fac_nxkooli_garfield_fish = {
+                name = {
+                    "Spotted Gar-f",
+                },
+                text = {
+                    {
+                        "After catching fish",
+                        "obtain {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{}",
+                        "or {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} if it's a",
+                        "{C:dark_edition}perfect catch"
+                    }
+                },
+                flavor = {
+                    "I can\'t be underwater, I\'m a catç",
+                    "Wait no, I\'m a fish!",
+                    "Wait no, I\'m a catfish!",
+                }
+            },
         },
         PotatoPatch = {
             PotatoPatchDev_Nxkoo = {
