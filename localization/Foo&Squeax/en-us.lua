@@ -88,9 +88,39 @@ return {
 					"or gain {X:purple,C:white}#1#%{} of",
 					"required chips"
 				}
+			},
+			fish_fac_fas_can_of_wormholes = {
+				name = "Can of Wormholes",
+				flavour = {
+					"flavourful text"
+				},
+				text = {
+					{
+						"This Fish gains {X:mult,C:white}X#1#{} Mult when a Fish made by {C:attention}#2#{} is caught",
+						"{C:inactive}[Currently {X:mult,C:white}X#3#{C:inactive} Mult]   {C:inactive}[Target changes every round]"
+					},
+					{
+						"Use this Fish to convert it into {C:attention}45#{} bait per {C:attention}#1# {X:mult,C:white}XMult{}"
+					}
+				}
 			}
 		},
 		PotatoPatch = {
+			fac_fas_dev = {
+				name = "Developer"
+			},
+			PotatoPatchDev_Mack = {
+				name = "Mack",
+				text = {
+					"why don't I have an entry ):"
+				}
+			},
+			PotatoPatchDev_Snapper = {
+				name = "Snapper",
+				text = {
+					"why don't I have an entry ):"
+				}
+			},
 			PotatoPatchDev_Foo54 = {
 				name = "Foo54",
 				text = {

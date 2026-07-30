@@ -17,21 +17,6 @@ SMODS.Shader{
 	end
 }
 
-local fishandchips_mod_reset_game_globals_ref = FishAndChips.mod.reset_game_globals
----@diagnostic disable-next-line: duplicate-set-field
-function FishAndChips.mod.reset_game_globals (run_start)
----@diagnostic disable-next-line: need-check-nil
-	fishandchips_mod_reset_game_globals_ref(run_start)
-	if run_start then
-		G.GAME.fac_FooSqueax = {
-			bucket = {
-				on = false,
-				water_height = 1
-			}
-		}
-	end
-end
-
 function FishAndChips.FooSqueax.toggle_bucket_shader()
 	if not FishAndChips then return end
 	G.GAME.fac_FooSqueax.bucket.on = not G.GAME.fac_FooSqueax.bucket.on

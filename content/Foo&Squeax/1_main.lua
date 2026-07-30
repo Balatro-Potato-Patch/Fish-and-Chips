@@ -42,3 +42,20 @@ PotatoPatchUtils.Developer{
 
 FishAndChips.mod.optional_features = FishAndChips.mod.optional_features or {}
 FishAndChips.mod.optional_features.retrigger_joker = true
+
+local fishandchips_mod_reset_game_globals_ref = FishAndChips.mod.reset_game_globals
+---@diagnostic disable-next-line: duplicate-set-field
+function FishAndChips.mod.reset_game_globals (run_start)
+---@diagnostic disable-next-line: need-check-nil
+	fishandchips_mod_reset_game_globals_ref(run_start)
+	if run_start then
+		G.GAME.fac_FooSqueax = {
+			bucket = {
+				on = false,
+				water_height = 1
+			},
+			wormholes = {}
+		}
+	end
+	G.GAME.fac_FooSqueax.wormholes.target = pseudorandom_element(PotatoPatchUtils.Developers).name
+end
