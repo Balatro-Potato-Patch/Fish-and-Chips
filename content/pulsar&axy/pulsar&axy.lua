@@ -61,4 +61,40 @@ FishAndChips.Fish {
 	end,
 }
 
+FishAndChips.Fish {
+	key = "heatshield",
+	weight = 10,
+	atlas = "pulsarfish",
+	pos = { x = 1, y = 0 },
+	ppu_artist = { "Pulsar" },
+	ppu_coder = { "Axy" },
+	attributes = { "economy" },
+	environments = {
+		soup = 1,
+		backroom = 0.5
+	},
+	blueprint_compat = true,
+	config = {
+		extra = {
+			xmult = 1,
+            xmult_gain = 0.5
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult, } }
+	end,
+	calculate = function(self, card, context)
+        if context.using_consumeable and context.consumeable.set == 'Planet' then
+            -- 1 Free Location Reroll
+            print("Planeted")
+        end
+
+		if context.joker_main then
+			return {
+				xmult = card.ability.extra.xmult
+			}
+		end
+	end,
+}
+
 --#endregion
