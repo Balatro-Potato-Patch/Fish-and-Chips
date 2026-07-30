@@ -1,27 +1,57 @@
+PotatoPatchUtils.Developer({
+	name = 'Pulsar',
+	atlas = 'fac_cards',
+	colour = G.C.YELLOW,
+	fac_partner = 'Axy' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+})
+
+PotatoPatchUtils.Developer({
+	name = 'Axy',
+	atlas = 'fac_cards',
+	pos = {x = 1, y = 0},
+	colour = G.C.YELLOW,
+	fac_partner = 'Pulsar'
+})
+
+SMODS.Atlas({
+	key = "pulsarfish", -- Please include your name/team name in your atlas keys
+	path = "pulsar&axy/feesh.png",
+	px = 71,
+	py = 95,
+})
+
 --#region Fish
 
 FishAndChips.Fish {
-	key = "cod",
-	atlas = "fish",
-	pos = { x = 3, y = 0 },
+	key = "videogame",
 	weight = 10,
-	ppu_coder = { "Mack" },
-	ppu_artist = { "GhostSalt" },
-	attributes = { "chips" },
+	atlas = "pulsarfish",
+	pos = { x = 0, y = 0 },
+	ppu_artist = { "Pulsar" },
+	ppu_coder = { "Axy" },
+	attributes = { "xmult" },
+	environments = {
+		soup = 1,
+		backroom = 0.5
+	},
+	blueprint_compat = true,
 	config = {
 		extra = {
-			chips = 30
+			xmult = 1,
 		}
 	},
-	environments = {
-		pier = 10,
-		city_river = 2.5
-	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips } }
+		return { vars = { card.ability.extra.xmult, "#" } }
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main then return { chips = card.ability.extra.chips } end
+        if context.fac_end_fishing and context.perfect then
+            card.ability.extra.xmult = card.ability.extra.xmult + 0.5
+        end
+		if context.joker_main then
+			return {
+				xmult = card.ability.extra.xmult
+			}
+		end
 	end,
 }
 
