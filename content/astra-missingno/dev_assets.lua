@@ -33,3 +33,8 @@ SMODS.Sound {
 	key = 'am_jerry_chips',
 	path = 'astra-missingno/am_jerry_chips.ogg'
 }
+
+SMODS.Sound {
+	key = 'am_chomp',
+	path = 'astra-missingno/am_chomp.ogg'
+}

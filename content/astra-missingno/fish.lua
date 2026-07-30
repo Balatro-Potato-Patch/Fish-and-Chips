@@ -348,7 +348,9 @@ FishAndChips.Fish {
                     scalar_factor = #cards_to_destroy,
                     scaling_message = {
                         message = localize('k_val_up'),
-                        colour = FishAndChips.C.SAND_DOLLAR
+                        colour = FishAndChips.C.SAND_DOLLAR,
+                        sound = 'fac_am_chomp',
+                        pitch = 1
                     }
                 })
                 card:set_cost()
@@ -522,6 +524,12 @@ FishAndChips.Fish {
                     ref_value = "xmult",
                     scalar_value = "gain",
                     scalar_factor = #cards_to_destroy,
+                    scaling_message = {
+                        message = localize{type='variable',key='a_xmult',vars={ stg.xmult + (stg.gain * #cards_to_destroy)}},
+                        colour = G.C.FILTER,
+                        sound = 'fac_am_chomp',
+                        pitch = 1,
+                    }
                 })
             end
         end
