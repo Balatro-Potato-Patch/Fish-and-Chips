@@ -277,6 +277,16 @@ FishAndChips.Fish{
 					}
 					card.ability.immutable.fish = card.ability.immutable.fish + 1
 					FishAndChips.FooSqueax.link_kebab(card, _card)
+
+					-- less evil value manip
+					for key, value in pairs(_card.ability) do
+						pcall(function() _card.ability[key] = value / 2 end)
+					end
+					if _card.ability.extra and type(_card.ability.extra) == "table" then
+						for key, value in pairs(_card.ability.extra) do
+							pcall(function() _card.ability.extra[key] = value / 2 end)
+						end
+					end
 				end
 				if _card == card then found = true end
 			end
@@ -293,5 +303,31 @@ FishAndChips.Fish{
 				end
 			end
 		end
-	end
+	end,
+	calculate = function(self, card, context)
+		local effects = {}
+		local retrigger = false
+		for _, _card in ipairs(G.fac_fas_fish_kebab_area.cards) do
+			if _card.ability.fac_fas_kebab.id == card.ability.immutable.id and _card.config.center.key ~= "fish_fac_fas_fish_kebab_top" then
+				local eff, ret = _card:calculate_joker(context)
+				effects[#effects+1] = eff
+				retrigger = retrigger or ret
+			end
+		end
+		if context.end_of_round and not context.blueprint then
+			local highest = {ability = {fac_fas_kebab = {order = -1}}}
+			for _, _card in ipairs(G.fac_fas_fish_kebab_area.cards) do
+				if _card.ability.fac_fas_kebab.id == card.ability.immutable.id and _card.config.center.key ~= "fish_fac_fas_fish_kebab_top" then
+					if _card.ability.fac_fas_kebab.order > highest.ability.fac_fas_kebab.order then
+						highest = _card
+					end
+				end
+			end
+			if highest.is then
+				highest:start_dissolve()
+				SMODS.calculate_effect({message = localize("k_fac_fas_yum")}, highest)
+			end
+		end
+		return SMODS.merge_effects(effects), retrigger or nil
+	end,
 }
