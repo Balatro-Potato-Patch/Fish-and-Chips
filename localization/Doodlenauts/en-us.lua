@@ -12,6 +12,17 @@ return {
                     "Wow, so cool!",
                 }
             },
+            fish_fac_bigbasswheel = {
+                name = 'Big Bass Wheel',
+                text = {
+                    '{C:green}#1# in #2#{} chance to give',
+                    '{C:blue}Foil{} or {C:dark_edition}Holographic{} edition',
+                    'to a random Fish'
+                },
+                flavour = {
+                    'Take it for a spin!'
+                }
+            }
         },
     }
 }
