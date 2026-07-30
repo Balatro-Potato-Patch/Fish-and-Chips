@@ -1,6 +1,6 @@
 SMODS.Atlas {
     key = "blamperer_credits",
-    path = "blamperer/ts me.png",
+    path = "blamperer/ts_me.png",
     px = 71,
     py = 95
 }
@@ -14,7 +14,7 @@ SMODS.Atlas {
 
 PotatoPatchUtils.Developer {
     name = "blamperer",
-    atlas = "blamperer_credits",
+    atlas = "fac_blamperer_credits",
     pos = { x = 0, y = 0 },
     colour = G.C.BLUE,
     loc = true,
@@ -24,7 +24,7 @@ PotatoPatchUtils.Developer {
 }
 
 -- Hoosks
-local rgg_ref = FishAndChips.mod.reset_game_globals()
+local rgg_ref = FishAndChips.mod.reset_game_globals
 function FishAndChips.mod.reset_game_globals (run_start)
     rgg_ref(run_start)
     if run_start then
