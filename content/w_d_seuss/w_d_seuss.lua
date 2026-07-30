@@ -36,7 +36,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		calm_pond = 10,
+		calm_pond = 5,
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
@@ -65,7 +65,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		calm_pond = 10,
+		calm_pond = 5,
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
@@ -93,7 +93,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		calm_pond = 10,
+		calm_pond = 5,
 	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
@@ -128,7 +128,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		calm_pond = 10,
+		calm_pond = 5,
 	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
@@ -227,4 +227,64 @@ FishAndChips.Fish {
 			}))
 		end
 	end,
+}
+
+loc_colour('red')
+G.ARGS.LOC_COLOURS['spalmon_pink'] = HEX("ffaec9")
+G.ARGS.LOC_COLOURS['spalmon_gold'] = HEX("fff200")
+
+SMODS.Sound{
+    key = "spamtonf1",
+    path = "w_d_seuss/spamtonf1.ogg",
+}
+
+local keypress = love.keypressed
+function love.keypressed(key)
+    if key == "f1" then
+        if G and G.jokers and G.jokers.cards and not G.SETTINGS.paused then
+            SMODS.calculate_context({ key_press_f1 = true })
+        end
+    end
+    return (keypress(key))
+end
+
+FishAndChips.Fish {
+	key = "spalmon",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 0, y = 1 },
+	weight = 1000,
+	ppu_coder = { "Moby Nick" },
+	ppu_artist = { "Moby Nick" },
+	attributes = { },
+	config = {
+		extra = {
+			f1 = true
+		}
+	},
+	environments = {
+		wormhole = 5,
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+		if context.key_press_f1 and card.ability.extra.f1 == true and G.STATE == G.STATES.FAC_FISHING then
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.4,
+				func = function()
+					play_sound('fac_spamtonf1')
+					card.ability.extra.f1 = false
+					local bait = SMODS.add_card({ set = 'fac_Bait', area = G.discard })
+					FishAndChips.add_bait_to_inventory(bait.config.center_key)
+					card:juice_up(0.3, 0.5)
+					return true
+				end
+			}))
+			return {
+                message = "[[BIG TROUT]]",
+            }
+		end
+	end
 }

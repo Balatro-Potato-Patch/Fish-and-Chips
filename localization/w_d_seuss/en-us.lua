@@ -60,6 +60,18 @@ return {
                     "even in its absence."
                 }
             },
+            fish_fac_spalmon = {
+                name = "[[{C:spalmon_pink}SPA{}L{C:spalmon_gold}MON{}]]",
+                text = {
+                    "{s:2}[Press F1 For] HELP",
+                    "{C:inactive}at a [[phishing]] [site]"
+                },
+                flavour = {
+                    "ARE {s:0.5,C:hearts}YOU{} GETTING ALL THIS {s:1.5,C:white}[Mack]{}!?",
+                    "{s:0.7}I'M FINALLY {s:1.3}I'M FINALLY{} GONNA",
+                    "BE A {s:2,C:spalmon_pink}BIG {s:2,C:spalmon_gold}TROUT{s:2}!!!{}"
+                }
+            },
         },
         Other = {
         },
