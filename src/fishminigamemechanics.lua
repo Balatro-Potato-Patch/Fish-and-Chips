@@ -81,16 +81,26 @@ local function fac_profile_from_center(center)
         treasure_gain = rod.treasure_gain == nil and t.treasure_gain or rod.treasure_gain,
         catch_gain = rod.catch_gain == nil and t.catch_gain or rod.catch_gain,
         catch_loss = rod.catch_loss == nil and t.catch_loss or rod.catch_loss,
-        vel_limit = rod.vel_limit == nil and t.vel_limit or rod.vel_limit,
-        impulse_min = center.impulse_min == nil and t.impulse_min or rod.impulse_min,
-        impulse_max = center.impulse_max == nil and t.impulse_max or rod.impulse_max,
-        decision_min = center.decision_min == nil and t.decision_min or rod.decision_min,
-        decision_max = center.decision_max == nil and t.decision_max or rod.decision_max,
-        colour = center.colour == nil and t.colour or rod.colour,
+        vel_limit = (center.vel_limit or t.vel_limit) * (rod.vel_limit or 1),
+        impulse_min = (center.impulse_min or t.impulse_min) * (rod.impulse_min or 1),
+        impulse_max = (center.impulse_max or t.impulse_max) * (rod.impulse_max or 1),
+        decision_min = (center.decision_min or t.decision_min) * (rod.decision_min or 1),
+        decision_max = (center.decision_max or t.decision_max) * (rod.decision_max or 1),
+        colour = center.colour or rod.colour or t.colour,
         rod = rod,
         rod_key = key,
         center = center
     }
+end
+
+function FishAndChips.modify_fishing_profile(profile)
+    local context = {
+        fac_modify_fishing_profile = true,
+        fishing_profile = profile,
+        hooked_fish = profile.center,
+    }
+    SMODS.calculate_context(context)
+    return context.fishing_profile or profile
 end
 
 local function fac_pick_profile()
@@ -631,6 +641,7 @@ local function fac_begin_hooking_round()
     if not profile then
         return false
     end
+    profile = FishAndChips.modify_fishing_profile(profile)
     state.profile = profile
     state.meter = 0
     state.meter_primed = false
