@@ -49,7 +49,7 @@ FishAndChips.Fish {
     key = "am_king",
     atlas = "astra-missingno-fish",
     pos = { x = 1, y = 0 },
-    weight = 3,
+    weight = 1,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
     attributes = { "xmult", "rank", "king" },
@@ -59,8 +59,8 @@ FishAndChips.Fish {
         }
     },
     environments = {
-        calm_pond = 3,
-        garden = 3
+        calm_pond = 1,
+        garden = 1
     },
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -252,7 +252,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         local stg = card.ability.extra
 
-        if context.repetitio and context.cardarea == G.play and not tonumber(localize(context.other_card.base.value, 'ranks')) then
+        if context.repetition and context.cardarea == G.play and not tonumber(localize(context.other_card.base.value, 'ranks')) then
             return {
                 repetitions = stg.retriggers
             }
@@ -305,7 +305,7 @@ FishAndChips.Fish {
     weight = 9,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
-    attributes = { "economy", "destroy_card", "rank", "diamonds" },
+    attributes = { "economy", "destroy_card", "suit", "diamonds" },
     blueprint_compat = false,
     config = {
         extra = {
@@ -659,5 +659,25 @@ FishAndChips.Fish {
         local stg = card.ability.extra
     
         SMODS.change_free_rerolls(-stg.rerolls)
+    end,
+}
+
+FishAndChips.Fish {
+    key = "chocolat",
+    atlas = "astra-missingno-fish",
+    pos = { x = 2, y = 2 },
+    weight = 3,
+    ppu_coder = { "theAstra" },
+    ppu_artist = { "MissingNumber" },
+    attributes = { "" },
+    config = {
+       
+    },
+    environments = {
+       
+    },
+    loc_vars = function(self, info_queue, card)
+       local stg = card.ability.extra
+       
     end,
 }
