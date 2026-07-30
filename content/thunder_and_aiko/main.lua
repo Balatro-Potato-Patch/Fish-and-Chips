@@ -139,4 +139,14 @@ FishAndChips.Fish({
             }
         end
 	end,
+	on_catch = function(self, card)
+		delay(0.8 * G.SETTINGS.GAMESPEED)
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				play_sound("fac_moai_catch", nil, 0.8)
+				return true
+			end
+		}))
+		delay(5.2 * G.SETTINGS.GAMESPEED)
+	end
 })
