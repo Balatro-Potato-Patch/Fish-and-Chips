@@ -20,6 +20,23 @@ return {
 						"Use to eat all skewered fish"
 					}
 				}
+			},
+			fish_fac_fas_submarine = {
+				name = 'Submarine',
+				flavour = {
+					"flavourful text"
+				},
+				text = {
+					{
+						"While Submerged:",
+						"All {C:attention}Jokers{} are debuffed",
+						"All Fish retrigger {C:attention}#1#{} times",
+						"{C:inactive}[#2#]"
+					},
+					{
+						"Use to submerge/unsubmerge"
+					}
+				}
 			}
 		},
 		PotatoPatch = {
@@ -35,6 +52,15 @@ return {
 					"temp"
 				}
 			}
+		}
+	},
+	misc = {
+		dictionary = {
+			k_fac_fas_submerged = "Submerged!",
+			k_fac_fas_unsubmerged = "Unsubmerged!",
+			k_fac_fas_resurface = "Going Up!",
+			k_fac_fas_dive = "Dive! Dive! Dive!",
+			k_fac_fas_yum = "Yum!"
 		}
 	}
 }

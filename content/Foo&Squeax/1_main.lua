@@ -1,5 +1,9 @@
 FishAndChips.FooSqueax = {
-	file_path = "Foo&Squeax/"
+	file_path = "Foo&Squeax/",
+	bucket = {
+		on = false,
+		water_height = 1
+	}
 }
 
 SMODS.Atlas{
@@ -25,3 +29,5 @@ PotatoPatchUtils.Developer{
 	loc = true
 }
 
+FishAndChips.mod.optional_features = FishAndChips.mod.optional_features or {}
+FishAndChips.mod.optional_features.retrigger_joker = true

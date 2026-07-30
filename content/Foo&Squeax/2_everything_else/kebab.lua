@@ -52,39 +52,41 @@ function FishAndChips.mod.custom_card_areas(game)
 		for ii, card in ipairs(self.cards) do
 			if card.ability.fac_fas_kebab.order ~= 1000 then
 				local b = base[card.ability.fac_fas_kebab.id]
-				local length = tally[card.ability.fac_fas_kebab.id]
-				local w = b.T.w * 0.5
-				local h = b.T.h * 0.5
-				local x_offset = b.T.w * 0.3
-				local y_offset = b.T.h * 0.3
-				local i = ii - 1
-				card.T.x = b.T.x - 				 b.T.w / 2 / scale + x_offset + w * i / length
-				card.T.y = b.T.y + b.T.h - b.T.h / 2 / scale - y_offset - h * i / length
-				card.T.w = b.T.w / scale
-				card.T.h = b.T.h / scale
-				card.T.r = b.T.r
+				if b then
+					local length = tally[card.ability.fac_fas_kebab.id]
+					local w = b.T.w * 0.5
+					local h = b.T.h * 0.5
+					local x_offset = b.T.w * 0.3
+					local y_offset = b.T.h * 0.3
+					local i = ii - 1
+					card.T.x = b.T.x - 				 b.T.w / 2 / scale + x_offset + w * i / length
+					card.T.y = b.T.y + b.T.h - b.T.h / 2 / scale - y_offset - h * i / length
+					card.T.w = b.T.w / scale
+					card.T.h = b.T.h / scale
+					card.T.r = b.T.r
 
-				--[[
-				
-				
-				local b = base[card.ability.fac_fas_kebab.id]
-				local length = tally[card.ability.fac_fas_kebab.id]
-				local i = ii - 1
-				
-				local x = -b.T.w / 2 + card.T.w / 2 / scale + x_offset + w * i / length
-				local y =  b.T.h / 2 - card.T.h / 2 / scale - y_offset - h * i / length
-				
-				local r = b.T.r + math.atan2(G.CARD_H, G.CARD_W)
+					--[[
+					
+					
+					local b = base[card.ability.fac_fas_kebab.id]
+					local length = tally[card.ability.fac_fas_kebab.id]
+					local i = ii - 1
+					
+					local x = -b.T.w / 2 + card.T.w / 2 / scale + x_offset + w * i / length
+					local y =  b.T.h / 2 - card.T.h / 2 / scale - y_offset - h * i / length
+					
+					local r = b.T.r + math.atan2(G.CARD_H, G.CARD_W)
 
-				card.T.x = x * math.cos(r) - y * math.sin(r) + b.T.x
-				card.T.y = x * math.sin(r) + y * math.cos(r) + b.T.y
+					card.T.x = x * math.cos(r) - y * math.sin(r) + b.T.x
+					card.T.y = x * math.sin(r) + y * math.cos(r) + b.T.y
 
-				card.T.r = b.T.r
-				card.T.w = G.CARD_W / scale
-				card.T.h = G.CARD_H / scale
-				
-				
-				]]
+					card.T.r = b.T.r
+					card.T.w = G.CARD_W / scale
+					card.T.h = G.CARD_H / scale
+					
+					
+					]]
+				end
 			end
 		end
 	end
@@ -275,6 +277,16 @@ FishAndChips.Fish{
 					}
 					card.ability.immutable.fish = card.ability.immutable.fish + 1
 					FishAndChips.FooSqueax.link_kebab(card, _card)
+
+					-- less evil value manip
+					for key, value in pairs(_card.ability) do
+						pcall(function() _card.ability[key] = value / 2 end)
+					end
+					if _card.ability.extra and type(_card.ability.extra) == "table" then
+						for key, value in pairs(_card.ability.extra) do
+							pcall(function() _card.ability.extra[key] = value / 2 end)
+						end
+					end
 				end
 				if _card == card then found = true end
 			end
@@ -291,5 +303,31 @@ FishAndChips.Fish{
 				end
 			end
 		end
-	end
+	end,
+	calculate = function(self, card, context)
+		local effects = {}
+		local retrigger = false
+		for _, _card in ipairs(G.fac_fas_fish_kebab_area.cards) do
+			if _card.ability.fac_fas_kebab.id == card.ability.immutable.id and _card.config.center.key ~= "fish_fac_fas_fish_kebab_top" then
+				local eff, ret = _card:calculate_joker(context)
+				effects[#effects+1] = eff
+				retrigger = retrigger or ret
+			end
+		end
+		if context.end_of_round and context.main_eval and not context.blueprint then
+			local highest = {ability = {fac_fas_kebab = {order = -1}}}
+			for _, _card in ipairs(G.fac_fas_fish_kebab_area.cards) do
+				if _card.ability.fac_fas_kebab.id == card.ability.immutable.id and _card.config.center.key ~= "fish_fac_fas_fish_kebab_top" then
+					if _card.ability.fac_fas_kebab.order > highest.ability.fac_fas_kebab.order then
+						highest = _card
+					end
+				end
+			end
+			if highest.is then
+				highest:start_dissolve()
+				SMODS.calculate_effect({message = localize("k_fac_fas_yum")}, highest)
+			end
+		end
+		return SMODS.merge_effects(effects), retrigger or nil
+	end,
 }
