@@ -200,9 +200,8 @@ FishAndChips.Fish {
 	},
 	environments = {
 		calm_pond = 10,
-		garden = 10,
-		aquifer = 7,
-		chocolate_river = 3,
+		garden = 9,
+		aquifer = 3,
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
@@ -242,7 +241,7 @@ FishAndChips.Fish {
 	attributes = { "mult" },
 	config = {
 		extra = {
-			mult_per_average_round = 13
+			mult_per_average_round = 9
 		},
 	},
 	environments = {
@@ -430,6 +429,104 @@ FishAndChips.Fish {
 	can_use = function (self, card)
 		return next(SMODS.Edition:get_edition_cards({cards = filter_list(G.fac_fish_area.cards, {[card] = true})}, true))
 	end
+}
+
+-- Gouramichel
+FishAndChips.Fish {
+	key = "gouramichel",
+	atlas = "aure-allu_fish",
+	pos = { x = 3, y = 1 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "chips" },
+	config = {
+		extra = {
+			chips = 61,
+			michel_odds = 5
+		},
+	},
+	environments = {
+		aquifer = 8,
+		chocolate_river = 7,
+		soup = 10,
+	},
+	loc_vars = function(self, info_queue, card)
+		local numerator_michel, denominator_michel = SMODS.get_probability_vars(card, 1, card.ability.extra.michel_odds, "fac_aure-allu_gouramichel")
+		return { vars = { zero_signed(card.ability.extra.chips), numerator_michel, denominator_michel } }
+	end,
+	calculate = function(self, card, context)
+		-- Thanks once more, Vanillaremade !!
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+            if SMODS.pseudorandom_probability(card, 'fac_aure-allu_gouramichel', 1, card.ability.extra.michel_odds) then
+                SMODS.destroy_cards(card, nil, nil, true)
+                G.GAME.pool_flags.fac_aure_allu_gouramichel = true
+                return {
+                    message = localize('k_extinct_ex')
+                }
+            else
+                return {
+                    message = localize('k_safe_ex')
+                }
+            end
+		elseif context.joker_main then
+			return {
+				chips = card.ability.extra.chips
+			}
+		end
+	end,
+	in_pool = function(self, args)
+        return not G.GAME.pool_flags.fac_aure_allu_gouramichel
+    end
+}
+
+-- Cavenfish
+FishAndChips.Fish {
+	key = "cavenfish",
+	atlas = "aure-allu_fish",
+	pos = { x = 4, y = 1 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "x_chips" },
+	config = {
+		extra = {
+			x_chips = 3,
+			cavenfish_odds = 914
+		},
+	},
+	environments = {
+		aquifer = 8,
+		chocolate_river = 7,
+		soup = 10,
+		wormhole = 4,
+	},
+	loc_vars = function(self, info_queue, card)
+		local numerator_cavenfish, denominator_cavenfish = SMODS.get_probability_vars(card, 1, card.ability.extra.cavenfish_odds, "fac_aure-allu_cavenfish")
+		return { vars = { card.ability.extra.x_chips, numerator_cavenfish, denominator_cavenfish } }
+	end,
+	calculate = function(self, card, context)
+		-- Thanks once more, Vanillaremade !!
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+            if SMODS.pseudorandom_probability(card, 'fac_aure-allu_cavenfish', 1, card.ability.extra.cavenfish_odds) then
+                SMODS.destroy_cards(card, nil, nil, true)
+                return {
+                    message = localize('k_extinct_ex')
+                }
+            else
+                return {
+                    message = localize('k_safe_ex')
+                }
+            end
+		elseif context.joker_main then
+			return {
+				x_chips = card.ability.extra.x_chips
+			}
+		end
+	end,
+	in_pool = function(self, args)
+        return G.GAME.pool_flags.fac_aure_allu_gouramichel
+    end
 }
 
 -- #endregion

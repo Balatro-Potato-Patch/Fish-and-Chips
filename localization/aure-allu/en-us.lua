@@ -85,6 +85,30 @@ return {
                     "Big money no swamp-eels"
                 }
             },
+            fish_fac_gouramichel = {
+                name = {"Gouramichel"},
+                text = {
+                    "{C:chips}#1#{} Chips", 
+                    "{C:green}#2# in #3#{} chance",
+                    "this {C:attention}Fish{} dips",
+                    "at {C:attention}end of round",
+                },
+                flavor = {
+                    ""
+                }
+            },
+            fish_fac_cavenfish = {
+                name = {"Cavenfish"},
+                text = {
+                    "{X:chips,C:white}X#1#{} Chips", 
+                    "{C:green}#2# in #3#{} chance",
+                    "this {C:attention}Fish{} dips",
+                    "at {C:attention}end of round",
+                },
+                flavor = {
+                    ""
+                }
+            },
         },
     }
 }
