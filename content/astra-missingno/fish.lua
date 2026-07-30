@@ -3,7 +3,7 @@ FishAndChips.Fish {
     atlas = "astra-missingno-fish",
     pos = { x = 0, y = 0 },
     pixel_size = { w = 71, h = 72 },
-    weight = 10,
+    weight = 9,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
     attributes = { "chips" },
@@ -165,7 +165,7 @@ FishAndChips.Fish {
     key = "am_shrimp",
     atlas = "astra-missingno-fish",
     pos = { x = 3, y = 0 },
-    weight = 10,
+    weight = 9,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
     attributes = { "mult", "scaling" },
@@ -302,7 +302,7 @@ FishAndChips.Fish {
     atlas = "astra-missingno-fish",
     pos = { x = 1, y = 1 },
     pixel_size = { w = 63, h = 74 },
-    weight = 10,
+    weight = 9,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
     attributes = { "economy", "destroy_card", "rank", "diamonds" },
@@ -474,10 +474,11 @@ FishAndChips.Fish {
     atlas = "astra-missingno-fish",
     pos = { x = 0, y = 2 },
     pixel_size = { w = 61, h = 71 },
-    weight = 8,
+    weight = 7,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
     attributes = { "destroy_cards", "xmult" },
+    blueprint_compat = false,
     config = {
         extra = {
             xmult = 1,
@@ -550,6 +551,7 @@ FishAndChips.Fish {
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
     attributes = { "usable", "hand_level" },
+    blueprint_compat = false,
     config = {
         extra = {
             levels = 2,
@@ -565,20 +567,22 @@ FishAndChips.Fish {
 
         local hand = G.GAME.last_hand_played or 'High Card'
 
-        return { vars = {
-            stg.levels,
-            G.GAME.hands[hand].level,
-            localize(hand, 'poker_hands'),
-            G.GAME.hands[hand].l_mult * stg.levels,
-            G.GAME.hands[hand].l_chips * stg.levels,
-            colours = {
-                (G.GAME.hands[hand].level == 1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, G.GAME.hands[hand].level)])
+        return {
+            vars = {
+                stg.levels,
+                G.GAME.hands[hand].level,
+                localize(hand, 'poker_hands'),
+                G.GAME.hands[hand].l_mult * stg.levels,
+                G.GAME.hands[hand].l_chips * stg.levels,
+                colours = {
+                    (G.GAME.hands[hand].level == 1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, G.GAME.hands[hand].level)])
+                }
             }
-        } }
+        }
     end,
     calculate = function(self, card, context)
         local stg = card.ability.extra
-    
+
         if context.before then
             stg.last_hand = context.scoring_name
         end
@@ -588,12 +592,70 @@ FishAndChips.Fish {
     end,
     use = function(self, card)
         local stg = card.ability.extra
-        
-        SMODS.upgrade_poker_hands({hands = G.GAME.last_hand_played, level_up = stg.levels, from = card })
+
+        SMODS.upgrade_poker_hands({ hands = G.GAME.last_hand_played, level_up = stg.levels, from = card })
     end,
     set_ability = function(self, card, initial, delay_sprites)
         local stg = card.ability.extra
 
         stg.last_hand = G.GAME.last_hand_played or 'High Card'
     end
+}
+
+FishAndChips.Fish {
+    key = "am_blubby",
+    atlas = "astra-missingno-fish",
+    pos = { x = 2, y = 1 },
+    pixel_size = { w = 52, h = 54 },
+    weight = 3,
+    ppu_coder = { "theAstra" },
+    ppu_artist = { "MissingNumber" },
+    attributes = { "passive" },
+    blueprint_compat = false,
+    config = {
+        extra = {
+            rerolls = 0,
+            percent = 100
+        }
+    },
+    environments = {
+        wormhole = 3,
+    },
+    loc_vars = function(self, info_queue, card)
+        local stg = card.ability.extra
+
+        return { vars = { stg.percent, stg.rerolls } }
+    end,
+    calculate = function(self, card, context)
+        local stg = card.ability.extra
+    
+        if context.starting_shop then
+            SMODS.change_free_rerolls(stg.rerolls)
+        end
+
+        if context.ending_shop then
+            SMODS.change_free_rerolls(-stg.rerolls)
+            stg.rerolls = 0
+        end
+
+        if context.end_of_round and not context.individual and not context.repetition then
+            print(G.GAME.chips / G.GAME.blind.chips)
+            print(stg.percent / 100)
+            print(math.floor((G.GAME.chips / G.GAME.blind.chips) / (stg.percent / 100)))
+            stg.rerolls = math.floor((G.GAME.chips / G.GAME.blind.chips) / (stg.percent / 100))
+            return {
+                message = localize { type = 'variable', key = 'a_fac_am_rerolls', vars = {stg.rerolls} }
+            }
+        end
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        local stg = card.ability.extra
+    
+        SMODS.change_free_rerolls(stg.rerolls)
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        local stg = card.ability.extra
+    
+        SMODS.change_free_rerolls(-stg.rerolls)
+    end,
 }

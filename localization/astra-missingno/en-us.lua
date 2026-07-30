@@ -146,17 +146,36 @@ return {
                     "{C:chips}+#5#{} chips",}
                 },
                 flavor = {
-                    "It is said that gazing at the ",
+                    "It is said that gazing at the",
                     "dazzling scales of this fish",
                     "gives you a glimpse into",
                     "another universe"
+                }
+            },
+            fish_fac_am_blubby = {
+                name = "Blubby",
+                text = {
+                    "{C:attention}1{} free {C:green}Reroll ",
+                    "for every {C:attention}#1#%{} of score",
+                    "overshot each round",
+                    "{C:inactive,s:0.8}Currently: {C:green,s:0.8}#2# Rerolls",
+                },
+                flavor = {
+                    "It seems like this Fish came",
+                    "from a factory somewhere...",
+                    "Who knows what wonders",
+                    "are made there"
                 }
             },
         }
     },
     misc = {
         dictionary = {
-            k_fac_am_card = 'Card'
+            k_fac_am_card = 'Card',
+            k_fac_am_rerolls = 'Rerolls'
+        },
+        v_dictionary = {
+            a_fac_am_rerolls = '#1# Rerolls'
         }
     }
 }
