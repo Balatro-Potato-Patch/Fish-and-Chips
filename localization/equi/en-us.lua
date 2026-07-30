@@ -23,6 +23,20 @@ return {
                 flavor = {
                     "A Dangerous Pack of critters."
                 }
+            },
+
+            fish_fac_carpticalillusion = {
+                name = "Carptical Illusion",
+                text = {
+                    "After using {C:attention}#2#{}, create a",
+                    "random {C:spectral}Spectral{} card, then change",
+                    "the type of {C:attention}Bait{} required",
+                    "{C:inactive}(Cannot be Classic Canned){}"
+                },
+                flavor = {
+                    "Maybe a fish,",
+                    "or maybe not."
+                }
             }
         },
         PotatoPatch = {
@@ -39,4 +53,10 @@ return {
             }
         }
     },
+
+    misc = {
+        dictionary = {
+            k_fac_equi_no_room = "No Room!"
+        }
+    }
 }

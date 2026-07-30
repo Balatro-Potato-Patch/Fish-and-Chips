@@ -105,3 +105,59 @@ FishAndChips.Fish {
         end
     end
 }
+
+--Carptical Illusion
+FishAndChips.Fish {
+    key = "carpticalillusion",
+    atlas = "equi_fish",
+    pos = { x = 4, y = 0 },
+    display_size = { w = 66, h = 46 },
+    pixel_size = { w = 66, h = 46 },
+    weight = 5,
+    cost = 7,
+    blueprint_compat = true,
+    ppu_coder = { "Equi" },
+    ppu_artist = { "Equi" },
+    attributes = { "generation" },
+    config = { extra = { chosen_bait = 2 } },
+    environments = {
+        backroom = 1,
+        wormhole = 0.25
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.chosen_bait, localize{ set = "fac_Bait", type = "name_text", key = G.P_CENTER_POOLS.fac_Bait[card.ability.extra.chosen_bait].key } } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.fac_fish_hooked then
+            if G.GAME.fac_active_bait == G.P_CENTER_POOLS.fac_Bait[card.ability.extra.chosen_bait].key then
+                card.ability.extra.chosen_bait = pseudorandom("equi_carpticalillusion", 2, #G.P_CENTER_POOLS.fac_Bait)
+                if (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit) then
+                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        trigger = "before",
+                        delay = 0.0,
+                        func = (function()
+                            SMODS.add_card {
+                                set = "Spectral"
+                            }
+                            return true
+                        end)}))
+                    return {
+                        message = localize("k_plus_spectral"),
+                        colour = G.C.SPECTRAL
+                    }
+                else
+                    return {
+                        message = localize("k_fac_equi_no_room"),
+                        colour = G.C.SPECTRAL
+                    }
+                end
+            end
+        end
+    end,
+
+    set_ability = function(self, card, initial, delay_sprites)
+        card.ability.extra.chosen_bait = pseudorandom("equi_carpticalillusion", 2, #G.P_CENTER_POOLS.fac_Bait)
+    end
+}
