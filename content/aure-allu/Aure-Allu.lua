@@ -123,10 +123,8 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			refund_sand_dollars = 2,
+			refund_odds = 3,
 		},
-        immutable = {
-            refund_odds = 3,
-        }
 	},
 	environments = {
 		pier = 10,
@@ -135,10 +133,15 @@ FishAndChips.Fish {
 		garden = 7,
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { } }
+		local numerator_cheap, denominator_cheap = SMODS.get_probability_vars(card, 1, card.ability.extra.refund_odds, "fac_aure-allu_cheap_cheep")
+		return { vars = { numerator_cheap, denominator_cheap, card.ability.extra.refund_sand_dollars } }
 	end,
 	calculate = function(self, card, context)
-		
+		if context.fac_buy_bait and SMODS.pseudorandom_probability(card, "fac_aure-allu_cheap_cheep", 1, card.ability.extra.refund_odds) then
+			return {
+				sand_dollars = card.ability.extra.refund_sand_dollars
+			}
+		end
 	end,
 }
 
@@ -150,7 +153,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = {  },
+	attributes = { "x_chips" },
 	config = {
 		extra = {
 			face_down_x_chips = 0.1,
@@ -163,13 +166,26 @@ FishAndChips.Fish {
 		aquifer = 4,
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { } }
+		local total = 1
+		if G.hand then
+			for _, pcard in ipairs(G.hand.cards) do
+				if pcard.facing == "back" then
+					total = total + card.ability.extra.face_down_x_chips
+				end
+			end
+		end
+		return { vars = { card.ability.extra.face_down_x_chips, total } }
 	end,
 	calculate = function(self, card, context)
 		if context.stay_flipped and context.from_area == G.deck and context.to_area == G.hand and G.GAME.current_round.hands_played == 0 then
             return {
-                stay_flipped = true
+                stay_flipped = true,
             }
+		elseif context.first_hand_drawn then
+			return {
+				message = localize("k_aure_allu_blooper"),
+				colour = G.C.BLACK
+			}
         elseif context.joker_main then 
             local total = 1
             for _, pcard in ipairs(G.hand.cards) do

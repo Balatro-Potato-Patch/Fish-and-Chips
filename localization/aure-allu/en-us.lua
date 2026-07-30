@@ -13,7 +13,9 @@ return {
             fish_fac_cheap_cheep = {
                 name = {"Cheap Cheep"},
                 text = {
-                    ""
+                    "{C:green}#1# in #2#{} chance",
+                    "to refund {C:fac_sand_dollars,f:fac_sand_dollars}$#3#",
+                    "upon buying {C:attention}bait"
                 },
                 flavor = {
                     ""
@@ -22,7 +24,16 @@ return {
             fish_fac_blooper = {
                 name = {"Blooper"},
                 text = {
-                    ""
+                    {
+                        "Blubs {C:white,X:chips}+X#1#{} Chips",
+                        "per {C:attention}face down{} card",
+                        "held in hand",
+                        "{C:inactive}(Currently {C:white,X:chips}X#2#{C:inactive} Chips)"
+                    },
+                    {
+                        "{C:attention}First{} hand is always",
+                        "drawn {C:attention}face down{}"
+                    },
                 },
                 flavor = {
                     ""
@@ -53,7 +64,7 @@ return {
                 name = {"Shrimp"},
                 text = {
                     "Gains {C:mult}#1#{} Mult if",
-                    "this {C:attention}Fish{} resides in",
+                    "this {C:attention}Shrimp{} resides in",
                     "a different {C:attention}slot{} from",
                     "last {C:attention}#2#{} hands {C:attention}played{}",
                     "{C:inactive,s:0.8}(Resets otherwise)",
@@ -110,5 +121,10 @@ return {
                 }
             },
         },
+    },
+    misc = {
+        dictionary = {
+            k_aure_allu_blooper = "Ink'd!"
+        }
     }
 }
