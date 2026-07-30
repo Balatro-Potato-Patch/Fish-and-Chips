@@ -25,7 +25,7 @@ SMODS.Atlas({
 FishAndChips.Fish {
 	key = "Whale",
 	atlas = "typ0",
-	pos = { x = 1, y = 1 },
+	pos = { x = 2, y = 0 },
 	weight = 5,
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "TigerThawk" },
@@ -113,17 +113,12 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "jojacola",
 	atlas = "typ0",
-	pos = { x = 0, y = 0 },
+	pos = { x = 0, y = 1 },
 	weight = 10,
 	cost = 0,
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
-	attributes = { "mult" },
-	config = {
-		extra = {
-			mult = 1
-		}
-	},
+	attributes = { "passive" },
 	environments = {
 		wormhole = 1,
 		pier = 10,
@@ -132,11 +127,108 @@ FishAndChips.Fish {
 		city_river = 10,
 		soup = 3,
 	},
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult } }
-	end,
 	calculate = function(self, card, context)
 		return
+	end,
+}
+
+FishAndChips.Fish {
+	key = "MagnetFish",
+	atlas = "typ0",
+	pos = { x = 1, y = 1 },
+	weight = 8,
+	cost = 0,
+	ppu_coder = { "SLDTyp0" },
+	ppu_artist = { "SLDTyp0" },
+	attributes = { "economy" },
+	environments = {
+		city_river = 10,
+	},
+	config = {
+		extra = {
+			dollarsmin = 3,
+			dollarsmax = 6
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.dollarsmin, card.ability.extra.dollarsmax } }
+	end,
+	calculate = function(self, card, context)
+		if context.perfect then return { dollars = pseudorandom('fac_magnetfish', card.ability.extra.dollarsmin, card.ability.extra.dollarsmax) } end
+	end,
+}
+
+FishAndChips.Fish {
+	key = "Gary",
+	atlas = "typ0",
+	pos = { x = 0, y = 2 },
+	weight = 8,
+	cost = 0,
+	ppu_coder = { "SLDTyp0" },
+	ppu_artist = { "SLDTyp0" },
+	attributes = { "economy" },
+	environments = {
+		city_river = 10,
+	},
+	config = {
+		extra = {
+			dollarsmin = 3,
+			dollarsmax = 6
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.dollarsmin, card.ability.extra.dollarsmax } }
+	end,
+	calculate = function(self, card, context)
+		if context.perfect then return { dollars = pseudorandom('fac_magnetfish', card.ability.extra.dollarsmin, card.ability.extra.dollarsmax) } end
+	end,
+}
+
+FishAndChips.Fish {
+	key = "Magikarp",
+	atlas = "typ0",
+	pos = { x = 2, y = 1 },
+	weight = 8,
+	cost = 0,
+	ppu_coder = { "SLDTyp0" },
+	ppu_artist = { "SLDTyp0" },
+	attributes = { "economy" },
+	environments = {
+		city_river = 10,
+	},
+	config = {
+		extra = {
+			gary_rounds = 0,
+			total_rounds = 3
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.total_rounds, card.ability.extra.gary_rounds } }
+	end,
+	calculate = function(self, card, context)
+		if context.selling_self and (card.ability.extra.gary_rounds >= card.ability.extra.total_rounds) and not context.blueprint then
+			if #G.jokers.cards < G.jokers.config.card_limit then
+				local new_card = create_card('fac_Fish', G.jokers, nil, nil, nil, nil, 'fish_fac_Gary')
+				new_card:add_to_deck()
+				G.jokers:emplace(new_card)
+				return { message = localize('k_duplicated_ex') }
+			else
+				return { message = localize('k_no_room_ex') }
+			end
+		end
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+			card.ability.extra.gary_rounds = card.ability.extra.gary_rounds + 1
+			if card.ability.extra.gary_rounds == card.ability.extra.total_rounds then
+				local eval = function(card) return not card.REMOVED end
+				juice_card_until(card, eval, true)
+			end
+			return {
+				message = (card.ability.extra.gary_rounds < card.ability.extra.total_rounds) and
+					(card.ability.extra.gary_rounds .. '/' .. card.ability.extra.total_rounds) or
+					localize('k_active_ex'),
+				colour = G.C.FILTER
+			}
+		end
 	end,
 }
 

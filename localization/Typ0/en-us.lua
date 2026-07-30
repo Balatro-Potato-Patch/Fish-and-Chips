@@ -4,8 +4,8 @@ return {
             fish_fac_Whale = {
                 name = "Whale",
                 text = {
-                    "Retriggers {c:attention}first played hand{}",
-                    "{c:attention}-1 space{} in bucket"
+                    "Retriggers {C:attention}first played hand{}",
+                    "{C:attention}-1 space{} in bucket"
                 },
                 flavor = {
                     "THE WHALE IN SEARCH OF THE 8 FISH I AM '~knzyvo}' IN HAMBURG",
@@ -36,6 +36,43 @@ return {
                 },
                 flavor = {
                     "Fuck You",
+                }
+            },
+
+            fish_fac_MagnetFish = {
+                name = "Magnet Fish",
+                text = {
+                    "If fish is caught {C:attention}Perfectly{},",
+                    "earn between {C:money}$#1#{} and {C:money}$#2#{}"
+                },
+                flavor = {
+                    "Why do they always find bombs in those videos?", 
+                    "Its like either a bomb or a gun I swear"
+                }
+            },
+            
+            fish_fac_Magikarp = {
+                name = "Magikarp",
+                text = {
+                    "After 3 rounds sell this fish toevolve into Gyarados",
+                    "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#)",
+                },
+                flavor = {
+                    "An underpowered, pathetic Pokémon.",
+                    "It may jump high on rare occasions", 
+                    "but never more than seven feet."
+                }
+            },
+
+            fish_fac_Gary = {
+                name = "Gyarados",
+                text = {
+                    "If fish is caught {C:attention}Perfectly{},",
+                    "earn between {C:money}$#1#{} and {C:money}$#2#{}"
+                },
+                flavor = {
+                    "Once it appears, it goes on a rampage.",
+                    "It remains enraged until it demolishes everything around it.",
                 }
             },
         },
