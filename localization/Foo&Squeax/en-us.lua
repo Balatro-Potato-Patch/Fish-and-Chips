@@ -45,8 +45,8 @@ return {
 					"temp"
 				}
 			},
-			PotatoPatchDev_Squeax = {
-				name = "Squeax",
+			PotatoPatchDev_squeax09 = {
+				name = "squax09",
 				text = {
 					"temp"
 				}
