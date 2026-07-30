@@ -49,7 +49,8 @@ return {
 			PotatoPatchDev_squeax09 = {
 				name = "squeax09",
 				text = {
-					"temp"
+					{"ts {C:green,E:1}gabby{}"},
+					{"temp"}
 				}
 			}
 		}
