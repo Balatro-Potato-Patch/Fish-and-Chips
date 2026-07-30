@@ -357,7 +357,6 @@ FishAndChips.Fish {
 					end
 				}
 			end
-			return nil, true
 		end
 	end,
 }

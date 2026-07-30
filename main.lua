@@ -106,6 +106,3 @@ SMODS.Atlas{
 
 PotatoPatchUtils.load_files(FishAndChips.mod.path .. '/src')
 PotatoPatchUtils.load_files(FishAndChips.mod.path .. '/content')
-
-SMODS.handle_loc_file(FishAndChips.mod.path)
-PotatoPatchUtils.LOC.init()
