@@ -435,7 +435,7 @@ FishAndChips.Fish {
         local stg = card.ability.extra
 
         if context.ending_shop and SMODS.pseudorandom_probability(card, "fac_am_mola", stg.prob, stg.odds) then
-            SMODS.destroy_cards(card, {pinch_anim = true})
+            SMODS.destroy_cards(card, { pinch_anim = true })
         end
 
         if context.setting_blind and not card.getting_sliced and context.blind.boss then
@@ -463,6 +463,73 @@ FishAndChips.Fish {
             G.GAME.blind:disable()
             play_sound('timpani')
             SMODS.calculate_effect({ message = localize('ph_boss_disabled') }, card)
+        end
+    end,
+}
+
+FishAndChips.Fish {
+    key = "am_dopefish",
+    atlas = "astra-missingno-fish",
+    pos = { x = 0, y = 2 },
+    pixel_size = { w = 61, h = 71 },
+    weight = 8,
+    ppu_coder = { "theAstra" },
+    ppu_artist = { "MissingNumber" },
+    attributes = { "destroy_cards", "xmult" },
+    config = {
+        extra = {
+            xmult = 1,
+            gain = 0.2
+        }
+    },
+    environments = {
+        wormhole = 8,
+        aquifer = 8,
+        swamp = 8
+    },
+    loc_vars = function(self, info_queue, card)
+        local stg = card.ability.extra
+
+        return { vars = { stg.xmult, stg.gain }}
+    end,
+    calculate = function(self, card, context)
+        local stg = card.ability.extra
+    
+        if context.setting_blind then
+            local cards_to_destroy = {}
+
+            for i = 1, #G.fac_fish_area.cards do
+				if G.fac_fish_area.cards[i] == card then
+                    if i ~= 1 and not G.fac_fish_area.cards[i - 1].getting_sliced then
+                        table.insert(cards_to_destroy, G.fac_fish_area.cards[i - 1])
+                    end
+                    if i ~= #G.fac_fish_area.cards and not G.fac_fish_area.cards[i + 1].getting_sliced then
+                        table.insert(cards_to_destroy, G.fac_fish_area.cards[i + 1])
+                    end
+                end
+			end
+
+            if next(cards_to_destroy) then
+                SMODS.destroy_cards(cards_to_destroy)
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        card:juice_up(0.8, 0.8)
+                        return true;
+                    end
+                }))
+                SMODS.scale_card(card, {
+                    ref_table = stg,
+                    ref_value = "xmult",
+                    scalar_value = "gain",
+                    scalar_factor = #cards_to_destroy,
+                })
+            end
+        end
+
+        if context.joker_main then
+            return {
+                xmult = stg.xmult
+            }
         end
     end,
 }

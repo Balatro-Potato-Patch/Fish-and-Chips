@@ -118,6 +118,22 @@ return {
                     "literally everything else"
                 }
             },
+            fish_fac_am_dopefish = {
+                name = "Dopefish",
+                text = {
+                    "When blind is selected,",
+                    "this Fish {C:red,E:1}eats{} all",
+                    "{C:attention}adjacent{} Fish and gains",
+                    "{X:red,C:white}X#2#{} for each Fish eaten",
+                    "{C:inactive,s:0.8}Currently: {X:red,C:white,s:0.8}X#1#{C:inactive,s:0.8} Mult"
+                },
+                flavor = {
+                    "The second dumbest",
+                    "creature in the universe,",
+                    "they'll eat anything alive",
+                    "and moving near them"
+                }
+            },
         },
     },
     misc = {
