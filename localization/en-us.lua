@@ -286,19 +286,6 @@ return {
                     "milkfin roe! It is",
                     "incredibly toxic!"
                 }
-            },
-            fish_fac_floppy_fih = {
-                name = "Floppy Fish",
-                text = {
-                    "Occasionally starts {C:attention}flopping",
-                    "and permanently gains {X:mult,C:white}X#1#{} Mult",
-                    "when the flopping is stopped",
-                    "by {C:attention}selecting{} this fish",
-                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
-                },
-                flavour = {
-                    "Does this one ever die??"
-                }
             }
         },
         fac_Bait = {
@@ -579,20 +566,6 @@ return {
                 name = 'WilsonTheWolf',
                 text = {
                     "I made this book"
-                }
-            },
-            PotatoPatchDev_lanedarushpy = {
-                name = "Lizzie",
-                text = {
-                    "I am the lanedarushpy",
-                    "I made the balacats",
-                    "banana fih"
-                }
-            },
-            PotatoPatchDev_pangaea47 = {
-                name = "pangaea47",
-                text = {
-                    "im a spider i think"
                 }
             }
         }

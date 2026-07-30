@@ -61,7 +61,7 @@ FishAndChips.Fish {
 	key = "floppy_fih",
 	atlas = "lanedarushpy_floppy_fih",
 	pos = { x = 4, y = 0 },
-	weight = 75,
+	weight = 5,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "lanedarushpy" },
 	attributes = { "xmult" },
@@ -74,9 +74,9 @@ FishAndChips.Fish {
         },
 		extra = {
 			Xmult = 1.0,
-            Xmult_mod = 0.25,
-            min_flop_time = 8,
-            max_flop_time = 20,
+            Xmult_mod = 0.1,
+            min_flop_time = 12,
+            max_flop_time = 28,
             time_flop_escape = 5
 		},
         immutable = {
@@ -89,10 +89,11 @@ FishAndChips.Fish {
         }
 	},
 	environments = {
-		pier = 75,
-		city_river = 50,
-        calm_pond = 75
+		pier = 5,
+		city_river = 2.5,
+        calm_pond = 4
 	},
+    pixel_size = { h = 71, w = 71 },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult } }
 	end,
@@ -245,3 +246,39 @@ function love.update(dt, ...)
         end
     end
 end
+
+SMODS.Atlas {
+    key = "lanedarushpy_flying",
+    path = "lanedarushpy/flying.png",
+    px = 142,
+    py = 285
+}
+
+FishAndChips.Fish {
+	key = "flying_fih",
+	atlas = "lanedarushpy_flying",
+	pos = { x = 0, y = 0 },
+	weight = 50,
+	ppu_coder = { "lanedarushpy" },
+	ppu_artist = { "pangaea47" },
+	attributes = { "chips" },
+	config = {
+		extra = {
+			chips = 30
+		}
+	},
+	environments = {
+		pier = 50,
+		city_river = 50,
+        calm_pond = 50,
+	},
+
+    display_size = { w = 142, h = 285 },
+    -- pixel_size = { w = 142, h = 285 },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.chips } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then return { chips = card.ability.extra.chips } end
+	end,
+}
