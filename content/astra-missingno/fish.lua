@@ -611,7 +611,6 @@ FishAndChips.Fish {
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
     attributes = { "passive" },
-    blueprint_compat = false,
     config = {
         extra = {
             rerolls = 0,
@@ -628,7 +627,7 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         local stg = card.ability.extra
-    
+
         if context.starting_shop then
             SMODS.change_free_rerolls(stg.rerolls)
         end
@@ -645,39 +644,90 @@ FishAndChips.Fish {
             stg.rerolls = math.floor((G.GAME.chips / G.GAME.blind.chips) / (stg.percent / 100))
             if stg.rerolls > 0 then
                 return {
-                    message = localize { type = 'variable', key = 'a_fac_am_rerolls', vars = {stg.rerolls} }
+                    message = localize { type = 'variable', key = 'a_fac_am_rerolls', vars = { stg.rerolls } }
                 }
             end
         end
     end,
     add_to_deck = function(self, card, from_debuff)
         local stg = card.ability.extra
-    
+
         SMODS.change_free_rerolls(stg.rerolls)
     end,
     remove_from_deck = function(self, card, from_debuff)
         local stg = card.ability.extra
-    
+
         SMODS.change_free_rerolls(-stg.rerolls)
     end,
 }
 
 FishAndChips.Fish {
-    key = "chocolat",
+    key = "am_chocolat",
     atlas = "astra-missingno-fish",
     pos = { x = 2, y = 2 },
-    weight = 3,
+    weight = 4,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
-    attributes = { "" },
+    attributes = { "passive", "food", "modify_card", "edition" },
     config = {
-       
+        extra = {
+            times = 2,
+        }
     },
     environments = {
-       
+        chocolate_river = 4,
+        backroom = 2,
+        soup = 2,
     },
     loc_vars = function(self, info_queue, card)
-       local stg = card.ability.extra
-       
+        local stg = card.ability.extra
+
+        return { vars = { stg.times } }
+    end,
+    calculate = function(self, card, context)
+        local stg = card.ability.extra
+
+        if context.fac_fish_caught and context.perfect then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    local edition = SMODS.poll_edition({ guaranteed = true })
+                    stg.times = stg.times - 1
+
+                    SMODS.calculate_effect({
+                        message = localize { type = 'variable', key = 'a_fac_am_blank_left', vars = { stg.times } },
+                        sound = 'fac_am_le_fishe',
+                    }, card)
+
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            context.fac_fish_caught:set_edition(edition)
+                            return true;
+                        end
+                    }))
+
+                    if stg.times <= 0 then
+                        G.E_MANAGER:add_event(Event({
+                            delay = 0.4,
+                            trigger = 'after',
+                            func = function()
+                                card.area:remove_card(card)
+                                G.FISHING.fac_fish_reward_area:emplace(card)
+                                play_sound('fac_am_le_fishe_death')
+                                return true;
+                            end
+                        }))
+                        G.E_MANAGER:add_event(Event({
+                            delay = 0.6,
+                            trigger = 'after',
+                            func = function()
+                                SMODS.destroy_cards(card, { pinch_anim = true })
+                                return true;
+                            end
+                        }))
+                    end
+                    return true;
+                end
+            }))
+        end
     end,
 }

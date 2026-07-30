@@ -38,3 +38,13 @@ SMODS.Sound {
 	key = 'am_chomp',
 	path = 'astra-missingno/am_chomp.ogg'
 }
+
+SMODS.Sound {
+	key = 'am_le_fishe',
+	path = 'astra-missingno/am_le_fishe.ogg'
+}
+
+SMODS.Sound {
+	key = 'am_le_fishe_death',
+	path = 'astra-missingno/am_le_fishe_death.ogg'
+}

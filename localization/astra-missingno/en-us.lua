@@ -155,7 +155,7 @@ return {
             fish_fac_am_blubby = {
                 name = "Blubby",
                 text = {
-                    "{C:attention}1{} free {C:green}Reroll ",
+                    "{C:attention}1{} free {C:green}Reroll",
                     "for every {C:attention}#1#%{} of score",
                     "overshot each round",
                     "{C:inactive,s:0.8}Currently: {C:green,s:0.8}#2# Rerolls",
@@ -167,6 +167,17 @@ return {
                     "are made there"
                 }
             },
+            fish_fac_am_chocolat = {
+                name = {"Le Fishe", "au chocolat"},
+                text = {
+                    "Applies a {C:green}random{} {C:dark_edition}edition",
+                    "to the next {C:attention}#1#",
+                    "{C:attention}perfectly{} caught Fish"
+                },
+                flavor = {
+                    "Typical French Cuisine",
+                }
+            },
         }
     },
     misc = {
@@ -175,7 +186,8 @@ return {
             k_fac_am_rerolls = 'Rerolls'
         },
         v_dictionary = {
-            a_fac_am_rerolls = '#1# Rerolls'
+            a_fac_am_rerolls = '#1# Rerolls',
+            a_fac_am_blank_left = '#1# Left',
         }
     }
 }
