@@ -14,7 +14,7 @@ return {
                 text = {
                     "Gains {X:mult,C:white}X#1#{} Mult if",
                     "fish is caught perfectly",
-                    "Currently {X:mult,C:white}X#1#{} Mult"
+                    "Currently {X:mult,C:white}X#2#{} Mult"
                 },
                 flavour = {
                     "WHAT STORE ARE YOU IN",
