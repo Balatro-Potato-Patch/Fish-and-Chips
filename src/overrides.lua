@@ -277,7 +277,7 @@ function G.UIDEF.card_h_popup(card)
         local name_node = name.objtree
         local flavour_node = {}
         local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}
-        localize({type = 'flavour', nodes = flavour_node, loc_target = G.localization.descriptions.fac_Fish[card.config.center_key], scale = 0.8, text_colour = G.C.JOKER_GREY, shadow = true, vars = loc_vars.vars})
+        localize({type = 'flavour', nodes = flavour_node, loc_target = G.localization.descriptions.fac_Fish[loc_vars.key or card.config.center_key], scale = 0.8, text_colour = G.C.JOKER_GREY, shadow = true, vars = loc_vars.vars})
         local final_flavour = {{n=G.UIT.R, config = {minh = 0.1}}}
         for i, line in ipairs(flavour_node) do
             local node = {n=G.UIT.R, config = {align = 'cm'}, nodes = {}}
