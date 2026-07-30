@@ -126,3 +126,71 @@ FishAndChips.Fish {
 		end
 	end
 }
+
+FishAndChips.Fish {
+	key = "tss_forcefish",
+	atlas = "tss_fish",
+	pos = { x = 0, y = 0 },
+	weight = 8,
+	ppu_coder = { "slimestuff" },
+	ppu_artist = { "slimestuff" },
+	attributes = { "rank" },
+	config = { extra = { odds = 5 } },
+	environments = {
+		city_river = 4,
+		pier = 3,
+		garden = 1
+	},
+	loc_vars = function(self, info_queue, card)
+		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_tss_forcefish")
+		return { vars = { num, dem } }
+	end,
+	calculate = function(self, card, context)
+		if context.final_scoring_step then
+			local list = {}
+			for i, v in ipairs(G.play.cards) do
+				if v:get_id() ~= 12 and SMODS.pseudorandom_probability(card,"fcc_tss_forcefish",1,card.ability.extra.odds) then
+					list[#list+1] = v
+				end
+			end
+			
+			for i, c in ipairs(list) do
+				G.E_MANAGER:add_event(Event({
+					trigger = 'immediate',
+					delay = 0.15,
+					func = function()
+						c:flip()
+						play_sound('card1')
+						c:juice_up(0.3, 0.3)
+						return true
+					end
+				}))
+			end
+			delay(0.2)
+			for i, c in ipairs(list) do
+				G.E_MANAGER:add_event(Event({
+					trigger = 'immediate',
+					delay = 0.1,
+					func = function()
+						SMODS.change_base(c, nil, "Queen")
+						return true
+					end
+				}))
+			end
+			for i, c in ipairs(list) do
+				G.E_MANAGER:add_event(Event({
+					trigger = 'immediate',
+					delay = 0.15,
+					func = function()
+						c:flip()
+						play_sound('tarot2')
+						c:juice_up(0.3, 0.3)
+						card:juice_up(0.3, 0.3)
+						return true
+					end
+				}))
+			end
+			return {message = localize("fac_tss_forcefem")}
+		end
+	end
+}

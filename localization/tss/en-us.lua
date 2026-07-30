@@ -57,6 +57,17 @@ return {
 					"often associated",
 					"with the wealthy"
 				}
+			},
+			fish_fac_tss_forcefish = {
+				name = "Forcefish",
+				text = {
+					"Played cards have a",
+					"{C:green}#1# in #2#{} chance to turn into",
+					"{C:attention}Queens{} after scoring"
+				},
+				flavour = {
+					"I have a suggestion."
+				}
 			}
 		},
 		PotatoPatch = {
@@ -80,6 +91,7 @@ return {
 			fac_tss_chesh_giggle_2 = "Yoink~",
 			fac_tss_chesh_giggle_3 = "Mine~",
 			fac_tss_chesh_giggle_4 = "Thanks~",
+			fac_tss_forcefem = "Forcefem!",
 		}
 	}
 }
