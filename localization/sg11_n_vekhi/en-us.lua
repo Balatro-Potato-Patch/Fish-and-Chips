@@ -25,6 +25,17 @@ return {
 					"{S:1.1,C:red,E:2}self destructs{}",
 				},
 			},
+			fish_fac_sg11_n_vekhi_quantum_fish_wild = {
+				name = "Quantum Fish",
+				text = {},
+			},
+			fish_fac_sg11_n_vekhi_quantum_fish = {
+				name = "Quantum Fish (photo)",
+				text = {
+					"Any random card gives",
+					"{C:white,X:mult}X#1#{} Mult when scored",
+				},
+			},
 		},
 		PotatoPatch = {
 			fac_sleepyg11 = {
@@ -44,6 +55,13 @@ return {
 					},
 				},
 			},
+		},
+	},
+	misc = {
+		dictionary = {
+			pac_quantum_fish_1 = "You again...",
+			pac_quantum_fish_2 = "I'll not let you go ever again!",
+			pac_quantum_fish_3 = "Say 'Fish!'",
 		},
 	},
 }
