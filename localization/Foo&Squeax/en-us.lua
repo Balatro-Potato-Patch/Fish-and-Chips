@@ -57,6 +57,25 @@ return {
 						"{C:inactive}[Currently {X:mult,C:white}X#4#{C:inactive} Mult]"
 					}
 				}
+			},
+			fish_fac_fas_kawkaw = {
+				name = "BlubBlub",
+				flavour = {
+					"nyon"
+				},
+				text = {
+					{
+						"{X:mult,C:white}X#1#{} Mult",
+					},
+					{
+						"Must be pet periodically",
+						"or it's shoed away",
+					},
+					{
+						"{X:mult,C:white}X#2#{} Mult",
+						"if it's pet too much"
+					}
+				}
 			}
 		},
 		PotatoPatch = {
