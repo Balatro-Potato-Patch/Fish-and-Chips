@@ -86,7 +86,7 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
         if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == 'Planet' then
             -- 1 Free Location Reroll
-            sendDebugMessage("Planeted")
+            print("Planeted")
         end
 
 		if context.joker_main then
