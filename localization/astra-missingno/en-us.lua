@@ -76,7 +76,10 @@ return {
             fish_fac_am_starcatcher = {
                 name = "Starcatcher",
                 text = {
-                    " "
+                    "Before scoring, {C:red}eats",
+                    "all scoring {C:diamonds}Diamond{} cards",
+                    "and gains {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} of sell value",
+                    "for each eaten {C:diamonds}Diamond{}"
                 },
                 flavor = {
                     "Its tentacles dangle with",

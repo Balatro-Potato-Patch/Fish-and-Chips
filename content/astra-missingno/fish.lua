@@ -268,15 +268,52 @@ FishAndChips.Fish {
     weight = 10,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
-    attributes = { "" },
+    attributes = { "economy", "destroy_card", "rank", "diamonds" },
     config = {
-
+        extra = {
+            dollars = 1
+        }
     },
     environments = {
         pier = 10,
         wormhole = 5
     },
     loc_vars = function(self, info_queue, card)
+        local stg = card.ability.extra
 
+        return { vars = { stg.dollars } }
+    end,
+    calculate = function(self, card, context)
+        local stg = card.ability.extra
+    
+        if context.before then
+            local cards_to_destroy = {}
+            for k, v in pairs(context.scoring_hand) do
+                if v:is_suit('Diamonds') then
+                    table.insert(cards_to_destroy, v)
+                end
+            end
+            if next(cards_to_destroy) then
+                SMODS.destroy_cards(cards_to_destroy)
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        card:juice_up(0.8, 0.8)
+                        return true;
+                    end
+                }))
+                SMODS.scale_card(card, {
+                    ref_table = card.ability,
+                    ref_value = "extra_value",
+                    scalar_table = stg,
+                    scalar_value = "dollars",
+                    scalar_factor = #cards_to_destroy,
+                    scaling_message = {
+                        message = localize('k_val_up'),
+                        colour = FishAndChips.C.SAND_DOLLAR
+                    }
+                })
+                card:set_cost()
+            end
+        end
     end,
 }
