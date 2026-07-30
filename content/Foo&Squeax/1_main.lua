@@ -9,6 +9,9 @@ FishAndChips.FooSqueax = {
 SMODS.Atlas{
 	key = "fas_credits_foo",
 	path = FishAndChips.FooSqueax.file_path .. "credits/teto.png",
+	atlas_table = "ANIMATION_ATLAS",
+	fps = 4,
+	frames = 40,
 	px = 71,
 	py = 95,
 }
