@@ -28,3 +28,8 @@ SMODS.Sound {
 	key = 'am_jerry_intro',
 	path = 'astra-missingno/am_jerry_intro.ogg'
 }
+
+SMODS.Sound {
+	key = 'am_jerry_chips',
+	path = 'astra-missingno/am_jerry_chips.ogg'
+}

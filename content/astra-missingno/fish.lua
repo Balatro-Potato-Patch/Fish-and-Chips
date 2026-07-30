@@ -6,16 +6,34 @@ FishAndChips.Fish {
     weight = 10,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
-    attributes = { "" },
+    attributes = { "chips" },
     config = {
-
+        extra = {
+            factor = 2
+        }
     },
     environments = {
         pier = 10,
         wormhole = 5
     },
     loc_vars = function(self, info_queue, card)
+        local stg = card.ability.extra
+        return { vars = { stg.factor, G.SETTINGS.SOUND.music_volume * stg.factor } }
+    end,
+    calculate = function(self, card, context)
+        local stg = card.ability.extra
 
+        if context.joker_main then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    play_sound('fac_am_jerry_chips')
+                    return true;
+                end
+            }))
+            return {
+                chips = G.SETTINGS.SOUND.music_volume * stg.factor
+            }
+        end
     end,
     on_catch = function(self, card)
         G.E_MANAGER:add_event(Event({
@@ -41,7 +59,8 @@ FishAndChips.Fish {
         }
     },
     environments = {
-        calm_pond = 3
+        calm_pond = 3,
+        garden = 3
     },
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -88,7 +107,8 @@ FishAndChips.Fish {
         }
     },
     environments = {
-        pier = 5
+        pier = 5,
+        city_river = 5
     },
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -167,7 +187,7 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         local stg = card.ability.extra
-    
+
         if context.joker_main then
             return {
                 mult = stg.mult
@@ -178,7 +198,9 @@ FishAndChips.Fish {
             if stg.hand then
                 if context.scoring_name == stg.hand then
                     stg.times = stg.times + 1
-                    SMODS.calculate_effect({ message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },card)
+                    SMODS.calculate_effect(
+                    { message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },
+                        card)
                     if stg.times == stg.goal then
                         stg.times = 0
                         SMODS.scale_card(card, {
@@ -189,13 +211,17 @@ FishAndChips.Fish {
                     end
                 else
                     stg.times = 1
-                    SMODS.calculate_effect({ message = localize('k_reset'), colour = G.C.RED },card)
-                    SMODS.calculate_effect({ message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },card)
+                    SMODS.calculate_effect({ message = localize('k_reset'), colour = G.C.RED }, card)
+                    SMODS.calculate_effect(
+                    { message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },
+                        card)
                 end
             else
                 stg.times = 1
                 stg.hand = context.scoring_name
-                SMODS.calculate_effect({ message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },card)
+                SMODS.calculate_effect(
+                { message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },
+                    card)
             end
         end
     end,
@@ -248,7 +274,8 @@ FishAndChips.Fish {
         }
     },
     environments = {
-        pier = 10
+        pier = 10,
+        city_river = 10,
     },
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -284,6 +311,7 @@ FishAndChips.Fish {
     },
     environments = {
         pier = 10,
+        aquifer = 7,
         wormhole = 5
     },
     loc_vars = function(self, info_queue, card)
@@ -293,7 +321,7 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         local stg = card.ability.extra
-    
+
         if context.before then
             local cards_to_destroy = {}
             for k, v in pairs(context.scoring_hand) do

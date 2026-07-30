@@ -4,7 +4,10 @@ return {
             fish_fac_am_jerry = {
                 name = "Jerry",
                 text = {
-                    " "
+                    "Gives {C:chips}Chips{} equal",
+                    "to {C:attention}x#1#{} the current",
+                    "{C:attention}Music Volume{} setting",
+                    "{C:inactive,s:0.8}Currently: {s:0.8,C:chips}+#2# {C:inactive,s:0.8}Chips"
                 },
                 flavor = {
                     "This music-loving jellyfish",
