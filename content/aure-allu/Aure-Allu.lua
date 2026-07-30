@@ -124,3 +124,28 @@ FishAndChips.Fish {
         end
 	end,
 }
+
+-- Goldfish
+FishAndChips.Fish {
+	key = "goldfish",
+	atlas = "aure-allu_fish",
+	pos = { x = 3, y = 0 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = {  },
+	config = {
+		extra = {
+			
+		},
+	},
+	environments = {
+		
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+		
+	end,
+}
