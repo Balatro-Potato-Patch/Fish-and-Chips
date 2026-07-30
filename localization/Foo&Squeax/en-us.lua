@@ -142,7 +142,8 @@ return {
 			k_fac_fas_unsubmerged = "Unsubmerged!",
 			k_fac_fas_resurface = "Going Up!",
 			k_fac_fas_dive = "Dive! Dive! Dive!",
-			k_fac_fas_yum = "Yum!"
+			k_fac_fas_yum = "Yum!",
+			k_fac_fas_nom = "Nom!"
 		}
 	}
 }

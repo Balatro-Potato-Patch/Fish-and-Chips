@@ -3,6 +3,12 @@ FishAndChips.FooSqueax = {
 	bucket = {
 		on = false,
 		water_height = 1
+	},
+	fat_idiot = {
+		active = false,
+		state = 0,
+		timer = nil,
+		fih = nil
 	}
 }
 
