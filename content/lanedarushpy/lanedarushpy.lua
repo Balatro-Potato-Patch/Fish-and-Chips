@@ -99,7 +99,8 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main and not card.ability.immutable.cant_flop then return { Xmult = card.ability.extra.Xmult > 1.0 and card.ability.extra.Xmult or nil } end
-        if (context.end_of_round or context.first_hand_drawn or context.after) and card.ability.immutable.flop_flag then
+        local context_check = (context.end_of_round or context.first_hand_drawn or context.after or (context.fac_fish_hooked and pseudorandom("laneda_floppy_fuckyou", 1, 10) < 4))
+        if context_check and card.ability.immutable.flop_flag then
             G.E_MANAGER:add_event(Event({
                 func = function ()
                     card.ability.immutable.flop_flag = false;
@@ -308,7 +309,7 @@ FishAndChips.Fish {
 		city_river = 50,
         calm_pond = 50,
 	},
-    
+
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips } }
 	end,
