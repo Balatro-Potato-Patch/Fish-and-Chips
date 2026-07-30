@@ -90,6 +90,19 @@ return {
                     "floating by"
                 }
             },
+            fish_fac_am_chameleon = {
+                name = "Chameleon",
+                text = {
+                    "Copies the",
+                    "{C:attention}centermost{} Joker",
+                    "{C:inactive,s:0.8}Must have odd number of Jokers"
+                },
+                flavor = {
+                    "It attempts to blend into",
+                    "anything and everything,",
+                    "although usually quite poorly"
+                }
+            },
         },
     },
     misc = {

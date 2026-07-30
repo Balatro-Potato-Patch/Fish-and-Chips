@@ -125,7 +125,7 @@ FishAndChips.Fish {
         table.insert(loc_ctypes, '$^&Q*()@')
         table.insert(loc_ctypes, 'ERROR')
         table.insert(loc_ctypes, ')$*^%@@@$%%')
-        table.insert(loc_ctypes, ')$*^%@@@$%%')
+        table.insert(loc_ctypes, '%&^$^#%$$^&')
         local loc_cards = ' ' .. localize('k_fac_am_card') .. ' '
         local colour = SMODS.ConsumableTypes[stg.ctype].secondary_colour
         return {
@@ -353,4 +353,54 @@ FishAndChips.Fish {
             end
         end
     end,
+}
+
+FishAndChips.Fish {
+   key = "am_chameleon",
+   atlas = "astra-missingno-fish",
+   pos = { x = 3, y = 1 },
+   weight = 5,
+   ppu_coder = { "theAstra" },
+   ppu_artist = { "MissingNumber" },
+   attributes = { "copying" },
+   environments = {
+      wormhole = 5,
+      city_river = 5,
+      backroom = 5
+   },
+   loc_vars = function(self, info_queue, card)
+      if card.area and card.area == G.fac_fish_area then
+			local other_joker
+            if #G.jokers.cards % 2 == 1 then
+                other_joker = G.jokers.cards[math.ceil(#G.jokers.cards / 2)]
+            end
+			local compatible = other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat
+			local main_end = {
+				{
+					n = G.UIT.C,
+					config = { align = "bm", minh = 0.4 },
+					nodes = {
+						{
+							n = G.UIT.C,
+							config = { ref_table = card, align = "m", colour = compatible and mix_colours(G.C.GREEN, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.RED, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
+							nodes = {
+								{ n = G.UIT.T, config = { text = " " .. localize("k_" .. (compatible and "compatible" or "incompatible")) .. " ", colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
+							}
+						}
+					}
+				}
+			}
+			return { main_end = main_end }
+		end
+   end,
+   calculate = function(self, card, context)
+       local stg = card.ability.extra
+
+       local other_joker
+        if #G.jokers.cards % 2 == 1 then
+            other_joker = G.jokers.cards[math.ceil(#G.jokers.cards / 2)]
+        end
+
+       return SMODS.blueprint_effect(card, other_joker, context)
+   end,
 }
