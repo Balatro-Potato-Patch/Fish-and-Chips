@@ -67,6 +67,15 @@ return {
                     ""
                 }
             },
+            fish_fac_eel_of_fortune = {
+                name = {"Eel of Fortune"},
+                text = {
+                    ""
+                },
+                flavor = {
+                    ""
+                }
+            },
         },
     }
 }

@@ -231,4 +231,29 @@ FishAndChips.Fish {
 	end,
 }
 
+-- Eel of Fortune
+FishAndChips.Fish {
+	key = "eel_of_fortune",
+	atlas = "aure-allu_fish",
+	pos = { x = 2, y = 1 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = {  },
+	config = {
+		extra = {
+			
+		},
+	},
+	environments = {
+		
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = {  } }
+	end,
+	calculate = function(self, card, context)
+		
+	end,
+}
+
 -- #endregion
