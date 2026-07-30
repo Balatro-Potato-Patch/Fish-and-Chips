@@ -18,10 +18,11 @@
 
 ---@class FishAndChips.Fish: SMODS.Center
 ---@field environments Environments where this fish can appear, key = weight
----@field impulse_min? number minimum distance fish will move when being caught
----@field impulse_max? number maximum distance fish will move when being caught
----@field decision_min? number minimum time fish will wait before moving
----@field decision_max? number maximum time fish will wait before moving
+---@field impulse_min? number base minimum movement distance when being caught; lower values are easier (for fish)
+---@field impulse_max? number base maximum movement distance when being caught; lower values are easier (for fish)
+---@field decision_min? number base minimum time before changing movement; higher values are easier (for fish)
+---@field decision_max? number base maximum time before changing movement; higher values are easier (for fish)
+---@field vel_limit? number base maximum speed along the catch track; lower values are easier (for fish)
 ---@field colour? number colour of sweet spot (I THINK NEED TO CHECK THIS)
 ---@field requires_hand? boolean makes the hand move back into view if this card is selected
 ---@field ppu_coder string[] key(s) for the developer(s) who coded this fish
@@ -45,11 +46,59 @@ FishAndChips.Fish = setmetatable({}, {
 ---@field catch_gain? number how fast the fishing meter should increase
 ---@field catch_loss? number how fast the fishing meter should decrease
 ---@field treasure_gain? number how fast the treasure meter should increase
----@field vel_limit? number limit to the speed of the Sweet Spot
----@field impulse_min? number minimum distance fish will move when being caught (fish takes priority)
----@field impulse_max? number maximum distance fish will move when being caught (fish takes priority)
----@field decision_min? number minimum time fish will wait before moving (fish takes priority)
----@field decision_max? number maximum time fish will wait before moving (fish takes priority)
+---@field vel_limit? number multiplier applied to the fish's maximum movement speed; values below 1 are easier (for rods)
+---@field impulse_min? number multiplier applied to the fish's minimum movement distance; values below 1 are easier (for rods)
+---@field impulse_max? number multiplier applied to the fish's maximum movement distance; values below 1 are easier (for rods)
+---@field decision_min? number multiplier applied to the fish's minimum time before changing movement; values above 1 are easier (for rods)
+---@field decision_max? number multiplier applied to the fish's maximum time before changing movement; values above 1 are easier (for rods)
+
+---@class FishAndChips.FishingProfile
+---@field key string key of the fish being caught
+---@field name string name of the fish being caught
+---@field bar_size number rod-only catch-zone size, taken from the rod or default; higher values are easier
+---@field catch_gain number rod-only catch progress gained per second, taken from the rod or default; higher values are easier
+---@field catch_loss number rod-only catch progress lost per second, taken from the rod or default; lower values are easier
+---@field treasure_gain number treasure progress gained per second for this catch, taken from the rod or default; higher values are easier
+---@field vel_limit number maximum fish speed that will be used for this catch, after applying the fish/default base and rod multiplier; lower values are easier
+---@field impulse_min number minimum movement distance that will be used for this catch, after applying the fish/default base and rod multiplier; lower values are easier
+---@field impulse_max number maximum movement distance that will be used for this catch, after applying the fish/default base and rod multiplier; lower values are easier
+---@field decision_min number minimum time before changing movement that will be used for this catch, after applying the fish/default base and rod multiplier; higher values are easier
+---@field decision_max number maximum time before changing movement that will be used for this catch, after applying the fish/default base and rod multiplier; higher values are easier
+---@field colour number[] Sweet Spot colour that will be used for this catch, taken from the fish, rod, or default
+---@field rod table active rod's fishing settings
+---@field rod_key string key of the active rod
+---@field center FishAndChips.Fish center object of the fish being caught
+
+---@class FishAndChips.ModifiableFishingProfile
+---@field treasure_gain number treasure progress gained per second; higher values are easier
+---@field vel_limit number maximum fish speed; lower values are easier
+---@field impulse_min number minimum movement distance; lower values are easier
+---@field impulse_max number maximum movement distance; lower values are easier
+---@field decision_min number minimum time before changing movement; higher values are easier
+---@field decision_max number maximum time before changing movement; higher values are easier
+---@field colour number[] Sweet Spot colour
+
+---@class FishAndChips.ModifyFishingProfileContext
+---@field fac_modify_fishing_profile true identifies the pre-minigame profile modification context
+---@field fishing_profile FishAndChips.ModifiableFishingProfile values fish may change for the upcoming catch
+---@field hooked_fish FishAndChips.Fish hooked fish center object; use `.key` to identify its species
+
+---@class FishAndChips.FishCaughtContext
+---@field fac_fish_caught Card actual Card object created for the caught fish
+---@field fish string center key of the caught fish
+---@field treasure boolean whether this Card was caught as the bonus treasure fish
+---@field perfect boolean whether the main catch was perfect
+
+---@class FishAndChips.EndFishingContext
+---@field fac_end_fishing true identifies the end-of-fishing context
+---@field failed boolean whether the fish escaped
+---@field fish string? center key of the caught fish; nil when the catch failed
+---@field treasure boolean whether treasure was collected
+---@field treasure_available boolean whether treasure appeared during the fishing attempt
+---@field treasure_progress number treasure progress when the fishing attempt ended
+---@field missed_treasure boolean whether the fish was caught while available treasure was not collected
+---@field attempted_treasure boolean whether uncollected treasure received any progress
+---@field perfect boolean whether the catch succeeded without losing catch progress
 
 ---@class FishAndChips.Rod: SMODS.Center
 ---@field config? table|{fishing: FishingConfig} how this rod modifies the fishing minigame
