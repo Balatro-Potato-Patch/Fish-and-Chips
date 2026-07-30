@@ -16,6 +16,13 @@ SMODS.Atlas{
 	py = 95,
 }
 
+SMODS.Atlas{
+	key = "fas_credits_sqx",
+	path = FishAndChips.FooSqueax.file_path .. "credits/gabby.png",
+	px = 71,
+	py = 95,
+}
+
 PotatoPatchUtils.Developer{
 	name = "Foo54",
 	atlas = "fac_fas_credits_foo",
@@ -26,7 +33,8 @@ PotatoPatchUtils.Developer{
 
 PotatoPatchUtils.Developer{
 	name = "squeax09",
-	atlas = "fac_fas_credits_foo",
+	atlas = "fac_fas_credits_sqx",
+	pixel_size = {w = 66, h = 80},
 	colour = HEX("c551bd"),
 	fac_partner = "Foo54",
 	loc = true
