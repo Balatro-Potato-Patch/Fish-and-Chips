@@ -282,3 +282,91 @@ FishAndChips.Fish {
 		if context.joker_main then return { chips = card.ability.extra.chips } end
 	end,
 }
+
+SMODS.Atlas {
+    key = "pangaea47_main",
+    path = "lanedarushpy/pangaea47.png",
+    px = 71,
+    py = 95
+}
+
+FishAndChips.Fish {
+	key = "argel_findows",
+	atlas = "pangaea47_main",
+	pos = { x = 0, y = 0 },
+	weight = 6,
+	ppu_coder = { "lanedarushpy" },
+	ppu_artist = { "pangaea47" },
+	attributes = { "chips" },
+	config = {
+		extra = {
+			chips = 30
+		}
+	},
+	environments = {
+		pier = 50,
+		city_river = 50,
+        calm_pond = 50,
+	},
+    
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.chips } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then return { chips = card.ability.extra.chips } end
+	end,
+}
+
+FishAndChips.Fish {
+	key = "argel_blowfish",
+	atlas = "pangaea47_main",
+	pos = { x = 1, y = 0 },
+	weight = 5,
+	ppu_coder = { "lanedarushpy" },
+	ppu_artist = { "pangaea47" },
+	attributes = { "chips" },
+	config = {
+		extra = {
+			chips = 30
+		}
+	},
+	environments = {
+		pier = 50,
+		city_river = 50,
+        calm_pond = 50,
+	},
+
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.chips } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then return { chips = card.ability.extra.chips } end
+	end,
+}
+
+FishAndChips.Fish {
+	key = "argel_thing",
+	atlas = "pangaea47_main",
+	pos = { x = 2, y = 0 },
+	weight = 3,
+	ppu_coder = { "lanedarushpy" },
+	ppu_artist = { "pangaea47" },
+	attributes = { "chips" },
+	config = {
+		extra = {
+			chips = 30
+		}
+	},
+	environments = {
+		pier = 50,
+		city_river = 50,
+        calm_pond = 50,
+	},
+
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.chips } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then return { chips = card.ability.extra.chips } end
+	end,
+}

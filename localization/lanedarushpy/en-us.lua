@@ -26,7 +26,39 @@ return {
                     "I'm pretty sure this",
                     "is a fish? It has fins"
                 }
-            }
+            },
+
+            fish_fac_argel_blowfish = {
+                name = "Blowfish",
+                text = {
+                    "Does nothing"
+                },
+                flavour = {
+                    "Why people throw these in the ocean?",
+                    "I have no idea."
+                }
+            },
+
+            fish_fac_argel_findows = {
+                name = "Findows",
+                text = {
+                    "Does nothing"
+                },
+                flavour = {
+                    "Is this even a physical object?",
+                }
+            },
+
+            fish_fac_argel_thing = {
+                name = "Thing",
+                text = {
+                    "Does nothing"
+                },
+                flavour = {
+                    "What the hell did you just find.",
+                    "What in the world?"
+                }
+            },
         },
         PotatoPatch = {
             PotatoPatchDev_lanedarushpy = {
