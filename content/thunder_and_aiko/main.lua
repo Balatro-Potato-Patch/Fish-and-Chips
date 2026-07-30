@@ -278,7 +278,7 @@ FishAndChips.Fish({
 					card.ability.extra.crashed = nil
 				end
 				prefix = "=$"
-				card.ability.extra_value = math.max(1, math.floor(self.cost / 2)) + val
+				card.ability.extra_value = -math.max(1, math.floor(self.cost / 2)) + val
 			else
 				local change = pseudorandom("fac_nft_secret", card.ability.extra.min, card.ability.extra.max)
 				if change >= 0 then
