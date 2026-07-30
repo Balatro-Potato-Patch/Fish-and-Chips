@@ -85,9 +85,9 @@ FishAndChips.Fish {
 	atlas = "w_d_seuss_fish",
 	pos = { x = 2, y = 0 },
 	weight = 7,
-	ppu_coder = { "Mack" },
-	ppu_artist = { "Mack" },
-	attributes = { "chips" },
+	ppu_coder = { "Moby Nick" },
+	ppu_artist = { "Moby Nick" },
+	attributes = { "chips", "mult", "balance", "score" },
 	config = {
 		extra = {
 		}
@@ -95,11 +95,24 @@ FishAndChips.Fish {
 	environments = {
 		calm_pond = 10,
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		return { 
+			vars = {
+				next(SMODS.find_card('fish_fac_blue', true)) and "Purple" or "and the Reversal",
+				next(SMODS.find_card('fish_fac_blue', true)) and "Balances" or "Converts total scored",
+				next(SMODS.find_card('fish_fac_blue', true)) and "to" or "and",
+			} 
+		}
 	end,
 	calculate = function(self, card, context)
-	end,
+		if context.final_scoring_step then
+			if next(SMODS.find_card('fish_fac_blue', true)) then
+			else
+				return { chips = -hand_chips + 1, mult = hand_chips }
+			end
+		end
+    end
 }
 
 FishAndChips.Fish {
@@ -107,9 +120,9 @@ FishAndChips.Fish {
 	atlas = "w_d_seuss_fish",
 	pos = { x = 3, y = 0 },
 	weight = 7,
-	ppu_coder = { "Mack" },
-	ppu_artist = { "Mack" },
-	attributes = { "chips" },
+	ppu_coder = { "Moby Nick" },
+	ppu_artist = { "Moby Nick" },
+	attributes = { "chips", "mult", "balance", "score" },
 	config = {
 		extra = {
 		}
@@ -117,11 +130,25 @@ FishAndChips.Fish {
 	environments = {
 		calm_pond = 10,
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		return { 
+			vars = {
+				next(SMODS.find_card('fish_fac_red', true)) and "Hollow" or "Take the Amplified",
+				next(SMODS.find_card('fish_fac_red', true)) and "Balances" or "Converts total scored",
+				next(SMODS.find_card('fish_fac_red', true)) and "to" or "and",
+			} 
+		}
 	end,
 	calculate = function(self, card, context)
-	end,
+		if context.final_scoring_step then
+			if next(SMODS.find_card('fish_fac_red', true)) then
+				return { balance = true }
+			else
+				return { chips = mult, mult = -mult + 1 }
+			end
+		end
+    end
 }
 
 FishAndChips.Fish {

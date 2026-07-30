@@ -29,19 +29,21 @@ return {
             fish_fac_red = {
                 name = "Red Fish",
                 text = {
-                    "Red"
+                    "#2#",
+                    "{C:chips}Chips{} #3# {C:mult}Mult{}"
                 },
                 flavour = {
-                    "Red"
+                    "...#1#"
                 }
             },
             fish_fac_blue = {
                 name = "Blue Fish",
                 text = {
-                    "Blue"
+                    "#2#",
+                    "{C:mult}Mult{} #3# {C:chips}Chips{}"
                 },
                 flavour = {
-                    "Blue"
+                    "#1#..."
                 }
             },
             fish_fac_pear = {
