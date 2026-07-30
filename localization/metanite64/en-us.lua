@@ -15,6 +15,35 @@ return {
                     "I'm coming!"
                 }
             },
+            fish_fac_ol_baron = {
+                name = "Ol' Baron",
+                text = {
+                    "Scored cards give {X:mult,C:white}X0.2{} Mult",
+                    "per {C:attention}played and scoring{} card.",
+                    "Takes up {C:attention}2{} bucket slots"
+                },
+                flavour = {
+                    "Wow! Lots of people say",
+                    "they caught Ol' Baron, but",
+                    "you actually did!"
+                }
+            },
+            fish_fac_tripod = {
+                name = "Tripod Spiderfish",
+                text = {
+                    "If played {C:attention}poker hand{}",
+                    "is a {C:attention}Three of a Kind{},",
+                    "duplicate one of the",
+                    "scoring cards and {C:attention}randomize",
+                    "the copy's {C:enhanced}Enhancement{},",
+                    "{C:dark_edition}Edition{}, and {C:attention}Seal{}"
+                },
+                flavour = {
+                    "Stablest photography",
+                    "this side of the",
+                    "California coastline."
+                }
+            },
             fish_fac_tsuchinoko = {
                 name = "Tsuchinoko",
                 text = {

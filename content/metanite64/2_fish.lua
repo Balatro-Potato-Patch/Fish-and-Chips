@@ -1,3 +1,6 @@
+-- TOTAL WEIGHT USED
+-- 10 + 10 + 7 + 5 + 5 = 37
+
 FishAndChips.Fish {
     key = "yellow_pikman",
     atlas = "meta_fish",
@@ -105,6 +108,92 @@ FishAndChips.Fish {
     end
 }
 
+FishAndChips.Fish {
+    key = "tripod",
+    atlas = "meta_fish",
+    pos = { x = 3, y = 0 },
+    weight = 7,
+    environments =  {
+        styx = 7,
+        pier = 7,
+        aquifer = 7
+    },
+    attributes = { "generation" },
+    ppu_coder = { "metanite64" },
+    ppu_artist = { "metanite64" },
+
+    calculate = function(self, card, context)
+        if context.before and context.scoring_name == "Three of a Kind" then
+            local to_copy = pseudorandom_element(context.scoring_hand, "tripod_select")
+            local copy = SMODS.copy_card(to_copy, { area = G.hand })
+
+            local edition = SMODS.poll_edition { key = "tripod_edition", no_negative = true, guaranteed = true }
+            local enh = SMODS.poll_enhancement { key = "tripod_enh", guaranteed = true }
+            local seal = SMODS.poll_seal { key = "tripod_seal", guaranteed = true }
+
+            copy:set_ability(enh or "c_base")
+            copy:set_edition(edition)
+            copy:set_seal(seal)
+
+            return {
+                message = localize("k_copied_ex"),
+                colour = FishAndChips.C.FISH
+            }
+        end
+    end
+}
+
+-- ts rotates me
+local card_draw_ref = Card.draw
+Card.draw = function(card, layer, ...)
+    if card.config and card.config.center and card.config.center.key == "fish_fac_ol_baron" then
+        card.VT.r = card.VT.r + math.pi / 2
+        for i, v in pairs(card.children) do
+            v.VT.r = v.VT.r + math.pi / 2
+        end
+    end
+
+    card_draw_ref(card, layer, ...)
+    if card.config and card.config.center and card.config.center.key == "fish_fac_ol_baron" then
+        card.VT.r = card.VT.r - math.pi / 2
+        for i, v in pairs(card.children) do
+            v.VT.r = v.VT.r - math.pi / 2
+        end
+    end
+end
+
+FishAndChips.Fish {
+    key = "ol_baron",
+    atlas = "meta_fish",
+    pos = { x = 0, y = 1 },
+    weight = 5,
+    environments = {
+        swamp = 2,
+        aquifer = 5
+    },
+    attributes = { "xmult" },
+    ppu_coder = { "metanite64" },
+    ppu_artist = { "metanite64" },
+
+    config = {
+        extra_slots_used = 1,
+        extra = {
+            xmult = 0.2
+        }
+    },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xmult } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+            return {
+                xmult = 1 + (card.ability.extra.xmult * #context.scoring_hand)
+            }
+        end
+    end
+}
 FishAndChips.Fish {
     key = "tsuchinoko",
     atlas = "meta_fish",
