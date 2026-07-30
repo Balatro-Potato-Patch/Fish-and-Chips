@@ -33,7 +33,7 @@ FishAndChips.Fish {
 	key = 'bottomfeeder',
 	atlas = 'fac_placeholders',
 	pos = { x = 0, y = 0 },
-	weight = 30, --this will be updated when more fish are added
+	weight = 10, --this will be updated when more fish are added
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'chips', 'rank' },
@@ -89,7 +89,7 @@ FishAndChips.Fish {
 	key = 'bigbasswheel',
 	atlas = 'fac_placeholders',
 	pos = { x = 0, y = 0 },
-	weight = 30, --this will be updated when more fish are added
+	weight = 10, --this will be updated when more fish are added
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'usable' },
@@ -153,3 +153,89 @@ FishAndChips.Fish {
     end
 }
 
+FishAndChips.Fish {
+	key = 'britishflag',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 2, y = 0 },
+	weight = 10, --this will be updated when more fish are added
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'chips' },
+	config = {
+		extra = {
+			chips_per_fish = 20,
+		}
+	},
+	environments = {
+		city_river = 0.5,
+		wormhole = 0.25,
+		pier = 0.25
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.chips_per_fish,
+				card.ability.extra.chips_per_fish * (G.fac_fish_area and #G.fac_fish_area.cards or 0)
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			return {
+				chips = card.ability.extra.chips_per_fish * #G.fac_fish_area.cards
+			}
+		end
+	end
+}
+
+FishAndChips.Fish {
+	key = 'bullfrog',
+	atlas = 'fac_placeholders',
+	pos = { x = 0, y = 0 },
+	weight = 10, --this will be updated when more fish are added
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'chips' },
+	config = {
+		extra = {
+			chips_per_sanddollar = 8,
+		}
+	},
+	environments = {
+		swamp = 0.5,
+		calm_pond = 0.3,
+		garden = 0.2
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.chips_per_sanddollar,
+				card.ability.extra.chips_per_sanddollar * (G.GAME.fac_sand_dollars or 0)
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			return {
+				chips = card.ability.extra.chips_per_sanddollar * (G.GAME.fac_sand_dollars or 0)
+			}
+		end
+	end
+}
+
+FishAndChips.Fish {
+	key = 'catfish',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 1, y = 0 },
+	weight = 10, --this will be updated when more fish are added
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'passive' },
+	environments = {
+		calm_pond = 0.7,
+		pier = 0.3
+	},
+	loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
+    end,
+}

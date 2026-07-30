@@ -1,0 +1,65 @@
+[manifest]
+version = "1.0.0"
+priority = 99
+
+[[patches]] # this patch edits lucky card UI values if lucky catfish is held
+[patches.pattern]
+target = '=[SMODS _ "src/game_object.lua"]'
+pattern = '''
+    local numerator_mult, denominator_mult = SMODS.get_probability_vars(card, 1, 5, 'lucky_mult')
+    local numerator_dollars, denominator_dollars = SMODS.get_probability_vars(card, 1, 15, 'lucky_money')
+'''
+position = 'at'
+payload = '''
+    local lucky_num = 1
+    if G.fac_fish_area and next(SMODS.find_card('fish_fac_catfish')) then
+        lucky_num = 3
+    end
+    local numerator_mult, denominator_mult = SMODS.get_probability_vars(card, lucky_num, 5, 'lucky_mult')
+    local numerator_dollars, denominator_dollars = SMODS.get_probability_vars(card, lucky_num, 15, 'lucky_money')
+'''
+match_indent = true
+
+[[patches]] # this patch edits actual lucky card mult odds if lucky catfish is held
+[patches.pattern]
+target = 'card.lua'
+pattern = '''
+    if SMODS.pseudorandom_probability(self, 'lucky_mult', 1, 5) then
+        self.lucky_trigger = true
+        ret = ret + self.ability.mult
+    end
+'''
+position = 'at'
+payload = '''
+    local lucky_num = 1
+    if G.fac_fish_area and next(SMODS.find_card('fish_fac_catfish')) then
+        lucky_num = 3
+    end
+    if SMODS.pseudorandom_probability(self, 'lucky_mult', lucky_num, 5) then
+        self.lucky_trigger = true
+        ret = ret + self.ability.mult
+    end
+'''
+match_indent = true
+
+[[patches]] # this patch edits actual lucky card money odds if lucky catfish is held
+[patches.pattern]
+target = 'card.lua'
+pattern = '''
+    if SMODS.pseudorandom_probability(self, 'lucky_money', 1, 15) then
+        self.lucky_trigger = true
+        ret = ret + self.ability.p_dollars
+    end
+'''
+position = 'at'
+payload = '''
+    local lucky_num = 1
+    if G.fac_fish_area and next(SMODS.find_card('fish_fac_catfish')) then
+        lucky_num = 3
+    end
+    if SMODS.pseudorandom_probability(self, 'lucky_mult', lucky_num, 5) then
+        self.lucky_trigger = true
+        ret = ret + self.ability.p_dollars
+    end
+'''
+match_indent = true

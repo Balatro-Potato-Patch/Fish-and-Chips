@@ -1,0 +1,27 @@
+[manifest]
+version = "1.0.0"
+priority = 99
+
+#[[patches]]
+#[patches.pattern]
+#target = '=[SMODS _ "src/game_object.lua"]'
+#pattern = '''
+#    local numerator_mult, denominator_mult = SMODS.get_probability_vars(card, 1, 5, 'lucky_mult')
+#    local numerator_dollars, denominator_dollars = SMODS.get_probability_vars(card, 1, 15, 'lucky_money')
+#'''
+#position = 'at'
+#payload = '''
+#    local numerator_mult, denominator_mult = SMODS.get_probability_vars(card, 1, 5, 'lucky_mult')
+#    local numerator_dollars, denominator_dollars = SMODS.get_probability_vars(card, 1, 15, 'lucky_money')
+#'''
+#match_indent = true
+
+#payload = '''
+#    if G.fac_fish_area and next(SMODS.find_card("fish_fac_catfish")) then
+#        local numerator_mult, denominator_mult = SMODS.get_probability_vars(card, 3, 5, 'lucky_mult')
+#        local numerator_dollars, denominator_dollars = SMODS.get_probability_vars(card, 3, 15, 'lucky_money')
+#    else
+#        local numerator_mult, denominator_mult = SMODS.get_probability_vars(card, 1, 5, 'lucky_mult')
+#        local numerator_dollars, denominator_dollars = SMODS.get_probability_vars(card, 1, 15, 'lucky_money')
+#    end
+#'''
