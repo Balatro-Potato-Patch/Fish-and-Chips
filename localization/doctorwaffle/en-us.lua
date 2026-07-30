@@ -22,7 +22,8 @@ return {
                 text = {
                     "{C:attention}Once per round{}, ask the",
                     "Magic Conch for a {C:attention}Food Joker{},",
-                    "{C:green}#1# in #2#{} chance for it to say {C:attention}yes{}"
+                    "{C:green}#1# in #2#{} chance for it to say {C:attention}yes{}",
+                    "{C:inactive}(Must have room)"
                 },
                 flavor = {
                     "Oh, Magic Conch Shell, what do we",

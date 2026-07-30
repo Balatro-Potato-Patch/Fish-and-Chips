@@ -23,6 +23,10 @@ SMODS.Sound {
     key = "fac_waffle_conch_try_again",
     path = "doctorwaffle/conch_try_again.ogg"
 }
+SMODS.Sound {
+    key = "fac_waffle_conch_nothing",
+    path = "doctorwaffle/conch_nothing.ogg"
+}
 
 -- Magic Conch
 FishAndChips.Fish {
@@ -202,13 +206,47 @@ FishAndChips.Fish {
         return true
     end,
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval and not context.game_over and card.ability.extra.used_this_round and not context.blueprint then
-            card.ability.extra.used_this_round = false
-            card:juice_up()
-            return {
-                message = localize('k_fac_waffle_ready_ex'),
-                colour = G.C.PURPLE
-            }
+        if not context.blueprint then
+            if context.end_of_round and context.main_eval and not context.game_over and card.ability.extra.used_this_round then
+                card.ability.extra.used_this_round = false
+                card:juice_up()
+                return {
+                    message = localize('k_fac_waffle_ready_ex'),
+                    colour = G.C.PURPLE
+                }
+            end
+            if card.ability.extra.doingNothing and (context.press_play or context.discard or context.selling_card or context.using_consumeable) then
+                card.ability.extra.doingNothing = nil
+            end
+            if context.setting_blind and context.blind.key == "bl_plant" then -- The Funniest And Dumbest Easter Egg Ever
+                card.ability.extra.doingNothing = true
+                local x, y = love.mouse.getPosition()
+                G.E_MANAGER:add_event(Event({
+                    trigger = "after",
+                    delay = 60 * G.SETTINGS.GAMESPEED,
+                    blocking = false,
+                    func = function()
+                        --print("60 seconds have passed")
+                        local newX, newY = love.mouse.getPosition()
+                        if card and card.ability.extra.doingNothing and newX == x and newY == y and G.GAME and G.GAME.blind and G.GAME.blind.config.blind.key == "bl_plant" then
+                            card.ability.extra.doingNothing = nil
+                            if G.STATE == G.STATES.SELECTING_HAND then
+
+                                play_sound("fac_waffle_conch_nothing")
+                                card:juice_up()
+
+                                delay(0.8*G.SETTINGS.GAMESPEED)
+
+                                G.GAME.chips = G.GAME.blind.chips
+                                G.STATE = G.STATES.HAND_PLAYED
+                                G.STATE_COMPLETE = true
+                                end_round()
+                            end
+                        end
+                        return true
+                    end
+                }))
+            end
         end
     end,
     attributes = { "generation", "joker", "chance" }
@@ -262,6 +300,7 @@ FishAndChips.Fish {
     config = { extra = {
         sand_dollars = 2
     } },
+    blueprint_compat = false, -- i would like having compat be true here but trading card isn't compat for extra dosh (sadge)
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -270,7 +309,7 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.discard and context.other_card:get_id() == 2 then
+        if context.discard and context.other_card:get_id() == 2 and not config.blueprint then
             --context.other_card:remove()
             --SMODS.destroy_cards(context.other_card)
             return {
@@ -279,6 +318,7 @@ FishAndChips.Fish {
             }
         end
     end,
+    attributes = {"economy", "destroy_card"}
 }
 
 -- Squid Ink Cookie
@@ -289,7 +329,7 @@ FishAndChips.Fish {
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     weight = 10,
-    cost = 3,
+    cost = 4,
     environments = {
         chocolate_river = 1,
         pier = 0.8,
@@ -345,5 +385,6 @@ FishAndChips.Fish {
             }
         end
     end,
+    attributes = {"suit"},
     pronouns = "they_them"
 }
