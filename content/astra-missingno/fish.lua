@@ -109,7 +109,7 @@ FishAndChips.Fish {
         if context.open_booster then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    local _card = SMODS.create_card({set = stg.ctype})
+                    local _card = SMODS.create_card({set = stg.ctype, area = G.pack_cards})
                     _card.created_by_missingno = true
                     G.pack_cards:emplace(_card)
                     stg.uses = stg.uses + 1
