@@ -26,7 +26,7 @@ FishAndChips.Fish {
 	key = "videogame",
 	weight = 10,
 	atlas = "pulsarfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 5, y = 0 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
 	attributes = { "xmult" },
