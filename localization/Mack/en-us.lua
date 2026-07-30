@@ -1,5 +1,13 @@
 return {
     descriptions = {
+		PotatoPatch = {
+			PotatoPatchDev_Mack = {
+				name = "Mack",
+			},
+			PotatoPatchDev_Snapper = {
+				name = "Snapper",
+			},
+        }
         fac_Fish = {
             fish_fac_cod = {
                 name = "Common Cod",
