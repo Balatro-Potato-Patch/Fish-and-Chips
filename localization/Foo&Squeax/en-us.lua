@@ -69,7 +69,7 @@ return {
 					},
 					{
 						"Must be pet periodically",
-						"or it's shoed away",
+						"or it's shooed away",
 					},
 					{
 						"{X:mult,C:white}X#2#{} Mult",
