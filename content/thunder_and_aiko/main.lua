@@ -264,10 +264,21 @@ FishAndChips.Fish({
 		end
 		if context.after and not context.blueprint then
 			local prefix = ""
-			if pseudorandom("fac_nft_secret", 1, 2) == 1 then
-				local val = pseudorandom_element({ -69420, 21, 0 }, "fac_nft_secret_value")
+			if card.ability.extra.crashed or pseudorandom("fac_nft_secret", 1, 8) == 1 then
+				local val = pseudorandom_element({
+					card.ability.extra.crashed
+							and pseudorandom("fac_nft_secret", card.ability.extra.min, card.ability.extra.max)
+						or -69420,
+					21,
+					0,
+				}, "fac_nft_secret_value")
+				if val == -69420 then
+					card.ability.extra.crashed = true
+				elseif card.ability.extra.crashed then
+					card.ability.extra.crashed = nil
+				end
 				prefix = "=$"
-				card.ability.extra_value = -card.config.center.cost / 2 + val
+				card.ability.extra_value = math.max(1, math.floor(self.cost / 2)) + val
 			else
 				local change = pseudorandom("fac_nft_secret", card.ability.extra.min, card.ability.extra.max)
 				if change >= 0 then
