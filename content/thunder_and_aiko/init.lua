@@ -12,6 +12,11 @@ SMODS.Sound({
 	path = "thunder_and_aiko/moai.ogg",
 })
 
+SMODS.Sound({
+	key = "bruh",
+	path = "thunder_and_aiko/bruh.ogg",
+})
+
 PotatoPatchUtils.Developer({
 	name = "thunderedge",
 	loc = true,

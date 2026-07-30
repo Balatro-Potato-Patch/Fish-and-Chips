@@ -150,3 +150,12 @@ FishAndChips.Fish({
 		delay(5.2 * G.SETTINGS.GAMESPEED)
 	end
 })
+
+local play_sound_hook = play_sound
+function play_sound(sound_code, per, vol, ...)
+	if sound_code == "multhit2" and G.STATE == G.STATES.HAND_PLAYED and next(SMODS.find_card("fish_fac_moai_statue")) then
+		play_sound_hook("fac_bruh", per + 0.1, vol, ...)
+	else
+		play_sound_hook(sound_code, per, vol, ...)
+	end
+end
