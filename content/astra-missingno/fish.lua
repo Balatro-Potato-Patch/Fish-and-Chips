@@ -643,9 +643,11 @@ FishAndChips.Fish {
             print(stg.percent / 100)
             print(math.floor((G.GAME.chips / G.GAME.blind.chips) / (stg.percent / 100)))
             stg.rerolls = math.floor((G.GAME.chips / G.GAME.blind.chips) / (stg.percent / 100))
-            return {
-                message = localize { type = 'variable', key = 'a_fac_am_rerolls', vars = {stg.rerolls} }
-            }
+            if stg.rerolls > 0 then
+                return {
+                    message = localize { type = 'variable', key = 'a_fac_am_rerolls', vars = {stg.rerolls} }
+                }
+            end
         end
     end,
     add_to_deck = function(self, card, from_debuff)
