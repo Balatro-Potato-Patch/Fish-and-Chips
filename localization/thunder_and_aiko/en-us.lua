@@ -34,6 +34,22 @@ return {
                     "sunk into the water",
 				},
 			},
+			fish_fac_nft = {
+				name = "Non-Fungible Trout",
+				text = {
+					"when hand is played",
+					"Gives {C:mult}+1{} Mult per {C:fac_sand_dollars,f:fac_sand_dollars}$",
+					"of sell value",
+					"{C:inactive}(Minimum of {C:mult}+#1#{C:inactive} Mult)",
+					"{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+				},
+				flavor = {
+					"This fish is going to",
+					"to be worth millions",
+                    "in the future",
+					"trust me bro",
+				},
+			},
 		},
 		Other = {},
 		PotatoPatch = {
@@ -56,6 +72,8 @@ return {
 	misc = {
 		dictionary = {
 			k_fac_boom_ex = "Boom!",
+			k_fac_nft_sell_value1 = "Gains",
+			k_fac_nft_sell_value2 = "of sell value",
 		},
 	},
 }
