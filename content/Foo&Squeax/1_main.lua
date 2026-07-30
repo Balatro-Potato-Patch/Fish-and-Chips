@@ -1,5 +1,9 @@
 FishAndChips.FooSqueax = {
-	file_path = "Foo&Squeax/"
+	file_path = "Foo&Squeax/",
+	bucket = {
+		on = false,
+		water_height = 1
+	}
 }
 
 SMODS.Atlas{

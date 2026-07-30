@@ -20,6 +20,22 @@ return {
 						"Use to eat all skewered fish"
 					}
 				}
+			},
+			fish_fac_fas_submarine = {
+				name = 'Submarine',
+				flavour = {
+					"flavourful text"
+				},
+				text = {
+					{
+						"While Submerged:",
+						"All Jokers are debuffed",
+						"All fish retrigger 3 times"
+					},
+					{
+						"Use to submerge/unsubmerge"
+					}
+				}
 			}
 		},
 		PotatoPatch = {
