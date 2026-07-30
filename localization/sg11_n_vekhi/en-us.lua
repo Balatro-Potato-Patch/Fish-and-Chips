@@ -12,7 +12,7 @@ return {
 			fish_fac_sg11_n_vekhi_water_ghoul = {
 				name = "Water Ghoul",
 				text = {
-					"When {C:attention}primed{}, next caught fish",
+					"When {C:attention}primed{}, next caught Fish",
 					"will be {C:dark_edition}Negative{}, then",
 					"{S:1.1,C:red,E:2}self destructs{}",
 				},
@@ -20,20 +20,31 @@ return {
 			fish_fac_sg11_n_vekhi_water_ghoul_primed = {
 				name = "Water Ghoul",
 				text = {
-					"Next caught fish",
+					"Next caught Fish",
 					"will be {C:dark_edition}Negative{}, then",
 					"{S:1.1,C:red,E:2}self destructs{}",
 				},
 			},
 			fish_fac_sg11_n_vekhi_quantum_fish_wild = {
 				name = "Quantum Fish",
-				text = {},
+				text = {
+					"{C:attention}Any{} random card gives",
+					"{C:white,X:mult}X#1#{} Mult when scored",
+				},
+				flavour = {
+					"Exist in all places at the same time",
+					"Only one can be observed",
+				},
 			},
 			fish_fac_sg11_n_vekhi_quantum_fish = {
 				name = "Quantum Fish (photo)",
 				text = {
-					"Any random card gives",
+					"{C:attention}Any{} random card gives",
 					"{C:white,X:mult}X#1#{} Mult when scored",
+				},
+				flavour = {
+					"Exist in all places at the same time",
+					"Only one can be observed",
 				},
 			},
 		},

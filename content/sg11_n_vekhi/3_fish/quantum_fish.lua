@@ -15,8 +15,10 @@ local center = FishAndChips.Fish({
 			xmult = 3,
 		},
 	},
-	weight = 3,
-	environments = {},
+	weight = 2,
+	environments = {
+		wormhole = 100,
+	},
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = { card.ability.extra.xmult },
@@ -177,6 +179,12 @@ local function start_quantum_fish_sequence(card)
 	}))
 end
 
+local old_hooking_update = G.update_fac_fishing_hooking
+function G:update_fac_fishing_hooking(dt, ...)
+	old_hooking_update(self, dt, ...)
+	FishAndChips.QuantumFish.update_minigame(G.FAC_FISH_GAME, dt)
+end
+
 FishAndChips.QuantumFish = {
 	cards_to_score = {},
 	center = center,
@@ -185,6 +193,18 @@ FishAndChips.QuantumFish = {
 			if context.fac_fish_caught.config.center == center then
 				start_quantum_fish_sequence(context.fac_fish_caught)
 			end
+		end
+	end,
+	minigame_teleport_delay = 1.5,
+	minigame_pos = math.random(),
+	update_minigame = function(state, dt)
+		if state and state.profile and state.profile.key == FishAndChips.QuantumFish.center.key then
+			FishAndChips.QuantumFish.minigame_teleport_delay = FishAndChips.QuantumFish.minigame_teleport_delay - dt
+			if FishAndChips.QuantumFish.minigame_teleport_delay < 0 or not FishAndChips.QuantumFish.minigame_pos then
+				FishAndChips.QuantumFish.minigame_teleport_delay = 1.5
+				FishAndChips.QuantumFish.minigame_pos = math.random()
+			end
+			state.fish_pos = FishAndChips.QuantumFish.minigame_pos
 		end
 	end,
 }
