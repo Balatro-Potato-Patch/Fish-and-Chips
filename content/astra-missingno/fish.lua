@@ -195,12 +195,12 @@ FishAndChips.Fish {
             }
         end
 
-        if context.before then
+        if context.before and not context.blueprint then
             if stg.hand then
                 if context.scoring_name == stg.hand then
                     stg.times = stg.times + 1
                     SMODS.calculate_effect(
-                    { message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },
+                        { message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },
                         card)
                     if stg.times == stg.goal then
                         stg.times = 0
@@ -214,14 +214,14 @@ FishAndChips.Fish {
                     stg.times = 1
                     SMODS.calculate_effect({ message = localize('k_reset'), colour = G.C.RED }, card)
                     SMODS.calculate_effect(
-                    { message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },
+                        { message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },
                         card)
                 end
             else
                 stg.times = 1
                 stg.hand = context.scoring_name
                 SMODS.calculate_effect(
-                { message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },
+                    { message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },
                     card)
             end
         end
@@ -268,6 +268,7 @@ FishAndChips.Fish {
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
     attributes = { "usable", "economy" },
+    blueprint_compat = false,
     requires_hand = true,
     config = {
         extra = {
@@ -305,6 +306,7 @@ FishAndChips.Fish {
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
     attributes = { "economy", "destroy_card", "rank", "diamonds" },
+    blueprint_compat = false,
     config = {
         extra = {
             dollars = 1
@@ -356,51 +358,111 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-   key = "am_chameleon",
-   atlas = "astra-missingno-fish",
-   pos = { x = 3, y = 1 },
-   weight = 5,
-   ppu_coder = { "theAstra" },
-   ppu_artist = { "MissingNumber" },
-   attributes = { "copying" },
-   environments = {
-      wormhole = 5,
-      city_river = 5,
-      backroom = 5
-   },
-   loc_vars = function(self, info_queue, card)
-      if card.area and card.area == G.fac_fish_area then
-			local other_joker
+    key = "am_chameleon",
+    atlas = "astra-missingno-fish",
+    pos = { x = 3, y = 1 },
+    weight = 5,
+    ppu_coder = { "theAstra" },
+    ppu_artist = { "MissingNumber" },
+    attributes = { "copying" },
+    environments = {
+        wormhole = 5,
+        city_river = 5,
+        backroom = 5
+    },
+    loc_vars = function(self, info_queue, card)
+        if card.area and card.area == G.fac_fish_area then
+            local other_joker
             if #G.jokers.cards % 2 == 1 then
                 other_joker = G.jokers.cards[math.ceil(#G.jokers.cards / 2)]
             end
-			local compatible = other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat
-			local main_end = {
-				{
-					n = G.UIT.C,
-					config = { align = "bm", minh = 0.4 },
-					nodes = {
-						{
-							n = G.UIT.C,
-							config = { ref_table = card, align = "m", colour = compatible and mix_colours(G.C.GREEN, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.RED, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
-							nodes = {
-								{ n = G.UIT.T, config = { text = " " .. localize("k_" .. (compatible and "compatible" or "incompatible")) .. " ", colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
-							}
-						}
-					}
-				}
-			}
-			return { main_end = main_end }
-		end
-   end,
-   calculate = function(self, card, context)
-       local stg = card.ability.extra
+            local compatible = other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat
+            local main_end = {
+                {
+                    n = G.UIT.C,
+                    config = { align = "bm", minh = 0.4 },
+                    nodes = {
+                        {
+                            n = G.UIT.C,
+                            config = { ref_table = card, align = "m", colour = compatible and mix_colours(G.C.GREEN, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.RED, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
+                            nodes = {
+                                { n = G.UIT.T, config = { text = " " .. localize("k_" .. (compatible and "compatible" or "incompatible")) .. " ", colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
+                            }
+                        }
+                    }
+                }
+            }
+            return { main_end = main_end }
+        end
+    end,
+    calculate = function(self, card, context)
+        local stg = card.ability.extra
 
-       local other_joker
+        local other_joker
         if #G.jokers.cards % 2 == 1 then
             other_joker = G.jokers.cards[math.ceil(#G.jokers.cards / 2)]
         end
 
-       return SMODS.blueprint_effect(card, other_joker, context)
-   end,
+        return SMODS.blueprint_effect(card, other_joker, context)
+    end,
+}
+
+FishAndChips.Fish {
+    key = "am_mola",
+    atlas = "astra-missingno-fish",
+    pos = { x = 4, y = 1 },
+    pixel_size = { w = 68, h = 66 },
+    weight = 7,
+    ppu_coder = { "theAstra" },
+    ppu_artist = { "MissingNumber" },
+    attributes = { "boss_blind" },
+    blueprint_compat = false,
+    config = {
+        extra = {
+            prob = 1,
+            odds = 3
+        }
+    },
+    environments = {
+        pier = 7
+    },
+    loc_vars = function(self, info_queue, card)
+        local stg = card.ability.extra
+        local num, den = SMODS.get_probability_vars(card, stg.prob, stg.odds, "fac_am_mola")
+        return { vars = { num, den } }
+    end,
+    calculate = function(self, card, context)
+        local stg = card.ability.extra
+
+        if context.ending_shop and SMODS.pseudorandom_probability(card, "fac_am_mola", stg.prob, stg.odds) then
+            SMODS.destroy_cards(card, {pinch_anim = true})
+        end
+
+        if context.setting_blind and not card.getting_sliced and context.blind.boss then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            G.GAME.blind:disable()
+                            play_sound('timpani')
+                            delay(0.4)
+                            return true
+                        end
+                    }))
+                    return true
+                end
+            }))
+            SMODS.calculate_effect({ message = localize('ph_boss_disabled') }, card)
+            return nil, true
+        end
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        local stg = card.ability.extra
+
+        if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
+            G.GAME.blind:disable()
+            play_sound('timpani')
+            SMODS.calculate_effect({ message = localize('ph_boss_disabled') }, card)
+        end
+    end,
 }

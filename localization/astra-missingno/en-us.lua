@@ -103,6 +103,21 @@ return {
                     "although usually quite poorly"
                 }
             },
+            fish_fac_am_mola = {
+                name = "Mola Mola",
+                text = {
+                    {"Disables effect of",
+                    "every {C:attention}Boss Blind",},
+                    {"{C:green}#1# in #2#{} chance to {C:red,E:1}die{}",
+                    "at the end of the {C:attention}shop{}"}
+                },
+                flavor = {
+                    "While it's great at",
+                    "deterring parasites,",
+                    "it's quite terrible at",
+                    "literally everything else"
+                }
+            },
         },
     },
     misc = {
