@@ -13,7 +13,7 @@ PotatoPatchUtils.Developer{
 	name = "Foo54",
 	atlas = "fac_fas_credits_foo",
 	colour = HEX("ED5B5B"),
-	fac_partner = "Squeax",
+	fac_partner = "squeax09",
 	loc = true
 }
 
