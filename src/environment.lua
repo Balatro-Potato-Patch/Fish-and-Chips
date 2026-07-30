@@ -1127,14 +1127,16 @@ FishAndChips.Environment {
 		y = -2.75
 	},
 	update = function (self, dt)
-		if G.FISHING.banana_ad then
-			G.FISHING.banana_ad.alignment.offset.y = -2 - 0.1 * math.sin(G.TIMERS.REAL)
+		if G.FISHING then
+			if G.FISHING.banana_ad then
+				G.FISHING.banana_ad.alignment.offset.y = -2 - 0.1 * math.sin(G.TIMERS.REAL)
+			end
+			if G.FISHING.other_ad then
+				G.FISHING.other_ad.alignment.offset.y = -0.2 - 0.1 * math.sin(G.TIMERS.REAL * 0.99 + 0.1)
+			end
+			fac_wormhole_update_rocket()
+			fac_wormhole_update_potato()
 		end
-		if G.FISHING.other_ad then
-			G.FISHING.other_ad.alignment.offset.y = -0.2 - 0.1 * math.sin(G.TIMERS.REAL * 0.99 + 0.1)
-		end
-		fac_wormhole_update_rocket()
-		fac_wormhole_update_potato()
 	end,
 	generate_ui = function(self)
 		local scale_h = FAC_WORMHOLE_SCALE
