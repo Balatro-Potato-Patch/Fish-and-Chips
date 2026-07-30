@@ -139,15 +139,57 @@ FishAndChips.Fish {
     weight = 10,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNumber" },
-    attributes = { "" },
+    attributes = { "mult", "scaling" },
     config = {
-
+        extra = {
+            mult = 0,
+            gain = 10,
+            times = 0,
+            goal = 3,
+            hand = nil
+        }
     },
     environments = {
         pier = 10
     },
     loc_vars = function(self, info_queue, card)
+        local stg = card.ability.extra
+        local hand_name = stg.hand and localize(stg.hand, 'poker_hands') or localize('k_none')
+        return { vars = { stg.mult, stg.gain, stg.goal, stg.times, hand_name } }
+    end,
+    calculate = function(self, card, context)
+        local stg = card.ability.extra
+    
+        if context.joker_main then
+            return {
+                mult = stg.mult
+            }
+        end
 
+        if context.before then
+            if stg.hand then
+                if context.scoring_name == stg.hand then
+                    stg.times = stg.times + 1
+                    SMODS.calculate_effect({ message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },card)
+                    if stg.times == stg.goal then
+                        stg.times = 0
+                        SMODS.scale_card(card, {
+                            ref_table = stg,
+                            ref_value = "mult",
+                            scalar_value = "gain",
+                        })
+                    end
+                else
+                    stg.times = 1
+                    SMODS.calculate_effect({ message = localize('k_reset'), colour = G.C.RED },card)
+                    SMODS.calculate_effect({ message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },card)
+                end
+            else
+                stg.times = 1
+                stg.hand = context.scoring_name
+                SMODS.calculate_effect({ message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },card)
+            end
+        end
     end,
 }
 

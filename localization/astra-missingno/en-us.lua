@@ -38,7 +38,9 @@ return {
             fish_fac_am_shrimp = {
                 name = "Shrimp Scamperer",
                 text = {
-                    " "
+                    "{C:mult}+#1#{} Mult, gains {C:mult}+#2#{} Mult if a",
+                    " hand type is played {C:attention}#3#{C:inactive}[#4#]{} times",
+                    "{C:inactive,s:0.8}Current hand: #5#"
                 },
                 flavor = {
                     "One! Two! Three!",
