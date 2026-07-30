@@ -1,0 +1,21 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = '''functions/common_events.lua'''
+pattern = ''' elseif _c.set == 'Tag' then'''
+position = "before"
+payload = '''
+if cfg.crimsonseraphim_forged then
+    local str = FishAndChips.crimsonseraphim.create_forge_text(cfg)
+    if str then
+        FishAndChips.crimsonseraphim.generate_ui_multiboxes({
+            {localized_text = str}
+        })(_c, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    end
+end
+'''
+match_indent = true
