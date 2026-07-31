@@ -83,6 +83,7 @@ function Game:init_game_object()
     ret.fac_active_bait = nil
     ret.fac_treasure_earned = 0
     ret.fac_perfect_catches = 0
+	ret.fac_no_jokers = true
     return ret
 end
 
@@ -383,6 +384,13 @@ function Game:main_menu(change_context)
 
     return ret
 
+end
+
+local start_run_ref = Game.start_run
+function Game:start_run(...)
+	start_run_ref(self, ...)
+	FishAndChips.stop_ambience()
+	FishAndChips.stop_reel_sound()
 end
 
 
