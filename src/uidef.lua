@@ -1026,6 +1026,15 @@ function G.FUNCS.buy_from_shop(e, ...)
 		FishAndChips.remove_bait_from_shop(c.config.center_key)
 		SMODS.calculate_context { fac_buy_bait = c.config.center }
 		c:start_dissolve(nil, nil, 0.3)
+		if #c.area.cards > 1 then
+			local below = c.area.cards[#c.area.cards-1]
+			if below then
+				below.not_focusable = nil
+				if G.CONTROLLER.HID.controller then
+					G.CONTROLLER:snap_to{node = below}
+				end
+			end
+		end
 
 		local stocked_items = false
 		for _, v in ipairs(G.GAME.fac_bait_shop_items) do
@@ -1062,9 +1071,11 @@ function G.UIDEF.fac_create_shop_entry(key)
 		highlighted_limit = 1,
 		align_buttons = true,
 		no_card_count = true,
+		fac_bait_shop = true,
 	})
-	for _ = 1, amt do
+	for i = 1, amt do
 		local c = SMODS.add_card({ key = key, area = area })
+		if i ~= amt then c.not_focusable = true end
 		c.children.buy_button = UIBox({
 			definition = {
 				n = G.UIT.ROOT,
@@ -1294,9 +1305,11 @@ function G.UIDEF.fac_create_inventory_entry(key)
 		highlighted_limit = 0,
 		align_buttons = true,
 		no_card_count = true,
+		fac_bait_inventory = true,
 	})
-	for _ = 1, amt do
+	for i = 1, amt do
 		local c = SMODS.add_card({ key = key, area = area })
+		if i ~= amt then c.not_focusable = true end
 	end
 	return {
 		n = G.UIT.C,

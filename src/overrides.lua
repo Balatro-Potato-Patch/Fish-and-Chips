@@ -475,3 +475,12 @@ function Card:open()
 		end
 	}))
 end
+
+local focusable = Controller.is_node_focusable
+function Controller:is_node_focusable(node)
+	local ret = focusable(self, node)
+	if node.not_focusable then
+		ret = false
+	end
+	return ret
+end

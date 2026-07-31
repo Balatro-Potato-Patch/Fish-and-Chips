@@ -268,6 +268,7 @@ if SilkTouch then
 
     --#region Controller buttons
     local old_font = SilkTouch.ControllerButtons.sell.font
+	local old_focus_condition = SilkTouch.ControllerButtons.sell.focus_condition
     SilkTouch.ControllerButton:take_ownership("sell",
     {
         font = function(card)
@@ -283,6 +284,9 @@ if SilkTouch then
             end
             return t
         end,
+		focus_condition = function(card)
+			return old_focus_condition(card) and card.area and not card.area.config.fac_bait_shop and not card.area.config.fac_bait_inventory
+		end,
     },
     true)
 	SilkTouch.ControllerButton{
@@ -302,6 +306,24 @@ if SilkTouch then
 		end,
 		active_check_cb = "fac_can_use_fish",
 		press_func_cb = "fac_use_fish",
+	}
+	SilkTouch.ControllerButton{
+		key = "bait_buy",
+		side = "right",
+		button_key = "rightshoulder",
+		button_order = 0,
+		text = function(card)
+			return {
+				localize('b_buy'),
+				single_text = true,
+			}
+		end,
+		text_scale = function() return {0.5} end,
+		focus_condition = function(card)
+			return card.area and card.area.config.fac_bait_shop
+		end,
+		active_check_cb = "can_buy",
+		press_func_cb = "buy_from_shop",
 	}
     --#endregion
 end
