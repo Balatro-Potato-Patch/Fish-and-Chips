@@ -123,6 +123,26 @@ return {
                     "Am I bad, am I bad, am I bad, am I really that bad?"
                 }
             },
+
+            fish_fac_gungir = {
+                name = "Gungir",
+                text = {
+                    {
+                        "Use this {C:attention}Fish{} to",
+                        "charge or uncharge the Spear",
+                        "{C:inactive}(Currently: #1#)"
+                    },
+                    {
+                        "When charged: All caught {C:attention}Fish{} will",
+                        "have an edition, {C:red}self-destructs{} if",
+                        "catch is not perfect."
+                    }
+                },
+                flavor = {
+                    "A Heavenly spear formed",
+                    "from pure energy."
+                }
+            },
         },
         Other = {
             fac_crimsonseraphim_transmute = {
@@ -198,6 +218,10 @@ return {
             blue_fish_seal = "Blue Seal",
             purple_fish_seal = "Purple Seal",
             gold_fish_seal = "Gold Seal"
+        },
+        dictionary = {
+            k_charged = "Charged",
+            k_uncharged = "Uncharged"
         }
     }
 }

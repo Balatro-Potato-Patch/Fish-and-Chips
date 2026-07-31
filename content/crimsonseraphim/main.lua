@@ -104,7 +104,6 @@ function Card:transmute(seed, center)
             end
         end
         result = SMODS.poll_object{type = "fac_Fish", attributes = valid, union = true}
-        print(result.attributes)
     end
     --DO ANIM LATER
     G.E_MANAGER:add_event(Event{func = function() 
@@ -149,7 +148,8 @@ SMODS.DrawStep({
 	order = 25,
 	func = function(self)
         local card = self.config.center_key
-        if (card ~= "fish_fac_aeonfish")  then return end
+        if (card ~= "fish_fac_aeonfish" and card ~= "fish_fac_gungir")  then return end
+        if card == "fish_fac_gungir" and not self.ability.extra.charged then return end
         self.children.center:draw_shader('fac_aeonfish_caustics', nil, self.ARGS.send_to_shader)
 	end,
 	conditions = { vortex = false, facing = "front" },
@@ -695,7 +695,7 @@ FishAndChips.Fish {
 	weight = 5, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "generation" },
+	attributes = { "mult", "chips" },
 	config = {
 		extra = {
             mult = 1,
@@ -719,4 +719,57 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
         
 	end,
+}
+
+FishAndChips.Fish {
+	key = "gungir",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 3, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "generation" },
+	config = {
+		extra = {
+            charged = nil
+        }
+	},
+	environments = {
+		volcano = 5,
+        garden = 5,
+        aquifer = 5,
+	},
+	loc_vars = function(self, info_queue, card)
+    return {
+        vars = {
+            localize(card.ability.extra.charged and "k_charged" or "k_uncharged")
+        }
+    }
+	end,
+	use = function(self, card)
+		card.ability.extra.charged = not card.ability.extra.charged
+	end,
+	can_use = function(self, card)
+		return true
+	end,
+    keep_on_use = function()
+        return true
+    end,
+    calculate = function(self, card, context)
+        if card.ability.extra.charged then
+            if context.fac_fish_caught then
+                context.fac_fish_caught:set_edition(SMODS.poll_object{type = "Edition", guaranteed = true})
+            end
+            if context.fac_end_fishing and not context.perfect then
+                G.E_MANAGER:add_event(Event{
+                    trigger = "after",
+                    blocking = false,
+                    func = function()
+                        SMODS.destroy_cards(card, nil, true)
+                        return true
+                    end
+                })
+            end
+        end
+    end
 }
