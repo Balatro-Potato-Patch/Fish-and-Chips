@@ -1,0 +1,133 @@
+PotatoPatchUtils.Developer({
+	name = 'Blanthos',
+	atlas = 'fac_cards',
+	colour = G.C.YELLOW,
+	fac_partner = 'Hunter'
+})
+
+PotatoPatchUtils.Developer({
+	name = 'Hunter',
+	atlas = 'fac_cards',
+	pos = {x = 1, y = 0},
+	colour = G.C.YELLOW,
+	fac_partner = 'Blanthos'
+})
+
+SMODS.Atlas({
+	key = "fish", -- Please include your name/team name in your atlas keys
+	path = "mack/fish.png",
+	px = 71,
+	py = 95,
+})
+
+SMODS.Gradient {
+    key = 'happy_gradient',
+    colours = {G.C.FILTER, G.C.GREEN},
+    cycle = 1
+}
+
+SMODS.Gradient {
+    key = 'bored_gradient',
+    colours = {G.C.SECONDARY_SET.Spectral, G.C.SECONDARY_SET.Planet},
+    cycle = 1
+}
+
+--#region Fish
+
+FishAndChips.Fish {
+	key = "gneep_gnarp",
+	atlas = "fish",
+	pos = { x = 3, y = 0 },
+	weight = 75,
+	ppu_coder = { "Blanthos" },
+	ppu_artist = { "Hunter" },
+	attributes = { "hand_level", "scaling", "hand_type", "space", "usable", "economy" },
+	config = {
+		extra = {
+			happiness = 30,
+			boredom = 5,
+			food_cost = 3,
+			food_happiness = 5
+		},
+		immutable = {
+			hand = "HighCard"
+		}
+	},
+	environments = {
+		chocolate_river = 10,
+		wormhole = 10,
+		soup = 10
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.happiness, card.ability.extra.boredom, card.ability.extra.food_cost, card.ability.extra.food_happiness, math.floor (card.ability.extra.happiness / 15), localize(card.ability.immutable.hand, "poker_hands") } }
+	end,
+	can_use = function(self, card)
+		return G.GAME.dollars >= card.ability.extra.food_cost
+	end,
+    keep_on_use = function()
+        return true
+    end,
+	use = function(self, card)
+            SMODS.scale_card(card, {
+                    ref_value = "happiness",
+                    scalar_value = "food_happiness",
+                    operation = '+',
+                    message_key = "blanth_yum",
+                    message_colour = G.C.SECONDARY_SET.Planet
+                })
+                return nil, true
+		end,
+
+  calculate = function(self, card, context)
+        if context.before then
+            return {
+                message = localize("blanth_placeholder"),
+                colour = G.C.SECONDARY_SET.Planet,
+                func = function()
+                    SMODS.upgrade_poker_hands({
+                        hands = card.ability.immutable.hand,
+                        level_up = math.floor (card.ability.extra.happiness / 15),
+                        from = context.blueprint and context.blueprint_card or card
+                    })
+                end
+            }
+        end
+        if context.after then
+            SMODS.upgrade_poker_hands({
+                hands = card.ability.immutable.hand,
+                level_up = math.ceil (-card.ability.extra.happiness / 15),
+                from = context.blueprint and context.blueprint_card or card
+            })
+            return nil, true
+        end
+
+        if context.end_of_round and context.main_eval then
+         if card.ability.extra.happiness - card.ability.extra.boredom <= 0 then
+                SMODS.destroy_cards(card, {pinch_anim = true})
+                return {
+                    message = localize("blanth_placeholder")
+                }
+            else
+                SMODS.scale_card(card, {
+                    ref_value = "happiness",
+                    scalar_value = "boredom",
+                    operation = '-',
+                    message_key = "blanth_bored",
+                    message_colour = G.C.SECONDARY_SET.Planet
+                })
+                return nil, true
+		end
+	end
+end,
+    set_ability = function(self, card, initial, delay_sprites)
+        local _poker_hands = {}
+        for handname, _ in pairs(G.GAME.hands) do
+            if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand then
+                _poker_hands[#_poker_hands + 1] = handname
+            end
+        end
+        card.ability.immutable.hand = pseudorandom_element(_poker_hands, 'fac_gneep_gnarp')
+    end
+}
+
+--#endregion
