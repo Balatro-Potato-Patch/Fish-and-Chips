@@ -196,7 +196,6 @@ function Card:add_to_deck(...)
     end
 end
 
--- TODO: code check
 FishAndChips.Achievement({
     key = 'no_jokers',
     unlock_condition = function(self, args)
