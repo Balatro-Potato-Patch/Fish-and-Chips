@@ -121,7 +121,7 @@ FishAndChips.Rod {
 	unlocked = false,
 	check_for_unlock = function(self, args)
 		if args.type == "fac_fish_caught" then
-			for k, v in pairs(G.P_CENTER_POOLS.fac_Bait) do
+			for _, v in pairs(G.P_CENTER_POOLS.fac_Bait) do
 				if not G.PROFILES[G.SETTINGS.profile].fac_fishing.baits_used[v.key] then
 					return false
 				end
@@ -186,7 +186,12 @@ FishAndChips.Rod {
 	unlocked = false,
 	check_for_unlock = function(self, args)
 		if args.type == "fac_fish_caught" then
-			return #G.PROFILES[G.SETTINGS.profile].fac_fishing.environments_fished >= #G.FAC_ENVIRONMENT_POOL
+			for _, v in pairs(G.FAC_ENVIRONMENT_POOL) do
+				if not G.PROFILES[G.SETTINGS.profile].fac_fishing.environments_fished[v.key] then
+					return false
+				end
+			end
+			return true
 		end
 	end,
 	force_environment = function(self, card, args)
