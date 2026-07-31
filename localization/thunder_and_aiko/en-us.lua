@@ -77,9 +77,30 @@ return {
 					"{C:inactive}(Must have room)",
 				},
 				flavor = {
-					"Tastes like fish"
-				}
-			}
+					"Tastes like fish",
+				},
+			},
+			fish_fac_killer = {
+				name = { "Killer Fish", "from San Diego" },
+				text = {
+					{
+						"At end of round, destroy the",
+						"nearest {C:attention}Fish{} in the direction",
+						"that this {C:attention}Fish{} points towards",
+						"and this {C:attention}Fish{} gains {C:attention}1{} charge",
+					},
+					{
+						"Spend {C:attention}1{} charge to use this",
+						"Fish and turn {C:attention}1{} selected",
+						"card into a {C:attention}Glass Card",
+						"{C:inactive}(Currently {C:attention}#1#{C:inactive} charges)",
+					}
+				},
+				flavor = {
+					"I don't know what I am,",
+					"but I taste really good",
+				},
+			},
 		},
 		Other = {},
 		PotatoPatch = {

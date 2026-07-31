@@ -327,11 +327,16 @@ FishAndChips.Fish({
 				xmult = card.ability.extra.xmult,
 			}
 		end
-		if context.end_of_round and context.main_eval and not context.blueprint and not context.game_over then
+		if
+			context.end_of_round
+			and context.main_eval
+			and not context.blueprint
+			and not context.game_over
+			and card.ability.extra.used
+		then
 			card.ability.extra.used = false
-			print("reached")
 			local eval = function()
-				return not card.ability.extra.used and not G.RESET_JIGGLES
+				return not card.ability.extra.used
 			end
 			juice_card_until(card, eval, true)
 		end
@@ -342,7 +347,7 @@ FishAndChips.Fish({
 	add_to_deck = function(self, card, from_debuff)
 		if not card.ability.extra.used then
 			local eval = function()
-				return not card.ability.extra.used and not G.RESET_JIGGLES
+				return not card.ability.extra.used
 			end
 			juice_card_until(card, eval, true)
 		end
@@ -401,4 +406,116 @@ FishAndChips.Fish({
 			end
 		end
 	end,
+})
+
+FishAndChips.Fish({
+	key = "killer",
+	weight = 5,
+	environments = {
+		swamp = 1,
+		city_river = 1,
+	},
+	attributes = { "usable", "enhancements", "destroy_card" },
+	ppu_coder = { "thunderedge" },
+	ppu_artist = { "aikoyori" },
+	config = { extra = { charges = 0, facing = "right" } },
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_CENTERS.m_glass
+		return {
+			vars = {
+				card.ability.extra.charges,
+			},
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval and not context.blueprint and not context.game_over then
+			local index = 0
+			for i, c in ipairs(G.fac_fish_area.cards) do
+				if card == c then
+					index = i
+					break
+				end
+			end
+			local index_to_check = index
+			if card.ability.extra.facing == "right" then
+				card.ability.extra.facing = "left"
+				index_to_check = index_to_check + 1
+			else
+				card.ability.extra.facing = "right"
+				index_to_check = index_to_check - 1
+			end
+			if
+				G.fac_fish_area.cards[index_to_check]
+				and not SMODS.is_eternal(G.fac_fish_area.cards[index_to_check], card)
+			then
+				card.ability.extra.charges = card.ability.extra.charges + 1
+				SMODS.destroy_cards(G.fac_fish_area.cards[index_to_check])
+			end
+		end
+	end,
+	can_use = function(self, card)
+		return card.ability.extra.charges > 0 and G.hand and #G.hand.highlighted == 1
+	end,
+	use = function(self, card)
+		card.ability.extra.charges = card.ability.extra.charges - 1
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.4,
+			func = function()
+				play_sound("tarot1")
+				card:juice_up(0.3, 0.5)
+				return true
+			end,
+		}))
+		for i = 1, #G.hand.highlighted do
+			local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
+			G.E_MANAGER:add_event(Event({
+				trigger = "after",
+				delay = 0.15,
+				func = function()
+					G.hand.highlighted[i]:flip()
+					play_sound("card1", percent)
+					G.hand.highlighted[i]:juice_up(0.3, 0.3)
+					return true
+				end,
+			}))
+		end
+		delay(0.2)
+		for i = 1, #G.hand.highlighted do
+			G.E_MANAGER:add_event(Event({
+				trigger = "after",
+				delay = 0.1,
+				func = function()
+					G.hand.highlighted[i]:set_ability("m_glass")
+					return true
+				end,
+			}))
+		end
+		for i = 1, #G.hand.highlighted do
+			local percent = 0.85 + (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
+			G.E_MANAGER:add_event(Event({
+				trigger = "after",
+				delay = 0.15,
+				func = function()
+					G.hand.highlighted[i]:flip()
+					play_sound("tarot2", percent, 0.6)
+					G.hand.highlighted[i]:juice_up(0.3, 0.3)
+					return true
+				end,
+			}))
+		end
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.2,
+			func = function()
+				G.hand:unhighlight_all()
+				return true
+			end,
+		}))
+		delay(0.5)
+	end,
+	keep_on_use = function(self, card)
+		return true
+	end,
+	requires_hand = true,
 })
