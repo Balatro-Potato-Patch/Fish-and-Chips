@@ -682,7 +682,7 @@ FishAndChips.Fish {
 			card.ability.extra.remaining_uses = card.ability.extra.max_uses
 			if before < card.ability.extra.max_uses then
 				return {
-					message = localiue("k_reset"),
+					message = localize("k_reset"),
 					colour = G.C.IMPORTANT
 				}
 			end
@@ -713,6 +713,9 @@ FishAndChips.Fish {
                 end
             }))
 		end
+	end,
+	keep_on_use = function (self, card)
+		return true
 	end,
 	can_use = function (self, card)
 		return G.hand and #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.max_cards and card.ability.extra.remaining_uses > 0
