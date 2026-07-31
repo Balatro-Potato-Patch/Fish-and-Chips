@@ -18,6 +18,6 @@ FishAndChips.Fish{
 	},
 	attributes = {"xmult"},
 	loc_vars = function(self, info_queue, card)
-		return {vars = {card.ability.extra.xmult, card.ability.extra.call}}
+		return {vars = {card.ability.extra.xmult, card.ability.extra.call, pseudorandom_element({"Nyon!", "Ueueleuleuleue"})}}
 	end,
 }

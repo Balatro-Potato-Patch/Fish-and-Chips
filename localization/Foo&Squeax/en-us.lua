@@ -24,7 +24,8 @@ return {
 			fish_fac_fas_submarine = {
 				name = 'Submarine',
 				flavour = {
-					"flavourful text"
+					"Looks like someone decided to",
+					"take the 3-0-0 out on a joyride"
 				},
 				text = {
 					{
@@ -61,7 +62,7 @@ return {
 			fish_fac_fas_kawkaw = {
 				name = "BlubBlub",
 				flavour = {
-					"nyon"
+					"#3#"
 				},
 				text = {
 					{
@@ -92,7 +93,9 @@ return {
 			fish_fac_fas_can_of_wormholes = {
 				name = "Can of Wormholes",
 				flavour = {
-					"flavourful text"
+					"These space-faring worms finally",
+					"managed to reach the other",
+					"side of the wormhole"
 				},
 				text = {
 					{

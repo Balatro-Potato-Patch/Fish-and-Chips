@@ -5,7 +5,8 @@ FishAndChips.Fish{
 	key = "fas_can_of_wormholes",
 	ppu_coder = {"Foo54"},
 	environments = {
-		wormhole = 1
+		wormhole = 1,
+		city_river = 0.2,
 	},
 	weight = 10,
 	config = {

@@ -1,9 +1,5 @@
 FishAndChips.FooSqueax = {
 	file_path = "Foo&Squeax/",
-	bucket = {
-		on = false,
-		water_height = 1
-	},
 	fat_chud = {
 		active = false,
 		state = 0,
