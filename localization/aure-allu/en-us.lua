@@ -195,8 +195,8 @@ return {
             fish_fac_clownfish = {
                 name = {"Clownfish"},
                 text = {
-                    "Copies ability of {C:attention}Joker",
-                    "at this {C:fac_fish}Fish{}'s {C:attention}position"
+                    "{C:attention,E:1}Copies ability{} of {C:attention}Joker",
+                    "at this {C:fac_fish}Fish{}'s position"
                 },
                 flavor = {
                     ""
