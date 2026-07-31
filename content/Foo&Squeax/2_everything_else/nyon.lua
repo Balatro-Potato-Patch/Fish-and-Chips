@@ -25,8 +25,7 @@ FishAndChips.Fish{
 	ppu_coder = {"Foo54"},
 	config = {
 		extra = {
-			xmult = 5,
-			call = 0.5,
+			xmult = 4,
 			rounds = 3
 		},
 		immutable = {
@@ -69,7 +68,7 @@ FishAndChips.Fish{
 	calculate = function(self, card, context)
 		if context.joker_main then
 			return {
-				xmult = card.ability.immutable.slow and card.ability.extra.call or card.ability.extra.xmult,
+				xmult = card.ability.extra.xmult,
 				func = function()
 					G.E_MANAGER:add_event(Event{
 						func = function ()

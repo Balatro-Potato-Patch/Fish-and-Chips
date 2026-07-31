@@ -70,12 +70,9 @@ return {
 					},
 					{
 						"Must be pet periodically",
+						"{C:inactive}(but not too much)",
 						"or it's shooed away",
-						"{C:inactive}[#3# seconds remaining]"
-					},
-					{
-						"{X:mult,C:white}X#2#{} Mult",
-						"if it's pet too much"
+						"{C:inactive}[#4# seconds remaining]"
 					}
 				}
 			},
