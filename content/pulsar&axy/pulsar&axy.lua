@@ -106,4 +106,53 @@ FishAndChips.Fish {
 	end,
 }
 
+FishAndChips.Fish {
+	key = "onering",
+	weight = 2,
+	atlas = "pulsarfish",
+	pos = { x = 3 , y = 1},
+	ppu_artist = { "Pulsar" },
+	ppu_coder = { "Axy" },
+	attributes = { "boss_blind", "scaling", "passive" },
+	environments = {
+		aquifer = 1,
+		chocolate_river = 0.3,
+		styx = 0.3,
+		city_river = 0.3
+	},
+	loc_txt = {
+		"potato"
+	},
+	blueprint_compat = false,
+	config = {
+		extra = {
+			perma_h_xblind_size = 2,
+			blindsize = 1,
+			blindsize_increase = 1.15
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.perma_h_xblind_size, } }
+	end,
+	remove_from_deck = function(self, card, from_debuff)
+		if FishAndChips.get_environment().key ~= 'volcano' then
+			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling * card.ability.extra.perma_h_xblind_size
+		else
+			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling / card.ability.extra.perma_h_xblind_size
+		end
+	end,
+	calculate = function(self, card, context)
+		-- disable all boss blinds
+		-- blind size increases per round
+		if context.end_of_round then
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "blindsize",
+                scalar_value = "blindsize_increase",
+				operation = '*'
+            })
+		end
+	end
+}
+
 --#endregion
