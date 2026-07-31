@@ -3,19 +3,20 @@
 ----------
 
 PotatoPatchUtils.Developer {
-  name = 'PLagger',
+  name = 'Omegaflowey18',
   colour = G.C.MULT,
-  fac_partner = 'Omegaflowey18',
+  fac_partner = 'PLagger',
+  atlas = 'fac_plaggeromega_credits',
   pos = {x = 0, y = 0}
 }
 
 PotatoPatchUtils.Developer {
-  name = 'Omegaflowey18',
+  name = 'PLagger',
   colour = G.C.MULT,
-  fac_partner = 'PLagger',
-  pos = {x = 0, y = 0}
+  fac_partner = 'Omegaflowey18',
+  atlas = 'fac_plaggeromega_credits',
+  pos = {x = 1, y = 0}
 }
-
 
 --[[
 ideas:
@@ -32,10 +33,17 @@ Gummigoo in Choco River & Swamp
 ----------
 
 SMODS.Atlas({
-	key = "plaggeromega_fish", -- Please include your name/team name in your atlas keys
+	key = "plaggeromega_fish",
 	path = "PLagger-Omega/fish.png",
 	px = 71,
 	py = 95,
+})
+
+SMODS.Atlas({
+  key = 'plaggeromega_credits',
+  path = 'PLagger-Omega/credits.png',
+  px = 71,
+  py = 95
 })
 
 ----------
