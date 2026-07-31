@@ -81,20 +81,47 @@ local function fac_profile_from_center(center)
         treasure_gain = rod.treasure_gain == nil and t.treasure_gain or rod.treasure_gain,
         catch_gain = rod.catch_gain == nil and t.catch_gain or rod.catch_gain,
         catch_loss = rod.catch_loss == nil and t.catch_loss or rod.catch_loss,
-        vel_limit = rod.vel_limit == nil and t.vel_limit or rod.vel_limit,
-        impulse_min = center.impulse_min == nil and t.impulse_min or rod.impulse_min,
-        impulse_max = center.impulse_max == nil and t.impulse_max or rod.impulse_max,
-        decision_min = center.decision_min == nil and t.decision_min or rod.decision_min,
-        decision_max = center.decision_max == nil and t.decision_max or rod.decision_max,
-        colour = center.colour == nil and t.colour or rod.colour,
+        vel_limit = (center.vel_limit or t.vel_limit) * (rod.vel_limit or 1),
+        impulse_min = (center.impulse_min or t.impulse_min) * (rod.impulse_min or 1),
+        impulse_max = (center.impulse_max or t.impulse_max) * (rod.impulse_max or 1),
+        decision_min = (center.decision_min or t.decision_min) * (rod.decision_min or 1),
+        decision_max = (center.decision_max or t.decision_max) * (rod.decision_max or 1),
+        colour = center.colour or rod.colour or t.colour,
         rod = rod,
         rod_key = key,
         center = center
     }
 end
 
+function FishAndChips.modify_fishing_profile(profile)
+    local fish_profile = {
+        treasure_gain = profile.treasure_gain,
+        vel_limit = profile.vel_limit,
+        impulse_min = profile.impulse_min,
+        impulse_max = profile.impulse_max,
+        decision_min = profile.decision_min,
+        decision_max = profile.decision_max,
+        colour = profile.colour,
+    }
+    local context = {
+        fac_modify_fishing_profile = true,
+        fishing_profile = fish_profile,
+        hooked_fish = profile.center,
+    }
+    SMODS.calculate_context(context)
+    local modified_profile = context.fishing_profile or fish_profile
+    if modified_profile.treasure_gain ~= nil then profile.treasure_gain = modified_profile.treasure_gain end
+    if modified_profile.vel_limit ~= nil then profile.vel_limit = modified_profile.vel_limit end
+    if modified_profile.impulse_min ~= nil then profile.impulse_min = modified_profile.impulse_min end
+    if modified_profile.impulse_max ~= nil then profile.impulse_max = modified_profile.impulse_max end
+    if modified_profile.decision_min ~= nil then profile.decision_min = modified_profile.decision_min end
+    if modified_profile.decision_max ~= nil then profile.decision_max = modified_profile.decision_max end
+    if modified_profile.colour ~= nil then profile.colour = modified_profile.colour end
+    return profile
+end
+
 local function fac_pick_profile()
-    local key = FishAndChips.poll_fish()
+    local key = G.GAME.fac_forced_fish or FishAndChips.poll_fish()
     local center = key and G.P_CENTERS[key]
     if not center then
         return nil
@@ -222,12 +249,42 @@ function FishAndChips.get_area_for_center(center)
     return G.jokers -- default
 end
 
+local function fac_get_fishing_stats(rod_key, bait_key)
+    local profile_data = G.PROFILES[G.SETTINGS.profile].fac_fishing
+    profile_data.rod_data = profile_data.rod_data or {}
+    profile_data.bait_data = profile_data.bait_data or {}
+
+    local rod_stats = profile_data.rod_data[rod_key] or {}
+    rod_stats.fish_caught = rod_stats.fish_caught or 0
+    rod_stats.fish_lost = rod_stats.fish_lost or 0
+    rod_stats.perfect_catch = rod_stats.perfect_catch or 0
+    rod_stats.treasure = rod_stats.treasure or 0
+    profile_data.rod_data[rod_key] = rod_stats
+
+    local bait_stats
+    if bait_key then
+        bait_stats = profile_data.bait_data[bait_key] or {}
+        bait_stats.fish_caught = bait_stats.fish_caught or 0
+        bait_stats.fish_lost = bait_stats.fish_lost or 0
+        bait_stats.perfect_catch = bait_stats.perfect_catch or 0
+        bait_stats.treasure = bait_stats.treasure or 0
+        profile_data.bait_data[bait_key] = bait_stats
+    end
+
+    return profile_data, rod_stats, bait_stats
+end
+
 local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_catch)
     reward_area = reward_area or G.FISHING.fac_fish_reward_area
     if not (profile.center and G.fac_fish_area) then
         return nil
     end
-    local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[profile.key] or {}
+    local treasure_type = state.treasure_type
+    local treasure_reward = treasure_type == "dollars"
+        and state.result_dollars_reward or state.result_reward
+    local profile_data = G.PROFILES[G.SETTINGS.profile].fac_fishing
+    profile_data.fish_data = profile_data.fish_data or {}
+    local fish_data = profile_data.fish_data[profile.key] or {}
     local first_catch = not (fish_data.times_caught and fish_data.times_caught > 0)
     profile.center.discovered = true
     play_sound('fac_fish_landed', math.random(0.8, 1.2))
@@ -235,31 +292,37 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     if added_card then
         added_card:set_sprites(added_card.config.center)
         added_card.states.visible = false
+        SMODS.calculate_context({fac_fish_caught = added_card, fish = profile.key, treasure = is_treasure_catch or false, perfect = state.perfect or false})
     end
 
     local rod_key = FishAndChips.get_rod().key
-    G.PROFILES[G.SETTINGS.profile].fac_fishing.career_fish_caught = G.PROFILES[G.SETTINGS.profile].fac_fishing.career_fish_caught + 1
-    G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[profile.key] = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[profile.key] or {
+    local bait_key = G.GAME.fac_active_bait
+    local _, rod_stats, bait_stats = fac_get_fishing_stats(rod_key, bait_key)
+    profile_data.environments_fished = profile_data.environments_fished or {}
+    profile_data.baits_used = profile_data.baits_used or {}
+    profile_data.fish_data[profile.key] = profile_data.fish_data[profile.key] or {
         first_catch = os.date('%d %B'),
         times_caught = 0,
         rod = rod_key
     }
-    G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[profile.key].times_caught = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[profile.key].times_caught + 1
-    G.PROFILES[G.SETTINGS.profile].fac_fishing.rod_data[rod_key].fish_caught = G.PROFILES[G.SETTINGS.profile].fac_fishing.rod_data[rod_key].fish_caught + 1
-    G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[G.GAME.fac_active_bait].fish_caught = G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[G.GAME.fac_active_bait].fish_caught + 1
+    local fish_stats = profile_data.fish_data[profile.key]
+    profile_data.career_fish_caught = (profile_data.career_fish_caught or 0) + 1
+    fish_stats.times_caught = (fish_stats.times_caught or 0) + 1
+    rod_stats.fish_caught = rod_stats.fish_caught + 1
+    if bait_stats then bait_stats.fish_caught = bait_stats.fish_caught + 1 end
     if state.perfect and queue ~= "fac_treasure_reveal" then
-        G.PROFILES[G.SETTINGS.profile].fac_fishing.career_perfect_catch = G.PROFILES[G.SETTINGS.profile].fac_fishing.career_perfect_catch + 1
-        G.PROFILES[G.SETTINGS.profile].fac_fishing.rod_data[rod_key].perfect_catch = G.PROFILES[G.SETTINGS.profile].fac_fishing.rod_data[rod_key].perfect_catch + 1
-        G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[G.GAME.fac_active_bait].perfect_catch = G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[G.GAME.fac_active_bait].perfect_catch + 1
+        profile_data.career_perfect_catch = (profile_data.career_perfect_catch or 0) + 1
+        rod_stats.perfect_catch = rod_stats.perfect_catch + 1
+        if bait_stats then bait_stats.perfect_catch = bait_stats.perfect_catch + 1 end
     end
     if state.got_treasure and queue ~= "fac_treasure_reveal" then
-        G.PROFILES[G.SETTINGS.profile].fac_fishing.career_treasure_caught = G.PROFILES[G.SETTINGS.profile].fac_fishing.career_treasure_caught + 1
-        G.PROFILES[G.SETTINGS.profile].fac_fishing.rod_data[rod_key].treasure = G.PROFILES[G.SETTINGS.profile].fac_fishing.rod_data[rod_key].treasure + 1
-        G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[G.GAME.fac_active_bait].treasure = G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[G.GAME.fac_active_bait].treasure + 1
+        profile_data.career_treasure_caught = (profile_data.career_treasure_caught or 0) + 1
+        rod_stats.treasure = rod_stats.treasure + 1
+        if bait_stats then bait_stats.treasure = bait_stats.treasure + 1 end
     end
-    G.PROFILES[G.SETTINGS.profile].fac_fishing.environments_fished[FishAndChips.get_environment().key] = true
-    if G.GAME.fac_active_bait and queue ~= "fac_treasure_reveal" then
-        G.PROFILES[G.SETTINGS.profile].fac_fishing.baits_used[G.GAME.fac_active_bait] = true
+    profile_data.environments_fished[FishAndChips.get_environment().key] = true
+    if bait_key and queue ~= "fac_treasure_reveal" then
+        profile_data.baits_used[bait_key] = true
     end
     check_for_unlock({
         type = 'fac_fish_caught',
@@ -366,11 +429,9 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
             end
             caught_box.states.visible = true
             caught_box:juice_up()
-            if state.treasure_type == "sand_dollars" or state.treasure_type == "dollars" then
-                local reward_amount = state.treasure_type == "dollars"
-                    and state.result_dollars_reward or state.result_reward
+            if treasure_type == "sand_dollars" or treasure_type == "dollars" then
                 treasure_box = UIBox {
-                    definition = G.UIDEF.fac_treasure_reward(reward_amount, state.treasure_type),
+                    definition = G.UIDEF.fac_treasure_reward(treasure_reward, treasure_type),
                     config = {
                         align = "cl",
                         major = added_card,
@@ -387,6 +448,10 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
             return true
         end
     }), queue)
+    if added_card and added_card.ability.set == "fac_Fish" and type(added_card.config.center.on_catch) == "function" then
+        local center = added_card.config.center
+        center:on_catch(added_card)
+    end
     delay(G.SETTINGS.GAMESPEED * ((first_catch or state.perfect) and 1 or 2), queue)
     if first_catch and added_card.ability.set == 'fac_Fish' then
         G.E_MANAGER:add_event(Event({
@@ -497,13 +562,11 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
             if discovery_text then discovery_text:remove() end
             if perfect_catch_text then perfect_catch_text:remove() end
             if treasure_catch_text then treasure_catch_text:remove() end
-            if treasure_box then
-                treasure_box:remove()
-                if state.treasure_type == "dollars" then
-                    ease_dollars(state.result_dollars_reward)
-                else
-                    ease_sand_dollars(state.result_reward)
-                end
+            if treasure_box then treasure_box:remove() end
+            if treasure_type == "dollars" then
+                ease_dollars(treasure_reward)
+            elseif treasure_type == "sand_dollars" then
+                ease_sand_dollars(treasure_reward)
             end
             return true
         end
@@ -522,6 +585,8 @@ local function fac_finish_round(success, skip)
         state.reel_rumbling = false
         fac_rumble_release()
     end
+    local fish_obj
+    local treasure_obj
     if success then
         state.result_message = localize(state.perfect and "ph_fac_perfect_catch" or "ph_fac_good_catch")
         state.celebrate_t = FAC_CELEBRATE_DURATION
@@ -555,11 +620,11 @@ local function fac_finish_round(success, skip)
             check_for_unlock({type = 'fac_treasure', value = G.GAME.fac_treasure_earned})
         end
         FishAndChips.rod_function("on_catch", state.profile.key)
-        fac_reveal_catch(state, state.profile)
+        fish_obj = fac_reveal_catch(state, state.profile)
         if treasure_profile then
             FishAndChips.rod_function("on_catch", treasure_profile.key)
             G.E_MANAGER.queues.fac_treasure_reveal = G.E_MANAGER.queues.fac_treasure_reveal or {}
-            fac_reveal_catch(state, treasure_profile, "fac_treasure_reveal", G.FISHING.fac_treasure_reward_area, true)
+            treasure_obj = fac_reveal_catch(state, treasure_profile, "fac_treasure_reveal", G.FISHING.fac_treasure_reward_area, true)
         end
     else
         play_sound('fac_line_snap', 1.2)
@@ -570,10 +635,12 @@ local function fac_finish_round(success, skip)
         if not skip then 
             check_for_unlock({type = 'fac_fish_escaped'})
         else
-            G.PROFILES[G.SETTINGS.profile].fac_fishing.career_lines_snapped = G.PROFILES[G.SETTINGS.profile].fac_fishing.career_lines_snapped + 1
+            local profile_data = G.PROFILES[G.SETTINGS.profile].fac_fishing
+            profile_data.career_lines_snapped = (profile_data.career_lines_snapped or 0) + 1
         end
-        G.PROFILES[G.SETTINGS.profile].fac_fishing.rod_data[FishAndChips.get_rod().key].fish_lost = G.PROFILES[G.SETTINGS.profile].fac_fishing.rod_data[FishAndChips.get_rod().key].fish_lost  + 1
-        G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[G.GAME.fac_active_bait].fish_lost = G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[G.GAME.fac_active_bait].fish_lost  + 1
+        local _, rod_stats, bait_stats = fac_get_fishing_stats(FishAndChips.get_rod().key, G.GAME.fac_active_bait)
+        rod_stats.fish_lost = rod_stats.fish_lost + 1
+        if bait_stats then bait_stats.fish_lost = bait_stats.fish_lost + 1 end
         fac_rumble(0.5, 0.25)
         FishAndChips.remove_bait_from_inventory(G.GAME.fac_active_bait)
         if G.GAME.fac_active_bait then
@@ -586,7 +653,7 @@ local function fac_finish_round(success, skip)
             }))
         end
     end
-    SMODS.calculate_context{fac_end_fishing = true, failed = not success, fish = success and state.profile.key, treasure = success and state.got_treasure}
+    SMODS.calculate_context({fac_end_fishing = true, failed = not success, fish = success and state.profile.key or nil, fish_obj = fish_obj or nil, treasure = success and state.got_treasure or false, treasure_available = state.treasure_enabled or false, treasure_progress = state.treasure_meter or 0, missed_treasure = success and state.treasure_enabled and not state.got_treasure or false, attempted_treasure = state.treasure_enabled and not state.got_treasure and (state.treasure_meter or 0) > 0 or false, treasure_obj = treasure_obj, perfect = success and state.perfect or false})
 end
 local function fac_begin_hooking_round()
     local state = fac_ensure_state()
@@ -594,6 +661,7 @@ local function fac_begin_hooking_round()
     if not profile then
         return false
     end
+    profile = FishAndChips.modify_fishing_profile(profile)
     state.profile = profile
     state.meter = 0
     state.meter_primed = false
@@ -651,6 +719,9 @@ end
 function G.FUNCS.fac_go_fish(e)
     if G.STATE ~= G.STATES.FAC_FISHING or G.FISHING_STATE ~= G.FISHING_STATES.LOBBY or FishAndChips.in_tutorial then
         return
+    end
+    if G.GAME.fac_fish_expanded then
+        G.FUNCS.fac_open_fishing_menu()
     end
     fac_ensure_state().fishing_active = true
     FishAndChips.fade_fishing_buttons()
@@ -713,6 +784,7 @@ function G:update_fac_fishing_casting(dt)
         state.bite_timer = fac_clamp(fac_rand(0.75, 1.95) - state.cast_power * 0.55, 0.35, 1.95)
         G.FISHING_STATE_COMPLETE = true
         FishAndChips.update_jimbo_state(FishAndChips.JIMBO_ANIMATION_STATES.CAST)
+        SMODS.calculate_context{fac_cast_rod = true}
     end
     if G.FAC_JIMBO_ANIMATION_STATE == FishAndChips.JIMBO_ANIMATION_STATES.WAIT then
         state.cast_timer = state.cast_timer - dt
@@ -1061,8 +1133,18 @@ local function fac_get_rod_tip_local(px, py, pw, ph, force_anim_state)
     return px + fx * pw, py + fy * ph
 end
 
+local FAC_STATUS_QUEUE
 local function fac_draw_text_with_black_bg(str, x, y, text_color)
     if FishAndChips.show_ui then
+        if FAC_STATUS_QUEUE then
+            FAC_STATUS_QUEUE[#FAC_STATUS_QUEUE + 1] = {
+                str = str,
+                x = x,
+                y = y,
+                colour = text_color or {0.88, 0.97, 1, 1},
+            }
+            return
+        end
         local textbox_w = love.graphics.getFont():getWidth(str) + 12
         local textbox_h = love.graphics.getFont():getHeight() + 8
         love.graphics.setColor(G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65)
@@ -1259,7 +1341,10 @@ local function fac_draw_panel()
     local prev_canvas = love.graphics.getCanvas()
     love.graphics.setCanvas(FAC_SCENE_CANVAS)
     love.graphics.clear(0, 0, 0, 0)
+    FAC_STATUS_QUEUE = {}
     fac_draw_scene_content(state, 0, 0, cw, ch)
+    local status_queue = FAC_STATUS_QUEUE
+    FAC_STATUS_QUEUE = nil
     love.graphics.setCanvas(prev_canvas)
 
     local blit_alpha = 1
@@ -1268,6 +1353,37 @@ local function fac_draw_panel()
     end
     love.graphics.setColor(1, 1, 1, blit_alpha)
     love.graphics.draw(FAC_SCENE_CANVAS, px, py, 0, pw / cw, ph / ch)
+
+    local screen_scale = G.TILESCALE * G.TILESIZE
+    local scale_x, scale_y = pw / cw, ph / ch
+    for index = 1, 2 do
+        local status = G.FISHING["fishing_status_" .. index]
+        local status_data = status_queue[index]
+        if status then
+            status.states.visible = status_data ~= nil
+            if status_data then
+                state["status_text_" .. index] = status_data.str
+                local status_x = (px + (status_data.x + 18) * scale_x) / screen_scale
+                local status_y = (py + (status_data.y - 4) * scale_y) / screen_scale
+                status:hard_set_T(status_x, status_y, status.T.w, status.T.h)
+                status:recalculate()
+
+                local text = status:get_UIE_by_ID("fac_fishing_status_text_" .. index)
+                if text then
+                    text.config.colour = {
+                        status_data.colour[1],
+                        status_data.colour[2],
+                        status_data.colour[3],
+                        (status_data.colour[4] or 1) * blit_alpha,
+                    }
+                    text:update_text()
+                end
+                local bg = status:get_UIE_by_ID("fac_fishing_status_bg_" .. index)
+                if bg then bg.config.colour[4] = 0.65 * blit_alpha end
+                status:draw()
+            end
+        end
+    end
 end
 
 local old_fac_draw = love.draw
