@@ -245,6 +245,7 @@ end
 local g_uidef_card_h_popup_ref = G.UIDEF.card_h_popup
 ---@diagnostic disable-next-line: duplicate-set-field
 function G.UIDEF.card_h_popup(card)
+	if card.ability and card.ability.set == 'fac_Fish' and not FishAndChips.mod.config.disable_flavour then FishAndChips.tooltip_seed = (FishAndChips.tooltip_seed or 0) + 1 end
     local ret = g_uidef_card_h_popup_ref(card)
     if card.config and card.config.center and card.config.center.set == "fac_Fish" and card.area and (card.area.config.collection or card.area.config.fac_compendium) then
         local t = {n=G.UIT.C, config = {padding = 0.1, align = 'cm'}, nodes = {}}
@@ -274,7 +275,7 @@ function G.UIDEF.card_h_popup(card)
 		ret.nodes[#ret.nodes].nodes[2] = {n=G.UIT.C, nodes = {ret.nodes[#ret.nodes].nodes[2]}}
     end
     if card.ability and card.ability.set == 'fac_Fish' and not FishAndChips.mod.config.disable_flavour and card.config.center.discovered and G.localization.descriptions.fac_Fish[card.config.center_key] and G.localization.descriptions.fac_Fish[card.config.center_key].fac_flavour_parsed then
-        local name = SMODS.deepfind(ret, 'tooltip_name')[1]
+		local name = SMODS.deepfind(ret, 'tooltip_id_'..FishAndChips.tooltip_seed, nil, true)[1]
         local name_node = name.objtree
         local flavour_node = {}
         local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}
@@ -295,7 +296,7 @@ end
 local name_from_hook = name_from_rows
 function name_from_rows(name_nodes, background_colour)
     local ret = name_from_hook(name_nodes, background_colour)
-    if ret then ret.config.id = 'tooltip_name' end
+    if ret then ret.config.id = 'tooltip_id_'..FishAndChips.tooltip_seed end
     return ret
 end
 
