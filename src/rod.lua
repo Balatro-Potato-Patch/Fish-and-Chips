@@ -121,7 +121,12 @@ FishAndChips.Rod {
 	unlocked = false,
 	check_for_unlock = function(self, args)
 		if args.type == "fac_fish_caught" then
-			return #G.PROFILES[G.SETTINGS.profile].fac_fishing.baits_used >= #G.P_CENTER_POOLS.fac_Bait
+			for k, v in pairs(G.P_CENTER_POOLS.fac_Bait) do
+				if not G.PROFILES[G.SETTINGS.profile].fac_fishing.baits_used[v.key] then
+					return false
+				end
+			end
+			return true
 		end
 	end
 }
