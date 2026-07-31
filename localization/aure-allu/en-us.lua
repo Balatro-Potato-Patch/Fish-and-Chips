@@ -2,7 +2,7 @@ return {
     descriptions = {
         fac_Fish = {
             fish_fac_the_original___starfish = {
-                name = {"The Original    ", "     Starfish"},
+                name = {"2 Original    ", "    2 Starfish"},
                 text = {
                     ""
                 },
@@ -165,6 +165,20 @@ return {
                 },
                 flavor = {
                     "Moo."
+                }
+            },
+            fish_fac_soldierfish = {
+                name = {"Soldierfish"},
+                text = {
+                    "Use this {C:fac_fish}Fish{} to {C:attention}redraw",
+                    "and then draw {C:attention}#1#{} cards",
+                    "{C:attention}ignoring{} hand size",
+                    "{C:inactive,s:0.9}Costs {C:money,s:1.0}$#2# {C:inactive,s:0.8}Increases by {C:money,s:0.8}$#3#{C:inactive}",
+                    "{C:inactive,s:0.7}Resets to {C:attention,s:0.7}last{C:inactive,s:0.7} payed price",
+                    "{C:inactive,s:0.7}at {C:attention,s:0.7}end of round"
+                },
+                flavor = {
+                    ""
                 }
             },
         },

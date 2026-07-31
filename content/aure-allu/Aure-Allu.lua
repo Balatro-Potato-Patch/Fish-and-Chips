@@ -806,4 +806,82 @@ FishAndChips.Fish {
 	end
 }
 
+-- Soldierfish
+FishAndChips.Fish {
+	key = "soldierfish",
+	atlas = "aure-allu_fish",
+	pos = { x = 4, y = 2 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "usable" },
+	blueprint_compat = false,
+	requires_hand = true,
+	config = {
+		extra = {
+			extra_draw = 2,
+			cost = 4,
+			cost_increase = 2,
+		},
+	},
+	environments = {
+		pier = 2,
+		styx = 10,
+		wormhole = 4,
+		backroom = 7,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.extra_draw, card.ability.extra.cost + (card.ability.used_this_round and card.ability.extra.cost_increase or 0), card.ability.extra.cost_increase } }
+	end,
+	calculate = function (self, card, context)
+		if context.end_of_round and not context.game_over and context.main_eval then
+			card.ability.used_this_round = nil
+		end
+	end,
+	use = function (self, card)
+		local was_used = card.ability.used_this_round
+		card.ability.used_this_round = true
+        G.E_MANAGER:add_event(Event({
+			trigger = "after", 
+			delay = 0.1, 
+			func = function()
+				play_sound('tarot1')
+				card:juice_up(0.3, 0.5)
+				if was_used then
+					card.ability.extra.cost = card.ability.extra.cost + card.ability.extra.cost_increase
+				end
+				ease_dollars(-card.ability.extra.cost)
+				return true
+			end
+		}))
+		delay(0.1)
+        G.E_MANAGER:add_event(Event({
+			trigger = "after", 
+			delay = 0.5, 
+			func = function()
+				local count = math.max(G.hand.config.card_limit - #G.hand.cards, 0) + card.ability.extra.extra_draw
+				for i=1, count do
+					local percent = 1.15 - (i - 0.999) / (count - 0.998) * 0.3
+					G.E_MANAGER:add_event(Event({
+						trigger = "after", 
+						delay = 0.2, 
+						func = function()
+							play_sound('card1', percent)
+							G.hand:draw_card_from(G.deck, false, false)
+							return true
+						end
+					}))
+				end
+				return true
+			end
+		}))
+	end,
+	keep_on_use = function (self, card)
+		return true
+	end,
+	can_use = function (self, card)
+		return G.hand and #G.hand.cards > 0 and #G.deck.cards > 0 and G.GAME.dollars >= card.ability.extra.cost + (card.ability.used_this_round and card.ability.extra.cost_increase or 0)
+	end
+}
+
 -- #endregion
