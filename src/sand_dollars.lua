@@ -172,15 +172,6 @@ function G.UIDEF.use_and_sell_buttons(card)
 
     table.insert(SMODS.other_calculation_keys, 'sand_dollars')
 
-    local loc_colour_ref = loc_colour
-    function loc_colour(_c, _default)
-        local ret = loc_colour_ref(_c, _default)
-        if _c == 'fac_sand_dollars' then
-            ret = FishAndChips.C.SAND_DOLLAR
-        end
-        return ret
-    end
-
     function add_round_eval_sand_dollars(config)
     local config = config or {}
     local width = G.round_eval.T.w - 0.51
