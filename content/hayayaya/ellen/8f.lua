@@ -12,6 +12,8 @@ FishAndChips.Fish({
 	},
 	decision_min = math.huge,
 	decision_max = math.huge,
+	impulse_min = 0,
+	impulse_max = 0,
 	vel_limit = 0,
 	config = { immutable = { count = 0, max = 8 } },
 	loc_vars = function(self, info_queue, card)
