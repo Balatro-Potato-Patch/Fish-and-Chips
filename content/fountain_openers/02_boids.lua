@@ -42,7 +42,6 @@ function FountainOpeners.Boid:init(args)
 		x = pseudorandom("fac_fo_boid_x") * 200,
 		y = pseudorandom("fac_fo_boid_x") * 200,
 	}
-	self.target_rot = 0
 	self.spr = {
 		x = 0,
 		y = 0
