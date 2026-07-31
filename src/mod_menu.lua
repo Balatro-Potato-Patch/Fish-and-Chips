@@ -372,7 +372,7 @@ function FishAndChips.Compendium.extended_fish_page(page_number, left)
     local last_page = false
     for i = 1, fish_per_page do
         table.insert(page.nodes[2].nodes, FishAndChips.Compendium.extended_fish_entry(pool[start_index + i], i%2 == 1))
-        if start_index + i > #pool then last_page = true; break end
+        if start_index + i >= #pool then last_page = true; break end
     end
 
     if page_number > 1 and (not last_page or left) then
