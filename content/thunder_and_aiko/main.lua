@@ -1,20 +1,15 @@
+local function all_env()
+	local ret = {}
+	for _, k in ipairs(FishAndChips.Environment.obj_buffer) do
+		ret[k] = 10
+	end
+	return ret
+end
+
 FishAndChips.Fish({
 	key = "trojan_fish",
 	weight = 10,
-	environments = {
-		aquifer = 1,
-		backroom = 1,
-		calm_pond = 1,
-		chocolate_river = 1,
-		city_river = 1,
-		garden = 1,
-		pier = 1,
-		soup = 1,
-		styx = 1,
-		swamp = 1,
-		volcano = 1,
-		wormhole = 1,
-	},
+	environments = all_env(),
 	attributes = { "copying", "chance" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
@@ -181,13 +176,14 @@ FishAndChips.Fish({
 			r_mults[#r_mults + 1] = SMODS.signed_dollars(i)
 		end
 		local loc_sv = localize("k_fac_nft_sell_value1") .. " "
+		local loc_sv2 = localize("k_fac_nft_sell_value1_alt") .. " "
 		local main_start = {
 			{
 				n = G.UIT.O,
 				config = {
 					object = DynaText({
 						string = {
-							{ string = "rand()", colour = G.C.JOKER_GREY },
+							{ string = "rand() ", colour = G.C.JOKER_GREY },
 							{
 								string = "#@"
 									.. (G.deck and G.deck.cards[1] and G.deck.cards[#G.deck.cards].base.id or 11)
@@ -195,12 +191,16 @@ FishAndChips.Fish({
 										G.deck
 											and G.deck.cards[1]
 											and G.deck.cards[#G.deck.cards].base.suit:sub(1, 1)
-										or "D"
+										or "D "
 									),
 								colour = FishAndChips.C.SAND_DOLLAR,
 							},
 							loc_sv,
 							loc_sv,
+							loc_sv2,
+							loc_sv,
+							loc_sv,
+							loc_sv2,
 							loc_sv,
 							loc_sv,
 							loc_sv,
@@ -210,8 +210,7 @@ FishAndChips.Fish({
 							loc_sv,
 							loc_sv,
 							loc_sv,
-							loc_sv,
-							loc_sv,
+							loc_sv2,
 						},
 						colours = { G.C.UI.TEXT_DARK },
 						pop_in_rate = 9999999,

@@ -135,6 +135,7 @@ return {
 		dictionary = {
 			k_fac_boom_ex = "Boom!",
 			k_fac_nft_sell_value1 = "Gains",
+			k_fac_nft_sell_value1_alt = "Loses",
 			k_fac_nft_sell_value2 = "of sell value",
 			k_fac_was_used = "Was used this round",
 			k_fac_not_used = "Not used this round",
