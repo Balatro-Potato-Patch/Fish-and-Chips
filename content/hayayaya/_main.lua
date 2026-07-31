@@ -27,12 +27,27 @@ SMODS.Sound({
 	path = "hayayaya/snd_badexplosion.wav",
 })
 
+SMODS.Font({
+	key = "hayayaya_pkmn",
+	path = "hayayaya/pokemon-font.ttf",
+	FONTSCALE = 0.07,
+	squish = 1,
+	TEXT_HEIGHT_SCALE = 0.75,
+	TEXT_OFFSET = { x = 0, y = -40 },
+})
+
 PotatoPatchUtils.Developer({
 	name = "Ellen (Haya)",
 	atlas = "fac_hayayaya_credits",
 	colour = G.C.PURPLE,
 	fac_partner = "Pepix",
 	loc = true,
+	calculate = function(self, context)
+		-- How ominous
+		if context.fac_fish_caught and context.fish == "fish_fac_8f" then
+			HayayayaUtils.stop_music()
+		end
+	end,
 })
 
 PotatoPatchUtils.Developer({
@@ -47,6 +62,46 @@ PotatoPatchUtils.Developer({
 -- Namespace for team specific utils
 
 HayayayaUtils = {}
+HayayayaUtils.MusicStopped = true
+
+local gum = Game.update_menu
+function Game:update_menu(dt)
+	gum(self, dt)
+	if HayayayaUtils.MusicStopped then
+		HayayayaUtils.MusicStopped = false
+		HayayayaUtils.restart_music()
+	end
+end
+
+local gubs = Game.update_blind_select
+function Game:update_blind_select(dt)
+	gubs(self, dt)
+	if HayayayaUtils.MusicStopped then
+		HayayayaUtils.MusicStopped = false
+		HayayayaUtils.restart_music()
+	end
+end
+
+function HayayayaUtils.restart_music()
+	G.ARGS.push = G.ARGS.push or {}
+	G.ARGS.push.type = "restart_music"
+	if G.F_SOUND_THREAD then
+		G.SOUND_MANAGER.channel:push(G.ARGS.push)
+	else
+		RESTART_MUSIC(G.ARGS.push)
+	end
+end
+
+function HayayayaUtils.stop_music()
+	G.ARGS.push = G.ARGS.push or {}
+	G.ARGS.push.type = "hayayaya_stop_music"
+	if G.F_SOUND_THREAD then
+		G.SOUND_MANAGER.channel:push(G.ARGS.push)
+	else
+		STOP_MUSIC(G.ARGS.push)
+	end
+	HayayayaUtils.MusicStopped = true
+end
 
 -- This is so ridicluously old
 HayayayaUtils.MisprintizeForbidden = {

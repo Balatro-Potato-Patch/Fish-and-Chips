@@ -30,6 +30,25 @@ return {
 					"consequences...",
 				},
 			},
+			fish_fac_8f = {
+				name = "{f:fac_hayayaya_pkmn}8F",
+				text = {
+					"{C:inactive,f:fac_hayayaya_pkmn}#1#/#2#",
+				},
+				flavor = {
+					"{f:fac_hayayaya_pkmn}???",
+				},
+			},
+			fish_fac_8f_alt = {
+				name = "{f:fac_hayayaya_pkmn}8F",
+				text = {
+					"{C:red,f:fac_hayayaya_pkmn}Removes{f:fac_hayayaya_pkmn} an ante",
+				},
+				flavor = {
+					"{f:fac_hayayaya_pkmn}THERE IS A NEW",
+					"{f:fac_hayayaya_pkmn}ROCK BY THE WATER",
+				},
+			},
 			fish_fac_codamite = {
 				name = "Codamite",
 				text = {
