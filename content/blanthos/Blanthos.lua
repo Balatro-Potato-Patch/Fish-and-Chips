@@ -44,7 +44,7 @@ FishAndChips.Fish {
 	attributes = { "hand_level", "scaling", "hand_type", "space", "usable", "economy" },
 	config = {
 		extra = {
-			happiness = 30,
+			happiness = 75,
 			boredom = 5,
 			food_cost = 3,
 			food_happiness = 5
@@ -128,6 +128,45 @@ end,
         end
         card.ability.immutable.hand = pseudorandom_element(_poker_hands, 'fac_gneep_gnarp')
     end
+}
+
+
+
+FishAndChips.Fish {
+	key = "spectre_fish",
+	atlas = "fish",
+	pos = { x = 2, y = 0 },
+	weight = 10,
+	ppu_coder = { "Blanthos" },
+	ppu_artist = { "Hunter" },
+	attributes = { "mult" },
+	config = {
+		extra = {
+			mult = 4,
+			scaling = 4
+		},
+		immutable = {
+			active = "true"
+		}
+	},
+	environments = {
+		styx = 10,
+		aquifer = 10
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.mult } }
+	end,
+	calculate = function(self, card, context)
+if context.joker_type_destroyed then
+                SMODS.scale_card(card, {
+                    ref_value = "mult",
+                    scalar_value = "scaling",
+                    operation = '+'
+                })
+                return nil, true, {no_destroy = true}
+		end
+		if context.joker_main then return { mult = card.ability.extra.mult } end
+	end,
 }
 
 --#endregion
