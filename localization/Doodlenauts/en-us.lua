@@ -4,12 +4,15 @@ return {
             fish_fac_bottomfeeder = {
                 name = "Bottom Feeder",
                 text = {
-                    'This Fish gains {C:chips}+#2#{} chips',
+                    'This Fish gains {C:mult}+#2#{} Mult',
                     'when a {C:attention}2{}, {C:attention}3{}, {C:attention}4{}, or {C:attention}5{} is scored',
-                    "{C:inactive}Currently {C:chips}+#1#{} {C:inactive}chips"                 
+                    "{C:inactive}Currently {C:mult}+#1#{} {C:inactive}chips"                 
                 },
                 flavour = {
-                    "Wow, so cool!",
+                    "This fish feeds off of minerals",
+                    'in the sediments of the ocean floor,',
+                    'and quite frankly, it scores',
+                    'low in competitions.',
                 }
             },
             fish_fac_bigbasswheel = {
@@ -60,6 +63,48 @@ return {
                     'put inside a fish body,',
                     'and they will seriously',
                     'act like a cat'
+                }
+            },
+            fish_fac_eyelessfish = {
+                name = 'Eyeless Fish',
+                text = {
+                    'Jokers {C:red}without{} the',
+                    '{C:attention}letter "I"{} in their',
+                    'names each give {X:mult,C:white}X#1#{} Mult'
+                },
+                flavour = {
+                    "What do you call a fish",
+                    "with no eyes? Not sure.",
+                    "Hmm, there's gotta be a",
+                    "good punchline there ..."
+                }
+            },
+            fish_fac_moonjelly = {
+                name = 'Moon Jelly',
+                text = {
+                    'Convert all cards',
+                    'in hand to {C:clubs}Clubs'
+                },
+                flavour = {
+                    'One of the most beautiful',
+                    'jellyfish in the whole world.',
+                    "I'd know because I drew it.",
+                    '-F404'
+                }
+            },
+            fish_fac_loanshark = {
+                name = 'Loan Shark',
+                text = {
+                    'Gives {C:money}$#1#{}, lose {C:money}$#2#',
+                    'at end of round until',
+                    '{C:red}debt{} has been payed',
+                    '{C:inactive}Current debt: {C:red}$#3#{}'
+                },
+                flavour = {
+                    "A fierce predator",
+                    "in the Oceanic Abyss.",
+                    "That's the name of",
+                    "the bank he works at."
                 }
             }
         },

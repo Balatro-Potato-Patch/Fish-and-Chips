@@ -31,17 +31,17 @@ SMODS.Atlas({
 -- Bottom Feeder
 FishAndChips.Fish {
 	key = 'bottomfeeder',
-	atlas = 'fac_placeholders',
-	pos = { x = 0, y = 0 },
-	weight = 10, --this will be updated when more fish are added
+	atlas = 'DoodlenautsFish',
+	pos = { x = 2, y = 1 },
+	weight = 5, --common / uncommon
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'chips', 'rank' },
+	attributes = { 'mult', 'rank', 'scaling', 'two', 'three', 'four', 'five' },
+	cost = 5,
 	config = {
 		extra = {
-			chips = 0,
-			chip_gain = 1,
-			--ranks = { 2 , 3 }
+			mult = 0,
+			mult_gain = 0.5,
 		}
 	},
 	environments = {
@@ -52,9 +52,8 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
-				card.ability.extra.chips,
-				card.ability.extra.chip_gain,
-				--card.ability.extra.ranks
+				card.ability.extra.mult,
+				card.ability.extra.mult_gain,
 			}
 		}
 	end,
@@ -64,7 +63,7 @@ FishAndChips.Fish {
 			local triggered = false
 			for i, rank in ipairs(scoring_ranks) do
 				if context.other_card:get_id() == scoring_ranks[i] then
-					card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_gain
+					card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
 					triggered = true
 					break
 				end
@@ -72,27 +71,29 @@ FishAndChips.Fish {
 			if triggered then
 				return {
 					message = localize('k_upgrade_ex'),
-					colour = G.C.CHIPS,
+					colour = G.C.MULT,
 					message_card = card
             	}
 			end
 		end
 		if context.joker_main then
 			return {
-				chips = card.ability.extra.chips
+				mult = card.ability.extra.mult
 			}
 		end
 	end
 }
 
+-- Big Bass Wheel
 FishAndChips.Fish {
 	key = 'bigbasswheel',
-	atlas = 'fac_placeholders',
-	pos = { x = 0, y = 0 },
-	weight = 10, --this will be updated when more fish are added
+	atlas = 'DoodlenautsFish',
+	pos = { x = 1, y = 1 },
+	weight = 5, --common
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'usable' },
+	attributes = { 'usable', 'chance', 'editions' },
+	cost = 3,
 	config = {
 		extra = {
 			num = 1,
@@ -120,7 +121,6 @@ FishAndChips.Fish {
 					eligible_fish[#eligible_fish+1] = fish
 				end
 			end
-			--local editionless_fish = SMODS.Edition:get_edition_cards(G.fac_fish_area, true)
 			local selected_fish = pseudorandom_element(eligible_fish, 'fac_bigbasswheel')
 			local edition = SMODS.poll_edition { key = 'fac_bigbasswheel', guaranteed = true, no_negative = true, options = { 'e_foil', 'e_holo' } }
 			selected_fish:set_edition(edition, true)
@@ -144,7 +144,6 @@ FishAndChips.Fish {
 		end
 	end,
 	can_use = function(self, card)
-        --return next(SMODS.Edition:get_edition_cards(G.fac_fish_area, true))
 		for i, fish in ipairs(G.fac_fish_area.cards) do
 			if not fish.edition and fish ~= card then
 				return true
@@ -153,17 +152,19 @@ FishAndChips.Fish {
     end
 }
 
+-- British Flag
 FishAndChips.Fish {
 	key = 'britishflag',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 2, y = 0 },
-	weight = 10, --this will be updated when more fish are added
+	weight = 5, -- common
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'chips' },
+	cost = 5,
 	config = {
 		extra = {
-			chips_per_fish = 20,
+			chips_per_fish = 15,
 		}
 	},
 	environments = {
@@ -188,14 +189,16 @@ FishAndChips.Fish {
 	end
 }
 
+-- Bullfrog
 FishAndChips.Fish {
 	key = 'bullfrog',
-	atlas = 'fac_placeholders',
-	pos = { x = 0, y = 0 },
-	weight = 10, --this will be updated when more fish are added
+	atlas = 'DoodlenautsFish',
+	pos = { x = 0, y = 1 },
+	weight = 5, --common/uncommon
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'chips' },
+	cost = 5,
 	config = {
 		extra = {
 			chips_per_sanddollar = 8,
@@ -223,14 +226,16 @@ FishAndChips.Fish {
 	end
 }
 
+-- Lucky Catfish
 FishAndChips.Fish {
 	key = 'catfish',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 1, y = 0 },
-	weight = 10, --this will be updated when more fish are added
+	weight = 5, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'passive' },
+	attributes = { 'passive', 'enhancements' },
+	cost = 7,
 	environments = {
 		calm_pond = 0.7,
 		pier = 0.3
@@ -239,3 +244,179 @@ FishAndChips.Fish {
         info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
     end,
 }
+
+-- Eyeless Fish
+FishAndChips.Fish {
+	key = 'eyelessfish',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 4, y = 0 },
+	weight = 5, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'xmult', 'joker' },
+	cost = 7,
+	config = {
+		extra = {
+			xmult = 1.5,
+		}
+	},
+	environments = {
+		backroom = 0.5,
+		aquifer = 0.2,
+		styx = 0.3,
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.xmult
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.other_joker then
+			if G.jokers then
+				local joker_name = localize({ type = 'name_text', set = "Joker", key = context.other_joker.config.center.key })
+				--print(joker_name)
+				if string.find(joker_name, "[iI]") == nil then
+					return {
+						xmult = card.ability.extra.xmult
+					}
+				end
+			end
+		end
+	end
+}
+
+-- Moon Jelly
+FishAndChips.Fish {
+	key = 'moonjelly',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 3, y = 0 },
+	weight = 5, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'suit', 'clubs' },
+	cost = 4,
+	environments = {
+		pier = 1
+	},
+	use = function(self, card, area)
+		G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                play_sound('tarot1')
+                card:juice_up(0.3, 0.5)
+                return true
+            end
+        }))
+        for i = 1, #G.hand.cards do
+            local percent = 1.15 - (i - 0.999) / (#G.hand.cards - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    G.hand.cards[i]:flip()
+                    play_sound('card1', percent)
+                    G.hand.cards[i]:juice_up(0.3, 0.3)
+                    return true
+                end
+            }))
+        end
+        for i = 1, #G.hand.cards do
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    local _card = G.hand.cards[i]
+                    assert(SMODS.change_base(_card, 'Clubs'))
+                    return true
+                end
+            }))
+        end
+        for i = 1, #G.hand.cards do
+            local percent = 0.85 + (i - 0.999) / (#G.hand.cards - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    G.hand.cards[i]:flip()
+                    play_sound('tarot2', percent, 0.6)
+                    G.hand.cards[i]:juice_up(0.3, 0.3)
+                    return true
+                end
+            }))
+        end
+        delay(0.5)
+	end,
+	can_use = function(self, card)
+        return G.hand and #G.hand.cards > 1
+    end,
+}
+
+-- Loan Shark
+FishAndChips.Fish {
+	key = 'loanshark',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 3, y = 1 },
+	weight = 5, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'economy', },
+	cost = 6,
+	config = {
+		extra = {
+			money_loaned = 20,
+			payback_per_round = 4,
+			loanshark_current_debt = 0
+		}
+	},
+	environments = {
+		pier = 0.7,
+		volcano = 0.3,
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.money_loaned,
+				card.ability.extra.payback_per_round,
+				card.ability.extra.loanshark_current_debt,
+			}
+		}
+	end,
+	use = function(self, card, area)
+		card.ability.extra.loanshark_current_debt = card.ability.extra.money_loaned
+		G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                play_sound('timpani')
+                card:juice_up(0.3, 0.5)
+                ease_dollars(card.ability.extra.money_loaned, true)
+                return true
+            end
+        }))
+	end,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.game_over == false and card.ability.extra.loanshark_current_debt > 0 then
+			card.ability.extra.loanshark_current_debt = card.ability.extra.loanshark_current_debt - card.ability.extra.payback_per_round
+			return {
+                dollars = -card.ability.extra.payback_per_round,
+            }
+		end
+	end,
+	can_use = function(self, card)
+		return card.ability.extra.loanshark_current_debt <= 0
+	end,
+	keep_on_use = function(self, card)
+		return true
+	end
+}
+
+local can_sell_card_ref = Card.can_sell_card
+function Card:can_sell_card(context)
+	if self.ability.extra.loanshark_current_debt ~= nil then
+		if self.ability.extra.loanshark_current_debt > 0 then
+			return false
+		end
+	end
+	return can_sell_card_ref(self, context)
+end
