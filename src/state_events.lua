@@ -370,6 +370,14 @@ function FishAndChips.hand_offset(offset)
 					break
 				end
 			end
+			if SilkTouch and G.GAME.fac_fish_expanded and (not G.SETTINGS.enable_action_buttons or G.CONTROLLER.HID.controller) then
+				for _, card in ipairs(G.fac_fish_area.cards) do
+					if card.config.center.requires_hand then
+						offset = offset - 3
+						break
+					end
+				end
+			end
 		end
 	end
 	return offset

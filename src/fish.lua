@@ -219,3 +219,90 @@ FishAndChips.Fish {
 }
 
 --#endregion
+
+--#region Silk Touch compat
+if SilkTouch then
+    --#region Drag targets
+    SilkTouch.DragTarget{
+        key = "fish_sell",
+        moveable_t = "C_sell",
+        text = function(card)
+            local sell_loc = copy_table(localize('ml_sell_target'))
+            sell_loc[#sell_loc+1] = localize('$')..card.sell_cost_label
+            return sell_loc
+        end,
+        font = function(card)
+            return {"default", "fac_sand_dollars"}
+        end,
+        colour = FishAndChips.C.SAND_DOLLAR,
+        drag_condition = function(card)
+            return card.area and card.area == G.fac_fish_area
+        end,
+        active_check = function(card)
+            return card:can_sell_card()
+        end,
+        release_func = function(card)
+            G.FUNCS.sell_card{config = {ref_table = card}}
+        end,
+    }
+    SilkTouch.DragTarget{
+        key = "fish_use",
+        moveable_t = "J_sell",
+        text = function(card)
+            return {localize('b_use')}
+        end,
+        colour = G.C.ORANGE,
+        drag_condition = function(card)
+            return card.area and card.area == G.fac_fish_area and card.config.center.use and true
+        end,
+        active_check = function(card)
+            local temp_config = {UIBox = {states = {visible = false}}, config = {ref_table = card}}
+            G.FUNCS.fac_can_use_fish(temp_config)
+            return temp_config.config.button ~= nil
+        end,
+        release_func = function(card)
+            G.FUNCS.fac_use_fish{config = {ref_table = card}}
+        end,
+    }
+    --#endregion
+
+    --#region Controller buttons
+    local old_font = SilkTouch.ControllerButtons.sell.font
+    SilkTouch.ControllerButton:take_ownership("sell",
+    {
+        font = function(card)
+            local t = old_font and old_font(card) or {
+                "default",
+                {
+                    "default",
+                    "default"
+                }
+            }
+            if card.ability.set == 'fac_Fish' then
+                t[2][1] = "fac_sand_dollars"
+            end
+            return t
+        end,
+    },
+    true)
+	SilkTouch.ControllerButton{
+		key = "fish_use",
+		side = "right",
+		button_key = "rightshoulder",
+		button_order = 0,
+		text = function(card)
+			return {
+				localize('b_use'),
+				single_text = true,
+			}
+		end,
+		text_scale = function() return {0.5} end,
+		focus_condition = function(card)
+			return card.area and card.area == G.fac_fish_area and card.config.center.use and true
+		end,
+		active_check_cb = "fac_can_use_fish",
+		press_func_cb = "fac_use_fish",
+	}
+    --#endregion
+end
+--#endregion
