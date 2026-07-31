@@ -59,10 +59,13 @@ function FishAndChips.mod.custom_card_areas(game)
 					local x_offset = b.T.w * 0.3
 					local y_offset = b.T.h * 0.3
 					local i = ii - 1
-					card.T.x = b.T.x - 				 b.T.w / 2 / scale + x_offset + w * i / length
-					card.T.y = b.T.y + b.T.h - b.T.h / 2 / scale - y_offset - h * i / length
-					card.T.w = b.T.w / scale
-					card.T.h = b.T.h / scale
+					card.T.x = b.T.x  			 + x_offset + w * i / length
+					card.T.y = b.T.y + b.T.h - y_offset - h * i / length
+					if not card.memT then card.memT = copy_table(card.T) end
+					card.T.w = card.memT.w / G.CARD_W * b.T.w / scale
+					card.T.x = card.T.x - card.T.w / 2
+					card.T.h = card.memT.h / G.CARD_H *  b.T.h / scale
+					card.T.y = card.T.y - card.T.h / 2
 					card.T.r = b.T.r
 
 					--[[
@@ -260,6 +263,7 @@ FishAndChips.Fish{
 		})
 	end,
 	can_use = function (self, card)
+		if card.ability.immutable.fish > 0 then return true end
 		for i, _card in ipairs(G.fac_fish_area.cards) do
 			if _card == card then return i ~= #G.fac_fish_area.cards end
 		end
