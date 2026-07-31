@@ -159,6 +159,14 @@ function play_sound(sound_code, per, vol, ...)
 	end
 end
 
+local function calc_nft_value_change(card)
+	local change = pseudorandom("fac_nft_value", 0, card.ability.extra.max)
+	if pseudorandom("fac_nft_inc_or_dec") >= 0.7 then
+		change = change * -1
+	end
+	return change
+end
+
 FishAndChips.Fish({
 	key = "nft",
 	weight = 5,
@@ -168,11 +176,11 @@ FishAndChips.Fish({
 	attributes = { "sell_value", "scaling", "economy", "mult" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
-	config = { extra = { min_mult = 1, min = -1, max = 2 } },
+	config = { extra = { min_mult = 1, max = 3 } },
 	loc_vars = function(self, info_queue, card)
 		local sv = card.sell_cost
 		local r_mults = {}
-		for i = card.ability.extra.min, card.ability.extra.max do
+		for i = 0, card.ability.extra.max do
 			r_mults[#r_mults + 1] = SMODS.signed_dollars(i)
 		end
 		local loc_sv = localize("k_fac_nft_sell_value1") .. " "
@@ -185,13 +193,13 @@ FishAndChips.Fish({
 						string = {
 							{ string = "rand() ", colour = G.C.JOKER_GREY },
 							{
-								string = "#@"
+								string = "%&"
 									.. (G.deck and G.deck.cards[1] and G.deck.cards[#G.deck.cards].base.id or 11)
 									.. (
 										G.deck
 											and G.deck.cards[1]
 											and G.deck.cards[#G.deck.cards].base.suit:sub(1, 1)
-										or "D "
+										or "F "
 									),
 								colour = FishAndChips.C.SAND_DOLLAR,
 							},
@@ -266,10 +274,11 @@ FishAndChips.Fish({
 			if card.ability.extra.crashed or pseudorandom("fac_nft_secret", 1, 8) == 1 then
 				local val = pseudorandom_element({
 					card.ability.extra.crashed
-							and pseudorandom("fac_nft_secret", card.ability.extra.min, card.ability.extra.max)
+							and calc_nft_value_change(card)
 						or -69420,
 					21,
 					0,
+					42,
 				}, "fac_nft_secret_value")
 				if val == -69420 then
 					card.ability.extra.crashed = true
@@ -279,7 +288,7 @@ FishAndChips.Fish({
 				prefix = "=$"
 				card.ability.extra_value = -math.max(1, math.floor(self.cost / 2)) + val
 			else
-				local change = pseudorandom("fac_nft_secret", card.ability.extra.min, card.ability.extra.max)
+				local change = calc_nft_value_change(card)
 				if change >= 0 then
 					prefix = "+$"
 				else
@@ -287,7 +296,7 @@ FishAndChips.Fish({
 				end
 				-- idk how to use SMODS.scale_card here properly
 				card.ability.extra_value = card.ability.extra_value
-					+ pseudorandom("fac_nft_secret", card.ability.extra.min, card.ability.extra.max)
+					+ change
 			end
 			card:set_cost()
 			return {

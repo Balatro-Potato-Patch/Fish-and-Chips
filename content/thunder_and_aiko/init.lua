@@ -28,6 +28,7 @@ SMODS.Font({
 SMODS.Font({
     key = "fac_papyrus",
     path = "thunder_and_aiko/papyrus.ttf",
+	TEXT_HEIGHT_SCALE = 0.7
 })
 
 PotatoPatchUtils.Developer({
