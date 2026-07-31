@@ -83,6 +83,7 @@ function Game:init_game_object()
     ret.fac_active_bait = nil
     ret.fac_treasure_earned = 0
     ret.fac_perfect_catches = 0
+	ret.fac_no_jokers = true
     return ret
 end
 

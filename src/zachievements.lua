@@ -188,11 +188,19 @@ FishAndChips.Achievement({
     end
 })
 
+local add_to_deck_ref = Card.add_to_deck
+function Card:add_to_deck(...)
+    add_to_deck_ref(self, ...)
+    if self.ability.set == 'Joker' then
+        G.GAME.fac_no_jokers = false
+    end
+end
+
 -- TODO: code check
 FishAndChips.Achievement({
     key = 'no_jokers',
     unlock_condition = function(self, args)
-        return args.type == 'fac_no_jokers' and FishAndChips.no_jokers
+        return args.type == 'win' and G.GAME.fac_no_jokers
     end
 })
 
