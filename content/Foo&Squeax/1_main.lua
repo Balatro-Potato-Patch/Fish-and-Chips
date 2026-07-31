@@ -29,6 +29,13 @@ SMODS.Atlas{
 	py = 95,
 }
 
+SMODS.Atlas{
+	key = "fas_fish_general",
+	path = FishAndChips.FooSqueax.file_path .. "fish.png",
+	px = 71,
+	py = 95
+}
+
 PotatoPatchUtils.Developer{
 	name = "Foo54",
 	atlas = "fac_fas_credits_foo",
