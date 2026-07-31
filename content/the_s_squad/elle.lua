@@ -6,7 +6,7 @@ FishAndChips.Fish {
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "xmult", "destroy_card" },
-	config = { extra = { xmult = 1, xmult_mod = .25, odds = 3 } },
+	config = { extra = { xmult = 1, xmult_mod = .5, odds = 4 } },
 	environments = {
 		backroom = 5,
 		wormhole = 2,

@@ -1,3 +1,7 @@
+FishAndChips.TheShitSquad = {
+	swoon_timer = 0
+}
+
 PotatoPatchUtils.Developer{
 	name = 'slimestuff',
 	atlas = 'fac_tss_devs',
@@ -24,6 +28,45 @@ PotatoPatchUtils.Developer{
 
 			f.tss_cheshed = true
 			f.states.click.can = false -- Apparently it should be like this already but they forgot. Will remove once that is patched :p
+
+			if pseudorandom("fac_tss_chesh_swoon",1,1225)==1 or os.date("%m%d",os.time()) == "1225" then
+				G.E_MANAGER:add_event(Event({func=function()
+					FishAndChips.TheShitSquad.swoon_timer = 4
+					play_sound("fac_tss_swoon_knight_cut2", .06, 8)
+					play_sound("fac_tss_swoon_knight_cut2", .1, 8)
+					play_sound("fac_tss_swoon_knight_cut2", .12, 8)
+					play_sound("fac_tss_swoon_knight_cut2", .18, 8)
+					play_sound("fac_tss_swoon_knight_cut2", .24, 8)
+					
+					for _, v in ipairs(cheshlist) do
+						v.area:remove_card(v)
+						G.FISHING.fac_fish_reward_area:emplace(v)
+					end
+					SMODS.destroy_cards(f)
+				return true end}))
+
+				G.E_MANAGER:add_event(Event({func=function() return FishAndChips.TheShitSquad.swoon_timer == 0 end}))
+				G.E_MANAGER:add_event(Event({func=function()
+					play_sound("fac_tss_swoon_impact")
+					play_sound("fac_tss_swoon_closet_impact")
+					play_sound("fac_tss_swoon_closet_impact", .5)
+					play_sound("fac_tss_swoon_bageldefeat", .8, .8)
+					play_sound("fac_tss_swoon_damage")
+					play_sound("fac_tss_swoon_glassbreak", .4, .8)
+					play_sound("fac_tss_swoon_glassbreak", .3, .6)
+				return true end}))
+				
+				G.E_MANAGER:add_event(Event({func=function()
+					for _, v in ipairs(cheshlist) do
+						G.E_MANAGER:add_event(Event({func=function()
+							v.area:remove_card(v)
+							G.fac_fish_area:emplace(v)
+						return true end}))
+					end
+				return true end}))
+				
+				return
+			end
 
 			-- Move Cheshes to the fish
 			for _, v in ipairs(cheshlist) do
@@ -80,8 +123,6 @@ PotatoPatchUtils.Developer{
 					v.T.h = v.T.h/chesh_scale
 				return true end}))
 			end
-
-			if #cheshlist>0 then G.E_MANAGER:add_event(Event({trigger = "after", delay = chesh_speed, func=function() return true end})) end
 		end
 	end,
 	fac_dw_shader = true
@@ -97,6 +138,37 @@ PotatoPatchUtils.Developer{
 	loc = true,
 	fac_dw_shader = true
 }
+
+
+-- Update hook :)
+if not love.update then function love.update(dt) end end
+local update_hook = love.update
+function love.update(dt)
+	update_hook(dt)
+	if FishAndChips.TheShitSquad.swoon_timer>0 then FishAndChips.TheShitSquad.swoon_timer = math.max(FishAndChips.TheShitSquad.swoon_timer - dt,0) end
+end
+
+if not love.mousepressed then function love.mousepressed(x, y, button, istouch, presses) end end
+local click_hook = love.mousepressed
+function love.mousepressed(x, y, button, istouch, presses)
+	if FishAndChips.TheShitSquad.swoon_timer>0 then return end
+	click_hook(x, y, button, istouch, presses)
+end
+
+local swoon_img = love.graphics.newImage(love.image.newImageData(SMODS.NFS.newFileData(SMODS.current_mod.path ..
+	"assets/the_s_squad/swoon.png")))
+
+if not love.draw then function love.draw() end end
+local draw_hook = love.draw
+function love.draw()
+	if FishAndChips.TheShitSquad.swoon_timer>0 then
+		love.graphics.clear(0,0,0)
+		local w,h = love.graphics.getDimensions()
+		local iw,ih = swoon_img:getDimensions()
+		love.graphics.setColor(1,1,1)
+		love.graphics.draw(swoon_img,w/2,h/2,0,3,3,iw/2,ih/2)
+	else draw_hook() end
+end
 
 -- Credits shader stuff :3
 SMODS.Shader {
@@ -187,9 +259,38 @@ for i = 1, 3 do
 		volume = 1
 	}
 end
-	
+
 SMODS.Sound {
 	key = 'tss_burp',
-	path = 'the_s_squad/burp.ogg',
-	volume = 1
+	path = 'the_s_squad/burp.ogg'
+}
+
+SMODS.Sound {
+	key = 'tss_swoon_bageldefeat',
+	path = 'the_s_squad/swoon/bageldefeat.wav'
+}
+
+SMODS.Sound {
+	key = 'tss_swoon_closet_impact',
+	path = 'the_s_squad/swoon/closet_impact.ogg'
+}
+
+SMODS.Sound {
+	key = 'tss_swoon_damage',
+	path = 'the_s_squad/swoon/damage.wav'
+}
+
+SMODS.Sound {
+	key = 'tss_swoon_glassbreak',
+	path = 'the_s_squad/swoon/glassbreak.wav'
+}
+
+SMODS.Sound {
+	key = 'tss_swoon_impact',
+	path = 'the_s_squad/swoon/impact.wav'
+}
+
+SMODS.Sound {
+	key = 'tss_swoon_knight_cut2',
+	path = 'the_s_squad/swoon/knight_cut2.wav'
 }
