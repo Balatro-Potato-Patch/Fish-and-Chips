@@ -106,23 +106,22 @@ return {
 						"Use this Fish to convert it into {C:attention}#4#{} bait per {C:attention}#1# {X:mult,C:white}XMult{} gained"
 					}
 				}
+			},
+			fish_fac_fas_super_bo_noise = {
+				name = "Super Bo Noise",
+				flavour = {
+					"ts flavours me"
+				},
+				text = {
+					"Each played card",
+					"permanently gains",
+					"{X:mult,C:white}X#1#{} Mult when scored"
+				}
 			}
 		},
 		PotatoPatch = {
 			fac_fas_dev = {
 				name = "Developer"
-			},
-			PotatoPatchDev_Mack = {
-				name = "Mack",
-				text = {
-					"why don't I have an entry ):"
-				}
-			},
-			PotatoPatchDev_Snapper = {
-				name = "Snapper",
-				text = {
-					"why don't I have an entry ):"
-				}
 			},
 			PotatoPatchDev_Foo54 = {
 				name = "Foo54",
