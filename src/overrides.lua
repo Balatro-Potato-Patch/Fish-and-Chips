@@ -296,7 +296,7 @@ end
 local name_from_hook = name_from_rows
 function name_from_rows(name_nodes, background_colour)
     local ret = name_from_hook(name_nodes, background_colour)
-    if ret then ret.config.id = 'tooltip_id_'..FishAndChips.tooltip_seed end
+    if ret then ret.config.id = 'tooltip_id_'..(FishAndChips.tooltip_seed or 1) end
     return ret
 end
 
