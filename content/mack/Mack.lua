@@ -119,7 +119,7 @@ FishAndChips.Fish {
 	pos = { x = 4, y = 1 },
 	ppu_artist = { "GhostSalt" },
 	ppu_coder = { "Mack" },
-	attributes = { "copying" },
+	attributes = { "copying", "food" },
 	environments = {
 		chocolate_river = 10
 	},
@@ -357,6 +357,7 @@ FishAndChips.Fish {
 					end
 				}
 			end
+			return nil, true
 		end
 	end,
 }
@@ -410,7 +411,7 @@ FishAndChips.Fish {
 	pos = { x = 1, y = 2 },
 	ppu_artist = { "GhostSalt" },
 	ppu_coder = { "Mack" },
-	attributes = { "copying" },
+	attributes = { "copying", "food" },
 	environments = {
 		soup = 1,
 		volcano = 0.5
@@ -591,7 +592,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "Mack" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "suits", "mult" },
+	attributes = { "suits", "mult", "food" },
 	environments = {
 		chocolate_river = 1
 	},
