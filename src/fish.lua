@@ -66,7 +66,11 @@ function FishAndChips.verify_submissions()
 	for _, fish in ipairs(G.P_CENTER_POOLS.fac_Fish) do
 		devs[fish.ppu_coder[1]] = devs[fish.ppu_coder[1]] or {}
 		table.insert(devs[fish.ppu_coder[1]], fish)
-		local partner = PotatoPatchUtils.Developers["fac_" .. fish.ppu_coder[1]].fac_partner
+		local prefix = ""
+		if not (fish.prefix_config and fish.prefix_config.ppu_coder == false) then
+			prefix = "fac_"
+		end
+		local partner = PotatoPatchUtils.Developers[prefix .. fish.ppu_coder[1]].fac_partner
 		if partner then
 			-- print('Partner detected: ' .. partner)
 			devs[partner] = devs[partner] or {}
@@ -82,8 +86,10 @@ function FishAndChips.verify_submissions()
 			if fish.treasure then treasure_fish_count = treasure_fish_count + 1 end
 		end
 		local scalar = math.min(1, FishAndChips.submission_weight_limit / total_weight)
-		assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
-		assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")
+		if submission.mod == FishAndChips.mod then
+			assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
+			assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")
+		end
 		for _, fish in ipairs(submission) do
 			fish.weight = fish.weight * scalar
 			local unpack_env = function(environment)

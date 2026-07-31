@@ -29,6 +29,41 @@ function G.UIDEF.fac_fishing()
 	}
 end
 
+function G.UIDEF.fac_fishing_status(index)
+	local ref_value = "status_text_" .. index
+	G.FAC_FISH_GAME = G.FAC_FISH_GAME or {}
+	G.FAC_FISH_GAME[ref_value] = G.FAC_FISH_GAME[ref_value] or ""
+	return {
+		n = G.UIT.ROOT,
+		config = { colour = G.C.CLEAR },
+		nodes = {
+			{
+				n = G.UIT.R,
+				config = {
+					id = "fac_fishing_status_bg_" .. index,
+					align = "cm",
+					colour = { G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65 },
+					r = 0.1,
+					padding = 0.08,
+				},
+				nodes = {
+					{
+						n = G.UIT.T,
+						config = {
+							id = "fac_fishing_status_text_" .. index,
+							ref_table = G.FAC_FISH_GAME,
+							ref_value = ref_value,
+							colour = G.C.UI.TEXT_LIGHT,
+							scale = 0.4,
+							shadow = true,
+						},
+					},
+				},
+			},
+		},
+	}
+end
+
 FishAndChips.C.FISHING_BUTTONS_ACTIVE = { 62 / 255, 222 / 255, 250 / 255, 0.65 }
 FishAndChips.C.FISHING_BUTTONS_BG = { G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65 }
 FishAndChips.C.FISHING_BUTTONS_TEXT = { G.C.UI.TEXT_LIGHT[1], G.C.UI.TEXT_LIGHT[2], G.C.UI.TEXT_LIGHT[3], 1 }
@@ -1230,7 +1265,7 @@ end
 function G.FUNCS.fac_set_active_bait(e)
 	G.GAME.fac_active_bait = e.config.key
 
-	G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[e.config.key] or {
+	G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] = G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] or {
         fish_caught = 0,
 		fish_lost = 0,
 		perfect_catch = 0,
