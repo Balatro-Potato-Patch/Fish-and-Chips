@@ -30,7 +30,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         if context.fac_end_fishing then
             if not context.failed then
-                if G.FAC_FISH_GAME.perfect then
+                if context.perfect then
                     local msg_colour = G.C.BLUE
                     card.ability.extra.current_streak = card.ability.extra.current_streak + 1
                     if card.ability.extra.current_streak > card.ability.extra.best_streak then
