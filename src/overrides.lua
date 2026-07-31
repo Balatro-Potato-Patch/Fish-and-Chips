@@ -450,3 +450,20 @@ function SMODS.add_to_deck (card, args)
 	if not args.area and card.config.center.set == "fac_Fish" then args.area = G.fac_fish_area end
 	return smods_add_to_deck_ref(card, args)
 end
+
+local card_open_ref = Card.open
+function Card:open()
+	G.GAME.fac_booster_opening = true
+	card_open_ref(self)
+	G.E_MANAGER:add_event(Event({
+		func = function()
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					G.GAME.fac_booster_opening = nil
+					return true;
+				end
+			}))
+			return true;
+		end
+	}))
+end
