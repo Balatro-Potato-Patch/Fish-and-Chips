@@ -1,5 +1,27 @@
 return {
     descriptions = {
+		PotatoPatch = {
+			PotatoPatchDev_theAstra = {
+				name = "theAstra",
+                text = {
+                    "Howdy! I'm {C:purple,E:2}Astra{}, head of the {C:attention}Potato Patch!",
+                    "Thanks for playing the mod! This was easily our {C:red}most ambitious",
+                    "event mod yet, and I had a blast making it happen! Shout out to",
+                    "my fellow {C:attention}Organizers{} and the {C:planet}Guest Dev{} team for bringing this crazy",
+                    "vision to life!",
+                    "{C:dark_edition,s:1.4}To The Stars!!! {C:dark_edition,s:1.4,f:8}🪐"
+                }
+			},
+			PotatoPatchDev_MissingNo = {
+				name = "MissingNo",
+                text = {
+                    "{C:inactive,s:0.8}Breaking News: Kokichi Oma found dead in Tennessee",
+                    "Artist for {C:red}0 ERROR{} and {C:purple}Finity",
+                    "unhinged internet idiot",
+                    "Listen to {C:blue,u:blue}my music{} to die instantly"
+                }
+			},
+        },
         fac_Fish = {
             fish_fac_am_jerry = {
                 name = "Jerry",

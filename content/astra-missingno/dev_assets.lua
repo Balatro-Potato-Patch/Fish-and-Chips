@@ -1,18 +1,38 @@
 PotatoPatchUtils.Developer({
 	name = 'theAstra',
+	atlas = 'fac_astra-missingno-credits',
+	pos = { x = 1, y = 0 },
+	loc = true,
 	colour = G.C.PURPLE,
-	fac_partner = 'MissingNumber'
+	fac_partner = 'MissingNo',
+	click = function(self)
+		play_sound('fac_am_astra_click')
+	end
 })
 
 PotatoPatchUtils.Developer({
-	name = 'MissingNumber',
+	name = 'MissingNo',
+	atlas = 'fac_astra-missingno-credits',
+	pos = { x = 0, y = 0 },
+	loc = true,
 	colour = G.C.ORANGE,
-	fac_partner = 'theAstra'
+	fac_partner = 'theAstra',
+	click = function(self)
+		play_sound('generic1')
+		love.system.openURL("https://www.youtube.com/@copykeys")
+	end
 })
 
 SMODS.Atlas({
-	key = "astra-missingno-fish", -- Please include your name/team name in your atlas keys
+	key = "astra-missingno-fish",
 	path = "astra-missingno/fish.png",
+	px = 71,
+	py = 95,
+})
+
+SMODS.Atlas({
+	key = "astra-missingno-credits",
+	path = "astra-missingno/credits.png",
 	px = 71,
 	py = 95,
 })
@@ -47,4 +67,10 @@ SMODS.Sound {
 SMODS.Sound {
 	key = 'am_le_fishe_death',
 	path = 'astra-missingno/am_le_fishe_death.ogg'
+}
+
+SMODS.Sound {
+	key = 'am_astra_click',
+	path = 'astra-missingno/am_astra_click.ogg',
+	volume = 1
 }
