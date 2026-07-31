@@ -45,7 +45,7 @@ FishAndChips.Fish{
 	pixel_size = {w=70,h=87},
 	ppu_coder = {"Foo54"},
 	ppu_artist = {"squeax09"},
-	weight = 10,
+	weight = 5,
 	environments = {
 		pier = 1,
 		backroom = 0.4,

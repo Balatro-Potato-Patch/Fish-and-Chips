@@ -117,6 +117,18 @@ return {
 					"permanently gains",
 					"{X:mult,C:white}X#1#{} Mult when scored"
 				}
+			},
+			fish_fac_fas_kyu_kurafin = {
+				name = "Kyu-Kurafin",
+				flavour = {
+					"{f:5}わたし ちゅうぶらりん"
+				},
+				text = {
+					"This Fish gains {C:chips}+#1#{} Chips",
+					"when a Fish is {C:red}lost",
+					"or a treasure is {C:red}failed",
+					"{C:inactive}[Currently {C:chips}+#2#{C:inactive} Chips]"
+				}
 			}
 		},
 		PotatoPatch = {

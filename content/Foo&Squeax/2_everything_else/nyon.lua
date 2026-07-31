@@ -1,6 +1,6 @@
 FishAndChips.Fish{
 	key = "fas_kawkaw",
-	weight = 10,
+	weight = 5,
 	environments = {
 		calm_pond = 1,
 		garden = 0.75

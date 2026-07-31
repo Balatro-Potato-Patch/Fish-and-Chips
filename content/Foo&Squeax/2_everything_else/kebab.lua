@@ -241,7 +241,7 @@ FishAndChips.Fish{
 	environments = {
 		soup = 1
 	},
-	weight = 10,
+	weight = 5,
 	set_ability = function (self, card, initial, delay_sprites)
 		if G.fac_fas_fish_kebab_area then
 			card.ability.immutable.id = random_string(20, pseudoseed("fac_fas_fish_kebab"))

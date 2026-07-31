@@ -11,7 +11,7 @@ FishAndChips.Fish{
 			fish = "fish_fac_flounder",
 		}
 	},
-	weight = 10,
+	weight = 5,
 	ppu_coder = {"Foo54"},
 	environments = {
 		soup = 1,

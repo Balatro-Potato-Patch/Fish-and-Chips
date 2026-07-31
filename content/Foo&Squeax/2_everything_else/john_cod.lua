@@ -1,6 +1,6 @@
 FishAndChips.Fish{
 	key = "fas_john_cod",
-	weight = 10,
+	weight = 5,
 	environments = {
 		city_river = 1,
 		wormhole = 1

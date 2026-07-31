@@ -1,7 +1,7 @@
 
 FishAndChips.Fish {
 	key = "fas_super_bo_noise",
-	weight = 10,
+	weight = 5,
 	environments = {
 		aquifer = 1,
 		wormhole = 0.5,

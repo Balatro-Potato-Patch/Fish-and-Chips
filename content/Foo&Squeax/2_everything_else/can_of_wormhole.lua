@@ -8,7 +8,7 @@ FishAndChips.Fish{
 		wormhole = 1,
 		city_river = 0.2,
 	},
-	weight = 10,
+	weight = 5,
 	config = {
 		extra = {
 			scale = 1,
