@@ -14,10 +14,7 @@ FishAndChips.FooSqueax = {
 
 SMODS.Atlas{
 	key = "fas_credits_foo",
-	path = FishAndChips.FooSqueax.file_path .. "credits/teto.png",
-	atlas_table = "ANIMATION_ATLAS",
-	fps = 4,
-	frames = 40,
+	path = FishAndChips.FooSqueax.file_path .. "credits/foo.png",
 	px = 71,
 	py = 95,
 }
@@ -64,4 +61,24 @@ function FishAndChips.mod.reset_game_globals (run_start)
 		}
 	end
 	G.GAME.fac_FooSqueax.wormholes.target = pseudorandom_element(PotatoPatchUtils.Developers).name
+end
+
+local cardarea_emplace_red = CardArea.emplace
+---@diagnostic disable-next-line: duplicate-set-field
+function CardArea:emplace(card, ...)
+	if card.ppu_member and card.ppu_member.name == "Foo54" then
+		print("what")
+		local dev_card2 = Card(0, 0, G.CARD_W / 1.25, G.CARD_H / 1.25, nil, G.P_CENTERS.c_base)
+    dev_card2.children.center:remove()
+    dev_card2.children.center = SMODS.create_sprite(dev_card2.T.x, dev_card2.T.y, dev_card2.T.w, dev_card2.T.h, "fac_rods", {x = 1, y = 2})
+    dev_card2.children.center.states.hover = dev_card2.states.hover
+    dev_card2.children.center.states.click = dev_card2.states.click
+    dev_card2.children.center.states.drag = dev_card2.states.drag
+    dev_card2.children.center.states.collide.can = true
+    dev_card2.children.center:set_role({major = dev_card2, role_type = 'Glued', draw_major = dev_card2})
+    dev_card2.no_shadow = true
+		function dev_card2:hover() end
+		self:emplace(dev_card2)
+	end
+	cardarea_emplace_red(self, card, ...)
 end
