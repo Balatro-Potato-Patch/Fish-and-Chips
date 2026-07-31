@@ -27,7 +27,20 @@ return {
                     "why is this?? @_@"
                 }
             },
-
+            fish_fac_proto_dj = {
+                name = "DJ Fish",
+                text = {
+                "Use this fish to {C:attention}Play{}",
+                "a Balatro type beat",
+                "and create {C:attention}#1#{} Baits"
+                },
+                flavor = {
+                    "This DJ likes to play Jersey Club music",
+                    "and is hoping you'll give Proto another",
+                    "chance after the absolute nonsense",
+                    'it "cooked" for Stocking Stuffer'
+                }
+            },
         },
         Other = {
             proto_kingdomhearts = {

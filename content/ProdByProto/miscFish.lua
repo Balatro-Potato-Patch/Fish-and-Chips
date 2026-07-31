@@ -48,7 +48,7 @@ FishAndChips.Fish {
         return { vars = { "Spades","1","2","2" } }
     end,
 
-    add_to_deck = function(self, card, from_debuff)
+    on_catch = function(self,card)
         card.ability.extra.suit = idolSuit()
     end,
 
@@ -108,4 +108,102 @@ FishAndChips.Fish {
         end
 
 	end,
+}
+
+-- DJ Fish
+
+local playlistEvent
+playlistEvent = {
+    trigger = "after",
+    delay = 64,
+    --start_timer = true,
+    no_delete = true,
+    pause_force = true,
+    blockable = false,
+    blocking = false,
+    func = function()
+        FishAndChips.ProdByProto.q_music = false
+        return true
+    end
+}
+
+FishAndChips.Fish {
+	key = "proto_dj",
+    atlas = "proto_fish",
+	pos = { x = 1, y = 0 },
+    pixel_size = {w = 71, h = 64},
+
+	weight = 15,
+    ppu_coder = {"ProdByProto"},
+	attributes = { "usable","generation" },
+	environments = addEnvs(),
+
+	config = {
+		extra = {
+			bait = 2
+		}
+	},
+
+	loc_vars = function(self, info_queue, card)
+        local cae = card.ability.extra
+		return { vars = { cae.bait } }
+	end,
+
+	use = function(self,card,area)
+        local cae = card.ability.extra
+        local w = (G.CARD_W + 0.1) * cae.bait * 2 - 0.1
+		local h = G.CARD_H
+		G.fac_temp_bait_area = CardArea(
+			card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h,
+			w, h,
+			{
+				type = "joker",
+				card_limit = cae.bait,
+				highlight_limit = 1,
+				highlighted_limit = 1,
+				align_buttons = true,
+				bg_colour = G.C.CLEAR,
+				fixed_limit = true,
+				no_card_count = true,
+			}
+		)
+		delay(1)
+		for i = 1, cae.bait do
+			G.E_MANAGER:add_event(Event {
+				func = function()
+					local card = SMODS.create_card { set = "fac_Bait" }
+					G.fac_temp_bait_area:emplace(card)
+					FishAndChips.add_bait_to_inventory(card.config.center.key)
+					return true
+				end
+			})
+			delay(0.2)
+		end
+		delay(3)
+		for i = 1, card.ability.extra.bait do
+			G.E_MANAGER:add_event(Event {
+				func = function()
+					G.fac_temp_bait_area.cards[1]:start_dissolve()
+					return true
+				end
+			})
+			delay(0.2)
+		end
+		delay(0.5)
+		G.E_MANAGER:add_event(Event {
+			func = function()
+				G.fac_temp_bait_area:remove()
+				card:start_dissolve()
+				return true
+			end
+		})
+        G.ARGS.push.type = 'restart_music'
+        G.SOUND_MANAGER.channel:push(G.ARGS.push)
+        FishAndChips.ProdByProto.q_music = "jclub"
+        G.E_MANAGER:add_event(Event(playlistEvent))
+    end,
+    can_use = function(self,card)
+        return true
+    end
+        
 }
