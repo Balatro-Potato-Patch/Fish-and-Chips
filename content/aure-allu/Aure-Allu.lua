@@ -726,7 +726,9 @@ FishAndChips.Fish {
 local use_and_sell_ref = G.UIDEF.use_and_sell_buttons
 function G.UIDEF.use_and_sell_buttons(card)
 	use_and_sell_card = card
-	return use_and_sell_ref(card)
+	local ret = use_and_sell_ref(card)
+	use_and_sell_card = nil
+	return ret
 end
 
 local localize_ref = localize
