@@ -71,6 +71,15 @@ FishAndChips.Fish{
 			G.fac_fishing_bucket_bottom.definition.nodes[1].config.shader = "fac_fas_water"
 		end
 	end,
+	remove_from_deck = function (self, card, from_debuff)
+		if G.GAME.fac_FooSqueax.bucket.on then
+			FishAndChips.FooSqueax.toggle_bucket_shader()
+			SMODS.calculate_effect({message = localize("k_fac_fas_resurface"), colour = G.C.BLUE}, card)
+			for _, _card in ipairs(G.jokers.cards) do
+				SMODS.debuff_card(_card, false, "fac_fas_submarine")
+			end
+		end
+	end,
 	use = function(self, card)
 		FishAndChips.FooSqueax.toggle_bucket_shader()
 		SMODS.calculate_effect({message = localize(G.GAME.fac_FooSqueax.bucket.on and "k_fac_fas_dive" or "k_fac_fas_resurface"), colour = G.C.BLUE}, card)
