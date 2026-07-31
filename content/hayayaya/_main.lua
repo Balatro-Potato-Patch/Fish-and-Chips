@@ -6,6 +6,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+	key = "hayayaya_fih",
+	path = "hayayaya/fih.png",
+	px = 71,
+	py = 95,
+})
+
+SMODS.Atlas({
 	key = "hayayaya_explosion",
 	path = "hayayaya/explosion.png",
 	px = 71,

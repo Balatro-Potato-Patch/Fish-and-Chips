@@ -11,6 +11,8 @@ FishAndChips.Fish({
 		"boss_blind",
 		"usable",
 	},
+	atlas = "hayayaya_fih",
+	pos = { x = 1, y = 0 },
 	can_use = function(self, card)
 		return G.STATE == G.STATES.SELECTING_HAND
 	end,

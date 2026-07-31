@@ -11,6 +11,8 @@ FishAndChips.Fish({
 		"generation",
 		"usable",
 	},
+	atlas = "hayayaya_fih",
+	pos = { x = 0, y = 0 },
 	-- TODO: Possibly tweak this????
 	config = { extra = { min = 0.5, max = 2 } },
 	loc_vars = function(self, info_queue, card)
