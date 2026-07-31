@@ -88,8 +88,8 @@ return {
             fish_fac_eel_of_fortune = {
                 name = {"Eel of Fortune"},
                 text = {
-                    "Use for {C:green}#1# in #2#{} chance",
-                    "to add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or",
+                    "Use for {C:green}#1# in #2#{} chance to",
+                    "add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or",
                     "{C:dark_edition}Polychrome{} to a random {C:fac_fish}Fish"
                 },
                 flavor = {
@@ -148,7 +148,9 @@ return {
                     "Use this {C:fac_fish}Ray{} to",
                     "{C:attention}flip{} up to {C:attention}#1#{} selected",
                     "{C:attention}Playing{} cards in hand",
-                    "{C:inactive,s:0.8}(Max. {C:attention,s:0.8}#2# {C:inactive,s:0.8}[#3#] uses per round)"            
+                    "{C:inactive,s:0.9}(Currently {C:attention,s:0.9}#2#{C:inactive,s:0.9}/#3#{C:inactive,s:0.9} uses)",
+                    "{C:inactive,s:0.8}(Resets at {C:attention,s:0.8}end of round{C:inactive,s:0.8})"
+                    
                 },
                 flavor = {
                     "To the batmobile!"

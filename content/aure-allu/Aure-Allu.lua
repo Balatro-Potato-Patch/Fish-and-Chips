@@ -356,7 +356,6 @@ FishAndChips.Fish {
 		pier = 10,
 		city_river = 8,
 		volcano = 3,
-		aquifer = 6,
 		wormhole = 2,
 		soup = 1,
 	},
@@ -674,7 +673,7 @@ FishAndChips.Fish {
 		backroom = 2,
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.max_cards, card.ability.extra.max_uses, card.ability.extra.remaining_uses } }
+		return { vars = { card.ability.extra.max_cards, card.ability.extra.remaining_uses, card.ability.extra.max_uses } }
 	end,
 	calculate = function (self, card, context)
 		if context.end_of_round and not context.game_over and context.main_eval then
