@@ -40,6 +40,6 @@ return {
         }
     },
     misc = {
-        dictionary = {}
+        dictionary = {},
     }
 }
