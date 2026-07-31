@@ -45,6 +45,41 @@ return {
 					"way around The Mall."
 				}
 			},
+			fish_fac_tss_plecoholder = {
+				name = "Plecoholder",
+				text = {
+					"When round starts, turn {C:attention}fish",
+					"to the right into another",
+					"{C:attention}fish{} by the same {C:attention}developers"
+				},
+				flavour = {
+					"pls add flavour text later"
+				}
+			},
+			fish_fac_tss_plecoholder1 = {
+				name = "Plecoholder",
+				text = {
+					"When round starts, turn {C:attention}fish",
+					"to the right into another",
+					"{C:attention}fish{} by the same {C:attention}developers",
+					"{C:inactive}({V:1}#1#{C:inactive})"
+				},
+				flavour = {
+					"pls add flavour text later"
+				}
+			},
+			fish_fac_tss_plecoholder2 = {
+				name = "Plecoholder",
+				text = {
+					"When round starts, turn {C:attention}fish",
+					"to the right into another",
+					"{C:attention}fish{} by the same {C:attention}developers",
+					"{C:inactive}({V:1}#1# {C:inactive}and {V:2}#2#{C:inactive})"
+				},
+				flavour = {
+					"pls add flavour text later"
+				}
+			},
 			fish_fac_tss_caviar = {
 				name = "Caviar",
 				text = {

@@ -1,31 +1,4 @@
 FishAndChips.Fish {
-	key = "tss_resident",
-	atlas = "tss_fish",
-	pos = { x = 0, y = 0 },
-	weight = 13,
-	ppu_coder = { "slimestuff" },
-	ppu_artist = { "slimestuff" },
-	attributes = { "mult" },
-	config = { extra = { mult = 0, mult_mod = 2 } },
-	environments = {
-		city_river = 1,
-		backroom = 4
-	},
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult_mod, card.ability.extra.mult } }
-	end,
-	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval and not context.blueprint then
-			card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-			
-			return { message = localize("k_upgrade_ex") }
-		end
-
-		if context.joker_main then return { mult = card.ability.extra.mult } end
-	end
-}
-
-FishAndChips.Fish {
 	key = "tss_chesh",
 	atlas = "tss_fish",
 	pos = { x = 0, y = 0 },
@@ -33,10 +6,11 @@ FishAndChips.Fish {
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "xmult", "destroy_card" },
-	config = { extra = { xmult = 1, xmult_mod = .25, odds = 2 } },
+	config = { extra = { xmult = 1, xmult_mod = .25, odds = 3 } },
 	environments = {
 		backroom = 5,
-		wormhole = 2
+		wormhole = 2,
+		styx = 2
 	},
 	loc_vars = function(self, info_queue, card)
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_tss_chesh")
@@ -55,6 +29,92 @@ function CardArea:emplace(card)
 end
 
 FishAndChips.Fish {
+	key = "tss_resident",
+	atlas = "tss_fish",
+	pos = { x = 0, y = 0 },
+	weight = 13,
+	ppu_coder = { "slimestuff" },
+	ppu_artist = { "slimestuff" },
+	attributes = { "mult" },
+	config = { extra = { mult = 0, mult_mod = 2 } },
+	environments = {
+		city_river = 1,
+		backroom = 4,
+		styx = 1
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.mult_mod, card.ability.extra.mult } }
+	end,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval and not context.blueprint then
+			card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+			
+			return { message = localize("k_upgrade_ex") }
+		end
+
+		if context.joker_main then return { mult = card.ability.extra.mult } end
+	end
+}
+
+FishAndChips.Fish {
+	key = "tss_plecoholder",
+	atlas = "tss_fish",
+	pos = { x = 0, y = 0 },
+	weight = 5,
+	ppu_coder = { "slimestuff" },
+	ppu_artist = { "slimestuff" },
+	attributes = { "mult" },
+	environments = {
+		wormhole = 5,
+		backroom = 4
+	},
+	loc_vars = function(self, info_queue, card)
+		local retvars = {colours={}}
+		local devs = {}
+		if card.area == G.fac_fish_area then
+			local self_pos = 0
+			for i = 1, #card.area.cards do
+				if card.area.cards[i] == card then self_pos = i break end
+			end
+			
+			if card.area.cards[self_pos+1] then
+				devs[1] = PotatoPatchUtils.Developers["fac_"..card.area.cards[self_pos+1].config.center.ppu_coder[1]]
+				devs[2] = devs[1].fac_partner and PotatoPatchUtils.Developers["fac_"..devs[1].fac_partner] or nil
+			end
+
+			for _, v in ipairs(devs) do
+				retvars[#retvars+1] = v.loc and localize({set = "PotatoPatch", key = v.loc, type = "name_text"}) or v.name
+				retvars.colours[#retvars.colours+1] = v.colour
+			end
+		end
+		
+		return {vars = retvars, key = #devs>0 and self.key..#devs or nil}
+	end,
+	calculate = function(self, card, context)
+		if context.setting_blind and context.main_eval and card.area == G.fac_fish_area then
+			local self_pos = 0
+			for i = 1, #card.area.cards do
+				if card.area.cards[i] == card then self_pos = i break end
+			end
+
+			local target = card.area.cards[self_pos+1]
+			if not target then return end
+
+			local key = SMODS.poll_object({
+				type = "fish",
+				allow_duplicates = true, -- Not to be confused with allow_duplicates on a fish center, which isn't allowed
+				filter = function(pool)
+					for _, v in ipairs(pool) do
+						print(v)
+					end
+					return pool
+				end
+			})
+		end
+	end
+}
+
+FishAndChips.Fish {
 	key = "tss_caviar",
 	atlas = "tss_fish",
 	pos = { x = 0, y = 0 },
@@ -62,7 +122,7 @@ FishAndChips.Fish {
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "economy" },
-	config = { extra = { mod = 1 } },
+	config = { extra = { mod = 2 } },
 	environments = {
 		city_river = 3,
 		soup = 5
@@ -145,7 +205,7 @@ FishAndChips.Fish {
 					end
 				}))
 			end
-			return {message = localize("fac_tss_forcefem")}
+			return {message = #list>0 and localize("fac_tss_forcefem") or nil}
 		end
 	end
 }
