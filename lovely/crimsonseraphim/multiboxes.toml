@@ -19,3 +19,24 @@ if cfg.crimsonseraphim_forged then
 end
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''functions/common_events.lua'''
+pattern = '''if not hide_desc and card and card.ability and (card.ability.extra_slots_used or 0) ~= 0 then'''
+position = "before"
+payload = '''
+
+if cfg and cfg.fish_seal then
+    local seal = FishAndChips.crimsonseraphim.fish_seals[cfg.fish_seal.key]
+    local t = {key = string.lower(cfg.fish_seal.key).."_fish_seal", set = 'Other', config = {}}
+    if seal.loc_vars and type(seal.loc_vars) == 'function' then
+        local res = seal:loc_vars(info_queue, card) or {}
+        t.vars = res.vars
+        t.key = res.key or t.key
+        t.set = res.set or t.set
+    end
+    info_queue[#info_queue+1] = t
+end
+'''
+match_indent = true

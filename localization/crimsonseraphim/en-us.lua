@@ -19,8 +19,10 @@ return {
                     "the rightmost {C:attention}Fish{}."
                 },
                 flavor = {
-                    "You may hear it whisper",
-                    "secrets if you get too close."
+                    "Typically found in moments of",
+                    "extreme lucidity. It is reported",
+                    "that it may whisper if you get",
+                    "too close."
                 }
             },
             fish_fac_hammerhead_shark = {
@@ -60,17 +62,24 @@ return {
                         "All other {C:attention}Fish{} contribute",
                         "to poker hand calculation"
                     }
+                },
+                flavor = {
+                    "It looks like its {C:green}shifting{}",
+                    "under the light..."
                 }
             },
             fish_fac_jade_crystalfish = {
                 name = "Crystalfish (Ca{s:0.5}2{}[Mg,Fe]{s:0.5}5{}Si{s:0.5}8{}O{s:0.5}22{}[OH]{s:0.5}2{})",
                 text = {
                     {
-                        ""
+                        "Caught {C:green}Fish{} have a ",
+                        "{C:green}#1# in #2#{} chance to",
+                        "have a random Seal"
                     },
-                    {
-                        ""
-                    }
+                },
+                flavor = {
+                    "It looks like its {C:red}shifting{}",
+                    "under the light..."
                 }
             }
         },
@@ -108,7 +117,46 @@ return {
                     "When a Fish is caught",
                     "earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}1{}"
                 }
-            }
+            },
+
+            red_fish_seal = {
+                name = "Red Seal",
+                text = {
+                    "Retrigger the First",
+                    "scored card of each round"
+                }
+            },
+            blue_fish_seal = {
+                name = "Blue Seal",
+                text = {
+                    "When Caught create",
+                    "{C:attention}2{} {C:blue}Planet{} Cards",
+                    "{C:inactive}(Must Have Room)"
+                }
+            },
+            purple_fish_seal = {
+                name = "Purple Seal",
+                text = {
+                    "When Caught create",
+                    "{C:attention}2{} {C:purple}Tarot{} Cards",
+                    "{C:inactive}(Must Have Room)"
+                }
+            },
+            gold_fish_seal = {
+                name = "Gold Seal",
+                text = {
+                    "Earn {C:money}$1{} for every other",
+                    "fish when a Blind is selected."
+                }
+            },
+        }
+    },
+    misc = {
+        labels = {
+            red_fish_seal = "Red Seal",
+            blue_fish_seal = "Blue Seal",
+            purple_fish_seal = "Purple Seal",
+            gold_fish_seal = "Gold Seal"
         }
     }
 }

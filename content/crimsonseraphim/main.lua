@@ -43,6 +43,16 @@ PotatoPatchUtils.Developer({
                 end
             end
         end
+        for _, c in pairs(G.fac_fish_area.cards) do
+            local ret = FishAndChips.crimsonseraphim.calculate_fish_seal(c, context)
+            if ret then
+                ret.card = c
+                ret.message_card = ret.fish_message_card or c
+                ret.juice_card = c
+                effects = SMODS.merge_effects({effects, ret})
+                effects[1] = true
+            end
+        end
         if #effects ~= 0 then
             return effects
         end
@@ -177,7 +187,9 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.fac_fish_caught then
             local money = card.sell_cost + context.fac_fish_caught.sell_cost
-            G.E_MANAGER:add_event(Evemt{
+            G.E_MANAGER:add_event(Event{
+                trigger = "after",
+                blocking = false,
                 func = function()
                     SMODS.destroy_cards({card, context.fac_fish_caught}, nil, true)
                     return true
@@ -200,17 +212,19 @@ FishAndChips.Fish {
 	weight = 7,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "generation", "chance" },
+	attributes = { "passive", "chance" },
 	config = {
 		extra = {
-            odds = 2
+            odds = 2,
+            odds_seal = 2
         }
 	},
 	environments = {
 		styx = 7
 	},
 	loc_vars = function(self, info_queue, card)
-		
+		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds_seal, "fac_crimsonseraphim_jade_crystalfish_seal")
+		return { vars = { num, dem } }
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(
@@ -218,8 +232,189 @@ FishAndChips.Fish {
         ) then
             card:transmute(G.P_CENTERS.fish_fac_ruby_crystalfish)
         end
+        if context.fac_fish_caught and SMODS.pseudorandom_probability(
+            card, "fac_crimsonseraphim_jade_crystalfish_seal", 1, card.ability.extra.odds_seal
+        ) then
+            context.fac_fish_caught:set_fish_seal(pseudorandom_element(SMODS.Seals, pseudoseed("jadefish_seal")).key)
+        end
 	end,
 }
+
+SMODS.Atlas({
+	key = "crimsonseraphim_fish_seals",
+	path = "crimsonseraphim/fish_seals.png",
+	px = 71,
+	py = 95,
+})
+
+FishAndChips.crimsonseraphim.fish_seals = {
+    Red = {
+        atlas = "fac_crimsonseraphim_fish_seals",
+        pos = {x = 0, y = 0},
+        calculate = function(card, context)
+            if context.repetition and G.GAME.round_resets.hands-1 >= G.GAME.current_round.hands_left and context.other_card == context.scoring_hand[1] then
+                return {
+                    fish_message_card = card,
+                    repetitions = 1
+                }
+            end
+        end
+    },
+    Blue = {
+        atlas = "fac_crimsonseraphim_fish_seals",
+        pos = {x = 1, y = 0},
+        on_apply = function()
+            if G.GAME.consumeable_buffer + #G.consumeables.cards < G.consumeables.config.card_limit then
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event{
+                    func = function()
+                        SMODS.add_card{
+                            set = "Planet"
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end
+                })
+            end
+            if G.GAME.consumeable_buffer + #G.consumeables.cards < G.consumeables.config.card_limit then
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event{
+                    func = function()
+                        SMODS.add_card{
+                            set = "Planet"
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end
+                })
+            end
+        end
+    },
+    Gold = {
+        atlas = "fac_crimsonseraphim_fish_seals",
+        pos = {x = 2, y = 0},
+        calculate = function(card, context)
+            if context.setting_blind then
+                for i, v in pairs(G.fac_fish_area.cards) do
+                    if v ~= card then
+                        SMODS.calculate_effect({dollars = 1}, v)
+                    end
+                end
+            end
+        end
+    },
+    Purple = {
+        atlas = "fac_crimsonseraphim_fish_seals",
+        pos = {x = 3, y = 0},
+        on_apply = function()
+            if G.GAME.consumeable_buffer + #G.consumeables.cards < G.consumeables.config.card_limit then
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event{
+                    func = function()
+                        SMODS.add_card{
+                            set = "Tarot"
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end
+                })
+            end
+            if G.GAME.consumeable_buffer + #G.consumeables.cards < G.consumeables.config.card_limit then
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event{
+                    func = function()
+                        SMODS.add_card{
+                            set = "Tarot"
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end
+                })
+            end
+        end
+    }
+}
+
+function FishAndChips.crimsonseraphim.calculate_fish_seal(card, context)
+    if card.fish_seal and FishAndChips.crimsonseraphim.fish_seals[card.fish_seal] and FishAndChips.crimsonseraphim.fish_seals[card.fish_seal].calculate then
+        return FishAndChips.crimsonseraphim.fish_seals[card.fish_seal].calculate(card, context)
+    end
+end
+
+function Card:set_fish_seal(_seal, silent, immediate)
+    local fish_seals = FishAndChips.crimsonseraphim.fish_seals
+    self.seal = nil
+    if _seal then
+        self.fish_seal = _seal
+        self.ability.fish_seal = {}
+        self.ability.fish_seal.key = _seal
+        for k, v in pairs(fish_seals[_seal] and fish_seals[_seal].config or G.P_SEALS[_seal].config or {}) do
+            if type(v) == 'table' then
+                self.ability.fish_seal[k] = copy_table(v)
+            else
+                self.ability.fish_seal[k] = v
+            end
+        end
+        
+        self.ability.delay_seal = not silent
+    
+        G.CONTROLLER.locks.seal = true
+        local sound = (fish_seals[_seal] and fish_seals[_seal].sound or G.P_SEALS[_seal].sound) or {sound = 'gold_seal', per = 1.2, vol = 0.4}
+        if immediate then 
+            self:juice_up(0.3, 0.3)
+            self.ability.delay_seal = false
+            play_sound(sound.sound, sound.per, sound.vol)
+            G.CONTROLLER.locks.seal = false
+        else
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.3,
+                func = function()
+                    self:juice_up(0.3, 0.3)
+                    self.ability.delay_seal = false
+                    play_sound(sound.sound, sound.per, sound.vol)
+                return true
+                end
+            }))
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    G.CONTROLLER.locks.seal = false
+                return true
+                end
+            }))
+        end
+        if type(fish_seals[_seal] and fish_seals[_seal].on_apply) == "function" then
+            fish_seals[_seal]:on_apply(self)
+        end
+    end
+    self:set_cost()
+end
+
+SMODS.DrawStep {
+    key = 'fish_seal',
+    order = 30,
+    func = function(self, layer)
+        local fish_seals = FishAndChips.crimsonseraphim.fish_seals
+        local seal = fish_seals[self.fish_seal] and fish_seals[self.fish_seal] or G.P_SEALS[self.fish_seal] or {}
+        if self.ability.delay_seal then return end
+        if type(seal.draw) == 'function' then
+            (seal.draw):draw(self, layer)
+        elseif self.fish_seal then
+            G.shared_seals["fish_"..self.fish_seal] = G.shared_seals["fish_"..self.fish_seal] or SMODS.create_sprite(0, 0, 2, 2, seal.atlas, seal.pos)
+            G.shared_seals["fish_"..self.fish_seal].role.draw_major = self
+            G.shared_seals["fish_"..self.fish_seal]:draw_shader('dissolve', nil, nil, nil, self.children.center)
+            if self.fish_seal == 'Gold' then G.shared_seals["fish_"..self.fish_seal]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center) end
+        end
+    end,
+    conditions = { vortex = false, facing = 'front' },
+}
+
+local get_badge_colour_ref = get_badge_colour
+function get_badge_colour(key)
+    return get_badge_colour_ref(key:gsub("fish_seal", "seal"))
+end
 
 FishAndChips.Fish {
 	key = "ruby_crystalfish",
@@ -228,7 +423,7 @@ FishAndChips.Fish {
 	weight = 8,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "passive" },
+	attributes = { "passive", "chance" },
 	config = {
 		extra = {
             odds = 2
