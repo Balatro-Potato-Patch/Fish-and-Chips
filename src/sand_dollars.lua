@@ -74,7 +74,9 @@ function ease_sand_dollars(mod, instant)
         end
         --Ease from current chips to the new number of chips
         G.GAME.fac_sand_dollars = G.GAME.fac_sand_dollars + mod
-        G.PROFILES[G.SETTINGS.profile].fac_fishing.career_sand_dollars = G.PROFILES[G.SETTINGS.profile].fac_fishing.career_sand_dollars + mod
+        if mod > 0 then
+            G.PROFILES[G.SETTINGS.profile].fac_fishing.career_sand_dollars = G.PROFILES[G.SETTINGS.profile].fac_fishing.career_sand_dollars + mod
+        end
         check_for_unlock({type = 'fac_sand_dollars'})
         dollar_UI.config.object:update()
         G.HUD:recalculate()
@@ -171,15 +173,6 @@ function G.UIDEF.use_and_sell_buttons(card)
     end
 
     table.insert(SMODS.other_calculation_keys, 'sand_dollars')
-
-    local loc_colour_ref = loc_colour
-    function loc_colour(_c, _default)
-        local ret = loc_colour_ref(_c, _default)
-        if _c == 'fac_sand_dollars' then
-            ret = FishAndChips.C.SAND_DOLLAR
-        end
-        return ret
-    end
 
     function add_round_eval_sand_dollars(config)
     local config = config or {}
