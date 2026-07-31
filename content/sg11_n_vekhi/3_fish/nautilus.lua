@@ -1,7 +1,14 @@
+SMODS.Atlas({
+	key = "sg11_n_vekhi_nautilus",
+	path = "sg11_n_vekhi/nautilus.png",
+	px = 71,
+	py = 95,
+})
+
 FishAndChips.Fish({
-	key = "sg11_n_vekhi_nautilius",
-	-- atlas = "fish",
-	-- pos = { x = 0, y = 0 },
+	key = "sg11_n_vekhi_nautilus",
+	atlas = "fac_sg11_n_vekhi_nautilus",
+	pos = { x = 0, y = 0 },
 	ppu_coder = { "sleepyg11" },
 	ppu_artist = { "vevekhi" },
 	attributes = { "generation" },
@@ -21,7 +28,7 @@ FishAndChips.Fish({
 						local h = G.CARD_H
 						G.E_MANAGER:add_event(Event({
 							func = function()
-								G.fac_nautilius_area =
+								G.fac_nautilus_area =
 									CardArea(card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.25 - h, w, h, {
 										type = "joker",
 										card_limit = 1,
@@ -37,8 +44,8 @@ FishAndChips.Fish({
 						}))
 						G.E_MANAGER:add_event(Event({
 							func = function()
-								local card = SMODS.create_card({ set = "fac_Bait", area = G.fac_nautilius_area })
-								G.fac_nautilius_area:emplace(card)
+								local card = SMODS.create_card({ set = "fac_Bait", area = G.fac_nautilus_area })
+								G.fac_nautilus_area:emplace(card)
 								FishAndChips.add_bait_to_inventory(card.config.center.key)
 								return true
 							end,
@@ -46,14 +53,14 @@ FishAndChips.Fish({
 						delay(1.5)
 						G.E_MANAGER:add_event(Event({
 							func = function()
-								G.fac_nautilius_area.cards[1]:start_dissolve()
+								G.fac_nautilus_area.cards[1]:start_dissolve()
 								return true
 							end,
 						}))
 						delay(0.5)
 						G.E_MANAGER:add_event(Event({
 							func = function()
-								G.fac_nautilius_area:remove()
+								G.fac_nautilus_area:remove()
 								return true
 							end,
 						}))

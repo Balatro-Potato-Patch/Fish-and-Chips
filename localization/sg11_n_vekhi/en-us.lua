@@ -1,10 +1,10 @@
 return {
 	descriptions = {
 		fac_Fish = {
-			fish_fac_sg11_n_vekhi_nautilius = {
-				name = "Nautilius",
+			fish_fac_sg11_n_vekhi_nautilus = {
+				name = "Nautilus",
 				text = {
-					"Gain a random {C:attention}Bait{}",
+					"Create a random {C:attention}Bait{}",
 					"at the end of round",
 					"if any {C:attention}Consumable{} held",
 				},
