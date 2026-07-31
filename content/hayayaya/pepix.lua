@@ -17,6 +17,8 @@ FishAndChips.Fish({
 	use = function(self, card)
 		delay(0.5)
 
+		card:highlight(false)
+
 		-- If this is bigger than 0.5 then fuck you
 		local gambling = pseudorandom("hayayaya_explosion_chance_" .. G.GAME.round_resets.ante, 0, 1) > 0.5
 
@@ -25,11 +27,15 @@ FishAndChips.Fish({
 				card.children.hayayaya_explosion = SMODS.create_sprite(
 					card.T.x,
 					card.T.y,
-					card.T.w * 2,
-					card.T.h * 2.01,
+					card.T.w * 2.5,
+					card.T.h * 2.65,
 					"fac_hayayaya_explosion",
 					{ x = 0, y = 0 }
 				)
+				card.children.hayayaya_explosion.role.role_type = "Minor"
+				card.children.hayayaya_explosion.role.major = card.children.center
+				card.children.hayayaya_explosion.role.offset =
+					{ x = -card.children.hayayaya_explosion.T.w / 4, y = -card.children.hayayaya_explosion.T.h / 4 }
 				card.children.hayayaya_explosion.hayayaya_explosion = true
 				SMODS.mod_blind_size({ mult = gambling and 2 or 0.5, card = G.GAME.blind, effect = {} })
 				play_sound("fac_hayayaya_explosion")
@@ -76,7 +82,7 @@ FishAndChips.Fish({
 		"scaling",
 		"chips",
 	},
-	config = { extra = { chips = 0, chips_add = 5, done = false } },
+	config = { extra = { chips = 0, chips_add = 5, done = false, discard_flush = false } },
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -96,6 +102,8 @@ FishAndChips.Fish({
 				end,
 			}))
 		end
+
+		-- TODO: Make each card disappear one by one?
 		if context.discard and not card.ability.extra.done then
 			SMODS.destroy_cards(context.other_card, {
 				immediate = true,
@@ -111,8 +119,23 @@ FishAndChips.Fish({
 			})
 		end
 
+		-- Genuinely, for some reason they still exist in the discard pile
+		-- We already know the actual moveable is deleted now, so just clear the table manually
+		if context.hand_drawn and card.ability.extra.done and not card.ability.extra.discard_flush then
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					G.discard.cards = {}
+					print("rid discard pile")
+					card.ability.extra.done = true
+					return true
+				end,
+			}))
+			card.ability.extra.discard_flush = true
+		end
+
 		if context.end_of_round and context.main_eval then
 			card.ability.extra.done = false
+			card.ability.extra.discard_flush = false
 		end
 
 		if context.joker_main then
