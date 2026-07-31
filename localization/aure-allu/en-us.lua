@@ -154,11 +154,23 @@ return {
                     "To the batmobile!"
                 }
             },
+            fish_fac_cowfish = {
+                name = {"Cowfish"},
+                text = {
+                    "Every {C:attention}#1#{C:inactive}/#2#{} rounds,",
+                    "{C:attention}milk{} this {C:fac_fish}Fish{} to create",
+                    "a random {C:spectral}Spectral{} card"
+                },
+                flavor = {
+                    "Moo."
+                }
+            },
         },
     },
     misc = {
         dictionary = {
             k_aure_allu_blooper = "Ink'd!",
+            k_aure_allu_milk_button = "Milk",
         }
     }
 }

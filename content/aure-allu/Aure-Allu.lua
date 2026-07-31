@@ -237,9 +237,9 @@ local function get_average_property(cards, property)
 	return total / #cards
 end
 
-local ease_round_ref = ease_round
-function ease_round(...)
-	ease_round_ref(...)
+local end_round_ref = end_round
+function end_round(...)
+	end_round_ref(...)
 	for _, area in ipairs({G.jokers, G.consumeables, G.fac_fish_area}) do
 		for _, card in ipairs(area.cards) do
 			card.ability.rounds_held = card.ability.rounds_held and card.ability.rounds_held + 1 or 1
@@ -677,7 +677,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.max_cards, card.ability.extra.max_uses, card.ability.extra.remaining_uses } }
 	end,
 	calculate = function (self, card, context)
-		if context.blind_defeated then
+		if context.end_of_round and not context.game_over and context.main_eval then
 			local before = card.ability.extra.remaining_uses
 			card.ability.extra.remaining_uses = card.ability.extra.max_uses
 			if before < card.ability.extra.max_uses then
@@ -719,6 +719,89 @@ FishAndChips.Fish {
 	end,
 	can_use = function (self, card)
 		return G.hand and #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.max_cards and card.ability.extra.remaining_uses > 0
+	end
+}
+
+-- Cowfish
+local use_and_sell_ref = G.UIDEF.use_and_sell_buttons
+function G.UIDEF.use_and_sell_buttons(card)
+	use_and_sell_card = card
+	return use_and_sell_ref(card)
+end
+
+local localize_ref = localize
+function localize(args, ...)
+	if args == "b_use" and use_and_sell_card then
+		args = ((use_and_sell_card.config or {}).center or {}).use_button_loc_key or args
+	end
+	local ret = localize_ref(args, ...)
+	return ret
+end
+
+FishAndChips.Fish {
+	key = "cowfish",
+	atlas = "aure-allu_fish",
+	pos = { x = 3, y = 2 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "usable" },
+	blueprint_compat = false,
+	config = {
+		extra = {
+			rounds_total = 0,
+			rounds_needed = 2,
+		},
+	},
+	environments = {
+		garden = 5,
+		chocolate_river = 10,
+		wormhole = 2,
+		soup = 8,
+	},
+	use_button_loc_key = "k_aure_allu_milk_button",
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.rounds_total, card.ability.extra.rounds_needed } }
+	end,
+	calculate = function (self, card, context)
+		if context.end_of_round and not context.game_over and context.main_eval then
+			card.ability.extra.rounds_total = card.ability.extra.rounds_total + 1
+			if card.ability.extra.rounds_total >= card.ability.extra.rounds_needed then
+				juice_card_until(card, function ()
+					return card.ability.extra.rounds_total >= card.ability.extra.rounds_needed and not G.RESET_JIGGLES
+				end)
+			end
+			return {
+				message = (card.ability.extra.rounds_total < card.ability.extra.rounds_needed) and (card.ability.extra.rounds_total..'/'..card.ability.extra.rounds_needed) or localize('k_active_ex'),
+				colour = FishAndChips.C.FISH
+			}
+		end
+	end,
+	use = function (self, card)
+		card.ability.extra.rounds_total = 0
+		G.E_MANAGER:add_event(Event({
+			trigger = "after", 
+			delay = 0.1, 
+			func = function()
+				play_sound('tarot1')
+				card:juice_up(0.3, 0.5)
+				return true
+			end
+		}))
+		G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+		G.E_MANAGER:add_event(Event({
+			func = (function()
+				SMODS.add_card({set = 'Spectral'})
+				G.GAME.consumeable_buffer = 0
+				return true
+			end)
+		}))
+	end,
+	keep_on_use = function (self, card)
+		return true
+	end,
+	can_use = function (self, card)
+		return G.consumeables and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit and card.ability.extra.rounds_total >= card.ability.extra.rounds_needed
 	end
 }
 
