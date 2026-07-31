@@ -821,7 +821,7 @@ FishAndChips.Fish {
 		extra = {
 			extra_draw = 2,
 			cost = 4,
-			cost_increase = 2,
+			cost_increase = 3,
 		},
 	},
 	environments = {
