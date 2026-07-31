@@ -5,7 +5,10 @@ FishAndChips.Fish{
 		city_river = 1,
 		wormhole = 1
 	},
+	atlas = "fas_fish_general",
+	pos = {x=1,y=0},
 	ppu_coder = {"Foo54"},
+	ppu_artist = {"squeax09"},
 	config = {
 		extra = {
 			score = 40
