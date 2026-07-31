@@ -1,5 +1,13 @@
 return {
     descriptions = {
+        fac_Env = {
+            egg = {
+                name = "Egg Room",
+                text = {
+                    "Well, there is a      here."
+                }
+            },
+        },
         fac_Fish = {
             fish_fac_one = {
                 name = "One Fish",
@@ -87,6 +95,8 @@ return {
     },
     misc = {
         dictionary = {
+            k_bigtrout = "[[BIG TROUT]]",
+            k_hokimama = "[HOKI MAMA]"
         },
         achievement_names = {
         },
