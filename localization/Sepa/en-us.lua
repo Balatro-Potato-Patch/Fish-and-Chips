@@ -45,7 +45,9 @@ return {
                     "{C:attention}face card{} held in hand"
                 },
                 flavor = {
-                    "He made a statement so funny even the kids clowned his jokes"
+                    "He made a statement",
+                    "so funny even the",
+                    "kids clowned his jokes"
                 }
             },
             fish_fac_freds_leg = {
