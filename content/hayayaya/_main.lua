@@ -32,6 +32,7 @@ PotatoPatchUtils.Developer({
 	atlas = "fac_hayayaya_credits",
 	colour = G.C.PURPLE,
 	fac_partner = "Pepix",
+	loc = true,
 })
 
 PotatoPatchUtils.Developer({
@@ -40,6 +41,7 @@ PotatoPatchUtils.Developer({
 	pos = { x = 1, y = 0 },
 	colour = G.C.GOLD,
 	fac_partner = "Ellen (Haya)",
+	loc = true,
 })
 
 -- Namespace for team specific utils

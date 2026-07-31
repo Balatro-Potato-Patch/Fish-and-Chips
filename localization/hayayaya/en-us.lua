@@ -1,5 +1,20 @@
 return {
 	descriptions = {
+		PotatoPatch = {
+			["PotatoPatchDev_Ellen (Haya)"] = {
+				name = "Ellen (Haya)",
+				text = {
+					"Back at it once again",
+				},
+			},
+			PotatoPatchDev_Pepix = {
+				name = "Pepix",
+				text = {
+					"Back at it once again",
+					"with more yesserie",
+				},
+			},
+		},
 		fac_Fish = {
 			fish_fac_mewtwostrikesback = {
 				name = "Cloner Fish",
