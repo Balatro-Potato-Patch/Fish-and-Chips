@@ -975,5 +975,64 @@ FishAndChips.Fish {
 	end
 }
 
+-- Clownfish
+FishAndChips.Fish {
+	key = "clownfish",
+	atlas = "aure-allu_fish",
+	pos = { x = 1, y = 3 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "copy" },
+	config = {
+		extra = {
+			
+		},
+	},
+	environments = {
+		city_river = 10,
+		styx = 7,
+		wormhole = 7,
+		backroom = 9,
+	},
+	loc_vars = function(self, info_queue, card)
+		-- Everyone say it with me: Thanks Vanillaremade!
+		if card.area and card.area == G.fac_fish_area then
+            local joker
+            for i = 1, #G.fac_fish_area.cards do
+                if G.fac_fish_area.cards[i] == card then joker = G.jokers.cards[i] end
+            end
+            local compatible = joker and joker ~= card and joker.config.center.blueprint_compat
+            local main_end = {
+                {
+                    n = G.UIT.C,
+                    config = { align = "bm", minh = 0.4 },
+                    nodes = {
+                        {
+                            n = G.UIT.C,
+                            config = { ref_table = card, align = "m", colour = compatible and mix_colours(FishAndChips.C.FISH, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.RED, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
+                            nodes = {
+                                { n = G.UIT.T, config = { text = ' ' .. localize('k_' .. (compatible and 'compatible' or 'incompatible')) .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
+                            }
+                        }
+                    }
+                }
+            }
+            return { main_end = main_end }
+        end
+	end,
+	calculate = function(self, card, context)
+		local joker = nil
+        for i = 1, #G.fac_fish_area.cards do
+                if G.fac_fish_area.cards[i] == card then joker = G.jokers.cards[i] end
+            end
+        local ret = SMODS.blueprint_effect(card, joker, context)
+        if ret then
+            ret.colour = FishAndChips.C.FISH
+        end
+        return ret
+	end,
+}
+
 
 -- #endregion
