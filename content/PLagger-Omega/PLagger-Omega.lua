@@ -24,6 +24,7 @@ Stewfish in Soup & Choco River?
 Docfish in Pier & City River
 Biblically accurate angelfish in backrooms
 Relicanth in Cavern Aquifer, Stone cards
+Gummigoo in Choco River & Swamp
 ]]
 
 ----------
