@@ -79,8 +79,8 @@ return {
 	misc = {
 		dictionary = {
 			pac_quantum_fish_1 = "You again...",
-			pac_quantum_fish_2 = "I'll not let you go ever again!",
-			pac_quantum_fish_3 = "Say 'Fish!'",
+			pac_quantum_fish_2 = "I'll not let you go this time.",
+			pac_quantum_fish_3 = "Say 'Fish'!",
 			k_pac_soul_cannon_trigger = "Saved by Soul Cannonfish",
 		},
 	},
