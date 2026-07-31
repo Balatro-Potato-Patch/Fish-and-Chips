@@ -231,11 +231,10 @@ FishAndChips.Fish {
                         if card and card.ability.extra.doingNothing and newX == x and newY == y and G.GAME and G.GAME.blind and G.GAME.blind.config.blind.key == "bl_plant" then
                             card.ability.extra.doingNothing = nil
                             if G.STATE == G.STATES.SELECTING_HAND then
-
                                 play_sound("fac_waffle_conch_nothing")
                                 card:juice_up()
 
-                                delay(0.8*G.SETTINGS.GAMESPEED)
+                                delay(0.8 * G.SETTINGS.GAMESPEED)
 
                                 G.GAME.chips = G.GAME.blind.chips
                                 G.STATE = G.STATES.HAND_PLAYED
@@ -259,7 +258,6 @@ FishAndChips.Fish {
     weight = 3,
     environments = {
         garden = 1,
-        wormhole = 0.6
     },
     cost = 9,
     pos = { x = 1, y = 0 },
@@ -309,7 +307,7 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.discard and context.other_card:get_id() == 2 and not config.blueprint then
+        if context.discard and context.other_card:get_id() == 2 and not context.blueprint then
             --context.other_card:remove()
             --SMODS.destroy_cards(context.other_card)
             return {
@@ -318,7 +316,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    attributes = {"economy", "destroy_card"}
+    attributes = { "economy", "destroy_card" }
 }
 
 -- Squid Ink Cookie
@@ -332,7 +330,7 @@ FishAndChips.Fish {
     cost = 4,
     environments = {
         chocolate_river = 1,
-        pier = 0.8,
+        soup = 0.8,
     },
     loc_vars = function(self, info_queue, card)
         local quotes = {
@@ -385,6 +383,37 @@ FishAndChips.Fish {
             }
         end
     end,
-    attributes = {"suit"},
+    attributes = { "suit" },
     pronouns = "they_them"
+}
+
+-- Mudskipper
+FishAndChips.Fish {
+    key = "fac_waffle_mudskipper",
+    atlas = "waffle_fish",
+    pos = { x = 4, y = 0 },
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    weight = 10,
+    cost = 4,
+    environments = {
+        swamp = 1,
+        calm_pond = 0.75,
+    },
+    attributes = { "passive" },
+    calculate = function(self, card, context)
+        if context.fac_end_fishing then -- thanks eremel
+            local tag_pool = get_current_pool('Tag')
+            local selected_tag = pseudorandom_element(tag_pool, 'fac_waffle_mudskipper_tag')
+            local it = 1
+            while selected_tag == 'UNAVAILABLE' do
+                it = it + 1
+                selected_tag = pseudorandom_element(tag_pool, 'fac_waffle_mudskipper_tag_resample' .. it)
+            end
+            add_tag(Tag(selected_tag, false, 'Small'))
+            return {
+                message = localize('k_fac_wafflemod_tag')
+            }
+        end
+    end
 }

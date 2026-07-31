@@ -65,6 +65,18 @@ return {
                 flavor = {
                     "#5#"
                 }
+            },
+
+            fish_fac_waffle_mudskipper = {
+                name = "Mudskipper",
+                text = {
+                    "Create a random {C:attention}Tag{}",
+                    "when {C:attention}reeling in{} a Fish"
+                },
+                flavor = {
+                    "Stop staring at me",
+                    "with them big ol' eyes!"
+                }
             }
 
         },
@@ -74,8 +86,9 @@ return {
     misc = {
 
         dictionary = {
-            k_fac_waffle_ready_ex = "Ready!"
-        }
+            k_fac_waffle_ready_ex = "Ready!",
+            k_fac_waffle_tag = "+1 Tag"
+        },
 
     }
 
