@@ -6,14 +6,14 @@ local bx, by
 local boid_quad = love.graphics.newQuad(0, 0, 1, 1, 1, 1)
 
 -- adapted from vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html
-local visual_range = 40
-local protected_range = 8
-local centering_factor = 0.02
-local avoid_factor = 0.5
+local visual_range = 150
+local protected_range = 20
+local centering_factor = 0.25
+local avoid_factor = 0.05
 local avoid_mouse_factor = 2
-local matching_factor = 2
-local max_speed = 600
-local min_speed = 200
+local matching_factor = 1
+local max_speed = 450
+local min_speed = 150
 local turn_factor = 4
 local max_bias = 0.1
 local bias_increment = 0.0004
@@ -34,14 +34,15 @@ FountainOpeners.Boid = Object:extend()
 
 function FountainOpeners.Boid:init(args)
 	self.pos = {
-		x = pseudorandom("fac_fo_boid_x") * (love.graphics.getWidth() - 60) - 30,
-		y = pseudorandom("fac_fo_boid_y") * (love.graphics.getHeight() - 40) - 20,
+		x = pseudorandom("fac_fo_boid_x") * (love.graphics.getWidth() - 62) - 31,
+		y = pseudorandom("fac_fo_boid_y") * (love.graphics.getHeight() - 38) - 19,
 		rot = 0
 	}
 	self.vel = {
 		x = pseudorandom("fac_fo_boid_x") * 200,
 		y = pseudorandom("fac_fo_boid_x") * 200,
 	}
+	self.target_rot = 0
 	self.spr = {
 		x = 0,
 		y = 0
@@ -52,6 +53,10 @@ function FountainOpeners.Boid:init(args)
 	end
 
 	FountainOpeners.Boids[#FountainOpeners.Boids+1] = self
+end
+
+local function lerp(a,b,fac)
+    return a + (b - a) * fac
 end
 
 local function pythagorean(x, y)
@@ -127,12 +132,12 @@ function FountainOpeners.Boid:update(dt)
 		self.vel.y = self.vel.y / speed * max_speed
 	end
 
+	self.pos.rot = math.atan2(self.vel.y, self.vel.x)
+
 	-- update position
 	for _, d in ipairs{"x", "y"} do
 		self.pos[d] = self.pos[d] + self.vel[d] * dt
 	end
-
-	self.pos.rot = -math.deg(math.atan(self.vel.y, self.vel.x))
 end
 
 FountainOpeners.boids_game = {
