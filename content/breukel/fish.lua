@@ -60,22 +60,20 @@ FishAndChips.Fish {
 	end,
 
 	calculate = function(self, card, context)
-		if context.other_joker then
-			if context.other_joker.ability.set == "fish" then
-				G.fac_Breukel.AddOverTime(context.other_joker, card.ability.extra.extraOvertime)
-			end
+		if context.other_unknown and context.other_unknown.ability.set == "fac_Fish" then
+			G.fac_Breukel.AddOverTime(context.other_unknown, card.ability.extra.extraOvertime)
 		end
 	end,
 
     remove_from_deck = function(self, card, from_debuff)
-        G.GAME.fac_breukel.MaxOverTime = 10
+        G.GAME.fac_Breukel.MaxOverTime = 10
     end,
 
 	on_catch = function(self, card)
-		G.GAME.fac_breukel.MaxOverTime = 20
+		G.GAME.fac_Breukel.MaxOverTime = 20
 	end,
     add_from_deck = function(self, card, from_debuff)
-        G.GAME.fac_breukel.MaxOverTime = 20
+        G.GAME.fac_Breukel.MaxOverTime = 20
     end,
 }
 
