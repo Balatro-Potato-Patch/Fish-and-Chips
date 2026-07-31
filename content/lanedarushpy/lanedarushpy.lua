@@ -99,7 +99,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main and not card.ability.immutable.cant_flop then return { Xmult = card.ability.extra.Xmult > 1.0 and card.ability.extra.Xmult or nil } end
-        local context_check = (context.end_of_round or context.first_hand_drawn or context.after or (context.fac_fish_hooked and pseudorandom("laneda_floppy_fuckyou", 1, 10) < 4))
+        local context_check = (context.end_of_round or context.first_hand_drawn or context.after or (context.fac_fish_hooked and pseudorandom("laneda_floppy_fuckyou", 1, 10) < 3))
         if context_check and card.ability.immutable.flop_flag then
             G.E_MANAGER:add_event(Event({
                 func = function ()
@@ -289,6 +289,83 @@ SMODS.Atlas {
     path = "lanedarushpy/pangaea47.png",
     px = 71,
     py = 95
+}
+
+
+--- Findows
+SMODS.Sound {
+    key = "music_findows_shop",
+    path = "lanedarushpy/music_findows_shop.ogg",
+    pitch = 1.0,
+    volume = 0.75,
+    -- sync = {
+    --     ['music_findows_booster'] = true,
+    --     ['music_findows_main'] = true,
+    --     ['music_findows_boss'] = true,
+    -- },
+
+    select_music_track = function (self)
+        local play_condition = G.STATE == G.STATES.SHOP
+        local has_findows = not not next(SMODS.find_card("fish_fac_argel_findows", true))
+
+        return (has_findows and play_condition) and 105 or false
+    end
+}
+
+SMODS.Sound {
+    key = "music_findows_main",
+    path = "lanedarushpy/music_findows_main.ogg",
+    pitch = 1.0,
+    volume = 0.75,
+    -- sync = {
+    --     ['music_findows_booster'] = true,
+    --     ['music_findows_shop'] = true,
+    --     ['music_findows_boss'] = true,
+    -- },
+
+    select_music_track = function (self)
+        local has_findows = not not next(SMODS.find_card("fish_fac_argel_findows", true))
+
+        return has_findows and 103 or false
+    end
+}
+
+SMODS.Sound {
+    key = "music_findows_booster",
+    path = "lanedarushpy/music_findows_boosters.ogg",
+    pitch = 1.0,
+    volume = 0.75,
+    -- sync = {
+    --     ['music_findows_main'] = true,
+    --     ['music_findows_shop'] = true,
+    --     ['music_findows_boss'] = true,
+    -- },
+
+    select_music_track = function (self)
+        local play_condition = G.STATE == G.STATES.SMODS_BOOSTER_OPENED;
+        local has_findows = not not next(SMODS.find_card("fish_fac_argel_findows", true))
+
+        return (play_condition and has_findows) and 106 or false
+    end
+}
+
+SMODS.Sound {
+    key = "music_findows_boss",
+    path = "lanedarushpy/music_findows_boss.ogg",
+    pitch = 1.0,
+    volume = 0.75,
+    -- sync = {
+    --     ['music_findows_main'] = true,
+    --     ['music_findows_shop'] = true,
+    --     ['music_findows_booster'] = true,
+    -- },
+
+    select_music_track = function (self)
+        local play_condition = G.GAME.blind and (G.GAME.blind.in_blind and not not G.GAME.blind.boss);
+        local has_findows = not not next(SMODS.find_card("fish_fac_argel_findows", true))
+
+        return (play_condition and has_findows) and 106 or false
+    end
 }
 
 FishAndChips.Fish {
