@@ -1,11 +1,21 @@
 PotatoPatchUtils.Developer({
     name = 'FirstTry',
-    atlas = 'fac_pnf_blueax',
+    atlas = 'fac_pnf_firsttry',
     loc = true,
     colour = G.C.SECONDARY_SET.Spectral,
     display_size = { w = 71 * 20.7, h = 95 * 20.7 },
     fac_partner =
     'Pixel',            -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+    click = function(self)
+        play_sound("fac_pnf_fts",math.random(0.95,1.25),1)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            func = function()
+                self:juice_up(1, 0.2)
+                return true
+            end
+        }))
+    end
 })
 
 PotatoPatchUtils.Developer({
@@ -25,6 +35,20 @@ PotatoPatchUtils.Developer({
             end
         }))
     end
+})
+
+SMODS.Atlas({
+    key = "pnf_firsttry", -- Please include your name/team name in your atlas keys
+    path = "pnf/FirstTryCredits.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_flyan", -- Please include your name/team name in your atlas keys
+    path = "pnf/FlyingAnchovy.png",
+    px = 71,
+    py = 95,
 })
 
 SMODS.Atlas({
@@ -58,6 +82,11 @@ SMODS.Atlas({
 SMODS.Sound({
     key = "pnf_pixelsounds", -- Please include your name/team name in your atlas keys
     path = "pnf/pixelnoise.ogg",
+})
+
+SMODS.Sound({
+    key = "pnf_fts", -- Please include your name/team name in your atlas keys
+    path = "pnf/firsttrynoise.ogg",
 })
 
 FishAndChips.Fish {

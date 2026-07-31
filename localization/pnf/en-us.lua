@@ -49,6 +49,7 @@ return {
             PotatoPatchDev_FirstTry = {
                 name = 'FirstTry',
                 text = {
+                    "{s:2,C:spectral}FirstTry",
                     "yo."
                 }
             },
