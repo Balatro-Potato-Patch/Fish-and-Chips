@@ -64,7 +64,8 @@ return {
             ["fish_fac_J8-Bit_hermit_crab"] = {
                 name = "Hermit Crab",
                 text = {
-                    "Doubles {C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}$ Sand Dollars{}",
+                    "Use this {C:fac_fish}Fish{} to",
+                    "double {C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}$ Sand Dollars{}",
                     "{C:inactive}(Max of {C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}$#1#{}{C:inactive})"
                 },
                 flavor = {
@@ -237,8 +238,10 @@ return {
                     "Spectral Sea Angel",
                 },
                 text = {
-                    "{C:red}Use{} to create the",
-                    "last used {V:1}#1#{} card"
+                    "Use this {C:fac_fish}Fish{} to",
+                    "create the last used",
+                    "{V:1}#1#{} card",
+                    "{C:inactive}(Must have room)"
                 },
                 flavor = {
                     "Only fools succumb to",
@@ -287,9 +290,9 @@ return {
                 },
                 text = {
                     {
-                        "{C:red}Use{} to {C:attention}destroy",
-                        "up to {C:attention}#1#{} selected",
-                        "cards per round",
+                        "Use this {C:fac_fish}Fish{} to",
+                        "{C:red}destroy{} up to {C:attention}#1#{}",
+                        "selected cards per round",
                         "{s:0.8,C:inactive}(Infinite uses)"
                     },
                     {
