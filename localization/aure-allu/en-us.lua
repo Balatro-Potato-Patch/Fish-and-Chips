@@ -181,12 +181,24 @@ return {
                     ""
                 }
             },
+            fish_fac_unicorn_fish = {
+                name = {"Unicorn Fish"},
+                text = {
+                    "Use this {C:fac_fish}Fish{} for",
+                    "a {C:green}#1# in #2#{} chance to",
+                    "create a {C:rare}Rare {C:attention}Tag"
+                },
+                flavor = {
+                    "Neigh! (Sparkly)"
+                }
+            },
         },
     },
     misc = {
         dictionary = {
             k_aure_allu_blooper = "Ink'd!",
             k_aure_allu_milk_button = "Milk",
+            k_aure_allu_unicorn = "Nyaeigh!"
         }
     }
 }

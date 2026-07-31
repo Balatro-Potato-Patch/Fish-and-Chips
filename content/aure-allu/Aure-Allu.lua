@@ -884,4 +884,96 @@ FishAndChips.Fish {
 	end
 }
 
+-- Unicorn Fish
+FishAndChips.Fish {
+	key = "unicorn_fish",
+	atlas = "aure-allu_fish",
+	pos = { x = 0, y = 3 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "usable" },
+	blueprint_compat = false,
+	config = {
+		extra = {
+			tag_odds = 2
+		},
+	},
+	environments = {
+		calm_pond = 4,
+		garden = 8,
+		chocolate_river = 10,
+		wormhole = 3,
+		backroom = 2,
+		soup = 5,
+	},
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue+1] = G.P_TAGS.tag_rare
+		local numerator_unicorn, denominator_unicorn = SMODS.get_probability_vars(card, 1, card.ability.extra.tag_odds, "fac_aure-allu_unicorn_fish")
+		return { vars = { numerator_unicorn, denominator_unicorn } }
+	end,
+	use = function (self, card)
+		if SMODS.pseudorandom_probability(card, "fac_aure-allu_unicorn_fish", 1, card.ability.extra.tag_odds) then
+			G.E_MANAGER:add_event(Event({
+				trigger = "after", 
+				delay = 0.1, 
+				func = function()
+					play_sound('tarot1')
+					card:juice_up(0.3, 0.5)
+					add_tag({key="tag_rare"})
+					play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+					play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+					attention_text({
+						text = localize('k_aure_allu_unicorn'),
+						scale = 1.3,
+						hold = 1.4,
+						major = card,
+						backdrop_colour = HEX("fca6e9"),
+						align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and
+							'tm' or 'cm',
+						offset = { x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and -0.2 or 0 },
+						silent = true
+					})
+					return true
+				end
+			}))
+		else
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.4,
+				func = function()
+					attention_text({
+						text = localize('k_nope_ex'),
+						scale = 1.3,
+						hold = 1.4,
+						major = card,
+						backdrop_colour = FishAndChips.C.FAC_PRIMARY,
+						align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and
+							'tm' or 'cm',
+						offset = { x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and -0.2 or 0 },
+						silent = true
+					})
+					G.E_MANAGER:add_event(Event({
+						trigger = 'after',
+						delay = 0.06 * G.SETTINGS.GAMESPEED,
+						blockable = false,
+						blocking = false,
+						func = function()
+							play_sound('tarot2', 0.76, 0.4)
+							return true
+						end
+					}))
+					play_sound('tarot2', 1, 0.4)
+					card:juice_up(0.3, 0.5)
+					return true
+				end
+			}))
+		end
+	end,
+	can_use = function (self, card)
+		return true
+	end
+}
+
+
 -- #endregion
