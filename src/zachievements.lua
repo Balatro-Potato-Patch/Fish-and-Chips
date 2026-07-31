@@ -142,12 +142,19 @@ FishAndChips.Achievement({
     end
 })
 
--- TODO: add check in corret code spot
+local emplace_ref = CardArea.emplace
+function CardArea:emplace(card, location, stay_flipped)
+    emplace_ref(self, card, location, stay_flipped)
+    if self == G.fac_fish_area then
+        check_for_unlock({type = 'fac_add_fish'})
+    end
+end
+
 FishAndChips.Achievement({
     key = 'bucket',
     config = {amount = 10},
     unlock_condition = function(self, args)
-        return args.type == 'fac_add_fish' and #G.fac_fish_area.cards == self.config.amount
+        return args.type == 'fac_add_fish' and #G.fac_fish_area.cards >= self.config.amount
     end
 })
 
@@ -181,11 +188,19 @@ FishAndChips.Achievement({
     end
 })
 
+local add_to_deck_ref = Card.add_to_deck
+function Card:add_to_deck(...)
+    add_to_deck_ref(self, ...)
+    if self.ability.set == 'Joker' then
+        G.GAME.fac_no_jokers = false
+    end
+end
+
 -- TODO: code check
 FishAndChips.Achievement({
     key = 'no_jokers',
     unlock_condition = function(self, args)
-        return args.type == 'fac_no_jokers' and FishAndChips.no_jokers
+        return args.type == 'win' and G.GAME.fac_no_jokers
     end
 })
 
@@ -254,7 +269,6 @@ FishAndChips.Achievement({
     end
 })
 
--- TODO: add check code in right place
 FishAndChips.Achievement({
     key = 'all_rods',
     unlock_condition = function(self, args)
