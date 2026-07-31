@@ -1,7 +1,7 @@
 FishAndChips.Fish {
 	key = "tss_chesh",
 	atlas = "tss_fish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 2, y = 0 },
 	weight = 5,
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
@@ -23,15 +23,17 @@ FishAndChips.Fish {
 }
 
 local emplace_hook = CardArea.emplace
-function CardArea:emplace(card)
+function CardArea:emplace(card, ...)
 	if card.tss_cheshed then return end
-	emplace_hook(self,card)
+	emplace_hook(self,card, ...)
 end
+
+
 
 FishAndChips.Fish {
 	key = "tss_resident",
 	atlas = "tss_fish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 1, y = 0 },
 	weight = 13,
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
@@ -100,16 +102,7 @@ FishAndChips.Fish {
 			local target = card.area.cards[self_pos+1]
 			if not target then return end
 
-			local key = SMODS.poll_object({
-				type = "fish",
-				allow_duplicates = true, -- Not to be confused with allow_duplicates on a fish center, which isn't allowed
-				filter = function(pool)
-					for _, v in ipairs(pool) do
-						print(v)
-					end
-					return pool
-				end
-			})
+			--local key = FishAndChips.poll_fish()
 		end
 	end
 }
@@ -146,7 +139,7 @@ FishAndChips.Fish {
 	key = "tss_forcefish",
 	atlas = "tss_fish",
 	pos = { x = 0, y = 0 },
-	weight = 8,
+	weight = 4,
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "rank" },
@@ -207,5 +200,64 @@ FishAndChips.Fish {
 			end
 			return {message = #list>0 and localize("fac_tss_forcefem") or nil}
 		end
+	end
+}
+
+FishAndChips.Fish {
+	key = "tss_uranium",
+	atlas = "tss_fish",
+	pos = { x = 0, y = 0 },
+	weight = 4,
+	ppu_coder = { "slimestuff" },
+	ppu_artist = { "slimestuff" },
+	attributes = { "rank" },
+	config = { extra = { pickup = 0 } },
+	environments = {
+		wormhole = 3,
+		city_river = 1
+	},
+	calculate = function(self, card, context)
+		if context.before then
+			for i, c in ipairs(G.hand.cards) do
+				G.E_MANAGER:add_event(Event({
+					trigger = 'immediate',
+					delay = 0.15,
+					func = function()
+						c:flip()
+						play_sound('card1')
+						c:juice_up(0.3, 0.3)
+						return true
+					end
+				}))
+			end
+			delay(0.2)
+			for i, c in ipairs(G.hand.cards) do
+				G.E_MANAGER:add_event(Event({
+					trigger = 'immediate',
+					delay = 0.1,
+					func = function()
+						SMODS.change_base(c, nil, pseudorandom_element(SMODS.Ranks, "fac_tss_uranium").key)
+						return true
+					end
+				}))
+			end
+			for i, c in ipairs(G.hand.cards) do
+				G.E_MANAGER:add_event(Event({
+					trigger = 'immediate',
+					delay = 0.15,
+					func = function()
+						c:flip()
+						play_sound('tarot2')
+						c:juice_up(0.3, 0.3)
+						card:juice_up(0.3, 0.3)
+						return true
+					end
+				}))
+			end
+			return {message = #G.hand.cards>0 and " " or nil, colour = G.C.GREEN}
+		end
+	end,
+	add_to_deck = function(self, card)
+		card.ability.extra.pickup = G.TIMERS.REAL
 	end
 }

@@ -30,7 +30,9 @@ PotatoPatchUtils.Developer{
 			for _, v in ipairs(cheshlist) do
 				G.E_MANAGER:add_event(Event({trigger = "after", delay = chesh_speed/#cheshlist, func=function()
 					v.area:remove_card(v)
-					G.FISHING.fac_fish_reward_area:emplace(v)
+
+					G.FISHING.fac_fish_reward_area:emplace(v, 1)
+
 					play_sound("whoosh")
 					v.T.w = v.T.w*chesh_scale
 					v.T.h = v.T.h*chesh_scale
@@ -44,14 +46,13 @@ PotatoPatchUtils.Developer{
 				return true end}))
 			end
 
-			for i = 1, 5 do
-				for _, v in ipairs(cheshlist) do
-					G.E_MANAGER:add_event(Event({trigger = "after", delay = chesh_speed/#cheshlist, func=function()
-						v:juice_up()
-						f:juice_up()
-						play_sound("fac_tss_eat"..pseudorandom("fac_tss_chesh_eat_sfx",1,3))
-					return true end}))
-				end
+			for i = 1, 5*#cheshlist do
+				local v = pseudorandom_element(cheshlist, "fac_tss_chesh_bite")
+				G.E_MANAGER:add_event(Event({trigger = "after", delay = chesh_speed/#cheshlist, func=function()
+					v:juice_up()
+					f:juice_up()
+					play_sound("fac_tss_eat"..pseudorandom("fac_tss_chesh_eat_sfx",1,3))
+				return true end}))
 			end
 
 			G.E_MANAGER:add_event(Event({trigger = "after", delay = chesh_speed, func=function()
@@ -92,17 +93,17 @@ PotatoPatchUtils.Developer{
 
 -- Credits shader stuff :3
 SMODS.Shader {
-    key = 'dev_darkworld', -- Doesn't have team name in as also used by another team :3
-    path = 'dev_darkworld.fs',
+	key = 'dev_darkworld', -- Doesn't have team name in as also used by another team :3
+	path = 'the_s_squad/dev_darkworld.fs',
 
-    send_vars = function(self, sprite, card)
-        local w, h = love.graphics.getDimensions()
-        local mx, my = love.mouse.getPosition()
-        return {
-            mouse_pos = { mx, my },
-            t = G.TIMERS.REAL
-        }
-    end
+	send_vars = function(self, sprite, card)
+		local w, h = love.graphics.getDimensions()
+		local mx, my = love.mouse.getPosition()
+		return {
+			mouse_pos = { mx, my },
+			t = G.TIMERS.REAL
+		}
+	end
 }
 
 local ppu_front_hook = SMODS.DrawSteps.center.func
@@ -129,6 +130,32 @@ SMODS.DrawSteps.ppu_floating_sprite.func = function(card, layer)
 		ppu_floating_sprite_hook(card, layer)
 	end
 end
+
+-- Credits shader stuff :3
+SMODS.Shader {
+    key = 'tss_uranium', -- Doesn't have team name in as also used by another team :3
+    path = 'the_s_squad/uranium.fs'
+}
+
+SMODS.ScreenShader {
+	key = "pixelated",
+	shader = "fac_tss_uranium",
+
+    send_vars = function(self, sprite, card)
+        local t = G.TIMERS.REAL
+		for _, v in ipairs(SMODS.find_card("fish_fac_tss_uranium")) do
+			t = math.min(t,v.ability.extra.pickup)
+		end
+		t=0--debug
+		return {
+            --t = G.TIMERS.REAL-t
+        }
+    end,
+	should_apply = function(self)
+		return true--#SMODS.find_card("fish_fac_tss_uranium")>0
+	end,
+	order = 1
+}
 
 SMODS.Atlas{
 	key = "tss_fish", -- Please include your name/team name in your atlas keys

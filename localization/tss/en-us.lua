@@ -103,6 +103,16 @@ return {
 				flavour = {
 					"I have a suggestion."
 				}
+			},
+			fish_fac_tss_uranium = {
+				name = "Uranium Rod",
+				text = {
+					"Ranks of held cards are",
+					"shuffled before scoring"
+				},
+				flavour = {
+					"Who threw this away?"
+				}
 			}
 		},
 		PotatoPatch = {
