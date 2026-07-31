@@ -17,7 +17,7 @@ PotatoPatchUtils.Developer({
 
 SMODS.Attribute {
     key = 'blindsize',
-    keys = { 'fish_fac_vv_fireicefish'}
+    keys = { 'fish_fac_vv_fireicefish' }
 }
 
 FishAndChips.Fish {
@@ -25,7 +25,7 @@ FishAndChips.Fish {
     weight = 1,
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
-    attributes = { "passive", "blindsize" },
+    attributes = { "destroy_card", "modifier" },
     environments = { wormhole = 0.05 },
     cost = 1,
     config = { extra = { x_blind = 0.9 } },
@@ -45,9 +45,6 @@ FishAndChips.Fish {
                 return true end }))
         end
     end,
-    remove_from_deck =  function(self, card, from_debuff)
-        play_sound('fac_vv_ominouscancel')
-    end
 }
 FishAndChips.Fish {
     key = "vv_size2",
@@ -63,6 +60,36 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
 
+    end
+}
+
+FishAndChips.Fish {
+    key = "vv_stinkyboot",
+    weight = 5,
+    ppu_coder = { "FireIce" },
+    ppu_artist = { "Willow" },
+    attributes = {  "chips" },
+    environments = { 
+        calm_pond = 1,
+        chocolate_river = 1,
+        styx = 1,
+        pier = 1,
+        swamp = 1,
+        aquifer = 1,
+        -- volcano = 0, (itd burn up)
+        -- soup = 0,  (healthcode violation)
+        city_river = 1,
+        garden = 1,
+        backroom = 1,
+        wormhole = 1,
+    }, -- you can find ts everywhere it will not be funny
+    cost = 1,
+    config = { extra = {  } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {  } }
+    end,
+    calculate = function(self, card, context)
+        -- ts gives you some chips per sand dollar
     end
 }
 
