@@ -1,33 +1,32 @@
 local len = 5
 local targettimer
 
-local boid_sprite
-local bx, by
+local boid_sprite = love.graphics.newImage(love.image.newImageData(SMODS.NFS.newFileData(FishAndChips.mod.path ..
+	'/assets/1x/fountain_openers/boid_1x.png')))
+local bx, by = boid_sprite:getDimensions()
 local boid_quad = love.graphics.newQuad(0, 0, 1, 1, 1, 1)
+
+local explosion_sprite = love.graphics.newImage(love.image.newImageData(SMODS.NFS.newFileData(FishAndChips.mod.path ..
+	"/assets/1x/fountain_openers/explosion.png")))
+local ex, ey = explosion_sprite:getDimensions()
+
+SMODS.Sound {
+    key = "fac_fo_explosion",
+    path = "fountain_openers/fac_fo_explosion.ogg"
+}
 
 -- adapted from vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html
 local visual_range = 150
-local protected_range = 20
-local centering_factor = 0.25
-local avoid_factor = 0.05
-local avoid_mouse_factor = 2
-local matching_factor = 1
-local max_speed = 450
-local min_speed = 150
-local turn_factor = 4
-local max_bias = 0.1
-local bias_increment = 0.0004
-local bias_val = 0.01
-
-G.E_MANAGER:add_event(Event({
-	func = function()
-		boid_sprite = love.graphics.newImage(love.image.newImageData(SMODS.NFS.newFileData(FishAndChips.mod.path ..
-    		'/assets/1x/fountain_openers/boid_1x.png')))
-		bx, by = boid_sprite:getDimensions()
-
-		return true
-	end
-}))
+local protected_range = 40
+local centering_factor = 0.005
+local avoid_factor = 0.15
+local matching_factor = 0.05
+local max_speed = 700
+local min_speed = 300
+local turn_factor = 20
+local max_bias = 0.01
+local bias_increment = 0.000065
+local bias_val = 0.001
 
 FountainOpeners.Boids = {}
 FountainOpeners.Boid = Object:extend()
@@ -46,23 +45,33 @@ function FountainOpeners.Boid:init(args)
 		x = 0,
 		y = 0
 	}
+	self.bias_val = bias_val
+	self.group = (pseudorandom("fac_fo_is_group_boid") > 0.33) and pseudorandom_element({1, 2}, "fac_fo_boid_group")
 
 	for k, v in pairs(args or {}) do
 		self[k] = v
 	end
 
+	self.id = #FountainOpeners.Boids+1
 	FountainOpeners.Boids[#FountainOpeners.Boids+1] = self
-end
-
-local function lerp(a,b,fac)
-    return a + (b - a) * fac
 end
 
 local function pythagorean(x, y)
 	return math.sqrt(x^2 + y^2)
 end
 
+local cursor_x, cursor_y
+
 function FountainOpeners.Boid:update(dt)
+	if self.clicked then
+		if self.clicked > 1 then
+			self.remove_me = true
+			return
+		end
+		self.clicked = self.clicked + dt
+		return
+	end
+
 	local xpos_avg, ypos_avg = 0, 0
 	local xvel_avg, yvel_avg = 0, 0
 	local close_dx, close_dy = 0, 0
@@ -70,15 +79,15 @@ function FountainOpeners.Boid:update(dt)
 
 	-- loop through every boid
 	for _, boid in ipairs(FountainOpeners.Boids) do
-		if boid ~= self then
+		if boid ~= self and not boid.clicked then
 			local dx = self.pos.x - boid.pos.x
 			local dy = self.pos.y - boid.pos.y
 
 			local dist = math.abs(pythagorean(dx, dy))
-			if dist < visual_range then
+			if dist < protected_range then
 				close_dx = close_dx + self.pos.x - boid.pos.x
 				close_dy = close_dy + self.pos.y - boid.pos.y
-			elseif dist < protected_range then
+			elseif dist < visual_range then
 				xpos_avg = xpos_avg + boid.pos.x
 				ypos_avg = ypos_avg + boid.pos.y
 				xvel_avg = xvel_avg + boid.vel.x
@@ -89,6 +98,14 @@ function FountainOpeners.Boid:update(dt)
 		end
 	end
 
+	local dx = self.pos.x - cursor_x
+	local dy = self.pos.y - cursor_y
+	local dist = math.abs(pythagorean(dx, dy))
+	if dist < 200 then
+		close_dx = close_dx + (self.pos.x - cursor_x) * 2
+		close_dy = close_dy + (self.pos.y - cursor_y) * 2
+	end
+
 	if neighboring_boids > 0 then
 		xpos_avg = xpos_avg / neighboring_boids
 		ypos_avg = ypos_avg / neighboring_boids
@@ -96,7 +113,7 @@ function FountainOpeners.Boid:update(dt)
 		yvel_avg = yvel_avg / neighboring_boids
 
 		-- cohesion / alignment
-		self.vel.x = (self.vx +
+		self.vel.x = (self.vel.x +
 			(xpos_avg - self.pos.x)*centering_factor +
 			(xvel_avg - self.vel.x)*matching_factor)
 
@@ -121,6 +138,26 @@ function FountainOpeners.Boid:update(dt)
 		self.vel.y = self.vel.y + turn_factor
 	end
 
+	if self.group == 1 then
+		-- towards left
+		if self.vel.x > 0 then
+			self.bias_val = math.min(max_bias, self.bias_val + bias_increment)
+		else
+			self.bias_val = math.max(bias_increment, self.bias_val - bias_increment)
+		end
+
+		self.vel.x = (1 - self.bias_val) * self.vel.x + self.bias_val
+	elseif self.group == 2 then
+		-- towards right
+		if self.vel.x < 0 then
+			self.bias_val = math.min(max_bias, self.bias_val + bias_increment)
+		else
+			self.bias_val = math.max(bias_increment, self.bias_val - bias_increment)
+		end
+
+		self.vel.x = (1 - self.bias_val) * self.vel.x - self.bias_val
+	end
+
 	-- speed caps
 	local speed = pythagorean(self.vel.x, self.vel.y)
 	if speed < min_speed then
@@ -137,6 +174,12 @@ function FountainOpeners.Boid:update(dt)
 	for _, d in ipairs{"x", "y"} do
 		self.pos[d] = self.pos[d] + self.vel[d] * dt
 	end
+end
+
+function FountainOpeners.Boid:click()
+	play_sound("fac_fo_explosion", 2)
+	-- effect
+	self.clicked = 0
 end
 
 FountainOpeners.boids_game = {
@@ -175,7 +218,7 @@ function love.mousepressed(x, y, button, istouch, presses)
 	for i, v in ipairs(FountainOpeners.Boids) do
 		local dist = pythagorean(x - v.pos.x, y - v.pos.y)
 		if dist < 45 and not v.clicked then
-			print("clicked woah")
+			v:click()
 			return
 		end
 	end
@@ -190,11 +233,20 @@ function love.update(dt)
 
 	local boids_game = FountainOpeners.boids_game
 	if boids_game.active then
+		cursor_x, cursor_y = love.mouse.getPosition()
 		targettimer = boids_game.pre_timer>0 and "pre_timer" or "timer"
 		boids_game[targettimer] = boids_game[targettimer] - dt
 
 		for i, boid in ipairs(FountainOpeners.Boids) do
 			boid:update(dt)
+		end
+
+		local removed = 0
+		for i=1, #FountainOpeners.Boids do
+			local ii = i-removed
+			if FountainOpeners.Boids[ii] and FountainOpeners.Boids[ii].remove_me then
+				table.remove(FountainOpeners.Boids, ii)
+			end
 		end
 
 		-- End when timer runs out
@@ -212,18 +264,15 @@ function love.draw()
 	draw_hook()
 
 	love.graphics.setColor(1, 1, 1, 1)
-	for i, v in ipairs(FountainOpeners.Boids) do
-		--[[if v.clicked then
-			local f = math.floor(v.clicked * 17)
-			--meteor_quad:setViewport(f * 71, 0, 71, 100, ex, ey) -- Reposition quad to use the correct frame
-			--love.graphics.draw(explosion_sprite, meteor_quad, v.pos.x, v.pos.y, 0, 2, 2, 35, 55)
+	for i, v in pairs(FountainOpeners.Boids) do
+		if v.clicked then
+			local f = math.floor(v.clicked * 17 * 2)
+			boid_quad:setViewport(f * 71, 0, 71, 100, ex, ey) -- Reposition quad to use the correct frame
+			love.graphics.draw(explosion_sprite, boid_quad, v.pos.x, v.pos.y, 0, 1, 1, 35, 55)
 		else
-			meteor_quad:setViewport(v.spr.x * 64, v.spr.y * 64, 64, 64, mx, my) -- Reposition quad to use the correct frame
-			love.graphics.draw(meteor_sprite, meteor_quad, v.pos.x, v.pos.y, v.pos.rot, 2, 2, 32, 32)
-		end]]
-
-		boid_quad:setViewport(v.spr.x * bx/1, v.spr.y * by/1, bx/1, by/1, bx, by) -- Reposition quad to use the correct frame
-		love.graphics.draw(boid_sprite, boid_quad, v.pos.x, v.pos.y, v.pos.rot, 2, 2, 15, 10)
+			boid_quad:setViewport(v.spr.x * bx/1, v.spr.y * by/1, bx/1, by/1, bx, by) -- Reposition quad to use the correct frame
+			love.graphics.draw(boid_sprite, boid_quad, v.pos.x, v.pos.y, v.pos.rot, 2, 2, 15.5, 9.5)
+		end
 	end
 end
 
