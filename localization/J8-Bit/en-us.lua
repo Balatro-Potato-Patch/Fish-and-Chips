@@ -181,9 +181,9 @@ return {
                     "Partner"
                 },
                 text = {
-                    "Creates {C:attention}#1#{} random",
-                    "{C:fac_bait}Baits{} when {C:fac_environment}Environment{}",
-                    "is {C:green}rerolled"
+                    "Creates {C:attention}#1#{}",
+                    "random {C:fac_bait}Baits{} when",
+                    "{C:fac_environment}Environment{} changes"
                 },
                 flavor = {
                     "They're interested in your hobbies!",
@@ -196,9 +196,9 @@ return {
                     "Boyfriend"
                 },
                 text = {
-                    "Creates {C:attention}#1#{} random",
-                    "{C:fac_bait}Baits{} when {C:fac_environment}Environment{}",
-                    "is {C:green}rerolled"
+                    "Creates {C:attention}#1#{}",
+                    "random {C:fac_bait}Baits{} when",
+                    "{C:fac_environment}Environment{} changes"
                 },
                 flavor = {
                     "He's interested in your hobbies!",
@@ -211,9 +211,9 @@ return {
                     "Girlfriend"
                 },
                 text = {
-                    "Creates {C:attention}#1#{} random",
-                    "{C:fac_bait}Baits{} when {C:fac_environment}Environment{}",
-                    "is {C:green}rerolled"
+                    "Creates {C:attention}#1#{}",
+                    "random {C:fac_bait}Baits{} when",
+                    "{C:fac_environment}Environment{} changes"
                 },
                 flavor = {
                     "She's interested in your hobbies!",
@@ -226,8 +226,8 @@ return {
                     "{C:inactive,s:0.8}(Deltarune)"
                 },
                 text = {
-                    "{X:blue,C:white} X#1# {} fish speed",
-                    "{X:money,C:white} X#1# {} treasure reward",
+                    "{X:blue,C:white} X#1# {} {C:fac_fish}Fish{} swimming speed",
+                    "{X:money,C:white} X#1# {} reward from {C:gold}Treasure",
                 },
                 flavor = {
                     ""
@@ -275,9 +275,10 @@ return {
                     "{C:inactive,s:0.8}(Gen VII Pokémon)"
                 },
                 text = {
-                    "{C:attention}#1#s{} count as",
-                    "{C:fac_suits}any suit{} and",
-                    "can't be debuffed"
+                    "{C:attention}#1#s{} count",
+                    "as {C:fac_suits}any suit{},",
+                    "can't be debuffed,",
+                    "and {C:attention}always score"
                 },
                 flavor = {
                     "(would)"
@@ -350,4 +351,9 @@ return {
             },
         }
     },
+    misc = {
+        dictionary = {
+            ["k_J8-Bit_shark_waifu_quip"] = "Here you go!"
+        },
+    }
 }
