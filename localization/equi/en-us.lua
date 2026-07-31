@@ -37,13 +37,24 @@ return {
                 }
             },
 
+            fish_fac_fishedforitagain = {
+                name = "Fished For It Again Award",
+                text = {
+                    "After {C:attention}failing{} 4 catches,",
+                    "create a random {C:attention}Targeted Bait{}"
+                },
+                flavor = {
+                    "Just another day in",
+                    "my stupid chum life"
+                }
+            },
+
             fish_fac_carpticalillusion = {
                 name = "Carptical Illusion",
                 text = {
                     "After using {C:attention}#2#{}, create a",
                     "random {C:spectral}Spectral{} card, then change",
-                    "the type of {C:attention}Bait{} required",
-                    "{C:inactive}(Cannot be Classic Canned){}"
+                    "the type of {C:attention}Targeted Bait{} required"
                 },
                 flavor = {
                     "Maybe a fish,",
@@ -68,7 +79,8 @@ return {
 
     misc = {
         dictionary = {
-            k_fac_equi_no_room = "No Room!"
+            k_fac_equi_no_room = "No Room!",
+            k_fac_equi_plus_bait = "+#1# Bait"
         }
     }
 }

@@ -167,6 +167,52 @@ FishAndChips.Fish {
     end
 }
 
+--Fished For It Again Award
+FishAndChips.Fish {
+    key = "fishedforitagain",
+    atlas = "equi_fish",
+    pos = { x = 3, y = 0 },
+    display_size = { w = 65, h = 72 },
+    pixel_size = { w = 65, h = 72 },
+    weight = 15,
+    cost = 6,
+    blueprint_compat = true,
+    ppu_coder = { "Equi" },
+    ppu_artist = { "Equi" },
+    attributes = { "generation" },
+    config = {
+        extra = {
+            bait_given = 1, current_fails = 0, required_fails = 4
+        }
+    },
+    environments = {
+        wormhole = 1
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.bait_given, card.ability.extra.current_fails, card.ability.extra.required_fails } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.failed and not context.blueprint then
+            card.ability.extra.current_fails = card.ability.extra.current_fails + 1
+            if card.ability.extra.current_fails == card.ability.extra.required_fails then
+                card.ability.extra.current_fails = 0
+                local bait_number = pseudorandom("equi_carpticalillusion", 2, #G.P_CENTER_POOLS.fac_Bait)
+                local bait = G.P_CENTER_POOLS.fac_Bait[bait_number]
+                --may need to put a cap on this
+                FishAndChips.add_bait_to_inventory(bait.key, card.ability.extra.bait_given)
+                return {
+                    message = localize("k_fac_equi_plus_bait")
+                }
+            else
+                return {
+                    message =  card.ability.extra.current_fails .. "/" .. card.ability.extra.required_fails
+                }
+            end
+        end
+    end
+}
+
 --Carptical Illusion
 FishAndChips.Fish {
     key = "carpticalillusion",
