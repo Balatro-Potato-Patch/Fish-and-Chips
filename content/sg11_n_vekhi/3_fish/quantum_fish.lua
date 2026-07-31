@@ -146,38 +146,49 @@ local function start_quantum_fish_sequence(card)
 			return true
 		end,
 	}))
+	local attention_args
 	G.E_MANAGER:add_event(Event({
 		trigger = "after",
-		delay = 3,
+		delay = 0.75,
+		timer = "REAL",
 		func = function()
 			play_sound("fac_quantum_fish_photo_shot")
-			attention_text({
+			local old_speedfactor = G.SPEEDFACTOR
+			G.SPEEDFACTOR = 4
+			attention_args = {
 				major = card,
 				align = "cm",
 				colour = G.C.WHITE,
 				scale = 0,
-				hold = 2,
+				hold = 0.5 * old_speedfactor,
 				text = "",
 				backdrop_colour = G.C.WHITE,
 				backdrop_scale = 4,
-			})
+			}
+			attention_text(attention_args)
+			G.SPEEDFACTOR = old_speedfactor
 			return true
 		end,
 	}))
 	G.E_MANAGER:add_event(Event({
 		trigger = "after",
-		delay = 1.25,
+		delay = 0.35,
+		timer = "REAL",
 		func = function()
 			card.ability.extra.wild = nil
 			card.children.center:set_sprite_pos({ x = 1, y = 0 })
+			text_box:remove()
 			return true
 		end,
 	}))
 	G.E_MANAGER:add_event(Event({
 		trigger = "after",
 		delay = 1.25,
+		timer = "REAL",
 		func = function()
-			text_box:remove()
+			if attention_args.AT and not attention_args.AT.REMOVED then
+				attention_args.AT:remove()
+			end
 			local old_materialize = card.start_materialize
 			function card:start_materialize(...)
 				self.start_materialize = old_materialize
