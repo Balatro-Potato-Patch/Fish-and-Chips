@@ -90,7 +90,7 @@ return {
                         "When this {C:attention}Fish{} is caught",
                         "forcibly start fishing again",
                         "regardless of current bait",
-                        "{C:ianctive}(Must have Room)"
+                        "{C:inactive}(Must have Room)"
                     },
                     {
                         "You have a chance to",
@@ -102,6 +102,25 @@ return {
                     "A long lost cousin of the",
                     "Ghost Catfish. Probably not",
                     "a good idea to eat."
+                }
+            },
+
+            fish_fac_laplaces_angelfish = {
+                name = {"Laplace's Angelfish (Hurt Fish? Hurt Fish!)", "feat. A {C:red}Red{} and A {C:green}Green{} Dog", "(2026 F&C Edit)"},
+                text = {
+                    {
+                        "{C:mult}+#1#{} Mult",
+                        "{C:blue}+#2#{} Chips"
+                    },
+                    {
+                        "When a {C:attention}Fish{} is sold average its",
+                        "Weight with this {C:attention}Fish's{} Mult and",
+                        "its Length with this {C:attention}Fish's{} Chips"
+                    }
+                },
+                flavor = {
+                    "You, could you take a look at me?",
+                    "Am I bad, am I bad, am I bad, am I really that bad?"
                 }
             },
         },

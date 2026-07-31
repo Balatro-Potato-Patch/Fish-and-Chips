@@ -97,18 +97,14 @@ FishAndChips.Fish {
 function Card:transmute(seed, center)
     local result = center
     if not center then
-        local attributes = self.config.center.attributes or {}
         local valid = {}
-        for attribute, _ in pairs(attributes) do
-            for i, v in pairs(G.P_CENTERS) do
-                if v.set == self.config.center.set then
-                    for a, _ in pairs(v.attributes or {}) do
-                        if a == attribute and not FishAndChips.Environments[a] then valid[#valid+1] = v end
-                    end
-                end
+        for attribute, _ in pairs(self.config.center.attributes or {}) do
+            if type(attribute) ~= "number" and not FishAndChips.Environments[attribute] then
+                valid[#valid+1] = attribute
             end
         end
-        result = pseudorandom_element(valid, pseudoseed(seed))
+        result = SMODS.poll_object{type = "fac_Fish", attributes = valid, union = true}
+        print(result.attributes)
     end
     --DO ANIM LATER
     G.E_MANAGER:add_event(Event{func = function() 
@@ -220,7 +216,8 @@ FishAndChips.Fish {
         }
 	},
 	environments = {
-		styx = 7
+		styx = 7,
+        aquifer = 7
 	},
 	loc_vars = function(self, info_queue, card)
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds_seal, "fac_crimsonseraphim_jade_crystalfish_seal")
@@ -430,7 +427,8 @@ FishAndChips.Fish {
         }
 	},
 	environments = {
-		styx = 8
+		styx = 8,
+        aquifer = 8
 	},
 	loc_vars = function(self, info_queue, card)
 		
@@ -492,7 +490,8 @@ FishAndChips.Fish {
         }
 	},
 	environments = {
-		aquifer = 10
+		aquifer = 10,
+        volcano = 10
 	},
 	loc_vars = function(self, info_queue, card)
 		
@@ -573,7 +572,7 @@ end
 FishAndChips.Fish {
 	key = "ghost_chaosfish",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 1, y = 0 },
 	weight = 5, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
@@ -584,7 +583,8 @@ FishAndChips.Fish {
         }
 	},
 	environments = {
-		garden = 5
+		garden = 5,
+        wormhole = 5
 	},
     target = "",
     force_environment = function(card)
@@ -602,7 +602,6 @@ FishAndChips.Fish {
             blocking = false,
             func = function()
                 if not G.FAC_FISH_GAME.fishing_active then
-                    print("wa")
                     G.E_MANAGER:add_event(Event{
                         trigger = "after",
                         blocking = false,
@@ -688,3 +687,36 @@ end
 --     end
 --     return cards
 -- end
+
+FishAndChips.Fish {
+	key = "laplaces_angelfish",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 2, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "generation" },
+	config = {
+		extra = {
+            mult = 1,
+            chips = 1
+        }
+	},
+	environments = {
+		styx = 5,
+        volcano = 5,
+        wormhole = 5,
+        backroom = 5
+	},
+	loc_vars = function(self, info_queue, card)
+    return {
+        vars = {
+            card.ability.extra.mult,
+            card.ability.extra.chips
+        }
+    }
+	end,
+	calculate = function(self, card, context)
+        
+	end,
+}
