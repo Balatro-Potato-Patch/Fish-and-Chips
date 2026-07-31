@@ -386,6 +386,13 @@ function Game:main_menu(change_context)
 
 end
 
+local start_run_ref = Game.start_run
+function Game:start_run(...)
+	start_run_ref(self, ...)
+	FishAndChips.stop_ambience()
+	FishAndChips.stop_reel_sound()
+end
+
 
 G.FUNCS.fac_can_use_fish = function(e)
 	local center = e.config.ref_table.config.center
