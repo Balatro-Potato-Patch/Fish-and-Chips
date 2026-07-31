@@ -53,9 +53,8 @@ return {
             ["fish_fac_J8-Bit_boops_boops_all_6s"] = {
                 name = "{u:white}Boops Boops{}! All 6s",
                 text = {
-                    "{C:attention}Triples{} all {C:attention}listed",
-                    "{C:green,E:1,S:1.1}probabilities",
-                    "every {C:attention}#1#{} {C:inactive}[#2#]{} rounds",
+                    "{C:attention}Triples{} all {C:attention}listed {C:green,E:1,S:1.1}probabilities",
+                    "every {C:attention}#1#{} {C:inactive}[#2#]{} hands played",
                     "{C:inactive}(ex: {C:green}1 in 3{C:inactive} -> {C:green}3 in 3{C:inactive})",
                 },
                 flavor = {
@@ -80,7 +79,7 @@ return {
                 },
                 text = {
                     "Creates a random {V:1}#1#{} card",
-                    "when a Fish {C:red}gets away{}",
+                    "when a {C:fac_fish}Fish {C:red}gets away{}",
                     "{C:inactive}(Must have room)"
                 },
                 flavor = {
@@ -109,10 +108,9 @@ return {
                     "Nocto Octo",
                 },
                 text = {
-                    "Cards in the {C:attention}first",
-                    "{C:attention}discarded hand{} each",
-                    "round gain a",
-                    "permanent {C:mult}+#1#{} Mult"
+                    "Hands containing {C:attention}#1#s{} score",
+                    "the {C:attention}latter played rank{} as",
+                    "{C:mult}+Mult{} instead of {C:chips}+Chips{}"
                 },
                 flavor = {
                     "Not actually an octopus.",
@@ -138,10 +136,10 @@ return {
                     "Later Alligator",
                 },
                 text = {
-                    "Creates a {C:green}#1#{},",
-                    "{C:red}#2#{}, and",
-                    "{C:attention}#3#{} after",
-                    "{C:attention}#4#{} rounds,",
+                    "Creates a {C:green}#3#{},",
+                    "{C:red}#4#{}, and",
+                    "{C:attention}#5#{} after",
+                    "{C:attention}#2#{} {C:inactive}[#1#]{} rounds,",
                     "{C:red}self-destructs"
                 },
                 flavor = {
@@ -154,11 +152,11 @@ return {
                     "Mult Mahi Mahi",
                 },
                 text = {
-                    "{C:attention}Retrigger all {C:attention}#1#s{}"
+                    "{C:attention}Retrigger{} all {C:attention}#1#s{}"
                 },
                 flavor = {
                     "Esteemed delicacies",
-                    "for {V:1}#1#."
+                    "for {V:1}#2#."
                 }
             },
             ["fish_fac_J8-Bit_underhand"] = {
@@ -183,7 +181,7 @@ return {
                 },
                 text = {
                     "Creates {C:attention}#1#{} random",
-                    "{C:fac_bait}Baits{} when {C:attention}Environment{}",
+                    "{C:fac_bait}Baits{} when {C:fac_environment}Environment{}",
                     "is {C:green}rerolled"
                 },
                 flavor = {
@@ -198,7 +196,7 @@ return {
                 },
                 text = {
                     "Creates {C:attention}#1#{} random",
-                    "{C:fac_bait}Baits{} when {C:attention}Environment{}",
+                    "{C:fac_bait}Baits{} when {C:fac_environment}Environment{}",
                     "is {C:green}rerolled"
                 },
                 flavor = {
@@ -213,7 +211,7 @@ return {
                 },
                 text = {
                     "Creates {C:attention}#1#{} random",
-                    "Baits when {C:attention}Environment{}",
+                    "{C:fac_bait}Baits{} when {C:fac_environment}Environment{}",
                     "is {C:green}rerolled"
                 },
                 flavor = {
@@ -296,7 +294,7 @@ return {
                     },
                     {
                         "If a card destroyed",
-                        "by this Fish's ability",
+                        "by this {C:fac_fish}Fish{}'s ability",
                         "had an {C:dark_edition}Edition{},",
                         "create its respective {C:attention}Tag"
                     }
@@ -312,8 +310,8 @@ return {
                 },
                 text = {
                     "Earn {C:money}+$#1#{} and {C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}+$#2#{}",
-                    "if Fish is caught",
-                    "with unrelated Bait"
+                    "if {C:fac_fish}Fish{} is caught",
+                    "with unrelated {C:fac_bait}Bait{}"
                 },
                 flavor = {
                     "{E:fac_rainbow_text}#leftshark"
@@ -339,7 +337,7 @@ return {
                 },
                 text = {
                     "Creates a {C:dark_edition}#1#{} copy of",
-                    "a Fish you own when reeled,",
+                    "a {C:fac_fish}Fish{} you own when reeled,",
                     "{C:red}self-destructs"
                 },
                 flavor = {
