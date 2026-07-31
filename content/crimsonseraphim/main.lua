@@ -773,3 +773,44 @@ FishAndChips.Fish {
         end
     end
 }
+
+FishAndChips.Fish {
+	key = "trout_population",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "generation" },
+	config = {
+		extra = {
+            mult = 1,
+            chips = 3
+        }
+	},
+	environments = {
+		calm_pond = 5,
+        city_river = 5,
+        pier = 5,
+	},
+	loc_vars = function(self, info_queue, card)
+    return {
+        vars = {
+            card.ability.extra.mult,
+            card.ability.extra.chips
+        }
+    }
+	end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            for i = 1, 10 do
+                if pseudorandom("crimsonseraphim_trout_population") < 0.5 then
+                    SMODS.calculate_effect({mult = card.ability.extra.mult}, card)
+                else
+                    SMODS.calculate_effect({chips = card.ability.extra.chips}, card)
+                end
+            end
+            return nil, true
+        end
+    end
+}

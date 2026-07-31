@@ -52,7 +52,7 @@ return {
             },
 
             fish_fac_ruby_crystalfish = {
-                name = "Crystalfish (Al{s:0.5}2{}O{s:0.5}3{}:Cr)",
+                name = {"Crystalfish", "(Al{s:0.5}2{}O{s:0.5}3{}:Cr)"},
                 text = {
                     {
                         "All other {C:attention}Fish{} have",
@@ -69,7 +69,7 @@ return {
                 }
             },
             fish_fac_jade_crystalfish = {
-                name = "Crystalfish (Ca{s:0.5}2{}[Mg,Fe]{s:0.5}5{}Si{s:0.5}8{}O{s:0.5}22{}[OH]{s:0.5}2{})",
+                name = {"Crystalfish", "(Ca{s:0.5}2{}[Mg,Fe]{s:0.5}5{}Si{s:0.5}8{}O{s:0.5}22{}[OH]{s:0.5}2{})"},
                 text = {
                     {
                         "Caught {C:green}Fish{} have a ",
@@ -141,6 +141,19 @@ return {
                 flavor = {
                     "A Heavenly spear formed",
                     "from pure energy."
+                }
+            },
+
+            fish_fac_trout_population = {
+                name = "Trout Population",
+                text = {
+                    {
+                        "Randomly Give {C:red}+#1#{} Mult",
+                        "or {C:blue}+#2#{} Chips ten times."
+                    },
+                },
+                flavor = {
+                    "Affect Us."
                 }
             },
         },
