@@ -17,6 +17,19 @@ SMODS.Sound({
 	path = "thunder_and_aiko/bruh.ogg",
 })
 
+SMODS.Font({
+    key = "fac_kreon",
+    path = "thunder_and_aiko/Kreon.ttf",
+    FONTSCALE = 0.085,
+    TEXT_HEIGHT_SCALE = 0.8,
+    TEXT_OFFSET = { x = 0, y = -15 },
+})
+
+SMODS.Font({
+    key = "fac_papyrus",
+    path = "thunder_and_aiko/papyrus.ttf",
+})
+
 PotatoPatchUtils.Developer({
 	name = "thunderedge",
 	loc = true,

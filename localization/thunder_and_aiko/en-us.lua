@@ -53,20 +53,20 @@ return {
 				name = "Soul Fysh",
 				text = {
 					{
-						"This {C:attention}Fish{} can be",
-						"used {C:attention}once{} per round",
-						"{C:inactive}(#4#)",
+						"{f:fac_kreon}This {C:attention,f:fac_kreon}Fish{f:fac_kreon} can be",
+						"{f:fac_kreon}used {C:attention,f:fac_kreon}once{f:fac_kreon} per round",
+						"{C:inactive,f:fac_kreon}(#4#)",
 					},
 					{
-						"When used, adds {C:attention}#1#{} random",
-						"{C:attention}Enhanced{} cards to your deck",
-						"and this {C:attention}Fish{} gains {X:mult,C:white}X#2#{} Mult",
-						"{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
+						"{f:fac_kreon}When used, adds {C:attention,f:fac_kreon}#1#{f:fac_kreon} random",
+						"{C:attention,f:fac_kreon}Enhanced{f:fac_kreon} cards to your deck",
+						"{f:fac_kreon}and this {C:attention,f:fac_kreon}Fish{f:fac_kreon} gains {X:mult,C:white,f:fac_kreon}X#2#{f:fac_kreon} Mult",
+						"{C:inactive,f:fac_kreon}(Currently {X:mult,C:white,f:fac_kreon}X#3#{C:inactive,f:fac_kreon} Mult)",
 					},
 				},
 				flavor = {
-					"May or may not beckon",
-					"you to your doom",
+					"{f:fac_kreon}May or may not beckon",
+					"{f:fac_kreon}you to your doom",
 				},
 			},
 			fish_fac_fish_flavored_fish = {
@@ -100,6 +100,17 @@ return {
 					"I don't know what I am,",
 					"but I taste really good",
 				},
+			},
+			fish_fac_growfish = {
+				name = "Growfish",
+				text = {
+					"Gains {C:chips}+#1#{} Chips",
+					"per card played",
+					"{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+				},
+				flavor = {
+					"{f:fac_papyrus,s:1.2,C:white}address me",
+				}
 			},
 		},
 		Other = {},

@@ -519,3 +519,24 @@ FishAndChips.Fish({
 	end,
 	requires_hand = true,
 })
+
+FishAndChips.Fish({
+	key = "growfish",
+	weight = 5,
+	environments = {
+		garden = 1,
+	},
+	config = { extra = { chips = 1, chips_inc = 1 } },
+	attributes = { "scaling", "chips" },
+	ppu_coder = { "thunderedge" },
+	ppu_artist = { "aikoyori" },
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.chips_inc,
+				card.ability.extra.chips,
+			},
+		}
+	end,
+	calculate = function(self, card, context) end,
+})
