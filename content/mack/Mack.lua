@@ -417,6 +417,28 @@ FishAndChips.Fish {
 		volcano = 0.5
 	},
 	blueprint_compat = true,
+	loc_vars = function(self, info_queue, card)
+		if card.area and card.area == G.fac_fish_area then
+			local other_fish = G.fac_fish_area.cards[#G.fac_fish_area.cards] ~= card and G.fac_fish_area.cards[#G.fac_fish_area.cards]
+			local compatible = other_fish and other_fish ~= card and other_fish.config.center.blueprint_compat
+			local main_end = {
+				{
+					n = G.UIT.C,
+					config = { align = "bm", minh = 0.4 },
+					nodes = {
+						{
+							n = G.UIT.C,
+							config = { ref_table = card, align = "m", colour = compatible and mix_colours(G.C.GREEN, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.RED, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
+							nodes = {
+								{ n = G.UIT.T, config = { text = " " .. localize("k_" .. (compatible and "compatible" or "incompatible")) .. " ", colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
+							}
+						}
+					}
+				}
+			}
+			return { main_end = main_end }
+		end
+	end,
 	calculate = function(self, card, context)
 		if G.fac_fish_area.cards[#G.fac_fish_area.cards] ~= card then
 			return SMODS.blueprint_effect(card, G.fac_fish_area.cards[#G.fac_fish_area.cards], context)
