@@ -40,7 +40,11 @@ end
 
 FishAndChips.Fish{
 	key = "fas_submarine",
+	atlas = "fas_fish_general",
+	pos = {x=0,y=0},
+	pixel_size = {w=70,h=87},
 	ppu_coder = {"Foo54"},
+	ppu_artist = {"squeax09"},
 	weight = 10,
 	environments = {
 		pier = 1,
