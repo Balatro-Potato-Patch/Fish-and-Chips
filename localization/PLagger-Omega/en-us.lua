@@ -8,8 +8,21 @@ return {
                     '{C:attention}#2#{} was',
                     '{C:attention}discarded{} this round'
                 },
-                flavor = {
-                    'gay ass clown'
+                flavour = {
+                    'gay ass clown',
+                }
+            },
+            fish_fac_plaggeromega_troutearthextinct = {
+                name = 'Trout Earth Extinction',
+                text = {
+                    'Use this fish for',
+                    '{C:attention}-#1#{} Ante,',
+                    'destroys all fish'
+                },
+                flavour = {
+                    'This will severely',
+                    'impact the trout',
+                    'population'
                 }
             }
         }
