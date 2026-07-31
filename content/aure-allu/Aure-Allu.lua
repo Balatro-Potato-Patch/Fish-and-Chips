@@ -649,4 +649,74 @@ FishAndChips.Fish {
 	end,
 }
 
+-- Bat Ray
+FishAndChips.Fish {
+	key = "bat_ray",
+	atlas = "aure-allu_fish",
+	pos = { x = 2, y = 2 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "usable" },
+	blueprint_compat = false,
+	requires_hand = true,
+	config = {
+		extra = {
+			max_cards = 5,
+			max_uses = 2,
+			remaining_uses = 2,
+		},
+	},
+	environments = {
+		city_river = 9,
+		volcano = 6,
+		aquifer = 10,
+		backroom = 2,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.max_cards, card.ability.extra.max_uses, card.ability.extra.remaining_uses } }
+	end,
+	calculate = function (self, card, context)
+		if context.blind_defeated then
+			local before = card.ability.extra.remaining_uses
+			card.ability.extra.remaining_uses = card.ability.extra.max_uses
+			if before < card.ability.extra.max_uses then
+				return {
+					message = localiue("k_reset"),
+					colour = G.C.IMPORTANT
+				}
+			end
+		end
+	end,
+	use = function (self, card)
+		--Thanks https://github.com/nh6574/VanillaRemade/blob/main/src/tarots.lua The Hanged Man
+		card.ability.extra.remaining_uses = card.ability.extra.remaining_uses - 1
+        G.E_MANAGER:add_event(Event({
+			trigger = "after", 
+			delay = 0.1, 
+			func = function()
+				play_sound('tarot1')
+				card:juice_up(0.3, 0.5)
+				return true
+			end
+		}))
+		for i = 1, #G.hand.highlighted do
+            local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    G.hand.highlighted[i]:flip()
+                    play_sound('card1', percent)
+                    G.hand.highlighted[i]:juice_up(0.3, 0.3)
+                    return true
+                end
+            }))
+		end
+	end,
+	can_use = function (self, card)
+		return G.hand and #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.max_cards and card.ability.extra.remaining_uses > 0
+	end
+}
+
 -- #endregion

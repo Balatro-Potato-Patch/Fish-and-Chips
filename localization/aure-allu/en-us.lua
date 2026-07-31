@@ -53,7 +53,7 @@ return {
                 text = {
                     "Blubs {C:mult}#1#{} Mult times the",
                     "{C:attention}average{} number of {C:attention}rounds{}",
-                    "caught {C:attention}Fish{} have been held",
+                    "caught {C:fac_fish}Fish{} have been held",
                     "{C:inactive}(Currently {C:mult}#2#{C:inactive} Mult)"
                 },
                 flavor = {
@@ -64,7 +64,7 @@ return {
                 name = {"Shrimp"},
                 text = {
                     "Gains {C:mult}#1#{} Mult if",
-                    "this {C:attention}Shrimp{} resides in",
+                    "this {C:fac_fish}Shrimp{} resides in",
                     "a different {C:attention}slot{} from",
                     "last {C:attention}#2#{} hands {C:attention}played{}",
                     "{C:inactive,s:0.8}(Resets otherwise)",
@@ -90,7 +90,7 @@ return {
                 text = {
                     "Use for {C:green}#1# in #2#{} chance",
                     "to add {C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or",
-                    "{C:dark_edition}Polychrome{} to a random {C:attention}Fish"
+                    "{C:dark_edition}Polychrome{} to a random {C:fac_fish}Fish"
                 },
                 flavor = {
                     "Big money no swamp-eels"
@@ -101,7 +101,7 @@ return {
                 text = {
                     "{C:chips}#1#{} Chips", 
                     "{C:green}#2# in #3#{} chance",
-                    "this {C:attention}Fish{} dips",
+                    "this {C:fac_fish}Fish{} dips",
                     "at {C:attention}end of round",
                 },
                 flavor = {
@@ -113,7 +113,7 @@ return {
                 text = {
                     "{X:chips,C:white}X#1#{} Chips", 
                     "{C:green}#2# in #3#{} chance",
-                    "this {C:attention}Fish{} dips",
+                    "this {C:fac_fish}Fish{} dips",
                     "at {C:attention}end of round",
                 },
                 flavor = {
@@ -123,7 +123,7 @@ return {
             fish_fac_hammerjaw = {
                 name = {"Hammerjaw"},
                 text = {
-                    "Use this {C:attention}Fish{} to",
+                    "Use this {C:fac_fish}Fish{} to",
                     "{C:attention}destroy{} up to {C:attention}#1#{}",
                     "selected cards,",
                     "and then {C:attention}redraw"
@@ -142,11 +142,23 @@ return {
                     "Hooh!"
                 }
             },
+            fish_fac_bat_ray = {
+                name = {"Bat Ray"},
+                text = {
+                    "Use this {C:fac_fish}Ray{} to",
+                    "{C:attention}flip{} up to {C:attention}#1#{} selected",
+                    "{C:attention}Playing{} cards in hand",
+                    "{C:inactive,s:0.8}(Max. {C:attention,s:0.8}#2# {C:inactive,s:0.8}[#3#] uses per round)"            
+                },
+                flavor = {
+                    "To the batmobile!"
+                }
+            },
         },
     },
     misc = {
         dictionary = {
-            k_aure_allu_blooper = "Ink'd!"
+            k_aure_allu_blooper = "Ink'd!",
         }
     }
 }
