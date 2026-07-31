@@ -27,6 +27,11 @@ SMODS.Sound({
 	path = "hayayaya/snd_badexplosion.wav",
 })
 
+SMODS.Sound({
+	key = "hayayaya_mistake",
+	path = "hayayaya/se_mistake.ogg",
+})
+
 SMODS.Font({
 	key = "hayayaya_pkmn",
 	path = "hayayaya/pokemon-font.ttf",
@@ -42,12 +47,6 @@ PotatoPatchUtils.Developer({
 	colour = G.C.PURPLE,
 	fac_partner = "Pepix",
 	loc = true,
-	calculate = function(self, context)
-		-- How ominous
-		if context.fac_fish_caught and context.fish == "fish_fac_8f" then
-			HayayayaUtils.stop_music()
-		end
-	end,
 })
 
 PotatoPatchUtils.Developer({
@@ -62,7 +61,7 @@ PotatoPatchUtils.Developer({
 -- Namespace for team specific utils
 
 HayayayaUtils = {}
-HayayayaUtils.MusicStopped = true
+HayayayaUtils.MusicStopped = false
 
 local gum = Game.update_menu
 function Game:update_menu(dt)

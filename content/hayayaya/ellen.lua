@@ -125,4 +125,16 @@ FishAndChips.Fish({
 			}
 		end
 	end,
+	on_catch = function(self, card)
+		HayayayaUtils.stop_music()
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.5 * G.SPEEDFACTOR,
+			func = function()
+				play_sound("fac_hayayaya_mistake")
+				return true
+			end,
+		}))
+		delay(2 * G.SPEEDFACTOR)
+	end,
 })
