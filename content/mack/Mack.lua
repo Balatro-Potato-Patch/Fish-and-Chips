@@ -233,7 +233,7 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = true,
 	calculate = function(self, card, context)
-		if context.repetition and context.other_card.played_this_ante then
+		if context.repetition and context.other_card.ability.played_this_ante then
 			return {
 				repetitions = 1
 			}
