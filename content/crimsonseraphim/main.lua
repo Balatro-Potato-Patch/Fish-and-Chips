@@ -814,3 +814,120 @@ FishAndChips.Fish {
         end
     end
 }
+
+FishAndChips.Fish {
+	key = "another_bucket",
+	atlas = "bucket",
+	pos = { x = 2, y = 1 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "squeax09" },
+	attributes = { "generation" },
+	environments = {
+		calm_pond = 5,
+        city_river = 5,
+        pier = 5,
+	},
+    config = {
+        extra = {}
+    },
+    use = function(self, card)
+        if card.ability.saved_card then
+            if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
+                card.ability.saved_card.card.states.collide.can = true
+                card.ability.saved_card.card.states.hover.can = true
+                card.ability.saved_card.card.states.click.can = true
+                card.ability.saved_card.card.states.drag.can = true
+                card.ability.saved_card.card.states.focus.can = true
+                local s = card.ability.saved_card.card:save()
+                card.ability.saved_card.card:start_dissolve()
+                local car = SMODS.add_card{set = "Joker", area = G.fac_fish_area}
+                car.states.visible = false
+                car:load(s)
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        car:start_materialize()
+                        return true
+                    end
+                })) 
+                card.ability.saved_card = nil
+            else
+                SMODS.calculate_effect({message = localize("k_nope_ex")}, card)
+            end
+        else
+            local c = G.fac_fish_area.cards[#G.fac_fish_area.cards]
+            if c == card then return end
+            c.area:remove_card(c)
+            c.states.collide.can = false
+            c.states.hover.can = false
+            c.states.click.can = false
+            c.states.drag.can = false
+            c.states.focus.can = false
+            c.states.visible = false
+            card.ability.saved_card = {
+                save_table = c:save(),
+                card = c
+            }
+        end
+	end,
+	can_use = function(self, card)
+		return (#G.fac_fish_area.cards >= 2 and G.fac_fish_area.cards[#G.fac_fish_area.cards] ~= card) or card.ability.saved_card
+	end,
+    keep_on_use = function()
+        return true
+    end,
+}
+
+SMODS.draw_ignore_keys.bucket_front = true
+SMODS.DrawStep({
+	key = "bucket",
+	order = 25,
+	func = function(self)
+        local card = self.config.center_key
+        if (card ~= "fish_fac_another_bucket")  then return end
+        self.children.center:set_sprite_pos({x=2,y=1})
+        self.children.center:draw_shader('dissolve', nil, nil)
+        if self.ability.saved_card then
+            self.ability.saved_card.card.T = copy_table(self.T)
+            self.ability.saved_card.card.VT = copy_table(self.VT)
+            self.ability.saved_card.card.children.center:draw_shader('dissolve', nil, nil)  
+            for _, k in ipairs(SMODS.DrawStep.obj_buffer) do
+                if SMODS.DrawSteps[k]:check_conditions(self.ability.saved_card.card, 'both') then SMODS.DrawSteps[k].func(self.ability.saved_card.card, layer) end
+            end
+        end
+        self.children.center:set_sprite_pos({x=1,y=1})
+        self.children.center:draw_shader('dissolve', nil, nil)
+	end,
+	conditions = { vortex = false, facing = "front" },
+})
+
+local card_load_ref = Card.load
+function Card:load(tbl)
+    local ret = card_load_ref(self, tbl)
+    self.fish_seal = tbl.fish_seal
+    if self.ability.saved_card then
+        self.ability.saved_card.card = SMODS.create_card{set = "Joker"}
+        self.ability.saved_card.card:load(self.ability.saved_card.save_table)
+        self.ability.saved_card.card.states.collide.can = false
+        self.ability.saved_card.card.states.hover.can = false
+        self.ability.saved_card.card.states.click.can = false
+        self.ability.saved_card.card.states.drag.can = false
+        self.ability.saved_card.card.states.focus.can = false
+        self.ability.saved_card.card.states.visible = false
+    end
+    return ret
+end
+
+local card_save_ref = Card.save
+function Card:save()
+    local c = self.ability.saved_card and self.ability.saved_card.card
+    if c then
+        self.ability.saved_card.card = nil
+    end
+    local ret = card_save_ref(self)
+    ret.fish_seal = self.fish_seal
+    if c then
+        self.ability.saved_card.card = c
+    end
+    return ret
+end

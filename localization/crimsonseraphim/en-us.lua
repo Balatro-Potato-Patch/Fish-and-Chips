@@ -156,6 +156,23 @@ return {
                     "Affect Us."
                 }
             },
+
+            fish_fac_another_bucket = {
+                name = "Another Bucket",
+                text = {
+                    {
+                        "Use this {C:attention}Fish{}",
+                        "to store or release the",
+                        "rightmost {C:attention}Fish{}"
+                    },
+                },
+                flavor = {
+                    "it's just a bucket! you know,",
+                    "for putting soapy water in and",
+                    "cleaning stuff with. why, what do",
+                    "trolls use them for?"
+                }
+            },
         },
         Other = {
             fac_crimsonseraphim_transmute = {
