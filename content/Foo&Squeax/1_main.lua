@@ -4,7 +4,7 @@ FishAndChips.FooSqueax = {
 		on = false,
 		water_height = 1
 	},
-	fat_idiot = {
+	fat_chud = {
 		active = false,
 		state = 0,
 		timer = nil,
