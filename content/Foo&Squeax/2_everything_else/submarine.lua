@@ -99,7 +99,14 @@ SMODS.DrawStep{
 	order = 25,
 	func = function (card, layer)
 		if card.config.center.key == "fish_fac_fas_submarine" then
-			card.children.center:draw_shader("fac_fas_water_card", nil, card.ARGS.send_to_shader)
+			if not (card.area and card.area.config.fac_compendium) then
+				card.children.center:draw_shader("fac_fas_water_card", nil, card.ARGS.send_to_shader)
+			else
+				local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[card.config.center_key] or {}
+				if (fish_data.times_caught and fish_data.times_caught > 0) then
+					card.children.center:draw_shader("fac_fas_water_card", nil, card.ARGS.send_to_shader)
+				end
+			end
 		end
 	end
 }

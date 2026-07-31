@@ -163,7 +163,10 @@ return {
 			k_fac_fas_resurface = "Going Up!",
 			k_fac_fas_dive = "Dive! Dive! Dive!",
 			k_fac_fas_yum = "Yum!",
-			k_fac_fas_nom = "Nom!"
+			k_fac_fas_nom = "Nom!",
+			k_fac_fas_nyom = "nyoooooom...",
+			k_fac_fas_nyon = 'Nyon!',
+			k_fac_fas_ule = "Ueueleuleuleue!"
 		}
 	}
 }
