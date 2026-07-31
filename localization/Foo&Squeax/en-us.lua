@@ -124,7 +124,13 @@ return {
 			PotatoPatchDev_Foo54 = {
 				name = "Foo54",
 				text = {
-					"temp"
+					{
+						"temp"
+					},
+					{
+						"Defoko drawn by {C:ED5B5B}me",
+						"Harpoon Gun drawn by {C:attention}Kitty"
+					}
 				}
 			},
 			PotatoPatchDev_squeax09 = {

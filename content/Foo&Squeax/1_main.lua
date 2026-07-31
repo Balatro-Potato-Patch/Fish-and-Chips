@@ -74,7 +74,6 @@ local cardarea_emplace_red = CardArea.emplace
 ---@diagnostic disable-next-line: duplicate-set-field
 function CardArea:emplace(card, ...)
 	if card.ppu_member and card.ppu_member.name == "Foo54" then
-		print("what")
 		local dev_card2 = Card(0, 0, G.CARD_W / 1.25, G.CARD_H / 1.25, nil, G.P_CENTERS.c_base)
     dev_card2.children.center:remove()
     dev_card2.children.center = SMODS.create_sprite(dev_card2.T.x, dev_card2.T.y, dev_card2.T.w, dev_card2.T.h, "fac_rods", {x = 1, y = 2})
