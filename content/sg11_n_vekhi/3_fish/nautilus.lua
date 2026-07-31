@@ -16,7 +16,6 @@ FishAndChips.Fish({
 	weight = 10,
 	environments = {
 		pier = 4,
-		garden = 1,
 	},
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval then

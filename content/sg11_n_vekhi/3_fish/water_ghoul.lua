@@ -10,7 +10,7 @@ FishAndChips.Fish({
 			primed = false,
 		},
 	},
-	weight = 2,
+	weight = 4,
 	environments = {
 		styx = 1,
 	},

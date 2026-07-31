@@ -25,6 +25,7 @@ local center = FishAndChips.Fish({
 	weight = 2,
 	environments = {
 		wormhole = 1,
+		volcano = 1,
 	},
 	loc_vars = function(self, info_queue, card)
 		return {
