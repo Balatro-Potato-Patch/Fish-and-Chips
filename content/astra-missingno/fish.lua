@@ -5,7 +5,7 @@ FishAndChips.Fish {
     pixel_size = { w = 71, h = 72 },
     weight = 9,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "chips" },
     config = {
         extra = {
@@ -89,8 +89,11 @@ FishAndChips.Fish {
     pos = { x = 1, y = 0 },
     weight = 1,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "xmult", "rank", "king" },
+    impulse_min = 0.3,
+    impulse_max = 0.6,
+    vel_limit = 0.75,
     config = {
         extra = {
             xmult = 1.5
@@ -136,8 +139,12 @@ FishAndChips.Fish {
     pos = { x = 2, y = 0 },
     weight = 5,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "generation" },
+    impulse_min = 0.5,
+    impulse_max = 0.5,
+    vel_limit = 0.3,
+    decision_max = 0.24,
     config = {
         extra = {
             ctype = "Planet",
@@ -205,7 +212,7 @@ FishAndChips.Fish {
     pos = { x = 3, y = 0 },
     weight = 9,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "mult", "scaling" },
     config = {
         extra = {
@@ -273,8 +280,12 @@ FishAndChips.Fish {
     pixel_size = { w = 55, h = 87 },
     weight = 5,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "retrigger" },
+    decision_min = 0.5,
+    decision_max = 0.75,
+    impulse_min = 0.24,
+    impulse_max = 0.6,
     config = {
         extra = {
             retriggers = 1
@@ -304,10 +315,13 @@ FishAndChips.Fish {
     pos = { x = 0, y = 1 },
     weight = 5,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "usable", "economy" },
     blueprint_compat = false,
     requires_hand = true,
+    impulse_max = 0.12,
+    decision_min = 1.5,
+    decision_max = 1.5,
     config = {
         extra = {
             dollars = 1
@@ -342,7 +356,7 @@ FishAndChips.Fish {
     pixel_size = { w = 63, h = 74 },
     weight = 9,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "economy", "destroy_card", "suit", "diamonds" },
     blueprint_compat = false,
     config = {
@@ -403,7 +417,7 @@ FishAndChips.Fish {
     pos = { x = 3, y = 1 },
     weight = 5,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "copying" },
     environments = {
         wormhole = 5,
@@ -454,9 +468,13 @@ FishAndChips.Fish {
     pixel_size = { w = 68, h = 66 },
     weight = 7,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "boss_blind" },
     blueprint_compat = false,
+    impulse_max = 0.2,
+    decision_min = 0.6,
+    decision_max = 1,
+    vel_limit = 0.6,
     config = {
         extra = {
             prob = 1,
@@ -514,7 +532,7 @@ FishAndChips.Fish {
     pixel_size = { w = 61, h = 71 },
     weight = 7,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "destroy_cards", "xmult" },
     blueprint_compat = false,
     config = {
@@ -587,7 +605,7 @@ FishAndChips.Fish {
     pos = { x = 1, y = 2 },
     weight = 5,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "usable", "hand_level" },
     blueprint_compat = false,
     config = {
@@ -647,7 +665,7 @@ FishAndChips.Fish {
     pixel_size = { w = 52, h = 54 },
     weight = 3,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "passive" },
     config = {
         extra = {
@@ -676,9 +694,6 @@ FishAndChips.Fish {
         end
 
         if context.end_of_round and not context.individual and not context.repetition then
-            print(G.GAME.chips / G.GAME.blind.chips)
-            print(stg.percent / 100)
-            print(math.floor((G.GAME.chips / G.GAME.blind.chips) / (stg.percent / 100)))
             stg.rerolls = math.floor((G.GAME.chips / G.GAME.blind.chips) / (stg.percent / 100))
             if stg.rerolls > 0 then
                 return {
@@ -705,7 +720,7 @@ FishAndChips.Fish {
     pos = { x = 2, y = 2 },
     weight = 5,
     ppu_coder = { "theAstra" },
-    ppu_artist = { "MissingNumber" },
+    ppu_artist = { "MissingNo" },
     attributes = { "passive", "food", "modify_card", "edition" },
     config = {
         extra = {
