@@ -70,10 +70,20 @@ end
 
 -- --- Returns a `key` of the polled fish
 -- ---@param _force_env: string?
-function FishAndChips.poll_fish(_force_env)
+function FishAndChips.poll_fish(_force_env, _all_env)
 	local fishing_active = G.STATE == G.STATES.FAC_FISHING
 	_force_env = _force_env or FishAndChips.rod_function('force_environment')
-	local fish_pool = SMODS.create_poll_pool({_force_env or G.GAME.fac_fishing_environment}, {types = {'fac_Fish'}})	
+	local fish_pool
+	if _all_env then
+		_force_env = 'all'
+		local env_labels = {}
+		for _, v in pairs(G.FAC_ENVIRONMENT_POOL) do
+			table.insert(env_labels, v.key)
+		end
+		fish_pool = SMODS.create_poll_pool(env_labels, {types = {'fac_Fish'}})	
+	else
+		fish_pool = SMODS.create_poll_pool({_force_env or G.GAME.fac_fishing_environment}, {types = {'fac_Fish'}})	
+	end
 	fish_pool = FishAndChips.rod_function('modify_pool', fish_pool) or fish_pool
 	local catch = SMODS.poll_object({pool = fish_pool, use_bait = fishing_active, current_env = _force_env or G.GAME.fac_fishing_environment})
 	catch = FishAndChips.rod_function('modify_catch', catch) or catch
@@ -92,6 +102,9 @@ function SMODS.get_weight_of_object(obj, opt_weight, args)
 	if obj and obj.set == 'fac_Fish' then
 		if args.current_env == 'fac_treasure' then
 			local w = obj.treasure and 1 or 0
+			return w, w
+		elseif args.current_env == 'all' then
+			local w = obj.weight or 0
 			return w, w
 		end
 		local weight = obj.environments[args.current_env]
