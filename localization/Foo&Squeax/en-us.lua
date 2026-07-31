@@ -71,6 +71,7 @@ return {
 					{
 						"Must be pet periodically",
 						"or it's shooed away",
+						"{C:inactive}[#3# seconds remaining]"
 					},
 					{
 						"{X:mult,C:white}X#2#{} Mult",
@@ -128,6 +129,21 @@ return {
 					"when a Fish is {C:red}lost",
 					"or a treasure is {C:red}failed",
 					"{C:inactive}[Currently {C:chips}+#2#{C:inactive} Chips]"
+				}
+			},
+			fish_fac_fas_kine = {
+				name = "Kine",
+				flavour = {
+					"text of the flavourful variety"
+				},
+				text = {
+					{
+						"not sure how to word"
+					},
+					{
+						"Use to {C:red}consume{} held Joker",
+						"and then {C:attention}grab{} leftmost Joker",
+					}
 				}
 			}
 		},

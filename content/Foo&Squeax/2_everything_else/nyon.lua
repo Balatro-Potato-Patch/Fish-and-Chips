@@ -37,7 +37,7 @@ FishAndChips.Fish{
 	},
 	attributes = {"xmult"},
 	loc_vars = function(self, info_queue, card)
-		return {vars = {card.ability.extra.xmult, card.ability.extra.call, pseudorandom_element({"Nyon!", "Ueueleuleuleue"})}}
+		return {vars = {card.ability.extra.xmult, card.ability.extra.call, pseudorandom_element({"Nyon!", "Ueueleuleuleue"}), card.ability.immutable.timer}}
 	end,
 	update = function (self, card, dt)
 		if not G.SETTINGS.paused then
@@ -69,7 +69,16 @@ FishAndChips.Fish{
 	calculate = function(self, card, context)
 		if context.joker_main then
 			return {
-				xmult = card.ability.immutable.slow and card.ability.extra.call or card.ability.extra.xmult
+				xmult = card.ability.immutable.slow and card.ability.extra.call or card.ability.extra.xmult,
+				func = function()
+					G.E_MANAGER:add_event(Event{
+						func = function ()
+							play_sound("fac_fas_nyon")
+							return true
+						end
+					})
+					return true
+				end
 			}
 		end
 		if context.end_of_round and context.main_eval and not context.blueprint and card.ability.immutable.slow then
