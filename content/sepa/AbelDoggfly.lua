@@ -180,3 +180,129 @@ FishAndChips.Fish {
         card.ability.extra.poker_hand = pseudorandom_element(_poker_hands, 'pezbombastico')
     end
 }
+
+
+FishAndChips.Fish {
+	key = "klounfish",
+	atlas = pez,
+	pos = { x = 1, y = 1 },
+	weight = 8,
+	ppu_coder = { "DoggFly" },
+	ppu_artist = { "DoggFly" },
+	attributes = { "hands", "economy" },
+	config = {
+		extra = {
+			dollars = 1
+		}
+	},
+	environments = {
+		pier = 1
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.dollars } }
+	end,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+			local face_count = 0
+			for _, c in ipairs(G.hand.cards) do
+				if c:is_face() then
+					face_count = face_count + 1
+				end
+			end
+			if face_count > 0 then
+				return {
+					dollars = card.ability.extra.dollars * face_count
+				}
+			end
+		end
+	end,
+}
+ 
+
+FishAndChips.Fish {
+	key = "freds_leg",
+	atlas = pez,
+	pos = { x = 2, y = 0 },
+	weight = 6,
+	ppu_coder = { "DoggFly" },
+	ppu_artist = { "DoggFly" },
+	attributes = { "hands", "destruction" },
+	config = {
+		extra = {}
+	},
+	environments = {
+		city_river = 1
+	},
+	loc_vars = function(self, info_queue, card)
+		return {}
+	end,
+	calculate = function(self, card, context)
+		if context.before and not context.blueprint then
+			if G.hand and G.hand.cards and #G.hand.cards > 0 then
+				local rightmost = G.hand.cards[#G.hand.cards]
+				if rightmost then
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							play_sound('tarot1')
+							rightmost:juice_up(0.8, 0.8)
+							SMODS.destroy_cards(rightmost)
+							return true
+						end
+					}))
+					return {
+						message = "MY LEG!",
+						colour = G.C.RED
+					}
+				end
+			end
+		end
+	end,
+}
+ 
+ 
+FishAndChips.Fish {
+	key = "jimfish",
+	atlas = pez,
+	pos = { x = 0, y = 1 },
+	weight = 12,
+	ppu_coder = { "DoggFly" },
+	ppu_artist = { "DoggFly" },
+	attributes = { "mult" },
+	config = {
+		extra = {
+			mult = 4
+		}
+	},
+	environments = {
+		calm_pond = 1
+	},
+	loc_vars = function(self, info_queue, card)
+		local bucket_fish_count = 0
+		if G.fac_fish_area and G.fac_fish_area.cards then
+			for _, c in ipairs(G.fac_fish_area.cards) do
+				if c ~= card then
+					bucket_fish_count = bucket_fish_count + 1
+				end
+			end
+		end
+		return { vars = { card.ability.extra.mult, card.ability.extra.mult * bucket_fish_count } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			local bucket_fish_count = 0
+			if G.fac_fish_area and G.fac_fish_area.cards then
+				for _, c in ipairs(G.fac_fish_area.cards) do
+					if c ~= card then
+						bucket_fish_count = bucket_fish_count + 1
+					end
+				end
+			end
+			if bucket_fish_count > 0 then
+				return {
+					mult = card.ability.extra.mult * bucket_fish_count
+				}
+			end
+		end
+	end,
+}
+ 

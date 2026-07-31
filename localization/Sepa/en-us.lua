@@ -37,6 +37,42 @@ return {
             },
 
 
+   fish_fac_klounfish = {
+                name = "Kloun Fish",
+                text = {
+                    "At {C:attention}end of round{},",
+                    "earn {C:money}$#1#{} for each",
+                    "{C:attention}face card{} held in hand"
+                },
+                flavor = {
+                    "He made a statement so funny even the kids clowned his jokes"
+                }
+            },
+            fish_fac_freds_leg = {
+                name = "Fred's Leg",
+                text = {
+                    "When a hand is played,",
+                    "{C:red}destroys{} the {C:attention}leftmost{}",
+                    "card held in hand"
+                },
+                flavor = {
+                    "OUCH",
+                    "MY LEG!"
+                }
+            },
+            fish_fac_jimfish = {
+                name = "JimFish",
+                text = {
+                    "{C:mult}+#1#{} Mult for each",
+                    "{C:attention}fish{} in your bucket",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}"
+                },
+                flavor = {
+                    "Your favorite Joker, now as a fish"
+                }
+            },
+ 
+ 
         },
 
         PotatoPatch = {
