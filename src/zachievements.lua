@@ -261,7 +261,6 @@ FishAndChips.Achievement({
     end
 })
 
--- TODO: add check code in right place
 FishAndChips.Achievement({
     key = 'all_rods',
     unlock_condition = function(self, args)
