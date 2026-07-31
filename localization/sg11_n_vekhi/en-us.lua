@@ -40,7 +40,7 @@ return {
 				name = "Quantum Fish (photo)",
 				text = {
 					"Random {C:attention}any{} card gives",
-					"{C:white,X:mult}X#1#{} Mult when scored",
+					"{C:white,X:mult}X#1#{} Mult when triggered",
 				},
 				flavour = {
 					"Exist in all places at the same time",
