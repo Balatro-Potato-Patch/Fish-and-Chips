@@ -292,6 +292,7 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     if added_card then
         added_card:set_sprites(added_card.config.center)
         added_card.states.visible = false
+        SMODS.calculate_context({fac_fish_caught = added_card, fish = profile.key, treasure = is_treasure_catch or false, perfect = state.perfect or false})
     end
 
     local rod_key = FishAndChips.get_rod().key
@@ -584,6 +585,8 @@ local function fac_finish_round(success, skip)
         state.reel_rumbling = false
         fac_rumble_release()
     end
+    local fish_obj
+    local treasure_obj
     if success then
         state.result_message = localize(state.perfect and "ph_fac_perfect_catch" or "ph_fac_good_catch")
         state.celebrate_t = FAC_CELEBRATE_DURATION
@@ -617,11 +620,11 @@ local function fac_finish_round(success, skip)
             check_for_unlock({type = 'fac_treasure', value = G.GAME.fac_treasure_earned})
         end
         FishAndChips.rod_function("on_catch", state.profile.key)
-        fac_reveal_catch(state, state.profile)
+        fish_obj = fac_reveal_catch(state, state.profile)
         if treasure_profile then
             FishAndChips.rod_function("on_catch", treasure_profile.key)
             G.E_MANAGER.queues.fac_treasure_reveal = G.E_MANAGER.queues.fac_treasure_reveal or {}
-            fac_reveal_catch(state, treasure_profile, "fac_treasure_reveal", G.FISHING.fac_treasure_reward_area, true)
+            treasure_obj = fac_reveal_catch(state, treasure_profile, "fac_treasure_reveal", G.FISHING.fac_treasure_reward_area, true)
         end
     else
         play_sound('fac_line_snap', 1.2)
@@ -650,7 +653,7 @@ local function fac_finish_round(success, skip)
             }))
         end
     end
-    SMODS.calculate_context{fac_end_fishing = true, failed = not success, fish = success and state.profile.key, treasure = success and state.got_treasure}
+    SMODS.calculate_context({fac_end_fishing = true, failed = not success, fish = success and state.profile.key or nil, fish_obj = fish_obj or nil, treasure = success and state.got_treasure or false, treasure_available = state.treasure_enabled or false, treasure_progress = state.treasure_meter or 0, missed_treasure = success and state.treasure_enabled and not state.got_treasure or false, attempted_treasure = state.treasure_enabled and not state.got_treasure and (state.treasure_meter or 0) > 0 or false, treasure_obj = treasure_obj, perfect = success and state.perfect or false})
 end
 local function fac_begin_hooking_round()
     local state = fac_ensure_state()
@@ -717,6 +720,9 @@ function G.FUNCS.fac_go_fish(e)
     if G.STATE ~= G.STATES.FAC_FISHING or G.FISHING_STATE ~= G.FISHING_STATES.LOBBY or FishAndChips.in_tutorial then
         return
     end
+    if G.GAME.fac_fish_expanded then
+        G.FUNCS.fac_open_fishing_menu()
+    end
     fac_ensure_state().fishing_active = true
     FishAndChips.fade_fishing_buttons()
 end
@@ -778,6 +784,7 @@ function G:update_fac_fishing_casting(dt)
         state.bite_timer = fac_clamp(fac_rand(0.75, 1.95) - state.cast_power * 0.55, 0.35, 1.95)
         G.FISHING_STATE_COMPLETE = true
         FishAndChips.update_jimbo_state(FishAndChips.JIMBO_ANIMATION_STATES.CAST)
+        SMODS.calculate_context{fac_cast_rod = true}
     end
     if G.FAC_JIMBO_ANIMATION_STATE == FishAndChips.JIMBO_ANIMATION_STATES.WAIT then
         state.cast_timer = state.cast_timer - dt
@@ -1126,8 +1133,18 @@ local function fac_get_rod_tip_local(px, py, pw, ph, force_anim_state)
     return px + fx * pw, py + fy * ph
 end
 
+local FAC_STATUS_QUEUE
 local function fac_draw_text_with_black_bg(str, x, y, text_color)
     if FishAndChips.show_ui then
+        if FAC_STATUS_QUEUE then
+            FAC_STATUS_QUEUE[#FAC_STATUS_QUEUE + 1] = {
+                str = str,
+                x = x,
+                y = y,
+                colour = text_color or {0.88, 0.97, 1, 1},
+            }
+            return
+        end
         local textbox_w = love.graphics.getFont():getWidth(str) + 12
         local textbox_h = love.graphics.getFont():getHeight() + 8
         love.graphics.setColor(G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65)
@@ -1324,7 +1341,10 @@ local function fac_draw_panel()
     local prev_canvas = love.graphics.getCanvas()
     love.graphics.setCanvas(FAC_SCENE_CANVAS)
     love.graphics.clear(0, 0, 0, 0)
+    FAC_STATUS_QUEUE = {}
     fac_draw_scene_content(state, 0, 0, cw, ch)
+    local status_queue = FAC_STATUS_QUEUE
+    FAC_STATUS_QUEUE = nil
     love.graphics.setCanvas(prev_canvas)
 
     local blit_alpha = 1
@@ -1333,6 +1353,37 @@ local function fac_draw_panel()
     end
     love.graphics.setColor(1, 1, 1, blit_alpha)
     love.graphics.draw(FAC_SCENE_CANVAS, px, py, 0, pw / cw, ph / ch)
+
+    local screen_scale = G.TILESCALE * G.TILESIZE
+    local scale_x, scale_y = pw / cw, ph / ch
+    for index = 1, 2 do
+        local status = G.FISHING["fishing_status_" .. index]
+        local status_data = status_queue[index]
+        if status then
+            status.states.visible = status_data ~= nil
+            if status_data then
+                state["status_text_" .. index] = status_data.str
+                local status_x = (px + (status_data.x + 18) * scale_x) / screen_scale
+                local status_y = (py + (status_data.y - 4) * scale_y) / screen_scale
+                status:hard_set_T(status_x, status_y, status.T.w, status.T.h)
+                status:recalculate()
+
+                local text = status:get_UIE_by_ID("fac_fishing_status_text_" .. index)
+                if text then
+                    text.config.colour = {
+                        status_data.colour[1],
+                        status_data.colour[2],
+                        status_data.colour[3],
+                        (status_data.colour[4] or 1) * blit_alpha,
+                    }
+                    text:update_text()
+                end
+                local bg = status:get_UIE_by_ID("fac_fishing_status_bg_" .. index)
+                if bg then bg.config.colour[4] = 0.65 * blit_alpha end
+                status:draw()
+            end
+        end
+    end
 end
 
 local old_fac_draw = love.draw
