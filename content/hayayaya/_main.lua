@@ -17,7 +17,7 @@ SMODS.Atlas({
 	path = "hayayaya/explosion.png",
 	px = 71,
 	py = 100,
-	fps = 60,
+	fps = 90,
 	frames = 18,
 	atlas_table = "ANIMATION_ATLAS",
 })

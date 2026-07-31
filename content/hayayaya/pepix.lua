@@ -54,7 +54,17 @@ FishAndChips.Fish({
 			end,
 		}))
 
-		delay(0.5)
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.5,
+            func = function()
+				-- I'm sure this won't have consequences!
+				card:remove()
+				return true
+			end,
+		}))
+
+		-- delay(0.5)
 	end,
 })
 
