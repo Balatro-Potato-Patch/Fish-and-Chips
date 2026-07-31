@@ -4,11 +4,9 @@ return {
             PotatoPatchDev_crimsonseraphim = {
                 name = "crimsonseraphim",
                 text = {
-                    "And an angel came down to me. it put its hand",
-                    "on my shoulder. Softer than the finest fabrics",
-                    "I have ever felt; and the angel spoke out to me",
-                    '"OMG it\'s the {C:worm_ruby}creator{} of {C:worm_entropy,E:1}Entropy{}, I\'m such a big fan"',
-                    "in its pretty, {C:worm_entropy,E:1}gay{} little voice."
+                    "Inside me there are two wolves",
+                    "and one of them is {C:red}Red{}, and one of them is {C:green}Green{}",
+                    "say hello to them both."
                 }
             },
         },
@@ -17,26 +15,62 @@ return {
                 name = "Aeonfish",
                 text = {
                     "Once per round you may",
-                    "use this Fish to {C:fac_spectral_gradient}Transmute{}",
-                    "the rightmost fish."
+                    "use this {C:attention}Fish{} to {C:fac_spectral_gradient}Transmute{}",
+                    "the rightmost {C:attention}Fish{}."
+                },
+                flavor = {
+                    "You may hear it whisper",
+                    "secrets if you get too close."
                 }
             },
             fish_fac_hammerhead_shark = {
                 name = "Hammerhead Shark",
                 text = {
-                    "When a Fish is caught",
+                    "When a {C:attention}Fish{} is caught",
                     "{C:red}Forge{} a {C:blue}Common{} Joker",
                     "with a random added effect."
+                },
+                flavor = {
+                    "Usually found near anvils",
+                    "and circuses. for some reason..."
                 }
             },
 
             fish_fac_mealy_apple = {
                 name = "Mealy Apple",
                 text = {
-                    "When a Fish is caught",
-                    "Destroy it and this Fish",
+                    "When a {C:attention}Fish{} is caught",
+                    "Destroy it and this {C:attention}Fish{}",
                     "and give 3X their combined",
                     "sell values"
+                },
+                flavour = {
+                    "{element:1}"
+                }
+            },
+
+            fish_fac_ruby_crystalfish = {
+                name = "Crystalfish (Al{s:0.5}2{}O{s:0.5}3{}:Cr)",
+                text = {
+                    {
+                        "All other {C:attention}Fish{} have",
+                        "random Suits and ranks"
+                    },
+                    {
+                        "All other {C:attention}Fish{} contribute",
+                        "to poker hand calculation"
+                    }
+                }
+            },
+            fish_fac_jade_crystalfish = {
+                name = "Crystalfish (Ca{s:0.5}2{}[Mg,Fe]{s:0.5}5{}Si{s:0.5}8{}O{s:0.5}22{}[OH]{s:0.5}2{})",
+                text = {
+                    {
+                        ""
+                    },
+                    {
+                        ""
+                    }
                 }
             }
         },

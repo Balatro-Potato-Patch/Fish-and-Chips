@@ -1,11 +1,35 @@
+FishAndChips.crimsonseraphim = {
+    C = {
+        spectral_gradient = SMODS.Gradient {
+            key = "spectral_gradient",
+            colours = {
+                HEX"5e7297",
+                HEX"c7b24a"
+            }
+        },
+        stupid_fucking_DOGGYYYYIEEEs = SMODS.Gradient {
+            key = "stupid_fucking_DOGGYYYYIEEEs",
+            colours = {
+                G.C.RED,
+                G.C.GREEN
+            }
+        }
+    }
+}
+
+SMODS.Atlas({
+	key = "crimsonseraphim_credits",
+	path = "crimsonseraphim/credits.png",
+	px = 71,
+	py = 95,
+})
+
 PotatoPatchUtils.Developer({
 	name = 'crimsonseraphim',
-	atlas = 'fac_cards',
-	colour = G.C.RED,
+	atlas = 'fac_crimsonseraphim_credits',
+	colour = FishAndChips.crimsonseraphim.C.stupid_fucking_DOGGYYYYIEEEs,
+    loc = true,
     calculate = function(self, context)
-        if context.setting_blind then
-            print("setting_blind")
-        end
         local effects = {}
         for _, c in pairs(G.jokers.cards) do
             if not c.debuffed then
@@ -24,18 +48,6 @@ PotatoPatchUtils.Developer({
         end
     end
 })
-
-FishAndChips.crimsonseraphim = {
-    C = {
-        spectral_gradient = SMODS.Gradient {
-            key = "spectral_gradient",
-            colours = {
-                HEX"5e7297",
-                HEX"c7b24a"
-            }
-        }
-    }
-}
 
 FishAndChips.Fish {
 	key = "aeonfish",
@@ -137,6 +149,14 @@ SMODS.DrawStep({
 	conditions = { vortex = false, facing = "front" },
 })
 
+SMODS.Atlas({
+	key = "mealy_lore",
+	path = "crimsonseraphim/mealy_lore.png",
+	px = 1125,
+	py = 1086,
+})
+
+
 --When a fish is obtained sell it and this fish for 3x the sell price
 FishAndChips.Fish {
 	key = "mealy_apple",
@@ -146,19 +166,29 @@ FishAndChips.Fish {
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "economy" },
-	config = {
-		extra = {}
-	},
 	environments = {
 		calm_pond = 4,
 		soup = 10,
         chocolate_river = 7,
 	},
 	loc_vars = function(self, info_queue, card)
-		
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 2, 2 * 1125 / 1086, "fac_mealy_lore") } } }
 	end,
 	calculate = function(self, card, context)
-		
+		if context.fac_fish_caught then
+            local money = card.sell_cost + context.fac_fish_caught.sell_cost
+            G.E_MANAGER:add_event(Evemt{
+                func = function()
+                    SMODS.destroy_cards({card, context.fac_fish_caught}, nil, true)
+                    return true
+                end
+            })
+            if money ~= 0 then
+                return {
+                    sand_dollars = money * 3
+                }
+            end
+        end
 	end,
 }
 
@@ -192,13 +222,13 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "jade_crystalfish",
+	key = "ruby_crystalfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
 	weight = 8,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "generation", "chance" },
+	attributes = { "passive" },
 	config = {
 		extra = {
             odds = 2
@@ -212,21 +242,55 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(
-            card, "fac_crimsonseraphim_jade_crystalfish", 1, card.ability.extra.odds
+            card, "fac_crimsonseraphim_ruby_crystalfish", 1, card.ability.extra.odds
         ) then
             card:transmute(G.P_CENTERS.fish_fac_jade_crystalfish)
         end
+        if context.fac_fish_caught then
+            SMODS.change_base(context.fac_fish_caught, 
+                pseudorandom_element(SMODS.Suits, pseudoseed("ruby_crystalfish_suit")).key, 
+                pseudorandom_element(SMODS.Ranks, pseudoseed("ruby_crystalfish_rank")).key,
+            nil)
+        end
 	end,
+    add_to_deck = function(self, card)
+        if #SMODS.find_card("fish_fac_ruby_crystalfish") <= 0 then
+            for i, v in pairs(G.I.CARD) do
+                if v.config and v.config.center and v.config.center.set == "fac_Fish" and v ~= card then
+                    SMODS.change_base(v, 
+                        pseudorandom_element(SMODS.Suits, pseudoseed("ruby_crystalfish_suit")).key, 
+                        pseudorandom_element(SMODS.Ranks, pseudoseed("ruby_crystalfish_rank")).key,
+                    nil)
+                end
+            end
+        end
+    end
 }
+
+local get_poker_hand_info_ref = G.FUNCS.get_poker_hand_info
+function G.FUNCS.get_poker_hand_info(_cards)
+    local cards = {}
+    for i, v in pairs(_cards) do
+        cards[#cards+1] = v
+    end
+    if next(SMODS.find_card("fish_fac_ruby_crystalfish")) then
+        for i, v in pairs(G.I.CARD) do
+            if v.config and v.config.center and v.config.center.set == "fac_Fish" and not SMODS.in_scoring(_cards, v) and v.base.suit then
+                cards[#cards+1] = v
+            end
+        end
+    end
+    return get_poker_hand_info_ref(cards)
+end
 
 FishAndChips.Fish {
 	key = "hammerhead_shark",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 10,
+	weight = 10, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "generation", "chance" },
+	attributes = { "generation" },
 	config = {
 		extra = {
             odds = 2
@@ -295,7 +359,7 @@ local forge_effects = {
     end,
     fac_crimsonseraphim_forged_money = function(c, context)
         if context.setting_blind then
-            return {dollars = 4}
+            return {dollars  = 4}
         end
     end,
     fac_crimsonseraphim_forged_sand = function(c, context)
@@ -306,5 +370,7 @@ local forge_effects = {
 }
 
 function FishAndChips.crimsonseraphim.calculate_forged_joker(card, context)
-    return forge_effects[card.ability.crimsonseraphim_forged](card, context)
+    if card.ability.crimsonseraphim_forged and forge_effects[card.ability.crimsonseraphim_forged] then
+        return forge_effects[card.ability.crimsonseraphim_forged](card, context)
+    end
 end
