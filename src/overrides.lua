@@ -162,12 +162,6 @@ function Sprite:draw(...)
 	end
 end
 
-local start_run_hook = Game.start_run
-function Game:start_run(args)
-	start_run_hook(self, args)
-	G.GAME.fac_fish_expanded = false
-end
-
 local align_cards_hook = CardArea.align_cards
 ---@diagnostic disable-next-line: duplicate-set-field
 function CardArea:align_cards(...)
@@ -455,4 +449,21 @@ local smods_add_to_deck_ref = SMODS.add_to_deck
 function SMODS.add_to_deck (card, args)
 	if not args.area and card.config.center.set == "fac_Fish" then args.area = G.fac_fish_area end
 	return smods_add_to_deck_ref(card, args)
+end
+
+local card_open_ref = Card.open
+function Card:open()
+	G.GAME.fac_booster_opening = true
+	card_open_ref(self)
+	G.E_MANAGER:add_event(Event({
+		func = function()
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					G.GAME.fac_booster_opening = nil
+					return true;
+				end
+			}))
+			return true;
+		end
+	}))
 end
