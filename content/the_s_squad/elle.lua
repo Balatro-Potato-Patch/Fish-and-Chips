@@ -24,7 +24,7 @@ FishAndChips.Fish {
 
 local emplace_hook = CardArea.emplace
 function CardArea:emplace(card, ...)
-	if card.tss_cheshed then return end
+	if card.tss_cheshed then emplace_hook(G.FISHING.fac_fish_reward_area, card, ...) return end
 	emplace_hook(self,card, ...)
 end
 
@@ -206,7 +206,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "tss_uranium",
 	atlas = "tss_fish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 3, y = 0 },
 	weight = 4,
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
@@ -219,45 +219,39 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.before then
 			for i, c in ipairs(G.hand.cards) do
-				G.E_MANAGER:add_event(Event({
-					trigger = 'immediate',
-					delay = 0.15,
-					func = function()
-						c:flip()
-						play_sound('card1')
-						c:juice_up(0.3, 0.3)
-						return true
-					end
-				}))
+				c:juice_up()
+				SMODS.change_base(c, nil, pseudorandom_element(SMODS.Ranks, "fac_tss_uranium").key)
 			end
-			delay(0.2)
-			for i, c in ipairs(G.hand.cards) do
-				G.E_MANAGER:add_event(Event({
-					trigger = 'immediate',
-					delay = 0.1,
-					func = function()
-						SMODS.change_base(c, nil, pseudorandom_element(SMODS.Ranks, "fac_tss_uranium").key)
-						return true
-					end
-				}))
-			end
-			for i, c in ipairs(G.hand.cards) do
-				G.E_MANAGER:add_event(Event({
-					trigger = 'immediate',
-					delay = 0.15,
-					func = function()
-						c:flip()
-						play_sound('tarot2')
-						c:juice_up(0.3, 0.3)
-						card:juice_up(0.3, 0.3)
-						return true
-					end
-				}))
-			end
-			return {message = #G.hand.cards>0 and " " or nil, colour = G.C.GREEN}
 		end
 	end,
 	add_to_deck = function(self, card)
 		card.ability.extra.pickup = G.TIMERS.REAL
 	end
+}
+
+SMODS.Shader {
+	key = 'tss_uranium_glow',
+	path = 'the_s_squad/uranium_glow.fs',
+
+	send_vars = function(self, sprite, card)
+		local atlas = sprite.children.center.atlas
+		local w,h = atlas.image:getDimensions()
+		local w2,h2 = atlas.px,atlas.py
+		return { 
+			col = HEX("50ff81"),
+			size = {w,h,math.sin(G.TIMERS.REAL)*2+5},
+			cardsize = {w2,h2}
+		}
+	end
+}
+
+SMODS.DrawStep {
+	key = 'tss_uranium_glow',
+	order = -11,
+	func = function(self, layer)
+		if self.config.center_key == "fish_fac_tss_uranium" and (self.config.center.discovered or self.bypass_discovery_center) then
+			self.children.center:draw_shader('fac_tss_uranium_glow')
+		end
+	end,
+	conditions = { vortex = false, facing = 'front' },
 }

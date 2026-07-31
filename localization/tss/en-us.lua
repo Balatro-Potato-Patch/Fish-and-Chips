@@ -107,11 +107,12 @@ return {
 			fish_fac_tss_uranium = {
 				name = "Uranium Rod",
 				text = {
-					"Ranks of held cards are",
-					"shuffled before scoring"
+					"{C:attention}Ranks{} of held cards are",
+					"{C:attention}randomized{} before scoring"
 				},
 				flavour = {
-					"Who threw this away?"
+					"Who threw this away?",
+					"This is definitely radioactive..."
 				}
 			}
 		},

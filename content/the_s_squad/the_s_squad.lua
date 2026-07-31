@@ -12,33 +12,40 @@ PotatoPatchUtils.Developer{
 			local chesh_scale = 1.4
 			local chesh_speed = .75
 
-			local f = G.FISHING.fac_fish_reward_area.cards[1]
+			local f = context.fish_obj or G.FISHING.fac_fish_reward_area.cards[1]
 			local cheshlist = {}
 			for i, card in ipairs(SMODS.find_card("fish_fac_tss_chesh")) do
 				if SMODS.pseudorandom_probability(card,"fcc_tss_chesh",1,card.ability.extra.odds) then
 					cheshlist[#cheshlist+1] = card
 				end
 			end
-			
-			if #cheshlist < 1 then return end
-			
+
+			if not f or #cheshlist < 1 then return end
+
 			f.tss_cheshed = true
 			f.states.click.can = false -- Apparently it should be like this already but they forgot. Will remove once that is patched :p
-			
-			
+
 			-- Move Cheshes to the fish
 			for _, v in ipairs(cheshlist) do
 				G.E_MANAGER:add_event(Event({trigger = "after", delay = chesh_speed/#cheshlist, func=function()
 					v.area:remove_card(v)
 
-					G.FISHING.fac_fish_reward_area:emplace(v, 1)
+					G.FISHING.fac_fish_reward_area:emplace(v)
+
+					local a
+					for i, v2 in ipairs(v.area.cards) do
+						if v == v2 then a = i break end
+					end
+
+					table.remove(G.FISHING.fac_fish_reward_area.cards,a)
+					table.insert(G.FISHING.fac_fish_reward_area.cards,v)
 
 					play_sound("whoosh")
 					v.T.w = v.T.w*chesh_scale
 					v.T.h = v.T.h*chesh_scale
 				return true end}))
 			end
-			
+
 			for _, v in ipairs(cheshlist) do
 				G.E_MANAGER:add_event(Event({trigger = "after", delay = chesh_speed/#cheshlist, func=function()
 					v:juice_up()
@@ -133,28 +140,30 @@ end
 
 -- Credits shader stuff :3
 SMODS.Shader {
-    key = 'tss_uranium', -- Doesn't have team name in as also used by another team :3
-    path = 'the_s_squad/uranium.fs'
+	key = 'tss_uranium', -- Doesn't have team name in as also used by another team :3
+	path = 'the_s_squad/uranium.fs'
 }
 
 SMODS.ScreenShader {
-	key = "pixelated",
+	key = "fac_tss_uranium",
 	shader = "fac_tss_uranium",
 
-    send_vars = function(self, sprite, card)
-        local t = G.TIMERS.REAL
+	send_vars = function(self, sprite, card)
+		local t = G.TIMERS.REAL
 		for _, v in ipairs(SMODS.find_card("fish_fac_tss_uranium")) do
 			t = math.min(t,v.ability.extra.pickup)
 		end
-		t=0--debug
+
+		local w,h = love.graphics.getDimensions()
 		return {
-            --t = G.TIMERS.REAL-t
-        }
-    end,
-	should_apply = function(self)
-		return true--#SMODS.find_card("fish_fac_tss_uranium")>0
+			screen_dims = {w,h},
+			t = G.TIMERS.REAL-t-10
+		}
 	end,
-	order = 1
+	should_apply = function(self)
+		return #SMODS.find_card("fish_fac_tss_uranium")>0
+	end,
+	order = 0
 }
 
 SMODS.Atlas{
