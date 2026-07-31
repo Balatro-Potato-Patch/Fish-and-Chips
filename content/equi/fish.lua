@@ -106,6 +106,65 @@ FishAndChips.Fish {
     end
 }
 
+--Webfishing
+FishAndChips.Fish {
+    key = "webfishing",
+    --atlas
+    pos = { x = 2, y = 0 },
+    weight = 15,
+    cost = 5,
+    blueprint_compat = true,
+    ppu_coder = { "Equi" },
+    ppu_artist = { "Equi" },
+    attributes = { "xmult", "passive" },
+    config = {
+        extra = {
+            xmult = 3
+        }
+    },
+    environments = {
+        swamp = 1
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xmult } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                xmult = card.ability.extra.xmult
+            }
+        end
+
+        if (context.hand_drawn or context.other_drawn) and not context.blueprint then
+            local forced_count = 0
+            for _, playing_card in ipairs(G.hand.cards) do
+                if playing_card.ability.forced_selection then
+                    forced_count = forced_count + 1
+                end
+            end
+
+            --kind of inconsistent and needs standardising
+
+            if forced_count < G.hand.config.highlighted_limit then
+                G.hand:unhighlight_all()
+                local unselected_cards = {}
+                for k, v in ipairs(G.hand.cards) do
+                    if G.hand.cards[k].highlighted == false then
+                        table.insert(unselected_cards, v)
+                    end
+                end
+
+                local forced_card = pseudorandom_element(unselected_cards, "equi_webfishing")
+                if not forced_card.ability.forced_selection then
+                    forced_card.ability.forced_selection = true
+                    G.hand:add_to_highlighted(forced_card)
+                end
+            end
+        end
+    end
+}
+
 --Carptical Illusion
 FishAndChips.Fish {
     key = "carpticalillusion",

@@ -25,6 +25,18 @@ return {
                 }
             },
 
+            fish_fac_webfishing = {
+                name = "Webfishing",
+                text = {
+                    "{X:mult,C:white}X3{} Mult, forces {C:attention}1{} card",
+                    "to always be selected",
+                },
+                flavor = {
+                    "Ew! How do you even",
+                    "fish that up??"
+                }
+            },
+
             fish_fac_carpticalillusion = {
                 name = "Carptical Illusion",
                 text = {
