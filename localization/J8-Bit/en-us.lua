@@ -35,7 +35,11 @@ return {
                 }
             },
             ["fish_fac_J8-Bit_squishy"] = {
-                name = "Squishy",
+                name =
+                {
+                    "Squishy",
+                    "{C:inactive,s:0.8}(Kirby's Dream Land)"
+                },
                 text = {
                     "Played {C:attention}#1#s{} give",
                     "{C:chips}+#2#{} Chips and {C:mult}+#3#{} Mult",
@@ -43,7 +47,7 @@ return {
                 },
                 flavor = {
                     "\"An eight-armed Avalanche",
-                    "for you then, #1#!\""
+                    "for you then, #4#!\""
                 }
             },
             ["fish_fac_J8-Bit_boops_boops_all_6s"] = {

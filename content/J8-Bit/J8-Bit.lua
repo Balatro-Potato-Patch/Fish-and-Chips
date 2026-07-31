@@ -175,6 +175,7 @@ FishAndChips.Fish {
                 localize(card.ability.extra.rank, 'ranks'),
                 card.ability.extra.chips,
                 card.ability.extra.mult,
+                G.PROFILES[G.SETTINGS.profile].name or "Jimbo"
             }
         }
     end,
@@ -197,11 +198,11 @@ FishAndChips.Fish {
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
-    blueprint_compat = true,
+    blueprint_compat = false,
     config = {
         extra = {
-            rounds_needed = 6,
-            rounds_counter = 0,
+            hands_needed = 6,
+            hands_counter = 0,
             odds_mult = 3
         }
     },
@@ -215,13 +216,27 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                card.ability.extra.rounds_needed,
-                card.ability.extra.rounds_counter,
+                card.ability.extra.hands_needed,
+                card.ability.extra.hands_counter,
             }
         }
     end,
     calculate = function(self, card, context)
-
+        if context.mod_probability and not context.blueprint then
+            if card.ability.extra.hands_counter >= card.ability.extra.hands_needed then
+                return {
+                    numerator = context.numerator * card.ability.extra.odds_mult
+                }
+            end
+        end
+        if context.after and not context.blueprint then
+            if card.ability.extra.hands_counter >= card.ability.extra.hands_needed then
+                return {
+                    message = localize("k_active_ex"),
+                    colour = G.C.GREEN
+                }
+            end
+        end
     end,
 }
 
@@ -622,7 +637,6 @@ FishAndChips.Fish {
         if card.ability.extra.fake_blind and card.area then
             local blind_sprite = AnimatedSprite(0, 0, 0.5, 0.5, G.ANIMATION_ATLAS['blind_chips'],
                 card.ability.extra.fake_blind.pos)
-
             main_end = {
                 {
                     n = G.UIT.C,
@@ -666,7 +680,6 @@ FishAndChips.Fish {
                 --print("Boss Bass chose " .. localize { type = 'name_text', set = "Blind", key = chosen_blind.key })
                 card.ability.extra.fake_blind = chosen_blind
                 if card.ability.extra.fake_blind then
-                    Blind:set_blind(card.ability.extra.fake_blind)
                     return {
                         message = localize { type = 'name_text', set = "Blind", key = card.ability.extra.fake_blind.key } ..
                             "!",
