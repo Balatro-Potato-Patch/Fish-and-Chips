@@ -1,6 +1,6 @@
 FishAndChips.Fish({
 	key = "codamite",
-	weight = 10,
+	weight = 8,
 	environments = {
 		pier = 0.2,
 		backroom = 1,

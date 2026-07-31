@@ -1,6 +1,6 @@
 FishAndChips.Fish({
 	key = "mewtwostrikesback",
-	weight = 5,
+	weight = 2,
 	environments = {
 		styx = 0.3,
 		wormhole = 1,

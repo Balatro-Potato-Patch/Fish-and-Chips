@@ -19,8 +19,8 @@ FishAndChips.Fish({
 			vars = {
 				card.ability.extra.chips_add,
 				card.ability.extra.chips,
-				card.ability.extra.done and localize("ph_facyou_hayayaya_active")
-					or localize("ph_facyou_hayayaya_inactive"),
+				card.ability.extra.done and localize("ph_facyou_hayayaya_inactive")
+					or localize("ph_facyou_hayayaya_active"),
 			},
 		}
 	end,
@@ -44,8 +44,11 @@ FishAndChips.Fish({
 					else
 						destroy_card:start_dissolve()
 					end
-					card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_add
-					SMODS.calculate_effect({ message = localize("k_upgrade_ex") }, card)
+					SMODS.scale_card(card, {
+						ref_table = card.ability.extra,
+						ref_value = "chips",
+						scalar_value = "chips_add",
+					})
 				end,
 			})
 		end

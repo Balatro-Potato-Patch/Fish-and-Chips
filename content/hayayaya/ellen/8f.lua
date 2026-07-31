@@ -1,6 +1,6 @@
 FishAndChips.Fish({
 	key = "8f", -- 3 NEW
-	weight = 3,
+	weight = 1,
 	cost = -3,
 	environments = {
 		calm_pond = 1,

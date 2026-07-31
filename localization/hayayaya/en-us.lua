@@ -66,12 +66,61 @@ return {
 					"{C:chips}+#1#{} Chips for every card",
 					"discarded in the first",
 					"discard and {C:red}destroys{} them",
-					"{C:inactive}Currently{} {C:chips}+#2#{C:inactive} Chips",
+					"{C:inactive}(Currently{} {C:chips}+#2#{C:inactive} Chips)",
 					"{C:inactive}#3#",
 				},
 				flavor = {
 					"This fish somehow shoots bullet-like",
 					"things out of its mouth",
+				},
+			},
+			fish_fac_boot = {
+				name = "Boot",
+				text = {
+					"Gains {C:mult}+#1#{} Mult for",
+					"every {C:attention}discarded{} card",
+					"{C:inactive}(Currently{} {C:mult}+#2#{C:inactive} Mult)",
+				},
+				flavor = {
+					"What sailor left this here?",
+				},
+			},
+			fish_fac_cat1 = {
+				name = "Crazed Fish Cat",
+				text = {
+					"Gains {C:chips}+#1#{} Chips when",
+					"a card is scored",
+					"{C:inactive}Resets after scoring hand{}",
+					"{C:inactive}(Currently{} {C:chips}+#2#{C:inactive} Chips)",
+					"{C:inactive}(Evolves at #3#/#4#)",
+				},
+				flavor = {
+					"PLACEHOLDER",
+				},
+			},
+			fish_fac_cat2 = {
+				name = "Crazed Whale Cat",
+				text = {
+					"Gains {C:chips}+#1#{} Chips when",
+					"a card is scored",
+					"{C:inactive}Resets at end of round{}",
+					"{C:inactive}(Currently{} {C:chips}+#2#{C:inactive} Chips)",
+					"{C:inactive}(Evolves at #3#/#4#)",
+				},
+				flavor = {
+					"PLACEHOLDER",
+				},
+			},
+			fish_fac_cat3 = {
+				name = "Manic Island Cat",
+				text = {
+					"Gains {X:chips,C:white}X#1#{} Chips when",
+					"a card is scored",
+					"{C:inactive}Resets at end of ante{}",
+					"{C:inactive}(Currently{} {X:chips,C:white}X#2#{C:inactive} Chips)",
+				},
+				flavor = {
+					"PLACEHOLDER",
 				},
 			},
 		},
@@ -80,6 +129,7 @@ return {
 		dictionary = {
 			ph_facyou_hayayaya_active = "Active!",
 			ph_facyou_hayayaya_inactive = "Inactive!",
+			ph_facyou_hayayaya_evolved = "Evolved!",
 		},
 	},
 }
