@@ -109,8 +109,10 @@ FishAndChips.Fish {
 --Webfishing
 FishAndChips.Fish {
     key = "webfishing",
-    --atlas
+    atlas = "equi_fish",
     pos = { x = 2, y = 0 },
+    display_size = { w = 65, h = 72 },
+    pixel_size = { w = 65, h = 72 },
     weight = 15,
     cost = 5,
     blueprint_compat = true,

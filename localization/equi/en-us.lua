@@ -32,7 +32,7 @@ return {
                     "to always be selected",
                 },
                 flavor = {
-                    "Ew! How do you even",
+                    "Ew! How did you even",
                     "fish that up??"
                 }
             },
