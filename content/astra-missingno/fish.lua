@@ -608,6 +608,7 @@ FishAndChips.Fish {
     ppu_artist = { "MissingNo" },
     attributes = { "usable", "hand_level" },
     blueprint_compat = false,
+    treasure = true,
     config = {
         extra = {
             levels = 2,
@@ -740,7 +741,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         local stg = card.ability.extra
 
-        if context.fac_fish_caught and context.perfect then
+        if context.fac_end_fishing and context.perfect then
             G.E_MANAGER:add_event(Event({
                 func = function()
                     local edition = SMODS.poll_edition({ guaranteed = true })
@@ -750,13 +751,8 @@ FishAndChips.Fish {
                         message = localize { type = 'variable', key = 'a_fac_am_blank_left', vars = { stg.times } },
                         sound = 'fac_am_le_fishe',
                     }, card)
-
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            context.fac_fish_caught:set_edition(edition)
-                            return true;
-                        end
-                    }))
+                    
+                    context.fish_obj:set_edition(edition)
 
                     if stg.times <= 0 then
                         G.E_MANAGER:add_event(Event({
@@ -770,10 +766,15 @@ FishAndChips.Fish {
                             end
                         }))
                         G.E_MANAGER:add_event(Event({
-                            delay = 0.6,
-                            trigger = 'after',
                             func = function()
-                                SMODS.destroy_cards(card, { pinch_anim = true })
+                                G.E_MANAGER:add_event(Event({
+                                    delay = 0.6,
+                                    trigger = 'after',
+                                    func = function()
+                                        SMODS.destroy_cards(card, { pinch_anim = true })
+                                        return true;
+                                    end
+                                }))
                                 return true;
                             end
                         }))
