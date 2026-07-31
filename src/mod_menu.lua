@@ -768,12 +768,15 @@ function FishAndChips.Compendium.dev_card(dev)
             {n = G.UIT.C, config = { align = "cm", padding = 0.2 }, nodes = {}},
         }}
         local text = dev.loc and G.localization.descriptions.PotatoPatch[dev.loc].text_parsed or nil
+        local loc_vars = dev.loc_vars and dev:loc_vars() or {}
+        loc_vars.text_colour = loc_vars.text_colour or G.C.UI.TEXT_LIGHT
+        loc_vars.font = loc_vars.font or SMODS.Fonts.fac_collection
         if text then
             if not text[1][1][1] then text = {text} end
             for _, box in ipairs(text) do
                 local node = {n=G.UIT.R, config = {colour = G.C.L_BLACK, r=0.1, padding = 0.15, align = 'cm', shadow = true}, nodes = {}}
                 for _, v in ipairs(box) do
-                    table.insert(node.nodes, {n=G.UIT.R, config={align='cm'}, nodes = SMODS.localize_box(v, {text_colour = G.C.UI.TEXT_LIGHT, font = SMODS.Fonts.fac_collection})})
+                    table.insert(node.nodes, {n=G.UIT.R, config={align='cm'}, nodes = SMODS.localize_box(v, loc_vars)})
                 end
                 info_nodes.nodes[1].nodes[#info_nodes.nodes[1].nodes + 1] = {n=G.UIT.R, config = {align = 'cm'}, nodes = {{n=G.UIT.C, config = {align = 'cm', colour = G.C.WHITE, r=0.1, padding = 0.025}, nodes = {node}}}}
             end

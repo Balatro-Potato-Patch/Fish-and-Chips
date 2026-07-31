@@ -15,6 +15,7 @@ FishAndChips.mod_badge = {
 FishAndChips.C = {
 	FISH = HEX("4db1f6"),
 	ROD = HEX("F64D4D"),
+	ENVIRONMENT = HEX("1D5228"),
 	SAND_DOLLAR = HEX("ff8a8a"),
     FAC_PRIMARY = HEX("5987c3"),
     FAC_SECONDARY = HEX("9ebcdf"),
@@ -45,6 +46,10 @@ FishAndChips.suits_gradient = SMODS.Gradient {
 }
 G.C.FAC_SUIT = FishAndChips.suits_gradient
 G.ARGS.LOC_COLOURS["fac_suits"] = G.C.FAC_SUIT
+G.ARGS.LOC_COLOURS['fac_sand_dollars'] = FishAndChips.C.SAND_DOLLAR
+G.ARGS.LOC_COLOURS['fac_fish'] = FishAndChips.C.FISH
+G.ARGS.LOC_COLOURS['fac_rod'] = FishAndChips.C.ROD
+G.ARGS.LOC_COLOURS['fac_environment'] = FishAndChips.C.ENVIRONMENT
 
 SMODS.Atlas({
 	key = "soup",
