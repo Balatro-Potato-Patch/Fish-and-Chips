@@ -36,7 +36,7 @@ local game_update_ref = Game.update
 function Game:update(dt)
     game_update_ref(self, dt)
     if G.STATE == G.STATES.FAC_FISHING then
-        if G.FISHING_STATE == G.FISHING_STATES.HOOKING then
+        if G.FISHING_STATE == G.FISHING_STATES.HOOKING and G.FAC_FISH_GAME.decay_unlocked then
             G.GAME.blamperer_hook_time = G.GAME.blamperer_hook_time + dt
         end
     end
