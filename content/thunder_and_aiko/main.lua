@@ -273,9 +273,7 @@ FishAndChips.Fish({
 			local prefix = ""
 			if card.ability.extra.crashed or pseudorandom("fac_nft_secret", 1, 8) == 1 then
 				local val = pseudorandom_element({
-					card.ability.extra.crashed
-							and calc_nft_value_change(card)
-						or -69420,
+					card.ability.extra.crashed and calc_nft_value_change(card) or -69420,
 					21,
 					0,
 					42,
@@ -294,9 +292,13 @@ FishAndChips.Fish({
 				else
 					prefix = "-$"
 				end
-				-- idk how to use SMODS.scale_card here properly
-				card.ability.extra_value = card.ability.extra_value
-					+ change
+				local scalar_t = { change }
+				SMODS.scale_card(card, {
+					ref_table = card.ability,
+					ref_value = "extra_value",
+					scalar_table = scalar_t,
+					scalar_value = 1,
+				})
 			end
 			card:set_cost()
 			return {
@@ -534,6 +536,7 @@ FishAndChips.Fish({
 	environments = {
 		garden = 1,
 	},
+	display_size = { w = 71 / 4, h = 95 / 4 },
 	config = { extra = { chips = 1, chips_inc = 1 } },
 	attributes = { "scaling", "chips" },
 	ppu_coder = { "thunderedge" },
@@ -546,5 +549,27 @@ FishAndChips.Fish({
 			},
 		}
 	end,
-	calculate = function(self, card, context) end,
+	calculate = function(self, card, context)
+		if context.before then
+			local scalar_t = { #context.full_hand }
+			SMODS.scale_card(card, {
+				ref_table = card.ability.extra,
+				ref_value = "chips",
+				scalar_table = scalar_t,
+				scalar_value = 1,
+			})
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					card.T.w = math.min(card.T.w + G.CARD_W * #context.full_hand / 100, G.CARD_W * 1.6)
+					card.T.h = math.min(card.T.h + G.CARD_H * #context.full_hand / 100, G.CARD_H * 1.6)
+					return true
+				end
+			}))
+		end
+		if context.joker_main then
+			return {
+				chips = card.ability.extra.chips,
+			}
+		end
+	end,
 })
