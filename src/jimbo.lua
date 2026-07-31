@@ -22,7 +22,7 @@ for i = 1, 5 do
 		py = 199,
 		atlas_table = "ANIMATION_ATLAS",
 		frames = ({4, 2, 4, 4, 3})[i],
-		FPS = ({2, 5, 1, 7, 6})[i]
+		fps = ({2, 5, 1, 7, 6})[i]
 	}
 end
 
