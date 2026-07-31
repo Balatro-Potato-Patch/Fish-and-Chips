@@ -569,3 +569,122 @@ function FishAndChips.crimsonseraphim.calculate_forged_joker(card, context)
         return forge_effects[card.ability.crimsonseraphim_forged](card, context)
     end
 end
+
+FishAndChips.Fish {
+	key = "ghost_chaosfish",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "passive" },
+	config = {
+		extra = {
+            odds = 2
+        }
+	},
+	environments = {
+		garden = 5
+	},
+    target = "",
+    force_environment = function(card)
+        if pseudorandom("fac_ghost_chaosfish") < 0.2 then
+			return pseudorandom_element(FishAndChips.Environments, "fac_ghost_chaosfish_poll", {
+				in_pool = function(v, _args)
+					return v ~= FishAndChips.CurrentFishingPool
+				end
+			}).key
+		end
+    end,
+    on_catch = function()
+        G.E_MANAGER:add_event(Event{
+            trigger = "after",
+            blocking = false,
+            func = function()
+                if not G.FAC_FISH_GAME.fishing_active then
+                    print("wa")
+                    G.E_MANAGER:add_event(Event{
+                        trigger = "after",
+                        blocking = false,
+                        delay = 1,
+                        func = function()
+                            G.FUNCS.fac_go_fish()
+                            return true
+                        end
+                    })
+                    return true
+                end
+            end
+        })  
+    end
+    -- calculate = function(self, card, context)
+    --     if context.fac_end_fishing then
+    --         if not context.perfect and G.GAME.fac_active_bait == "fish_fac_ghost_chaosfish" then
+    --             if not G.GHOST_CHAOSFISH_SLICED then
+    --                 G.GHOST_CHAOSFISH_SLICED = true
+    --                 SMODS.destroy_cards(FishAndChips.crimsonseraphim.find_fish("fish_fac_ghost_chaosfish")[1], nil, true)
+    --                 G.E_MANAGER:add_event(Event{func = function()
+    --                     G.GHOST_CHAOSFISH_SLICED = nil
+    --                     return true
+    --                 end, trigger = "after"})
+    --             end
+    --         end
+    --         local e
+    --         if #G.GAME.fac_bait_inventory == 0 or (G.GAME.fac_bait_inventory[1] and G.GAME.fac_bait_inventory[1].key == "fish_fac_ghost_chaosfish") then
+    --             e = true
+    --         end
+    --         G.E_MANAGER:add_event(Event{func = function()
+    --             FishAndChips.clean_up_bait_inventory()
+    --             if e then
+    --                 G.FUNCS.fac_set_active_bait({ config = G.GAME.fac_bait_inventory[1] })
+    --             end
+    --             return true
+    --         end})
+    --     end
+    -- end,
+    -- on_caught = function()
+    --     G.E_MANAGER:add_event(Event{func = function()
+    --         FishAndChips.clean_up_bait_inventory()
+    --         return true
+    --     end})
+    -- end
+}
+
+local poll_fish_ref = FishAndChips.poll_fish
+function FishAndChips.poll_fish(_fevn)
+    for i, v in pairs(SMODS.find_card("fish_fac_ghost_chaosfish")) do
+        _fenv = _fenv or v.config.center:force_environment(v)
+    end
+    return poll_fish_ref(_fevn)
+end
+
+local card_eval_status_text_ref = card_eval_status_text
+function card_eval_status_text(card, ...)
+    if card then
+        card_eval_status_text_ref(card, ...)
+    end
+end
+
+-- local bait_inv_ref = FishAndChips.clean_up_bait_inventory
+-- function FishAndChips.clean_up_bait_inventory()
+--     bait_inv_ref()
+--     if not G.GAME.fac_bait_inventory[1] or not G.GAME.fac_bait_inventory[1].amt or G.GAME.fac_bait_inventory[1].key == "fish_fac_ghost_chaosfish" then
+--         G.GAME.fac_bait_inventory = {}
+--     end
+--     if next(FishAndChips.crimsonseraphim.find_fish("fish_fac_ghost_chaosfish")) and #G.GAME.fac_bait_inventory == 0 then
+--         local tbl = SMODS.shallow_copy(G.P_CENTERS.fish_fac_ghost_chaosfish)
+--         tbl.amt = #FishAndChips.crimsonseraphim.find_fish("fish_fac_ghost_chaosfish")
+--         G.GAME.fac_bait_inventory[#G.GAME.fac_bait_inventory+1] = tbl
+--     end
+-- end
+
+-- function FishAndChips.crimsonseraphim.find_fish(key)
+--     local c = SMODS.find_card(key)
+--     local cards = {}
+--     for i, v in pairs(c) do
+--         if v.area == G.fac_fish_area then
+--             cards[#cards+1] = v
+--         end
+--     end
+--     return cards
+-- end

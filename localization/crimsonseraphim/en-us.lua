@@ -81,7 +81,29 @@ return {
                     "It looks like its {C:red}shifting{}",
                     "under the light..."
                 }
-            }
+            },
+
+            fish_fac_ghost_chaosfish = {
+                name = "Phantom Chaosfish",
+                text = {
+                    {
+                        "When this {C:attention}Fish{} is caught",
+                        "forcibly start fishing again",
+                        "regardless of current bait",
+                        "{C:ianctive}(Must have Room)"
+                    },
+                    {
+                        "You have a chance to",
+                        "catch {C:attention}Fish{} from any",
+                        "environment"
+                    }
+                },
+                flavor = {
+                    "A long lost cousin of the",
+                    "Ghost Catfish. Probably not",
+                    "a good idea to eat."
+                }
+            },
         },
         Other = {
             fac_crimsonseraphim_transmute = {
