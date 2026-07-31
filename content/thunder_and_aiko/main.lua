@@ -108,7 +108,7 @@ local function calc_moai_mult(card)
 	local target_day_2 = os.date("*t", os.time({ year = current_year + 1, month = 4, day = 5 })).yday
 	local diff = math.min(math.abs(current_day - target_day_1), math.abs(current_day - target_day_2))
 	local max_diff = 183
-	local final_mult = min_mult + (diff / max_diff) * (max_mult - min_mult)
+	local final_mult = min_mult + ((max_diff - diff) / max_diff) * (max_mult - min_mult)
 	return math.floor(final_mult * 100) / 100
 end
 
