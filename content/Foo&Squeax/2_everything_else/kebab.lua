@@ -169,6 +169,7 @@ end
 FishAndChips.Fish{
 	key = "fas_fish_kebab_top",
 	ppu_coder = {"Mack"},
+	--ppu_artist = {"https://en.wikipedia.org/wiki/Kebab"},
 	atlas = "fas_fish_kebab",
 	pos = {x = 1, y = 0},
 	environments = {
@@ -235,6 +236,7 @@ FishAndChips.Fish{
 		}
 	},
 	attributes = {"copying", "useable", "food"},
+	ppu_artist = {"squeax09"},
 	ppu_coder = {"Foo54"},
 	environments = {
 		soup = 1
