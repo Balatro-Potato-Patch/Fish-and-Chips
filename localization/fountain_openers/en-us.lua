@@ -22,6 +22,16 @@ return {
                     "neutron starfish at them"
                 }
             },
+            fish_fac_fo_goldfish = {
+                name = "Goldfish Crackers",
+                text = {
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} at end of round",
+                    "{C:fac_sand_dollars,f:fac_sand_dollars}-${C:fac_sand_dollars}#2#{} when entering the shop"
+                },
+                fac_flavor = {
+                    "The snack that smiles back!"
+                }
+            }
         },
         PotatoPatch = {
             PotatoPatchDev_fo_alexi = {

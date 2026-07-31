@@ -1,4 +1,4 @@
---[[FishAndChips.Fish {
+FishAndChips.Fish {
 	key = "fo_goldfish",
 	atlas = "fish",
 	pos = { x = 3, y = 0 },
@@ -7,31 +7,45 @@
 	ppu_artist = { "Grahkon" },
 	attributes = { "destroy_card", "hand_level", "usable" },
 	config = {
-        levels = 1,
+        extra = {
+            amt = 3,
+            dec = 1,
+        }
 	},
 	environments = {
 		wormhole = 1,
 	},
+    loc_vars = function(self, info_queue, card)
+		return { vars = {
+            card.ability.extra.amt,
+            card.ability.extra.dec,
+        }}
+	end,
 	calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-            if card.ability.extra.mult - card.ability.extra.mult_loss <= 0 then
+        if context.starting_shop then
+            if card.ability.extra.amt - card.ability.extra.dec <= 0 then
                 SMODS.destroy_cards(card, nil, nil, true)
                 return {
                     message = localize('k_eaten_ex'),
                     colour = G.C.RED
                 }
             else
-                card.ability.extra.mult = card.ability.extra.mult - card.ability.extra.dollar_loss
-                return {
-                    message = localize{ type = 'variable', key = 'a_mult_minus', vars = { card.ability.extra.mult_loss } },
-                    colour = FishAndChips.C.SAND_DOLLAR
-                }
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "amt",
+                    scalar_value = "dec",
+                    scalar_factor = -1,
+                    scaling_message = {
+                        message = "-$" .. card.ability.extra.dec,
+                        colour = FishAndChips.C.SAND_DOLLAR,
+                        font = "fac_sand_dollars",
+                    }
+                })
             end
         end
-        if context.joker_main then
-            return {
-                mult = card.ability.extra.mult
-            }
-        end
+
+        if context.modify_final_cashout then
+			return { sand_dollars = card.ability.extra.amt }
+		end
     end,
-}]]
+}
