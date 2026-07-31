@@ -83,6 +83,23 @@ FishAndChips.Fish = setmetatable({}, {
 ---@field fishing_profile FishAndChips.ModifiableFishingProfile values fish may change for the upcoming catch
 ---@field hooked_fish FishAndChips.Fish hooked fish center object; use `.key` to identify its species
 
+---@class FishAndChips.FishCaughtContext
+---@field fac_fish_caught Card actual Card object created for the caught fish
+---@field fish string center key of the caught fish
+---@field treasure boolean whether this Card was caught as the bonus treasure fish
+---@field perfect boolean whether the main catch was perfect
+
+---@class FishAndChips.EndFishingContext
+---@field fac_end_fishing true identifies the end-of-fishing context
+---@field failed boolean whether the fish escaped
+---@field fish string? center key of the caught fish; nil when the catch failed
+---@field treasure boolean whether treasure was collected
+---@field treasure_available boolean whether treasure appeared during the fishing attempt
+---@field treasure_progress number treasure progress when the fishing attempt ended
+---@field missed_treasure boolean whether the fish was caught while available treasure was not collected
+---@field attempted_treasure boolean whether uncollected treasure received any progress
+---@field perfect boolean whether the catch succeeded without losing catch progress
+
 ---@class FishAndChips.Rod: SMODS.Center
 ---@field config? table|{fishing: FishingConfig} how this rod modifies the fishing minigame
 ---@field force_environment? fun(self: FishAndChips.Rod, card: Card): ValidPools|nil change the environment your considered to be fishing in
