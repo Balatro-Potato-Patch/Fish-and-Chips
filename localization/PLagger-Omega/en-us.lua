@@ -24,6 +24,19 @@ return {
                     'impact the trout',
                     'population'
                 }
+            },
+            fish_fac_plaggeromega_xanaxsargo = {
+                name = 'Xanax Sargo',
+                text = {
+                    'Earn {C:money}$#1#{} and {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{}',
+                    'at end of round'
+                },
+                flavour = {
+                    'Consuming 1 dose',
+                    'of this fish',
+                    'lowers your cortisol',
+                    'levels for a round!'
+                }
             }
         }
     },
