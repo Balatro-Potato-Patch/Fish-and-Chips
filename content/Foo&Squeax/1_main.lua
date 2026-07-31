@@ -4,7 +4,12 @@ FishAndChips.FooSqueax = {
 		active = false,
 		state = 0,
 		timer = nil,
-		fih = nil
+		fih = nil,
+		scale = function(card, mod)
+			card.T.w = card.T.w / card.ability.extra.xmult
+			card.ability.extra.xmult = card.ability.extra.xmult + mod
+			card.T.w = card.T.w * card.ability.extra.xmult
+		end
 	}
 }
 

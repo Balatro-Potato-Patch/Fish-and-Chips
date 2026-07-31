@@ -40,26 +40,28 @@ FishAndChips.Fish{
 		return {vars = {card.ability.extra.xmult, card.ability.extra.call, pseudorandom_element({"Nyon!", "Ueueleuleuleue"})}}
 	end,
 	update = function (self, card, dt)
-		if card.area and not card.area.config.collection then
-			if card.ability.immutable.slow then
-				local limit = 300 * G.real_dt
-				local px, py = G.CONTROLLER.cursor_position.x, G.CONTROLLER.cursor_position.y
-				local x, y = love.mouse.getPosition()
-				local dx, dy = x - px, y - py
-				if math.abs(dx) > limit then
-					dx = math.max(-limit, math.min(limit, dx))
-					love.mouse.setX(px + dx)
-				end
-				if math.abs(dy) > limit then
-					dy = math.max(-limit, math.min(limit, dy))
-					love.mouse.setY(py + dy)
-				end
-			else
-				card.ability.immutable.timer = card.ability.immutable.timer - G.real_dt
-				if card.ability.immutable.timer < 0 then
-					card.ability.immutable.timer = 100000
-					card_eval_status_text(card, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_nyom")})
-					SMODS.destroy_cards(card)
+		if not G.SETTINGS.paused then
+			if card.area and not card.area.config.collection then
+				if card.ability.immutable.slow then
+					local limit = 300 * G.real_dt
+					local px, py = G.CONTROLLER.cursor_position.x, G.CONTROLLER.cursor_position.y
+					local x, y = love.mouse.getPosition()
+					local dx, dy = x - px, y - py
+					if math.abs(dx) > limit then
+						dx = math.max(-limit, math.min(limit, dx))
+						love.mouse.setX(px + dx)
+					end
+					if math.abs(dy) > limit then
+						dy = math.max(-limit, math.min(limit, dy))
+						love.mouse.setY(py + dy)
+					end
+				else
+					card.ability.immutable.timer = card.ability.immutable.timer - G.real_dt
+					if card.ability.immutable.timer < 0 then
+						card.ability.immutable.timer = 100000
+						card_eval_status_text(card, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_nyom")})
+						SMODS.destroy_cards(card)
+					end
 				end
 			end
 		end

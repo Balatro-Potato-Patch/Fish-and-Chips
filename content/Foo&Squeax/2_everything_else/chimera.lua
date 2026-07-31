@@ -1,6 +1,15 @@
+
+SMODS.Atlas{
+	key = "fas_chirema_placeholder",
+	path = FishAndChips.FooSqueax.file_path .. "credits/teto.png",
+	px = 71,
+	py = 95,
+}
+
+
 FishAndChips.Fish{
 	key = "fas_chimera",
-	atlas = "fas_credits_foo",
+	atlas = "fas_chirema_placeholder",
 	config = {
 		extra = {
 			scaling = 0.401,
