@@ -74,7 +74,9 @@ function ease_sand_dollars(mod, instant)
         end
         --Ease from current chips to the new number of chips
         G.GAME.fac_sand_dollars = G.GAME.fac_sand_dollars + mod
-        G.PROFILES[G.SETTINGS.profile].fac_fishing.career_sand_dollars = G.PROFILES[G.SETTINGS.profile].fac_fishing.career_sand_dollars + mod
+        if mod > 0 then
+            G.PROFILES[G.SETTINGS.profile].fac_fishing.career_sand_dollars = G.PROFILES[G.SETTINGS.profile].fac_fishing.career_sand_dollars + mod
+        end
         check_for_unlock({type = 'fac_sand_dollars'})
         dollar_UI.config.object:update()
         G.HUD:recalculate()
