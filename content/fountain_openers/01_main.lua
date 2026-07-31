@@ -9,7 +9,7 @@ local alexi_text_colors = {
 }
 local alexi_click_count = 5
 
-local function dark_flip(card)
+function FountainOpeners.dark_flip(card)
     local pos = card.children.center.sprite_pos
     card.children.center:set_sprite_pos({x=pos.x,y=1-pos.y})
     local pos2 = card.children.ppu_floating_sprite.sprite_pos
