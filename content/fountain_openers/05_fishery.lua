@@ -3,7 +3,7 @@ for _, file in pairs(files) do
     -- load Every Fucking Flowery Voiceline
     if file.type == "file" then
         SMODS.Sound {
-            key = "fac_fo_" .. file.name:sub(1, #file.name - 4),
+            key = "fo_" .. file.name:sub(1, #file.name - 4),
             path = "fountain_openers/flowery/" .. file.name
         }
     end
