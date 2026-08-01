@@ -390,7 +390,7 @@ FishAndChips.Fish {
     attributes = { "economy", "usable", "chance" },
 	config = {
 		extra = {
-			odds = 10, eor_sand = 10, use_sand = 10, use_dollars = 20
+			odds = 10, eor_sand = 20, use_sand = 10, use_dollars = 20
 		}
 	},
     loc_vars = function(self, info_queue, card)
@@ -528,7 +528,7 @@ FishAndChips.Fish {
     requires_hand = true,
 	config = {
 		extra = {
-			dollars = 3,
+			dollars = 5,
             bonus_value = 5,
 		}
 	},
