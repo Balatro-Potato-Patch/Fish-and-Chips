@@ -4,7 +4,8 @@ return {
 			fish_fac_fas_fish_kebab = {
 				name = "Fish Kebab",
 				flavour = {
-					"flavourful text"
+					"Great for the grill",
+					"AND the krill."
 				},
 				text = {
 					{
@@ -108,7 +109,14 @@ return {
 			fish_fac_fas_super_bo_noise = {
 				name = "Super Bo Noise",
 				flavour = {
-					"ts flavours me"
+					"Dear Bo N.,",
+					"Stop pretending to be an endangered fish.",
+					"It's not funny, we get worried everytime.",
+					"Stop wasting our time, ",
+					"- Animal Rescue Services"
+					--[[ This is ripped from one of the letters you can get ingame, 
+					specifically for staying out of water for a while in Fish Form lol
+					- gabby ]]
 				},
 				text = {
 					"Each played card",
@@ -131,7 +139,11 @@ return {
 			fish_fac_fas_kine = {
 				name = "Kine",
 				flavour = {
-					"text of the flavourful variety"
+					"A funny guy who looks",
+					"just like an ocean sunfish.",
+					"He'll always stick",
+					"by everyone's side."
+					-- ripped from Kirby's Star Stacker website [ https://www.nintendo.co.jp/n02/dmg/akcj/chr.html ]
 				},
 				text = {
 					{
