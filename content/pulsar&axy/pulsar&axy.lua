@@ -120,9 +120,6 @@ FishAndChips.Fish {
 		styx = 0.3,
 		city_river = 0.3
 	},
-	loc_txt = {
-		"potato"
-	},
 	blueprint_compat = false,
 	config = {
 		extra = {
@@ -133,12 +130,23 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
 		local opposite = 1 / (card.ability.extra.perma_xblind_size or 1)
+
+		local dupeCount = 0
+		for _, fish in ipairs(G.fac_fish_area.cards) do
+			if fish.config.center.key == "fish_fac_onering" then
+				dupeCount = dupeCount + 1
+			end
+		end
+		local dupeCount = dupeCount > 7 and 7 or dupeCount -- stop at seven because six sevennn
+
 		return { vars = {
 			card.ability.extra.blindsize_increase,
 			card.ability.extra.perma_xblind_size,
 			opposite,
 			G.GAME.starting_params.ante_scaling
-		} }
+		},
+		key = (dupeCount > 0 and self.key .. "_" .. dupeCount) or self.key .. "_1"
+	}
 	end,
     add_to_deck = function(self, card, from_debuff)
         if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
