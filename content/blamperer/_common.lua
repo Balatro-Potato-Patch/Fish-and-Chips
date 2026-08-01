@@ -25,7 +25,7 @@ PotatoPatchUtils.Developer {
 
 -- Hoosks
 local rgg_ref = FishAndChips.mod.reset_game_globals
-function FishAndChips.mod.reset_game_globals (run_start)
+function FishAndChips.mod.reset_game_globals(run_start)
     rgg_ref(run_start)
     if run_start then
         G.GAME.blamperer_hook_time = 0.0
@@ -42,7 +42,6 @@ function Game:update(dt)
     end
 end
 
-
 -- tf (this fish) templating me
 -- FishAndChips.Fish {
 --     key = "blamperer_",
@@ -51,11 +50,11 @@ end
 --     ppu_coder = { "blamperer" },
 --     ppu_artist = { "blamperer" },
 --     attributes = {
-        
+
 --     },
 --     config = {
 --         extra = {
-            
+
 --         }
 --     },
 --     loc_vars = function(self, info_queue, card)
@@ -65,9 +64,9 @@ end
 --     end,
 --     weight = ,
 --     environments = {
-        
+
 --     },
 --     calculate = function(self, card, context)
-        
+
 --     end
 -- }
