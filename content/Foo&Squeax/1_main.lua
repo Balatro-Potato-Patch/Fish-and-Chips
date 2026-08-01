@@ -49,13 +49,22 @@ PotatoPatchUtils.Developer{
 	loc = true
 }
 
+for i=1, 11 do
+	SMODS.Sound({key = 'fac_fas_gabby' .. i, path = FishAndChips.FooSqueax.file_path .. "gabby" .. i .. ".ogg",})
+end
+
 PotatoPatchUtils.Developer{
 	name = "squeax09",
 	atlas = "fac_fas_credits_sqx",
 	pixel_size = {w = 66, h = 80},
 	colour = HEX("c551bd"),
 	fac_partner = "Foo54",
-	loc = true
+	loc = true,
+	click = function(self)
+		local pickables = pseudorandom('ts gabby', 1, 11)
+		play_sound("fac_fas_gabby" .. pickables, 1, 0.8)
+		self:juice_up()
+	end
 }
 
 FishAndChips.mod.optional_features = FishAndChips.mod.optional_features or {}
