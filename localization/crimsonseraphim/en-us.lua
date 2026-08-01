@@ -61,6 +61,11 @@ return {
                     {
                         "All other {C:attention}Fish{} contribute",
                         "to poker hand calculation"
+                    },
+                    {
+                        "{C:green}#1# in #2#{} chance to turn into",
+                        "{C:attention}#3#{}",
+                        "at the end of round."
                     }
                 },
                 flavor = {
@@ -76,6 +81,11 @@ return {
                         "{C:green}#1# in #2#{} chance to",
                         "have a random Seal"
                     },
+                    {
+                        "{C:green}#3# in #4#{} chance to turn into",
+                        "{C:attention}#5#{}",
+                        "at the end of round."
+                    }
                 },
                 flavor = {
                     "It looks like its {C:red}shifting{}",

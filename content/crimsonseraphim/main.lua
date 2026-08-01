@@ -101,6 +101,10 @@ SMODS.Sound {
 
 function Card:transmute(seed, center)
     local result = center
+    local s = {
+        w = self.T.w / self.original_T.w,
+        h = self.T.h / self.original_T.h
+    }
     if not center then
         local valid = {}
         for attribute, _ in pairs(self.config.center.attributes or {}) do
@@ -124,6 +128,8 @@ function Card:transmute(seed, center)
                 self:set_ability(self.children.center.aeonfish_transmute.center)
                 self.children.center.aeonfish_transmute = nil
                 self.states.hover.can = true
+                self.T.w = self.T.w * s.w
+                self.T.h = self.T.h * s.h
                 return true
             end
         end
@@ -255,7 +261,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "jade_crystalfish",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 5, y = 0 },
 	weight = 7,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
@@ -272,13 +278,14 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds_seal, "fac_crimsonseraphim_jade_crystalfish_seal")
-		return { vars = { num, dem } }
+        local num2, dem2 = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_crimsonseraphim_jade_crystalfish")
+		return { vars = { num, dem, num2, dem2, localize{type = "name_text", set = "fac_Fish", key = "fish_fac_ruby_crystalfish"} } }
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(
             card, "fac_crimsonseraphim_jade_crystalfish", 1, card.ability.extra.odds
         ) then
-            card:transmute(G.P_CENTERS.fish_fac_ruby_crystalfish)
+            card:transmute(nil, G.P_CENTERS.fish_fac_ruby_crystalfish)
         end
         if context.fac_fish_caught and SMODS.pseudorandom_probability(
             card, "fac_crimsonseraphim_jade_crystalfish_seal", 1, card.ability.extra.odds_seal
@@ -467,7 +474,7 @@ end
 FishAndChips.Fish {
 	key = "ruby_crystalfish",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 6, y = 0 },
 	weight = 8,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
@@ -482,13 +489,14 @@ FishAndChips.Fish {
         aquifer = 8
 	},
 	loc_vars = function(self, info_queue, card)
-		
+		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_crimsonseraphim_ruby_crystalfish")
+        return {vars = {num, dem, localize{type = "name_text", set = "fac_Fish", key = "fish_fac_jade_crystalfish"}}}
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(
             card, "fac_crimsonseraphim_ruby_crystalfish", 1, card.ability.extra.odds
         ) then
-            card:transmute(G.P_CENTERS.fish_fac_jade_crystalfish)
+            card:transmute(nil, G.P_CENTERS.fish_fac_jade_crystalfish)
         end
         if context.fac_fish_caught then
             SMODS.change_base(context.fac_fish_caught, 
@@ -903,7 +911,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "another_bucket",
 	atlas = "bucket",
-	pos = { x = 2, y = 1 },
+	pos = { x = 1, y = 1 },
 	weight = 5, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "squeax09" },
