@@ -20,6 +20,7 @@ FishAndChips.Fish({
 	weight = 4,
 	environments = {
 		styx = 1,
+		aquifer = 1,
 	},
 	can_use = function(self, card)
 		return not card.ability.extra.primed

@@ -51,7 +51,7 @@ return {
 				name = "Soul Cannonfish",
 				text = {
 					"Prevents death",
-					"Must destroy {C:attention}#1#{} random Fish",
+					"Must {C:red}destroy{} {C:attention}#1#{} random Fish",
 					"and {C:attention}#1#{} Bucket Slots to trigger",
 				},
 			},

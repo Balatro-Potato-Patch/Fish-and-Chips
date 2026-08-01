@@ -22,9 +22,10 @@ FishAndChips.Fish({
 			vars = { self.config.extra.history_size },
 		}
 	end,
-	weight = 10,
+	weight = 7,
 	environments = {
-		pier = 4,
+		backroom = 2,
+		city_river = 1,
 	},
 	calculate = function(self, card, context)
 		if
