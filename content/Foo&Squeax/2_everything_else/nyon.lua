@@ -52,6 +52,7 @@ FishAndChips.Fish{
 		return {vars = {card.ability.extra.xmult, card.ability.extra.call, pseudorandom_element({"Nyon!", "Ueueleuleuleue"}), card.ability.immutable.timer}}
 	end,
 	update = function (self, card, dt)
+		if card.REMOVED then return end
 		if not G.SETTINGS.paused then
 			if card.area and not card.area.config.collection then
 				if card.ability.immutable.slow then
@@ -192,6 +193,7 @@ function Card:remove()
 ---@diagnostic disable-next-line: undefined-field
 	if self.config.center.key == "fish_fac_fas_kawkaw" and not self.dont_nyon then
 		if self.area and self.area.config.collection then return card_remove_ref(self) end
+		self.REMOVED = true
 		play_sound("fac_fas_nyon!")
 		self.children.center:set_sprite_pos{x = 4, y = 1}
 		delay(3)
