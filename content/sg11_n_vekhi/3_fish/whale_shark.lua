@@ -18,9 +18,10 @@ FishAndChips.Fish({
 			xmult_gain = 0.1,
 		},
 	},
-	weight = 10,
+	weight = 2,
 	environments = {
-		pier = 4,
+		pier = 8,
+		styx = 1,
 	},
 	display_size = {
 		w = 71 * 1.75,

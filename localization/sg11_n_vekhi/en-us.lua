@@ -72,6 +72,9 @@ return {
 					"for each card swallowed",
 					"{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult){}",
 				},
+				flavour = {
+					"BIG. CHUNGUS.",
+				},
 			},
 		},
 		PotatoPatch = {
