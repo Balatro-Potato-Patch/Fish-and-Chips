@@ -23,9 +23,10 @@ FishAndChips.Fish{
 	key = "fas_kawkaw",
 	weight = 5,
 	environments = {
-		calm_pond = 1,
+		calm_pond = 1, -- WHY is it not garden above it's liek the field of flowersssssss </3
 		garden = 0.75
 	},
+	ppu_artist = {"squeax09"},
 	ppu_coder = {"Foo54"},
 	config = {
 		extra = {
