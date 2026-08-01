@@ -29,7 +29,12 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         if context.fac_end_fishing then
             local reward = math.min(card.ability.immutable.maximum, math.floor(G.GAME.blamperer_hook_time / card.ability.extra.seconds))
-            G.GAME.blamperer_hook_time = 0
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.blamperer_hook_time = 0
+                    return true
+                end
+            }))
             if reward > 0 then
                 return { sand_dollars = reward }
             end
