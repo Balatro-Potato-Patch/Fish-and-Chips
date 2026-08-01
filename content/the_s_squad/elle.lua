@@ -58,6 +58,45 @@ FishAndChips.Fish {
 	end
 }
 
+local function create_guppy_uibox(key)
+	local fish = SMODS.create_card({key = key})
+	fish:juice_up()
+	FishAndChips.TheShitSquad.guppy_fish = fish
+	return UIBox{definition={n=G.UIT.ROOT, config={colour=G.C.CLEAR}, nodes = {
+		{n = G.UIT.O, config = {object=fish}}
+	}},config={major = G.FISHING.fishing_bait_inventory, align = "cr", offset = { x = .4, y = -G.CARD_H/2-.45 }}}
+end
+
+FishAndChips.Fish {
+	key = "tss_guppy",
+	atlas = "tss_ellefish",
+	pos = { x = 0, y = 0 },
+	weight = 5,
+	ppu_coder = { "slimestuff" },
+	ppu_artist = { "slimestuff" },
+	attributes = { "passive" },
+	environments = {
+		wormhole = 5,
+		backroom = 4
+	},
+	loc_vars = function(self, info_queue, card)
+	end,
+	calculate = function(self, card, context)
+		if context.fac_fish_hooked and not FishAndChips.TheShitSquad.guppy_ui then
+			FishAndChips.TheShitSquad.guppy_ui = create_guppy_uibox(context.fac_fish_hooked)
+		end
+		if context.fac_end_fishing and FishAndChips.TheShitSquad.guppy_ui then
+			FishAndChips.TheShitSquad.guppy_fish:juice_up()
+			FishAndChips.TheShitSquad.guppy_fish:start_dissolve()
+			--FishAndChips.TheShitSquad.guppy_fish:start_dissolve()
+			G.E_MANAGER:add_event(Event({func = function()
+				FishAndChips.TheShitSquad.guppy_ui:remove()
+				FishAndChips.TheShitSquad.guppy_ui = nil
+			return true end}))
+		end
+	end
+}
+
 FishAndChips.Fish {
 	key = "tss_plecoholder",
 	atlas = "tss_ellefish",

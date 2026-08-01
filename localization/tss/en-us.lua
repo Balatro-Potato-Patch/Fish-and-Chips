@@ -58,6 +58,16 @@ return {
 					"way around The Mall."
 				}
 			},
+			fish_fac_tss_guppy = {
+				name = "Guppy",
+				text = {
+					"Show which {C:attention}fish{} is",
+					"currently being caught"
+				},
+				flavour = {
+					"An eye for secrets"
+				}
+			},
 			fish_fac_tss_plecoholder = {
 				name = "Plecoholder",
 				text = {
