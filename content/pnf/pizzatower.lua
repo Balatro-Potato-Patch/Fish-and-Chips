@@ -86,6 +86,13 @@ SMODS.Atlas({
     py = 95,
 })
 
+SMODS.Atlas({
+    key = "pnf_star", -- Please include your name/team name in your atlas keys
+    path = "pnf/OriginalStarfish.png",
+    px = 71,
+    py = 95,
+})
+
 SMODS.Sound({
     key = "pnf_pixelsounds", -- Please include your name/team name in your atlas keys
     path = "pnf/pixelnoise.ogg",
@@ -346,4 +353,107 @@ FishAndChips.Fish {
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + add
     ease_discard(add)
     end,
+}
+
+FishAndChips.Fish {
+    key = "patrickstarwalker",
+    atlas = "pnf_star",
+    pos = { x = 0, y = 0 },
+    weight = 3,
+    blueprint_compat = true,
+    ppu_coder = { "FirstTry" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "chips", "destroy_card" },
+    config = {
+        extra = {
+            xchips = 1,
+            add = 0.2
+        },
+        immutable = {
+            revert = 0
+        }
+    },
+    environments = {
+        city_river = 1,
+        wormhole = 3,
+        styx = 1,
+        backroom = 3
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
+        return { vars = { card.ability.extra.xchips, card.ability.extra.add, colours = { HEX("4db1f6") } } }
+    end,
+        calculate = function(self, card, context)
+            if context.joker_main then
+                return {xchips = card.ability.extra.xchips}
+            end
+    if context.destroy_card and context.cardarea == G.play then
+                if SMODS.has_enhancement(context.destroy_card,"m_stone") then
+                    SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "xchips",
+                    scalar_value = "add",
+                    operation = "+",
+                    message_key = "a_xchips",
+                    message_colour = G.C.CHIPS
+                })
+             return {remove = true}
+        end
+    end
+end
+}
+
+
+FishAndChips.Fish {
+    key = "flyinganchovy",
+    atlas = "pnf_flyan",
+    pos = { x = 0, y = 0 },
+    weight = 3,
+    blueprint_compat = true,
+    ppu_coder = { "FirstTry" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "mult", "rank" },
+    config = {
+        extra = {
+            mult = 1
+        },
+        immutable = {
+            revert = 0
+        }
+    },
+    environments = {
+        soup = 5,
+        chocolate_river = 3,
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
+        return { vars = { card.ability.extra.xchips, card.ability.extra.add, colours = { HEX("4db1f6") } } }
+    end,
+        calculate = function(self, card, context)
+       if context.individual and context.cardarea == G.play and not context.end_of_round then
+         if next(context.poker_hands['Straight']) then
+            local rankmult, cardID = 1,1
+            local raised_card = nil
+            for i = 1, #G.play.cards do
+                if cardID <= G.play.cards[i].base.id and not SMODS.has_no_rank(G.play.cards[i]) then
+                    rankmult = G.play.cards[i].base.nominal
+                    cardID = G.play.cards[i].base.id
+                    raised_card = G.play.cards[i]
+                end
+            end
+            if raised_card == context.other_card then
+                if context.other_card.debuff then
+                    return {
+                        message = localize('k_debuffed'),
+                        colour = G.C.RED
+                    }
+                else
+                    return {
+                        mult = rankmult
+                    }
+                end
+            end
+        end
+    end
+end
 }
