@@ -14,14 +14,6 @@ return {
                 },
 			},
         },
-        fac_Env = {
-            egg = {
-                name = "Egg Room",
-                text = {
-                    "Well, there is a      here."
-                }
-            },
-        },
         fac_Fish = {
             fish_fac_one = {
                 name = "One Fish",
@@ -96,8 +88,19 @@ return {
                     "BE A {s:2,C:spalmon_pink}BIG {s:2,C:spalmon_gold}TROUT{s:2}!!!{}"
                 }
             },
-            fish_fac_lordxray = {
-                name = "Lord X-ray",
+            fish_fac_forgotten = {
+                name = "Forgotten Fish",
+                text = {
+                    "Gains {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} of",
+                    "{C:attention}sell value{} at",
+                    "end of fishing",
+                },
+                flavour = {
+                    "Well, there is a fish here."
+                }
+            },
+            fish_fac_lordx = {
+                name = "Lord X-ray Fish",
                 text = {
                     ""
                 },
@@ -105,7 +108,7 @@ return {
                     ""
                 }
             },
-            fish_fac_marlin = {
+            fish_fac_majin = {
                 name = "Marlin",
                 text = {
                     ""
@@ -114,7 +117,7 @@ return {
                     ""
                 }
             },
-            fish_fac_redherring = {
+            fish_fac_redglove = {
                 name = "Red-Herring",
                 text = {
                     ""
@@ -123,22 +126,13 @@ return {
                     ""
                 }
             },
-            fish_fac_flounder = {
+            fish_fac_faker = {
                 name = "Flounder",
                 text = {
                     ""
                 },
                 flavour = {
                     ""
-                }
-            },
-            fish_fac_forgotten = {
-                name = "Forgotten Fish",
-                text = {
-                    "{C:inactive}Does nothing?"
-                },
-                flavour = {
-                    "Well, there is a fish here."
                 }
             },
         },

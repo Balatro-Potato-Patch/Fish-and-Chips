@@ -187,7 +187,7 @@ FishAndChips.Fish {
 			end
 		end
 
-		if context.fish then
+		if context.fish and context.fac_end_fishing then
 			return {
 				level_up = card.ability.extra.levels,
 				level_up_hand = "Pair",
@@ -195,7 +195,7 @@ FishAndChips.Fish {
 				colour = HEX("FCB3EA")
 			}
 		end
-		if context.failed then
+		if context.failed and context.fac_end_fishing then
 			G.E_MANAGER:add_event(Event({
 				trigger = 'after',
 				delay = 0.4,
@@ -332,10 +332,10 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "forgotten",
+	key = "lordx",
 	atlas = "w_d_seuss_fish",
 	pos = { x = 1, y = 1 },
-	weight = 1,
+	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
 	attributes = { },
@@ -355,7 +355,30 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "marlin",
+	key = "majin",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 2, y = 1 },
+	weight = 2,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		wormhole = 5,
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+FishAndChips.Fish {
+	key = "redglove",
 	atlas = "w_d_seuss_fish",
 	pos = { x = 3, y = 1 },
 	weight = 2,
@@ -378,7 +401,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "redherring",
+	key = "faker",
 	atlas = "w_d_seuss_fish",
 	pos = { x = 4, y = 1 },
 	weight = 2,
@@ -397,5 +420,38 @@ FishAndChips.Fish {
 		return { vars = { } }
 	end,
 	calculate = function(self, card, context)
+	end
+}
+
+
+FishAndChips.Fish {
+	key = "forgotten",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 0, y = 2 },
+	weight = 1,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { "sell_value", "scaling", "economy" },
+	config = {
+		extra = {
+			price = 1
+		}
+	},
+	environments = {
+		wormhole = 5,
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.price } }
+	end,
+	calculate = function(self, card, context)
+		if context.fac_end_fishing then
+			card.ability.extra_value = card.ability.extra_value + card.ability.extra.price
+            card:set_cost()
+            return {
+                message = localize('k_val_up'),
+                colour = FishAndChips.C.SAND_DOLLAR
+            }
+		end
 	end
 }
