@@ -32,6 +32,7 @@
 ---@field keep_on_use? fun(self: FishAndChips.Fish, card: Card): boolean? return `true` if the fish should be kept when used.
 ---@field treasure? boolean mark as true if this can be caught as a treasure 
 ---@field on_catch? fun(self: FishAndChips.Fish, card: Card) If defined, this function will be called when this fish is called.
+---@field badge_key? string replace the text on the fish badge with whatever is in misc.dictionary[badge_key]
 ---@overload fun(self: FishAndChips.Fish): FishAndChips.Fish
 FishAndChips.Fish = setmetatable({}, {
 	__call = function(self)

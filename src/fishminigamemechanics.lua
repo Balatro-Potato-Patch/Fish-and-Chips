@@ -1009,9 +1009,8 @@ local old_fac_keypressed = love.keypressed
 function love.keypressed(key, scancode, isrepeat)
     if G and G.STATE == G.STATES.FAC_FISHING and not G.SETTINGS.paused then
         local state = fac_ensure_state()
-        if key == "space" or key == "up" or key == "w" or key == "return" then
+        if key == "space" or key == "up" or key == "w" then
             fac_queue_tap(state)
-            return
         end
     end
 
@@ -1343,9 +1342,11 @@ local function fac_draw_panel()
     love.graphics.clear(0, 0, 0, 0)
     FAC_STATUS_QUEUE = {}
     fac_draw_scene_content(state, 0, 0, cw, ch)
+
     local status_queue = FAC_STATUS_QUEUE
     FAC_STATUS_QUEUE = nil
-    love.graphics.setCanvas(prev_canvas)
+    love.graphics.setCanvas({ prev_canvas, stencil = true })
+    SMODS.reload_stencil_stack()
 
     local blit_alpha = 1
     if G.FISHING_STATE == G.FISHING_STATES.RESULTS and state.round_success then
@@ -1386,10 +1387,4 @@ local function fac_draw_panel()
     end
 end
 
-local old_fac_draw = love.draw
-function love.draw()
-    if old_fac_draw then
-        old_fac_draw()
-    end
-    fac_draw_panel()
-end
+FishAndChips.render_fishing_minigame = fac_draw_panel
