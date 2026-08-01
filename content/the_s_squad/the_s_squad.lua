@@ -133,7 +133,7 @@ PotatoPatchUtils.Developer{
 	atlas = 'fac_tss_devs',
 	pos = {x=2,y=0},
 	soul_pos = {x=3,y=0},
-	colour = G.C.YELLOW,
+	colour = HEX("850021"),
 	fac_partner = 'slimestuff',
 	loc = true,
 	fac_dw_shader = true
@@ -233,16 +233,23 @@ SMODS.ScreenShader {
 		}
 	end,
 	should_apply = function(self)
-		return #SMODS.find_card("fish_fac_tss_uranium")>0
+		return not FishAndChips.mod.config.disable_flashing and #SMODS.find_card("fish_fac_tss_uranium")>0
 	end,
 	order = 0
 }
 
 SMODS.Atlas{
-	key = "tss_fish", -- Please include your name/team name in your atlas keys
-	path = "the_s_squad/fish.png",
+	key = "tss_ellefish",
+	path = "the_s_squad/ellefish.png",
 	px = 71,
 	py = 95,
+}
+
+SMODS.Atlas{
+	key = "tss_azfish",
+	path = "the_s_squad/azfish.png",
+	px = 112,
+	py = 112,
 }
 
 SMODS.Atlas{

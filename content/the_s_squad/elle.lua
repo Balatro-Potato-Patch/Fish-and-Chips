@@ -1,6 +1,6 @@
 FishAndChips.Fish {
 	key = "tss_chesh",
-	atlas = "tss_fish",
+	atlas = "tss_ellefish",
 	pos = { x = 2, y = 0 },
 	weight = 5,
 	ppu_coder = { "slimestuff" },
@@ -32,7 +32,7 @@ end
 
 FishAndChips.Fish {
 	key = "tss_resident",
-	atlas = "tss_fish",
+	atlas = "tss_ellefish",
 	pos = { x = 1, y = 0 },
 	weight = 13,
 	ppu_coder = { "slimestuff" },
@@ -60,12 +60,12 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = "tss_plecoholder",
-	atlas = "tss_fish",
+	atlas = "tss_ellefish",
 	pos = { x = 0, y = 0 },
 	weight = 5,
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
-	attributes = { "mult" },
+	attributes = { "generation" },
 	environments = {
 		wormhole = 5,
 		backroom = 4
@@ -109,7 +109,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = "tss_caviar",
-	atlas = "tss_fish",
+	atlas = "tss_ellefish",
 	pos = { x = 0, y = 0 },
 	weight = 8,
 	ppu_coder = { "slimestuff" },
@@ -137,7 +137,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = "tss_forcefish",
-	atlas = "tss_fish",
+	atlas = "tss_ellefish",
 	pos = { x = 0, y = 0 },
 	weight = 4,
 	ppu_coder = { "slimestuff" },
@@ -205,7 +205,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = "tss_uranium",
-	atlas = "tss_fish",
+	atlas = "tss_ellefish",
 	pos = { x = 3, y = 0 },
 	weight = 4,
 	ppu_coder = { "slimestuff" },

@@ -14,6 +14,19 @@ return {
 				}
 			},
 
+			fish_fac_tss_ferish = {
+				name = "Ferish",
+				text = {
+					"Played {C:hearts}Hearts{} cards",
+					"permanently gain",
+					"{C:mult}+#1#{} Mult when scored"
+				},
+				flavour = {
+					"The most popular",
+					"pop star of the deep!"
+				}
+			},
+
 			-- - slimestuff.'s' Fish -
 			fish_fac_tss_chesh = {
 				name = "Cheshire Catfish",
