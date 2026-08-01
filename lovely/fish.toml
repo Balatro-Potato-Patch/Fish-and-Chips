@@ -133,3 +133,36 @@ if args.type == 'flavour' then
     return
 end
 '''
+
+[[patches]]
+[patches.pattern]
+target = '=[lovely debugplus.core "debugplus/core.lua"]'
+pattern = '''
+elseif _card.playing_card then
+'''
+position = 'before'
+payload = '''
+elseif _card.ability.set == 'fac_Fish' then
+    _area = G.fac_fish_area
+elseif _card.ability.set == 'fac_Bait' then
+    FishAndChips.add_bait_to_inventory(_card.config.center_key)
+    return
+'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = '''
+self:set_sprites(self.config.center, self.config.card)
+'''
+position = 'before'
+payload = '''
+if (self.ability.set == 'fac_Fish' or self.ability.set == 'fac_Bait') and not self.config.center.discovered then
+    discover_card(self.config.center)
+end
+
+'''
+match_indent = true
+times = 1
