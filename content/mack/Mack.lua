@@ -392,6 +392,10 @@ FishAndChips.Fish {
 				ref_value = "levels",
 				scalar_value = "dec",
 				scalar_factor = -1,
+				scaling_message = {
+					message = card.ability.extra.dec * -1 .. '',
+					colour = G.C.RED
+				}
 			})
 			if card.ability.extra.levels == 0 then
 				SMODS.destroy_cards(card)
