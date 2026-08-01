@@ -9,6 +9,7 @@ local alexi_text_colors = {
 }
 local alexi_click_count = 5
 
+-- Also used by the shit squad
 function FountainOpeners.dark_flip(card)
     local pos = card.children.center.sprite_pos
     card.children.center:set_sprite_pos({x=pos.x,y=1-pos.y})
@@ -32,7 +33,7 @@ PotatoPatchUtils.Developer {
 	fac_partner = 'Grahkon',
 	fac_dw_shader = true, -- thanks elleeeee love youuu :3
 	click = function(self)
-        -- dark_flip(self)
+        FountainOpeners.dark_flip(self)
 
         play_sound("fac_fo_splat",1.5-alexi_click_count*0.1)
         self:juice_up()
@@ -42,7 +43,142 @@ PotatoPatchUtils.Developer {
         else
             alexi_click_count = alexi_click_count - 1
         end
-    end
+    end,
+    calculate = function(self, context)
+        local floweries = SMODS.find_card("fish_fac_fo_fishery")
+        if #floweries > 0 then
+            if context.fac_end_fishing then
+                if not context.fail and not context.fish == "fish_fac_fo_fishery" then
+                    if context.perfect or context.treasure then
+                        FountainOpeners.random_flowery_sound({
+                            "heh_one_more_for_the_fans",
+                            "heh_its_my_jarona",
+                            "all_according_to_all_according_to_plant",
+                            "wow",
+                            "thatsgreat",
+                            "leaf_it_to_me",
+                            "give_it_to_you",
+                            "sustingus",
+                            "glue"
+                        })
+                    else
+                        FountainOpeners.random_flowery_sound({
+                            "heytherelittleguy",
+                            "heyguysithinkifoundaglue",
+                            "its_all_yours",
+                            "minipeppers",
+                            "hey_boys",
+                            "hey",
+                            "hey_guys",
+                        })
+                    end
+                else
+                    FountainOpeners.random_flowery_sound({
+                        "sorryaboutthatguys",
+                        "sorryabouttheguy"
+                    })
+                end
+
+            elseif context.fac_environment_changed and context.forced then
+                FountainOpeners.random_flowery_sound({
+                    "mysterious_wind",
+                    "what_a_predictable_creature"
+                })
+
+            -- some of these also taken from utdr
+            elseif context.game_over then
+                FountainOpeners.random_flowery_sound({
+                    "sustingus",
+                    "nonono",
+                    "goodbye",
+                    "go_home",
+                    "get_a_chance_1",
+                    "get_a_chance_2",
+                    "forget_it"
+                })
+
+            elseif context.open_booster then
+                FountainOpeners.flowery_sound("hereicomesanfrandisco")
+
+            elseif context.skipping_booster then
+                FountainOpeners.flowery_sound("hereicomesanfrandisco_weak")
+
+            elseif context.blind_disabled then
+                FountainOpeners.flowery_sound("nonono")
+
+            elseif context.blind_defeated then
+                FountainOpeners.random_flowery_sound({
+                    "heh_one_more_for_the_fans",
+                    "heh_its_my_jarona",
+                    "all_according_to_all_according_to_plant",
+                    "wow",
+                    "thatsgreat",
+                    "leaf_it_to_me",
+                    "give_it_to_you",
+                    "sustingus",
+                    "glue"
+                })
+
+            elseif context.card_added and context.card.config.center.set == "Joker" then
+                FountainOpeners.random_flowery_sound({
+                    "heytherelittleguy",
+                    "heyguysithinkifoundaglue",
+                    "its_all_yours",
+                    "minipeppers",
+                    "hey_boys",
+                    "hey",
+                    "hey_guys",
+                })
+
+            elseif context.after then
+                local jacks = false
+                local kings = false
+                local queens = false
+                for _, scored_card in ipairs(context.scoring_hand) do
+                    if scored_card:get_id() == 11 then
+                        jacks = true
+                    elseif scored_card:get_id() == 13 then
+                        kings = true
+                    elseif scored_card:get_id() == 12 then
+                        queens = true
+                    end
+                end
+
+                if jacks then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            FountainOpeners.random_flowery_sound({
+                                "hey_raly",
+                                "dont_you_like_serving_humans",
+                                "im_only_trying_to_help_you",
+                                "imsorryonceagainikeptaladyinwaiting",
+                                "sorrytokeepaladyinwaiting"
+                            })
+                            return true
+                        end
+                    }))
+                elseif queens then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            FountainOpeners.random_flowery_sound({
+                                "hey_raly",
+                                "imsorryonceagainikeptaladyinwaiting",
+                                "sorrytokeepaladyinwaiting"
+                            })
+                            return true
+                        end
+                    }))
+                elseif kings then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            FountainOpeners.flowery_sound("my_king")
+                            return true
+                        end
+                    }))
+                end
+            end
+        end
+    end,
 }
 
 PotatoPatchUtils.Developer {

@@ -79,7 +79,6 @@ return {
     misc = {
         dictionary = {
             fac_fo_hey_raly = "Hey Raly!",
-            fac_fo_jarona = "Jarona!"
         },
     }
 }
