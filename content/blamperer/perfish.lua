@@ -49,7 +49,7 @@ FishAndChips.Fish {
                     }
                 end
             end
-            if break_streak then
+            if break_streak and card.ability.extra.current_streak > 0 then
                 card.ability.extra.current_streak = 0
                 return {
                     message = localize("k_fac_blamperer_str_broke"),
