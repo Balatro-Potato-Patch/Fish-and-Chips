@@ -45,6 +45,20 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+    key = "pnf_frogchair", -- Please include your name/team name in your atlas keys
+    path = "pnf/FroggyChair.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_fishery", -- Please include your name/team name in your atlas keys
+    path = "pnf/Fishery.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
     key = "pnf_flyan", -- Please include your name/team name in your atlas keys
     path = "pnf/FlyingAnchovy.png",
     px = 71,
@@ -101,6 +115,26 @@ SMODS.Sound({
 SMODS.Sound({
     key = "pnf_fts", -- Please include your name/team name in your atlas keys
     path = "pnf/firsttrynoise.ogg",
+})
+
+SMODS.Sound({
+    key = "pnf_fishery1", -- Please include your name/team name in your atlas keys
+    path = "pnf/fishery1.ogg",
+})
+
+SMODS.Sound({
+    key = "pnf_fishery2", -- Please include your name/team name in your atlas keys
+    path = "pnf/fishery2.ogg",
+})
+
+SMODS.Sound({
+    key = "pnf_fishery3", -- Please include your name/team name in your atlas keys
+    path = "pnf/fishery3.ogg",
+})
+
+SMODS.Sound({
+    key = "pnf_fishery4", -- Please include your name/team name in your atlas keys
+    path = "pnf/fishery4.ogg",
 })
 
 FishAndChips.Fish {
@@ -461,4 +495,84 @@ FishAndChips.Fish {
         end
     end
 end
+}
+
+FishAndChips.Fish {
+    key = "froggychair",
+    atlas = "pnf_frogchair",
+    pos = { x = 0, y = 0 },
+    weight = 2,
+    blueprint_compat = true,
+    ppu_coder = { "Pixel" },
+    ppu_artist = { "Pixel" },
+    attributes = { "destroy_card" },
+    environments = {
+        city_river = 1,
+        garden = 1
+    },
+    add_to_deck = function(self, card, from_debuff)
+        G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base + 2
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base - 2
+    end,
+    calculate = function(self, card, context)
+        local current_index
+        for i = 1, #G.fac_fish_area.cards do
+            if G.fac_fish_area.cards[i] == card then
+                current_index = i
+            end
+        end
+        if context.setting_blind then
+			for i = 1, #G.fac_fish_area.cards do
+				if G.fac_fish_area.cards[i] == card then
+					if G.fac_fish_area.cards[current_index + 1] then
+						SMODS.destroy_cards(G.fac_fish_area.cards[current_index + 1])
+                    elseif G.fac_fish_area.cards[current_index - 1] then
+                        SMODS.destroy_cards(G.fac_fish_area.cards[current_index - 1])
+                    end
+				end
+			end
+        end
+    end,
+}
+
+FishAndChips.Fish {
+    key = "fishery",
+    atlas = "pnf_fishery",
+    pos = { x = 0, y = 0 },
+    weight = 2,
+    blueprint_compat = true,
+    ppu_coder = { "Pixel" },
+    ppu_artist = { "Pixel" },
+    attributes = { "destroy_card" },
+    environments = {
+        city_river = 1,
+        garden = 1
+    },
+    add_to_deck = function(self, card, from_debuff)
+        play_sound("fac_pnf_fishery3")
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        play_sound("fac_pnf_fishery2")
+    end,
+    calculate = function(self, card, context)
+        local current_index
+        for i = 1, #G.fac_fish_area.cards do
+            if G.fac_fish_area.cards[i] == card then
+                current_index = i
+            end
+        end
+        if context.setting_blind then
+			for i = 1, #G.fac_fish_area.cards do
+				if G.fac_fish_area.cards[i] == card then
+					if G.fac_fish_area.cards[current_index + 1] then
+						SMODS.destroy_cards(G.fac_fish_area.cards[current_index + 1])
+                    elseif G.fac_fish_area.cards[current_index - 1] then
+                        SMODS.destroy_cards(G.fac_fish_area.cards[current_index - 1])
+                    end
+				end
+			end
+        end
+    end,
 }
