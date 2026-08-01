@@ -20,6 +20,16 @@ PotatoPatchUtils.Developer {
     loc = true,
     click = function()
         love.system.openURL("https://github.com/blamperer/The-Latro")
+    end,
+    calculate = function(self, context)
+        if context.fac_end_fishing then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.blamperer_hook_time = 0
+                    return true
+                end
+            }))
+        end
     end
 }
 
