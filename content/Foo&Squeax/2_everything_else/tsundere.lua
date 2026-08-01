@@ -173,7 +173,7 @@ function FishAndChips.FooSqueax.tsunderfish.create_act_uibox (card)
 	end
 	local base_ui = {n = G.UIT.ROOT, config = {minw = 7.5, minh = 3, colour = FishAndChips.C.FooSqueax.BLACK, padding = 0.1, align = "cm"}, nodes = {
 		{n = G.UIT.R, config = {minw = 7.3, minh = 2.8, colour = G.C.WHITE, padding = 0.1, align = "cm"}, nodes = {
-			{n = G.UIT.R, config = {minw = 7.1, minh = 2.6, colour = FishAndChips.C.FooSqueax.BLACK, align = "cm"}, nodes = added_ui}
+			{n = G.UIT.R, config = {minw = 7.1, minh = 2.6, colour = FishAndChips.C.FooSqueax.BLACK, align = "tl", padding = 0.1}, nodes = added_ui}
 		}}
 	}}
 	return UIBox{
