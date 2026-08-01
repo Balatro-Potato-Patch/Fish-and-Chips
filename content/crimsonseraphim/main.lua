@@ -105,21 +105,23 @@ function Card:transmute(seed, center)
         end
         result = SMODS.poll_object{type = "fac_Fish", attributes = valid, union = true}
     end
-    --DO ANIM LATER
-    G.E_MANAGER:add_event(Event{func = function() 
-        self:flip()
-        return true
-    end, trigger = "after", delay = 0.75})
-
-    G.E_MANAGER:add_event(Event{func = function() 
-        self:set_ability(result)
-        return true
-    end, trigger = "after", delay = 0.75})
-
-    G.E_MANAGER:add_event(Event{func = function() 
-        self:flip()
-        return true
-    end, trigger = "after", delay = 0.75})
+    self.aeonfish_transmute = {
+        realtime_start = G.TIMERS.real,
+        image = SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H, result.atlas, result.pos),
+        center = result
+    }
+    self.states.hover.can = false
+    G.E_MANAGER:add_event(Event{
+        blocking = false,
+        func = function()
+            if G.TIMERS.REAL - self.aeonfish_transmute.realtime_start > 1 then
+                self:set_ability(self.aeonfish_transmute.center)
+                self.aeonfish_transmute = nil
+                self.states.hover.can = true
+                return true
+            end
+        end
+    })
 end
 
 local data = NFS.newFileData(FishAndChips.mod.path .."/assets/1x/crimsonseraphim/caustics-texture.png")
@@ -131,6 +133,17 @@ SMODS.Shader({
         return {
             realtime = G.TIMERS.REAL,
             caustic_image = _caustics
+        }
+    end,
+})
+
+SMODS.Shader({
+    key="aeonfish_transmute",
+    path="crimsonseraphim/aeonfish_transmute.fs",
+    send_vars = function (sprite, card)
+        return {
+            realtime_offset = G.TIMERS.REAL - card.aeonfish_transmute.realtime_start,
+            caustic_image = card.aeonfish_transmute.image
         }
     end,
 })
@@ -151,6 +164,16 @@ SMODS.DrawStep({
         if (card ~= "fish_fac_aeonfish" and card ~= "fish_fac_gungir")  then return end
         if card == "fish_fac_gungir" and not self.ability.extra.charged then return end
         self.children.center:draw_shader('fac_aeonfish_caustics', nil, self.ARGS.send_to_shader)
+	end,
+	conditions = { vortex = false, facing = "front" },
+})
+
+SMODS.DrawStep({
+	key = "aeonfish_transmute",
+	order = 25,
+	func = function(self)
+        if not self.aeonfish_transmute then return end
+        self.children.center:draw_shader('fac_aeonfish_transmute', nil, self.ARGS.send_to_shader)
 	end,
 	conditions = { vortex = false, facing = "front" },
 })
