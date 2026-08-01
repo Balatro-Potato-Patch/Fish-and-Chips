@@ -1,3 +1,14 @@
+local files = SMODS.NFS.getDirectoryItemsInfo(FishAndChips.mod.path .. "fountain_openers/flowery")
+for _, file in pairs(files) do
+    -- load Every Fucking Flowery Voiceline
+    if file.type == "file" then
+        SMODS.Sound {
+            key = "fac_fo_" .. file.name:sub(1, #file.name - 4),
+            path = "fountain_openers/flowery/" .. file.name
+        }
+    end
+end
+
 FishAndChips.Fish {
 	key = "fo_fishery",
 	atlas = "fish",
