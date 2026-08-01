@@ -203,6 +203,18 @@ return {
                     "have become unsalvageable."
                 }
             },
+            fish_fac_larp = {
+                name = "Larp",
+                text = {
+                    "Larps the ability of a",
+                    "random {C:attention}Fish{} from the collection",
+                    "{C:red}Randomizes{} when entering the shop",
+                },
+                flavor = {
+                    "Theres no limit",
+                    "to the carp."
+                }
+            }
         },
         Other = {
             fac_crimsonseraphim_transmute = {
@@ -281,7 +293,8 @@ return {
         },
         dictionary = {
             k_charged = "Charged",
-            k_uncharged = "Uncharged"
+            k_uncharged = "Uncharged",
+            k_switch_ex = "Switch!"
         }
     }
 }

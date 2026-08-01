@@ -898,9 +898,9 @@ FishAndChips.Fish {
         if context.joker_main then
             for i = 1, 10 do
                 if pseudorandom("crimsonseraphim_trout_population") < 0.5 then
-                    SMODS.calculate_effect({mult = card.ability.extra.mult}, card)
+                    SMODS.calculate_effect({mult = card.ability.extra.mult}, context.blueprint_card or card)
                 else
-                    SMODS.calculate_effect({chips = card.ability.extra.chips}, card)
+                    SMODS.calculate_effect({chips = card.ability.extra.chips}, context.blueprint_card or card)
                 end
             end
             return nil, true
@@ -1114,8 +1114,10 @@ function G.FUNCS.fac_go_fish(e)
             blocking = false,
             func = function()
                 if G.FISHING_STATE == G.FISHING_STATES.HOOKING then
+                    local p
                     for i, v in pairs(SMODS.find_card("fish_fac_rusty_revolver")) do
                         if v.ability.extra.primed then
+                            p = true
                             for i = 1, v.ability.extra.primed do
                                 G.E_MANAGER:add_event(Event{
                                     trigger = "after",
@@ -1129,20 +1131,216 @@ function G.FUNCS.fac_go_fish(e)
                             v.ability.extra.primed = nil
                         end
                     end
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'ease',
-                        blockable = false,
-                        blocking = false,
-                        ref_table = G.GAME,
-                        ref_value = 'REVOLVER_RETICLE_ALPHA',
-                        ease_to = 0,
-                        delay = 2*G.SETTINGS.GAMESPEED,
-                        func = (function(t) return t end)
-                    }))
+                    if p then 
+                        G.GAME.REVOLVER_RETICLE_ALPHA = 1
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'ease',
+                            blockable = false,
+                            blocking = false,
+                            ref_table = G.GAME,
+                            ref_value = 'REVOLVER_RETICLE_ALPHA',
+                            ease_to = 0,
+                            delay = 2*G.SETTINGS.GAMESPEED,
+                            func = (function(t) return t end)
+                        }))
+                    end
                     return true
                 end
             end
         }) 
-        G.GAME.REVOLVER_RETICLE_ALPHA = 1
     end
 end
+
+function FishAndChips.crimsonseraphim.get_dummy(center, area, self)
+    local abil = copy_table(center.config) or {}
+    abil.consumeable = copy_table(abil)
+    abil.name = center.name or center.key
+    abil.set = "Joker"
+    abil.t_mult = abil.t_mult or 0
+    abil.t_chips = abil.t_chips or 0
+    abil.x_mult = abil.x_mult or abil.Xmult or 1
+    abil.extra_value = abil.extra_value or 0
+    abil.d_size = abil.d_size or 0
+    abil.mult = abil.mult or 0
+    abil.effect = center.effect
+    abil.h_size = abil.h_size or 0
+    local eligible_editionless_jokers = {}
+    for i, v in pairs(G.jokers and G.jokers.cards or {}) do
+        if not v.edition then
+            eligible_editionless_jokers[#eligible_editionless_jokers+1] = v
+        end
+    end
+    local tbl = {
+        ability = abil,
+        config = {
+            center = center,
+            center_key = center.key
+        },
+        juice_up = function(_, ...)
+            return self:juice_up(...)
+        end,
+        start_dissolve = function(_, ...)
+            return self:start_dissolve(...)
+        end,
+        remove = function(_, ...)
+            return self:remove(...)
+        end,
+        flip = function(_, ...)
+            return self:flip(...)
+        end,
+        use_consumeable = function(self, ...)
+            self.bypass_echo = true
+            local ret = Card.use_consumeable(self, ...)
+            self.bypass_echo = nil
+        end,
+        can_use_consumeable = function(self, ...)
+            return Card.can_use_consumeable(self, ...)
+        end,
+        calculate_joker = function(self, ...)
+            return Card.calculate_joker(self, ...)
+        end,
+        can_calculate = function(self, ...)
+            return Card.can_calculate(self, ...)
+        end,
+        original_card = self,
+        area = area,
+        added_to_deck = added_to_deck,
+        cost = self.cost,
+        sell_cost = self.sell_cost,
+        eligible_strength_jokers = eligible_editionless_jokers,
+        eligible_editionless_jokers = eligible_editionless_jokers,
+        T = self.t,
+        VT = self.VT
+    }
+    for i, v in pairs(self) do
+        if type(v) == "function" and i ~= "flip_side" then
+            tbl[i] = function(_, ...)
+                return v(self, ...)
+            end
+        end
+    end
+    return tbl
+end
+
+FishAndChips.Fish {
+	key = "larp",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "useable", "passive" },
+	environments = {
+        city_river = 5,
+        calm_pond = 5,
+        garden = 5
+	},
+    config = {
+        extra = {
+            joker = "fish_fac_cod"
+        }
+    },
+    loc_vars = function(self, q, card)
+        return {
+            vars = {
+                localize{type = "name_text", key = card.ability.extra.joker, set = "fac_Fish"}
+            },
+        }
+    end,
+    use = function(self, card)
+        if G.P_CENTERS[card.ability.extra.joker].use then
+            G.P_CENTERS[card.ability.extra.joker]:use(card.dummy)
+        end
+	end,
+	can_use = function(self, card)
+		return G.P_CENTERS[card.ability.extra.joker].can_use and G.P_CENTERS[card.ability.extra.joker]:can_use(card.dummy) or nil
+	end,
+    keep_on_use = function(self, card)
+        return G.P_CENTERS[card.ability.extra.joker].keep_on_use and G.P_CENTERS[card.ability.extra.joker]:keep_on_use(card.dummy) or nil
+    end,
+    calculate = function(self, card, context)
+        if context.starting_shop then
+            G.E_MANAGER:add_event(Event{
+                trigger = "after",
+                func = function()
+                    card.ability.extra.joker = SMODS.poll_object{type = "fac_Fish"}
+                    Card.remove_from_deck(card.dummy)
+                    card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
+                    card.dummy.added_to_deck = nil
+                    Card.add_to_deck(card.dummy)
+                    card.dummy.added_to_deck = true
+                    card.ability.extra.dummy_abil = card.dummy.ability
+                    card_eval_status_text(
+                        card,
+                        "extra",
+                        nil,
+                        nil,
+                        nil,
+                        { message = localize("k_switch_ex") }
+                    )
+                    return true
+                end
+            })
+        end
+        if not card.dummy then
+            card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
+            card.dummy.added_to_deck = true
+            if card.ability.extra.dummy_abil then card.dummy.ability = card.ability.extra.dummy_abil end
+        end
+        if card.ability.extra.joker == "fish_fac_steelhead" then
+            local other_fish = nil
+            for i = 2, #G.fac_fish_area.cards do
+                if G.fac_fish_area.cards[i] == card then other_fish = G.fac_fish_area.cards[i - 1] end
+            end
+            return SMODS.blueprint_effect(card, other_fish, context)
+        elseif card.ability.extra.joker == "fish_fac_flounder" then
+            if G.fac_fish_area.cards[#G.fac_fish_area.cards] ~= card then
+                return SMODS.blueprint_effect(card, G.fac_fish_area.cards[#G.fac_fish_area.cards], context)
+            end
+        else
+            local ret = Card.calculate_joker(card.dummy, context)
+            card.ability.extra.dummy_abil = card.dummy.ability
+            return ret
+        end
+    end,
+    calc_dollar_bonus = function(self, card)
+        if card.dummy then
+            local ret = Card.calculate_dollar_bonus(card.dummy)
+            card.ability.extra.dummy_abil = card.dummy.ability
+            return ret
+        end
+    end,
+}
+
+-- local g_uidef_card_h_popup_ref = G.UIDEF.card_h_popup
+-- ---@diagnostic disable-next-line: duplicate-set-field
+-- function G.UIDEF.card_h_popup(card)
+--     local ret = g_uidef_card_h_popup_ref(card)
+--     if card.config.center_key == "fish_fac_larp" then
+        
+
+--         local target = ret.nodes[1].nodes[1].nodes[1].nodes
+--         table.insert(target, #target, name_from_rows(AUT_LARP.name, is_playing_card and G.C.WHITE or nil))
+
+--         local card = card.dummy
+--         if card.ability and card.ability.set == 'fac_Fish' and not FishAndChips.mod.config.disable_flavour and card.config.center.discovered and G.localization.descriptions.fac_Fish[card.config.center_key] and G.localization.descriptions.fac_Fish[card.config.center_key].fac_flavour_parsed then
+--             local name = SMODS.deepfind(ret, 'tooltip_id_'..FishAndChips.tooltip_seed, nil, true)[1]
+--             local name_node = name.objtree
+--             local flavour_node = {}
+--             local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}
+--             localize({type = 'flavour', nodes = flavour_node, loc_target = G.localization.descriptions.fac_Fish[loc_vars.key or card.config.center_key], scale = 0.8, text_colour = G.C.JOKER_GREY, shadow = true, vars = loc_vars.vars})
+--             local final_flavour = {{n=G.UIT.R, config = {minh = 0.1}}}
+--             for i, line in ipairs(flavour_node) do
+--                 local node = {n=G.UIT.R, config = {align = 'cm'}, nodes = {}}
+--                 for _, part in ipairs(line) do
+--                     table.insert(node.nodes, part)
+--                 end
+--                 table.insert(final_flavour, i, node)
+--             end
+--             table.insert(target, #target, {n=G.UIT.R, config = {align = 'cm'}, nodes = final_flavour})
+--         end
+
+        
+--     end
+--     return
+-- end
