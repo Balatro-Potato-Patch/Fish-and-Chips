@@ -1,6 +1,6 @@
 SMODS.Atlas({
 	key = "sg11_n_vekhi_yellowbin_tuna",
-	path = "sg11_n_vekhi/nautilus.png",
+	path = "sg11_n_vekhi/yellowbin_tuna.png",
 	px = 71,
 	py = 95,
 })
