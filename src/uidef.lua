@@ -64,9 +64,6 @@ function G.UIDEF.fac_fishing_status(index)
 	}
 end
 
-FishAndChips.C.FISHING_BUTTONS_ACTIVE = { 62 / 255, 222 / 255, 250 / 255, 0.65 }
-FishAndChips.C.FISHING_BUTTONS_BG = { G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65 }
-FishAndChips.C.FISHING_BUTTONS_TEXT = { G.C.UI.TEXT_LIGHT[1], G.C.UI.TEXT_LIGHT[2], G.C.UI.TEXT_LIGHT[3], 1 }
 
 local FAC_FISHING_BUTTON_IDS = {
 	"fac_btn_toggle_fishing",
@@ -1265,7 +1262,7 @@ end
 function G.FUNCS.fac_set_active_bait(e)
 	G.GAME.fac_active_bait = e.config.key
 
-	G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[e.config.key] or {
+	G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] = G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] or {
         fish_caught = 0,
 		fish_lost = 0,
 		perfect_catch = 0,
