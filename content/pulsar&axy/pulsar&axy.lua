@@ -14,7 +14,7 @@ PotatoPatchUtils.Developer({
 })
 
 SMODS.Atlas({
-	key = "pulsarfish", -- Please include your name/team name in your atlas keys
+	key = "pa_pulsarfish", -- Please include your name/team name in your atlas keys
 	path = "pulsar&axy/feesh.png",
 	px = 71,
 	py = 95,
@@ -23,9 +23,9 @@ SMODS.Atlas({
 --#region Fish
 
 FishAndChips.Fish {
-	key = "videogame",
+	key = "pa_videogame",
 	weight = 10,
-	atlas = "pulsarfish",
+	atlas = "pa_pulsarfish",
 	pos = { x = 5, y = 0 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
@@ -62,9 +62,9 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "heatshield",
+	key = "pa_heatshield",
 	weight = 10,
-	atlas = "pulsarfish",
+	atlas = "pa_pulsarfish",
 	pos = { x = 1, y = 0 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
@@ -107,9 +107,9 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "onering",
+	key = "pa_onering",
 	weight = 2,
-	atlas = "pulsarfish",
+	atlas = "pa_pulsarfish",
 	pos = { x = 3 , y = 1},
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
@@ -133,7 +133,7 @@ FishAndChips.Fish {
 
 		local dupeCount = 0
 		for _, fish in ipairs(G.fac_fish_area.cards) do
-			if fish.config.center.key == "fish_fac_onering" then
+			if fish.config.center.key == self.key then
 				dupeCount = dupeCount + 1
 			end
 		end
@@ -216,6 +216,170 @@ FishAndChips.Fish {
 				color = G.C.BLIND
 			}, card)
 		end
+	end
+}
+
+FishAndChips.Fish {
+	key = "pa_mysteryfish",
+	weight = 10,
+	atlas = "pa_pulsarfish",
+	pos = { x = 6, y = 0 },
+	ppu_artist = { "Pulsar" },
+	ppu_coder = { "Axy" },
+	attributes = { "xmult" },
+	environments = {
+		soup = 1,
+		backroom = 0.5
+	},
+	blueprint_compat = true,
+	config = {
+		extra = {
+			xmult = 4,
+			chosen_hand = 0
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.xmult, } }
+	end,
+	calculate = function(self, card, context)
+        if context.setting_blind and not context.blueprint then
+			card.ability.extra.chosen_hand = pseudorandom("pa_mysteryfish", 0, G.GAME.current_round.hands_left)
+        end
+
+		if context.joker_main and G.GAME.current_round.hands_left == card.ability.extra.chosen_hand then
+			return {
+				xmult = card.ability.extra.xmult
+			}
+		end
+	end,
+}
+
+FishAndChips.Fish {
+	key = "pa_F",
+	weight = 10,
+	atlas = "pa_pulsarfish",
+	pos = { x = 2, y = 1 },
+	ppu_artist = { "Pulsar" },
+	ppu_coder = { "Axy" },
+	attributes = { "mult", "food" },
+	environments = {
+		soup = 1,
+		backroom = 0.5
+	},
+	blueprint_compat = true,
+	config = {
+		extra = {
+			mult = 1
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		local letter_count = 0
+		local charmap = {}
+		for _, fish in ipairs(G.fac_fish_area.cards) do
+			for letter in string.gmatch(localize({ type = 'name_text', set = "fac_Fish", key = fish.config.center.key }), '.') do
+				if not charmap[letter] then
+					charmap[letter] = true
+					letter_count = letter_count + 1
+				end
+			end
+		end
+
+		return { vars = { card.ability.extra.mult, letter_count * card.ability.extra.mult } }
+	end,
+	calculate = function(self, card, context)
+        if context.setting_blind and not context.blueprint then
+			card.ability.extra.chosen_hand = pseudorandom("pa_mysteryfish", 0, G.GAME.current_round.hands_left)
+        end
+
+		if context.joker_main then
+			local letter_count = 0
+			local charmap = {}
+			for _, fish in ipairs(G.fac_fish_area.cards) do
+				for letter in string.gmatch(localize({ type = 'name_text', set = "fac_Fish", key = fish.config.center.key }), '.') do
+					if not charmap[letter] then
+						charmap[letter] = true
+						letter_count = letter_count + 1
+					end
+				end
+			end
+
+			return {
+				mult = letter_count * card.ability.extra.mult
+			}
+		end
+	end,
+}
+
+FishAndChips.Fish {
+	key = "pa_fishingfish",
+	weight = 10,
+	atlas = "pa_pulsarfish",
+	pos = { x = 1, y = 1 },
+	ppu_artist = { "Pulsar" },
+	ppu_coder = { "Axy" },
+	attributes = { "usable" },
+	environments = {
+		soup = 1,
+		backroom = 0.5
+	},
+	blueprint_compat = true,
+	config = {
+		extra = {
+			toggle = 0,
+			modifier = 1.2
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		local choice = card.ability.extra.toggle % 3
+		local direction = "same"
+		local magnitude = 1
+		G.E_MANAGER:add_event(Event({
+			trigger = 'after',
+			delay = 1.0,
+			func = function()
+				card:juice_up(0.3, 0.5)
+				card.children.center:set_sprite_pos({x = 0, y = (card.ability.extra.toggle % 3) + 1})
+				return true
+			end}))
+		if choice == 0 then
+			choice = "speed"
+			direction = "slower"
+			magnitude = round_number(1 / card.ability.extra.modifier, 2)
+		elseif choice == 1 then
+			choice = "movement distance"
+			direction = "slower"
+			magnitude = round_number(1 / card.ability.extra.modifier, 2)
+		elseif choice == 2 then
+			choice = "movement time"
+			direction = "larger"
+			magnitude = round_number(card.ability.extra.modifier, 2)
+		end
+		return { vars = { card.ability.extra.toggle, choice, direction, magnitude } }
+	end,
+	calculate = function(self, card, context)
+        if context.fac_modify_fishing_profile then
+			local profile = {}
+			-- add effect based on toggle, effects are sweet spot larger, impulse less distance, less often
+			local choice = card.ability.extra.toggle % 2
+			if choice == 0 then
+				profile = {vel_limit = fac_pick_profile().vel_limit / card.ability.extra.modifier}
+			elseif choice == 1 then
+				profile = {impulse_max = fac_pick_profile().impulse_max / card.ability.extra.modifier}
+			elseif choice == 2 then
+				profile = {decision_max = fac_pick_profile().decision_max * card.ability.extra.modifier}
+			end
+
+			FishAndchips.modify_fishing_profile(profile)
+		end
+	end,
+	can_use = function(self, card)
+		return true
+	end,
+	keep_on_use = function(self, card)
+		return true
+	end,
+	use = function(self, card)
+		card.ability.extra.toggle = card.ability.extra.toggle + 1
 	end
 }
 
