@@ -139,8 +139,10 @@ return {
 			fish_fac_fas_kine = {
 				name = "Kine",
 				flavour = {
-					"A funny guy who looks just like an ocean sunfish.",
-					"He'll always stick by everyone's side."
+					"A funny guy who looks",
+					"just like an ocean sunfish.",
+					"He'll always stick",
+					"by everyone's side."
 					-- ripped from Kirby's Star Stacker website [ https://www.nintendo.co.jp/n02/dmg/akcj/chr.html ]
 				},
 				text = {
