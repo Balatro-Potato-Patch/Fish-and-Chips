@@ -37,6 +37,7 @@ FishAndChips.Fish {
         pier = 1,
         calm_pond = 0.2
     },
+    pixel_size = { h = 77 },
     blueprint_compat = false,
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -259,7 +260,7 @@ FishAndChips.Fish {
     environments = {
         garden = 1,
     },
-    cost = 9,
+    cost = 10,
     pos = { x = 1, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -276,9 +277,12 @@ FishAndChips.Fish {
             return { message = localize('k_duplicated_ex') }
         end
     end,
-    vel_limit = 0.58,
-    decision_max = 0.4,
-    decision_min = 0.14,
+    vel_limit = 0.7,
+    impulse_min = 0.42,
+    impulse_max = 0.48,
+    decision_max = 0.24,
+    decision_min = 0.1,
+    treasure = true,
     attributes = { "generation" }
 }
 
@@ -327,6 +331,7 @@ FishAndChips.Fish {
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     weight = 10,
+    pixel_size = { h = 83 },
     cost = 4,
     environments = {
         chocolate_river = 1,
@@ -384,7 +389,12 @@ FishAndChips.Fish {
         end
     end,
     attributes = { "suit" },
-    pronouns = "they_them"
+    pronouns = "they_them",
+    vel_limit = 0.7,
+    impulse_max = 0.8,
+    impulse_min = 0.65,
+    decision_min = 0.75,
+    decision_max = 0.95
 }
 
 -- Mudskipper
@@ -395,10 +405,10 @@ FishAndChips.Fish {
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     weight = 10,
-    cost = 4,
+    cost = 5,
     environments = {
         swamp = 1,
-        calm_pond = 0.75,
+        calm_pond = 0.65,
     },
     attributes = { "passive" },
     calculate = function(self, card, context)
@@ -412,8 +422,127 @@ FishAndChips.Fish {
             end
             add_tag(Tag(selected_tag, false, 'Small'))
             return {
-                message = localize('k_fac_wafflemod_tag')
+                message = localize('k_fac_waffle_tag')
             }
         end
-    end
+    end,
+    impulse_max = 0.45
 }
+
+-- Reginald The Teleporting Sea Urchin
+FishAndChips.Fish {
+    key = "fac_waffle_reginald",
+    atlas = "waffle_fish",
+    pos = { x = 5, y = 0 },
+    pixel_size = { h = 60 },
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    weight = 10,
+    cost = 6,
+    blueprint_compat = false,
+    environments = {
+        backroom = 1,
+        wormhole = 1,
+    },
+    attributes = { "passive" },
+    calculate = function(self, card, context)
+        if context.fac_end_fishing and not context.blueprint then
+            -- THIS IS ALL TEMPORARY UNTIL THE BUTTON CALLBACK IS NO LONGER HARDCODED
+            -- COPYPASTING HARDCODED CODE IS STINKY AND BAD BUT I LIKE THIS FISH CONCEPT
+            G.E_MANAGER:add_event(Event({
+                blocking = false,
+                func = function()
+                    if G.FISHING_STATE == G.FISHING_STATES.LOBBY and not FishAndChips.in_tutorial then
+                        G.E_MANAGER:add_event(Event({
+                            trigger = "after",
+                            delay = 1,
+                            func = function()
+                                FishAndChips:stop_ambience()
+                                play_sound('other1')
+                                local old_env = G.GAME.fac_fishing_environment
+                                G.GAME.fac_fishing_environment = G.GAME.fac_next_environment or
+                                    pseudorandom_element(FishAndChips.Environments, "fac_next_location", {
+                                        in_pool = function(v, args)
+                                            return v.key ~= G.GAME.fac_fishing_environment
+                                        end
+                                    }).key
+                                SMODS.calculate_context { fac_environment_changed = G.GAME.fac_fishing_environment, old_environment = old_env, forced = G.GAME.fac_next_environment and true }
+                                if G.GAME.fac_next_environment then G.GAME.fac_next_environment = nil end
+                                G.FISHING_STATE = G.FISHING_STATES.MOVING
+                                G.FISHING_STATE_COMPLETE = false
+                                return true
+                            end
+                        }))
+                        return true
+                    else
+                        return false
+                    end
+                end
+            }))
+        end
+    end,
+}
+
+-- Double Dicefin
+FishAndChips.Fish {
+    key = "fac_waffle_double_dicefin",
+    atlas = "waffle_fish",
+    pos = {x = 6, y = 0},
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    weight = 10,
+    environments = {
+        city_river = 1,
+        backroom = 0.6
+    },
+    config = { extra = {
+        boost = 2,
+        active = false
+    } },
+    cost = 6,
+    loc_vars = function (self, info_queue, card)
+         local main_end = {
+                {
+                    n = G.UIT.C,
+                    config = { align = "bm", minh = 0.4 },
+                    nodes = {
+                        {
+                            n = G.UIT.C,
+                            config = { ref_table = card, align = "m", colour = card.ability.extra.active and G.C.GREEN or G.C.RED, r = 0.05, padding = 0.06 },
+                            nodes = {
+                                { n = G.UIT.T, config = { text = ' ' .. localize('k_' .. (card.ability.extra.active and 'active' or 'fac_waffle_inactive')) .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.9 } },
+                            }
+                        }
+                    }
+                }
+            }
+            return { 
+                main_end = main_end,
+                vars = {card.ability.extra.boost}
+             }
+    end,
+    blueprint_compat = false,
+    calculate = function(self, card, context)
+        if not context.blueprint then
+            if context.mod_probability and card.ability.extra.active then
+                return {
+                    numerator = context.numerator * card.ability.extra.boost
+                }
+            end
+            if context.fac_end_fishing and context.perfect and not context.blueprint then
+                if not card.ability.extra.active then
+                    card.ability.extra.active = true
+                    return {
+                        message = localize('k_active_ex'),
+                        colour = G.C.GREEN
+                    }
+                end
+            end
+            if context.end_of_round and context.main_eval and not context.game_over then
+                card.ability.extra.active = false
+            end
+        end
+    end,
+    attributes = { "mod_chance", "passive" }
+}
+

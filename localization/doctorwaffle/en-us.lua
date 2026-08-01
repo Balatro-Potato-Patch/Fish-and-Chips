@@ -77,6 +77,31 @@ return {
                     "Stop staring at me",
                     "with them big ol' eyes!"
                 }
+            },
+
+            fish_fac_waffle_reginald = {
+                name = "Reginald the Teleporting Sea Urchin",
+                text = {
+                    "Travel to a different {C:attention}environment{}",
+                    "after reeling in a Fish"
+                },
+                flavor = {
+                    "Currently on the run from the nautical police",
+                    "due to multiple accounts of undersea arson (somehow?)",
+                }
+            },
+
+            fish_fac_waffle_double_dicefin = {
+                name = "Double Dicefin",
+                text = {
+                    "{X:green,C:white}X#1#{} to all {C:attention}listed{} {C:green}probabilities{} if a{C:attention}",
+                    "{C:attention}perfect catch{} was made last fishing trip",
+                    "{C:inactive}(ex: {C:green}1 in 3 {C:inactive}-> {C:green}#1# in 3{C:inactive})"
+                },
+                flavor = {
+                    "This determined duo will roll with",
+                    "each other until the bitter end."
+                }
             }
 
         },
@@ -87,7 +112,8 @@ return {
 
         dictionary = {
             k_fac_waffle_ready_ex = "Ready!",
-            k_fac_waffle_tag = "+1 Tag"
+            k_fac_waffle_tag = "+1 Tag",
+            k_fac_waffle_inactive = "inactive"
         },
 
     }
