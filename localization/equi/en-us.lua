@@ -40,8 +40,9 @@ return {
             fish_fac_fishedforitagain = {
                 name = "Fished For It Again Award",
                 text = {
-                    "After {C:attention}failing{} 4 catches,",
-                    "create a random {C:attention}Targeted Bait{}"
+                    "After {C:attention}failing{} #3# catches,",
+                    "create a random {C:attention}Targeted Bait{}",
+                    "{C:inactive}(Currently #2#/#3#){}"
                 },
                 flavor = {
                     "Just another day in",
@@ -80,6 +81,8 @@ return {
     misc = {
         dictionary = {
             k_fac_equi_no_room = "No Room!",
+        },
+        v_dictionary = {
             k_fac_equi_plus_bait = "+#1# Bait"
         }
     }

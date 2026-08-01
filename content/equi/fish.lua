@@ -172,8 +172,6 @@ FishAndChips.Fish {
     key = "fishedforitagain",
     atlas = "equi_fish",
     pos = { x = 3, y = 0 },
-    display_size = { w = 65, h = 72 },
-    pixel_size = { w = 65, h = 72 },
     weight = 15,
     cost = 6,
     blueprint_compat = true,
@@ -202,7 +200,11 @@ FishAndChips.Fish {
                 --may need to put a cap on this
                 FishAndChips.add_bait_to_inventory(bait.key, card.ability.extra.bait_given)
                 return {
-                    message = localize("k_fac_equi_plus_bait")
+                    message = localize {
+                        type = "variable",
+                        key = "k_fac_equi_plus_bait",
+                        vars = { card.ability.extra.bait_given } 
+                    }
                 }
             else
                 return {
