@@ -22,6 +22,7 @@ PotatoPatchUtils.Developer {
         love.system.openURL("https://github.com/blamperer/The-Latro")
     end,
     calculate = function(self, context)
+        -- Reset hook time
         if context.fac_end_fishing then
             G.E_MANAGER:add_event(Event({
                 func = function()
@@ -29,6 +30,12 @@ PotatoPatchUtils.Developer {
                     return true
                 end
             }))
+        end
+        -- Reallow Washed-out Voucher to spawn
+        if context.ante_change and context.ante_change ~= 0 and context.ante_end then
+            if G.GAME.pool_flags.fac_blamperer_vouched then
+                G.GAME.pool_flags.fac_blamperer_vouched = nil
+            end
         end
     end
 }
@@ -43,7 +50,6 @@ SMODS.Attribute {
     key = "fac_perfect_catch",
     aliases = { "perfect_catch", "perfect" }
 }
-
 
 -- Hoosks
 local rgg_ref = FishAndChips.mod.reset_game_globals

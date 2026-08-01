@@ -50,6 +50,18 @@ return {
                     "which is a wonder when",
                     "it's bisected like that."
                 }
+            },
+            fish_fac_blamperer_voucher = {
+                name = "Washed-out Voucher",
+                text = {
+                    "Use this {C:fac_fish}Fish{} to add a",
+                    "{C:voucher}Voucher{} to the shop",
+                    "{C:inactive}(Defeat {C:attention}Boss Blind {C:inactive}to restock)"
+                },
+                flavor = {
+                    "Maybe you can still exchange it",
+                    "for one of equal or lesser value..."
+                }
             }
         },
         PotatoPatch = {
