@@ -333,21 +333,14 @@ FishAndChips.Fish {
 		local choice = card.ability.extra.toggle % 3
 		local direction = "same"
 		local magnitude = 1
-		G.E_MANAGER:add_event(Event({
-			trigger = 'after',
-			delay = 1.0,
-			func = function()
-				card:juice_up(0.3, 0.5)
-				card.children.center:set_sprite_pos({x = 0, y = (card.ability.extra.toggle % 3) + 1})
-				return true
-			end}))
+		
 		if choice == 0 then
 			choice = "speed"
 			direction = "slower"
 			magnitude = round_number(1 / card.ability.extra.modifier, 2)
 		elseif choice == 1 then
 			choice = "movement distance"
-			direction = "slower"
+			direction = "lower"
 			magnitude = round_number(1 / card.ability.extra.modifier, 2)
 		elseif choice == 2 then
 			choice = "movement time"
@@ -372,6 +365,14 @@ FishAndChips.Fish {
 			FishAndchips.modify_fishing_profile(profile)
 		end
 	end,
+	add_to_deck = function(self, card)
+		G.E_MANAGER:add_event(Event({
+			trigger = 'after',
+			func = function()
+				card.children.center:set_sprite_pos({x = 0, y = (card.ability.extra.toggle % 3) + 1})
+				return true
+			end}))
+	end,
 	can_use = function(self, card)
 		return true
 	end,
@@ -380,6 +381,13 @@ FishAndChips.Fish {
 	end,
 	use = function(self, card)
 		card.ability.extra.toggle = card.ability.extra.toggle + 1
+		G.E_MANAGER:add_event(Event({
+			trigger = 'after',
+			func = function()
+				card:juice_up(0.3, 0.5)
+				card.children.center:set_sprite_pos({x = 0, y = (card.ability.extra.toggle % 3) + 1})
+				return true
+			end}))
 	end
 }
 

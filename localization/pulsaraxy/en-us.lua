@@ -202,7 +202,7 @@ return {
             fish_fac_pa_fishingfish = {
                 name = "The 'Fish'ing Rod",
                 text = {
-                    "Max fish {C:attention}#2#{} is #3# by #4#"
+                    "Max fish {C:attention}#2#{} is #3# by {X:mult,C:white}X#4#{}"
                 }
             }
         },
