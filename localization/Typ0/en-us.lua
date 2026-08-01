@@ -67,12 +67,21 @@ return {
             fish_fac_Gary = {
                 name = "Gyarados",
                 text = {
-                    "If fish is caught {C:attention}Perfectly{},",
-                    "earn between {C:money}$#1#{} and {C:money}$#2#{}"
+                    "{X:mult,C:white}X#1#{} mult"
                 },
                 flavor = {
                     "Once it appears, it goes on a rampage.",
                     "It remains enraged until it demolishes everything around it.",
+                }
+            },
+
+            fish_fac_Klaus = {
+                name = "Klaus",
+                text = {
+                    "{C:mult}+#1#{} mult if no face cards are played"
+                },
+                flavor = {
+                    "Good morning USA!",
                 }
             },
         },

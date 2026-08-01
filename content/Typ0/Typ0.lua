@@ -20,6 +20,26 @@ SMODS.Atlas({
 	py = 95,
 })
 
+--from cryptid
+
+if not userHasClicked then
+    userHasClicked = function(x, y) end
+end
+if not userHasClickedBoss then
+    userHasClickedBoss = function(x, y) end
+end
+
+local lcpref = Controller.L_cursor_press
+function Controller:L_cursor_press(x, y)
+    lcpref(self, x, y)
+    if G and G.jokers and G.jokers.cards and not G.SETTINGS.paused then
+        SMODS.calculate_context({ cry_press = true })
+        userHasClicked(x, y)
+        userHasClickedBoss(x, y)
+    end
+end
+
+
 --#region Fish
 
 FishAndChips.Fish {
@@ -166,21 +186,20 @@ FishAndChips.Fish {
 	cost = 0,
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
-	attributes = { "economy" },
+	attributes = { "xmult" },
 	environments = {
 		city_river = 10,
 	},
 	config = {
 		extra = {
-			dollarsmin = 3,
-			dollarsmax = 6
+			xmult = 3
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.dollarsmin, card.ability.extra.dollarsmax } }
+		return { vars = { card.ability.extra.xmult } }
 	end,
 	calculate = function(self, card, context)
-		if context.perfect then return { dollars = pseudorandom('fac_magnetfish', card.ability.extra.dollarsmin, card.ability.extra.dollarsmax) } end
+		if context.joker_main then return { xmult = card.ability.extra.xmult } end
 	end,
 }
 
@@ -192,7 +211,7 @@ FishAndChips.Fish {
 	cost = 0,
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
-	attributes = { "economy" },
+	attributes = { "xmult" },
 	environments = {
 		city_river = 10,
 	},
@@ -230,6 +249,101 @@ FishAndChips.Fish {
 			}
 		end
 	end,
+}
+
+SMODS.Sound({key = "Klaus_ass", path = "./Typ0/ass.wav",})
+SMODS.Sound({key = "Klaus_balls", path = "./Typ0/balls deep.wav",})
+SMODS.Sound({key = "Klaus_bitches", path = "./Typ0/Bitches.wav",})
+SMODS.Sound({key = "Klaus_getout", path = "./Typ0/Get Out.wav",})
+SMODS.Sound({key = "Klaus_later", path = "./Typ0/later.wav",})
+SMODS.Sound({key = "Klaus_help", path = "./Typ0/may i help you.wav",})
+SMODS.Sound({key = "Klaus_regards", path = "./Typ0/regards.wav",})
+
+FishAndChips.Fish {
+	key = "Klaus",
+	atlas = "typ0",
+	pos = { x = 1, y = 2 },
+	weight = 10,
+	cost = 0,
+	ppu_coder = { "SLDTyp0" },
+	ppu_artist = { "SLDTyp0" },
+	attributes = { "mult" },
+	environments = {
+		city_river = 10,
+	},
+	config = {
+		extra = {
+			mult = 10
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.mult } }
+	end,
+	calculate = function(self, card, context)
+		if context.cry_press and card.states.hover.is then
+			local roll = pseudorandom('fac_klaus_audio', 1, 7)
+				local sounds = {
+					'fac_Klaus_ass',
+					'fac_Klaus_balls',
+					'fac_Klaus_bitches',
+					'fac_Klaus_getout',
+					'fac_Klaus_later',
+					'fac_Klaus_help',
+					'fac_Klaus_regards',
+				}
+				local messages = {
+					"Sit Your Ass On The Ground!",
+					"I want to be Balls Deep in Egg Salad!",
+					"That's Right Bitches!",
+					"Get Out!",
+					"Happy To Take Look Later!",
+					"May I Help You?",
+					"Goofus Mcdoof? Sends his Regards!",
+				}
+
+                return {
+                    sound = sounds[roll],
+                    message = messages[roll]
+                }
+		end
+
+        if context.joker_main then
+            local has_face = false
+            for _, played_card in ipairs(context.scoring_hand) do
+                if played_card:is_face() then
+                    has_face = true
+                    break
+                end
+            end
+            if not has_face then
+				local roll = pseudorandom('fac_klaus_audio', 1, 7)
+				local sounds = {
+					'fac_Klaus_ass',
+					'fac_Klaus_balls',
+					'fac_Klaus_bitches',
+					'fac_Klaus_getout',
+					'fac_Klaus_later',
+					'fac_Klaus_help',
+					'fac_Klaus_regards',
+				}
+				local messages = {
+					"Sit Your Ass On The Ground!",
+					"I want to be Balls Deep in Egg Salad!",
+					"That's Right Bitches!",
+					"Get Out!",
+					"Happy To Take Look Later!",
+					"May I Help You?",
+					"Goofus Mcdoof? Sends his Regards!",
+				}
+
+                return {
+                    mult = card.ability.extra.mult,
+                    sound = sounds[roll],
+                    message = messages[roll]
+                }
+            end
+        end
+    end,
 }
 
 --#endregion
