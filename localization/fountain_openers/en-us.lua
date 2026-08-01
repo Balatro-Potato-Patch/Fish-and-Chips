@@ -56,7 +56,9 @@ return {
                         "Scored {C:attention}Kings{} and {C:attention}Queens{}",
                         "each give {X:mult,C:white}X#2#{} Mult"
                     }
-
+                },
+                fac_flavor = {
+                    "Heh, it's my Jarona!"
                 }
             }
         },
