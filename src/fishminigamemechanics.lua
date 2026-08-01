@@ -1306,7 +1306,8 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
         end
 
         fac_draw_fish(track_x + track_w * 0.5 + 6, fish_y, 10, state.profile.colour)
-
+        
+        --I WOULD REALLY PREFER TO KEEP THIS BUT IF I NEED TO REMOVE IT ITS ONLY VISUAL, RUBY DONT FORGET THAT TOO
         if next(SMODS.find_card("fish_fac_rusty_revolver")) or G.GAME.REVOLVER_RETICLE_ALPHA then
             local reticle = G.GAME.REVOLVER_RETICLE_ALPHA
             for i, v in pairs(SMODS.find_card("fish_fac_rusty_revolver")) do

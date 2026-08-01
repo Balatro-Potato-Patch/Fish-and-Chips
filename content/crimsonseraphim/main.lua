@@ -1037,7 +1037,7 @@ end
 FishAndChips.Fish {
 	key = "rusty_revolver",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 4, y = 0 },
 	weight = 5, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
