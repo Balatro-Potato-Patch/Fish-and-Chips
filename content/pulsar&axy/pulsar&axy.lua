@@ -126,31 +126,65 @@ FishAndChips.Fish {
 	blueprint_compat = false,
 	config = {
 		extra = {
-			perma_h_xblind_size = 2,
-			blindsize = 1,
-			blindsize_increase = 1.15
+			perma_xblind_size = 2,
+			blindsize_increase = 0.15
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.perma_h_xblind_size, } }
+		local opposite = 1 / (card.ability.extra.perma_xblind_size or 1)
+		return { vars = {
+			card.ability.extra.blindsize_increase,
+			card.ability.extra.perma_xblind_size,
+			opposite
+		} }
 	end,
+    add_to_deck = function(self, card, from_debuff)
+        if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
+            G.GAME.blind:disable()
+            play_sound('timpani')
+            SMODS.calculate_effect({ message = localize('ph_boss_disabled') }, card)
+        end
+    end,
 	remove_from_deck = function(self, card, from_debuff)
-		if FishAndChips.get_environment().key ~= 'volcano' then
-			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling * card.ability.extra.perma_h_xblind_size
-		else
-			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling / card.ability.extra.perma_h_xblind_size
+		if FishAndChips.get_environment().key ~= 'volcano' and not from_debuff then
+			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling * card.ability.extra.perma_xblind_size
+		elseif not from_debuff then
+			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling / card.ability.extra.perma_xblind_size
 		end
 	end,
 	calculate = function(self, card, context)
-		-- disable all boss blinds
+		-- disable all boss blinds, from vanillaremade's chicot
+        if context.setting_blind and not context.blueprint and context.blind.boss then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            G.GAME.blind:disable()
+                            play_sound('timpani')
+                            delay(0.4)
+                            return true
+                        end
+                    }))
+                    SMODS.calculate_effect({ message = localize('ph_boss_disabled') }, card)
+                    return true
+                end
+            }))
+            return nil, true -- This is for Joker retrigger purposes
+        end
 		-- blind size increases per round
-		if context.end_of_round then
+		if context.end_of_round and context.main_eval then
             SMODS.scale_card(card, {
-                ref_table = card.ability.extra,
-                ref_value = "blindsize",
+                ref_table = G.GAME.starting_params,
+                ref_value = "ante_scaling",
+				scalar_table = card.ability.extra,
                 scalar_value = "blindsize_increase",
-				operation = '*'
+				operation = '*',
+				no_message = true
             })
+			return {
+				message = "Scaled by " .. 1 + card.ability.extra.blindsize_increase,
+				color = G.C.BLIND
+			}
 		end
 	end
 }

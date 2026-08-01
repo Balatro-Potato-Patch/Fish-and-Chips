@@ -37,6 +37,22 @@ return {
                     "It's still slightly warm"
                 }
             },
+            fish_fac_onering = {
+                name = "The One Fish",
+                text = {
+                    "Disable all {B:blind,C:white}boss blinds{}",
+                    "Blind Size increases by {X:mult,C:white}X#1#{} each round while held",
+                    "If {C:attention}sold or destroyed{}:",
+                    "Outside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size permanently",
+                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently"
+                },
+                flavour = {
+                    "One fish to rule them all,",
+                    "one fish to find them,",
+                    "One fish to bring them all",
+                    "and in the darkness bind them."
+                }
+            }
         },
     }
 }
