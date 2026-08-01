@@ -17,10 +17,7 @@ return {
                     "Currently {X:mult,C:white}X#2#{} Mult"
                 },
                 flavour = {
-                    "WHAT STORE ARE YOU IN",
-                    "I'M AT THE SOUP STORE",
-                    "WHY ARE YOU BUYING",
-                    "CLOTHES AT THE SOUP STORE",
+                    "Rated F for Fish"
                 }
             },
             fish_fac_heatshield = {
