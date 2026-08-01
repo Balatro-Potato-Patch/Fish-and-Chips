@@ -1,7 +1,6 @@
 --yippee fish
 
 
---TODO: set up atlas
 SMODS.Atlas ({
     key = "equi_fish",
     path = "equi/fish.png",
@@ -19,7 +18,7 @@ SMODS.Atlas ({
 PotatoPatchUtils.Developer {
     name = "Equi",
     atlas = "fac_equi_credits",
-    pos = { x = 0, y = 0 }, -- temp
+    pos = { x = 0, y = 0 },
     colour = G.C.BLUE,
     loc = true
 }
@@ -63,8 +62,10 @@ FishAndChips.Fish {
 --Antarctic Krill
 FishAndChips.Fish {
     key = "antarctickrill",
-    --atlas
+    atlas = "equi_fish",
     pos = { x = 1, y = 0 },
+    display_size = { w = 67, h = 51 },
+    pixel_size = { w = 67, h = 51 },
     weight = 15,
     cost = 5,
     blueprint_compat = true,

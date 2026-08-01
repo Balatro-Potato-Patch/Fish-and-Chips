@@ -9,7 +9,9 @@ return {
                     "{C:chips}Chips{} equal to their {C:attention}rank"
                 },
                 flavor = {
-                    "Just say what you see!"
+                    "A British national treasure",
+                    "that wants you to",
+                    "say what you see."
                 }
             },
 
