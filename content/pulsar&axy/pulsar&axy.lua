@@ -127,7 +127,8 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			perma_xblind_size = 2,
-			blindsize_increase = 0.15
+			blindsize_increase = 1.15,
+			rounds_elapsed = 0
 		}
 	},
 	loc_vars = function(self, info_queue, card)
@@ -135,7 +136,8 @@ FishAndChips.Fish {
 		return { vars = {
 			card.ability.extra.blindsize_increase,
 			card.ability.extra.perma_xblind_size,
-			opposite
+			opposite,
+			G.GAME.starting_params.ante_scaling
 		} }
 	end,
     add_to_deck = function(self, card, from_debuff)
@@ -146,11 +148,30 @@ FishAndChips.Fish {
         end
     end,
 	remove_from_deck = function(self, card, from_debuff)
-		if FishAndChips.get_environment().key ~= 'volcano' and not from_debuff then
-			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling * card.ability.extra.perma_xblind_size
-		elseif not from_debuff then
-			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling / card.ability.extra.perma_xblind_size
+		if not from_debuff then
+			card.ability.extra.rounds_elapsed = card.ability.extra.rounds_elapsed or 0
+			card.ability.extra.blindsize_increase = (1 / card.ability.extra.blindsize_increase) ^ card.ability.extra.rounds_elapsed
+
+			SMODS.scale_card(card, {
+				ref_table = G.GAME.starting_params,
+				ref_value = "ante_scaling",
+				scalar_table = card.ability.extra,
+				scalar_value = "blindsize_increase",
+				operation = 'X',
+				no_message = true
+			})
 		end
+		
+		if FishAndChips.get_environment().key == 'volcano' and not from_debuff then
+			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling / card.ability.extra.perma_xblind_size
+		elseif not from_debuff then
+			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling * card.ability.extra.perma_xblind_size
+		end
+
+		SMODS.calculate_effect({
+			message = "Blind size: " .. G.GAME.starting_params.ante_scaling,
+			color = G.C.BLIND
+		}, card)
 	end,
 	calculate = function(self, card, context)
 		-- disable all boss blinds, from vanillaremade's chicot
@@ -178,13 +199,14 @@ FishAndChips.Fish {
                 ref_value = "ante_scaling",
 				scalar_table = card.ability.extra,
                 scalar_value = "blindsize_increase",
-				operation = '*',
+				operation = 'X',
 				no_message = true
             })
-			return {
-				message = "Scaled by " .. 1 + card.ability.extra.blindsize_increase,
+			card.ability.extra.rounds_elapsed = card.ability.extra.rounds_elapsed + 1
+			SMODS.calculate_effect({
+				message = "Blind size: " .. G.GAME.starting_params.ante_scaling,
 				color = G.C.BLIND
-			}
+			}, card)
 		end
 	end
 }
