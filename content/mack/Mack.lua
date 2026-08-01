@@ -3,13 +3,14 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_cards',
 	colour = G.C.YELLOW,
 	ignore_limits = true, -- USING THIS VALUE WILL RESULT IN YOUR SUBMISSION BEING REJECTED
-	fac_partner = 'Snapper' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+	fac_partner =
+	'Snapper'            -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
 })
 
 PotatoPatchUtils.Developer({
 	name = 'Snapper',
 	atlas = 'fac_cards',
-	pos = {x = 1, y = 0},
+	pos = { x = 1, y = 0 },
 	colour = G.C.YELLOW,
 	ignore_limits = true,
 	fac_partner = 'Mack'
@@ -104,7 +105,8 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.modify_final_cashout then
-			local money = math.max(0, math.floor(G.GAME.dollars / card.ability.extra.money_needed)) * card.ability.extra.money
+			local money = math.max(0, math.floor(G.GAME.dollars / card.ability.extra.money_needed)) *
+			card.ability.extra.money
 			if money > 0 then
 				return { sand_dollars = money }
 			end
@@ -419,7 +421,8 @@ FishAndChips.Fish {
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		if card.area and card.area == G.fac_fish_area then
-			local other_fish = G.fac_fish_area.cards[#G.fac_fish_area.cards] ~= card and G.fac_fish_area.cards[#G.fac_fish_area.cards]
+			local other_fish = G.fac_fish_area.cards[#G.fac_fish_area.cards] ~= card and
+			G.fac_fish_area.cards[#G.fac_fish_area.cards]
 			local compatible = other_fish and other_fish ~= card and other_fish.config.center.blueprint_compat
 			local main_end = {
 				{

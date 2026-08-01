@@ -18,6 +18,11 @@ FishAndChips.Fish {
         city_river = 2.0,
         garden = 2.0
     },
+    attributes = {
+        suit,
+        economy,
+        passive
+    },
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds,
             'J8-Bit_money_mola_mola')
@@ -81,6 +86,12 @@ FishAndChips.Fish {
         aquifer = 4.0,
         garden = 4.0
     },
+    attributes = {
+        rank,
+        chips,
+        mult,
+        passive
+    },
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -124,6 +135,9 @@ FishAndChips.Fish {
         aquifer = 3.0,
         garden = 2.0,
         backroom = 1.0
+    },
+    attributes = {
+        passive,
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -205,6 +219,10 @@ FishAndChips.Fish {
         backroom = 1.0,
         wormhole = 1.0,
     },
+    attributes = {
+        usable,
+        economy
+    },
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -249,6 +267,10 @@ FishAndChips.Fish {
     },
     environments = {
         wormhole = 5.0
+    },
+    attributes = {
+        passive,
+        generation
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -363,6 +385,10 @@ FishAndChips.Fish {
         volcano = 4.5,
         soup = 3.0
     },
+    attributes = {
+        passive,
+        mult
+    },
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -459,6 +485,10 @@ FishAndChips.Fish {
         pier = 3.0,
         soup = 4.5
     },
+    attributes = {
+        passive,
+        mult,
+    },
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -467,106 +497,6 @@ FishAndChips.Fish {
         }
     end
 }
-
--- NOTE TO FNC DEVS: THIS CODE IS FROM THE MULTIPLAYER MOD!! I'M NOT SURE IF THERE'S A BETTER WAY TO DO THIS SO PLEASE FEEL FREE TO REWRITE THIS TO BE BETTER AND NOT JUST BLATANT COPYING AND PASTING
--- source: https://github.com/Balatro-Multiplayer/BalatroMultiplayer/blob/dev/objects/decks/01_indigo.lua
--- (thank you)
-local function check_joker_space(card)
-    if card.config.center.set == "Joker" and card.edition and card.edition.negative then return true end
-    local c = 0
-    local un_c = G.jokers.config.card_limit
-    for i, v in ipairs(G.jokers.cards) do
-        if v.edition and v.edition.type == "negative" then
-            un_c = un_c - 1
-        elseif v.ability.eternal then
-            c = c + 1
-        else
-            break
-        end
-    end
-    return c < un_c
-end
-
-local function is_usable(card)
-    local center = card.config.center
-    local key = center.key
-    if center.set == "Enhanced" or center.set == "Default" or center.set == "Planet" then
-        return true
-    elseif center.set == "Joker" then
-        return check_joker_space(card)
-    elseif center.set == "Tarot" then
-        if key == "c_fool" then
-            return G.GAME.last_tarot_planet and G.GAME.last_tarot_planet ~= "c_fool"
-        elseif key == "c_judgement" then
-            return check_joker_space(card)
-        elseif key == "c_wheel_of_fortune" then
-            if card.eligible_strength_jokers and next(card.eligible_strength_jokers) then return true end
-            return false
-        elseif card.ability.consumeable.max_highlighted then
-            if #G.hand.cards >= (card.ability.consumeable.min_highlighted or 1) then return true end
-            return false
-        else
-            return true
-        end
-    elseif center.set == "Spectral" then
-        if
-            key == "c_familiar"
-            or key == "c_grim"
-            or key == "c_incantation"
-            or key == "c_immolate"
-            or key == "c_sigil"
-            or key == "c_ouija"
-        then
-            if #G.hand.cards > 1 then -- vanilla bug?
-                return true
-            end
-            return false
-        elseif key == "c_aura" then
-            local bool = false
-            for i, v in ipairs(G.hand.cards) do
-                if not v.edition then
-                    bool = true
-                    break
-                end
-            end
-            return bool
-        elseif key == "c_ectoplasm" or key == "c_hex" then
-            if card.eligible_editionless_jokers and next(card.eligible_editionless_jokers) then return true end
-            return false
-        elseif key == "c_wraith" or key == "c_soul" then
-            return check_joker_space(card)
-        elseif key == "c_ankh" then
-            if G.jokers.cards[1] then return check_joker_space(card) end
-            return false
-        elseif card.ability.consumeable.max_highlighted then
-            if #G.hand.cards >= (card.ability.consumeable.min_highlighted or 1) then return true end
-            return false
-        else
-            return true
-        end
-    end
-    return true -- hopefully no mod compat doesn't kill a run (it will)
-end
-
-local can_skip_booster_pack = G.FUNCS.can_skip_booster
-G.FUNCS.can_skip_booster = function(e)
-    if next(SMODS.find_card("fish_fac_J8-Bit_boostorca")) then
-        local softlock = true
-        for i, v in ipairs(G.pack_cards.cards) do
-            if is_usable(v) then
-                softlock = false
-                break
-            end
-        end
-        if not softlock then
-            e.config.colour = G.C.UI.BACKGROUND_INACTIVE
-            e.config.button = nil
-            return
-        end
-    end
-    return can_skip_booster_pack(e)
-end
--- END MULTIPLAYER COPYING AND PASTING
 
 FishAndChips.Fish {
     key = "J8-Bit_boostorca",
@@ -585,6 +515,10 @@ FishAndChips.Fish {
     },
     environments = {
         pier = 4,
+    },
+    attributes = {
+        passive,
+        generation,
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -630,6 +564,11 @@ FishAndChips.Fish {
         backroom = 2.0,
         wormhole = 2.0,
         swamp = 4.0
+    },
+    attributes = {
+        passive,
+        generation,
+        economy,
     },
     loc_vars = function(self, info_queue, card)
         local vars = {
@@ -700,6 +639,11 @@ FishAndChips.Fish {
         garden = 4.0,
         pier = 2.0
     },
+    attributes = {
+        passive,
+        mult,
+        retrigger,
+    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.extra.enhancement]
         return {
@@ -747,6 +691,9 @@ FishAndChips.Fish {
     environments = {
         styx = 4.0,
         backroom = 2.0
+    },
+    attributes = {
+        passive,
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -796,6 +743,10 @@ FishAndChips.Fish {
         garden = 4.0,
         backroom = 2.0,
         wormhole = 4.0,
+    },
+    attributes = {
+        passive,
+        generation,
     },
     loc_vars = function(self, info_queue, card)
         if card.ability.extra.gender_presentation == "masc" then
@@ -909,11 +860,41 @@ FishAndChips.Fish {
         city_river = 3.5,
         wormhole = 2.0
     },
+    attributes = {
+        passive,
+        economy,
+    },
     loc_vars = function(self, info_queue, card)
+        local possible_popups = {}
+        table.insert(possible_popups, SMODS.create_sprite(0, 0, 1.5, 1.5 * 332 / 460, "fac_j8bit_trustmeimadolphin"))
+        local popup_quotes = {}
+        for i = 1, 6 do
+            table.insert(popup_quotes, localize("k_J8-Bit_poppup_quote_" .. tostring(i)))
+        end
+        local poppup_sprite = AnimatedSprite(0.0, 0.0, 1.0, 1.0 * 88 / 112, G.ANIMATION_ATLAS['fac_j8bit_poppup'])
+        table.insert(possible_popups, {
+            n = G.UIT.O,
+            config = {
+                object = DynaText({
+                    string = popup_quotes,
+                    colours = { G.C.JOKER_GREY },
+                    pop_in_rate = 9999999,
+                    silent = true,
+                    random_element = true,
+                    pop_delay = 0.2011,
+                    scale = 0.25,
+                    min_cycle_time = 0
+                })
+            }
+        })
         return {
             vars = {
                 card.ability.extra.fish_cocaine,
                 card.ability.extra.treasure_reward,
+                elements = {
+                    possible_popups[math.random(#possible_popups)],
+                    poppup_sprite
+                }
             }
         }
     end,
@@ -945,6 +926,10 @@ FishAndChips.Fish {
         backroom = 3.0,
         wormhole = 3.0,
         garden = 3.0
+    },
+    attributes = {
+        usable,
+        generation,
     },
     loc_vars = function(self, info_queue, card)
         -- This vanilla variable only checks for vanilla Tarots and Planets, you would have to keep track on your own for any custom consumables
@@ -1015,6 +1000,11 @@ FishAndChips.Fish {
         pier = 1.0,
         swamp = 1.0,
         styx = 1.5
+    },
+    attributes = {
+        passive,
+        xmult,
+        boss_blind,
     },
     loc_vars = function(self, info_queue, card)
         local main_end = nil
@@ -1130,10 +1120,17 @@ FishAndChips.Fish {
         garden = 1.0,
         wormhole = 2.0
     },
+    attributes = {
+        passive,
+        rank,
+        suit
+    },
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                localize(card.ability.extra.rank, 'ranks')
+                localize(card.ability.extra.rank, 'ranks'),
+                localize({ type = 'name_text', key = card.config.center.key, set = card.config.center.set })[1] or
+                "Primarina"
             }
         }
     end,
@@ -1168,20 +1165,117 @@ FishAndChips.Fish {
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
-    blueprint_compat = true,
+    blueprint_compat = false,
+    requires_hand = true,
     config = {
         extra = {
-
+            cards_selectable = 2,
+            can_destroy = true,
         }
     },
     environments = {
-
+        wormhole = 1.0,
+        styx = 0.1,
+        pier = 0.1,
+        city_river = 0.5
+    },
+    attributes = {
+        usable,
+        destroy_card,
+        generation
     },
     loc_vars = function(self, info_queue, card)
-        return {}
+        for i, edition in ipairs(G.P_CENTER_POOLS.Edition) do
+            --print(edition.key)
+            local tag_name = string.gsub(edition.key, "e_", "tag_")
+            --print(tag_name)
+            if G.P_TAGS[tag_name] then
+                info_queue[#info_queue + 1] = { key = tag_name, set = 'Tag' }
+            end
+        end
+        local main_end = nil
+        if card.area and (card.area == G.fac_fish_area) then
+            local disableable = G.GAME.blind and card.ability.extra.can_destroy
+            main_end = {
+                {
+                    n = G.UIT.C,
+                    config = { align = "bm", minh = 0.4 },
+                    nodes = {
+                        {
+                            n = G.UIT.C,
+                            config = { ref_table = card, align = "m", colour = disableable and G.C.GREEN or G.C.RED, r = 0.05, padding = 0.06 },
+                            nodes = {
+                                { n = G.UIT.T, config = { text = " " .. localize('k_J8-Bit_ts_' .. (disableable and 'active' or 'inactive')) .. " ", colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.9 } },
+                            }
+                        }
+                    }
+                }
+            }
+        end
+        return {
+            vars = {
+                card.ability.extra.cards_selectable
+            },
+            main_end = main_end
+        }
+    end,
+    calculate = function(self, card, context)
+        if context.setting_blind and not context.blueprint then
+            return {
+                message = localize("k_J8-Bit_ts_active"),
+                colour = G.C.GREEN,
+                func = function()
+                    card.ability.extra.can_destroy = true
+                    return true
+                end
+            }
+        end
     end,
     can_use = function(self, card)
-
+        return card.ability.extra.can_destroy and G.hand and #G.hand.highlighted > 0 and
+            #G.hand.highlighted <= card.ability.extra.cards_selectable
+    end,
+    keep_on_use = function(self, card)
+        return true
+    end,
+    use = function(self, card)
+        SMODS.calculate_effect(
+            {
+                message = localize('k_J8-Bit_ts_attack'),
+                colour = G.C.GREEN
+            }, card)
+        card.ability.extra.can_destroy = false
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                play_sound('tarot1')
+                card:juice_up(0.3, 0.5)
+                return true
+            end
+        }))
+        for i, playing_card in ipairs(G.hand.highlighted) do
+            if playing_card.edition then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound("tarot1")
+                        add_tag(Tag(string.gsub(playing_card.edition.key, "e_", "tag_")))
+                        playing_card:juice_up(0.3, 0.5)
+                        return true
+                    end
+                }))
+                delay(0.5)
+            end
+        end
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.2,
+            func = function()
+                SMODS.destroy_cards(G.hand.highlighted)
+                return true
+            end
+        }))
+        delay(0.3)
     end,
 }
 
@@ -1196,17 +1290,70 @@ FishAndChips.Fish {
     blueprint_compat = true,
     config = {
         extra = {
-
+            money = 8,
+            sand_dollars = 8,
         }
     },
     environments = {
-
+        pier = 1.0,
+        soup = 1.0,
+        wormhole = 1.0,
+    },
+    attributes = {
+        passive,
+        economy,
     },
     loc_vars = function(self, info_queue, card)
-        return {}
+        return {
+            vars = {
+                card.ability.extra.money,
+                card.ability.extra.sand_dollars,
+                "#leftshark"
+            }
+        }
     end,
     calculate = function(self, card, context)
-
+        if context.fac_fish_caught then
+            local bait = G.P_CENTERS[G.GAME.fac_active_bait]
+            --print(bait)
+            if bait.target then
+                --print(bait.target)
+                local bait_matches = false
+                local attributes = {}
+                if type(bait.target) == "table" then
+                    for i, attribute in ipairs(bait.target) do
+                        table.insert(attributes, attribute)
+                    end
+                elseif type(bait.target) == "string" then
+                    table.insert(attributes, bait.target)
+                end
+                if #attributes > 0 then
+                    --print(attributes)
+                    for i, attribute in ipairs(attributes) do
+                        if context.fac_fish_caught:has_attribute(attribute) then
+                            --print(attribute .. " is part of the bait!")
+                            bait_matches = true
+                            break
+                        end
+                    end
+                end
+                if not bait_matches then
+                    G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+                    return {
+                        sand_dollars = card.ability.extra.sand_dollars,
+                        dollars = card.ability.extra.money,
+                        func = function() -- This is for timing purposes, it runs after the dollar manipulation
+                            G.E_MANAGER:add_event(Event({
+                                func = function()
+                                    G.GAME.dollar_buffer = 0
+                                    return true
+                                end
+                            }))
+                        end
+                    }
+                end
+            end
+        end
     end,
 }
 
@@ -1221,17 +1368,40 @@ FishAndChips.Fish {
     blueprint_compat = true,
     config = {
         extra = {
-
+            repetitions = 1
         }
     },
     environments = {
-
+        wormhole = 1.0
+    },
+    attributes = {
+        passive,
+        retrigger,
     },
     loc_vars = function(self, info_queue, card)
-        return {}
+        return {
+            vars = {
+                localize("k_planet"),
+                colours = {
+                    G.C.SECONDARY_SET.Planet
+                }
+            }
+        }
     end,
     calculate = function(self, card, context)
-
+        if context.repetition and context.cardarea == G.play then
+            local planets = 0
+            for i, consumable in ipairs(G.consumeables.cards) do
+                if consumable.ability.set == 'Planet' and consumable.ability.consumeable.hand_type == context.scoring_name then
+                    planets = planets + 1
+                end
+            end
+            if planets > 0 then
+                return {
+                    repetitions = card.ability.extra.repetitions * planets
+                }
+            end
+        end
     end,
 }
 
@@ -1243,19 +1413,71 @@ FishAndChips.Fish {
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
-    blueprint_compat = true,
+    blueprint_compat = false,
     config = {
         extra = {
-
+            edition = "e_negative",
+            did_copy = false
         }
     },
     environments = {
-
+        calm_pond = 1.0,
+        chocolate_river = 1.0,
+        styx = 1.0,
+        pier = 1.0,
+        swamp = 1.0,
+        aquifer = 1.0,
+        volcano = 1.0,
+        city_river = 1.0,
+        soup = 1.0,
+        garden = 1.0,
+        backroom = 1.0,
+        wormhole = 1.0,
+    },
+    attributes = {
+        passive,
     },
     loc_vars = function(self, info_queue, card)
-        return {}
+        info_queue[#info_queue + 1] = { key = 'e_negative_generic', set = 'Edition', config = { extra = 1 } }
+        return {
+            vars = {
+                localize({ type = 'name_text', key = "e_negative_generic", set = "Edition" })
+            }
+        }
     end,
-    calculate = function(self, card, context)
-
-    end,
+    update = function(self, card, dt)
+        if G.fac_fish_area and card.area == G.fac_fish_area and not card.ability.extra.did_copy then
+            card.ability.extra.did_copy = true
+            local fish = {}
+            for i = 1, #G.fac_fish_area.cards do
+                if G.fac_fish_area.cards[i] ~= card then
+                    fish[#fish + 1] = G.fac_fish_area.cards[i]
+                end
+            end
+            if #fish > 0 then
+                --print("we got fish")
+                if #G.fac_fish_area.cards <= G.fac_fish_area.config.card_limit + 1 then
+                    local chosen_fish = pseudorandom_element(fish, 'fac_j8bit_red_herring')
+                    G.E_MANAGER:add_event(Event({
+                        delay = 0.5,
+                        func = function()
+                            local copied_fish = SMODS.copy_card(chosen_fish, {
+                                area = G.fac_fish_area,
+                                strip_edition = true
+                            })
+                            copied_fish:set_edition(card.ability.extra.edition)
+                            return true
+                        end
+                    }))
+                end
+            end
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    SMODS.destroy_cards(card, nil, nil, true)
+                    G:save_progress()
+                    return true
+                end
+            }))
+        end
+    end
 }

@@ -126,7 +126,6 @@ return {
                     "{C:attention}+#1#{} initial Booster Pack",
                     "slots in shop",
                     "{C:attention}+#1#{} cards in Booster Packs",
-                    "Booster Packs {C:red}can't be skipped"
                 },
                 flavor = {
                     "Everybody could use a little boost."
@@ -222,15 +221,15 @@ return {
             },
             ["fish_fac_J8-Bit_poppup"] = {
                 name = {
-                    "Poppup",
+                    "{element:2} Poppup",
                     "{C:inactive,s:0.8}(Deltarune)"
                 },
                 text = {
                     "{X:blue,C:white} X#1# {} {C:fac_fish}Fish{} swimming speed",
                     "{X:money,C:white} X#1# {} reward from {C:gold}Treasure",
                 },
-                flavor = {
-                    ""
+                flavour = {
+                    "{element:1}",
                 }
             },
             ["fish_fac_J8-Bit_spectral_sea_angel"] = {
@@ -281,7 +280,9 @@ return {
                     "and {C:attention}always score"
                 },
                 flavor = {
-                    "(would)"
+                    "For #2#, every battle's a stage.",
+                    "Its singing and the dancing of,",
+                    "its balloons will mesmerize the audience."
                 }
             },
             ["fish_fac_J8-Bit_toxic_seahorse"] = {
@@ -318,7 +319,7 @@ return {
                     "with unrelated {C:fac_bait}Bait{}"
                 },
                 flavor = {
-                    "{E:fac_rainbow_text}#leftshark"
+                    "{E:fac_j8_rainbow}#3#"
                 }
             },
             ["fish_fac_J8-Bit_sdmg"] = {
@@ -353,7 +354,16 @@ return {
     },
     misc = {
         dictionary = {
-            ["k_J8-Bit_shark_waifu_quip"] = "Here you go!"
+            ["k_J8-Bit_shark_waifu_quip"] = "Here you go!",
+            ["k_J8-Bit_ts_active"] = "Ready to attack!",
+            ["k_J8-Bit_ts_inactive"] = "Recharging...",
+            ["k_J8-Bit_ts_attack"] = "Acid Burst!",
+            ["k_J8-Bit_poppup_quote_1"] = "...OTANJOBY.. OMEDETOH...?",
+            ["k_J8-Bit_poppup_quote_2"] = ".....ASOBOH ......?",
+            ["k_J8-Bit_poppup_quote_3"] = "Click Here! Click Here! Click Here! Click Here!",
+            ["k_J8-Bit_poppup_quote_4"] = "This application is only supported by OS 2000.",
+            ["k_J8-Bit_poppup_quote_5"] = "GOKARMASHI O INARY....?",
+            ["k_J8-Bit_poppup_quote_6"] = "NEED... LOOK... ME...",
         },
     }
 }

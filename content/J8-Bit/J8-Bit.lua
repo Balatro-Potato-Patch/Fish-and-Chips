@@ -14,6 +14,23 @@ SMODS.Atlas({
     py = 95,
 })
 
+SMODS.Atlas({
+    key = "j8bit_trustmeimadolphin",
+    path = "J8-Bit/trustmeimadolphin.png",
+    px = 460,
+    py = 332,
+})
+
+SMODS.Atlas({
+    key = "j8bit_poppup",
+    path = "J8-Bit/poppup.png",
+    px = 88,
+    py = 112,
+    atlas_table = 'ANIMATION_ATLAS',
+    fps = 8,
+    frames = 6
+})
+
 -- ## COLORS ##
 
 loc_colour('red')
@@ -53,7 +70,7 @@ local rainbow_colors = {
 }
 
 SMODS.DynaTextEffect {
-    key = "rainbow_text",
+    key = "j8_rainbow",
     func = function(dynatext, index, letter)
         local s = #rainbow_colors
         local o = index * -0.5
