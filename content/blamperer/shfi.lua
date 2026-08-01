@@ -7,7 +7,7 @@ FishAndChips.Fish {
     attributes = {
         "swap"
     },
-    weight = 4,
+    weight = 3,
     environments = {
         styx = 8,
     },
