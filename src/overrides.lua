@@ -484,3 +484,10 @@ function Controller:is_node_focusable(node)
 	end
 	return ret
 end
+
+local can_highlight_ref = CardArea.can_highlight
+function CardArea:can_highlight(card)
+    if SilkTouch and not G.SETTINGS.enable_action_buttons and G.SETTINGS.enable_dragging
+    and self.config.fac_bait_shop then return true end
+    return can_highlight_ref(self, card)
+end
