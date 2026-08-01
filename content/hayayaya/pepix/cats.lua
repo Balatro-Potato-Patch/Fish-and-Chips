@@ -1,3 +1,5 @@
+local cats = { fac_fish_cat1 = true, fac_fish_cat2 = true, fac_fish_cat3 = true }
+
 FishAndChips.Fish({
 	key = "cat1",
 	weight = 3,
@@ -15,6 +17,14 @@ FishAndChips.Fish({
 	atlas = "hayayaya_fih",
 	pos = { x = 3, y = 0 },
 	config = { extra = { chips = 0, chips_add = 10, forme_counter = 0, forme_max = 3 } },
+	in_pool = function(self, args)
+		for _, c in ipairs(G.fac_fish_area.cards) do
+			if cats[c.config.center_key] then
+				return false
+			end
+		end
+		return true
+	end,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -80,6 +90,14 @@ FishAndChips.Fish({
 	atlas = "hayayaya_fih",
 	pos = { x = 2, y = 0 },
 	config = { extra = { chips = 0, chips_add = 10, forme_counter = 0, forme_max = 3 } },
+	in_pool = function(self, args)
+		for _, c in ipairs(G.fac_fish_area.cards) do
+			if cats[c.config.center_key] then
+				return false
+			end
+		end
+		return true
+	end,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -141,6 +159,14 @@ FishAndChips.Fish({
 	atlas = "hayayaya_fih",
 	pos = { x = 4, y = 0 },
 	config = { extra = { xchips = 1, xchips_add = 0.05 } },
+	in_pool = function(self, args)
+		for _, c in ipairs(G.fac_fish_area.cards) do
+			if cats[c.config.center_key] then
+				return false
+			end
+		end
+		return true
+	end,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
