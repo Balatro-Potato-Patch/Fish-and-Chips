@@ -6,30 +6,30 @@ return {
 				text = {
 					"Create a random {C:attention}Bait{}",
 					"at the end of round",
-					"if any {C:attention}Consumable{} held",
+					"if any {C:attention}Consumable{} is held",
 				},
 			},
 			fish_fac_sg11_n_vekhi_water_ghoul = {
 				name = "Water Ghoul",
 				text = {
 					"When {C:attention}primed{}, next caught Fish",
-					"will be {C:dark_edition}Negative{}, then",
-					"{S:1.1,C:red,E:2}self destructs{}",
+					"will be {C:dark_edition}Negative{},",
+					"{S:1.1,C:red,E:2}self destructs{} afterwards",
 				},
 			},
 			fish_fac_sg11_n_vekhi_water_ghoul_primed = {
 				name = "Water Ghoul",
 				text = {
 					"Next caught Fish",
-					"will be {C:dark_edition}Negative{}, then",
-					"{S:1.1,C:red,E:2}self destructs{}",
+					"will be {C:dark_edition}Negative{}",
+					"{S:1.1,C:red,E:2}self destructs{}, afterwards",
 				},
 			},
 			fish_fac_sg11_n_vekhi_quantum_fish_wild = {
 				name = "Quantum Fish",
 				text = {
-					"Random {C:attention}any{} card gives",
-					"{C:white,X:mult}X#1#{} Mult when scored",
+					"{C:attention}Random{} card on screen gives",
+					"{C:white,X:mult}X#1#{} Mult during scoring",
 				},
 				flavour = {
 					"Exist in all places at the same time",
@@ -39,8 +39,8 @@ return {
 			fish_fac_sg11_n_vekhi_quantum_fish = {
 				name = "Quantum Fish (photo)",
 				text = {
-					"Random card on screen gives",
-					"{C:white,X:mult}X#1#{} Mult when triggered",
+					"{C:attention}Random{} card on screen gives",
+					"{C:white,X:mult}X#1#{} Mult during scoring",
 				},
 				flavour = {
 					"Exist in all places at the same time",
@@ -59,15 +59,15 @@ return {
 				name = "Yellowbin Tuna",
 				text = {
 					"When {C:attention}Treasure{} is caught",
-					"create a copy of one of",
-					"{C:attention}#1#{} last sold cards",
+					"Create a {C:attention}random#{} ",
+					"recently sold card",
 					"{C:inactive}(Must have room){}",
 				},
 			},
 			fish_fac_sg11_n_vekhi_whale_shark = {
 				name = "Whale Shark",
 				text = {
-					"Swallows all played and scored",
+					"Swallows each played and scored",
 					"{C:attention}2{}, {C:attention}3{}, {C:attention}4{}, or {C:attention}5{}, and gains {C:white,X:mult}X#1#{} Mult",
 					"for each card swallowed",
 					"{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult){}",
