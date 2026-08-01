@@ -40,4 +40,7 @@ FishAndChips.Fish {
             end
         end
     end,
+    add_to_deck = function(self, card, from_debuff)
+        G.GAME.blamperer_hook_time = 0
+    end
 }
