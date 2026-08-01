@@ -94,6 +94,11 @@ FishAndChips.Fish {
     end
 }
 
+SMODS.Sound {
+    key = "crimsonseraphim_shimmer",
+    path = "crimsonseraphim/shimmer.ogg"
+}
+
 function Card:transmute(seed, center)
     local result = center
     if not center then
@@ -111,13 +116,23 @@ function Card:transmute(seed, center)
         center = result
     }
     self.states.hover.can = false
+    play_sound("fac_crimsonseraphim_shimmer")
     G.E_MANAGER:add_event(Event{
         blocking = false,
         func = function()
-            if G.TIMERS.REAL - self.children.center.aeonfish_transmute.realtime_start > 1 then
+            if G.TIMERS.REAL - self.children.center.aeonfish_transmute.realtime_start > 0.6 then
                 self:set_ability(self.children.center.aeonfish_transmute.center)
                 self.children.center.aeonfish_transmute = nil
                 self.states.hover.can = true
+                return true
+            end
+        end
+    })
+    G.E_MANAGER:add_event(Event{
+        blocking = false,
+        func = function()
+            if math.abs((G.TIMERS.REAL - self.children.center.aeonfish_transmute.realtime_start) - 0.2) < 0.01 then
+                self:juice_up(0.6, 0.7)
                 return true
             end
         end
@@ -143,7 +158,7 @@ SMODS.Shader({
     send_vars = function (sprite, card)
         return {
             realtime_offset = G.TIMERS.REAL - sprite.aeonfish_transmute.realtime_start,
-            reverse = not sprite.aeonfish_transmute.image
+            reverse = not sprite.aeonfish_transmute.image,
         }
     end,
 })
@@ -757,6 +772,23 @@ FishAndChips.Fish {
 	end,
 }
 
+SMODS.Sound {
+    key = "crimsonseraphim_gungir_break",
+    path = "crimsonseraphim/gungir_break.ogg"
+}
+SMODS.Sound {
+    key = "crimsonseraphim_gungir_charge",
+    path = "crimsonseraphim/gungir_charge.ogg"
+}
+SMODS.Sound {
+    key = "crimsonseraphim_gungir_success",
+    path = "crimsonseraphim/gungir_success.ogg"
+}
+SMODS.Sound {
+    key = "crimsonseraphim_gungir_decharge",
+    path = "crimsonseraphim/gungir_decharge.ogg"
+}
+
 FishAndChips.Fish {
 	key = "gungir",
 	atlas = "crimsonseraphim_aeonfish",
@@ -783,6 +815,11 @@ FishAndChips.Fish {
     }
 	end,
 	use = function(self, card)
+        if card.ability.extra.charged then
+            play_sound("fac_crimsonseraphim_gungir_decharge")
+        else    
+            play_sound("fac_crimsonseraphim_gungir_charge")
+        end
 		card.ability.extra.charged = not card.ability.extra.charged
 	end,
 	can_use = function(self, card)
@@ -796,15 +833,27 @@ FishAndChips.Fish {
             if context.fac_fish_caught then
                 context.fac_fish_caught:set_edition(SMODS.poll_object{type = "Edition", guaranteed = true})
             end
-            if context.fac_end_fishing and not context.perfect then
-                G.E_MANAGER:add_event(Event{
-                    trigger = "after",
-                    blocking = false,
-                    func = function()
-                        SMODS.destroy_cards(card, nil, true)
-                        return true
-                    end
-                })
+            if context.fac_end_fishing then
+                if not context.perfect then
+                    G.E_MANAGER:add_event(Event{
+                        trigger = "after",
+                        blocking = false,
+                        func = function()
+                            play_sound("fac_crimsonseraphim_gungir_break")
+                            SMODS.destroy_cards(card, nil, true)
+                            return true
+                        end
+                    })
+                else
+                    G.E_MANAGER:add_event(Event{
+                        trigger = "after",
+                        blocking = false,
+                        func = function()
+                            play_sound("fac_crimsonseraphim_gungir_success")
+                            return true
+                        end
+                    })
+                end
             end
         end
     end
@@ -966,4 +1015,126 @@ function Card:save()
         self.ability.saved_card.card = c
     end
     return ret
+end
+
+SMODS.Sound {
+    key = "crimsonseraphim_revolver_spin",
+    path = "crimsonseraphim/revolver_spin.ogg"
+}
+
+SMODS.Sound {
+    key = "crimsonseraphim_revolver_empty",
+    path = "crimsonseraphim/revolver_empty.ogg"
+}
+
+for i = 1, 8 do
+    SMODS.Sound {
+    key = "crimsonseraphim_revolver_shots_"..i,
+    path = "crimsonseraphim/revolver_shots_"..i..".ogg"
+}
+end
+
+FishAndChips.Fish {
+	key = "rusty_revolver",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "useable" },
+	environments = {
+        city_river = 5,
+	},
+    config = {
+        extra = {
+            shots = 4
+        }
+    },
+    loc_vars = function(_, _, card)
+        return {
+            vars = {
+                card.ability.extra.shots,
+                card.ability.extra.primed or 0
+            }
+        }
+    end,
+    use = function(self, card)
+        play_sound()
+        if card.ability.extra.shots <= 0 then
+            play_sound("fac_crimsonseraphim_revolver_empty")
+        else
+            play_sound("fac_crimsonseraphim_revolver_spin")
+            card.ability.extra.primed = (card.ability.extra.primed or 0) + 1
+            card.ability.extra.shots = card.ability.extra.shots - 1
+        end
+	end,
+	can_use = function(self, card)
+		return card.ability.extra.shots > 0
+	end,
+    keep_on_use = function()
+        return true
+    end,
+    calculate = function(self, card, context)
+        if context.fac_modify_fishing_profile then  
+            context.fishing_profile.vel_limit = context.fishing_profile.vel_limit * math.pow(1/2, card.ability.extra.primed or 0)
+        end
+    end
+}
+
+function FishAndChips.crimsonseraphim.draw_reticle(x, y, size)
+    love.graphics.setColor({G.C.RED[1], G.C.RED[2], G.C.RED[3], G.GAME.REVOLVER_RETICLE_ALPHA or 1})
+    local w = love.graphics.getLineWidth()
+    love.graphics.setLineWidth(2)
+    x = x - 2.5
+    y = y + 1.5
+    love.graphics.ellipse("line", x, y, size, size)
+    love.graphics.ellipse("fill", x - size, y, size * 0.5, size * 0.2)
+    love.graphics.ellipse("fill", x + size, y, size * 0.5, size * 0.2)
+
+    love.graphics.ellipse("fill", x, y - size, size * 0.2, size * 0.5)
+    love.graphics.ellipse("fill", x, y + size, size * 0.2, size * 0.5)
+    love.graphics.setLineWidth(w)
+    if G.GAME.REVOLVER_RETICLE_ALPHA <= 0 then G.GAME.REVOLVER_RETICLE_ALPHA = nil end
+end
+
+local go_fish = G.FUNCS.fac_go_fish
+function G.FUNCS.fac_go_fish(e)
+    go_fish(e)
+    if next(SMODS.find_card("fish_fac_rusty_revolver")) then
+        G.E_MANAGER:add_event(Event{
+            trigger = "after",
+            blocking = false,
+            func = function()
+                if G.FISHING_STATE == G.FISHING_STATES.HOOKING then
+                    for i, v in pairs(SMODS.find_card("fish_fac_rusty_revolver")) do
+                        if v.ability.extra.primed then
+                            for i = 1, v.ability.extra.primed do
+                                G.E_MANAGER:add_event(Event{
+                                    trigger = "after",
+                                    delay = 0.075*G.SETTINGS.GAMESPEED,
+                                    func = function()
+                                        play_sound("fac_crimsonseraphim_revolver_shots_"..math.random(1, 8))
+                                        return true
+                                    end
+                                })
+                            end
+                            v.ability.extra.primed = nil
+                        end
+                    end
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'ease',
+                        blockable = false,
+                        blocking = false,
+                        ref_table = G.GAME,
+                        ref_value = 'REVOLVER_RETICLE_ALPHA',
+                        ease_to = 0,
+                        delay = 2*G.SETTINGS.GAMESPEED,
+                        func = (function(t) return t end)
+                    }))
+                    return true
+                end
+            end
+        }) 
+        G.GAME.REVOLVER_RETICLE_ALPHA = 1
+    end
 end

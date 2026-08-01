@@ -730,7 +730,7 @@ function G.FUNCS.fac_go_fish(e)
         G.FUNCS.fac_open_fishing_menu()
     end
     fac_ensure_state().fishing_active = true
-    FishAndChips.fade_fishing_buttons()
+    FishAndChips.fade_fishing_buttons()    
 end
 
 local fac_game_update_ref = Game.update
@@ -1306,6 +1306,18 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
         end
 
         fac_draw_fish(track_x + track_w * 0.5 + 6, fish_y, 10, state.profile.colour)
+
+        if next(SMODS.find_card("fish_fac_rusty_revolver")) or G.GAME.REVOLVER_RETICLE_ALPHA then
+            local reticle = G.GAME.REVOLVER_RETICLE_ALPHA
+            for i, v in pairs(SMODS.find_card("fish_fac_rusty_revolver")) do
+                if v.ability.extra.primed then
+                    reticle = true
+                end
+            end
+            if reticle then
+                FishAndChips.crimsonseraphim.draw_reticle(track_x + track_w * 0.5 + 6, fish_y, 10)
+            end
+        end
 
         fac_draw_vertical_meter(catch_meter_x, track_y, 14, track_h, state.meter, { 0.20, 0.10, 0.13 }, { 0.97, 0.38, 0.47 })
         love.graphics.setColor(0.97, 0.76, 0.82, 1)

@@ -13,6 +13,7 @@ extern bool shadow;
 extern MY_HIGHP_OR_MEDIUMP vec4 burn_colour_1;
 extern MY_HIGHP_OR_MEDIUMP vec4 burn_colour_2;
 extern MY_HIGHP_OR_MEDIUMP number realtime_offset;
+extern MY_HIGHP_OR_MEDIUMP number realtime;
 extern bool reverse;
 
 vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv)
@@ -112,20 +113,20 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
     
     if(uv.x > uv.x * 2.) uv.x = aeonfish_transmute.x;
-    
+    float time = 1-(realtime_offset/0.6);
     if (reverse) {
-        if (uv.y > 0 && uv.y < 1-realtime_offset) {
+        if (uv.y > 0 && uv.y < time) {
             tex = vec4(0,0,0,0);
         }
     }
     else {
-        if(!(uv.y > 0 && uv.y < 1-realtime_offset)) {
+        if(!(uv.y > 0 && uv.y < time)) {
             tex = vec4(0,0,0,0);
         }
     }
-    if (abs(uv.y - (1-realtime_offset + pNoise(uv*9.32, 10)/5.)) < 0.02) {
+    if (abs(uv.y - (time + pNoise(uv*9.32, 10)/5.)) < 0.02) {
         float noise = (pNoise(uv*4.5, 10) + 1.)/1.5;
-        tex = vec4(1,1,1, o_a) * noise + vec4(1,0,1,o_a) * (1-noise);
+        tex = vec4(1,1,1, o_a) * noise + vec4(0,0.66,1,o_a) * (1-noise);
     }
 
     return dissolve_mask(tex, texture_coords, uv);

@@ -173,6 +173,26 @@ return {
                     "trolls use them for?"
                 }
             },
+
+            fish_fac_rusty_revolver = {
+                name = "Rusty Revolver",
+                text = {
+                    {
+                        "Shoot the next {C:attention}Fish{}",
+                        "#2# Times moving twice as slow",
+                        "for each shot when caught"
+                    },
+                    {
+                        "Use this {C:attention}Fish{} to load",
+                        "up one Shot",
+                        "{C:inactive}(Remaining: #1#)"
+                    }
+                },
+                flavor = {
+                    "The other two shots",
+                    "have become unsalvageable."
+                }
+            },
         },
         Other = {
             fac_crimsonseraphim_transmute = {
