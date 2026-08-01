@@ -121,6 +121,7 @@ function G.UIDEF.create_UIBox_your_collection_fish()
 	return SMODS.card_collection_UIBox(pool, { 5, 5, 5 }, {
 		no_materialize = true,
 		h_mod = 0.95,
+		back_func = 'your_collection_other_gameobjects',
 	})
 end
 
@@ -144,7 +145,7 @@ SMODS.Shader {
 	path = "core/hide_fish.fs",
 	send_vars = function(self, card)
 		return {
-			mask_colour = card.area.config.fac_compendium and FishAndChips.C.COMPENDIUM_COLOUR or {0,0,0,1}
+			mask_colour = card and card.area and card.area.config.fac_compendium and FishAndChips.C.COMPENDIUM_COLOUR or {0,0,0,1}
 		}
 	end
 }
