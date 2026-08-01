@@ -34,6 +34,23 @@ return {
                     "It's still slightly warm"
                 }
             },
+            fish_fac_onering = {
+                name = "The Null Fish",
+                text = {
+                    "Disable all {B:blind,C:white}boss blinds{}",
+                    "Blind Size increases by {X:mult,C:white}X#1#{} each round while held",
+                    "{C:inactive}(Current blind size: #4#x){}",
+                    "If {C:attention}sold or destroyed{}:",
+                    "Outside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size permanently",
+                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
+                },
+                flavour = {
+                    "Null fish to rule them all,",
+                    "null fish to find them,",
+                    "Null fish to bring them all",
+                    "and in the darkness bind them."
+                }
+            },
             fish_fac_onering_1 = {
                 name = "The One Fish",
                 text = {
