@@ -110,7 +110,7 @@ FishAndChips.Fish { --Trust
 		return { vars = { card.ability.extra.xchips, card.ability.extra.score } }
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main then return { x_chips = card.ability.extra.xchips, score = card.ability.extra.score } end
+		--if context.joker_main then return { x_chips = card.ability.extra.xchips, score = card.ability.extra.score } end
 	end
 }
 
