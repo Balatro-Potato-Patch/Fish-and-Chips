@@ -21,7 +21,6 @@ FishAndChips.Fish {
     attributes = {
         suit,
         economy,
-        passive
     },
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds,
@@ -66,6 +65,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
     key = "J8-Bit_squishy",
+    badge_key = "k_J8-Bit_fishbadge_mollusk",
     atlas = "fac_j8bit_fish",
     pos = { x = 1, y = 0 },
     weight = 8,
@@ -90,7 +90,6 @@ FishAndChips.Fish {
         rank,
         chips,
         mult,
-        passive
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -200,6 +199,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
     key = "J8-Bit_hermit_crab",
+    badge_key = "k_J8-Bit_fishbadge_crustacean",
     atlas = "fac_j8bit_fish",
     pos = { x = 3, y = 0 },
     weight = 5,
@@ -253,6 +253,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
     key = "J8-Bit_trunkstar",
+    badge_key = "k_J8-Bit_fishbadge_mollusk",
     atlas = "fac_j8bit_fish",
     pos = { x = 4, y = 0 },
     weight = 5,
@@ -269,7 +270,6 @@ FishAndChips.Fish {
         wormhole = 5.0
     },
     attributes = {
-        passive,
         generation
     },
     loc_vars = function(self, info_queue, card)
@@ -369,6 +369,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
     key = "J8-Bit_fire_urchin",
+    badge_key = "k_J8-Bit_fishbadge_echinoderm",
     atlas = "fac_j8bit_fish",
     pos = { x = 0, y = 1 },
     weight = 4.5,
@@ -386,7 +387,6 @@ FishAndChips.Fish {
         soup = 3.0
     },
     attributes = {
-        passive,
         mult
     },
     loc_vars = function(self, info_queue, card)
@@ -468,6 +468,7 @@ end
 
 FishAndChips.Fish {
     key = "J8-Bit_nocto_octo",
+    badge_key = "k_J8-Bit_fishbadge_cephalopod",
     atlas = "fac_j8bit_fish",
     pos = { x = 1, y = 1 },
     weight = 4.5,
@@ -486,7 +487,6 @@ FishAndChips.Fish {
         soup = 4.5
     },
     attributes = {
-        passive,
         mult,
     },
     loc_vars = function(self, info_queue, card)
@@ -542,6 +542,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
     key = "J8-Bit_later_alligator",
+    badge_key = "k_J8-Bit_fishbadge_reptile",
     atlas = "fac_j8bit_fish",
     pos = { x = 3, y = 1 },
     weight = 4,
@@ -640,7 +641,6 @@ FishAndChips.Fish {
         pier = 2.0
     },
     attributes = {
-        passive,
         mult,
         retrigger,
     },
@@ -675,6 +675,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
     key = "J8-Bit_underhand",
+    badge_key = "k_J8-Bit_fishbadge_question_marks",
     atlas = "fac_j8bit_fish",
     pos = { x = 0, y = 2 },
     weight = 4,
@@ -745,7 +746,6 @@ FishAndChips.Fish {
         wormhole = 4.0,
     },
     attributes = {
-        passive,
         generation,
     },
     loc_vars = function(self, info_queue, card)
@@ -843,6 +843,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
     key = "J8-Bit_poppup",
+    badge_key = "k_J8-Bit_fishbadge_darkner",
     atlas = "fac_j8bit_fish",
     pos = { x = 2, y = 2 },
     weight = 3.5,
@@ -915,6 +916,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
     key = "J8-Bit_spectral_sea_angel",
+    badge_key = "k_J8-Bit_fishbadge_sea_slug",
     atlas = "fac_j8bit_fish",
     pos = { x = 3, y = 2 },
     weight = 3,
@@ -1002,7 +1004,6 @@ FishAndChips.Fish {
         styx = 1.5
     },
     attributes = {
-        passive,
         xmult,
         boss_blind,
     },
@@ -1102,6 +1103,7 @@ end
 
 FishAndChips.Fish {
     key = "J8-Bit_primarina",
+    badge_key = "k_J8-Bit_fishbadge_pokemon",
     atlas = "fac_j8bit_fish",
     pos = { x = 0, y = 3 },
     weight = 2,
@@ -1159,6 +1161,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
     key = "J8-Bit_toxic_seahorse",
+    badge_key = "k_J8-Bit_fishbadge_reploid",
     atlas = "fac_j8bit_fish",
     pos = { x = 1, y = 3 },
     weight = 1,
@@ -1281,6 +1284,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
     key = "J8-Bit_left_shark",
+    badge_key = "k_J8-Bit_fishbadge_person_in_a_suit",
     atlas = "fac_j8bit_fish",
     pos = { x = 2, y = 3 },
     weight = 1,
@@ -1300,7 +1304,6 @@ FishAndChips.Fish {
         wormhole = 1.0,
     },
     attributes = {
-        passive,
         economy,
     },
     loc_vars = function(self, info_queue, card)
@@ -1359,6 +1362,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
     key = "J8-Bit_sdmg",
+    badge_key = "k_J8-Bit_fishbadge_ranged_weapon",
     atlas = "fac_j8bit_fish",
     pos = { x = 3, y = 3 },
     weight = 1,
@@ -1375,7 +1379,6 @@ FishAndChips.Fish {
         wormhole = 1.0
     },
     attributes = {
-        passive,
         retrigger,
     },
     loc_vars = function(self, info_queue, card)

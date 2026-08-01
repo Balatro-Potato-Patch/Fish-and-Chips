@@ -364,6 +364,18 @@ return {
             ["k_J8-Bit_poppup_quote_4"] = "This application is only supported by OS 2000.",
             ["k_J8-Bit_poppup_quote_5"] = "GOKARMASHI O INARY....?",
             ["k_J8-Bit_poppup_quote_6"] = "NEED... LOOK... ME...",
+            ["k_J8-Bit_fishbadge_mollusk"] = "Mollusk",
+            ["k_J8-Bit_fishbadge_crustacean"] = "Crustacean",
+            ["k_J8-Bit_fishbadge_echinoderm"] = "Echinoderm",
+            ["k_J8-Bit_fishbadge_cephalopod"] = "Cephalopod",
+            ["k_J8-Bit_fishbadge_reptile"] = "Reptile",
+            ["k_J8-Bit_fishbadge_question_marks"] = "?????",
+            ["k_J8-Bit_fishbadge_darkner"] = "Darkner",
+            ["k_J8-Bit_fishbadge_sea_slug"] = "Sea Slug",
+            ["k_J8-Bit_fishbadge_pokemon"] = "Pokémon",
+            ["k_J8-Bit_fishbadge_reploid"] = "Reploid",
+            ["k_J8-Bit_fishbadge_person_in_a_suit"] = "Person in a Suit",
+            ["k_J8-Bit_fishbadge_ranged_weapon"] = "Ranged Weapon",
         },
     }
 }
