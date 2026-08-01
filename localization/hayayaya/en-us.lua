@@ -123,6 +123,19 @@ return {
 					"PLACEHOLDER",
 				},
 			},
+			fish_fac_inferno = {
+				name = "Fish's Inferno",
+				text = {
+					"{C:green}#1# in #2#{} chance of",
+					"getting the bait {C:attention}back{}",
+					"after a successful fish",
+					"{C:inactive,s:0.8}Doesn't apply to perfect fishes{}",
+				},
+				flavor = {
+					"Excuse me sir! There must be",
+					"someone you've confused me for!",
+				},
+			},
 		},
 	},
 	misc = {
@@ -130,6 +143,7 @@ return {
 			ph_facyou_hayayaya_active = "Active!",
 			ph_facyou_hayayaya_inactive = "Inactive!",
 			ph_facyou_hayayaya_evolved = "Evolved!",
+			ph_facyou_hayayaya_returned = "Returned!",
 		},
 	},
 }
