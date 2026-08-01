@@ -44,6 +44,19 @@ return {
                     [[Active explosion risk.]]
                 }
             },
+            fish_fac_ribbit = {
+                name = "Circus Frog",
+                text = {
+                    {
+                         "{C:attention}+#1#{} Card Selection Limit",
+                         "{C:blue}+#1#{} Hand Size",
+                         "{C:red}-#1#{} Discard",
+                }
+                },
+                flavor = {
+                    [["Hehe it's me, the character from TADC"]]
+                }
+            },
         },
         PotatoPatch = {
             PotatoPatchDev_FirstTry = {
