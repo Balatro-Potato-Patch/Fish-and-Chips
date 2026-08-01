@@ -42,10 +42,12 @@ return {
             fish_fac_goldfish = {
                 name = {"Goldfish"},
                 text = {
-                    ""
+                    "Gains {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} of",
+                    "{C:money}sell value{} at",
+                    "{C:attention}end of {C:fac_fish}fishing"
                 },
                 flavor = {
-                    ""
+                    "I'm gold!"
                 }
             },
             fish_fac_moldfish = {

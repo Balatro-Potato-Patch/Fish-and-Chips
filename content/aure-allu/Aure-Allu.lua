@@ -81,6 +81,7 @@ FishAndChips.Fish {
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = {  },
+	blueprint_compat = false,
 	config = {
 		extra = {
 			sand_dollars = 2,
@@ -106,7 +107,10 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
 	end,
-	calculate = function(self, card, context)
+	use = function (self, card)
+		
+	end,
+	can_use = function (self, card)
 		
 	end,
 }
@@ -120,6 +124,7 @@ FishAndChips.Fish {
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "chance", },
+	blueprint_compat = true,
 	config = {
 		extra = {
 			refund_sand_dollars = 2,
@@ -142,6 +147,7 @@ FishAndChips.Fish {
 				sand_dollars = card.ability.extra.refund_sand_dollars
 			}
 		end
+		return nil, true
 	end,
 }
 
@@ -154,6 +160,7 @@ FishAndChips.Fish {
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "x_chips" },
+	blueprint_compat = true,
 	config = {
 		extra = {
 			face_down_x_chips = 0.1,
@@ -177,11 +184,11 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.face_down_x_chips, total } }
 	end,
 	calculate = function(self, card, context)
-		if context.stay_flipped and context.from_area == G.deck and context.to_area == G.hand and G.GAME.current_round.hands_played == 0 then
+		if context.stay_flipped and not context.blueprint_card and context.from_area == G.deck and context.to_area == G.hand and G.GAME.current_round.hands_played == 0 then
             return {
                 stay_flipped = true,
             }
-		elseif context.first_hand_drawn then
+		elseif context.first_hand_drawn and not context.blueprint_card then
 			return {
 				message = localize("k_aure_allu_blooper"),
 				colour = G.C.BLACK
@@ -208,10 +215,11 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = {  },
+	attributes = { "passive" },
+	blueprint_compat = false,
 	config = {
 		extra = {
-			
+			sand_dollars_gain = 3
 		},
 	},
 	environments = {
@@ -220,10 +228,17 @@ FishAndChips.Fish {
 		aquifer = 3,
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { } }
+		return { vars = { card.ability.extra.sand_dollars_gain } }
 	end,
 	calculate = function(self, card, context)
-		
+		if context.ending_fishing and not context.blueprint_card then
+			card.ability.extra_value = card.ability.extra_value + card.ability.extra.sand_dollars_gain
+			card:set_cost()
+			return {
+				message = localize('k_val_up'),
+				colour = FishAndChips.C.SAND_DOLLAR
+			}
+		end
 	end,
 }
 
@@ -255,6 +270,7 @@ FishAndChips.Fish {
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "mult" },
+	blueprint_compat = true,
 	config = {
 		extra = {
 			mult_per_average_round = 9
@@ -288,6 +304,7 @@ FishAndChips.Fish {
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "mult" },
+	blueprint_compat = true,
 	config = {
 		extra = {
 			mult_gain = 4,
@@ -309,7 +326,7 @@ FishAndChips.Fish {
 		return { vars = { zero_signed(card.ability.extra.mult_gain), card.ability.immutable.last_slots_max, zero_signed(card.ability.extra.total_mult) } }
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint then
+		if context.before and not context.blueprint_card then
             local same_slot = false
 			for _, slot in ipairs(card.ability.immutable.last_slots) do
 				if slot == table_find(G.fac_fish_area.cards, card) then
@@ -347,6 +364,7 @@ FishAndChips.Fish {
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "mult" },
+	blueprint_compat = true,
 	config = {
 		extra = {
 			mult_per_slot = 9
@@ -457,6 +475,7 @@ FishAndChips.Fish {
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "chips", "chance", "food"  },
+	blueprint_compat = true,
 	config = {
 		extra = {
 			chips = 61,
@@ -474,7 +493,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		-- Thanks once more, Vanillaremade !!
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint_card then
             if SMODS.pseudorandom_probability(card, 'fac_aure-allu_gouramichel', 1, card.ability.extra.michel_odds) then
                 SMODS.destroy_cards(card, nil, nil, true)
                 G.GAME.pool_flags.fac_aure_allu_gouramichel = true
@@ -506,6 +525,7 @@ FishAndChips.Fish {
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "x_chips", "chance", "food" },
+	blueprint_compat = true,
 	config = {
 		extra = {
 			x_chips = 3,
@@ -524,7 +544,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		-- Thanks once more, Vanillaremade !!
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint_card then
             if SMODS.pseudorandom_probability(card, 'fac_aure-allu_cavenfish', 1, card.ability.extra.cavenfish_odds) then
                 SMODS.destroy_cards(card, nil, nil, true)
                 return {
@@ -625,7 +645,8 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = {  },
+	attributes = { "passive" },
+	blueprint_compat = false,
 	config = {
 		extra = {
 			x_treasure = 1.5
@@ -1043,6 +1064,7 @@ FishAndChips.Fish {
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "chips" },
+	blueprint_compat = true,
 	config = {
 		extra = {
 			chips_per_sand_dollar = 5
