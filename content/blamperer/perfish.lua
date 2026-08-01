@@ -29,8 +29,10 @@ FishAndChips.Fish {
     },
     calculate = function(self, card, context)
         if context.fac_end_fishing then
+            local break_streak = true
             if not context.failed then
                 if context.perfect then
+                    break_streak = false
                     local msg_colour = G.C.BLUE
                     card.ability.extra.current_streak = card.ability.extra.current_streak + 1
                     if card.ability.extra.current_streak > card.ability.extra.best_streak then
@@ -45,14 +47,9 @@ FishAndChips.Fish {
                         },
                         colour = msg_colour
                     }
-                elseif card.ability.extra.current_streak > 0 then
-                    card.ability.extra.current_streak = 0
-                    return {
-                        message = localize("k_fac_blamperer_str_broke"),
-                        colour = G.C.RED
-                    }
                 end
-            else
+            end
+            if break_streak then
                 card.ability.extra.current_streak = 0
                 return {
                     message = localize("k_fac_blamperer_str_broke"),
