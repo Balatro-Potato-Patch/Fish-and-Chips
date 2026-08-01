@@ -59,7 +59,7 @@ return {
 				name = "Yellowbin Tuna",
 				text = {
 					"When {C:attention}Treasure{} is caught",
-					"Create a {C:attention}random#{} ",
+					"Create a {C:attention}random{} ",
 					"recently sold card",
 					"{C:inactive}(Must have room){}",
 				},
