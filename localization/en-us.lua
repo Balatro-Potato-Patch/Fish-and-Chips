@@ -384,6 +384,7 @@ return {
             b_fac_menu_toggle = "Enable Custom Main Menu",
             b_fac_condensed_fish = "Enable Condensed Fish Collection",
             b_fac_flavour_text = 'Disable Flavour Text',
+            b_fac_flashing_lights = 'Disable Flashing Effects',
             ph_fac_go_fishing_ex = "Go Fishing!",
             k_fac_no_baits = "No Baits in inventory",
             k_fac_equip_bait = "Equip Bait",

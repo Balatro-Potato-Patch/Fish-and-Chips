@@ -121,6 +121,7 @@ function G.UIDEF.create_UIBox_your_collection_fish()
 	return SMODS.card_collection_UIBox(pool, { 5, 5, 5 }, {
 		no_materialize = true,
 		h_mod = 0.95,
+		back_func = 'your_collection_other_gameobjects',
 	})
 end
 
