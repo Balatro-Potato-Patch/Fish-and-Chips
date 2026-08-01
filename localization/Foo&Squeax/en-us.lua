@@ -152,6 +152,29 @@ return {
 						"and then {C:attention}grab{} leftmost Joker",
 					}
 				}
+			},
+			fish_fac_fas_tsundere = {
+				name = "Tsunderfish",
+				flavour = {
+					"No way! Why would I like YOU"
+				},
+				text = {
+					"Needs some encouragement",
+					"before it's ready to help you.",
+					"Maybe some {C:attention}ACT{}ing would work?",
+					"{C:inactive}[Once per round]"
+				}
+			},
+			fish_fac_fas_tsundere_active = {
+				name = "Tsunderfish",
+				flavour = {
+					"Finally Confessed",
+					"{s:0.8}What!? I didn't!!"
+				},
+				text = {
+					"It's not like I want to give you",
+					"{C:attention}+#1#{} selection limit. Hmph!"
+				}
 			}
 		},
 		PotatoPatch = {
@@ -189,7 +212,38 @@ return {
 			k_fac_fas_nom = "Nom!",
 			k_fac_fas_nyom = "nyoooooom...",
 			k_fac_fas_nyon = 'Nyon!',
-			k_fac_fas_ule = "Ueueleuleuleue!"
+			k_fac_fas_ule = "Ueueleuleuleue!",
+
+			k_fac_fas_flirt = "Flirt",
+			k_fac_fas_approach = "Approach",
+			k_fac_fas_check = "Check",
+			ph_fac_fas_tsunderfish_check_1 = "Seems mean, but does",
+			ph_fac_fas_tsunderfish_check_2 = "it secretly like you?",
+			ph_fac_fas_tsunderfish_fail_a_1 = "Tsunderfish looks over,",
+			ph_fac_fas_tsunderfish_fail_a_2 = "then turns up its nose.",
+			ph_fac_fas_tsunderfish_fail_b_1 = "Tsunderfish shakes its",
+			ph_fac_fas_tsunderfish_fail_b_2 = "tail dimissively at you.",
+			ph_fac_fas_tsunderfish_fail_c_1 = "Tsunderfish \"accidentally\"",
+			ph_fac_fas_tsunderfish_fail_c_2 = "bumps you with its fins.",
+			ph_fac_fas_tsunderfish_fail_d_1 = "Tsunderfish gives you a",
+			ph_fac_fas_tsunderfish_fail_d_2 = "condescending barrel roll.",
+			ph_fac_fas_tsunderfish_flirt_a_1 = "You tell Tsunderfish it has",
+			ph_fac_fas_tsunderfish_flirt_a_2 = "an impressive finspan.",
+			ph_fac_fas_tsunderfish_flirt_b_1 = "You tell Tsunderfish",
+			ph_fac_fas_tsunderfish_flirt_b_2 = "it has nice gills.",
+			ph_fac_fas_tsunderfish_flirt_c_1 = "You tell Tsunderfish it",
+			ph_fac_fas_tsunderfish_flirt_c_2 = "has a powerful tail.",
+			ph_fac_fas_tsunderfish_flirt_d_1 = "You tell Tsunderfish that you",
+			ph_fac_fas_tsunderfish_flirt_d_2 = "like its taste in movies and books.",
+			ph_fac_fas_tsunderfish_approach_a_1 = "You get close to Tsunderfish.",
+			ph_fac_fas_tsunderfish_approach_a_2 = "But not that close.",
+			ph_fac_fas_tsunderfish_approach_b_1 = "You get close to Tsunderfish.",
+			ph_fac_fas_tsunderfish_approach_b_2 = "But not too close.",
+			ph_fac_fas_tsunderfish_approach_c_1 = "You get closer to Tsunderfish.",
+			ph_fac_fas_tsunderfish_approach_c_2 = "But not too closer.",
+			ph_fac_fas_tsunderfish_approach_d_1 = "You get closest to Tsunderfish.",
+			ph_fac_fas_tsunderfish_approach_d_2 = "But not too closest.",
+			ph_fac_fas_tsunderfish_active = "Human, I...",
 		}
 	}
 }
