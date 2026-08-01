@@ -1034,5 +1034,52 @@ FishAndChips.Fish {
 	end,
 }
 
+-- Pirate Perch
+FishAndChips.Fish {
+	key = "pirate_perch",
+	atlas = "aure-allu_fish",
+	pos = { x = 2, y = 3 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "chips" },
+	config = {
+		extra = {
+			chips_per_sand_dollar = 5
+		},
+	},
+	environments = {
+		pier = 10,
+		volcano = 8,
+		styx = 3,
+		wormhole = 2,
+		backroom = 4,
+	},
+	loc_vars = function(self, info_queue, card)
+		local sell_cost = 0
+		if G.fac_fish_area then
+			for i, fishee in ipairs(G.fac_fish_area.cards) do
+				if fishee ~= card then
+					sell_cost = sell_cost + fishee.sell_cost
+				end
+			end
+		end
+		return { vars = { zero_signed(card.ability.extra.chips_per_sand_dollar), zero_signed(sell_cost * card.ability.extra.chips_per_sand_dollar) } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			local sell_cost = 0
+			for i, fishee in ipairs(G.fac_fish_area.cards) do
+				if fishee ~= card then
+					sell_cost = sell_cost + fishee.sell_cost
+				end
+			end
+			return {
+				chips = sell_cost * card.ability.extra.chips_per_sand_dollar
+			}
+		end
+	end,
+}
+
 
 -- #endregion

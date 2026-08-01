@@ -202,6 +202,18 @@ return {
                     ""
                 }
             },
+            fish_fac_pirate_perch = {
+                name = {"Pirate Perch"},
+                text = {
+                    "Blubs {C:chips}#1#{} Chips per",
+                    "{C:fac_sand_dollars,f:fac_sand_dollars}$1{} of {C:money}sell value",
+                    "of all {C:attention}other {C:fac_fish}Fish",
+                    "{C:inactive}(Currently {C:chips}#2#{C:inactive} Chips)"
+                },
+                flavor = {
+                    "Yarr Fishee 're mine!"
+                }
+            },
         },
     },
     misc = {
