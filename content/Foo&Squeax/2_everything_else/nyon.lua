@@ -14,6 +14,10 @@ SMODS.Sound{
 	key = "fas_nyoom",
 	path = FishAndChips.FooSqueax.file_path .. "nyoom.ogg"
 }
+SMODS.Sound{
+	key = "fas_nyon!",
+	path = FishAndChips.FooSqueax.file_path .. "nyon!.ogg"
+}
 
 FishAndChips.Fish{
 	key = "fas_kawkaw",
@@ -59,6 +63,7 @@ FishAndChips.Fish{
 					if card.ability.immutable.timer < 0 then
 						card.ability.immutable.timer = 100000
 						card_eval_status_text(card, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_nyom")})
+						card.dont_nyon = true
 						SMODS.destroy_cards(card)
 					end
 				end
@@ -113,7 +118,8 @@ local card_remove_ref = Card.remove
 ---@diagnostic disable-next-line: duplicate-set-field
 function Card:remove()
 	card_remove_ref(self)
-	if self.config.center.key == "fish_fac_fas_kawkaw" then
-		play_sound("fac_fas_nyoom")
+---@diagnostic disable-next-line: undefined-field
+	if self.config.center.key == "fish_fac_fas_kawkaw" and not self.dont_nyon then
+		play_sound("fac_fas_nyon!")
 	end
 end

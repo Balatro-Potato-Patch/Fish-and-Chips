@@ -10,7 +10,14 @@ FishAndChips.FooSqueax = {
 			card.ability.extra.xmult = card.ability.extra.xmult + mod
 			card.T.w = card.T.w * card.ability.extra.xmult
 		end
+	},
+	tsunderfish = {
+		
 	}
+}
+
+FishAndChips.C.FooSqueax = {
+	BLACK = {0, 0, 0, 1}
 }
 
 SMODS.Atlas{
