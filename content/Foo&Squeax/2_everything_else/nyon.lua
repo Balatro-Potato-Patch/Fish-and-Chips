@@ -150,7 +150,7 @@ function Card:click()
 						frame = (frame) % 3 + 1
 						self.children.center:set_sprite_pos{x = frame, y = 1}
 						counter = G.TIMERS.REAL
-						if G.TIMERS.REAL - start >= 0.75 then
+						if G.TIMERS.REAL - start >= 0.5 then
 							self.children.center:set_sprite_pos{x = 0, y = 0}
 							return true
 						end
