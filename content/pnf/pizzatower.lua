@@ -130,6 +130,10 @@ FishAndChips.Fish {
         return { vars = { card.ability.extra.scoring, card.ability.extra.gain, colours = { HEX("4db1f6") } } }
     end,
     calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval then
+            card.ability.extra.mult = card.ability.immutable.revert
+            return { message = localize("k_reset") }
+        end
         local eval = function(card) return card.ability.extra.trigger == true end
         juice_card_until(card, eval, false)
         if context.joker_main then
