@@ -398,7 +398,8 @@ FishAndChips.Fish {
         return { vars = { numerator, denominator, card.ability.extra.eor_sand, card.ability.extra.use_sand, card.ability.extra.use_dollars } }
     end,
     calculate = function(self, card, context)
-		if context.modify_final_cashout then
+		if context.modify_final_cashout 
+        and SMODS.pseudorandom_probability(card, 'mysteriouscanfish', 1, card.ability.extra.odds) then
 			return { sand_dollars = card.ability.extra.eor_sand }
 		end
 	end,
