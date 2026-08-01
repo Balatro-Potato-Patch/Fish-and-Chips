@@ -15,6 +15,32 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
+	key = "tss_watrena",
+	atlas = "tss_ellefish",
+	pos = { x = 0, y = 0 },
+	weight = 3,
+	ppu_coder = { "slimestuff" },
+	ppu_artist = { "azazel" },
+	attributes = { "mult", "suit" },
+	environments = {
+		city_river = 10
+	},
+	config = { extra = { mult = 1 } },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.mult } }
+	end,
+	calculate = function(self, card, context)
+		if context.individual and context.cardarea == G.play and context.other_card:is_suit("Hearts") then
+			fish:set_edition(poll_edition('fac_tss_watrena', nil, true, true))
+			return {
+				message = localize('k_upgrade_ex'),
+				colour = G.C.MULT
+			}
+		end
+	end
+}
+
+FishAndChips.Fish {
 	key = "tss_ferish",
 	atlas = "tss_azfish",
 	pos = { x = 1, y = 0 },

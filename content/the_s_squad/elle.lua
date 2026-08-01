@@ -59,12 +59,18 @@ FishAndChips.Fish {
 }
 
 local function create_guppy_uibox(key)
+	G.OVERLAY_MENU = true
 	local fish = SMODS.create_card({key = key})
+	G.OVERLAY_MENU = false
 	fish:juice_up()
+	fish.states.drag.can = false
+	fish.states.click.can = false
+	fish.states.hover.can = false
+	fish:hover()
 	FishAndChips.TheShitSquad.guppy_fish = fish
 	return UIBox{definition={n=G.UIT.ROOT, config={colour=G.C.CLEAR}, nodes = {
 		{n = G.UIT.O, config = {object=fish}}
-	}},config={major = G.FISHING.fishing_bait_inventory, align = "cr", offset = { x = .4, y = -G.CARD_H/2-.45 }}}
+	}},config={major = G.FISHING.fishing_bait_inventory, align = "cr", offset = { x = 1.6, y = -G.CARD_H/2-.45 }}}
 end
 
 FishAndChips.Fish {
@@ -79,19 +85,18 @@ FishAndChips.Fish {
 		wormhole = 5,
 		backroom = 4
 	},
-	loc_vars = function(self, info_queue, card)
-	end,
 	calculate = function(self, card, context)
 		if context.fac_fish_hooked and not FishAndChips.TheShitSquad.guppy_ui then
 			FishAndChips.TheShitSquad.guppy_ui = create_guppy_uibox(context.fac_fish_hooked)
 		end
 		if context.fac_end_fishing and FishAndChips.TheShitSquad.guppy_ui then
 			FishAndChips.TheShitSquad.guppy_fish:juice_up()
+			local a = FishAndChips.TheShitSquad.guppy_fish.config.center_key
 			FishAndChips.TheShitSquad.guppy_fish:start_dissolve()
-			--FishAndChips.TheShitSquad.guppy_fish:start_dissolve()
 			G.E_MANAGER:add_event(Event({func = function()
 				FishAndChips.TheShitSquad.guppy_ui:remove()
 				FishAndChips.TheShitSquad.guppy_ui = nil
+				G.GAME.used_jokers[a] = G.GAME.used_jokers[a] or not context.failed
 			return true end}))
 		end
 	end

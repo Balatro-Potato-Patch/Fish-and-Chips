@@ -1,5 +1,7 @@
 FishAndChips.TheShitSquad = {
-	swoon_timer = 0
+	swoon_timer = 0,
+	swoon_text_timer = 0,
+	force_swoon = false
 }
 
 PotatoPatchUtils.Developer{
@@ -27,9 +29,10 @@ PotatoPatchUtils.Developer{
 			if not f or #cheshlist < 1 then return end
 
 			f.tss_cheshed = true
-			f.states.click.can = false -- Apparently it should be like this already but they forgot. Will remove once that is patched :p
+			--f.states.click.can = false -- Apparently it should be like this already but they forgot. Will remove once that is patched :p
 
-			if pseudorandom("fac_tss_chesh_swoon",1,1225)==1 or os.date("%m%d",os.time()) == "1225" then
+			if FishAndChips.TheShitSquad.force_swoon or pseudorandom("fac_tss_chesh_swoon",1,225)==1 or os.date("%m%d",os.time()) == "1225" then
+				FishAndChips.TheShitSquad.force_swoon = false
 				G.E_MANAGER:add_event(Event({func=function()
 					FishAndChips.TheShitSquad.swoon_timer = 4
 					play_sound("fac_tss_swoon_knight_cut2", .06, 8)
@@ -54,6 +57,7 @@ PotatoPatchUtils.Developer{
 					play_sound("fac_tss_swoon_damage")
 					play_sound("fac_tss_swoon_glassbreak", .4, .8)
 					play_sound("fac_tss_swoon_glassbreak", .3, .6)
+					FishAndChips.TheShitSquad.swoon_text_timer = 5
 				return true end}))
 				
 				G.E_MANAGER:add_event(Event({func=function()
