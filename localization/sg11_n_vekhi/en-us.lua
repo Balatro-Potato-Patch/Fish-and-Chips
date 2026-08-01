@@ -39,7 +39,7 @@ return {
 			fish_fac_sg11_n_vekhi_quantum_fish = {
 				name = "Quantum Fish (photo)",
 				text = {
-					"Random {C:attention}any{} card gives",
+					"Random card on screen gives",
 					"{C:white,X:mult}X#1#{} Mult when triggered",
 				},
 				flavour = {
@@ -62,6 +62,15 @@ return {
 					"create a copy of one of",
 					"{C:attention}#1#{} last sold cards",
 					"{C:inactive}(Must have room){}",
+				},
+			},
+			fish_fac_sg11_n_vekhi_whale_shark = {
+				name = "Whale Shark",
+				text = {
+					"Swallows all played and scored",
+					"{C:attention}2{}, {C:attention}3{}, {C:attention}4{}, or {C:attention}5{}, and gains {C:white,X:mult}X#1#{} Mult",
+					"for each card swallowed",
+					"{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult){}",
 				},
 			},
 		},
@@ -92,6 +101,7 @@ return {
 			pac_quantum_fish_3 = "Say 'Fish'!",
 			k_pac_soul_cannon_trigger = "Saved by Soul Cannonfish",
 			k_fac_recycle_ex = "Recycle!",
+			k_fac_nom_ex = "Nom!",
 		},
 	},
 }
