@@ -58,9 +58,9 @@ return {
 			fish_fac_sg11_n_vekhi_yellowbin_tuna = {
 				name = "Yellowbin Tuna",
 				text = {
-					"When {C:attention}Treasure{} is caught",
-					"Create a {C:attention}random{} ",
+					"Create a {C:attention}random{}",
 					"recently sold card",
+					"when {C:attention}Treasure{} is caught",
 					"{C:inactive}(Must have room){}",
 				},
 			},
@@ -75,6 +75,10 @@ return {
 				flavour = {
 					"BIG. CHUNGUS.",
 				},
+			},
+			fish_fac_sg11_n_vekhi_transcendent = {
+				name = "Transcendent Fish",
+				text = {},
 			},
 		},
 		PotatoPatch = {
