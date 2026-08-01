@@ -103,10 +103,10 @@ function Card:transmute(seed, center)
                 valid[#valid+1] = attribute
             end
         end
-        result = SMODS.poll_object{type = "fac_Fish", attributes = valid, union = true}
+        result = G.P_CENTERS[SMODS.poll_object{type = "fac_Fish", attributes = valid, union = true}]
     end
-    self.aeonfish_transmute = {
-        realtime_start = G.TIMERS.real,
+    self.children.center.aeonfish_transmute = {
+        realtime_start = G.TIMERS.REAL,
         image = SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H, result.atlas, result.pos),
         center = result
     }
@@ -114,9 +114,9 @@ function Card:transmute(seed, center)
     G.E_MANAGER:add_event(Event{
         blocking = false,
         func = function()
-            if G.TIMERS.REAL - self.aeonfish_transmute.realtime_start > 1 then
-                self:set_ability(self.aeonfish_transmute.center)
-                self.aeonfish_transmute = nil
+            if G.TIMERS.REAL - self.children.center.aeonfish_transmute.realtime_start > 1 then
+                self:set_ability(self.children.center.aeonfish_transmute.center)
+                self.children.center.aeonfish_transmute = nil
                 self.states.hover.can = true
                 return true
             end
@@ -142,8 +142,8 @@ SMODS.Shader({
     path="crimsonseraphim/aeonfish_transmute.fs",
     send_vars = function (sprite, card)
         return {
-            realtime_offset = G.TIMERS.REAL - card.aeonfish_transmute.realtime_start,
-            caustic_image = card.aeonfish_transmute.image
+            realtime_offset = G.TIMERS.REAL - sprite.aeonfish_transmute.realtime_start,
+            reverse = not sprite.aeonfish_transmute.image
         }
     end,
 })
@@ -172,8 +172,16 @@ SMODS.DrawStep({
 	key = "aeonfish_transmute",
 	order = 25,
 	func = function(self)
-        if not self.aeonfish_transmute then return end
+        if not self.children.center.aeonfish_transmute then return end  
+        self.shadow_height = ((((self.highlighted and self.area == G.play) or self.states.drag.is) and 0.35) or (self.area and self.area.config.type == 'title_2') and 0.04 or 0.1)
+        local sprite = self.children.center.aeonfish_transmute.image
+        sprite.role.draw_major = self
+        sprite.aeonfish_transmute = {
+            realtime_start = self.children.center.aeonfish_transmute.realtime_start,
+            reverse = true
+        }
         self.children.center:draw_shader('fac_aeonfish_transmute', nil, self.ARGS.send_to_shader)
+        sprite:draw_shader('fac_aeonfish_transmute', nil, self.ARGS.send_to_shader, nil, self.children.center)
 	end,
 	conditions = { vortex = false, facing = "front" },
 })
@@ -185,6 +193,11 @@ SMODS.Atlas({
 	py = 1086,
 })
 
+local should_draw_base_ref = Card.should_draw_base_shader
+function Card:should_draw_base_shader(...)
+    if self.children.center.aeonfish_transmute then return nil end
+    return should_draw_base_ref(self, ...)
+end
 
 --When a fish is obtained sell it and this fish for 3x the sell price
 FishAndChips.Fish {
@@ -845,7 +858,7 @@ FishAndChips.Fish {
 	weight = 5, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "squeax09" },
-	attributes = { "generation" },
+	attributes = { "useable" },
 	environments = {
 		calm_pond = 5,
         city_river = 5,

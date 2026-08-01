@@ -1261,7 +1261,7 @@ end
 
 function G.FUNCS.fac_set_active_bait(e)
 	G.GAME.fac_active_bait = e.config.key
-
+	if not e.config.center then return end
 	if not e.config.center.discovered then
 		discover_card(e.config.center)
 	end

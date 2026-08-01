@@ -1,0 +1,24 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/card_draw.lua"]'''
+pattern = '''G.shared_shadow:draw_shader('dissolve', self.shadow_height)'''
+position = "at"
+payload = '''
+if G.shared_shadow.aeonfish_transmute then
+    G.shared_shadow:draw_shader('fac_aeonfish_transmute', self.shadow_height, self.ARGS.send_to_shader)
+    self.children.center.aeonfish_transmute.image.role.draw_major = self
+    self.children.center.aeonfish_transmute.image.aeonfish_transmute = {
+        realtime_start = self.children.center.aeonfish_transmute.realtime_start,
+        reverse = true
+    }
+    self.children.center.aeonfish_transmute.image:draw_shader('fac_aeonfish_transmute', self.shadow_height, self.ARGS.send_to_shader, nil, self.children.center)
+else
+    G.shared_shadow:draw_shader('dissolve', self.shadow_height)
+end
+'''
+match_indent = true
