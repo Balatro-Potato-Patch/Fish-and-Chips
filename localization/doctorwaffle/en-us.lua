@@ -82,7 +82,7 @@ return {
             fish_fac_waffle_reginald = {
                 name = "Reginald the Teleporting Sea Urchin",
                 text = {
-                    "Travel to a different {C:attention}environment{}",
+                    "Travel to a different {C:fac_environment}environment{}",
                     "after reeling in a Fish"
                 },
                 flavor = {
@@ -116,6 +116,26 @@ return {
                     "Swimming through the twilight zone,",
                     "these glowing worms elegantly row their",
                     "paddle-like parapodia in search of food."
+                }
+            },
+
+            fish_fac_waffle_bonus_duck = {
+                name = "Bonus Duck",
+                text = {
+                    {
+                        "When deck is shuffled, {C:attention}Ducks{}",
+                        "appear on {C:attention}#1#%{} of cards in deck",
+                        "{C:inactive}(rounded up)"
+                    },
+                    {
+                        "This Fish gains {C:chips}+#2#{} Chips whenever",
+                        "cards with {C:attention}Ducks{} are scored",
+                        "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)"
+                    },
+                },
+
+                flavor = {
+                    "Now the Ducks... are over there!",
                 }
             },
 

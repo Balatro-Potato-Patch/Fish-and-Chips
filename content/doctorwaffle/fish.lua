@@ -28,6 +28,16 @@ SMODS.Sound {
     path = "doctorwaffle/conch_nothing.ogg"
 }
 
+-- Bonus Duck sounds
+local numDuckSounds = 7
+for i = 1, 7 do
+    SMODS.Sound {
+    key = "fac_waffle_duck" .. i,
+    path = "doctorwaffle/duck" .. i .. ".ogg",
+    pitch = 1,
+}
+end
+
 -- Magic Conch
 FishAndChips.Fish {
     key = "waffle_magic_conch",
@@ -256,7 +266,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
     key = "waffle_percheo",
     atlas = "waffle_fish",
-    weight = 3,
+    weight = 2,
     environments = {
         garden = 1,
     },
@@ -293,7 +303,7 @@ FishAndChips.Fish {
     pos = { x = 2, y = 0 },
     environments = {
         styx = 1,
-        backroom = 1
+        backroom = 0.5
     },
     weight = 10,
     cost = 4,
@@ -404,7 +414,7 @@ FishAndChips.Fish {
     pos = { x = 4, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 10,
+    weight = 5,
     cost = 5,
     environments = {
         swamp = 1,
@@ -487,12 +497,13 @@ FishAndChips.Fish {
 FishAndChips.Fish {
     key = "fac_waffle_double_dicefin",
     atlas = "waffle_fish",
-    pos = {x = 6, y = 0},
+    pos = { x = 6, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     weight = 10,
     environments = {
         city_river = 1,
+        garden = 0.8,
         backroom = 0.6
     },
     config = { extra = {
@@ -500,26 +511,26 @@ FishAndChips.Fish {
         active = false
     } },
     cost = 6,
-    loc_vars = function (self, info_queue, card)
-         local main_end = {
-                {
-                    n = G.UIT.C,
-                    config = { align = "bm", minh = 0.4 },
-                    nodes = {
-                        {
-                            n = G.UIT.C,
-                            config = { ref_table = card, align = "m", colour = card.ability.extra.active and G.C.GREEN or G.C.RED, r = 0.05, padding = 0.06 },
-                            nodes = {
-                                { n = G.UIT.T, config = { text = ' ' .. localize('k_' .. (card.ability.extra.active and 'active' or 'fac_waffle_inactive')) .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.9 } },
-                            }
+    loc_vars = function(self, info_queue, card)
+        local main_end = {
+            {
+                n = G.UIT.C,
+                config = { align = "bm", minh = 0.4 },
+                nodes = {
+                    {
+                        n = G.UIT.C,
+                        config = { ref_table = card, align = "m", colour = card.ability.extra.active and G.C.GREEN or G.C.RED, r = 0.05, padding = 0.06 },
+                        nodes = {
+                            { n = G.UIT.T, config = { text = ' ' .. localize('k_' .. (card.ability.extra.active and 'active' or 'fac_waffle_inactive')) .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.9 } },
                         }
                     }
                 }
             }
-            return { 
-                main_end = main_end,
-                vars = {card.ability.extra.boost}
-             }
+        }
+        return {
+            main_end = main_end,
+            vars = { card.ability.extra.boost }
+        }
     end,
     blueprint_compat = false,
     calculate = function(self, card, context)
@@ -550,35 +561,152 @@ FishAndChips.Fish {
 FishAndChips.Fish {
     key = "waffle_gossamer_worm",
     atlas = "waffle_fish",
-    pos = {x = 7, y = 0},
-    weight = 10,
+    pos = { x = 7, y = 0 },
+    weight = 5,
     environments = {
         aquifer = 1,
         pier = 0.4
     },
-    pixel_size = { h = 76},
+    pixel_size = { h = 76 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     blueprint_compat = true,
-    calculate = function (self, card, context)
+    calculate = function(self, card, context)
         if context.fac_end_fishing and context.perfect and context.treasure then
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-                 G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                    G.E_MANAGER:add_event(Event({
-                        func = (function()
-                            SMODS.add_card {
-                                set = 'Spectral',
-                                key_append = 'fac_waffle_gossamer_worm'
-                            }
-                            G.GAME.consumeable_buffer = 0
-                            return true
-                        end)
-                    }))
-                    return {
-                        message = localize('k_plus_spectral'),
-                        colour = G.C.SECONDARY_SET.Spectral,
-                    }
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = (function()
+                        SMODS.add_card {
+                            set = 'Spectral',
+                            key_append = 'fac_waffle_gossamer_worm'
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end)
+                }))
+                return {
+                    message = localize('k_plus_spectral'),
+                    colour = G.C.SECONDARY_SET.Spectral,
+                }
             end
         end
     end,
+}
+
+-- Bonus Duck
+-- NOTE: duck value is stored in card.ability.fac_extra as card.ability.extra is wiped when changing card enhancement
+local bonusDuckRatio = 0.3
+FishAndChips.Fish {
+    key = "waffle_bonus_duck",
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    environments = {
+        backroom = 1,
+        styx = 1,
+    },
+    pixel_size = { h = 88 },
+    atlas = "waffle_fish",
+    pos = {x = 8, y = 0 },
+    weight = 10,
+    cost = 6,
+    config = { extra = {
+        chips = 0,
+        chips_per = 4
+    },
+        immutable = {
+            duck_ratio = bonusDuckRatio
+        } },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.immutable.duck_ratio * 100,
+                card.ability.extra.chips_per,
+                card.ability.extra.chips
+            }
+        }
+    end,
+    blueprint_compat = true,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and context.other_card.ability.fac_extra and context.other_card.ability.fac_extra.fac_waffle_duck and not context.blueprint then
+            --print("bonus duck")
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "chips",
+                scalar_value = "chips_per",
+                no_message = true
+            })
+            return {
+                message = localize('k_upgrade_ex'),
+                message_card = card,
+                sound = "fac_waffle_duck" .. math.random(1,numDuckSounds),
+                volume = 0.38
+            }
+
+        end
+        if context.joker_main then
+            return {
+                chips = card.ability.extra.chips
+            }
+        end
+    end,
+    attributes = { "chips", "scaling" }
+}
+local shuffle_ref = CardArea.shuffle
+function CardArea:shuffle(_seed)
+    shuffle_ref(self, _seed)
+
+    if self == G.deck then    -- idr if shuffle gets called on non-deck cardareas but better safe than sorry
+        local allCards = {}   -- Initialize list of cards in deck
+
+        for i = 1, #self.cards do -- Add cards in deck to allCards and reset their duck value
+            self.cards[i].ability.fac_extra = self.cards[i].ability.fac_extra or {}
+            self.cards[i].ability.fac_extra.fac_waffle_duck = false
+            allCards[#allCards + 1] = self.cards[i]
+        end
+
+        local bonusDuckCards = {} -- Initialize list of cards to add ducks do
+
+        for i = 1, math.ceil(#allCards * bonusDuckRatio) do -- Remove cards from deck list as they are added to duck list (this ensures the same card doesn't get ducked twice)
+            local chosenCardIndex = pseudorandom("fac_waffle_bonus_duck_choose", 1, #allCards)
+            bonusDuckCards[#bonusDuckCards + 1] = allCards[chosenCardIndex]
+            table.remove(allCards, chosenCardIndex)
+        end
+
+        for i = 1, #bonusDuckCards do -- Set duck variable to all cards
+            bonusDuckCards[i].ability.fac_extra = bonusDuckCards[i].ability.fac_extra or {}
+            bonusDuckCards[i].ability.fac_extra.fac_waffle_duck = true
+        end
+    end
+end
+-- Duck drawstep
+SMODS.DrawStep {
+    key = "fac_waffle_duck_drawstep",
+    order = 1,
+    func = function (card, layer)
+        if next(SMODS.find_card("fish_fac_waffle_bonus_duck", true)) then -- Only draw ducks if Bonus Duck is held
+            
+            if not G.fac_waffle_duck_sprite then
+                G.fac_waffle_duck_sprite = SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H,
+                    "fac_waffle_duck",
+                    { x = 0, y = 0 }
+                )
+            end
+
+            if card.ability.fac_extra and type(card.ability.fac_extra) == "table" and card.ability.fac_extra.fac_waffle_duck then
+                G.fac_waffle_duck_sprite.role.draw_major = card
+                G.fac_waffle_duck_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center)
+                G.fac_waffle_duck_sprite:draw_shader('booster', nil, card.ARGS.send_to_shader, nil, card.children.center)
+            end
+        
+        end
+    end,
+    conditions = {facing = 'front'}
+}
+-- Duck atlas
+SMODS.Atlas {
+    key = "waffle_duck",
+    path = "doctorwaffle/duck.png",
+    px = 71,
+    py = 95
 }
