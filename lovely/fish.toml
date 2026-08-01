@@ -150,19 +150,3 @@ elseif _card.ability.set == 'fac_Bait' then
 '''
 match_indent = true
 times = 1
-
-[[patches]]
-[patches.pattern]
-target = 'card.lua'
-pattern = '''
-self:set_sprites(self.config.center, self.config.card)
-'''
-position = 'before'
-payload = '''
-if (self.ability.set == 'fac_Fish' or self.ability.set == 'fac_Bait') and not self.config.center.discovered then
-    discover_card(self.config.center)
-end
-
-'''
-match_indent = true
-times = 1

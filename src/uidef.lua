@@ -1262,10 +1262,6 @@ end
 function G.FUNCS.fac_set_active_bait(e)
 	G.GAME.fac_active_bait = e.config.key
 
-	if not G.P_CENTERS[e.config.key].discovered then
-		discover_card(G.P_CENTERS[e.config.key])
-	end
-
 	G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] = G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] or {
         fish_caught = 0,
 		fish_lost = 0,
