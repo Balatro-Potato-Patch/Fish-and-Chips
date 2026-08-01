@@ -22,7 +22,7 @@ FishAndChips.Fish = SMODS.Center:extend {
 		G.P_CENTER_POOLS[self.set] = {}
 	end,
 	set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge(localize("k_fac_fish"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
+		badges[#badges + 1] = create_badge(localize(card.config.center.badge_key or "k_fac_fish"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
 	end,
 	post_inject_class = function(self)
 		FishAndChips.verify_submissions()
@@ -121,6 +121,7 @@ function G.UIDEF.create_UIBox_your_collection_fish()
 	return SMODS.card_collection_UIBox(pool, { 5, 5, 5 }, {
 		no_materialize = true,
 		h_mod = 0.95,
+		back_func = 'your_collection_other_gameobjects',
 	})
 end
 
