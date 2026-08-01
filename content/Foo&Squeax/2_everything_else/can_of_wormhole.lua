@@ -3,7 +3,10 @@
 
 FishAndChips.Fish{
 	key = "fas_can_of_wormholes",
-	ppu_coder = {"Foo54"},
+	atlas = "fas_fish_general",
+	pos = {x = 2, y = 0},
+	ppu_artist = {"Foo54"},
+	ppu_coder = {"squeax09"},
 	environments = {
 		wormhole = 1,
 		city_river = 0.2,

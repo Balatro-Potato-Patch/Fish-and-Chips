@@ -199,7 +199,9 @@ function Card:remove()
 			blocking = false,
 			func = function()
 				self.dont_nyon = true
-				self:start_dissolve(self.dissolve_params[1], self.dissolve_params[2], self.dissolve_params[3], self.dissolve_params[4])
+				if self.dissolve_params then
+					self:start_dissolve(self.dissolve_params[1], self.dissolve_params[2], self.dissolve_params[3], self.dissolve_params[4])
+				end
 				return true
 			end
 		})
