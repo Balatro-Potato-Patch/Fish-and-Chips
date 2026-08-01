@@ -45,6 +45,20 @@ return {
                     "{X:mult,C:white}X#1#{} Mult next hand"
                 }
             },
+            fish_fac_fo_fishery = {
+                name = "Fishery",
+                text = {
+                    {
+                        "Scored {C:attention}Jacks{} give {C:mult}+#1#{} Mult",
+                        "and become {C:attention}Queens{} after scoring",
+                    },
+                    {
+                        "Scored {C:attention}Kings{} and {C:attention}Queens{}",
+                        "each give {X:mult,C:white}X#2#{} Mult"
+                    }
+
+                }
+            }
         },
         PotatoPatch = {
             PotatoPatchDev_fo_alexi = {
@@ -63,6 +77,9 @@ return {
         }
     },
     misc = {
-        dictionary = {},
+        dictionary = {
+            fac_fo_hey_raly = "Hey Raly!",
+            fac_fo_jarona = "Jarona!"
+        },
     }
 }

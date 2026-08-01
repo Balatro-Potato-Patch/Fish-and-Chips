@@ -3,9 +3,11 @@ FishAndChips.Fish {
 	atlas = "fish",
 	pos = { x = 3, y = 0 },
 	weight = 3,
+    blueprint_compat = false,
+    eternal_compat = false,
 	ppu_coder = { "Alexi" },
 	ppu_artist = { "Grahkon" },
-	attributes = { "destroy_card", "hand_level", "usable" },
+	attributes = { "economy" },
 	config = {
         extra = {
             amt = 3,

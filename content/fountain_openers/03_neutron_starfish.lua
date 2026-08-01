@@ -2,6 +2,7 @@ FishAndChips.Fish {
 	key = "fo_neutron_starfish",
 	atlas = "fish",
 	pos = { x = 3, y = 0 },
+    eternal_compat = false,
 	weight = 3,
 	ppu_coder = { "Alexi" },
 	ppu_artist = { "Grahkon" },

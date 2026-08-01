@@ -282,6 +282,8 @@ FishAndChips.Fish {
 	atlas = "fish",
 	pos = { x = 3, y = 0 },
 	weight = 11,
+	blueprint_compat = true,
+	perishable_compat = false,
 	ppu_coder = { "Alexi" },
 	ppu_artist = { "Grahkon" },
 	attributes = { "chips" }, -- placeholder
