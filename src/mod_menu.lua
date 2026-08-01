@@ -372,7 +372,7 @@ function FishAndChips.Compendium.extended_fish_page(page_number, left)
     local last_page = false
     for i = 1, fish_per_page do
         table.insert(page.nodes[2].nodes, FishAndChips.Compendium.extended_fish_entry(pool[start_index + i], i%2 == 1))
-        if start_index + i > #pool then last_page = true; break end
+        if start_index + i >= #pool then last_page = true; break end
     end
 
     if page_number > 1 and (not last_page or left) then
@@ -768,12 +768,15 @@ function FishAndChips.Compendium.dev_card(dev)
             {n = G.UIT.C, config = { align = "cm", padding = 0.2 }, nodes = {}},
         }}
         local text = dev.loc and G.localization.descriptions.PotatoPatch[dev.loc].text_parsed or nil
+        local loc_vars = dev.loc_vars and dev:loc_vars() or {}
+        loc_vars.text_colour = loc_vars.text_colour or G.C.UI.TEXT_LIGHT
+        loc_vars.font = loc_vars.font or SMODS.Fonts.fac_collection
         if text then
             if not text[1][1][1] then text = {text} end
             for _, box in ipairs(text) do
                 local node = {n=G.UIT.R, config = {colour = G.C.L_BLACK, r=0.1, padding = 0.15, align = 'cm', shadow = true}, nodes = {}}
                 for _, v in ipairs(box) do
-                    table.insert(node.nodes, {n=G.UIT.R, config={align='cm'}, nodes = SMODS.localize_box(v, {text_colour = G.C.UI.TEXT_LIGHT, font = SMODS.Fonts.fac_collection})})
+                    table.insert(node.nodes, {n=G.UIT.R, config={align='cm'}, nodes = SMODS.localize_box(v, loc_vars)})
                 end
                 info_nodes.nodes[1].nodes[#info_nodes.nodes[1].nodes + 1] = {n=G.UIT.R, config = {align = 'cm'}, nodes = {{n=G.UIT.C, config = {align = 'cm', colour = G.C.WHITE, r=0.1, padding = 0.025}, nodes = {node}}}}
             end
@@ -877,7 +880,8 @@ function FishAndChips.Compendium.config_page(page_number, left)
             FishAndChips.Compendium.toggle {text_key = 'b_fac_ambience_toggle', ref_value = "ambience", callback = G.FUNCS.fac_toggle_ambience},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_menu_toggle', ref_value = "menu"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_condensed_fish', ref_value = "condensed_fish"},
-            FishAndChips.Compendium.toggle {text_key = 'b_fac_flavour_text', ref_value = "disable_flavour"}
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_flavour_text', ref_value = "disable_flavour"},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_flashing_lights', ref_value = "disable_flashing"},
         }},
         {n=G.UIT.R, config = {align = 'cm', minh = 2}, nodes = {
             {n=G.UIT.R, config = {align = 'cm', colour = FishAndChips.C.COMPENDIUM_COLOUR, r = 0.1, hover = true, button = 'fac_reset_all_progress', func = 'fac_can_reset_progress', minw = 3.2, minh = 0.8, padding = 0.05}, nodes = {
