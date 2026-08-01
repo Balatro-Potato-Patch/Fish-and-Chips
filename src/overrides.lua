@@ -392,6 +392,10 @@ function Game:start_run(...)
 	start_run_ref(self, ...)
 	FishAndChips.stop_ambience()
 	FishAndChips.stop_reel_sound()
+
+	FishAndChips.C.FISHING_BUTTONS_ACTIVE = { 62 / 255, 222 / 255, 250 / 255, 0.65 }
+	FishAndChips.C.FISHING_BUTTONS_BG = { G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65 }
+	FishAndChips.C.FISHING_BUTTONS_TEXT = { G.C.UI.TEXT_LIGHT[1], G.C.UI.TEXT_LIGHT[2], G.C.UI.TEXT_LIGHT[3], 1 }
 end
 
 
