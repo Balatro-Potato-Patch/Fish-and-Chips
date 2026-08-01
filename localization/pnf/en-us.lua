@@ -54,7 +54,35 @@ return {
                 }
                 },
                 flavor = {
-                    [["Hehe it's me, the character from TADC"]]
+                    [["Hehe it's me, the character from]],
+                    [[that one show"]]
+                }
+            },
+            fish_fac_patrickstarwalker = {
+                name = "Patrick Starwalker",
+                text = {
+                    {
+                        "{C:attention}Stone cards{} are {C:red}destroyed{}",
+                        "and this {V:1}Fish{} gains {C:white,X:chips}X#2#{} Chips",
+                        "{C:inactive}(Currently: {X:chips,C:white}X#1#{C:inactive})"
+                        
+                }
+                },
+                flavor = {
+                    [[These shorts piss me off]]
+                }
+            },
+            fish_fac_flyinganchovy = {
+                name = "Flying Anchovy",
+                text = {
+                    {
+                        "Highest rank in a {C:attention}Straight",
+                        "gives {C:mult}Mult{} equal to it's {C:attention}rank"
+                        
+                }
+                },
+                flavor = {
+                    [[WAK!!]]
                 }
             },
         },
