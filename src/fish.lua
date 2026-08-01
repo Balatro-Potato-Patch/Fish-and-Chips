@@ -22,7 +22,7 @@ FishAndChips.Fish = SMODS.Center:extend {
 		G.P_CENTER_POOLS[self.set] = {}
 	end,
 	set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge(localize("k_fac_fish"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
+		badges[#badges + 1] = create_badge(localize(card.config.center.badge_key or "k_fac_fish"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
 	end,
 	post_inject_class = function(self)
 		FishAndChips.verify_submissions()
@@ -66,7 +66,11 @@ function FishAndChips.verify_submissions()
 	for _, fish in ipairs(G.P_CENTER_POOLS.fac_Fish) do
 		devs[fish.ppu_coder[1]] = devs[fish.ppu_coder[1]] or {}
 		table.insert(devs[fish.ppu_coder[1]], fish)
-		local partner = PotatoPatchUtils.Developers["fac_" .. fish.ppu_coder[1]].fac_partner
+		local prefix = ""
+		if not (fish.prefix_config and fish.prefix_config.ppu_coder == false) then
+			prefix = "fac_"
+		end
+		local partner = PotatoPatchUtils.Developers[prefix .. fish.ppu_coder[1]].fac_partner
 		if partner then
 			-- print('Partner detected: ' .. partner)
 			devs[partner] = devs[partner] or {}
@@ -82,8 +86,10 @@ function FishAndChips.verify_submissions()
 			if fish.treasure then treasure_fish_count = treasure_fish_count + 1 end
 		end
 		local scalar = math.min(1, FishAndChips.submission_weight_limit / total_weight)
-		assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
-		assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")
+		if submission.mod == FishAndChips.mod then
+			assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
+			assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")
+		end
 		for _, fish in ipairs(submission) do
 			fish.weight = fish.weight * scalar
 			local unpack_env = function(environment)
@@ -115,6 +121,7 @@ function G.UIDEF.create_UIBox_your_collection_fish()
 	return SMODS.card_collection_UIBox(pool, { 5, 5, 5 }, {
 		no_materialize = true,
 		h_mod = 0.95,
+		back_func = 'your_collection_other_gameobjects',
 	})
 end
 

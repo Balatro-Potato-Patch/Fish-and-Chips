@@ -205,8 +205,8 @@ function FishAndChips.create_fishing_UI()
 
 	G.FISHING.fac_fish_reward_area = CardArea(0, 0, G.CARD_W, G.CARD_H, {
 		type = "joker",
-		highlight_limit = 1,
-		highlighted_limit = 1,
+		highlight_limit = 0,
+		highlighted_limit = 0,
 		align_buttons = true,
 		bg_colour = G.C.CLEAR,
 		no_card_count = true,
@@ -229,8 +229,8 @@ function FishAndChips.create_fishing_UI()
 
 	G.FISHING.fac_treasure_reward_area = CardArea(0, 0, G.CARD_W, G.CARD_H, {
 		type = "joker",
-		highlight_limit = 1,
-		highlighted_limit = 1,
+		highlight_limit = 0,
+		highlighted_limit = 0,
 		align_buttons = true,
 		bg_colour = G.C.CLEAR,
 		no_card_count = true,

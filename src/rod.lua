@@ -36,6 +36,7 @@ function G.UIDEF.create_UIBox_your_collection_rods()
 	return SMODS.card_collection_UIBox(pool, { 4, 4 }, {
 		no_materialize = true,
 		h_mod = 0.95,
+		back_func = 'your_collection_other_gameobjects',
 	})
 end
 
@@ -121,7 +122,12 @@ FishAndChips.Rod {
 	unlocked = false,
 	check_for_unlock = function(self, args)
 		if args.type == "fac_fish_caught" then
-			return #G.PROFILES[G.SETTINGS.profile].fac_fishing.baits_used >= #G.P_CENTER_POOLS.fac_Bait
+			for _, v in pairs(G.P_CENTER_POOLS.fac_Bait) do
+				if not G.PROFILES[G.SETTINGS.profile].fac_fishing.baits_used[v.key] then
+					return false
+				end
+			end
+			return true
 		end
 	end
 }
@@ -181,7 +187,12 @@ FishAndChips.Rod {
 	unlocked = false,
 	check_for_unlock = function(self, args)
 		if args.type == "fac_fish_caught" then
-			return #G.PROFILES[G.SETTINGS.profile].fac_fishing.environments_fished >= #G.FAC_ENVIRONMENT_POOL
+			for _, v in pairs(G.FAC_ENVIRONMENT_POOL) do
+				if not G.PROFILES[G.SETTINGS.profile].fac_fishing.environments_fished[v.key] then
+					return false
+				end
+			end
+			return true
 		end
 	end,
 	force_environment = function(self, card, args)
