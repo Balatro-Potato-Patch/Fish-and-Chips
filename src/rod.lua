@@ -36,6 +36,7 @@ function G.UIDEF.create_UIBox_your_collection_rods()
 	return SMODS.card_collection_UIBox(pool, { 4, 4 }, {
 		no_materialize = true,
 		h_mod = 0.95,
+		back_func = 'your_collection_other_gameobjects',
 	})
 end
 
