@@ -4,10 +4,16 @@ return {
             fish_fac_fo_boids = {
                 name = "Boids",
                 text = {
-                    "Placeholder"
+                    "Makes {C:attention}boids{} appear on screen",
+                    "This Fish gains {C:chips}+#1#{} Chips when you",
+                    "{C:attention}click{} on a boid while",
+                    "reeling in a fish"
                 },
                 fac_flavor = {
-                    "Placeholder"
+                    "Bird? Fish?",
+                    "Something else entirely?",
+                    "All of the above?",
+                    "Yes."
                 }
             },
             fish_fac_fo_neutron_starfish = {
@@ -31,7 +37,14 @@ return {
                 fac_flavor = {
                     "The snack that smiles back!"
                 }
-            }
+            },
+            fish_fac_fo_fireball = {
+                name = "Fireball",
+                text = {
+                    "Use this fish to get",
+                    "{X:mult,C:white}X#1#{} Mult next hand"
+                }
+            },
         },
         PotatoPatch = {
             PotatoPatchDev_fo_alexi = {
