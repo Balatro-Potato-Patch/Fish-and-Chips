@@ -1,8 +1,8 @@
 SMODS.Atlas({
 	key = "sg11_n_vekhi_whale_shark",
-	path = "sg11_n_vekhi/nautilus.png",
-	px = 71,
-	py = 95,
+	path = "sg11_n_vekhi/whale_shark.png",
+	px = 71 * 2,
+	py = 95 * 2,
 })
 
 FishAndChips.Fish({
@@ -23,9 +23,13 @@ FishAndChips.Fish({
 		pier = 4,
 	},
 	display_size = {
-		w = 71 * 1.5,
-		h = 95 * 1.5,
+		w = 71 * 1.75,
+		h = 95 * 1.75,
 	},
+	-- pixel_size = {
+	-- 	w = 71 * 2,
+	-- 	h = 95 * 2,
+	-- },
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult },
@@ -44,7 +48,10 @@ FishAndChips.Fish({
 									ref_table = card.ability.extra,
 									ref_value = "xmult",
 									scalar_value = "xmult_gain",
-									message_key = "k_fac_nom_ex",
+									scaling_message = {
+										message = localize("k_fac_nom_ex"),
+										colour = G.C.FILTER,
+									},
 								})
 								return true
 							end,
