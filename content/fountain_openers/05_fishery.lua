@@ -118,6 +118,23 @@ FishAndChips.Fish {
                 func = function()
                     FountainOpeners.random_flowery_sound({
                         "hereicomesanfrandisco",
+                        "hey_boys",
+                        "hey",
+                        "hey_guys",
+                        "heyguysithinkifoundaglue",
+                        "itsme",
+                        "itsmeflowery",
+                        "flowery",
+                        "flowery2",
+                        "leaf_it_to_me",
+                        "minipeppers",
+                        "thisguysyourbestfriend",
+                        "try_my_flavor",
+                        "imsorryonceagainikeptaladyinwaiting",
+                        "sorrytokeepaladyinwaiting",
+                        "sorrytokeepyouwaiting1",
+                        "sorrytokeepyouwaiting2",
+                        "heh_its_my_jarona"
                     })
                     return true
                 end
