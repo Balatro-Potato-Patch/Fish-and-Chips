@@ -1,7 +1,8 @@
-SMODS.Attribute {
-    key = "fac_fish_slot",
-    alias = { "fish_slot" }
-}
+-- wait i don't think these are allowed
+-- SMODS.Attribute {
+--     key = "fac_fish_slot",
+--     alias = { "fish_slot" }
+-- }
 
 FishAndChips.Fish {
     key = "blamperer_kala",
@@ -10,7 +11,7 @@ FishAndChips.Fish {
     ppu_coder = { "blamperer" },
     ppu_artist = { "blamperer" },
     attributes = {
-        "xmult", "fac_fish_slot"
+        "xmult", --"fac_fish_slot"
     },
     config = {
         extra = {
