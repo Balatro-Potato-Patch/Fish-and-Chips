@@ -30,7 +30,10 @@ return {
 					"consequences...",
 				},
 			},
-			fish_fac_8f = {
+			fish_fac_8f = { -- For compendium
+				name = "????",
+			},
+			fish_fac_8f_normal = {
 				name = "{f:fac_hayayaya_pkmn}8F",
 				text = {
 					"{C:inactive,f:fac_hayayaya_pkmn}#1#/#2#",
@@ -45,8 +48,7 @@ return {
 					"{C:red,f:fac_hayayaya_pkmn}Removes{f:fac_hayayaya_pkmn} an ante",
 				},
 				flavor = {
-					"{f:fac_hayayaya_pkmn}THERE IS A NEW",
-					"{f:fac_hayayaya_pkmn}ROCK BY THE WATER",
+					"{f:fac_hayayaya_pkmn}3 NEW",
 				},
 			},
 			fish_fac_codamite = {
@@ -134,6 +136,17 @@ return {
 				flavor = {
 					"Excuse me sir! There must be",
 					"someone you've confused me for!",
+				},
+			},
+			fish_fac_celadon = {
+				name = "Rainbow Badge",
+				text = {
+					"Add {C:dark_edition}Polychrome{} to",
+					"a random {C:attention}Fish{}",
+				},
+				flavor = {
+					"{C:white}Celadon City Gym Badge",
+					"It's covered in algae...",
 				},
 			},
 		},

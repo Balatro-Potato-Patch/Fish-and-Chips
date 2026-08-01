@@ -22,7 +22,7 @@ FishAndChips.Fish({
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = { card.ability.immutable.count, card.ability.immutable.max },
-			key = self.key .. (card.ability.immutable.count >= card.ability.immutable.max and "_alt" or ""),
+			key = self.key .. (card.ability.immutable.count >= card.ability.immutable.max and "_alt" or "_normal"),
 		}
 	end,
 	can_use = function(self, card)
