@@ -1,0 +1,227 @@
+PotatoPatchUtils.Developer({
+	name = 'VMan_2002',
+	atlas = 'fac_vman2002_fish',
+	colour = G.C.BLUE,
+	loc = "fac_dev_vman2002"
+})
+
+SMODS.Atlas({
+	key = "vman2002_fish", -- Please include your name/team name in your atlas keys
+	path = "vman2002/cards.png",
+	px = 71,
+	py = 95,
+})
+
+local chips_atlas = SMODS.Atlas({
+	key = "vman2002_chips", -- Please include your name/team name in your atlas keys
+	path = "vman2002/chips.png",
+	px = 71,
+	py = 95,
+})
+
+SMODS.Atlas({
+	key = "vman2002_manos", -- Please include your name/team name in your atlas keys
+	path = "vman2002/sinister.png",
+	px = 71,
+	py = 95,
+})
+
+SMODS.Sound({
+	key = "vman2002_manosorry",
+	path = "vman2002/manosorry.ogg"
+})
+
+local returnTrue = topuplib.returnTrue or function() return true end
+
+--#region Fish
+
+local chips_col = {HEX("EBF6F8"), HEX("FD5F55"), HEX("55A383"), HEX("009CFD"), HEX("4F6367"), HEX("8A71E1"), HEX("E47C4C"), HEX("F2C255")}
+FishAndChips.Fish { --Chips
+	key = "vman2002_chips",
+	atlas = "vman2002_chips",
+	pos = { x = 0, y = 0 },
+	weight = 6,
+	ppu_coder = { "VMan_2002" },
+	ppu_artist = { "VMan_2002" },
+	attributes = { "xchips", "score" },
+	pronouns = "they_them",
+	config = {
+		extra = {
+			xchips = 1.3,
+			score = 800
+		}
+	},
+	environments = {
+		backroom = 0.7, soup = 0.3
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.xchips, card.ability.extra.score } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then return { x_chips = card.ability.extra.xchips, score = card.ability.extra.score } end
+	end,
+	set_ability = function(self, card)
+		if not (card.ability.unriggable and card.ability.unriggable.fac_chips_col) then
+			card.ability.unriggable = card.ability.unriggable or {}
+			card.ability.unriggable.fac_chips_col = card.ability.unriggable.fac_chips_col or {}
+			local s = os.time() - math.floor(os.clock() * 100) % 7e4
+			while #card.ability.unriggable.fac_chips_col ~= 5 do
+				s = (s * 43) % 46217
+				table.insert(card.ability.unriggable.fac_chips_col, (s % #chips_col) + 1)
+			end
+		end
+	end,
+	draw = function(self, card, layer)
+		if not card.fac_chips_sprites then
+			card.fac_chips_sprites = {}
+			for i = 1, 5 do
+				--TODO: someone fix the sprite alignment positioning stuff (i'm not gonna. i would if i knew how)
+				local s = Sprite(card.VT.x, card.VT.y, card.VT.w, card.VT.h, chips_atlas, {x=6-i, y=0})
+				s.T = card.T
+				s.role.draw_major.tilt_var = card.children.center.role.draw_major.tilt_var
+				card.fac_chips_sprites[i] = s
+			end
+		end
+		for i = 1, 5 do
+			card.fac_chips_sprites[i]:draw_self(chips_col[card.ability.unriggable.fac_chips_col[i]])
+		end
+		card.children.center:draw_shader('dissolve')
+	end
+}
+
+FishAndChips.Fish { --Trust
+	key = "vman2002_trust",
+	atlas = "vman2002_fish",
+	pos = { x = 1, y = 0 },
+	weight = 8,
+	ppu_coder = { "VMan_2002" },
+	ppu_artist = { "VMan_2002" },
+	attributes = { "xchips", "score" },
+	config = {
+		extra = {
+			xchips = 1.3,
+			score = 800
+		}
+	},
+	environments = {
+		city_river = 0.4, pier = 0.6
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.xchips, card.ability.extra.score } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then return { x_chips = card.ability.extra.xchips, score = card.ability.extra.score } end
+	end
+}
+
+local todeg, todeg2 = 180/math.pi, 8/360
+FishAndChips.Fish { --Manos
+	key = "vman2002_manos",
+	atlas = "vman2002_manos",
+	pos = { x = 0, y = 0 },
+	weight = 2,
+	ppu_coder = { "VMan_2002" },
+	ppu_artist = { "VMan_2002" },
+	attributes = { "usable", "retrigger", "destroy_card", "self_eternal" },
+	config = {
+		extra = {
+			active = false,
+			straights_current = 0,
+			straights_goal = 8,
+			flushes_current = 0,
+			flushes_goal = 8,
+			repetitions = 1
+		}
+	},
+	environments = {
+		styx = 1
+	},
+	loc_vars = function(self, info_queue, card)
+		local manoline = 1
+		local ex = card.ability.extra
+		if ex.active then
+			local rip = (os.clock() * 9)
+			manoline = (rip % 2 >= 1) and 2 or 3
+			if rip % 9 > 7 then
+				manoline = manoline + 2
+			end
+		else
+			info_queue[#info_queue+1] = {set = "Other", key = "eternal"}
+		end
+		return {
+			vars = {
+				localize("fac_vman2002_manos" .. manoline),
+				ex.straights_current,
+				ex.straights_goal,
+				ex.flushes_current,
+				ex.flushes_goal,
+				ex.repetitions,
+				colours = {G.C.ETERNAL}
+			},
+			key = ex.active and "fish_fac_vman2002_manos_active" or G.PROFILES[G.SETTINGS.profile].fac_manos_known and "fish_fac_vman2002_manos_known" or nil,
+		}
+	end,
+	calculate = function(self, card, context)
+		local ex = card.ability.extra
+		if not ex.active then return end
+		if not context.blueprint then
+			if context.joker_main then
+				local c = false
+				topuplib.inspect(context)
+				if next(context.poker_hands.Flush) and ex.flushes_current < ex.flushes_goal then
+					SMODS.scale_card(card, {ref_value = "flushes_current", no_message = true})
+					c = true
+				end
+				if next(context.poker_hands.Straight) and ex.straights_current < ex.straights_goal then
+					SMODS.scale_card(card, {ref_value = "straights_current", no_message = true})
+					c = true
+				end
+				return c and {message = tostring((ex.straights_goal + ex.flushes_goal) - (ex.straights_current + ex.flushes_current)), colour = G.C.RED} or nil
+			end
+			if context.after and ex.straights_current >= ex.straights_goal and ex.flushes_current >= ex.flushes_goal then
+				SMODS.destroy_cards(card, {bypass_eternal = true})
+				return {
+					message = localize('fac_vman2002_manos_done'),
+					colour = G.C.RED
+				}
+			end
+			if G.GAME.current_round.hands_played == 0 then
+				return (context.cardarea == G.play or context.cardarea == "unscored") and context.destroy_card and {remove = true} or nil
+			end
+		end
+		if G.GAME.current_round.hands_played == 1 then
+			return context.repetition and context.cardarea == G.play and {repetitions = ex.repetitions} or nil
+		end
+	end,
+	draw = function(self, card)
+		if not card.ability.extra.active then return end
+		prep_draw(card, 1)
+		local mx, my = love.graphics.inverseTransformPoint(love.mouse.getPosition())
+		local xs = (math.floor(((math.atan2(mx - 0.6, my - 2.5) * todeg) + 112.5) * todeg2) % 8) + 1
+		if card.children.center.sprite_pos_copy.x ~= xs then
+			card.children.center:set_sprite_pos({x = xs, y = 0})
+		end
+		love.graphics.pop()
+	end,
+	use = function(self, card)
+		local ex = card.ability.extra
+		if not ex.active then
+			ex.active = true
+			SMODS.calculate_effect({ message_card = card,
+				message = localize("fac_vman2002_manosorry"),
+				sound = "fac_vman2002_manosorry",
+				colour = G.C.RED,
+				pitch = 1
+			}, card)
+			card:add_sticker("eternal", true)
+			G.PROFILES[G.SETTINGS.profile].fac_manos_known = true
+		end
+	end,
+	can_use = function(self, card)
+		return (G.GAME.current_round.hands_played == 0 or G.STATE ~= G.STATES.SELECTING_HAND) and not card.ability.extra.active
+	end,
+	keep_on_use = returnTrue,
+	usable = true
+}
+
+--#endregion
