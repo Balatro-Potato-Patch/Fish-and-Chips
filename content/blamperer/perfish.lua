@@ -62,7 +62,11 @@ FishAndChips.Fish {
         end
 
         if context.ending_fishing and card.ability.extra.best_streak > 0 then
-            return { dollars = math.max(0, 2 * card.ability.extra.best_streak - 1) }
+            local reward = math.max(0, 2 * card.ability.extra.best_streak - 1)
+            -- BALANCE: Uncomment these to reset on payout
+            -- card.ability.extra.current_streak = 0
+            -- card.ability.extra.best_streak = 0
+            return { dollars = reward }
         end
     end
 }
