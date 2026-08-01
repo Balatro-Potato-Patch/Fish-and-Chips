@@ -31,7 +31,7 @@ SMODS.Sound({
 	path = "vman2002/manosorry.ogg"
 })
 
-local returnTrue = topuplib.returnTrue or function() return true end
+local returnTrue = topuplib and topuplib.returnTrue or function() return true end
 
 --#region Fish
 
