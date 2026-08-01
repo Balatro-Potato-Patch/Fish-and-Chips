@@ -146,7 +146,7 @@ SMODS.Shader {
 	path = "core/hide_fish.fs",
 	send_vars = function(self, card)
 		return {
-			mask_colour = card.area.config.fac_compendium and FishAndChips.C.COMPENDIUM_COLOUR or {0,0,0,1}
+			mask_colour = card and card.area and card.area.config.fac_compendium and FishAndChips.C.COMPENDIUM_COLOUR or {0,0,0,1}
 		}
 	end
 }

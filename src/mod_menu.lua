@@ -145,7 +145,10 @@ G.FUNCS.fac_reset_all_progress = function(e)
             G.SETTINGS.ACHIEVEMENTS_EARNED[ach.key] = nil
         end
 
+        G.PROFILES[G.SETTINGS.profile].fac_tutorial_seen = nil
+
         G:save_progress()
+        remove_save()
         love.filesystem.remove(G.SETTINGS.profile..'/'..'meta.jkr')
         convert_save_to_meta()
         G.SAVE_MANAGER.channel:push({
