@@ -1,9 +1,3 @@
--- possibly illegal?
--- SMODS.Attribute {
---     key = "fac_perfect_catch",
---     aliases = { "perfect_catch", "perfect" }
--- }
-
 FishAndChips.Fish {
     key = "blamperer_perfish",
     atlas = "fitch",
@@ -11,7 +5,7 @@ FishAndChips.Fish {
     ppu_coder = { "blamperer" },
     ppu_artist = { "blamperer" },
     attributes = {
-        "economy", --"fac_perfect_catch"
+        "economy", "fac_perfect_catch"
     },
     config = {
         extra = {

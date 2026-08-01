@@ -33,6 +33,18 @@ PotatoPatchUtils.Developer {
     end
 }
 
+-- Custom attributes
+-- (legal as per https://discord.com/channels/1397999048559951923/1528889180695035924/1531781743449997535)
+SMODS.Attribute {
+    key = "fac_fish_slot",
+    alias = { "fish_slot" }
+}
+SMODS.Attribute {
+    key = "fac_perfect_catch",
+    aliases = { "perfect_catch", "perfect" }
+}
+
+
 -- Hoosks
 local rgg_ref = FishAndChips.mod.reset_game_globals
 function FishAndChips.mod.reset_game_globals(run_start)
