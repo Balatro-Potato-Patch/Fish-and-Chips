@@ -79,7 +79,7 @@ return {
 				name = "VMan_2002",
 				text = {
 					"meow mrrp mraow",
-					"{S:0.5}vman-2002.bsky.social"
+					"{s:0.8}vman-2002.bsky.social"
 				}
 			}
 		}
