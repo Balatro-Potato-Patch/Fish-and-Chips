@@ -80,7 +80,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = {  },
+	attributes = { "usable" },
 	blueprint_compat = false,
 	config = {
 		extra = {
@@ -159,7 +159,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "x_chips" },
+	attributes = { "x_chips", "face_down" },
 	blueprint_compat = true,
 	config = {
 		extra = {
@@ -269,7 +269,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "mult" },
+	attributes = { "mult", "scaling" },
 	blueprint_compat = true,
 	config = {
 		extra = {
@@ -303,7 +303,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "mult" },
+	attributes = { "mult", "scaling" },
 	blueprint_compat = true,
 	config = {
 		extra = {
@@ -574,7 +574,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable" },
+	attributes = { "usable", "destroy_card" },
 	blueprint_compat = false,
 	requires_hand = true,
 	config = {
@@ -677,7 +677,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable" },
+	attributes = { "usable", "face_down" },
 	blueprint_compat = false,
 	requires_hand = true,
 	config = {
@@ -767,7 +767,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable" },
+	attributes = { "usable", "spectral" },
 	blueprint_compat = false,
 	config = {
 		extra = {
@@ -913,7 +913,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable" },
+	attributes = { "usable", "tag", "chance" },
 	blueprint_compat = false,
 	config = {
 		extra = {
