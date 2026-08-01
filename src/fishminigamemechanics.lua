@@ -1009,9 +1009,8 @@ local old_fac_keypressed = love.keypressed
 function love.keypressed(key, scancode, isrepeat)
     if G and G.STATE == G.STATES.FAC_FISHING and not G.SETTINGS.paused then
         local state = fac_ensure_state()
-        if key == "space" or key == "up" or key == "w" or key == "return" then
+        if key == "space" or key == "up" or key == "w" then
             fac_queue_tap(state)
-            return
         end
     end
 
