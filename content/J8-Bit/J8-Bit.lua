@@ -82,6 +82,53 @@ SMODS.DynaTextEffect {
     end,
 }
 
+FishAndChips.AttributeColorTable = {
+    mult = G.C.MULT,
+    chips = G.C.CHIPS,
+    economy = G.C.MONEY,
+    xmult = G.C.MULT,
+    retrigger = G.C.FILTER,
+    hand_level = G.C.SECONDARY_SET.Planet,
+    usable = G.C.RED,
+    suits = FishAndChips.suits_gradient,
+    suit = FishAndChips.suits_gradient,
+    passive = G.C.BLUE,
+    rank = G.C.UI.TEXT_DARK,
+    copying = G.C.GREEN,
+    generation = G.C.FILTER,
+    boss_blind = G.C.DYN_UI.DARK,
+    destroy_card = G.C.RED,
+    food = G.C.INACTIVE,
+    hand = G.C.BLUE,
+    hands = G.C.BLUE,
+    discard = G.C.RED,
+    discards = G.C.RED,
+    xchips = G.C.CHIPS,
+    score = G.C.PURPLE,
+    xscore = G.C.PURPLE,
+    blindsize = G.C.DYN_UI.LIGHT or G.C.DYN_UI.DARK,
+    balance = G.C.PURPLE,
+    swap = G.C.SWAP,
+    reset = G.C.INACTIVE,
+    diamonds = G.C.SUITS.Diamonds,
+    hearts = G.C.SUITS.Hearts,
+    spades = G.C.SUITS.Spades,
+    clubs = G.C.SUITS.Clubs,
+    chance = G.C.GREEN,
+    mod_chance = G.C.GREEN,
+    joker_slot = G.C.FILTER,
+    joker = G.C.FILTER,
+    tarot = G.C.SECONDARY_SET.Tarot,
+    planet = G.C.SECONDARY_SET.Planet,
+    spectral = G.C.SECONDARY_SET.Spectral,
+    enhancement = G.C.SECONDARY_SET.Enhanced,
+    editions = G.C.DARK_EDITION,
+    seals = G.C.DARK_EDITION,
+    tags = G.C.FILTER,
+    reroll = G.C.GREEN,
+    on_sell = G.C.MONEY
+}
+
 -- ## DEVELOPERS ##
 
 PotatoPatchUtils.Developer({

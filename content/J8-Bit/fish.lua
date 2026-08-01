@@ -19,8 +19,10 @@ FishAndChips.Fish {
         garden = 2.0
     },
     attributes = {
-        suit,
-        economy,
+        "suit",
+        "economy",
+        "hearts",
+        "chance"
     },
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds,
@@ -87,9 +89,10 @@ FishAndChips.Fish {
         garden = 4.0
     },
     attributes = {
-        rank,
-        chips,
-        mult,
+        "rank",
+        "chips",
+        "mult",
+        "eight"
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -136,7 +139,9 @@ FishAndChips.Fish {
         backroom = 1.0
     },
     attributes = {
-        passive,
+        "passive",
+        "reset",
+        "mod_chance"
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -220,8 +225,8 @@ FishAndChips.Fish {
         wormhole = 1.0,
     },
     attributes = {
-        usable,
-        economy
+        "usable",
+        "economy"
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -270,7 +275,8 @@ FishAndChips.Fish {
         wormhole = 5.0
     },
     attributes = {
-        generation
+        "generation",
+        "space"
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -387,7 +393,10 @@ FishAndChips.Fish {
         soup = 3.0
     },
     attributes = {
-        mult
+        "mult",
+        "perma_bonus",
+        "modify_card",
+        "discard"
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -487,7 +496,8 @@ FishAndChips.Fish {
         soup = 4.5
     },
     attributes = {
-        mult,
+        "mult",
+        "hand_type"
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -517,8 +527,8 @@ FishAndChips.Fish {
         pier = 4,
     },
     attributes = {
-        passive,
-        generation,
+        "passive",
+        "generation",
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -567,9 +577,10 @@ FishAndChips.Fish {
         swamp = 4.0
     },
     attributes = {
-        passive,
-        generation,
-        economy,
+        "passive",
+        "generation",
+        "economy",
+        "tag",
     },
     loc_vars = function(self, info_queue, card)
         local vars = {
@@ -641,8 +652,9 @@ FishAndChips.Fish {
         pier = 2.0
     },
     attributes = {
-        mult,
-        retrigger,
+        "mult",
+        "retrigger",
+        "enhancements"
     },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.extra.enhancement]
@@ -694,7 +706,9 @@ FishAndChips.Fish {
         backroom = 2.0
     },
     attributes = {
-        passive,
+        "passive",
+        "hands",
+        "hand_size"
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -746,7 +760,8 @@ FishAndChips.Fish {
         wormhole = 4.0,
     },
     attributes = {
-        generation,
+        "generation",
+        "reroll"
     },
     loc_vars = function(self, info_queue, card)
         if card.ability.extra.gender_presentation == "masc" then
@@ -862,8 +877,8 @@ FishAndChips.Fish {
         wormhole = 2.0
     },
     attributes = {
-        passive,
-        economy,
+        "passive",
+        "economy",
     },
     loc_vars = function(self, info_queue, card)
         local possible_popups = {}
@@ -930,8 +945,9 @@ FishAndChips.Fish {
         garden = 3.0
     },
     attributes = {
-        usable,
-        generation,
+        "usable",
+        "generation",
+        "spectral"
     },
     loc_vars = function(self, info_queue, card)
         -- This vanilla variable only checks for vanilla Tarots and Planets, you would have to keep track on your own for any custom consumables
@@ -981,7 +997,7 @@ FishAndChips.Fish {
     end,
 }
 
-
+--[[
 FishAndChips.Fish {
     key = "J8-Bit_boss_bass",
     atlas = "fac_j8bit_fish",
@@ -1075,6 +1091,100 @@ FishAndChips.Fish {
         end
     end,
 }
+]]
+
+local get_all_fish_attributes = function()
+    local attributes = {}
+    if G.fac_fish_area and #G.fac_fish_area.cards > 0 then
+        for fish_index, fish in ipairs(G.fac_fish_area.cards) do
+            for attribute_index, attribute in ipairs(fish.config.center.attributes) do
+                if G.FAC_ENVIRONMENTS[attribute] == nil then
+                    attributes[attribute] = (attributes[attribute] or 0) + 1
+                end
+            end
+        end
+    end
+    return attributes
+end
+
+FishAndChips.Fish {
+    key = "J8-Bit_kaleidolotl",
+    badge_key = "k_J8-Bit_fishbadge_amphibian",
+    atlas = "fac_j8bit_fish",
+    pos = { x = 4, y = 2 },
+    weight = 2,
+    cost = 4,
+    ppu_coder = { "J8-Bit" },
+    ppu_artist = { "J8-Bit" },
+    blueprint_compat = true,
+    config = {
+        extra = {
+            xmult_inc = 0.1,
+        }
+    },
+    environments = {
+        garden = 2.0
+    },
+    attributes = {
+        "xmult",
+    },
+    loc_vars = function(self, info_queue, card)
+        -- attribute number
+        local attributes = get_all_fish_attributes() or {}
+        local attribute_list = {}
+        for attribute, __ in pairs(attributes) do
+            attribute_list[#attribute_list + 1] = attribute
+        end
+        -- main end
+        local main_end = {}
+        local columns = 4
+        if card.area and (card.area == G.fac_fish_area) then
+            for i = 0, math.floor(#attribute_list / columns) - 1 do
+                local row = {
+                    n = G.UIT.R,
+                    config = { align = "bm", minh = 0.4, colour = G.C.CLEAR },
+                    nodes = {
+                        nodes
+                    }
+                }
+                for j = i * columns + 1, math.min(i * columns + columns, #attribute_list) do
+                    local name = localize('k_J8-Bit_attribute_' .. attribute_list[j])
+                    if name == "ERROR" then
+                        name = attribute_list[j]
+                    end
+                    local node = {
+                        n = G.UIT.C,
+                        config = { ref_table = card, align = "m", colour = FishAndChips.AttributeColorTable[attribute_list[j]] or G.C.UI.TEXT_DARK, r = 0.05, padding = 0.06 },
+                        nodes = {
+                            { n = G.UIT.T, config = { text = " " .. name .. " ", colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.9 } },
+                        }
+                    }
+                    table.insert(row.nodes, node)
+                end
+                table.insert(main_end, row)
+            end
+        end
+        return {
+            vars = {
+                card.ability.extra.xmult_inc,
+                1.0 + card.ability.extra.xmult_inc * #attribute_list
+            },
+            main_end = main_end
+        }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local attributes = get_all_fish_attributes()
+            local attribute_num = 0
+            for _, __ in pairs(attributes) do
+                attribute_num = attribute_num + 1
+            end
+            return {
+                xmult = 1.0 + card.ability.extra.xmult_inc * attribute_num
+            }
+        end
+    end,
+}
 
 local has_any_suit_ref = SMODS.has_any_suit
 function SMODS.has_any_suit(card)
@@ -1123,9 +1233,12 @@ FishAndChips.Fish {
         wormhole = 2.0
     },
     attributes = {
-        passive,
-        rank,
-        suit
+        "passive",
+        "rank",
+        "suit",
+        "queen",
+        "boss_blind",
+        "modify_card"
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -1183,9 +1296,10 @@ FishAndChips.Fish {
         city_river = 0.5
     },
     attributes = {
-        usable,
-        destroy_card,
-        generation
+        "usable",
+        "destroy_card",
+        "generation",
+        "tag"
     },
     loc_vars = function(self, info_queue, card)
         for i, edition in ipairs(G.P_CENTER_POOLS.Edition) do
@@ -1294,8 +1408,8 @@ FishAndChips.Fish {
     blueprint_compat = true,
     config = {
         extra = {
-            money = 8,
-            sand_dollars = 8,
+            money = 5,
+            sand_dollars = 5,
         }
     },
     environments = {
@@ -1304,7 +1418,7 @@ FishAndChips.Fish {
         wormhole = 1.0,
     },
     attributes = {
-        economy,
+        "economy",
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -1379,7 +1493,10 @@ FishAndChips.Fish {
         wormhole = 1.0
     },
     attributes = {
-        retrigger,
+        "retrigger",
+        "hand_type",
+        "planet",
+        "space"
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -1438,7 +1555,9 @@ FishAndChips.Fish {
         wormhole = 1.0,
     },
     attributes = {
-        passive,
+        "passive",
+        "generation",
+        "editions"
     },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_generic', set = 'Edition', config = { extra = 1 } }
