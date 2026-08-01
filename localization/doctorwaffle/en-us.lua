@@ -102,7 +102,22 @@ return {
                     "This determined duo will roll with",
                     "each other until the bitter end."
                 }
-            }
+            },
+
+            fish_fac_waffle_gossamer_worm = {
+                name = "Gossamer Worm",
+                text = {
+                    "If catch is a {C:attention}perfect catch{} and",
+                    "{C:attention}treasure{} is reeled in, create a",
+                    "random {C:spectral}Spectral{} card",
+                    "{C:inactive}(Must have room)"
+                },
+                flavor = {
+                    "Swimming through the twilight zone,",
+                    "these glowing worms elegantly row their",
+                    "paddle-like parapodia in search of food."
+                }
+            },
 
         },
 

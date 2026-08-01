@@ -335,7 +335,7 @@ FishAndChips.Fish {
     cost = 4,
     environments = {
         chocolate_river = 1,
-        soup = 0.8,
+        pier = 0.7,
     },
     loc_vars = function(self, info_queue, card)
         local quotes = {
@@ -546,3 +546,39 @@ FishAndChips.Fish {
     attributes = { "mod_chance", "passive" }
 }
 
+-- Gossamer Worm
+FishAndChips.Fish {
+    key = "waffle_gossamer_worm",
+    atlas = "waffle_fish",
+    pos = {x = 7, y = 0},
+    weight = 10,
+    environments = {
+        aquifer = 1,
+        pier = 0.4
+    },
+    pixel_size = { h = 76},
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    blueprint_compat = true,
+    calculate = function (self, card, context)
+        if context.fac_end_fishing and context.perfect and context.treasure then
+            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                 G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = (function()
+                            SMODS.add_card {
+                                set = 'Spectral',
+                                key_append = 'fac_waffle_gossamer_worm'
+                            }
+                            G.GAME.consumeable_buffer = 0
+                            return true
+                        end)
+                    }))
+                    return {
+                        message = localize('k_plus_spectral'),
+                        colour = G.C.SECONDARY_SET.Spectral,
+                    }
+            end
+        end
+    end,
+}
