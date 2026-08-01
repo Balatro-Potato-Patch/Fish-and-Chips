@@ -1,5 +1,5 @@
 -- TOTAL WEIGHT USED
--- 10 + 10 + 7 + 5 + 5 = 37
+-- 10 + 10 + 7 + 5 + 5 + 10 + 5 = 52
 
 FishAndChips.Fish {
     key = "yellow_pikman",
@@ -191,6 +191,134 @@ FishAndChips.Fish {
             return {
                 xmult = 1 + (card.ability.extra.xmult * #context.scoring_hand)
             }
+        end
+    end
+}
+
+FishAndChips.Fish {
+    key = "ankhovy",
+    atlas = "meta_fish",
+    pos = { x = 1, y = 1 },
+    weight = 5,
+    environments = {
+        styx = 5,
+        volcano = 5,
+        backroom = 5,
+        wormhole = 3
+    },
+    attributes = { "usable", "generation", "destroy_card" },
+    ppu_coder = { "metanite64" },
+    ppu_artist = { "metanite64" },
+
+    draw = function(self, card, layer)
+        local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[card.key] or {}
+        if not card.area.config.fac_compendium or fish_data.times_caught and fish_data.times_caught > 0 then
+            card.children.center:draw_shader("booster", nil, card.ARGS.send_to_shader)
+        end
+    end,
+
+    can_use = function()
+        return G.fac_fish_area and #G.fac_fish_area.cards > 1 and #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit
+    end,
+
+    use = function(self, card, area)
+        local copyable_fish = {}
+        local deletable_fish = {}
+        for _, fish in ipairs(G.fac_fish_area.cards) do
+            if fish ~= card then
+                copyable_fish[#copyable_fish + 1] = fish
+                if not SMODS.is_eternal(fish, true) then
+                    deletable_fish[#deletable_fish + 1] = fish
+                end
+            end
+        end
+
+        local to_copy = pseudorandom_element(copyable_fish, "ankhovy_copy")
+        local first_dissolve = nil
+        G.E_MANAGER:add_event(Event {
+            trigger = "before",
+            delay = 0.75,
+            func = function()
+                for _, fish in ipairs(deletable_fish) do
+                    if fish ~= to_copy then
+                        fish:start_dissolve(nil, first_dissolve)
+                        first_dissolve = true
+                    end
+                end
+                return true
+            end
+        })
+        G.E_MANAGER:add_event(Event {
+            trigger = "before",
+            delay = 0.4,
+            func = function()
+                local copied_fish = SMODS.copy_card(to_copy)
+                copied_fish:start_materialize()
+                return true
+            end
+        })
+    end
+}
+
+FishAndChips.Fish {
+    key = "arctic_gayling",
+    atlas = "meta_fish",
+    pos = { x = 2, y = 1 },
+    weight = 10,
+    environments = {
+        city_river = 5,
+        soup = 2,
+        garden = 10
+    },
+    attributes = { "rank" },
+    ppu_coder = { "metanite64" },
+    ppu_artist = { "metanite64" },
+
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_wild
+    end,
+
+    calculate = function(self, card, context)
+        if context.before then
+            local queens = {}
+            local kings = {}
+            local yuri = false
+            local yaoi = false
+            for i, v in pairs(context.full_hand) do
+                if v:get_id() == 12 then queens[#queens + 1] = v end
+                if v:get_id() == 13 then kings[#kings + 1] = v end
+            end
+            if #queens >= 2 then
+                yuri = true
+                for i, v in ipairs(queens) do
+                    v:set_ability("m_wild", nil, true)
+                    G.E_MANAGER:add_event(Event {
+                        func = function()
+                            v:juice_up()
+                            return true
+                        end
+                    })
+                end
+            end
+            if #kings >= 2 then
+                yaoi = true
+                for i, v in ipairs(kings) do
+                    v:set_ability("m_wild", nil, true)
+                    G.E_MANAGER:add_event(Event {
+                        func = function()
+                            v:juice_up()
+                            return true
+                        end
+                    })
+                end
+            end
+
+            if yuri or yaoi then
+                return {
+                    message = localize("fac_gay" .. (yuri and "_yuri" or "") .. (yaoi and "_yaoi" or "")),
+                    colour = G.C.PURPLE
+                }
+            end
         end
     end
 }

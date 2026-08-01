@@ -1,6 +1,34 @@
 return {
     descriptions = {
         fac_Fish = {
+            fish_fac_ankhovy = {
+                name = "Ankhovy",
+                text = {
+                    "Use this fish to",
+                    "create a copy of",
+                    "a random {C:attention}Fish{},",
+                    "destroy all other Fish"
+                },
+                flavour = {
+                    "As food, ankhovies",
+                    "are extremely effective at",
+                    "amplifying one specific",
+                    "flavor at random in any dish."
+                }
+            },
+            fish_fac_arctic_gayling = {
+                name = "Arctic Gayling",
+                text = {
+                    "If played hand contains a",
+                    "pair of {C:attention}Kings{} or {C:attention}Queens{},",
+                    "enhance those cards to {C:enhanced}Wild{}"
+                },
+                flavour = {
+                    "Research going back to the 1950s",
+                    "has shown both male and female graylings",
+                    "exhibit homosexual behavior."
+                }
+            },
             fish_fac_froggy = {
                 name = "Froggy",
                 text = {
@@ -47,7 +75,8 @@ return {
             fish_fac_tsuchinoko = {
                 name = "Tsuchinoko",
                 text = {
-                    "Permanently increase",
+                    "Use this fish to",
+                    "permanently increase",
                     "earned {C:fac_sand_dollars}Sand Dollars{}",
                     "from {C:attention}Blinds{} by {C:attention}1"
                 },
@@ -81,7 +110,10 @@ return {
     },
     misc = {
         dictionary = {
-            fac_froggy_croak = "croak..."
+            fac_froggy_croak = "croak...",
+            fac_gay_yuri = "Yuri!",
+            fac_gay_yaoi = "Yaoi!",
+            fac_gay_yuri_yaoi = "Yaouri...?"
         }
     }
 }
