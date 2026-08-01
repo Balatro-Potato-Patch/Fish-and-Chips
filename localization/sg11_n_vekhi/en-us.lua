@@ -55,6 +55,15 @@ return {
 					"and {C:attention}#1#{} Bucket Slots to trigger",
 				},
 			},
+			fish_fac_sg11_n_vekhi_yellowbin_tuna = {
+				name = "Yellowbin Tuna",
+				text = {
+					"When {C:attention}Treasure{} is caught",
+					"create a copy of one of",
+					"{C:attention}#1#{} last sold cards",
+					"{C:inactive}(Must have room){}",
+				},
+			},
 		},
 		PotatoPatch = {
 			fac_sleepyg11 = {
@@ -82,6 +91,7 @@ return {
 			pac_quantum_fish_2 = "I'll not let you go this time.",
 			pac_quantum_fish_3 = "Say 'Fish'!",
 			k_pac_soul_cannon_trigger = "Saved by Soul Cannonfish",
+			k_fac_recycle_ex = "Recycle!",
 		},
 	},
 }

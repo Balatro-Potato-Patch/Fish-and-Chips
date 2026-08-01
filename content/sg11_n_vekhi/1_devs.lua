@@ -14,6 +14,14 @@ PotatoPatchUtils.Developer({
 	loc = "fac_sleepyg11",
 	calculate = function(self, context)
 		FishAndChips.QuantumFish.calculate(context)
+
+		if context.selling_card and not context.blueprint then
+			G.GAME.fac_yellowbin_sold_centers = G.GAME.fac_yellowbin_sold_centers or {}
+			table.insert(G.GAME.fac_yellowbin_sold_centers, context.card.config.center.key)
+			if #G.GAME.fac_yellowbin_sold_centers > 100 then
+				table.remove(G.GAME.fac_yellowbin_sold_centers, 1)
+			end
+		end
 	end,
 })
 
