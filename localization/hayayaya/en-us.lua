@@ -45,7 +45,8 @@ return {
 			fish_fac_8f_alt = {
 				name = "{f:fac_hayayaya_pkmn}8F",
 				text = {
-					"{C:red,f:fac_hayayaya_pkmn}Removes{f:fac_hayayaya_pkmn} an ante",
+					"{C:red,f:fac_hayayaya_pkmn}Removes",
+					"{f:fac_hayayaya_pkmn}an ante",
 				},
 				flavor = {
 					"{f:fac_hayayaya_pkmn}3 NEW",

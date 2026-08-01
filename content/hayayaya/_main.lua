@@ -62,12 +62,14 @@ PotatoPatchUtils.Developer({
 
 HayayayaUtils = {}
 HayayayaUtils.MusicStopped = false
+HayayayaUtils.DontRestartOnBlindSelect = false
 
 local gum = Game.update_menu
 function Game:update_menu(dt)
 	gum(self, dt)
 	if HayayayaUtils.MusicStopped then
 		HayayayaUtils.MusicStopped = false
+		HayayayaUtils.DontRestartOnBlindSelect = false
 		HayayayaUtils.restart_music()
 	end
 end
@@ -75,8 +77,18 @@ end
 local gubs = Game.update_blind_select
 function Game:update_blind_select(dt)
 	gubs(self, dt)
+	if HayayayaUtils.MusicStopped and not HayayayaUtils.DontRestartOnBlindSelect then
+		HayayayaUtils.MusicStopped = false
+		HayayayaUtils.restart_music()
+	end
+end
+
+local gudth = Game.update_draw_to_hand
+function Game:update_draw_to_hand(dt)
+	gudth(self, dt)
 	if HayayayaUtils.MusicStopped then
 		HayayayaUtils.MusicStopped = false
+		HayayayaUtils.DontRestartOnBlindSelect = false
 		HayayayaUtils.restart_music()
 	end
 end
@@ -91,7 +103,7 @@ function HayayayaUtils.restart_music()
 	end
 end
 
-function HayayayaUtils.stop_music()
+function HayayayaUtils.stop_music(prevent_blind)
 	G.ARGS.push = G.ARGS.push or {}
 	G.ARGS.push.type = "hayayaya_stop_music"
 	if G.F_SOUND_THREAD then
@@ -100,6 +112,9 @@ function HayayayaUtils.stop_music()
 		STOP_MUSIC(G.ARGS.push)
 	end
 	HayayayaUtils.MusicStopped = true
+	if prevent_blind then
+		HayayayaUtils.DontRestartOnBlindSelect = true
+	end
 end
 
 -- This is so ridicluously old
