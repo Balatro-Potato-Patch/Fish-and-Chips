@@ -59,6 +59,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+    key = "pnf_rib", -- Please include your name/team name in your atlas keys
+    path = "pnf/Ribbit.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
     key = "pnf_dupli", -- Please include your name/team name in your atlas keys
     path = "pnf/Barramunduplicare.png",
     px = 71,
@@ -296,5 +303,47 @@ FishAndChips.Fish {
             card.ability.immutable.sellamount = 0
             end
         end
+    end,
+}
+
+FishAndChips.Fish {
+    key = "ribbit",
+    atlas = "pnf_rib",
+    pos = { x = 0, y = 0 },
+    weight = 5,
+    blueprint_compat = true,
+    ppu_coder = { "FirstTry" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "passive" },
+    config = {
+        extra = {
+            select = 1,
+        },
+        immutable = {
+            revert = 0
+        }
+    },
+    environments = {
+        calm_pond = 5,
+        swamp = 5
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.select, colours = { HEX("4db1f6") } } }
+    end,
+    add_to_deck = function (self, card, from_debuff)
+    local add = card.ability.extra.select
+	G.hand:change_size(add)
+    SMODS.change_play_limit(add)
+	SMODS.change_discard_limit(add)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards - add
+    ease_discard(-add)
+    end,
+    remove_from_deck = function (self, card, from_debuff)
+    local add = card.ability.extra.select
+    G.hand:change_size(-add)
+    SMODS.change_play_limit(-add)
+	SMODS.change_discard_limit(-add)
+    G.GAME.round_resets.discards = G.GAME.round_resets.discards + add
+    ease_discard(add)
     end,
 }
