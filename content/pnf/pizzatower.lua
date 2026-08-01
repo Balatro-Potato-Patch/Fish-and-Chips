@@ -132,6 +132,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval then
             card.ability.extra.mult = card.ability.immutable.revert
+			card.ability.extra.trigger = false
             return { message = localize("k_reset") }
         end
         local eval = function(card) return card.ability.extra.trigger == true end
