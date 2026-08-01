@@ -10,8 +10,9 @@ return {
                     "{C:attention}when scoring",},
                     {"{C:attention}Use{} this {V:1}Fish{} to give a random",
                     "{C:attention}scoring effect{} equal to {C:dark_edition}#1#",
-            "in the {C:attention}next hand"},
-            {"Resets after scoring"}
+                    "in the {C:attention}next hand"},
+                    {"Resets after scoring",
+                    "or after each round"}
                 },
                 flavor = {
                     [["I'm sorry for existing"]]
