@@ -234,6 +234,7 @@ return {
 			ph_fac_fas_tsunderfish_approach_d_1 = "You get closest to Tsunderfish.",
 			ph_fac_fas_tsunderfish_approach_d_2 = "But not too closest.",
 			ph_fac_fas_tsunderfish_active = "Human, I...",
+			b_fac_fas_act = "ACT",
 		}
 	}
 }
