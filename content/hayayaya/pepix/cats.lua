@@ -1,6 +1,6 @@
 FishAndChips.Fish({
 	key = "cat1",
-	weight = 8,
+	weight = 3,
 	environments = {
 		volcano = 0.55,
 		soup = 1,
@@ -65,7 +65,7 @@ FishAndChips.Fish({
 
 FishAndChips.Fish({
 	key = "cat2",
-	weight = 1,
+	weight = 3,
 	environments = {
 		volcano = 0.55,
 		soup = 1,
@@ -127,7 +127,7 @@ FishAndChips.Fish({
 
 FishAndChips.Fish({
 	key = "cat3",
-	weight = 1,
+	weight = 3,
 	environments = {
 		volcano = 0.1,
 	},
@@ -140,7 +140,7 @@ FishAndChips.Fish({
 	},
 	atlas = "hayayaya_fih",
 	pos = { x = 4, y = 0 },
-	config = { extra = { xchips = 1, xchips_add = 0.15 } },
+	config = { extra = { xchips = 1, xchips_add = 0.05 } },
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {

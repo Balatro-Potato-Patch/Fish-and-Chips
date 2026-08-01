@@ -15,6 +15,9 @@ FishAndChips.Fish({
 	impulse_min = 0,
 	impulse_max = 0,
 	vel_limit = 0,
+	atlas = "hayayaya_fih",
+	pos = { x = 0, y = 1 },
+	pixel_size = { w = 64, h = 64 },
 	config = { immutable = { count = 0, max = 8 } },
 	loc_vars = function(self, info_queue, card)
 		return {
