@@ -1,5 +1,19 @@
 return {
     descriptions = {
+        PotatoPatch = {
+			PotatoPatchDev_Nick = {
+				name = "Moby Nick",
+                text = {
+                    "Meow"
+                },
+			},
+            PotatoPatchDev_Jolyne = {
+				name = "JoFIN",
+                text = {
+                    "Meow"
+                },
+			},
+        },
         fac_Env = {
             egg = {
                 name = "Egg Room",
@@ -38,7 +52,8 @@ return {
                 name = "Red Fish",
                 text = {
                     "#2#",
-                    "{C:chips}Chips{} #3# {C:mult}Mult{}"
+                    "{C:chips}Chips{} #3# {C:mult}Mult{}",
+                    "{s:0.8,C:inactive}#4#"
                 },
                 flavour = {
                     "...#1#"
@@ -48,7 +63,8 @@ return {
                 name = "Blue Fish",
                 text = {
                     "#2#",
-                    "{C:mult}Mult{} #3# {C:chips}Chips{}"
+                    "{C:mult}Mult{} #3# {C:chips}Chips{}",
+                    "{s:0.8,C:inactive}#4#"
                 },
                 flavour = {
                     "#1#..."
@@ -78,6 +94,42 @@ return {
                     "ARE {s:0.5,C:hearts}YOU{} GETTING ALL THIS {s:1.5,C:white}[Mack]{}!?",
                     "{s:0.7}I'M FINALLY {s:1.3}I'M FINALLY{} GONNA",
                     "BE A {s:2,C:spalmon_pink}BIG {s:2,C:spalmon_gold}TROUT{s:2}!!!{}"
+                }
+            },
+            fish_fac_lordxray = {
+                name = "Lord X-ray",
+                text = {
+                    ""
+                },
+                flavour = {
+                    ""
+                }
+            },
+            fish_fac_marlin = {
+                name = "Marlin",
+                text = {
+                    ""
+                },
+                flavour = {
+                    ""
+                }
+            },
+            fish_fac_redherring = {
+                name = "Red-Herring",
+                text = {
+                    ""
+                },
+                flavour = {
+                    ""
+                }
+            },
+            fish_fac_flounder = {
+                name = "Flounder",
+                text = {
+                    ""
+                },
+                flavour = {
+                    ""
                 }
             },
             fish_fac_forgotten = {

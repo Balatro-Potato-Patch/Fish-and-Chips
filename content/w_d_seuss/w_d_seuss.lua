@@ -1,18 +1,15 @@
 PotatoPatchUtils.Developer({
-	name = 'Moby Nick',
-	atlas = 'fac_cards',
+	name = 'Nick',
+	loc = true,
 	colour = HEX("d0d0d0"),
-	ignore_limits = true,
-	fac_partner = 'JoFIN'
+	fac_partner = 'Jolyne'
 })
 
 PotatoPatchUtils.Developer({
-	name = 'JoFIN',
-	atlas = 'fac_cards',
-	pos = { x = 1, y = 0 },
+	name = 'Jolyne',
+	loc = true,
 	colour = HEX("FCB3EA"),
-	ignore_limits = true,
-	fac_partner = 'Moby Nick'
+	fac_partner = 'Nick'
 })
 
 SMODS.Atlas({
@@ -27,8 +24,8 @@ FishAndChips.Fish {
 	atlas = "w_d_seuss_fish",
 	pos = { x = 0, y = 0 },
 	weight = 8,
-	ppu_coder = { "JoFIN" },
-	ppu_artist = { "JoFIN" },
+	ppu_coder = { "Jolyne" },
+	ppu_artist = { "Jolyne" },
 	attributes = { "mult, ace, rank" },
 	config = {
 		extra = {
@@ -56,8 +53,8 @@ FishAndChips.Fish {
 	atlas = "w_d_seuss_fish",
 	pos = { x = 1, y = 0 },
 	weight = 8,
-	ppu_coder = { "JoFIN" },
-	ppu_artist = { "JoFIN" },
+	ppu_coder = { "Jolyne" },
+	ppu_artist = { "Jolyne" },
 	attributes = { "mult, two, rank" },
 	config = {
 		extra = {
@@ -85,8 +82,8 @@ FishAndChips.Fish {
 	atlas = "w_d_seuss_fish",
 	pos = { x = 2, y = 0 },
 	weight = 7,
-	ppu_coder = { "Moby Nick" },
-	ppu_artist = { "Moby Nick" },
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
 	attributes = { "chips", "mult", "balance", "score" },
 	config = {
 		extra = {
@@ -102,6 +99,7 @@ FishAndChips.Fish {
 				next(SMODS.find_card('fish_fac_blue', true)) and "Purple" or "and the Reversal",
 				next(SMODS.find_card('fish_fac_blue', true)) and "Balances" or "Converts total scored",
 				next(SMODS.find_card('fish_fac_blue', true)) and "and" or "to",
+				next(SMODS.find_card('fish_fac_blue', true)) and "Doesn't convert base Chips" or "Plasma Lmao",
 			} 
 		}
 	end,
@@ -109,7 +107,8 @@ FishAndChips.Fish {
 		if context.final_scoring_step then
 			if next(SMODS.find_card('fish_fac_blue', true)) then
 			else
-				return { chips = -hand_chips + 1, mult = hand_chips }
+				local value = G.GAME.hands[G.GAME.last_hand_played].chips
+				return { chips = -hand_chips + value, mult = hand_chips }
 			end
 		end
     end
@@ -120,8 +119,8 @@ FishAndChips.Fish {
 	atlas = "w_d_seuss_fish",
 	pos = { x = 3, y = 0 },
 	weight = 7,
-	ppu_coder = { "Moby Nick" },
-	ppu_artist = { "Moby Nick" },
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
 	attributes = { "chips", "mult", "balance", "score" },
 	config = {
 		extra = {
@@ -137,6 +136,7 @@ FishAndChips.Fish {
 				next(SMODS.find_card('fish_fac_red', true)) and "Hollow" or "Take the Amplified",
 				next(SMODS.find_card('fish_fac_red', true)) and "Balances" or "Converts total scored",
 				next(SMODS.find_card('fish_fac_red', true)) and "and" or "to",
+				next(SMODS.find_card('fish_fac_blue', true)) and "Doesn't convert base Mult" or "Plasma Lmao",
 			} 
 		}
 	end,
@@ -145,7 +145,8 @@ FishAndChips.Fish {
 			if next(SMODS.find_card('fish_fac_red', true)) then
 				return { balance = true }
 			else
-				return { chips = mult, mult = -mult + 1 }
+				local value = G.GAME.hands[G.GAME.last_hand_played].mult
+				return { chips = mult, mult = -mult + value }
 			end
 		end
     end
@@ -156,8 +157,8 @@ FishAndChips.Fish {
 	atlas = "w_d_seuss_fish",
 	pos = { x = 4, y = 0 },
 	weight = 4,
-	ppu_coder = { "Moby Nick" },
-	ppu_artist = { "Moby Nick" },
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
 	attributes = { "hand_type, food" },
 	config = {
 		extra = {
@@ -253,8 +254,8 @@ FishAndChips.Fish {
 	atlas = "w_d_seuss_fish",
 	pos = { x = 0, y = 1 },
 	weight = 6,
-	ppu_coder = { "Moby Nick" },
-	ppu_artist = { "Moby Nick" },
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
 	attributes = { "generation" },
 	config = {
 		extra = {
@@ -335,8 +336,54 @@ FishAndChips.Fish {
 	atlas = "w_d_seuss_fish",
 	pos = { x = 1, y = 1 },
 	weight = 1,
-	ppu_coder = { "Moby Nick" },
-	ppu_artist = { "Moby Nick" },
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		wormhole = 5,
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+FishAndChips.Fish {
+	key = "marlin",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 3, y = 1 },
+	weight = 2,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		wormhole = 5,
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+FishAndChips.Fish {
+	key = "redherring",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 4, y = 1 },
+	weight = 2,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
 	attributes = { },
 	config = {
 		extra = {
