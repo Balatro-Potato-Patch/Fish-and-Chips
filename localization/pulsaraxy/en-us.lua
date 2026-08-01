@@ -204,6 +204,35 @@ return {
                 text = {
                     "Max fish {C:attention}#2#{} is #3# by {X:mult,C:white}X#4#{}"
                 }
+            },
+            fish_fac_pa_shellphone = {
+                name = "Shellphone",
+                text = {{
+                    'Increases {C:money}sell value{} when',
+                    'the below sequence of ranks',
+                    'is {C:attention}fully played{}, then',
+                    'creates a new sequence'
+                },{
+                    '{C:#1#}#2#{}', -- inactive or black, rank or '', repeat this 3-8 times in code
+                }},
+                flavour = {
+
+                }
+            },
+            fish_fac_pa_fromg = {
+                name = "fromg",
+                text = {
+                    'Use this fish while',
+                    'an owned consumable is selected to eat it and gain',
+                    '{C:chips}+#1#{} chips',
+                    '{C:inactive}(Currently {C:chips}+#2#{}{C:inactive} chips){}'
+                }
+            },
+            fish_fac_pa_box_jellyfish = {
+                name = "Box Jellyfish",
+                text = {
+                    'Use to copy selected {C:attention}Booster Pack{}'
+                }
             }
         },
     }
