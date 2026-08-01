@@ -19,6 +19,13 @@ SMODS.Sound{
 	path = FishAndChips.FooSqueax.file_path .. "nyon!.ogg"
 }
 
+SMODS.Atlas{
+	key = "fas_nyon",
+	path = FishAndChips.FooSqueax.file_path .. "blubblub.png",
+	px = 71,
+	py = 95
+}
+
 FishAndChips.Fish{
 	key = "fas_kawkaw",
 	weight = 5,
@@ -26,6 +33,7 @@ FishAndChips.Fish{
 		calm_pond = 1, -- WHY is it not garden above it's liek the field of flowersssssss </3
 		garden = 0.75
 	},
+	atlas = "fas_nyon",
 	ppu_artist = {"squeax09"},
 	ppu_coder = {"Foo54"},
 	config = {
@@ -65,6 +73,9 @@ FishAndChips.Fish{
 						card.ability.immutable.timer = 100000
 						card_eval_status_text(card, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_nyom")})
 						card.dont_nyon = true
+						play_sound("fac_fas_nyoom")
+						card.children.center:set_sprite_pos{x = 2, y = 0}
+						delay(2)
 						SMODS.destroy_cards(card)
 					end
 				end
@@ -78,6 +89,15 @@ FishAndChips.Fish{
 				func = function()
 					G.E_MANAGER:add_event(Event{
 						func = function ()
+							card.children.center:set_sprite_pos{x = 1, y = 0}
+							delay(2)
+							G.E_MANAGER:add_event(Event{
+								blocking = false,
+								func = function()
+									card.children.center:set_sprite_pos{x = 0, y = 0}
+									return true
+								end
+							})
 							play_sound("fac_fas_nyon")
 							return true
 						end
@@ -91,8 +111,17 @@ FishAndChips.Fish{
 			if card.ability.extra.rounds == 0 then
 				card.ability.extra.rounds = 3
 				card.ability.immutable.slow = false
-					card_eval_status_text(card, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_nyon")})
+				card_eval_status_text(card, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_nyon")})
 				play_sound("fac_fas_nyon")
+				card.children.center:set_sprite_pos{x = 1, y = 0}
+				delay(2)
+				G.E_MANAGER:add_event(Event{
+					blocking = false,
+					func = function()
+						card.children.center:set_sprite_pos{x = 0, y = 0}
+						return true
+					end
+				})
 			end
 		end
 	end,
@@ -105,22 +134,76 @@ function Card:click()
 	if self.config.center.key == "fish_fac_fas_kawkaw" then
 		if self.ability.immutable.timer >= 100 then
 			self.ability.immutable.slow = true
-					card_eval_status_text(self, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_ule")})
+			card_eval_status_text(self, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_ule")})
 			play_sound("fac_fas_ule")
+			self.children.center:set_sprite_pos{x = 0, y = 1}
+			delay(0.1)
+			local counter
+			local start
+			local frame = 1
+			G.E_MANAGER:add_event(Event{
+				blocking = false,
+				func = function()
+					if not counter then counter = G.TIMERS.REAL end
+					if not start then start = G.TIMERS.REAL end
+					if G.TIMERS.REAL - counter >= 1/15 then
+						frame = (frame) % 3 + 1
+						self.children.center:set_sprite_pos{x = frame, y = 1}
+						counter = G.TIMERS.REAL
+						if G.TIMERS.REAL - start >= 0.75 then
+							self.children.center:set_sprite_pos{x = 0, y = 0}
+							return true
+						end
+					end
+				end
+			})
 		else
 			self.ability.immutable.timer = self.ability.immutable.timer + self.ability.immutable.gain
-					card_eval_status_text(self, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_nyon")})
+			card_eval_status_text(self, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_nyon")})
 			play_sound("fac_fas_nyon")
+			self.children.center:set_sprite_pos{x = 1, y = 0}
+			delay(0.2)
+			G.E_MANAGER:add_event(Event{
+				blocking = false,
+				func = function()
+					self.children.center:set_sprite_pos{x = 0, y = 0}
+					return true
+				end
+			})
 		end
 	end
 end
 
+local card_start_dissolve_ref = Card.start_dissolve
+---@diagnostic disable-next-line: duplicate-set-field
+function Card:start_dissolve(...)
+	if self.config.center.key == "fish_fac_fas_kawkaw" and not self.dont_nyon then
+		self.dissolve_params = {...}
+		self:remove()
+	else
+		card_start_dissolve_ref(self, ...)
+	end
+end
+
+
 local card_remove_ref = Card.remove
 ---@diagnostic disable-next-line: duplicate-set-field
 function Card:remove()
-	card_remove_ref(self)
 ---@diagnostic disable-next-line: undefined-field
 	if self.config.center.key == "fish_fac_fas_kawkaw" and not self.dont_nyon then
+		if self.area and self.area.config.collection then return card_remove_ref(self) end
 		play_sound("fac_fas_nyon!")
+		self.children.center:set_sprite_pos{x = 4, y = 1}
+		delay(3)
+		G.E_MANAGER:add_event(Event{
+			blocking = false,
+			func = function()
+				self.dont_nyon = true
+				self:start_dissolve(self.dissolve_params[1], self.dissolve_params[2], self.dissolve_params[3], self.dissolve_params[4])
+				return true
+			end
+		})
+	else
+		card_remove_ref(self)
 	end
 end
