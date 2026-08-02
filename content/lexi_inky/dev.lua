@@ -10,15 +10,26 @@ SMODS.Gradient({
 
 PotatoPatchUtils.Developer({
 	name = "inky",
-	--atlas = "",
+	atlas = "fac_l_i_credits",
+	pos = {
+		x = 1,
+		y = 0,
+	},
 	colour = HEX("189bcc"),
 	fac_partner = "lexi",
 	loc = true,
+	click = function(self)
+		love.system.openURL("https://ko-fi.com/inkystanderson")
+	end,
 })
 
 PotatoPatchUtils.Developer({
 	name = "lexi",
-	--atlas = "",
+	atlas = "fac_l_i_credits",
+	pos = {
+		x = 0,
+		y = 0,
+	},
 	colour = SMODS.Gradients["fac_l_i_lexi"],
 	fac_partner = "inky",
 	loc = true,
@@ -27,9 +38,9 @@ PotatoPatchUtils.Developer({
 	end,
 })
 
---[[SMODS.Atlas({
+SMODS.Atlas({
 	key = "l_i_credits",
 	path = "lexi_inky/credits.png",
 	px = 71,
 	py = 95,
-})]]
+})
