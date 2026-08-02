@@ -327,7 +327,7 @@ FishAndChips.Fish {
 		for i = 1, card.ability.extra.bait do
 			G.E_MANAGER:add_event(Event {
 				func = function()
-					G.fac_temp_bait_area.cards[1]:start_dissolve()
+					G.fac_temp_bait_area.cards[i]:start_dissolve()
 					return true
 				end
 			})
