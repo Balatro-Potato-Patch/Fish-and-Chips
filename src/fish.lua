@@ -21,14 +21,63 @@ FishAndChips.Fish = SMODS.Center:extend {
 	pre_inject_class = function(self)
 		G.P_CENTER_POOLS[self.set] = {}
 	end,
+	inject = function(self)
+		assert(self.stats and self.stats.weight and self.stats.length and self.stats.weight.min and self.stats.weight.max and self.stats.length.min and self.stats.length.max,
+			'\n\nFish with key ' .. self.original_key .. ' has an incomplete stats field.\nMake sure it uses stats = {weight = {min = X, max = Y}, length = {min = Z, max = W}}.\nWeight is submitted in kilograms, length is submitted in metres.')
+		
+		SMODS.Center.inject(self)
+	end,
 	set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge(localize("k_fac_fish"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
+		badges[#badges + 1] = create_badge(localize(card.config.center.badge_key or "k_fac_fish"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
 	end,
 	post_inject_class = function(self)
 		FishAndChips.verify_submissions()
 	end
 }
+
+local function random_measurement(stats)
+    local precision = math.min(2, math.max(string.len(stats.min - math.floor(stats.min)) - 2, string.len(stats.max - math.floor(stats.max)) - 2, 1))
+    local delta = stats.max - stats.min
+    local value = stats.min + (pseudorandom('fac_fish_measurement') * delta)
+    return tonumber(string.format(value < 100 and "%."..precision.."f" or "%.d", value))
+end
+
+
+function FishAndChips.create_fish_stats(center)
+	local stats = {
+        weight = random_measurement(center.stats.weight),
+        length = random_measurement(center.stats.length)
+    }
+	local w_delta = center.stats.weight.max - center.stats.weight.min
+	local l_delta = center.stats.length.max - center.stats.length.min
+    stats.w_prop = w_delta > 0 and (stats.weight - center.stats.weight.min)/w_delta or 1
+    stats.l_prop = l_delta > 0  and (stats.length - center.stats.length.min)/l_delta or 1
+	return stats
+end
+
+function FishAndChips.modify_fish_stats(card, stats)
+	card.ability.stats = stats
+	local stats_tot = stats.w_prop + stats.l_prop
+	local scalar = stats_tot <= 0.5 and 0.75 or stats_tot <= 1.5 and 1 or stats_tot <= 1.8 and 1.5 or 2.5
+	if not FishAndChips.mod.config.disable_fish_scaling and not G.P_CENTERS[card.config.center.key].disable_visual_scaling then
+		card.T.scale = card.T.scale * (0.6 + (stats_tot/2*0.7))
+	end
+	card.cost = (card.cost * scalar)
+	card:set_sell_value()
+end
+
+local create_card_hook = create_card
+function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
+	local card = create_card_hook(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
+	if card.ability.set == 'fac_Fish' and not card.ability.stats and area then
+		local stats = FishAndChips.create_card_stats or FishAndChips.create_fish_stats(card.config.center)		
+		FishAndChips.modify_fish_stats(card, stats)
+	end
+	return card
+end
+
 FishAndChips.submission_weight_limit = 75
+FishAndChips.fish_environment_limit = 6
 
 G.C.SET.fac_Fish = FishAndChips.C.FISH
 G.C.SECONDARY_SET.fac_Fish = FishAndChips.C.FISH
@@ -62,11 +111,14 @@ function FishAndChips.verify_submissions()
 	end
 
 	local devs = {}
-	-- TODO: handle duo submissions
 	for _, fish in ipairs(G.P_CENTER_POOLS.fac_Fish) do
 		devs[fish.ppu_coder[1]] = devs[fish.ppu_coder[1]] or {}
 		table.insert(devs[fish.ppu_coder[1]], fish)
-		local partner = PotatoPatchUtils.Developers["fac_" .. fish.ppu_coder[1]].fac_partner
+		local prefix = ""
+		if not (fish.prefix_config and fish.prefix_config.ppu_coder == false) then
+			prefix = "fac_"
+		end
+		local partner = PotatoPatchUtils.Developers[prefix .. fish.ppu_coder[1]].fac_partner
 		if partner then
 			-- print('Partner detected: ' .. partner)
 			devs[partner] = devs[partner] or {}
@@ -80,10 +132,14 @@ function FishAndChips.verify_submissions()
 		for _, fish in ipairs(submission) do
 			total_weight = total_weight + fish.weight
 			if fish.treasure then treasure_fish_count = treasure_fish_count + 1 end
+			local in_envs = SMODS.table_size(fish.environments)
+			assert(in_envs <= FishAndChips.fish_environment_limit or dev_obj.ignore_limits, "Fish " .. fish.key .. " is in " .. in_envs .. " environments when the limit is " .. FishAndChips.fish_environment_limit)
 		end
 		local scalar = math.min(1, FishAndChips.submission_weight_limit / total_weight)
-		assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
-		assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")
+		if submission.mod == FishAndChips.mod then
+			assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
+			assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")
+		end
 		for _, fish in ipairs(submission) do
 			fish.weight = fish.weight * scalar
 			local unpack_env = function(environment)
@@ -115,6 +171,7 @@ function G.UIDEF.create_UIBox_your_collection_fish()
 	return SMODS.card_collection_UIBox(pool, { 5, 5, 5 }, {
 		no_materialize = true,
 		h_mod = 0.95,
+		back_func = 'your_collection_other_gameobjects',
 	})
 end
 
@@ -138,7 +195,7 @@ SMODS.Shader {
 	path = "core/hide_fish.fs",
 	send_vars = function(self, card)
 		return {
-			mask_colour = card.area.config.fac_compendium and FishAndChips.C.COMPENDIUM_COLOUR or {0,0,0,1}
+			mask_colour = card and card.area and card.area.config.fac_compendium and FishAndChips.C.COMPENDIUM_COLOUR or {0,0,0,1}
 		}
 	end
 }
@@ -216,6 +273,10 @@ FishAndChips.Fish {
 	no_collection = true,
 	discovered = true,
 	environments = all_env(),
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
 }
 
 --#endregion

@@ -47,6 +47,12 @@ local FAC_CELEBRATE_DURATION = 0.9
 local FAC_MATERIALIZE_GAP = 3
 local FAC_SCARE_DURATION = 0.4
 local FAC_DECAY_UNLOCK_THRESHOLD = 0.15
+local FAC_SCENE_CANVAS_RES_SCALE = 0.55
+local FAC_TRACK_H_RATIO = 0.72
+local FAC_FISH_DRAW_SIZE = 10
+local FAC_FISH_DRAW_VRADIUS_FACTOR = 0.56
+local FAC_FISH_HITBOX_FORGIVENESS = 0.6
+local fac_node_tile_xy, fac_get_scene_bounds
 
 local FAC_ROD_TIP_FRACTION = {
     [0] = { x = 0.95, y = 0.23 },
@@ -74,27 +80,56 @@ local function fac_profile_from_center(center)
         rod = G.fac_rod_area.cards[1].ability.fishing
         key = G.fac_rod_area.cards[1].config.center.key
     end
+    local stats = FishAndChips.create_fish_stats(center)
     return {
         key = center.key,
         name = center.name or center.key,
+        stats = stats,
         bar_size = rod.bar_size == nil and t.bar_size or rod.bar_size,
         treasure_gain = rod.treasure_gain == nil and t.treasure_gain or rod.treasure_gain,
-        catch_gain = rod.catch_gain == nil and t.catch_gain or rod.catch_gain,
-        catch_loss = rod.catch_loss == nil and t.catch_loss or rod.catch_loss,
-        vel_limit = rod.vel_limit == nil and t.vel_limit or rod.vel_limit,
-        impulse_min = center.impulse_min == nil and t.impulse_min or rod.impulse_min,
-        impulse_max = center.impulse_max == nil and t.impulse_max or rod.impulse_max,
-        decision_min = center.decision_min == nil and t.decision_min or rod.decision_min,
-        decision_max = center.decision_max == nil and t.decision_max or rod.decision_max,
-        colour = center.colour == nil and t.colour or rod.colour,
+        catch_gain = (rod.catch_gain == nil and t.catch_gain or rod.catch_gain) / (((0.5 + stats.w_prop * 0.5) + (0.5 + stats.l_prop * 0.5))/2),
+        catch_loss = (rod.catch_loss == nil and t.catch_loss or rod.catch_loss) * (((0.5 + stats.w_prop * 0.5) + (0.5 + stats.l_prop * 0.5))/2),
+        vel_limit = (center.vel_limit or t.vel_limit) * (rod.vel_limit or 1),
+        impulse_min = (center.impulse_min or t.impulse_min) * (rod.impulse_min or 1),
+        impulse_max = (center.impulse_max or t.impulse_max) * (rod.impulse_max or 1),
+        decision_min = (center.decision_min or t.decision_min) * (rod.decision_min or 1),
+        decision_max = (center.decision_max or t.decision_max) * (rod.decision_max or 1),
+        colour = center.colour or rod.colour or t.colour,
         rod = rod,
         rod_key = key,
         center = center
     }
 end
 
+function FishAndChips.modify_fishing_profile(profile)
+    local fish_profile = {
+        treasure_gain = profile.treasure_gain,
+        vel_limit = profile.vel_limit,
+        impulse_min = profile.impulse_min,
+        impulse_max = profile.impulse_max,
+        decision_min = profile.decision_min,
+        decision_max = profile.decision_max,
+        colour = profile.colour,
+    }
+    local context = {
+        fac_modify_fishing_profile = true,
+        fishing_profile = fish_profile,
+        hooked_fish = profile.center,
+    }
+    SMODS.calculate_context(context)
+    local modified_profile = context.fishing_profile or fish_profile
+    if modified_profile.treasure_gain ~= nil then profile.treasure_gain = modified_profile.treasure_gain end
+    if modified_profile.vel_limit ~= nil then profile.vel_limit = modified_profile.vel_limit end
+    if modified_profile.impulse_min ~= nil then profile.impulse_min = modified_profile.impulse_min end
+    if modified_profile.impulse_max ~= nil then profile.impulse_max = modified_profile.impulse_max end
+    if modified_profile.decision_min ~= nil then profile.decision_min = modified_profile.decision_min end
+    if modified_profile.decision_max ~= nil then profile.decision_max = modified_profile.decision_max end
+    if modified_profile.colour ~= nil then profile.colour = modified_profile.colour end
+    return profile
+end
+
 local function fac_pick_profile()
-    local key = FishAndChips.poll_fish()
+    local key = G.GAME.fac_forced_fish or FishAndChips.poll_fish()
     local center = key and G.P_CENTERS[key]
     if not center then
         return nil
@@ -261,10 +296,15 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     local first_catch = not (fish_data.times_caught and fish_data.times_caught > 0)
     profile.center.discovered = true
     play_sound('fac_fish_landed', math.random(0.8, 1.2))
+    FishAndChips.create_card_stats = profile.stats
     local added_card = SMODS.add_card({ area = reward_area, key = profile.key })
+    FishAndChips.create_card_stats = nil
     if added_card then
+        fish_data.record_weight = math.max(fish_data.record_weight or 0, profile.stats.weight)
+        fish_data.record_length = math.max(fish_data.record_length or 0, profile.stats.length)
         added_card:set_sprites(added_card.config.center)
         added_card.states.visible = false
+        SMODS.calculate_context({fac_fish_caught = added_card, fish = profile.key, treasure = is_treasure_catch or false, perfect = state.perfect or false})
     end
 
     local rod_key = FishAndChips.get_rod().key
@@ -420,6 +460,10 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
             return true
         end
     }), queue)
+    if added_card and added_card.ability.set == "fac_Fish" and type(added_card.config.center.on_catch) == "function" then
+        local center = added_card.config.center
+        center:on_catch(added_card)
+    end
     delay(G.SETTINGS.GAMESPEED * ((first_catch or state.perfect) and 1 or 2), queue)
     if first_catch and added_card.ability.set == 'fac_Fish' then
         G.E_MANAGER:add_event(Event({
@@ -483,6 +527,10 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
                 G.NOT_SAFE_TO_PRESS_BUTTONS = false
                 if not card_limit_stalled then
                     card_limit_stalled = true
+
+                    reward_area.config.highlight_limit = 1
+                    reward_area.config.highlighted_limit = 1
+                    
                     caught_box:remove()
                     caught_box = build_caught_box(true)
                     caught_box.states.visible = true
@@ -522,6 +570,8 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
             end
             G.NOT_SAFE_TO_PRESS_BUTTONS = false
             if not added_card.REMOVED then
+                reward_area.config.highlight_limit = 0
+                reward_area.config.highlighted_limit = 0
                 reward_area:remove_card(added_card)
                 area:emplace(added_card)
             end
@@ -553,6 +603,8 @@ local function fac_finish_round(success, skip)
         state.reel_rumbling = false
         fac_rumble_release()
     end
+    local fish_obj
+    local treasure_obj
     if success then
         state.result_message = localize(state.perfect and "ph_fac_perfect_catch" or "ph_fac_good_catch")
         state.celebrate_t = FAC_CELEBRATE_DURATION
@@ -586,11 +638,11 @@ local function fac_finish_round(success, skip)
             check_for_unlock({type = 'fac_treasure', value = G.GAME.fac_treasure_earned})
         end
         FishAndChips.rod_function("on_catch", state.profile.key)
-        fac_reveal_catch(state, state.profile)
+        fish_obj = fac_reveal_catch(state, state.profile)
         if treasure_profile then
             FishAndChips.rod_function("on_catch", treasure_profile.key)
             G.E_MANAGER.queues.fac_treasure_reveal = G.E_MANAGER.queues.fac_treasure_reveal or {}
-            fac_reveal_catch(state, treasure_profile, "fac_treasure_reveal", G.FISHING.fac_treasure_reward_area, true)
+            treasure_obj = fac_reveal_catch(state, treasure_profile, "fac_treasure_reveal", G.FISHING.fac_treasure_reward_area, true)
         end
     else
         play_sound('fac_line_snap', 1.2)
@@ -619,7 +671,7 @@ local function fac_finish_round(success, skip)
             }))
         end
     end
-    SMODS.calculate_context{fac_end_fishing = true, failed = not success, fish = success and state.profile.key, treasure = success and state.got_treasure}
+    SMODS.calculate_context({fac_end_fishing = true, failed = not success, fish = success and state.profile.key or nil, fish_obj = fish_obj or nil, treasure = success and state.got_treasure or false, treasure_available = state.treasure_enabled or false, treasure_progress = state.treasure_meter or 0, missed_treasure = success and state.treasure_enabled and not state.got_treasure or false, attempted_treasure = state.treasure_enabled and not state.got_treasure and (state.treasure_meter or 0) > 0 or false, treasure_obj = treasure_obj, perfect = success and state.perfect or false})
 end
 local function fac_begin_hooking_round()
     local state = fac_ensure_state()
@@ -627,6 +679,7 @@ local function fac_begin_hooking_round()
     if not profile then
         return false
     end
+    profile = FishAndChips.modify_fishing_profile(profile)
     state.profile = profile
     state.meter = 0
     state.meter_primed = false
@@ -684,6 +737,9 @@ end
 function G.FUNCS.fac_go_fish(e)
     if G.STATE ~= G.STATES.FAC_FISHING or G.FISHING_STATE ~= G.FISHING_STATES.LOBBY or FishAndChips.in_tutorial then
         return
+    end
+    if G.GAME.fac_fish_expanded then
+        G.FUNCS.fac_open_fishing_menu()
     end
     fac_ensure_state().fishing_active = true
     FishAndChips.fade_fishing_buttons()
@@ -746,6 +802,7 @@ function G:update_fac_fishing_casting(dt)
         state.bite_timer = fac_clamp(fac_rand(0.75, 1.95) - state.cast_power * 0.55, 0.35, 1.95)
         G.FISHING_STATE_COMPLETE = true
         FishAndChips.update_jimbo_state(FishAndChips.JIMBO_ANIMATION_STATES.CAST)
+        SMODS.calculate_context{fac_cast_rod = true}
     end
     if G.FAC_JIMBO_ANIMATION_STATE == FishAndChips.JIMBO_ANIMATION_STATES.WAIT then
         state.cast_timer = state.cast_timer - dt
@@ -875,7 +932,14 @@ function G:update_fac_fishing_hooking(dt)
     end
     -- end fish behavior logic
     -- fish progress logic
-    local in_bar = math.abs(state.fish_pos - state.bar_pos) <= (state.bar_size * 0.5)
+    local fish_hitbox_half = 0
+    local _, _, _, scene_ph = fac_get_scene_bounds()
+    if scene_ph and scene_ph > 0 then
+        local track_h = (scene_ph * FAC_SCENE_CANVAS_RES_SCALE) * FAC_TRACK_H_RATIO
+        local fish_visual_half_px = FAC_FISH_DRAW_SIZE * FAC_FISH_DRAW_VRADIUS_FACTOR
+        fish_hitbox_half = (fish_visual_half_px * FAC_FISH_HITBOX_FORGIVENESS) / track_h
+    end
+    local in_bar = math.abs(state.fish_pos - state.bar_pos) <= (state.bar_size * 0.5 + fish_hitbox_half)
     local previous_sound_state = FishAndChips.current_reel_sound
     if in_bar then
         state.meter = state.meter + profile.catch_gain * dt
@@ -970,9 +1034,8 @@ local old_fac_keypressed = love.keypressed
 function love.keypressed(key, scancode, isrepeat)
     if G and G.STATE == G.STATES.FAC_FISHING and not G.SETTINGS.paused then
         local state = fac_ensure_state()
-        if key == "space" or key == "up" or key == "w" or key == "return" then
+        if key == "space" or key == "up" or key == "w" then
             fac_queue_tap(state)
-            return
         end
     end
 
@@ -1032,7 +1095,7 @@ end
 
 local function fac_draw_fish(x, y, size, colour)
     love.graphics.setColor(colour[1], colour[2], colour[3], 1)
-    love.graphics.ellipse("fill", x, y, size * 0.95, size * 0.56)
+    love.graphics.ellipse("fill", x, y, size * 0.95, size * FAC_FISH_DRAW_VRADIUS_FACTOR)
     love.graphics.polygon("fill", x - size * 0.95, y, x - size * 1.45, y - size * 0.44, x - size * 1.45, y + size * 0.44)
     love.graphics.setColor(1, 1, 1, 0.88)
     love.graphics.circle("fill", x + size * 0.40, y - size * 0.1, size * 0.12)
@@ -1040,7 +1103,7 @@ local function fac_draw_fish(x, y, size, colour)
     love.graphics.circle("fill", x + size * 0.40, y - size * 0.1, size * 0.06)
 end
 
-local function fac_node_tile_xy(node)
+function fac_node_tile_xy(node)
     local x, y = node.T.x, node.T.y
     local c = node.container
     local guard = 0
@@ -1056,7 +1119,7 @@ local function fac_node_tile_xy(node)
     return x, y
 end
 
-local function fac_get_scene_bounds()
+function fac_get_scene_bounds()
     local sw, sh = love.graphics.getDimensions()
     G.FISHING = G.FISHING or {}
     local box = (G.FISHING.fishing and G.FISHING.fishing.UIRoot) or G.FISHING.fishing
@@ -1094,8 +1157,18 @@ local function fac_get_rod_tip_local(px, py, pw, ph, force_anim_state)
     return px + fx * pw, py + fy * ph
 end
 
+local FAC_STATUS_QUEUE
 local function fac_draw_text_with_black_bg(str, x, y, text_color)
     if FishAndChips.show_ui then
+        if FAC_STATUS_QUEUE then
+            FAC_STATUS_QUEUE[#FAC_STATUS_QUEUE + 1] = {
+                str = str,
+                x = x,
+                y = y,
+                colour = text_color or {0.88, 0.97, 1, 1},
+            }
+            return
+        end
         local textbox_w = love.graphics.getFont():getWidth(str) + 12
         local textbox_h = love.graphics.getFont():getHeight() + 8
         love.graphics.setColor(G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65)
@@ -1122,7 +1195,7 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
     local water_bottom = py + ph * (env.water_bounds and env.water_bounds.bottom or 0.84)
 
     local track_w = fac_clamp(pw * 0.05, 26, 52)
-    local track_h = ph * 0.72
+    local track_h = ph * FAC_TRACK_H_RATIO
     local track_x = px + pw * 0.83
     local track_y = py + ph * 0.12
     local catch_meter_x = track_x + track_w + 6
@@ -1251,7 +1324,7 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
             love.graphics.circle("line", track_x + track_w * 0.5, fish_y, 24 * (1.2 - splash))
         end
 
-        fac_draw_fish(track_x + track_w * 0.5 + 6, fish_y, 10, state.profile.colour)
+        fac_draw_fish(track_x + track_w * 0.5 + 6, fish_y, FAC_FISH_DRAW_SIZE, state.profile.colour)
 
         fac_draw_vertical_meter(catch_meter_x, track_y, 14, track_h, state.meter, { 0.20, 0.10, 0.13 }, { 0.97, 0.38, 0.47 })
         love.graphics.setColor(0.97, 0.76, 0.82, 1)
@@ -1281,7 +1354,7 @@ local function fac_draw_panel()
     if pw <= 0 or ph <= 0 then
         return
     end
-    local res_scale = 0.55
+    local res_scale = FAC_SCENE_CANVAS_RES_SCALE
     local cw = math.max(64, math.floor(pw * res_scale))
     local ch = math.max(64, math.floor(ph * res_scale))
     if not FAC_SCENE_CANVAS or FAC_SCENE_CANVAS_W ~= cw or FAC_SCENE_CANVAS_H ~= ch then
@@ -1292,8 +1365,13 @@ local function fac_draw_panel()
     local prev_canvas = love.graphics.getCanvas()
     love.graphics.setCanvas(FAC_SCENE_CANVAS)
     love.graphics.clear(0, 0, 0, 0)
+    FAC_STATUS_QUEUE = {}
     fac_draw_scene_content(state, 0, 0, cw, ch)
-    love.graphics.setCanvas(prev_canvas)
+
+    local status_queue = FAC_STATUS_QUEUE
+    FAC_STATUS_QUEUE = nil
+    love.graphics.setCanvas({ prev_canvas, stencil = true })
+    SMODS.reload_stencil_stack()
 
     local blit_alpha = 1
     if G.FISHING_STATE == G.FISHING_STATES.RESULTS and state.round_success then
@@ -1301,12 +1379,37 @@ local function fac_draw_panel()
     end
     love.graphics.setColor(1, 1, 1, blit_alpha)
     love.graphics.draw(FAC_SCENE_CANVAS, px, py, 0, pw / cw, ph / ch)
+
+    local screen_scale = G.TILESCALE * G.TILESIZE
+    local scale_x, scale_y = pw / cw, ph / ch
+    for index = 1, 2 do
+        local status = G.FISHING["fishing_status_" .. index]
+        local status_data = status_queue[index]
+        if status then
+            status.states.visible = status_data ~= nil
+            if status_data then
+                state["status_text_" .. index] = status_data.str
+                local status_x = (px + (status_data.x + 18) * scale_x) / screen_scale
+                local status_y = (py + (status_data.y - 4) * scale_y) / screen_scale
+                status:hard_set_T(status_x, status_y, status.T.w, status.T.h)
+                status:recalculate()
+
+                local text = status:get_UIE_by_ID("fac_fishing_status_text_" .. index)
+                if text then
+                    text.config.colour = {
+                        status_data.colour[1],
+                        status_data.colour[2],
+                        status_data.colour[3],
+                        (status_data.colour[4] or 1) * blit_alpha,
+                    }
+                    text:update_text()
+                end
+                local bg = status:get_UIE_by_ID("fac_fishing_status_bg_" .. index)
+                if bg then bg.config.colour[4] = 0.65 * blit_alpha end
+                status:draw()
+            end
+        end
+    end
 end
 
-local old_fac_draw = love.draw
-function love.draw()
-    if old_fac_draw then
-        old_fac_draw()
-    end
-    fac_draw_panel()
-end
+FishAndChips.render_fishing_minigame = fac_draw_panel
