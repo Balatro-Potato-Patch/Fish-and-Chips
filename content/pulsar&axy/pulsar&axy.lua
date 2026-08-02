@@ -42,6 +42,10 @@ FishAndChips.Fish {
 		soup = 1,
 		backroom = 0.5
 	},
+	stats = {
+		length = 0.0120,  --based on ordinary cd
+		weight = .02
+	},
 	blueprint_compat = true,
 	config = {
 		extra = {
@@ -88,6 +92,10 @@ FishAndChips.Fish {
             reroll_gain = 1
 		}
 	},
+	stats = {
+		length = 0.0278,  --0.0278m , 277.77g based on starship heat tile measurements, not sure where density was from?
+		weight = .2777
+	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.reroll_gain, card.ability.extra.rerolls, } }
 	end,
@@ -127,6 +135,10 @@ FishAndChips.Fish {
 		chocolate_river = 0.3,
 		styx = 0.3,
 		city_river = 0.3
+	},
+	stats = {
+		length = 0.00197,  --based on average gold ring
+		weight = 0.007
 	},
 	blueprint_compat = false,
 	config = {
@@ -239,6 +251,10 @@ FishAndChips.Fish {
 		soup = 1,
 		backroom = 0.5
 	},
+	stats = {
+		length = 1.75,  --entirely vibes based
+		weight = 90
+	},
 	blueprint_compat = true,
 	config = {
 		extra = {
@@ -293,6 +309,10 @@ FishAndChips.Fish {
 	environments = {
 		soup = 1,
 		backroom = 0.5
+	},
+	stats = {
+		length = 0.01,  --vibes
+		weight = 0.0003
 	},
 	blueprint_compat = true,
 	config = {
@@ -349,6 +369,10 @@ FishAndChips.Fish {
 	environments = {
 		soup = 1,
 		backroom = 0.5
+	},
+	stats = {
+		length = 1.5,  --same size as normal fishing rod but heavier
+		weight = 8
 	},
 	blueprint_compat = true,
 	config = {
@@ -426,6 +450,10 @@ FishAndChips.Fish {
 	environments = {
 		soup = 1,
 		backroom = 0.5
+	},
+	stats = {
+		length = 0.012,  --vaugely based on actual phone + measurements of a shell i have
+		weight = .125
 	},
 	blueprint_compat = true,
 	config = {
