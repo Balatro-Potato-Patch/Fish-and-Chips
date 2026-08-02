@@ -131,6 +131,7 @@ function G.UIDEF.use_and_sell_buttons(card)
                 }}
             }},
         }}
+        
         local use = {n=G.UIT.C, config={align = "cr"}, nodes={
             {n=G.UIT.C, config={ref_table = card, align = "cm",padding = 0.1, r=0.08, minw = 1.25, minh = 0.8, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, fac_ignore = true, button = 'fac_use_fish', func = "fac_can_use_fish", handy_insta_action = 'use'}, nodes={
                 {n=G.UIT.B, config = {w=0.1,h=0.6}},
