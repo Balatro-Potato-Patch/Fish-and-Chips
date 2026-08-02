@@ -43,23 +43,27 @@ return {
             fish_fac_red = {
                 name = "Red Fish",
                 text = {
-                    "#2#",
-                    "{C:chips}Chips{} #3# {C:mult}Mult{}",
-                    "{s:0.8,C:inactive}#4#"
+                    "Converts {C:attention}#1#%{} of scored",
+                    "{C:chips}Chips{} to {C:mult}Mult{} and set",
+                    "scored {C:chips}Chips{} to base",
+                    "poker hand {C:chips}Chips",
                 },
                 flavour = {
-                    "...#1#"
+                    "Doesn't really work",
+                    "with Blue Fish :/"
                 }
             },
             fish_fac_blue = {
                 name = "Blue Fish",
                 text = {
-                    "#2#",
-                    "{C:mult}Mult{} #3# {C:chips}Chips{}",
-                    "{s:0.8,C:inactive}#4#"
+                    "Convert {C:attention}#1#%{} of scored",
+                    "{C:mult}Mult{} to {C:chips}Chips{} and set",
+                    "scored {C:mult}Mult{} to base",
+                    "poker hand {C:mult}Mult",
                 },
                 flavour = {
-                    "#1#..."
+                    "Doesn't really work",
+                    "with Red Fish :/"
                 }
             },
             fish_fac_pear = {
@@ -94,7 +98,9 @@ return {
                     ""
                 },
                 flavour = {
-                    ""
+                    "ft. Lord X",
+                    " ",
+                    "{element:1}"
                 }
             },
             fish_fac_majin = {
@@ -103,7 +109,9 @@ return {
                     ""
                 },
                 flavour = {
-                    ""
+                    "ft. Majin",
+                    " ",
+                    "{element:1}"
                 }
             },
             fish_fac_redglove = {
@@ -112,7 +120,9 @@ return {
                     ""
                 },
                 flavour = {
-                    ""
+                    "ft. Redglove",
+                    " ",
+                    "{element:1}"
                 }
             },
             fish_fac_faker = {
@@ -121,7 +131,9 @@ return {
                     ""
                 },
                 flavour = {
-                    ""
+                    "ft. Faker",
+                    " ",
+                    "{element:1}"
                 }
             },
             fish_fac_forgotten = {
@@ -135,14 +147,45 @@ return {
                     "Well, there is a fish here."
                 }
             },
+            fish_fac_sukuna = {
+                name = "Ryomen Sutuna",
+                text = {
+                    "Switch {C:attention}current",
+                    "{C:attention}ability{} when used",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+                    "{C:inactive}(Currently: #3#)"
+                },
+                flavour = {
+                    "King of Sturgeons"
+                }
+            },
         },
         Other = {
+            w_d_seuss_dismantle = {
+                name = "Dismantle",
+                text= {
+                    "Destroy a random Fish",
+                    "and add {C:attention}double{} its",
+                    "sell value to this {C:mult}Mult",
+                },
+            },
+            w_d_seuss_cleave = {
+                name = "Cleave",
+                text= {
+                    "Destroy selected card",
+                    "and add {C:attention}triple{} its rank",
+                    "value to this {C:chips}Chips",
+                },
+            },
         },
     },
     misc = {
         dictionary = {
             k_bigtrout = "[[BIG TROUT]]",
-            k_hokimama = "[HOKI MAMA]"
+            k_hokimama = "[HOKI MAMA]",
+            k_dismantle = "Dismantle",
+            k_cleave = "Cleave",
         },
         achievement_names = {
         },

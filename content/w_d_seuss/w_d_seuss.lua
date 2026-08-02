@@ -35,6 +35,10 @@ FishAndChips.Fish {
 	environments = {
 		calm_pond = 5,
 	},
+	stats = {
+		weight = {min = 0.50, max = 1.41},
+		length = {min = 0.15, max = 0.30}
+	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
 	end,
@@ -64,6 +68,10 @@ FishAndChips.Fish {
 	environments = {
 		calm_pond = 5,
 	},
+	stats = {
+		weight = {min = 1, max = 2.82},
+		length = {min = 0.3, max = 0.60}
+	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
 	end,
@@ -87,29 +95,28 @@ FishAndChips.Fish {
 	attributes = { "chips", "mult", "balance", "score" },
 	config = {
 		extra = {
+			value = 10
 		}
 	},
 	environments = {
 		calm_pond = 5,
 	},
+	stats = {
+		weight = {min = 1.36, max = 6.81},
+		length = {min = 0.46, max = 1.02}
+	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { 
 			vars = {
-				next(SMODS.find_card('fish_fac_blue', true)) and "Purple" or "and the Reversal",
-				next(SMODS.find_card('fish_fac_blue', true)) and "Balances" or "Converts total scored",
-				next(SMODS.find_card('fish_fac_blue', true)) and "and" or "to",
-				next(SMODS.find_card('fish_fac_blue', true)) and "Doesn't convert base Chips" or "Plasma Lmao",
+				card.ability.extra.value
 			} 
 		}
 	end,
 	calculate = function(self, card, context)
 		if context.final_scoring_step then
-			if next(SMODS.find_card('fish_fac_blue', true)) then
-			else
-				local value = G.GAME.hands[G.GAME.last_hand_played].chips
-				return { chips = -hand_chips + value, mult = hand_chips }
-			end
+			local value = G.GAME.hands[G.GAME.last_hand_played].chips
+			return { chips = -hand_chips + value, mult = hand_chips * (card.ability.extra.value/100) }
 		end
     end
 }
@@ -124,30 +131,28 @@ FishAndChips.Fish {
 	attributes = { "chips", "mult", "balance", "score" },
 	config = {
 		extra = {
+			value = 50
 		}
 	},
 	environments = {
 		calm_pond = 5,
 	},
+	stats = {
+		weight = {min = 1.36, max = 6.80},
+		length = {min = 0.30, max = 0.61}
+	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { 
 			vars = {
-				next(SMODS.find_card('fish_fac_red', true)) and "Hollow" or "Take the Amplified",
-				next(SMODS.find_card('fish_fac_red', true)) and "Balances" or "Converts total scored",
-				next(SMODS.find_card('fish_fac_red', true)) and "and" or "to",
-				next(SMODS.find_card('fish_fac_blue', true)) and "Doesn't convert base Mult" or "Plasma Lmao",
+				card.ability.extra.value
 			} 
 		}
 	end,
 	calculate = function(self, card, context)
 		if context.final_scoring_step then
-			if next(SMODS.find_card('fish_fac_red', true)) then
-				return { balance = true }
-			else
-				local value = G.GAME.hands[G.GAME.last_hand_played].mult
-				return { chips = mult, mult = -mult + value }
-			end
+			local value = G.GAME.hands[G.GAME.last_hand_played].mult
+			return { chips = mult * (card.ability.extra.value/100), mult = -mult + value }
 		end
     end
 }
@@ -170,6 +175,10 @@ FishAndChips.Fish {
 	environments = {
 		pier = 4,
 		soup = 1,
+	},
+	stats = {
+		weight = {min = 0.16, max = 0.18},
+		length = {min = 0.05, max = 0.10}
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.pear_total, card.ability.extra.pear, card.ability.extra.levels } }
@@ -263,6 +272,10 @@ FishAndChips.Fish {
 			bait = 1
 		}
 	},
+	stats = {
+		weight = {min = 13.61, max = 22.68},
+		length = {min = 1.57, max = 1.63}
+	},
 	environments = {
 		wormhole = 5,
 	},
@@ -331,6 +344,13 @@ FishAndChips.Fish {
 	end
 }
 
+SMODS.Atlas({
+	key = "i_miss_the_quiet",
+	path = "w_d_seuss/i_miss_the_quiet.png",
+	px = 128,
+	py = 72,
+})
+
 FishAndChips.Fish {
 	key = "lordx",
 	atlas = "w_d_seuss_fish",
@@ -346,13 +366,24 @@ FishAndChips.Fish {
 	environments = {
 		wormhole = 5,
 	},
+	stats = {
+		weight = {min = 33.53, max = 34.93},
+		length = {min = 0.98, max = 1.01}
+	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { } }
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_i_miss_the_quiet") } } }
 	end,
 	calculate = function(self, card, context)
 	end
 }
+
+SMODS.Atlas({
+	key = "sinister",
+	path = "w_d_seuss/sinister.png",
+	px = 128,
+	py = 72,
+})
 
 FishAndChips.Fish {
 	key = "majin",
@@ -369,13 +400,24 @@ FishAndChips.Fish {
 	environments = {
 		wormhole = 5,
 	},
+	stats = {
+		weight = {min = 33.53, max = 34.93},
+		length = {min = 0.98, max = 1.01}
+	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { } }
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_sinister") } } }
 	end,
 	calculate = function(self, card, context)
 	end
 }
+
+SMODS.Atlas({
+	key = "red_handed",
+	path = "w_d_seuss/red_handed.png",
+	px = 128,
+	py = 72,
+})
 
 FishAndChips.Fish {
 	key = "redglove",
@@ -392,13 +434,24 @@ FishAndChips.Fish {
 	environments = {
 		wormhole = 5,
 	},
+	stats = {
+		weight = {min = 33.53, max = 34.93},
+		length = {min = 2.24, max = 2.51}
+	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { } }
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_red_handed") } } }
 	end,
 	calculate = function(self, card, context)
 	end
 }
+
+SMODS.Atlas({
+	key = "st_solis",
+	path = "w_d_seuss/st_solis.png",
+	px = 128,
+	py = 72,
+})
 
 FishAndChips.Fish {
 	key = "faker",
@@ -415,9 +468,13 @@ FishAndChips.Fish {
 	environments = {
 		wormhole = 5,
 	},
+	stats = {
+		weight = {min = 33.53, max = 34.93},
+		length = {min = 0.98, max = 1.01}
+	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { } }
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_st_solis") } } }
 	end,
 	calculate = function(self, card, context)
 	end
@@ -440,6 +497,10 @@ FishAndChips.Fish {
 	environments = {
 		wormhole = 5,
 	},
+	stats = {
+		weight = {min = 0.89, max = 1.12},
+		length = {min = 0.46, max = 0.81}
+	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.price } }
@@ -453,5 +514,94 @@ FishAndChips.Fish {
                 colour = FishAndChips.C.SAND_DOLLAR
             }
 		end
+	end
+}
+
+FishAndChips.Fish {
+	key = "sukuna",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 1, y = 2 },
+	weight = 2,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { "mult", "chips", "destroy_card", "sell_value", "scaling", "destroy_card", "usable" },
+	config = {
+		extra = {
+			attack = "Dismantle",
+			mult = 0,
+			chips = 0,
+		}
+	},
+	environments = {
+		volcano = 5,
+	},
+	stats = {
+		weight = {min = 136.08, max = 181.44},
+		length = {min = 2.08, max = 2.18}
+	},
+	requires_hand = true,
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = { key = 'w_d_seuss_dismantle', set = "Other" }
+		info_queue[#info_queue + 1] = { key = 'w_d_seuss_cleave', set = "Other" }
+		return { vars = { card.ability.extra.mult, card.ability.extra.chips, card.ability.extra.attack } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+            return {
+                mult = card.ability.extra.mult,
+				chips = card.ability.extra.chips
+            }
+        end
+	end,
+	keep_on_use = function(self, card)
+		return true
+	end,
+	use = function(self, card, area)
+		if card.ability.extra.attack == "Dismantle" then
+            local destructable_fish = {}
+            for i = 1, #G.fac_fish_area.cards do
+                if G.fac_fish_area.cards[i] ~= card and not SMODS.is_eternal(G.fac_fish_area.cards[i], card) and not G.fac_fish_area.cards[i].getting_sliced then
+                    destructable_fish[#destructable_fish + 1] = G.fac_fish_area.cards[i]
+                end
+            end
+            local fish_sliced = pseudorandom_element(destructable_fish, 'dismantle')
+            if fish_sliced then
+                fish_sliced.getting_sliced = true
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+						card.ability.extra.mult = card.ability.extra.mult + fish_sliced.sell_cost * 2
+                        card:juice_up(0.8, 0.8)
+						play_sound('slice1', 0.96 + math.random() * 0.08)
+                        fish_sliced:start_dissolve({ G.C.RED }, nil, 1.6)
+                        return true
+                    end
+                }))
+            end
+			card.ability.extra.attack = "Cleave"
+			SMODS.calculate_effect({message = localize('k_dismantle'), colour = G.C.MULT}, card)
+		elseif card.ability.extra.attack == "Cleave" then
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					card.ability.extra.chips = card.ability.extra.chips + G.hand.highlighted[1].base.id * 3
+					card:juice_up(0.8, 0.8)
+					play_sound('slice1', 0.96 + math.random() * 0.08)
+					SMODS.destroy_cards(G.hand.highlighted)
+					return true
+				end
+			}))
+			card.ability.extra.attack = "Dismantle"
+			SMODS.calculate_effect({message = localize('k_cleave'), colour = G.C.CHIPS}, card)
+		end
+	end,
+	can_use = function(self, card)
+		local destructable_fish = {}
+		for i = 1, #G.fac_fish_area.cards do
+			if G.fac_fish_area.cards[i] ~= card and not SMODS.is_eternal(G.fac_fish_area.cards[i], card) and not G.fac_fish_area.cards[i].getting_sliced then
+				destructable_fish[#destructable_fish + 1] = G.fac_fish_area.cards[i]
+			end
+		end
+		local fish_sliced = pseudorandom_element(destructable_fish, 'dismantle')
+		return card.ability.extra.attack == "Dismantle" and fish_sliced or card.ability.extra.attack == "Cleave" and G.hand and #G.hand.highlighted == 1
 	end
 }
