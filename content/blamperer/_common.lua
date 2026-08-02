@@ -48,7 +48,7 @@ SMODS.Attribute {
 }
 SMODS.Attribute {
     key = "fac_perfect_catch",
-    aliases = { "perfect_catch", "perfect" }
+    aliases = { "fac_perfect_catches", "perfect_catches", "perfect_catch", "perfect" }
 }
 
 -- Hoosks
