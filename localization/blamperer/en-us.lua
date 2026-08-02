@@ -63,6 +63,13 @@ return {
                     "Maybe you can still exchange it",
                     "for one of equal or lesser value..."
                 }
+            },
+            fish_fac_blamperer_clout = {
+                name = "Clout Trout",
+                text = {
+                    "{X:attention,C:white}#1#X{} Treasure rewards if",
+                    "{C:fac_fish}Fish{} is caught {C:gold}perfectly"
+                }
             }
         },
         PotatoPatch = {
