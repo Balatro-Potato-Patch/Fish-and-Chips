@@ -17,8 +17,8 @@ FishAndChips.Fish {
         wormhole = 5
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 0.194, max = 0.194},
+		length = {min = 0.14, max = 0.14}
 	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -109,8 +109,8 @@ FishAndChips.Fish {
         garden = 1
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 320, max = 350},
+		length = {min = 2, max = 4}
 	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -174,8 +174,8 @@ FishAndChips.Fish {
         backroom = 5,
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 9.5, max = 10.2},
+		length = {min = 0.9, max = 1.1}
 	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -248,8 +248,8 @@ FishAndChips.Fish {
         pier = 10
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 0.3, max = 0.45},
+		length = {min = 0.16, max = 0.21}
 	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -320,8 +320,8 @@ FishAndChips.Fish {
         wormhole = 5
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 1.01, max = 1.01},
+		length = {min = 0.10, max = 0.10}
 	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -361,8 +361,8 @@ FishAndChips.Fish {
         city_river = 5,
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 0.02, max = 0.03},
+		length = {min = 0.04, max = 0.12}
 	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -403,8 +403,8 @@ FishAndChips.Fish {
         wormhole = 5
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 0.2, max = 0.25},
+		length = {min = 0.16, max = 0.22}
 	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -462,8 +462,8 @@ FishAndChips.Fish {
         backroom = 5
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 29.5, max = 45.3},
+		length = {min = 0.9, max = 1.5}
 	},
     loc_vars = function(self, info_queue, card)
         if card.area and card.area == G.fac_fish_area then
@@ -526,8 +526,8 @@ FishAndChips.Fish {
         pier = 7
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 250, max = 750},
+		length = {min = 1.50, max = 2}
 	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -592,8 +592,8 @@ FishAndChips.Fish {
         swamp = 8
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 68, max = 90.7},
+		length = {min = 1.8, max = 2.2}
 	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -669,8 +669,8 @@ FishAndChips.Fish {
         styx = 5
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 6, max = 14},
+		length = {min = 0.3, max = 0.60}
 	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -731,8 +731,8 @@ FishAndChips.Fish {
         wormhole = 3,
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 0.194, max = 0.194},
+		length = {min = 0.14, max = 0.14}
 	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
@@ -791,8 +791,8 @@ FishAndChips.Fish {
         soup = 2,
     },
 	stats = {
-		weight = {min = 1, max = 1},
-		length = {min = 1, max = 1}
+		weight = {min = 1.10, max = 3.50},
+		length = {min = 0.10, max = 0.35}
 	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
