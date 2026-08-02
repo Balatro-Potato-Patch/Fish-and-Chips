@@ -44,7 +44,8 @@ return {
                 text = {
                     "After {C:attention}failing{} #3# catches,",
                     "create a random {C:attention}Targeted Bait{}",
-                    "{C:inactive}(Currently #2#/#3#){}"
+                    "{C:inactive}(Currently #2#/#3#){}",
+                    "{C:inactive}(Maximum #4# times per round)"
                 },
                 flavor = {
                     "Just another day in",

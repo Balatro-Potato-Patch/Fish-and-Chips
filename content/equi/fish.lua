@@ -35,8 +35,8 @@ FishAndChips.Fish {
     ppu_artist = { "Equi" },
     attributes = { "chips", "rank" },
     stats = {
-        weight = { min = 750, max = 900 },
-        length = { min = 55, max = 75 }
+        weight = { min = 0.75, max = 0.9 },
+        length = { min = 0.55, max = 0.75 }
     },
     config = {
         extra = {
@@ -77,8 +77,8 @@ FishAndChips.Fish {
     ppu_artist = { "Equi" },
     attributes = { "generation" },
     stats = {
-        weight = { min = 1.6, max = 2.5 },
-        length = { min = 5, max = 7 }
+        weight = { min = 0.0016, max = 0.0025 },
+        length = { min = 0.05, max = 0.07 }
     },
     config = {
         extra = {
@@ -129,8 +129,8 @@ FishAndChips.Fish {
     ppu_artist = { "Equi" },
     attributes = { "xmult", "passive" },
     stats = {
-        weight = { min = 3, max = 4 },
-        length = { min = 7, max = 11 }
+        weight = { min = 0.003, max = 0.004 },
+        length = { min = 0.07, max = 0.11 }
     },
     config = {
         extra = {
@@ -164,9 +164,9 @@ FishAndChips.Fish {
             if forced_count < G.hand.config.highlighted_limit then
                 G.hand:unhighlight_all()
                 local unselected_cards = {}
-                for k, v in ipairs(G.hand.cards) do
-                    if G.hand.cards[k].highlighted == false then
-                        table.insert(unselected_cards, v)
+                for _, playing_card in ipairs(G.hand.cards) do
+                    if playing_card.highlighted == false then
+                        table.insert(unselected_cards, playing_card)
                     end
                 end
 
@@ -192,27 +192,28 @@ FishAndChips.Fish {
     ppu_artist = { "Equi" },
     attributes = { "generation" },
     stats = {
-        weight = { min = 150, max = 250 },
-        length = { min = 8, max = 12 }
+        weight = { min = 0.15, max = 0.25 },
+        length = { min = 0.08, max = 0.12 }
     },
     config = {
         extra = {
-            bait_given = 1, current_fails = 0, required_fails = 4
+            bait_given = 1, current_fails = 0, required_fails = 4, max_per_round = 3, baits_this_round = 0
         }
     },
     environments = {
         wormhole = 1
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.bait_given, card.ability.extra.current_fails, card.ability.extra.required_fails } }
+        return { vars = { card.ability.extra.bait_given, card.ability.extra.current_fails, card.ability.extra.required_fails, card.ability.extra.max_per_round, card.ability.extra.baits_this_round } }
     end,
 
     calculate = function(self, card, context)
-        if context.failed and not context.blueprint then
+        if context.failed and not context.blueprint and card.ability.extra.baits_this_round < card.ability.extra.max_per_round then
             card.ability.extra.current_fails = card.ability.extra.current_fails + 1
             if card.ability.extra.current_fails == card.ability.extra.required_fails then
                 card.ability.extra.current_fails = 0
-                local bait_number = pseudorandom("equi_carpticalillusion", 2, #G.P_CENTER_POOLS.fac_Bait)
+                card.ability.extra.baits_this_round = card.ability.extra.baits_this_round + 1
+                local bait_number = pseudorandom("equi_fishedforitagain", 2, #G.P_CENTER_POOLS.fac_Bait)
                 local bait = G.P_CENTER_POOLS.fac_Bait[bait_number]
                 --may need to put a cap on this
                 FishAndChips.add_bait_to_inventory(bait.key, card.ability.extra.bait_given)
@@ -228,6 +229,10 @@ FishAndChips.Fish {
                     message =  card.ability.extra.current_fails .. "/" .. card.ability.extra.required_fails
                 }
             end
+        end
+
+        if context.end_of_round and context.main_eval and not context.blueprint and not context.game_over then
+            card.ability.extra.baits_this_round = 0
         end
     end
 }
@@ -246,7 +251,7 @@ FishAndChips.Fish {
     ppu_artist = { "Equi" },
     attributes = { "generation" },
     stats = {
-        weight = { min = 0.01, max = 0.02 },
+        weight = { min = 0.0001, max = 0.0001 },
         length = { min = 99, max = 99 }
     },
     config = { 
