@@ -260,6 +260,26 @@ FishAndChips.Fish {
 			}
 		end
 	end,
+	on_catch = function(self, card)
+		SMODS.calculate_effect{
+				message = "Hell yeah!",
+				colour = G.C.PURPLE,
+				card = card,
+				func = function()
+					play_sound('fac_pa_wiinormal',1,1)
+				end
+			}
+	end,
+	add_to_deck = function(self, card)
+		SMODS.calculate_effect{
+				message = "Hell yeah!",
+				colour = G.C.PURPLE,
+				card = card,
+				func = function()
+					play_sound('fac_pa_wiinormal',1,1)
+				end
+			}
+	end,
 }
 
 FishAndChips.Fish {
@@ -399,7 +419,7 @@ FishAndChips.Fish {
 	key = "pa_shellphone",
 	weight = 10,
 	atlas = "pa_pulsarfish",
-	pos = { x = 1, y = 0 },
+	pos = { x = 5, y = 1 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
 	attributes = { "xmult" },
