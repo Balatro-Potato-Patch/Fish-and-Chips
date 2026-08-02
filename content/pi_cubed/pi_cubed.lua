@@ -532,10 +532,7 @@ FishAndChips.Fish {
             bonus_value = 5,
 		}
 	},
-    add_to_deck = function(self, card, from_debuff)
-        card.ability.extra_value = card.ability.extra_value + card.ability.extra.bonus_value
-        card:set_cost()
-    end,
+    cost = 20,
 	loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_gold
         return { vars = { card.ability.extra.dollars } }
