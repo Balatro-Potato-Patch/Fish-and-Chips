@@ -9,10 +9,9 @@ return {
                     "{C:inactive}Currently {C:mult}+#1#{} {C:inactive}chips"                 
                 },
                 flavour = {
-                    "This fish feeds off of minerals",
-                    'in the sediments of the ocean floor,',
-                    'and quite frankly, it scores',
-                    'low in competitions.',
+                    'Quite frankly, I never knew',
+                    'bottom was on the menu, but',
+                    'this fish certainly did'
                 }
             },
             fish_fac_bigbasswheel = {
@@ -23,7 +22,9 @@ return {
                     'to a random Fish'
                 },
                 flavour = {
-                    'Take it for a spin!'
+                    "He was once the CEO and entrepreneur",
+                    "of a big arcade manufacturing gig.",
+                    "However, he wasn't born in 1964"
                 }
             },
             fish_fac_britishflag = {
@@ -104,7 +105,7 @@ return {
                     "A fierce predator",
                     "in the Oceanic Abyss.",
                     "That's the name of",
-                    "the bank he works at."
+                    "the bank he works at"
                 }
             },
             fish_fac_neontetra = {
@@ -113,6 +114,11 @@ return {
                     'If played hand is a {C:attention}Four of a Kind{},',
                     'scoring cards have a {C:green}1 in 4 chance{}',
                     'to gain {C:dark_edition}Polychrome{} edition'
+                },
+                flavour = {
+                    'This rather asymmetrical fish',
+                    'can glow in the dark! It seems',
+                    'to like the number 4 as well'
                 }
             },
             fish_fac_wantedposter = {

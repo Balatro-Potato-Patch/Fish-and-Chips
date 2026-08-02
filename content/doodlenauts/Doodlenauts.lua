@@ -14,7 +14,7 @@ SMODS.Atlas({
 
 PotatoPatchUtils.Developer({
 	name = 'F404',
-	atlas = 'DoodlenautsAvatar',
+	atlas = 'fac_DoodlenautsAvatar',
     pos = {x = 0, y = 0},
 	colour = HEX('ff00ff'),
 	fac_partner = 'Buckaroodle' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
@@ -22,7 +22,7 @@ PotatoPatchUtils.Developer({
 
 PotatoPatchUtils.Developer({
 	name = 'Buckaroodle',
-	atlas = 'DoodlenautsAvatar',
+	atlas = 'fac_DoodlenautsAvatar',
 	pos = {x = 1, y = 0},
 	colour = G.C.GREEN,
 	fac_partner = 'F404'
@@ -37,6 +37,16 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'mult', 'rank', 'scaling', 'two', 'three', 'four', 'five' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
 	cost = 5,
 	config = {
 		extra = {
@@ -93,6 +103,16 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'usable', 'chance', 'editions' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
 	cost = 3,
 	config = {
 		extra = {
@@ -161,6 +181,16 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'chips' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
 	cost = 5,
 	config = {
 		extra = {
@@ -198,6 +228,16 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'chips' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
 	cost = 5,
 	config = {
 		extra = {
@@ -235,6 +275,16 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'passive', 'enhancements' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
 	cost = 7,
 	environments = {
 		calm_pond = 0.7,
@@ -254,6 +304,16 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'xmult', 'joker' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
 	cost = 7,
 	config = {
 		extra = {
@@ -296,6 +356,16 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'suit', 'clubs' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
 	cost = 4,
 	config = {
 		extra = {
@@ -390,6 +460,16 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'economy', },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
 	cost = 6,
 	config = {
 		extra = {
@@ -459,6 +539,16 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'hand_type' , 'editions' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
 	cost = 8,
 	config = {
 		extra = {
@@ -499,6 +589,16 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'economy' , 'joker' , 'sell_value' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
 	cost = 7,
 	config = {
 		extra = {
@@ -555,6 +655,16 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'seals' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
 	cost = 6,
 	config = {
 		extra = {
