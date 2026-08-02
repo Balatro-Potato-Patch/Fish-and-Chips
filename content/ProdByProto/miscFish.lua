@@ -102,7 +102,7 @@ FishAndChips.Fish {
 
 
         if context.individual and context.cardarea == G.play then
-            if context.other_card:is_rank("King") and context.other_card:is_suit("Hearts") then
+            if context.other_card:get_id() == 13 and context.other_card:is_suit("Hearts") then
                 return {mult = cae.mult}
             end
         end
