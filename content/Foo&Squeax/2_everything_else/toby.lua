@@ -24,6 +24,14 @@ FishAndChips.Fish{
 		volcano = 1,
 		swamp = 1
 	},
+	set_card_type_badge = function(self, card, badges)
+		local scaling = 1.2
+		badges[#badges + 1] = {n=G.UIT.R, config={align = "cm"}, nodes={
+      {n=G.UIT.R, config={align = "cm", colour = FishAndChips.C.FISH, r = 0.1, minw = 2, minh = 0.4*scaling, emboss = 0.05}, nodes={
+        {n=G.UIT.O, config={object = SMODS.create_sprite(0, 0, 0.5 * scaling, 0.5 * scaling, "fac_fas_toby")}},
+      }}
+    }}
+	end,
 	stats = {
 		length = {min = 5, max = 5},
 		weight = {min = 5, max = 5}
@@ -33,13 +41,26 @@ FishAndChips.Fish{
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval then
-			self.extra_cost = self.extra_cost - 1
+			ease_sand_dollars(-1)
+			ease_dollars(-1)
+		end
+		if context.joker_main then
+			return {
+				chips = 1,
+				mult = 1,
+				xchips = 1.1,
+				xmult = 1.1,
+				score = 1,
+				xscore = 1.1,
+				blindsize = 1,
+			}
 		end
 	end,
 	on_catch = function (self, card)
 		G.GAME.fac_FooSqueax.tobies = G.GAME.fac_FooSqueax.tobies + 3
 	end
 }
+
 
 local desc_from_rows_ref = desc_from_rows
 ---@diagnostic disable-next-line: lowercase-global
@@ -58,15 +79,15 @@ function G.UIDEF.card_h_popup(card)
 		local ret = g_uidef_card_h_popup_ref(card)
 		
 		local search = SMODS.deepfind(ret.nodes[1].nodes, "Foo54", nil, true)[1]
-		local dynatext = search.objtree[#search.objtree - 1]
-		dynatext.config.string = {localize("k_fas_fas_annoying_dog")}
-		dynatext:update_text(true)
+		local config = search.objtree[#search.objtree - 2]
+		config.object:remove()
+		config.object = SMODS.create_sprite(0, 0, 0.5, 0.5, "fac_fas_toby")
 		
 		--[[
 		local search2 = SMODS.deepfind(ret.nodes[1].nodes, "squeax09", nil, true)[1]
-		local dynatext2 = search2.objtree[#search2.objtree - 1]
-		dynatext2.config.string = {localize("k_fas_fas_annoying_dog")}
-		dynatext2:update_text(true)
+		local config2 = search2.objtree[#search2.objtree - 2]
+		config2.object:remove()
+		config2.object = SMODS.create_sprite(0, 0, 0.5, 0.5, "fac_fas_toby")
 		--]] -- uncomment this when art is added
 
 		return ret
