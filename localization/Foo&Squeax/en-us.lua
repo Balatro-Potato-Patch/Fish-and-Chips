@@ -224,6 +224,7 @@ return {
 			k_fac_fas_nyom = "nyoooooom...",
 			k_fac_fas_nyon = 'Nyon!',
 			k_fac_fas_ule = "Ueueleuleuleue!",
+			k_fas_fas_annoying_dog = "Annoying Fish",
 
 			k_fac_fas_flirt = "Flirt",
 			k_fac_fas_approach = "Approach",

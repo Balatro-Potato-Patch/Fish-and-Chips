@@ -55,7 +55,20 @@ local g_uidef_card_h_popup_ref = G.UIDEF.card_h_popup
 function G.UIDEF.card_h_popup(card)
 	if card.config and card.config.center and card.config.center.key == "fish_fac_fas_toby_fish" then
 		FishAndChips.FooSqueax.toby_fish.no_desc = true
-		return g_uidef_card_h_popup_ref(card)
+		local ret = g_uidef_card_h_popup_ref(card)
+		
+		local search = SMODS.deepfind(ret.nodes[1].nodes, "Foo54", nil, true)[1]
+		local dynatext = search.objtree[#search.objtree - 1]
+		dynatext.config.string = {localize("k_fas_fas_annoying_dog")}
+		
+		--[[
+		local search = SMODS.deepfind(ret.nodes[1].nodes, "squeax09", nil, true)[1]
+		local dynatext = search.objtree[#search.objtree - 1]
+		dynatext.config.string = {localize("k_fas_fas_annoying_dog")}
+		--]] -- uncomment this when art is added
+
+		dynatext:update_text(true)
+		return ret
 	end
 	local ret = g_uidef_card_h_popup_ref(card)
 	if not G.GAME.fac_FooSqueax or not G.GAME.fac_FooSqueax.tobies then return ret end
