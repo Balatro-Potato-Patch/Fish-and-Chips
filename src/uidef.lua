@@ -112,21 +112,23 @@ function FishAndChips.safe_to_press_buttons()
 end
 
 function FishAndChips.update_bait_counter(major)
-	if G.FISHING.fishing_bait_count then
-		G.FISHING.fishing_bait_count:remove()
+	if G.FISHING then
+		if G.FISHING.fishing_bait_count then
+			G.FISHING.fishing_bait_count:remove()
+		end
+		G.FISHING.fishing_bait_count = UIBox({
+			definition = G.UIDEF.fac_bait_count(),
+			config = {
+				align = "br",
+				offset = { x = -0.5, y = -0.5 },
+				major = major,
+				bond = "Weak",
+				r_bond = "Weak",
+				instance_type = "CARD"
+			}
+		})
+		G.FISHING.fishing_bait_count.T.r = -0.3
 	end
-	G.FISHING.fishing_bait_count = UIBox({
-		definition = G.UIDEF.fac_bait_count(),
-		config = {
-			align = "br",
-			offset = { x = -0.5, y = -0.5 },
-			major = major,
-			bond = "Weak",
-			r_bond = "Weak",
-			instance_type = "CARD"
-		}
-	})
-	G.FISHING.fishing_bait_count.T.r = -0.3
 end
 
 function FishAndChips.fishing_button(key, text, price)
