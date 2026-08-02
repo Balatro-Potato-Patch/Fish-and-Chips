@@ -13,6 +13,31 @@ return {
                         "{C:purple}Somehow... I wound up here, don't ask."
                     }
                 },
+                fish_fac_vv_willowfish = {
+                    name = "Kai",
+                    text = {
+                        {
+                            "Gains {X:chips,C:white}X#2#{} Chips per {C:blue}Fish{C:attention} caught{} this run",
+                            "{C:inactive}Will only increment if {C:attention}Kai {C:inactive}is present",
+                            "{C:inactive}Currently {X:chips,C:white}X#1#{C:inactive} Chips"
+                        }
+                    },
+                    flavour = {
+                        "{C:green}...can you let me go? This is really annoying."
+                    }
+                },
+                fish_fac_vv_blahaj = {
+                    name = "BLAHAJ",
+                    text = {
+                        {
+                            "Effect not implemented!"
+                        }
+                    },
+                    flavour = {
+                        "True symbol of {C:blue}tr{C:fac_sand_dollars}ans {C:white}iden{C:fac_sand_dollars}ti{C:blue}ty",
+                        "Found in Sweden"
+                    }
+                },
                 fish_fac_vv_size2 = {
                     name = "Size 2 Fish",
                     text = {
@@ -27,16 +52,56 @@ return {
                     }
                 },
                 fish_fac_vv_stinkyboot = {
-                    name = "Old Stinky Boot",
+                    name = "Stinky Ol' Boot",
                     text = {
                         {
-                            "Effect not implemented!"
+                            "{C:chips}+1{} Chip for every Sand Dollar you have",
+                            "{C:inactive}Currently: {C:chips}+#1#{C:inactive} Chips"
+                        },{
+                            "Sells for 0 {C:fac_sand_dollars}Sand Dollars{}"
                         }
                     },
                     flavour = {
                         "Lost in the waters by some",
                         "long forgotten fisherman.",
                         "It was underwater at least a decade..."
+                    }
+                },
+                fish_fac_vv_winggaster = {
+                    name = "Whale Darter Gaster",
+                    text = {
+                        {
+                            "{C:chips}+#1#{} Chips",
+                            "{C:red,E:1}Self-destructs{} at end of round"
+                        }
+                    },
+                    flavour = {
+                        "That fish sure is a mystery, man."
+                    }
+                },
+                fish_fac_vv_lilypad = {
+                    name = "Lily Pad",
+                    text = {
+                        {
+                            "Effect not implemented!"
+                        }
+                    },
+                    flavour = {
+                        "Lily Pad never complains.",
+                        "Lily Pad never wants to know what's going on."
+                    }
+                },
+                fish_fac_vv_immortalsnail = {
+                    name = "The Immortal Snail",
+                    text = {
+                        {
+                            "Gives {C:money}+$2{} and {C:fac_sand_dollars,f:fac_sand_dollars}+${C:fac_sand_dollars}1{} when sold",
+                            "Gain {C:money}+$2{} and {C:fac_sand_dollars,f:fac_sand_dollars}+${C:fac_sand_dollars}1{} on next appearance"
+                        }
+                    },
+                    flavour = {
+                        "It always knows where you are and slowly crawls towards you.",
+                        "{s:1.5}What's your plan?"
                     }
                 },
         }
