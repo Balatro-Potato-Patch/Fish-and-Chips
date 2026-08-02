@@ -251,7 +251,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
         if context.setting_blind and not context.blueprint then
-			card.ability.extra.chosen_hand = pseudorandom("pa_mysteryfish", 0, G.GAME.current_round.hands_left)
+			card.ability.extra.chosen_hand = pseudorandom("pa_mysteryfish", 0, G.GAME.current_round.hands_left - 1)
         end
 
 		if context.joker_main and G.GAME.current_round.hands_left == card.ability.extra.chosen_hand then
@@ -359,18 +359,14 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
         if context.fac_modify_fishing_profile then
-			local profile = {}
-			-- add effect based on toggle, effects are sweet spot larger, impulse less distance, less often
-			local choice = card.ability.extra.toggle % 2
+			local choice = card.ability.extra.toggle % 3
 			if choice == 0 then
-				profile = {vel_limit = fac_pick_profile().vel_limit / card.ability.extra.modifier}
+				context.fishing_profile.vel_limit = context.fishing_profile.vel_limit / card.ability.extra.modifier
 			elseif choice == 1 then
-				profile = {impulse_max = fac_pick_profile().impulse_max / card.ability.extra.modifier}
+				context.fishing_profile.impulse_max = context.fishing_profile.impulse_max / card.ability.extra.modifier
 			elseif choice == 2 then
-				profile = {decision_max = fac_pick_profile().decision_max * card.ability.extra.modifier}
+				context.fishing_profile.decision_max = context.fishing_profile.decision_max * card.ability.extra.modifier
 			end
-
-			FishAndchips.modify_fishing_profile(profile)
 		end
 	end,
 	add_to_deck = function(self, card)
