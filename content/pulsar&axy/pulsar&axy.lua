@@ -26,7 +26,7 @@ SMODS.Sound {
 }
 SMODS.Sound {
 	key = "pa_wiibonus",
-	path = "pulsar&axy/wiiplayfishingbonus"
+	path = "pulsar&axy/wiiplayfishingbonus.ogg"
 }
 --#region Fish
 
