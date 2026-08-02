@@ -384,6 +384,8 @@ return {
             b_fac_menu_toggle = "Enable Custom Main Menu",
             b_fac_condensed_fish = "Enable Condensed Fish Collection",
             b_fac_flavour_text = 'Disable Flavour Text',
+            b_fac_flashing_lights = 'Disable Flashing Effects',
+            b_fac_fish_scaling = 'Disable Visual Size of Fish',
             ph_fac_go_fishing_ex = "Go Fishing!",
             k_fac_no_baits = "No Baits in inventory",
             k_fac_equip_bait = "Equip Bait",
@@ -438,6 +440,10 @@ return {
             ph_fac_rate = 'Catch rate: ',
             ph_fac_treasure = 'Treasure caught: ',
             ph_fac_perfect = 'Perfect catches: ',
+            ph_fac_weight = 'Weight: ',
+            ph_fac_length = 'Length: ',
+            ph_fac_record_weight = 'Record weight: ',
+            ph_fac_record_length = 'Record length: ',
             ph_fac_extended_fish_page = 'Fish',
             ph_fac_condensed_fish_page = 'Fish',
             ph_fac_config_page = 'Config',
@@ -790,11 +796,16 @@ return {
                 "{C:inactive,s:0.9}He only accepts {C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}$ Sand Dollars{C:inactive,s:0.9}.){}"
             },
             fac_fishing_4a = {
+                "Ya can see ya progress in",
+                "this fishin' area by",
+                "clickin' this box"
+            },
+            fac_fishing_4b = {
                 "If ya get tired of this here",
                 "fishin' area, you can travel",
                 "{C:attention}somewhere new!{}"
             },
-            fac_fishing_4b = {
+            fac_fishing_4c = {
                 "But if ya do, I'd appreciate",
                 "it if ya left me a {C:attention}tip{}.",
                 "I need fuel to drive ya, and",
