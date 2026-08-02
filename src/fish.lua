@@ -36,7 +36,7 @@ FishAndChips.Fish = SMODS.Center:extend {
 }
 
 local function random_measurement(stats)
-    local precision = math.min(2, math.max(string.len(stats.min - math.floor(stats.min)) - 2, string.len(stats.max - math.floor(stats.max)) - 2, 1))
+    local precision = math.max(string.len(stats.min - math.floor(stats.min)) - 2, string.len(stats.max - math.floor(stats.max)) - 2, 1)
     local delta = stats.max - stats.min
     local value = stats.min + (pseudorandom('fac_fish_measurement') * delta)
     return tonumber(string.format(value < 100 and "%."..precision.."f" or "%.d", value))
