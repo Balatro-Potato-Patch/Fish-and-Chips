@@ -36,7 +36,7 @@ fac_topuplib_inspect = topuplib and topuplib.inspect or function(name, value) --
 		value = name
 		name = "var"
 	end
-	topuplib.inspectedvalue = value
+	fac_topuplib_inspectedvalue = value
 	local t = type(value)
 	if t == "table" then
 		local r = {}
