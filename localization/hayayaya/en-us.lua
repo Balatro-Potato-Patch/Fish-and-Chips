@@ -159,6 +159,7 @@ return {
 					"When a fish is {C:attention}sold{}, get",
 					"the {C:attention}bait{} you used back",
 					"{X:attention,C:white}X0{C:red} Fish sell cost",
+					"{C:inactive,s:0.8}Doesn't apply to perfect fishes{}",
 				},
 				flavor = {
 					"TURN ME INTO A [REAL BOY!!!]",

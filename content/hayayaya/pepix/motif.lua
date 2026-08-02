@@ -53,7 +53,13 @@ local set_sell_value = Card.set_sell_value
 function Card:set_sell_value()
 	set_sell_value(self)
 	-- When freedom motif is present, set sell cost of fish to 0
-	if self.config.center.set == "fac_Fish" and next(SMODS.find_card("fish_fac_motif")) then
+	-- Only when it's not a perfect fish as well
+	if
+		self.config.center.set == "fac_Fish"
+		and next(SMODS.find_card("fish_fac_motif"))
+		and self.ability
+		and self.ability.fac_bait_used
+	then
 		self.sell_cost = 0
 	end
 end
