@@ -148,8 +148,8 @@ FishAndChips.Fish {
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
     config = {
         extra = {
-            scoring = 2,
-            gain = 2,
+            scoring = 1,
+            gain = 1.5,
             trigger = false
         },
         immutable = {
