@@ -2,11 +2,17 @@ return {
     descriptions = {
         PotatoPatch = {
             PotatoPatchDev_crimsonseraphim = {
-                name = "crimsonseraphim",
+                name = "Ruby & Jade",
                 text = {
-                    "Inside me there are two wolves",
-                    "and one of them is {C:red}Red{}, and one of them is {C:green}Green{}",
-                    "say hello to them both."
+                    "This will probably be a surprise to people",
+                    "who knew me but not super well but, I ({C:red}Ruby{}) am",
+                    "not {C:green}alone{} in my own head. {C:green}Jade{} is also here",
+                    " ",
+                    "I would like to thank everyone who has helped",
+                    "me with the process of figuring all of this out",
+                    "considering a lot of it happened during f&c development",
+                    " ",
+                    "Read {C:green}Homestuck{} Please."
                 }
             },
         },

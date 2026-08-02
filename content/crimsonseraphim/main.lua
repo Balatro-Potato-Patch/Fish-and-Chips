@@ -31,6 +31,7 @@ PotatoPatchUtils.Developer({
     loc = true,
     calculate = function(self, context)
         local effects = {}
+        --TODO: hook calculate_joker
         for _, c in pairs(G.jokers.cards) do
             if not c.debuffed then
                 local ret = FishAndChips.crimsonseraphim.calculate_forged_joker(c, context)
@@ -1102,7 +1103,7 @@ function FishAndChips.crimsonseraphim.draw_reticle(x, y, size)
     love.graphics.ellipse("fill", x, y - size, size * 0.2, size * 0.5)
     love.graphics.ellipse("fill", x, y + size, size * 0.2, size * 0.5)
     love.graphics.setLineWidth(w)
-    if G.GAME.REVOLVER_RETICLE_ALPHA <= 0 then G.GAME.REVOLVER_RETICLE_ALPHA = nil end
+    if (G.GAME.REVOLVER_RETICLE_ALPHA or 1) <= 0 then G.GAME.REVOLVER_RETICLE_ALPHA = nil end
 end
 
 local go_fish = G.FUNCS.fac_go_fish
@@ -1311,36 +1312,3 @@ FishAndChips.Fish {
         end
     end,
 }
-
--- local g_uidef_card_h_popup_ref = G.UIDEF.card_h_popup
--- ---@diagnostic disable-next-line: duplicate-set-field
--- function G.UIDEF.card_h_popup(card)
---     local ret = g_uidef_card_h_popup_ref(card)
---     if card.config.center_key == "fish_fac_larp" then
-        
-
---         local target = ret.nodes[1].nodes[1].nodes[1].nodes
---         table.insert(target, #target, name_from_rows(AUT_LARP.name, is_playing_card and G.C.WHITE or nil))
-
---         local card = card.dummy
---         if card.ability and card.ability.set == 'fac_Fish' and not FishAndChips.mod.config.disable_flavour and card.config.center.discovered and G.localization.descriptions.fac_Fish[card.config.center_key] and G.localization.descriptions.fac_Fish[card.config.center_key].fac_flavour_parsed then
---             local name = SMODS.deepfind(ret, 'tooltip_id_'..FishAndChips.tooltip_seed, nil, true)[1]
---             local name_node = name.objtree
---             local flavour_node = {}
---             local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}
---             localize({type = 'flavour', nodes = flavour_node, loc_target = G.localization.descriptions.fac_Fish[loc_vars.key or card.config.center_key], scale = 0.8, text_colour = G.C.JOKER_GREY, shadow = true, vars = loc_vars.vars})
---             local final_flavour = {{n=G.UIT.R, config = {minh = 0.1}}}
---             for i, line in ipairs(flavour_node) do
---                 local node = {n=G.UIT.R, config = {align = 'cm'}, nodes = {}}
---                 for _, part in ipairs(line) do
---                     table.insert(node.nodes, part)
---                 end
---                 table.insert(final_flavour, i, node)
---             end
---             table.insert(target, #target, {n=G.UIT.R, config = {align = 'cm'}, nodes = final_flavour})
---         end
-
-        
---     end
---     return
--- end
