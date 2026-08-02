@@ -42,12 +42,9 @@ target = '''=[SMODS FishAndChips "/src/overrides.lua"]'''
 pattern = '''
     table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 1, {n=G.UIT.R, config = {align = 'cm'}, nodes = final_flavour})
 end
-return ret
 '''
-position = "at"
+position = "after"
 payload = '''
-    table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 1, {n=G.UIT.R, config = {align = 'cm'}, nodes = final_flavour})
-end
 if card.config.center_key == "fish_fac_larp" then
     if not card.dummy then
         card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
@@ -58,7 +55,7 @@ if card.config.center_key == "fish_fac_larp" then
     local name = SMODS.deepfind(ret, 'tooltip_id_'..FishAndChips.tooltip_seed, nil, true)[1]
     local name_node = name.objtree
     local target = ret.nodes[1].nodes[1].nodes[1].nodes
-    table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 3, name_from_rows(AUT_LARP.name, is_playing_card and G.C.WHITE or nil))
+    table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], name_from_rows(AUT_LARP.name, is_playing_card and G.C.WHITE or nil))
     local card = card.dummy
     if not FishAndChips.mod.config.disable_flavour and card.config.center.discovered and G.localization.descriptions.fac_Fish[card.config.center_key] and G.localization.descriptions.fac_Fish[card.config.center_key].fac_flavour_parsed then
         local flavour_node = {}
@@ -72,13 +69,24 @@ if card.config.center_key == "fish_fac_larp" then
             end
             table.insert(final_flavour, i, node)
         end
-        table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 4, {n=G.UIT.R, config = {align = 'cm'}, nodes = final_flavour})
+        table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], {n=G.UIT.R, config = {align = 'cm'}, nodes = final_flavour})
     end
-    table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 5, desc_from_rows(AUT_LARP.main))
+    table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], desc_from_rows(AUT_LARP.main))
     for i, v in pairs(AUT_LARP.multi_box or {}) do
-        table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 6 + i, desc_from_rows(v))
+        table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], desc_from_rows(v))
     end
 end
-return ret
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS FishAndChips "/src/overrides.lua"]'''
+pattern = '''
+local stat_proto = card.config.center.stats
+'''
+position = "at"
+payload = '''
+local stat_proto = (card.dummy or card).config.center.stats
 '''
 match_indent = true

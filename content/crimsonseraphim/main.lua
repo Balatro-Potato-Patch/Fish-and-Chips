@@ -229,7 +229,7 @@ end
 FishAndChips.Fish {
 	key = "mealy_apple",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 0, y = 1 },
 	weight = 5,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
@@ -1328,6 +1328,7 @@ FishAndChips.Fish {
                     Card.add_to_deck(card.dummy)
                     card.dummy.added_to_deck = true
                     card.ability.extra.dummy_abil = card.dummy.ability
+                    FishAndChips.modify_fish_stats(card, FishAndChips.create_fish_stats(card.dummy.config.center))
                     card_eval_status_text(
                         card,
                         "extra",
