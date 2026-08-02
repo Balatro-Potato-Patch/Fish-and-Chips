@@ -1,15 +1,20 @@
-local function all_env()
-	local ret = {}
-	for _, k in ipairs(FishAndChips.Environment.obj_buffer) do
-		ret[k] = 10
-	end
-	return ret
-end
-
 FishAndChips.Fish({
 	key = "trojan_fish",
+	stats = {
+		weight = {
+			min = 10000,
+			max = 20000,
+		},
+		length = {
+			min = 50,
+			max = 50,
+		}
+	},
 	weight = 10,
-	environments = all_env(),
+	environments = {
+		wormhole = 1,
+		styx = 2,
+	},
 	attributes = { "copying", "chance" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
@@ -111,8 +116,18 @@ FishAndChips.Fish({
 	key = "moai_statue",
 	weight = 5,
 	environments = {
-		pier = 1,
+		pier = 2,
 		calm_pond = 1,
+	},
+	stats = {
+		weight = {
+			min = 65000,
+			max = 80000,
+		},
+		length = {
+			min = 9,
+			max = 10,
+		}
 	},
 	attributes = { "xmult" },
 	ppu_coder = { "thunderedge" },
@@ -172,6 +187,16 @@ FishAndChips.Fish({
 	weight = 5,
 	environments = {
 		wormhole = 1,
+	},
+	stats = {
+		weight = {
+			min = 0,
+			max = 0,
+		},
+		length = {
+			min = 0,
+			max = 0,
+		}
 	},
 	attributes = { "sell_value", "scaling", "economy", "mult" },
 	ppu_coder = { "thunderedge" },
@@ -317,6 +342,16 @@ FishAndChips.Fish({
 		styx = 1,
 		wormhole = 1,
 	},
+	stats = {
+		weight = {
+			min = 6,
+			max = 8,
+		},
+		length = {
+			min = 3,
+			max = 4,
+		}
+	},
 	attributes = { "xmult", "generation", "scaling", "usable" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
@@ -398,6 +433,16 @@ FishAndChips.Fish({
 	environments = {
 		soup = 1,
 	},
+	stats = {
+		weight = {
+			min = 1.9,
+			max = 3.5,
+		},
+		length = {
+			min = 0.7,
+			max = 1.3,
+		}
+	},
 	attributes = { "generation" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
@@ -424,6 +469,16 @@ FishAndChips.Fish({
 	environments = {
 		swamp = 1,
 		city_river = 1,
+	},
+	stats = {
+		weight = {
+			min = 1,
+			max = 3,
+		},
+		length = {
+			min = 0.3,
+			max = 0.9,
+		}
 	},
 	attributes = { "usable", "enhancements", "destroy_card" },
 	ppu_coder = { "thunderedge" },
@@ -535,6 +590,16 @@ FishAndChips.Fish({
 	weight = 5,
 	environments = {
 		garden = 1,
+	},
+	stats = {
+		weight = {
+			min = 0.05,
+			max = 0.1,
+		},
+		length = {
+			min = 0.01,
+			max = 0.05,
+		}
 	},
 	display_size = { w = 71 / 4, h = 95 / 4 },
 	config = { extra = { chips = 1, chips_inc = 1 } },
