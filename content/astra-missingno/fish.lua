@@ -153,6 +153,7 @@ end
 FishAndChips.Fish {
     key = "am_missingno",
     atlas = "astra-missingno-fish",
+    badge_key = 'k_fac_maybe_fish',
     pos = { x = 2, y = 0 },
     weight = 5,
     ppu_coder = { "theAstra" },
@@ -341,6 +342,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
     key = "am_teabag",
     atlas = "astra-missingno-fish",
+    badge_key = 'k_fac_maybe_fish',
     pos = { x = 0, y = 1 },
     weight = 5,
     ppu_coder = { "theAstra" },
@@ -451,6 +453,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
     key = "am_chameleon",
     atlas = "astra-missingno-fish",
+    badge_key = 'k_fac_maybe_fish',
     pos = { x = 3, y = 1 },
     weight = 5,
     ppu_coder = { "theAstra" },
