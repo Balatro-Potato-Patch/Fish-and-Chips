@@ -22,7 +22,7 @@ local center = FishAndChips.Fish({
 			xmult = 3,
 		},
 	},
-	weight = 2,
+	weight = 5,
 	stats = {
 		weight = { min = 1, max = 1 },
 		length = { min = 1, max = 1 },
