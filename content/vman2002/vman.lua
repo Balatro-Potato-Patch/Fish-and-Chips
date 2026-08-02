@@ -51,6 +51,7 @@ FishAndChips.Fish { --Chips
 			score = 800
 		}
 	},
+	stats = { weight = { min = 0.01, max = 0.02 }, length = {min = 0.01, max = 0.02}}, --TODO: Stats
 	environments = {
 		backroom = 0.7, city_river = 0.4
 	},
@@ -103,6 +104,7 @@ FishAndChips.Fish { --Trust
 			score = 800
 		}
 	},
+	stats = { weight = { min = 0.01, max = 0.02 }, length = {min = 0.01, max = 0.02}}, --TODO: Stats
 	environments = {
 		city_river = 0.4, pier = 0.6
 	},
@@ -133,6 +135,7 @@ FishAndChips.Fish { --Manos
 			repetitions = 1
 		}
 	},
+	stats = { weight = { min = 0.01, max = 0.02 }, length = {min = 0.01, max = 0.02}}, --TODO: Stats
 	environments = {
 		styx = 1
 	},
