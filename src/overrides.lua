@@ -463,7 +463,7 @@ G.FUNCS.fac_use_fish = function(e)
         keep_on_use = center:keep_on_use(card)
     end
 	if center.use and type(center.use) == 'function' then
-  SMODS.caclulate_context{fac_use_fish = card}
+		SMODS.calculate_context{fac_use_fish = card}
 		center:use(card)
 	end
 	card:juice_up()
