@@ -310,10 +310,10 @@ function G.UIDEF.card_h_popup(card)
 			G.ARGS.LOC_COLOURS.edition
 		}
 		
-		local weight_col_index = math.floor(weight_perc/20)
+		local weight_col_index = math.min(5, math.max(math.floor(weight_perc/20), 1))
 		local weight_col = stats.weight == stat_proto.weight.max and colours[6] or mix_colours(colours[weight_col_index+1], colours[math.max(weight_col_index, 1)], (weight_perc - (weight_col_index * 20))/20)
 		
-		local length_col_index = math.max(math.floor(length_perc/20), 1)
+		local length_col_index = math.min(5, math.max(math.floor(length_perc/20), 1))
 		local length_col = stats.length == stat_proto.length.max and colours[6] or mix_colours(colours[length_col_index+1], colours[length_col_index], (length_perc - (length_col_index * 20))/20)
 		
         table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], {n=G.UIT.R, config = {align = 'cm'}, nodes = {
