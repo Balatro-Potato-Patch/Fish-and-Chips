@@ -32,10 +32,21 @@ return {
                     'at end of round'
                 },
                 flavour = {
-                    'Consuming 1 dose',
+                    'They say taking a bite',
                     'of this fish',
                     'lowers your cortisol',
-                    'levels for a round!'
+                    'levels for a round.'
+                }
+            },
+            fish_fac_plaggeromega_docfish = {
+                name = 'Docfish',
+                text = {
+                    'Played {C:attention}Aces{} permanently',
+                    'gain {C:chips}+#1#{} Chips and {C:mult}+#2#{} Mult',
+                    'when scored'
+                },
+                flavour = {
+                    'Aces have no weaknesses'
                 }
             }
         }

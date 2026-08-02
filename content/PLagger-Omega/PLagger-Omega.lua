@@ -20,9 +20,9 @@ PotatoPatchUtils.Developer {
 
 --[[
 ideas:
-Gurmag Angler in Swamp
+Gurmag Angler in Swamp, scales off of joker destruction
 Stewfish in Soup & Choco River?
-Docfish in Pier & City River
+Docfish in Pier & City River, hiker but for aces with scholar stats
 Biblically accurate angelfish in backrooms
 Relicanth in Cavern Aquifer, Stone cards
 Gummigoo in Choco River & Swamp
@@ -69,6 +69,10 @@ FishAndChips.Fish{ --Hawaii Fish
       volcano = 1
     },
     attributes = {'xmult'},
+    stats = {
+      weight = {min = 20, max = 50},
+      length = {min = 1.2, max  = 5}
+    },
     ppu_coder = {'PLagger'},
     ppu_artist = {'Omegaflowey18'},
     cost = 5,
@@ -128,6 +132,10 @@ FishAndChips.Fish{ --Trout Earth Extinction
       wormhole = 0.67
     },
     attributes = {'usable'},
+    stats = {
+      weight = {min = 67, max = 69},
+      length = {min = 30, max  = 30}
+    },
     ppu_coder = {'PLagger'},
     ppu_artist = {'Omegaflowey18'},
     cost = 8,
@@ -168,6 +176,10 @@ FishAndChips.Fish{ --Xanax Sargo
   weight = 10,
   environments = {calm_pond = 5, garden = 10},
   attributes = {'passive', 'economy'},
+  stats = {
+      weight = {min = 4, max = 5},
+      length = {min = 0.25, max  = 0.70}
+    },
   ppu_coder = {'PLagger'},
   ppu_artist = {'Omegaflowey18'},
   cost = 4,
@@ -184,10 +196,48 @@ FishAndChips.Fish{ --Xanax Sargo
   end,
 
   calculate = function (self, card, context)
-    if context.modify_final_cashout then
+    if context.modify_final_cashout and not context.blueprint then
       return{
         dollars = card.ability.extra.dollars,
         sand_dollars = card.ability.extra.sand_dollars
+      }
+    end
+  end
+}
+
+FishAndChips.Fish{ --Docfish
+  key = 'plaggeromega_docfish',
+  atlas = 'plaggeromega_fish',
+  pos = {x=0,y=1},
+  weight = 7,
+  environments = {pier = 0.6, city_river = 0.8},
+  attributes = {'mult', 'chips'},
+  stats = {
+      weight = {min = 0.67, max = 3.5},
+      length = {min = 1.20, max  = 2.25}
+    },
+  ppu_coder = {'PLagger'},
+  ppu_artist = {'Omegaflowey18'},
+  impulse_min = 0.13,
+  impulse_max = 0.23,
+  vel_limit = 0.33,
+  cost = 6,
+  blueprint_compat = true,
+  config = {extra = {chips = 2, mult = 1}},
+
+  loc_vars = function (self, info_queue, card)
+    return{
+      vars = {card.ability.extra.chips, card.ability.extra.mult}
+    }
+  end,
+
+  calculate = function (self, card, context)
+    if context.individual and context.cardarea == G.play and context.other_card:get_id() == 14 then
+      context.other_card.ability.perma_bonus = (context.other_card.ability.perma_bonus or 0) + card.ability.extra.chips
+      context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult
+      return{
+        message = localize('k_upgrade_ex'),
+        colour = G.C.PURPLE
       }
     end
   end
