@@ -12,6 +12,10 @@ FishAndChips.Fish({
 		"scaling",
 		"mult",
 	},
+	stats = {
+		length = { min = 1, max = 1 },
+		weight = { min = 1, max = 1 },
+	},
 	config = { extra = { mult = 0, mult_add = 1 } },
 	loc_vars = function(self, info_queue, card)
 		return {

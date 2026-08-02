@@ -12,6 +12,10 @@ FishAndChips.Fish({
 	},
 	-- atlas = "hayayaya_fih",
 	-- pos = { x = 1, y = 1 },
+	stats = {
+		length = { min = 1, max = 1 },
+		weight = { min = 1, max = 1 },
+	},
 	can_use = function(self, card)
 		local eligible = {}
 		for _, c in ipairs(G.fac_fish_area.cards) do

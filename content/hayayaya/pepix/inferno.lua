@@ -12,6 +12,10 @@ FishAndChips.Fish({
 	atlas = "hayayaya_fih",
 	pos = { x = 1, y = 1 },
 	config = { extra = { num = 1, den = 4 } },
+	stats = {
+		length = { min = 1, max = 1 },
+		weight = { min = 1, max = 1 },
+	},
 	loc_vars = function(self, info_queue, card)
 		local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, "fac_inferno")
 		return {

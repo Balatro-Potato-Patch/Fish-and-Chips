@@ -16,6 +16,10 @@ FishAndChips.Fish({
 	},
 	atlas = "hayayaya_fih",
 	pos = { x = 3, y = 0 },
+	stats = {
+		length = { min = 0.6, max = 1.2 },
+		weight = { min = 1, max = 1.4 },
+	},
 	config = { extra = { chips = 0, chips_add = 10, forme_counter = 0, forme_max = 3 } },
 	in_pool = function(self, args)
 		for _, c in ipairs(G.fac_fish_area.cards) do
@@ -86,6 +90,10 @@ FishAndChips.Fish({
 		"scaling",
 		"chips",
 		"reset",
+	},
+	stats = {
+		length = { min = 0.6, max = 1.2 },
+		weight = { min = 1, max = 1.4 },
 	},
 	atlas = "hayayaya_fih",
 	pos = { x = 2, y = 0 },
@@ -158,6 +166,10 @@ FishAndChips.Fish({
 	},
 	atlas = "hayayaya_fih",
 	pos = { x = 4, y = 0 },
+	stats = {
+		length = { min = 0.6, max = 1.2 },
+		weight = { min = 1, max = 1.4 },
+	},
 	config = { extra = { xchips = 1, xchips_add = 0.05 } },
 	in_pool = function(self, args)
 		for _, c in ipairs(G.fac_fish_area.cards) do

@@ -15,6 +15,10 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 0 },
 	-- TODO: Possibly tweak this????
 	config = { extra = { min = 0.5, max = 2 } },
+	stats = {
+		length = { min = 1, max = 2 },
+		weight = { min = 0.75, max = 1.4 },
+	},
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = { card.ability.extra.min, card.ability.extra.max },

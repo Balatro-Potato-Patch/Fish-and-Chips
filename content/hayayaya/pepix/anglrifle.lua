@@ -13,6 +13,10 @@ FishAndChips.Fish({
 		"scaling",
 		"chips",
 	},
+	stats = {
+		length = { min = 0.75, max = 1.3 },
+		weight = { min = 0.5, max = 2 },
+	},
 	config = { extra = { chips = 0, chips_add = 5, done = false, discard_flush = false } },
 	loc_vars = function(self, info_queue, card)
 		return {
