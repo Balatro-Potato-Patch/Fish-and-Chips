@@ -340,11 +340,11 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
     local caught = localize('ph_fac_first_caught')..(fish_caught and fish_data.first_catch or '')
     local rod = fish_caught and localize('ph_fac_with_rod')..localize({key = fish_data.rod, set = 'fac_Rod', type = 'name_text'}) or ' '
     local count = localize('ph_fac_times_caught')..(fish_caught and fish_data.times_caught or '')
-    local record_weight = fish_caught and localize('ph_fac_record_weight')..(fish_data.record_weight or 0)..'kg' or ' '
-    local record_length = fish_caught and localize('ph_fac_record_length')..(fish_data.record_length or 0)..'m' or ' '
+    local record_weight = fish_caught and localize('ph_fac_record_weight')..FishAndChips.format_measurement(fish_data.record_weight or nil, 'weight') or ' '
+    local record_length = fish_caught and localize('ph_fac_record_length')..FishAndChips.format_measurement(fish_data.record_length or nil, 'length') or ' '
 
     local text = {n=G.UIT.R, config = {align = left and 'cl' or 'cr', padding = 0.1}, nodes = {
-        {n = G.UIT.C, config = {align = 'cl', padding = 0.03, minw = 3.4}, nodes = {
+        {n = G.UIT.C, config = {align = 'cl', padding = 0.03, minw = 3.2}, nodes = {
             {n=G.UIT.R, nodes = {
                 {n=G.UIT.R, config = {underline = FishAndChips.C.COMPENDIUM_COLOUR, underline_scale = 0.04, padding = -0.08}, nodes = {
                     {n=G.UIT.T, config = {text = fish_name, scale = 0.5, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}
@@ -358,10 +358,10 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
         }}
     }}
     
-    local temp_area = FishAndChips.Compendium.compendium_area()
-    local compendium_card = FishAndChips.Compendium.compendium_card(fish, temp_area)
+    local temp_area = FishAndChips.Compendium.compendium_area(nil, {2.25 * 71/95, 2.25})
+    local compendium_card = FishAndChips.Compendium.compendium_card(fish, temp_area, 0.85)
     temp_area:emplace(compendium_card)
-    table.insert(text.nodes, left and 1 or 2, {n=G.UIT.C, nodes = {{n=G.UIT.O, config={object=temp_area}}}})
+    table.insert(text.nodes, left and 1 or 2, {n=G.UIT.C, config = {align = 'cm'}, nodes = {{n=G.UIT.O, config={object=temp_area}}}})
     
     return text
 end
@@ -385,7 +385,7 @@ function FishAndChips.Compendium.extended_fish_page(page_number, left)
     end
 
     if page_number > 1 and (not last_page or left) then
-        table.insert(page.nodes, FishAndChips.Compendium.nav_button(page_number, left, 'extended_fish_page', 0.2))
+        table.insert(page.nodes, FishAndChips.Compendium.nav_button(page_number, left, 'extended_fish_page', 0.1))
     end
 
     return page
@@ -425,6 +425,18 @@ function FishAndChips.Compendium.condensed_fish_page(page_number, left)
     end
 
     return page
+end
+
+G.FUNCS.open_compendium_to_env = function(e)
+    play_sound("fac_flip_page")
+
+    local page_to_turn = FishAndChips.Environments[G.GAME.fac_fishing_environment].order
+    page_to_turn = page_to_turn%2 == 0 and page_to_turn - 1 or page_to_turn
+    G.OVERLAY_MENU = UIBox{
+        definition = FishAndChips.Compendium.page({type = 'environment_page', left = page_to_turn, right = page_to_turn + 1}),
+        config =  {align = "cm", offset = {x=0,y=0}, major = G.ROOM_ATTACH, bond = 'Weak'}
+    }
+    G.OVERLAY_MENU:get_UIE_by_ID("overlay_menu_back_button").config.button = 'exit_overlay_menu'
 end
 
 function FishAndChips.Compendium.environment_page(page_number, left)
