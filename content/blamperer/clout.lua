@@ -31,7 +31,7 @@ FishAndChips.Fish {
         city_river = 10
     },
     calculate = function(self, card, context)
-        if context.fac_treasure_reward_type then--and G.FAC_FISH_GAME.perfect then
+        if context.fac_treasure_reward_type and G.FAC_FISH_GAME.perfect then
             return { modify = math.floor(context.fac_treasure_reward * card.ability.extra.multiplier) }
         end
     end

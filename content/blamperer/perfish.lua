@@ -1,3 +1,10 @@
+-- BALANCE: 2X-1 seemed pretty good to me, but tweak as you see fit
+---@param streak_length number
+---@return number
+local streak_reward = function(streak_length)
+    return math.max(0, 2 * streak_length - 1)
+end
+
 FishAndChips.Fish {
     key = "blamperer_perfish",
     atlas = "fitch",
@@ -16,7 +23,7 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                math.max(0, 2 * card.ability.extra.best_streak - 1),
+                streak_reward(card.ability.extra.best_streak),
                 card.ability.extra.best_streak
             }
         }
@@ -62,7 +69,7 @@ FishAndChips.Fish {
         end
 
         if context.ending_fishing and card.ability.extra.best_streak > 0 then
-            local reward = math.max(0, 2 * card.ability.extra.best_streak - 1)
+            local reward = streak_reward(card.ability.extra.best_streak)
             card.ability.extra.current_streak = 0
             card.ability.extra.best_streak = 0
             return { dollars = reward }

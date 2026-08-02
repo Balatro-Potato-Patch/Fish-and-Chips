@@ -9,6 +9,7 @@ FishAndChips.Fish {
     },
     config = {
         extra = {
+            -- BALANCE: Balanced around otherwise empty bucket = 2X (1/5)
             slot_mult = 0.25
         }
     },

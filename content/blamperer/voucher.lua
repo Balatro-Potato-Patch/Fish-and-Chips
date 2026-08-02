@@ -16,11 +16,6 @@ FishAndChips.Fish {
         city_river = 10,
         pier = 3
     },
-    -- This will probably look dumb
-    -- set_ability = function(self, card, initial, delay_sprites)
-    --     card.ability.perishable = true
-    --     card.ability.perish_tally = 3
-    -- end,
     can_use = function(self, card)
         return G.STATE == G.STATES.SHOP
     end,
