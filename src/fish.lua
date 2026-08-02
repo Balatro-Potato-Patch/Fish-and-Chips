@@ -50,8 +50,8 @@ function FishAndChips.create_fish_stats(center)
     }
 	local w_delta = center.stats.weight.max - center.stats.weight.min
 	local l_delta = center.stats.length.max - center.stats.length.min
-    stats.w_prop = w_delta > 0 and (stats.weight - center.stats.weight.min)/w_delta or 1
-    stats.l_prop = l_delta > 0  and (stats.length - center.stats.length.min)/l_delta or 1
+    stats.w_prop = w_delta > 0 and (stats.weight - center.stats.weight.min)/w_delta or 0.5
+    stats.l_prop = l_delta > 0  and (stats.length - center.stats.length.min)/l_delta or 0.5
 	return stats
 end
 
