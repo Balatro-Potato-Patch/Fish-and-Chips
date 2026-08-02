@@ -510,3 +510,9 @@ function Card:open()
 		end
 	}))
 end
+
+local start_run_hook = Game.start_run
+function Game:start_run(args)
+	start_run_hook(self, args)
+	G.GAME.fac_fish_expanded = false
+end
