@@ -145,7 +145,10 @@ G.FUNCS.fac_reset_all_progress = function(e)
             G.SETTINGS.ACHIEVEMENTS_EARNED[ach.key] = nil
         end
 
+        G.PROFILES[G.SETTINGS.profile].fac_tutorial_seen = nil
+
         G:save_progress()
+        remove_save()
         love.filesystem.remove(G.SETTINGS.profile..'/'..'meta.jkr')
         convert_save_to_meta()
         G.SAVE_MANAGER.channel:push({
@@ -325,7 +328,9 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
     local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {
         first_catch = '',
         rod = '',
-        times_caught = ''
+        times_caught = '',
+        record_weight = '',
+        record_length = ''
     }
 
     local fish_caught = type(fish_data.times_caught) == 'number' and (fish_data.times_caught > 0)
@@ -335,6 +340,8 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
     local caught = localize('ph_fac_first_caught')..(fish_caught and fish_data.first_catch or '')
     local rod = fish_caught and localize('ph_fac_with_rod')..localize({key = fish_data.rod, set = 'fac_Rod', type = 'name_text'}) or ' '
     local count = localize('ph_fac_times_caught')..(fish_caught and fish_data.times_caught or '')
+    local record_weight = fish_caught and localize('ph_fac_record_weight')..(fish_data.record_weight or 0)..'kg' or ' '
+    local record_length = fish_caught and localize('ph_fac_record_length')..(fish_data.record_length or 0)..'m' or ' '
 
     local text = {n=G.UIT.R, config = {align = left and 'cl' or 'cr', padding = 0.1}, nodes = {
         {n = G.UIT.C, config = {align = 'cl', padding = 0.03, minw = 3.4}, nodes = {
@@ -346,6 +353,8 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
             {n=G.UIT.R, nodes = {{n=G.UIT.T, config = {text = caught, scale = 0.4, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}}},
             {n=G.UIT.R, config = {align = 'cr', minw = 3}, nodes = {{n=G.UIT.T, config = {text = rod, scale = 0.4, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}}},
             {n=G.UIT.R, nodes = {{n=G.UIT.T, config = {text = count, scale = 0.4, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}}},
+            {n=G.UIT.R, nodes = {{n=G.UIT.O, config={object = DynaText({string = record_weight, colours = {FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 3.2, pop_in_rate = 0, scale = 0.3, silent = true})}}}},
+            {n=G.UIT.R, nodes = {{n=G.UIT.O, config={object = DynaText({string = record_length, colours = {FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 3.2, pop_in_rate = 0, scale = 0.3, silent = true})}}}},
         }}
     }}
     
@@ -358,13 +367,13 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
 end
 
 function FishAndChips.Compendium.extended_fish_page(page_number, left)
-    local fish_per_page = 4
+    local fish_per_page = 3
     local start_index = (page_number-1)*fish_per_page
     local pool = SMODS.collection_pool(G.P_CENTER_POOLS.fac_Fish)
 
     local page = {n=G.UIT.C, config = {minh = 9.3, align = 'tm', minw = 5.4, padding = 0.1}, nodes = {
         FishAndChips.Compendium.page_title('extended_fish_page', page_number),
-        {n=G.UIT.R, config = {align = 'tm', minh = 8, padding = -0.15, id = 'fac_compendium_extended_fish_page'}, nodes = {
+        {n=G.UIT.R, config = {align = 'tm', minh = 8, id = 'fac_compendium_extended_fish_page'}, nodes = {
             -- fish added here
         }}
     }}
@@ -372,7 +381,7 @@ function FishAndChips.Compendium.extended_fish_page(page_number, left)
     local last_page = false
     for i = 1, fish_per_page do
         table.insert(page.nodes[2].nodes, FishAndChips.Compendium.extended_fish_entry(pool[start_index + i], i%2 == 1))
-        if start_index + i > #pool then last_page = true; break end
+        if start_index + i >= #pool then last_page = true; break end
     end
 
     if page_number > 1 and (not last_page or left) then
@@ -416,6 +425,18 @@ function FishAndChips.Compendium.condensed_fish_page(page_number, left)
     end
 
     return page
+end
+
+G.FUNCS.open_compendium_to_env = function(e)
+    play_sound("fac_flip_page")
+
+    local page_to_turn = FishAndChips.Environments[G.GAME.fac_fishing_environment].order
+    page_to_turn = page_to_turn%2 == 0 and page_to_turn - 1 or page_to_turn
+    G.OVERLAY_MENU = UIBox{
+        definition = FishAndChips.Compendium.page({type = 'environment_page', left = page_to_turn, right = page_to_turn + 1}),
+        config =  {align = "cm", offset = {x=0,y=0}, major = G.ROOM_ATTACH, bond = 'Weak'}
+    }
+    G.OVERLAY_MENU:get_UIE_by_ID("overlay_menu_back_button").config.button = 'exit_overlay_menu'
 end
 
 function FishAndChips.Compendium.environment_page(page_number, left)
@@ -768,12 +789,15 @@ function FishAndChips.Compendium.dev_card(dev)
             {n = G.UIT.C, config = { align = "cm", padding = 0.2 }, nodes = {}},
         }}
         local text = dev.loc and G.localization.descriptions.PotatoPatch[dev.loc].text_parsed or nil
+        local loc_vars = dev.loc_vars and dev:loc_vars() or {}
+        loc_vars.text_colour = loc_vars.text_colour or G.C.UI.TEXT_LIGHT
+        loc_vars.font = loc_vars.font or SMODS.Fonts.fac_collection
         if text then
             if not text[1][1][1] then text = {text} end
             for _, box in ipairs(text) do
                 local node = {n=G.UIT.R, config = {colour = G.C.L_BLACK, r=0.1, padding = 0.15, align = 'cm', shadow = true}, nodes = {}}
                 for _, v in ipairs(box) do
-                    table.insert(node.nodes, {n=G.UIT.R, config={align='cm'}, nodes = SMODS.localize_box(v, {text_colour = G.C.UI.TEXT_LIGHT, font = SMODS.Fonts.fac_collection})})
+                    table.insert(node.nodes, {n=G.UIT.R, config={align='cm'}, nodes = SMODS.localize_box(v, loc_vars)})
                 end
                 info_nodes.nodes[1].nodes[#info_nodes.nodes[1].nodes + 1] = {n=G.UIT.R, config = {align = 'cm'}, nodes = {{n=G.UIT.C, config = {align = 'cm', colour = G.C.WHITE, r=0.1, padding = 0.025}, nodes = {node}}}}
             end
@@ -877,7 +901,9 @@ function FishAndChips.Compendium.config_page(page_number, left)
             FishAndChips.Compendium.toggle {text_key = 'b_fac_ambience_toggle', ref_value = "ambience", callback = G.FUNCS.fac_toggle_ambience},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_menu_toggle', ref_value = "menu"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_condensed_fish', ref_value = "condensed_fish"},
-            FishAndChips.Compendium.toggle {text_key = 'b_fac_flavour_text', ref_value = "disable_flavour"}
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_flavour_text', ref_value = "disable_flavour"},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_flashing_lights', ref_value = "disable_flashing"},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_fish_scaling', ref_value = "disable_fish_scaling"},
         }},
         {n=G.UIT.R, config = {align = 'cm', minh = 2}, nodes = {
             {n=G.UIT.R, config = {align = 'cm', colour = FishAndChips.C.COMPENDIUM_COLOUR, r = 0.1, hover = true, button = 'fac_reset_all_progress', func = 'fac_can_reset_progress', minw = 3.2, minh = 0.8, padding = 0.05}, nodes = {
