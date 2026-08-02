@@ -17,14 +17,14 @@ FishAndChips.Fish({
 			dollars = 5,
 		},
 	},
-	weight = 4,
+	weight = 12,
 	stats = {
-		weight = { min = 1, max = 1 },
-		length = { min = 1, max = 1 },
+		weight = { min = 0.75, max = 1.2},
+		length = { min = 0.4, max = 0.6 },
 	},
 	environments = {
-		volcano = 5,
-		aquifer = 5,
+		volcano = 8,
+		aquifer = 6,
 		calm_pond = 2,
 	},
 	loc_vars = function(self, info_queue, card)
