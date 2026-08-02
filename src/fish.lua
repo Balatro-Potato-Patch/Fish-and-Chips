@@ -106,7 +106,6 @@ local set_ability_hook = Card.set_ability
 function Card:set_ability(...)
 	local stats = self.ability and self.ability.stats
 	set_ability_hook(self, ...)
-	if self.ability.set == 'fac_Fish' then print('making fish') end
 	if self.ability.set == 'fac_Fish' and self.area and not self.area.config.fac_compendium then
 		if stats then
 			local new_base = self.config.center.stats
@@ -123,10 +122,12 @@ end
 local copy_card_hook = copy_card
 function copy_card(...)
 	local card = copy_card_hook(...)
-	if card.ability.set == 'fac_Fish' and not card.ability.stats then
-		local stats = FishAndChips.create_fish_stats(card.config.center)
-		card.ability.stats = stats
-		FishAndChips.modify_fish_stats(card, stats)
+	if card.ability.set == 'fac_Fish' then
+		if not card.ability.stats then
+			local stats = FishAndChips.create_fish_stats(card.config.center)
+			card.ability.stats = stats
+		end
+		FishAndChips.modify_fish_stats(card, card.ability.stats)
 	end
 	return card
 end
