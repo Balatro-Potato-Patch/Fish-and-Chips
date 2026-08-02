@@ -40,8 +40,8 @@ return {
             fish_fac_am_king = {
                 name = "King of the Pond",
                 text = {
-                    "Each played and unscoring {C:attention}King{}",
-                    "gives {X:red,C:white}X#1#{} Mult"
+                    "{X:red,C:white}X#1#{} Mult, gains {X:red,C:white}X#2#{} Mult for",
+                    "each played and scoring {C:attention}King{}",
                 },
                 flavor = {
                     "There can only be one",
@@ -144,9 +144,9 @@ return {
                 name = "Dopefish",
                 text = {
                     "When blind is selected,",
-                    "this Fish {C:red,E:1}eats{} all",
-                    "{C:attention}adjacent{} Fish and gains",
-                    "{X:red,C:white}X#2#{} for each Fish eaten",
+                    "this {C:fac_fish}Fish {C:red,E:1}eats{} all",
+                    "{C:attention}adjacent {C:fac_fish}Fish{} and gains",
+                    "{X:red,C:white}X#2#{} for each {C:fac_fish}Fish{} eaten",
                     "{C:inactive,s:0.8}Currently: {X:red,C:white,s:0.8}X#1#{C:inactive,s:0.8} Mult"
                 },
                 flavor = {
@@ -159,7 +159,7 @@ return {
             fish_fac_am_piscis = {
                 name = "Piscis Austrinus",
                 text = {
-                    {"Use this Fish to upgrade",
+                    {"Use this {C:fac_fish}Fish{} to upgrade",
                     "the level of the {C:attention}last played{}",
                     "poker hand #1# times"},
                     {"{S:0.8}({S:0.8,V:1}lvl.#2#{S:0.8}){} Level up",
@@ -194,7 +194,7 @@ return {
                 text = {
                     "Applies a {C:green}random{} {C:dark_edition}edition",
                     "to the next {C:attention}#1#",
-                    "{C:attention}perfectly{} caught Fish"
+                    "{C:attention}perfectly{} caught {C:fac_fish}Fish{}"
                 },
                 flavor = {
                     "Typical French Cuisine",

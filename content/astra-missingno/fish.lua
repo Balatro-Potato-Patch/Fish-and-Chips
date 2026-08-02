@@ -96,7 +96,8 @@ FishAndChips.Fish {
     vel_limit = 0.75,
     config = {
         extra = {
-            xmult = 1.5
+            xmult = 1,
+            gain = 0.25
         }
     },
     environments = {
@@ -105,22 +106,30 @@ FishAndChips.Fish {
     },
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
-        return { vars = { stg.xmult, colours = { HEX('789d8e'), HEX('9e9f9d') } } }
+        return { vars = { stg.xmult, stg.gain } }
     end,
     calculate = function(self, card, context)
         local stg = card.ability.extra
 
-        if context.individual and context.area == 'unscoring' and context.other_card:get_id() == 13 then
+        if context.individual and context.area == G.play and context.other_card:get_id() == 13 then
             if context.other_card.debuff then
                 return {
                     message = localize('k_debuffed'),
                     colour = G.C.RED,
                 }
             else
-                return {
-                    x_mult = stg.xmult,
-                }
+                SMODS.scale_card(card, {
+                    ref_table = stg,
+                    ref_value = "xmult",
+                    scalar_value = "gain",
+                })
             end
+        end
+
+        if context.joker_main then
+            return {
+                stg.xmult
+            }
         end
     end,
 }
