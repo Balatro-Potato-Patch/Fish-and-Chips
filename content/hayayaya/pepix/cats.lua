@@ -14,10 +14,11 @@ FishAndChips.Fish({
 		"chips",
 		"reset",
 	},
+	badge_key = "k_fac_hayayaya_catfish",
 	atlas = "hayayaya_fih",
 	pos = { x = 3, y = 0 },
 	stats = {
-		length = { min = 0.6, max = 1.2 },
+		length = { min = 1.5, max = 3 },
 		weight = { min = 1, max = 1.4 },
 	},
 	config = { extra = { chips = 0, chips_add = 10, forme_counter = 0, forme_max = 3 } },
@@ -92,9 +93,10 @@ FishAndChips.Fish({
 		"reset",
 	},
 	stats = {
-		length = { min = 0.6, max = 1.2 },
-		weight = { min = 1, max = 1.4 },
+		length = { min = 2, max = 4 },
+		weight = { min = 2, max = 2.4 },
 	},
+	badge_key = "k_fac_hayayaya_catfish",
 	atlas = "hayayaya_fih",
 	pos = { x = 2, y = 0 },
 	config = { extra = { chips = 0, chips_add = 10, forme_counter = 0, forme_max = 3 } },
@@ -167,9 +169,10 @@ FishAndChips.Fish({
 	atlas = "hayayaya_fih",
 	pos = { x = 4, y = 0 },
 	stats = {
-		length = { min = 0.6, max = 1.2 },
-		weight = { min = 1, max = 1.4 },
+		length = { min = 3, max = 4 },
+		weight = { min = 3, max = 6.4 },
 	},
+	badge_key = "k_fac_hayayaya_catfish",
 	config = { extra = { xchips = 1, xchips_add = 0.05 } },
 	in_pool = function(self, args)
 		for _, c in ipairs(G.fac_fish_area.cards) do

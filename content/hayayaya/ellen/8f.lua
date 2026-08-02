@@ -148,6 +148,7 @@ FishAndChips.Fish({
 		length = { min = 0, max = 0 },
 		weight = { min = 0, max = 0 },
 	},
+	badge_key = "k_fac_hayayaya_unknown",
 	disable_visual_scaling = true, -- The stats are for show...
 	can_use = function(self, card)
 		return G.STATE == G.STATES.BLIND_SELECT and card.ability.immutable.count >= card.ability.immutable.max

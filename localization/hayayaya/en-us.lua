@@ -4,7 +4,10 @@ return {
 			["PotatoPatchDev_Ellen (Haya)"] = {
 				name = "Ellen (Haya)",
 				text = {
-					"Back at it once again",
+					"{s:1.2}You already know who it is......",
+					"It's still {C:red}haya{} but feel free to call me {C:edition}ellen{} now",
+					"{s:0.6}also {s:1.5,C:dark_edition}PLAY MY GAME(s):",
+					"https://haya3218.nekoweb.org/",
 				},
 			},
 			PotatoPatchDev_Pepix = {
@@ -158,6 +161,11 @@ return {
 			ph_facyou_hayayaya_inactive = "Inactive!",
 			ph_facyou_hayayaya_evolved = "Evolved!",
 			ph_facyou_hayayaya_returned = "Returned!",
+			-- Fish 'types'
+			k_fac_hayayaya_unknown = "???",
+			k_fac_hayayaya_badge_q = "Badge?",
+			k_fac_hayayaya_object = "Object",
+			k_fac_hayayaya_catfish = "Catfish",
 		},
 	},
 }
