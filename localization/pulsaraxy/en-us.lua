@@ -213,7 +213,7 @@ return {
                     'is {C:attention}fully played{}, then',
                     'creates a new sequence'
                 },{
-                    '{C:#1#}#2#{}', -- inactive or black, rank or '', repeat this 3-8 times in code
+                    '{V:1}#1#{}{V:2}#2#{}{V:3}#3#{}{V:4}#4#{}{V:5}#5#{}{V:6}#6#{}{V:7}#7#{}{V:8}#8#{}', -- inactive or black, rank or '', repeat this 3-8 times in code
                 }},
                 flavour = {
 

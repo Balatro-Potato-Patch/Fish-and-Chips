@@ -391,4 +391,80 @@ FishAndChips.Fish {
 	end
 }
 
+FishAndChips.Fish {
+	key = "pa_shellphone",
+	weight = 10,
+	atlas = "pa_pulsarfish",
+	pos = { x = 1, y = 0 },
+	ppu_artist = { "Pulsar" },
+	ppu_coder = { "Axy" },
+	attributes = { "xmult" },
+	environments = {
+		soup = 1,
+		backroom = 0.5
+	},
+	blueprint_compat = true,
+	config = {
+		extra = {
+			sequence = {},
+			sell_value_increase = 0,
+			current_position = 1,
+			sequence_min = 3,
+			sequence_max = 8
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		local ranks = {colours = {}}
+		for i=1,card.ability.extra.sequence_max do
+			ranks.colours[#ranks.colours+1] = (card.ability.extra.current_position > i and G.C.UI.TEXT_INACTIVE or G.C.UI.TEXT_DARK)
+			ranks[#ranks+1] = card.ability.extra.sequence[i] or {card_key = ''}
+			ranks[#ranks] = (i >= #card.ability.extra.sequence and (ranks[#ranks].card_key) or (ranks[#ranks].card_key .. ', '))
+		end
+		return { vars = ranks }
+	end,
+	calculate = function(self, card, context)
+		-- 'Increases {C:money}sell value{} when',
+		-- 'the below sequence of ranks',
+		-- 'is {C:attention}fully played{}, then',
+		-- 'creates a new sequence'
+		if context.individual and context.cardarea == G.play then
+			for k,v in ipairs(context.scoring_hand) do
+				local target = card.ability.extra.sequence and card.ability.extra.sequence[card.ability.extra.current_position].sort_id + 1
+				local matched_position =  v:get_id() == target
+				if matched_position then
+					card.ability.extra.current_position = card.ability.extra.current_position + 1
+				end
+			end
+		end
+
+		if context.joker_main and not context.blueprint then
+			if card.ability.extra.current_position >= #card.ability.extra.sequence then -- sequence is complete
+				SMODS.scale_card(card, {
+					ref_table = card.ability,
+					ref_value = "extra_value",
+					scalar_table = card.ability.extra,
+					scalar_value = "sell_value_increase",
+					operation = "+"
+				})
+				card:set_cost()
+				card.ability.extra.sequence = {}
+				card.ability.extra.current_position = 1
+
+				card.ability.extra.sell_value_increase = pseudorandom(pseudoseed(self.key), card.ability.extra.sequence_min, card.ability.extra.sequence_max)
+				for i=1,card.ability.extra.sell_value_increase do
+					table.insert(card.ability.extra.sequence, (pseudorandom_element(SMODS.Ranks, pseudoseed(self.key))))
+				end
+				return {message = localize('k_val_up'), colour = G.C.MONEY}
+			end
+		end
+	end,
+	add_to_deck = function(self, card, from_debuff)
+		card.ability.extra.sell_value_increase = pseudorandom(pseudoseed(self.key), card.ability.extra.sequence_min, card.ability.extra.sequence_max)
+		card.ability.extra.current_position = 1
+		for i=1,card.ability.extra.sell_value_increase do
+			table.insert(card.ability.extra.sequence, (pseudorandom_element(SMODS.Ranks, pseudoseed(self.key))))
+		end
+	end,
+}
+
 --#endregion
