@@ -6,7 +6,7 @@ return {
                 text = {
                     {"Upon use:",
                     "{C:attention}Creates{} a random {C:attention}Tag",
-                    "Applies Eternal to",
+                    "Applies {C:dark_edition}Eternal{} to",
                     "a random {C:attention}Joker{} in hand",
                     "{C:attention}Creates{} a second tag",
                     "if {C:fac_breukel_overtime,E:1}Overtime{} is more",
@@ -24,7 +24,7 @@ return {
                 name = {"Chief Executive","Oarfisher"},
                 text = {
                     {"{C:fac_breukel_overtime,E:1}Overtime{} can go up to {C:attention}20",
-                    "Every {C:attention}Fish{} gives an extra",
+                    "Every {C:fac_fish}Fish{} gives an extra",
                     "{C:attention}+#1#{} to {C:fac_breukel_overtime,E:1}Overtime{} when triggered"},
                     {"{C:attention}+#2#{} to {C:fac_breukel_overtime,E:1}Overtime{}",
                     "{C:inactive}(Overtime: #3#/#4#){}"}
@@ -37,10 +37,10 @@ return {
             fish_fac_stockfish = {
                 name = "Stockfish",
                 text = {
-                    {"Gives between {C:fac_sand_dollars}-#1#{} and {C:fac_sand_dollars}+#1#",
-                    "Sand dollars at the {C:attention}end",
+                    {"Gives between {C:fac_sand_dollars}-{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} and {C:fac_sand_dollars}+{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#",
+                    "at the {C:attention}end",
                     "{C:attention}of the round{}, higher chance",
-                    "for {C:fac_sand_dollars}+Sand dollars{} the higher",
+                    "for {C:fac_sand_dollars}+{C:fac_sand_dollars,f:fac_sand_dollars}${} the higher",
                     "{C:fac_breukel_overtime,E:1}Overtime{} is"
                     },
                     {"{C:attention}+#2#{} to {C:fac_breukel_overtime,E:1}Overtime{}",
@@ -63,6 +63,24 @@ return {
                 flavor = {
                     "9 to 5 sure is",
                     "boring, ey?"
+                }
+            },
+
+            fish_fac_codcument = {
+                name = "Codcument",
+                text = {
+                    {"{C:attention}Transforms{} into the",
+                    "next catched {C:fac_fish}Fish",
+                    "{C:attention}Create{} a copy if",
+                    "{C:fac_breukel_overtime,E:1}Overtime{} is exactly",
+                    "{C:attention}10"},
+                    {"{C:attention}+#1#{} to {C:fac_breukel_overtime,E:1}Overtime{}",
+                    "{C:inactive}(Overtime: #2#/#3#){}"}
+                },
+                flavor = {
+                    "Containing information about",
+                    "the next Potato Patch event!",
+                    "{C:red,s:0.8,E:1}DO NOT TOUCH"
                 }
             },
         },
