@@ -314,6 +314,7 @@ function FishAndChips.Compendium.compendium_card(fish, area, scale)
         self.ability_UIBox_table = self:generate_UIBox_ability_table()
         self.config.h_popup = G.UIDEF.card_h_popup(self)
         self.config.h_popup_config = self:align_h_popup()
+        play_sound('paper1', math.random() * 0.2 + 0.9, 0.35)
 
         Node.hover(self)
     end
