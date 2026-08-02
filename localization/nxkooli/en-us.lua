@@ -22,6 +22,8 @@ return{
                 name = "Bad Fish",
                 text = {
                     {
+                        "Lose half your",
+                        "{C:fac_sand_dollars}Sand Dollars{} when caught",
                         "{C:mult}+#1#{} Mult",
                     },
 
@@ -70,15 +72,58 @@ return{
                 text = {
                     {
                         "After catching fish",
-                        "obtain {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{}",
-                        "or {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} if it's a",
+                        "earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{}",
+                        "{s:0.5} ",
+                        "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} if it's a",
                         "{C:dark_edition}perfect catch"
                     }
                 },
                 flavor = {
-                    "I can\'t be underwater, I\'m a catç",
+                    "I can\'t be underwater...",
+                    "I\'m a cat!",
                     "Wait no, I\'m a fish!",
                     "Wait no, I\'m a catfish!",
+                }
+            },
+            fish_fac_nxkooli_pp_tile = {
+                name = {
+                    "Fisher\'s Tile",
+                },
+                text = {
+                    {
+                        "{V:1}+#3#{} #4# for #7# {C:attention}#6#{}",
+                        "in the {C:attention}name{} and {C:attention}flavor text{}",
+                        "of the {C:planet}Fish{} to the right",
+                        "{C:inactive,s:0.8}(Tile changes every hand)",
+                        "{C:inactive}(Currently {V:1}+#8#{C:inactive} #4#)"
+
+                        
+                    }
+                },
+                flavor = {
+                    "Previously a weapon of the oppressed.",
+                    "Now merely a reminder of the Party\'s","past influence.",
+                }
+            },
+            fish_fac_nxkooli_pp_tile_crit = {
+                name = {
+                    "Fisher\'s Tile",
+                },
+                text = {
+                    {
+                        "{V:1}+#3#{} #4# and",
+                        "{X:1,C:white}+X#5#{} #4# for #7# {C:attention}#6#{}",
+                        "in the {C:attention}name{} and {C:attention}flavor text{}",
+                        "of the {C:planet}Fish{} to the right",
+                        "{C:inactive,s:0.8}(Tile changes every hand)",
+                        "{C:inactive}(Currently {V:1}+#8#{C:inactive}, {X:1,C:white}X#9#{C:inactive} #4#)"
+                        
+                    }
+                },
+                flavor = {
+                    "Previously a weapon of the oppressed.",
+                    "Now merely a reminder of the Party\'s",
+                    "past influence.",
                 }
             },
         },
