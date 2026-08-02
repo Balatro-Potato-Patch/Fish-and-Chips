@@ -141,11 +141,11 @@ FishAndChips.Fish {
     key = "blueax",
     atlas = "pnf_blueax",
     pos = { x = 0, y = 0 },
-    weight = 1,
     blueprint_compat = true,
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
     attributes = { "mult", "chips", "xmult", "economy" },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
     config = {
         extra = {
             scoring = 2,
@@ -254,6 +254,7 @@ FishAndChips.Fish {
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
     attributes = { "mult" },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
     config = {
         extra = {
             mult = 0,
@@ -304,7 +305,8 @@ FishAndChips.Fish {
     ppu_coder = { "Pixel" },
     ppu_artist = { "FirstTry" },
     attributes = { "chips", "chipgain", "xchips", "xchipgain", "sellamount", "sellgoal" },
-    config = {
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+	config = {
         extra = {
             chips = 0,
             xchips = 1,
@@ -361,6 +363,7 @@ FishAndChips.Fish {
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
     attributes = { "passive" },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
     config = {
         extra = {
             select = 1,
@@ -403,6 +406,7 @@ FishAndChips.Fish {
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
     attributes = { "chips", "destroy_card" },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },	
     config = {
         extra = {
             xchips = 1,
@@ -452,7 +456,8 @@ FishAndChips.Fish {
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
     attributes = { "mult", "rank" },
-    config = {
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+	config = {
         extra = {
             mult = 1
         },
@@ -506,7 +511,8 @@ FishAndChips.Fish {
     ppu_coder = { "Pixel" },
     ppu_artist = { "Pixel" },
     attributes = { "destroy_card" },
-    environments = {
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+	environments = {
         city_river = 1,
         garden = 1
     },
@@ -546,7 +552,8 @@ FishAndChips.Fish {
     ppu_coder = { "Pixel" },
     ppu_artist = { "Pixel" },
     attributes = { "destroy_card" },
-    environments = {
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+	environments = {
         city_river = 1,
         garden = 1
     },
