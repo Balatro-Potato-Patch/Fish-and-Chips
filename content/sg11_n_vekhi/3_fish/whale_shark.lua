@@ -18,10 +18,10 @@ FishAndChips.Fish({
 			xmult_gain = 0.1,
 		},
 	},
-	weight = 2,
+	weight = 3,
 	stats = {
-		weight = { min = 1, max = 2 },
-		length = { min = 1, max = 2 },
+		weight = { min = 1000, max = 3000},
+		length = { min = 14, max = 18},
 	},
 	environments = {
 		pier = 8,
