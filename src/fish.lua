@@ -50,8 +50,8 @@ function FishAndChips.create_fish_stats(center)
     }
 	local w_delta = center.stats.weight.max - center.stats.weight.min
 	local l_delta = center.stats.length.max - center.stats.length.min
-    stats.w_prop = w_delta > 0 and (stats.weight - center.stats.weight.min)/w_delta or 1
-    stats.l_prop = l_delta > 0  and (stats.length - center.stats.length.min)/l_delta or 1
+    stats.w_prop = w_delta > 0 and (stats.weight - center.stats.weight.min)/w_delta or 0.5
+    stats.l_prop = l_delta > 0  and (stats.length - center.stats.length.min)/l_delta or 0.5
 	return stats
 end
 
@@ -63,13 +63,14 @@ function FishAndChips.modify_fish_stats(card, stats)
 		card.T.scale = card.T.scale * (0.6 + (stats_tot/2*0.7))
 	end
 	card.cost = (card.cost * scalar)
+	card.base_cost = card.cost
 	card:set_sell_value()
 end
 
 local create_card_hook = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 	local card = create_card_hook(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
-	if card.ability.set == 'fac_Fish' and not card.ability.stats and area then
+	if card.ability.set == 'fac_Fish' and not card.ability.stats and area and not area.config.fac_compendium then
 		local stats = FishAndChips.create_card_stats or FishAndChips.create_fish_stats(card.config.center)		
 		FishAndChips.modify_fish_stats(card, stats)
 	end
