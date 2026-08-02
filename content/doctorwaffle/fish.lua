@@ -42,10 +42,10 @@ end
 FishAndChips.Fish {
     key = "waffle_magic_conch",
     atlas = "waffle_fish",
-    weight = 10,
+    weight = 8,
     environments = {
         pier = 1,
-        calm_pond = 0.2
+        calm_pond = 0.6
     },
     pixel_size = { h = 77 },
     blueprint_compat = false,
@@ -275,7 +275,7 @@ FishAndChips.Fish {
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     calculate = function(self, card, context)
-        if context.fac_end_fishing and context.treasure and G.consumeables.cards[1] then
+        if context.fac_end_fishing and not context.failed and context.treasure and G.consumeables.cards[1] then
             G.E_MANAGER:add_event(Event({
                 func = function()
                     local choose_consumable, _ = pseudorandom_element(G.consumeables.cards, 'fac_waffle_percheo')
@@ -303,9 +303,9 @@ FishAndChips.Fish {
     pos = { x = 2, y = 0 },
     environments = {
         styx = 1,
-        backroom = 0.5
+        wormhole = 0.5
     },
-    weight = 10,
+    weight = 8,
     cost = 4,
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -340,12 +340,13 @@ FishAndChips.Fish {
     pos = { x = 3, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 10,
+    weight = 8,
     pixel_size = { h = 83 },
     cost = 4,
     environments = {
         chocolate_river = 1,
-        pier = 0.7,
+        pier = 0.75,
+        soup = 0.6
     },
     loc_vars = function(self, info_queue, card)
         local quotes = {
@@ -408,21 +409,24 @@ FishAndChips.Fish {
 }
 
 -- Mudskipper
+-- Notes: Might be a little broken with how many fish can be caught in one trip.
+-- Might either need to become limited to first catch per trip, or change the trigger to when line snaps. I leave this up to the playtester discretion.
 FishAndChips.Fish {
     key = "fac_waffle_mudskipper",
     atlas = "waffle_fish",
     pos = { x = 4, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 5,
+    weight = 8,
     cost = 5,
     environments = {
         swamp = 1,
         calm_pond = 0.65,
+        aquifer = 0.65,
     },
-    attributes = { "passive" },
+    attributes = { "generation" }, -- Doesn't really generate cards, but this is really the only fitting bait attribute I can think of
     calculate = function(self, card, context)
-        if context.fac_end_fishing then -- thanks eremel
+        if context.fac_end_fishing and not context.failed then -- thanks eremel
             local tag_pool = get_current_pool('Tag')
             local selected_tag = pseudorandom_element(tag_pool, 'fac_waffle_mudskipper_tag')
             local it = 1
@@ -440,6 +444,7 @@ FishAndChips.Fish {
 }
 
 -- Reginald The Teleporting Sea Urchin
+-- Notes: I copy-pasted the code from button_callbacks which is not exactly good code practice but is functional
 FishAndChips.Fish {
     key = "fac_waffle_reginald",
     atlas = "waffle_fish",
@@ -447,7 +452,7 @@ FishAndChips.Fish {
     pixel_size = { h = 60 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 10,
+    weight = 8,
     cost = 6,
     blueprint_compat = false,
     environments = {
@@ -456,7 +461,7 @@ FishAndChips.Fish {
     },
     attributes = { "passive" },
     calculate = function(self, card, context)
-        if context.fac_end_fishing and not context.blueprint then
+        if context.fac_end_fishing and not context.failed and not context.blueprint then
             -- THIS IS ALL TEMPORARY UNTIL THE BUTTON CALLBACK IS NO LONGER HARDCODED
             -- COPYPASTING HARDCODED CODE IS STINKY AND BAD BUT I LIKE THIS FISH CONCEPT
             G.E_MANAGER:add_event(Event({
@@ -500,7 +505,7 @@ FishAndChips.Fish {
     pos = { x = 6, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 10,
+    weight = 8,
     environments = {
         city_river = 1,
         garden = 0.8,
@@ -540,7 +545,7 @@ FishAndChips.Fish {
                     numerator = context.numerator * card.ability.extra.boost
                 }
             end
-            if context.fac_end_fishing and context.perfect and not context.blueprint then
+            if context.fac_end_fishing and context.perfect then
                 if not card.ability.extra.active then
                     card.ability.extra.active = true
                     return {
@@ -562,7 +567,7 @@ FishAndChips.Fish {
     key = "waffle_gossamer_worm",
     atlas = "waffle_fish",
     pos = { x = 7, y = 0 },
-    weight = 5,
+    weight = 8,
     environments = {
         aquifer = 1,
         pier = 0.4
@@ -595,7 +600,8 @@ FishAndChips.Fish {
 }
 
 -- Bonus Duck
--- NOTE: duck value is stored in card.ability.fac_extra as card.ability.extra is wiped when changing card enhancement
+-- Notes: duck value is stored in card.ability.fac_extra as card.ability.extra is wiped when changing card enhancement
+-- I don't *think* this causes any issues? 
 local bonusDuckRatio = 0.3
 FishAndChips.Fish {
     key = "waffle_bonus_duck",
@@ -608,7 +614,7 @@ FishAndChips.Fish {
     pixel_size = { h = 88 },
     atlas = "waffle_fish",
     pos = {x = 8, y = 0 },
-    weight = 10,
+    weight = 8,
     cost = 6,
     config = { extra = {
         chips = 0,
