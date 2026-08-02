@@ -73,6 +73,7 @@ end
 --#region Fish
 
 -- The Original     Starfish
+local starwalker_col = HEX("fef200")
 FishAndChips.Fish {
 	key = "the_original___starfish",
 	atlas = "aure-allu_fish",
@@ -80,16 +81,13 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable" },
+	attributes = { "usable", "space", "hand_level" },
 	stats = {weight = {min = 12, max = 25}, length = {min = 1.4, max = 1.6}},
 	blueprint_compat = false,
 	config = {
 		extra = {
-			sand_dollars = 2,
-		},
-        immutable = {
-            star_odds = 2,
-        }
+			hand_levels = 2,
+		}
 	},
 	environments = {
 		calm_pond = 10,
@@ -106,14 +104,67 @@ FishAndChips.Fish {
 		-- soup = 10,
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { } }
+		return { vars = { zero_signed(card.ability.extra.hand_levels), colours = { starwalker_col }} }
 	end,
 	use = function (self, card)
-		
+		SMODS.smart_level_up_hand(card, G.GAME.current_round.most_played_poker_hand, nil, card.ability.extra.hand_levels)
 	end,
 	can_use = function (self, card)
-		
+		return true
 	end,
+	on_catch = function (self, card)
+		G.E_MANAGER:add_event(Event({
+			func = function ()
+				attention_text({
+					text = localize('k_aure_allu_starfish_1'),
+					scale = 1.1,
+					hold = 0.7 * G.SETTINGS.GAMESPEED,
+					major = card,
+					backdrop_colour = starwalker_col,
+					align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and
+						'tm' or 'cm',
+					offset = { x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and -0.2 or 0 },
+					noisy = true
+				})
+				return true
+			end
+		}))
+		delay(0.7 * G.SETTINGS.GAMESPEED)
+		G.E_MANAGER:add_event(Event({
+			func = function ()
+				attention_text({
+					text = localize('k_aure_allu_starfish_2'),
+					scale = 1.1,
+					hold = 0.7 * G.SETTINGS.GAMESPEED,
+					major = card,
+					backdrop_colour = FishAndChips.C.FISH,
+					align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and
+						'tm' or 'cm',
+					offset = { x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and -0.2 or 0 },
+					noisy = true
+				})
+				return true
+			end
+		}))
+		delay(0.7 * G.SETTINGS.GAMESPEED)
+		G.E_MANAGER:add_event(Event({
+			func = function ()
+				attention_text({
+					text = localize('k_aure_allu_starfish_3'),
+					scale = 1.1,
+					hold = 0.7 * G.SETTINGS.GAMESPEED, 
+					major = card,
+					backdrop_colour = starwalker_col,
+					align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and
+						'tm' or 'cm',
+					offset = { x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and -0.2 or 0 },
+					noisy = true
+				})
+				return true
+			end
+		}))
+		delay(0.3 * G.SETTINGS.GAMESPEED)
+	end
 }
 
 -- Cheap Cheep
@@ -124,7 +175,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "chance", },
+	attributes = { "chance", "economy" },
 	stats = {weight = {min = 7, max = 140}, length = {min = 0.8, max = 4.5}},
 	blueprint_compat = true,
 	config = {
@@ -218,7 +269,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "passive" },
+	attributes = { "passive", "economy" },
 	stats = {weight = {min = 0.4, max = 0.9}, length = {min = 0.05, max = 0.12}},
 	blueprint_compat = false,
 	config = {
@@ -656,7 +707,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "passive" },
+	attributes = { "passive", "economy" },
 	stats = {weight = {min = 1.2, max = 1.3}, length = {min = 0.24, max = 0.27}},
 	blueprint_compat = false,
 	config = {

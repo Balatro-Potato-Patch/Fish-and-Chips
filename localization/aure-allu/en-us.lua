@@ -4,7 +4,9 @@ return {
             fish_fac_the_original___starfish = {
                 name = {"2 Original    ", "    2 Starfish"},
                 text = {
-                    ""
+                    "Use this {V:1}Star{C:fac_fish}fish{}",
+                    "for {C:attention}#1# {C:planet}levels{} 2 most",
+                    "played {C:attention}poker hand"
                 },
                 flavor = {
                     "These fish are pissing me off",
@@ -222,7 +224,10 @@ return {
         dictionary = {
             k_aure_allu_blooper = "Ink'd!",
             k_aure_allu_milk_button = "Milk",
-            k_aure_allu_unicorn = "Nyaeigh!"
+            k_aure_allu_unicorn = "Nyaeigh!",
+            k_aure_allu_starfish_1 = "I",
+            k_aure_allu_starfish_2 = "will also",
+            k_aure_allu_starfish_3 = "join.",
         }
     }
 }
