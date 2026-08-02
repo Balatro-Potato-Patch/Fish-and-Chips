@@ -83,8 +83,8 @@ return {
 			fish_fac_sg11_n_vekhi_diamond_fish = {
 				name = "Diamond Fish",
 				text = {
-					"Gain {C:money}$#1#{} if played hand contains",
-					"scoring {C:attention}Glass Card{} that survived",
+					"Gain {C:money}$#1#{} if hand contains",
+					"scoring {C:attention}Glass Card{} that do not break",
 				},
 			},
 		},
