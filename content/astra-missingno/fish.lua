@@ -703,7 +703,7 @@ FishAndChips.Fish {
     use = function(self, card)
         local stg = card.ability.extra
 
-        SMODS.upgrade_poker_hands({ hands = G.GAME.last_hand_played, level_up = stg.levels, from = card })
+        SMODS.upgrade_poker_hands({ hands = {stg.last_hand}, level_up = stg.levels, from = card })
     end,
     set_ability = function(self, card, initial, delay_sprites)
         local stg = card.ability.extra
