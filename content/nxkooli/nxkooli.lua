@@ -11,14 +11,17 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_cards',
 	pos = {x = 1, y = 0},
 	colour = G.C.PURPLE,
-	fac_partner = 'LasagnaFelidae'
+	fac_partner = 'LasagnaFelidae',
+	loc = true
 })
+
 PotatoPatchUtils.Developer({
 	name = 'LasagnaFelidae',
 	atlas = 'fac_cards',
 	pos = {x = 1, y = 0},
 	colour = G.C.FILTER,
-	fac_partner = 'Nxkoo'
+	fac_partner = 'Nxkoo',
+	loc = true
 })
 
 
@@ -159,7 +162,7 @@ FishAndChips.Fish {
 	pos = { x = 2, y = 0 },
 	weight = 5,
 	cost = 5,
-	ppu_coder = { " " },
+	ppu_coder = { "LasagnaFelidae" },
 	ppu_artist = { "LasagnaFelidae" },
 	attributes = { "generation", "mult" },
 	config = {
