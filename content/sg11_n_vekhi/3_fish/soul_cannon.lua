@@ -91,7 +91,7 @@ FishAndChips.Fish({
 			sacrifice = 2,
 		},
 	},
-	weight = 3,
+	weight = 5,
 	stats = {
 		weight = { min = 1, max = 1 },
 		length = { min = 1, max = 1 },
