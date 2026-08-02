@@ -1,5 +1,6 @@
 G.FUNCS.toggle_shop = function(e)
     stop_use()
+	if G.CONTROLLER.locks.toggle_shop then return end
     G.CONTROLLER.locks.toggle_shop = true
     if G.shop then
         SMODS.calculate_context({ ending_shop = true })
@@ -36,6 +37,7 @@ end
 
 G.FUNCS.fac_toggle_fishing = function(e)
     stop_use()
+	if G.CONTROLLER.locks.toggle_shop then return end
     G.CONTROLLER.locks.toggle_shop = true
     if G.GAME.fishing and not FishAndChips.in_tutorial then
         SMODS.calculate_context({ ending_fishing = true })
