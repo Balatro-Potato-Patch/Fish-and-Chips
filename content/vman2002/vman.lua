@@ -73,7 +73,7 @@ FishAndChips.Fish { --Chips
 			score = 800
 		}
 	},
-	stats = { weight = { min = 0.01, max = 0.02 }, length = {min = 0.01, max = 0.02}}, --TODO: Stats
+	stats = { weight = { min = 0.19, max = 0.2 }, length = {min = 0.051, max = 0.101}},
 	environments = {
 		backroom = 0.7, city_river = 0.4
 	},
@@ -246,6 +246,54 @@ FishAndChips.Fish { --Manos
 		return (G.GAME.current_round.hands_played == 0 or G.STATE ~= G.STATES.SELECTING_HAND) and not card.ability.extra.active
 	end,
 	keep_on_use = returnTrue,
+	usable = true
+}
+
+FishAndChips.Fish { --Necklace
+	key = "vman2002_necklace",
+	atlas = "vman2002_fish",
+	pos = { x = 2, y = 0 },
+	pixel_size = {w=68,h=68},
+	weight = 2,
+	ppu_coder = { "VMan_2002" },
+	ppu_artist = { "VMan_2002" },
+	attributes = { "editions" },
+	stats = { weight = { min = 0.01, max = 0.09 }, length = {min = 0.4, max = 0.6}},
+	environments = {
+		pier = 0.6, city_river = 1, backroom = 0.3, garden = 0.8
+	},
+	set_ability = function(self, card)
+		if not card.edition then
+			card:set_edition(poll_edition("fac_vman2002_necklace", 1, false, true))
+		end
+	end,
+	treasure = true
+}
+
+FishAndChips.Fish { --Coupon
+	key = "vman2002_coupon",
+	atlas = "vman2002_fish",
+	pos = { x = 0, y = 1 },
+	weight = 1,
+	ppu_coder = { "VMan_2002" },
+	ppu_artist = { "VMan_2002" },
+	attributes = { "tag" },
+	stats = { weight = { min = 0.02, max = 0.02 }, length = {min = 0.15, max = 0.21}},
+	environments = {
+		wormhole = 1, pier = 0.9
+	},
+	use = function(self, card)
+		local possible = {}
+		for k,v in pairs(SMODS.get_attribute_pool("editions")) do
+			if G.P_TAGS[v] then
+				table.insert(possible, v)
+			end
+		end
+		add_tag({key = pseudorandom_element(possible, "fac_vman2002_coupon")})
+	end,
+	can_use = function()
+		return G.STATE ~= G.STATES.FAC_FISHING
+	end,
 	usable = true
 }
 

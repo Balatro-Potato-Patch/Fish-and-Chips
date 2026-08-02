@@ -72,6 +72,22 @@ return {
 					q("{~A}Destroyed{} after playing hands containing"),
 					q("{~A}#2#/#3#{} Straights and {~A}#4#/#5#{} Flushes")
 				}
+			},
+			fish_fac_vman2002_necklace = {
+				name = "Jewel Necklace",
+				flavor = {"Makes you feel like","Deltarune OST - Hip Shop"},
+				text = {
+					"Always has",
+					"an {C:dark_edition}Edition"
+				}
+			},
+			fish_fac_vman2002_coupon = {
+				name = "Glimmering Coupon",
+				flavor = {"Big Companies Care About You!","They Really Do"},
+				text = {
+					"Create a {C:attention}Shop Edition Tag",
+					"Cannot be used while fishing"
+				}
 			}
 		},
 		PotatoPatch = {
