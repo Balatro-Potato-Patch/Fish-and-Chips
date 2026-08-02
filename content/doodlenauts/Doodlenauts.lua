@@ -1,3 +1,17 @@
+SMODS.Atlas({
+	key = "DoodlenautsAvatar", 
+	path = "Doodlenauts/avatars.png",
+	px = 71,
+	py = 95,
+})
+
+SMODS.Atlas({
+	key = "DoodlenautsFish", 
+	path = "Doodlenauts/fish.png",
+	px = 71,
+	py = 95,
+})
+
 PotatoPatchUtils.Developer({
 	name = 'F404',
 	atlas = 'DoodlenautsAvatar',
@@ -12,20 +26,6 @@ PotatoPatchUtils.Developer({
 	pos = {x = 1, y = 0},
 	colour = G.C.GREEN,
 	fac_partner = 'F404'
-})
-
-SMODS.Atlas({
-	key = "DoodlenautsFish", 
-	path = "Doodlenauts/fish.png",
-	px = 71,
-	py = 95,
-})
-
-SMODS.Atlas({
-	key = "DoodlenautsAvatar", 
-	path = "Doodlenauts/avatars.png",
-	px = 71,
-	py = 95,
 })
 
 -- Bottom Feeder
@@ -297,9 +297,38 @@ FishAndChips.Fish {
 	ppu_artist = { 'F404' },
 	attributes = { 'suit', 'clubs' },
 	cost = 4,
+	config = {
+		extra = {
+			suit = 'Spades',
+		}
+	},
 	environments = {
 		pier = 1
 	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.suit,
+				--localize(card.ability.extra.suit, 'suits_singular'),
+				colours = { 
+					G.C.SUITS[card.ability.extra.suit]
+				}
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+			local _suit = pseudorandom_element(SMODS.Suits, 'fac_moonjelly')
+			card.ability.extra.suit = _suit.key
+			return {
+                message = localize('k_reset')
+            }
+		end
+	end,
+	set_ability = function(self, card, initial, delay_sprites)
+		local _suit = pseudorandom_element(SMODS.Suits, 'fac_moonjelly')
+		card.ability.extra.suit = _suit.key
+	end,
 	use = function(self, card, area)
 		G.E_MANAGER:add_event(Event({
             trigger = 'after',
@@ -327,7 +356,7 @@ FishAndChips.Fish {
             G.E_MANAGER:add_event(Event({
                 func = function()
                     local _card = G.hand.cards[i]
-                    assert(SMODS.change_base(_card, 'Clubs'))
+                    assert(SMODS.change_base(_card, card.ability.extra.suit))
                     return true
                 end
             }))
@@ -357,7 +386,7 @@ FishAndChips.Fish {
 	key = 'loanshark',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 3, y = 1 },
-	weight = 5, --uncommon/rare
+	weight = 5, --common/uncommon
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'economy', },
@@ -413,10 +442,149 @@ FishAndChips.Fish {
 
 local can_sell_card_ref = Card.can_sell_card
 function Card:can_sell_card(context)
-	if self.ability.extra.loanshark_current_debt ~= nil then
+	if self.ability.extra and type(self.ability.extra) == 'table' and self.ability.extra.loanshark_current_debt ~= nil then
 		if self.ability.extra.loanshark_current_debt > 0 then
 			return false
 		end
 	end
 	return can_sell_card_ref(self, context)
 end
+
+--Neon Tetra
+FishAndChips.Fish {
+	key = 'neontetra',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 0, y = 2 },
+	weight = 5, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'hand_type' , 'editions' },
+	cost = 8,
+	config = {
+		extra = {
+			num = 1,
+			denom = 4,
+		}
+	},
+	environments = {
+		garden = 0.5,
+		aquifer = 0.5
+	},
+	loc_vars = function(self, info_queue, card)
+		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom, 'fac_bigbasswheel')
+		return {
+			vars = {
+				numerator,
+				denominator
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.individual and context.cardarea == G.play then
+			if context.scoring_name == 'Four of a Kind' and context.other_card.edition ~= 'e_polychrome' then
+				if SMODS.pseudorandom_probability(card, 'fac_neontetra', card.ability.extra.num, card.ability.extra.denom) then
+					context.other_card:set_edition('e_polychrome', nil, nil, true)
+				end
+			end
+		end
+	end
+}
+
+-- Wanted Poster
+FishAndChips.Fish {
+	key = 'wantedposter',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 0, y = 0 },
+	weight = 5, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'economy' , 'joker' , 'sell_value' },
+	cost = 7,
+	config = {
+		extra = {
+			bounty = 10,
+			common_mult = 1,
+			uncommon_mult = 2,
+			rare_mult = 3,
+			legendary_mult = 4,
+		}
+	},
+	environments = {
+		city_river = 0.5,
+		pier = 0.5
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.bounty,
+				card.ability.extra.common_mult,
+				card.ability.extra.uncommon_mult,
+				card.ability.extra.rare_mult,
+				card.ability.extra.legendary_mult
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.selling_card then
+			local sell_mult = 0
+			if context.card:is_rarity('Common') then
+				sell_mult = card.ability.extra.common_mult
+			elseif context.card:is_rarity('Uncommon') then
+				sell_mult = card.ability.extra.uncommon_mult
+			elseif context.card:is_rarity('Rare') then
+				sell_mult = card.ability.extra.rare_mult
+			elseif context.card:is_rarity('Legendary') then
+				sell_mult = card.ability.extra.legendary_mult
+			end
+			if sell_mult > 0 then
+				SMODS.destroy_cards(card, nil, nil, true)
+				return {
+					dollars = card.ability.extra.bounty * sell_mult
+				}
+			end
+		end
+	end
+}
+
+-- Goldfish Crackers
+FishAndChips.Fish {
+	key = 'goldfishcrackers',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 0, y = 0 },
+	weight = 5, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'seals' },
+	cost = 6,
+	config = {
+		extra = {
+			gold_seals = 10
+		}
+	},
+	environments = {
+		soup = 0.7,
+		styx = 0.25,
+		garden = 0.05
+	},
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_SEALS['Gold']
+		return {
+			vars = {
+				card.ability.extra.gold_seals
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.before then
+			for i, playing_card in ipairs(context.scoring_hand) do
+				if playing_card:get_seal() == nil and card.ability.extra.gold_seals > 0 then
+					playing_card:set_seal('Gold')
+					card.ability.extra.gold_seals = card.ability.extra.gold_seals - 1
+					if card.ability.extra.gold_seals <= 0 then
+						SMODS.destroy_cards(card, nil, nil, true)
+					end
+				end
+			end
+		end
+	end
+}

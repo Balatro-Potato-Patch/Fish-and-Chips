@@ -83,7 +83,7 @@ return {
                 name = 'Moon Jelly',
                 text = {
                     'Convert all cards',
-                    'in hand to {C:clubs}Clubs'
+                    'in hand to {V:1}#1#{}'
                 },
                 flavour = {
                     'One of the most beautiful',
@@ -95,7 +95,7 @@ return {
             fish_fac_loanshark = {
                 name = 'Loan Shark',
                 text = {
-                    'Gives {C:money}$#1#{}, lose {C:money}$#2#',
+                    'Gives {C:money}$#1#{}, lose {C:red}$#2#',
                     'at end of round until',
                     '{C:red}debt{} has been payed',
                     '{C:inactive}Current debt: {C:red}$#3#{}'
@@ -105,6 +105,48 @@ return {
                     "in the Oceanic Abyss.",
                     "That's the name of",
                     "the bank he works at."
+                }
+            },
+            fish_fac_neontetra = {
+                name = 'Neon Tetra',
+                text = {
+                    'If played hand is a {C:attention}Four of a Kind{},',
+                    'scoring cards have a {C:green}1 in 4 chance{}',
+                    'to gain {C:dark_edition}Polychrome{} edition'
+                }
+            },
+            fish_fac_wantedposter = {
+                name = 'Wanted Poster',
+                text = {
+                    {
+                        "When a Joker is sold,",
+                        "gain {C:money}$#1#{} multiplied by",
+                        "a value determined by",
+                        "the Joker's {C:attention}rarity",
+                        "and destroy this card"
+                    },{
+                        '{C:common}Common{} -> X#2#',
+                        '{C:uncommon}Uncommon{} -> X#3#',
+                        '{C:rare}Rare{} -> X#4#',
+                        '{C:legendary}Legendary{} -> X#5#',
+                    }
+                },
+                flavour = {
+                    'While hard to read, it says,',
+                    '"WANTED: Tom J. Foolery".'
+                }
+            },
+            fish_fac_goldfishcrackers = {
+                name = 'Goldfish Crackers',
+                text = {
+                    'Adds a {C:attention}Gold Seal{} to the',
+                    'next {C:attention}#1#{} scoring cards',
+                    'without a seal'
+                },
+                flavour = {
+                    'These cheesy treats are among',
+                    'the holy grail of snack foods',
+                    'fishermen can only dream of obtaining'
                 }
             }
         },
