@@ -482,6 +482,8 @@ G.FUNCS.fac_use_fish = function(e)
 			return true;
 		end
 	}))
+
+	G.GAME.fac_last_used_fish = card.config.center_key
 end
 
 local uielement_click_ref = UIElement.click
