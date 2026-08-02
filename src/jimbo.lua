@@ -22,7 +22,7 @@ for i = 1, 5 do
 		py = 199,
 		atlas_table = "ANIMATION_ATLAS",
 		frames = ({4, 2, 4, 4, 3})[i],
-		FPS = ({2, 5, 1, 7, 6})[i]
+		fps = ({2, 5, 1, 7, 6})[i]
 	}
 end
 
@@ -51,15 +51,23 @@ function FishAndChips.draw_jimbo(env)
 			}
 		}
 	}
-	for index, box in ipairs(G.I.UIBOX) do
-		if box == G.FISHING.jimbo then
-			table.remove(G.I.UIBOX, index)
-			break
+	local reward_boxes = {
+		G.FISHING.fac_fishing_reward_box,
+		G.FISHING.fac_treasure_reward_box,
+	}
+	for _, reward_box in ipairs(reward_boxes) do
+		for index, box in ipairs(G.I.UIBOX) do
+			if box == reward_box then
+				table.remove(G.I.UIBOX, index)
+				break
+			end
 		end
 	end
 	for index, box in ipairs(G.I.UIBOX) do
-		if box == G.FISHING.fac_fishing_reward_box then
-			table.insert(G.I.UIBOX, index, G.FISHING.jimbo)
+		if box == G.FISHING.jimbo then
+			for reward_index, reward_box in ipairs(reward_boxes) do
+				table.insert(G.I.UIBOX, index + reward_index, reward_box)
+			end
 			break
 		end
 	end

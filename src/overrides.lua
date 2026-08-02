@@ -83,6 +83,7 @@ function Game:init_game_object()
     ret.fac_active_bait = nil
     ret.fac_treasure_earned = 0
     ret.fac_perfect_catches = 0
+	ret.fac_no_jokers = true
     return ret
 end
 
@@ -244,6 +245,7 @@ end
 local g_uidef_card_h_popup_ref = G.UIDEF.card_h_popup
 ---@diagnostic disable-next-line: duplicate-set-field
 function G.UIDEF.card_h_popup(card)
+	if card.ability and card.ability.set == 'fac_Fish' and not FishAndChips.mod.config.disable_flavour then FishAndChips.tooltip_seed = (FishAndChips.tooltip_seed or 0) + 1 end
     local ret = g_uidef_card_h_popup_ref(card)
     if card.config and card.config.center and card.config.center.set == "fac_Fish" and card.area and (card.area.config.collection or card.area.config.fac_compendium) then
         local t = {n=G.UIT.C, config = {padding = 0.1, align = 'cm'}, nodes = {}}
@@ -272,12 +274,12 @@ function G.UIDEF.card_h_popup(card)
 		}})
 		ret.nodes[#ret.nodes].nodes[2] = {n=G.UIT.C, nodes = {ret.nodes[#ret.nodes].nodes[2]}}
     end
-    if card.ability and card.ability.set == 'fac_Fish' and not FishAndChips.mod.config.disable_flavour and card.config.center.discovered and G.localization.descriptions.fac_Fish[card.config.center_key].fac_flavour_parsed then
-        local name = SMODS.deepfind(ret, 'tooltip_name')[1]
+    if card.ability and card.ability.set == 'fac_Fish' and not FishAndChips.mod.config.disable_flavour and card.config.center.discovered and G.localization.descriptions.fac_Fish[card.config.center_key] and G.localization.descriptions.fac_Fish[card.config.center_key].fac_flavour_parsed then
+		local name = SMODS.deepfind(ret, 'tooltip_id_'..FishAndChips.tooltip_seed, nil, true)[1]
         local name_node = name.objtree
         local flavour_node = {}
         local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}
-        localize({type = 'flavour', nodes = flavour_node, loc_target = G.localization.descriptions.fac_Fish[card.config.center_key], scale = 0.8, text_colour = G.C.JOKER_GREY, shadow = true, vars = loc_vars.vars})
+        localize({type = 'flavour', nodes = flavour_node, loc_target = G.localization.descriptions.fac_Fish[loc_vars.key or card.config.center_key], scale = 0.8, text_colour = G.C.JOKER_GREY, shadow = true, vars = loc_vars.vars})
         local final_flavour = {{n=G.UIT.R, config = {minh = 0.1}}}
         for i, line in ipairs(flavour_node) do
             local node = {n=G.UIT.R, config = {align = 'cm'}, nodes = {}}
@@ -288,13 +290,43 @@ function G.UIDEF.card_h_popup(card)
         end
         table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 1, {n=G.UIT.R, config = {align = 'cm'}, nodes = final_flavour})
     end
-    return ret
+	if card.ability and card.ability.set == 'fac_Fish' and card.area and not (card.area.config.collection or card.area.config.fac_compendium) then
+		local name = SMODS.deepfind(ret, 'main_box_flag', 'i')[1]
+        local name_node = name.objtree
+        local flavour_node = {}
+		local stats = card.ability.stats
+		local stat_proto = card.config.center.stats
+		local weight_perc = (stats.weight - stat_proto.weight.min)/(stat_proto.weight.max-stat_proto.weight.min)*100
+		local length_perc = (stats.length - stat_proto.length.min)/(stat_proto.length.max-stat_proto.length.min)*100
+		local colours = { -- TODO: are these colours okay?
+			darken(G.C.RED, 0.1),
+			G.C.RED,
+			G.C.ORANGE,
+			G.C.YELLOW,
+			G.C.GREEN,
+			G.ARGS.LOC_COLOURS.edition
+		}
+		
+		local weight_col_index = math.floor(weight_perc/20)
+		local weight_col = stats.weight == stat_proto.weight.max and colours[6] or mix_colours(colours[weight_col_index+1], colours[math.max(weight_col_index, 1)], (weight_perc - (weight_col_index * 20))/20)
+		
+		local length_col_index = math.max(math.floor(length_perc/20), 1)
+		local length_col = stats.length == stat_proto.length.max and colours[6] or mix_colours(colours[length_col_index+1], colours[length_col_index], (length_perc - (length_col_index * 20))/20)
+		
+        table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 1, {n=G.UIT.R, config = {align = 'cm'}, nodes = {
+			{n=G.UIT.T, config = {text = localize('ph_fac_weight'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
+			{n=G.UIT.T, config = {text = stats.weight..'kg', scale = 0.27, colour = weight_col, shadow = true}},
+			{n=G.UIT.T, config = {text = '  '..localize('ph_fac_length'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
+			{n=G.UIT.T, config = {text = stats.length..'m', scale = 0.27, colour = length_col, shadow = true}},
+		}})
+    end
+	return ret
 end
 
 local name_from_hook = name_from_rows
 function name_from_rows(name_nodes, background_colour)
     local ret = name_from_hook(name_nodes, background_colour)
-    if ret then ret.config.id = 'tooltip_name' end
+    if ret then ret.config.id = 'tooltip_id_'..(FishAndChips.tooltip_seed or 1) end
     return ret
 end
 
@@ -385,6 +417,17 @@ function Game:main_menu(change_context)
 
 end
 
+local start_run_ref = Game.start_run
+function Game:start_run(...)
+	start_run_ref(self, ...)
+	FishAndChips.stop_ambience()
+	FishAndChips.stop_reel_sound()
+
+	FishAndChips.C.FISHING_BUTTONS_ACTIVE = { 62 / 255, 222 / 255, 250 / 255, 0.65 }
+	FishAndChips.C.FISHING_BUTTONS_BG = { G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65 }
+	FishAndChips.C.FISHING_BUTTONS_TEXT = { G.C.UI.TEXT_LIGHT[1], G.C.UI.TEXT_LIGHT[2], G.C.UI.TEXT_LIGHT[3], 1 }
+end
+
 
 G.FUNCS.fac_can_use_fish = function(e)
 	local center = e.config.ref_table.config.center
@@ -449,4 +492,27 @@ local smods_add_to_deck_ref = SMODS.add_to_deck
 function SMODS.add_to_deck (card, args)
 	if not args.area and card.config.center.set == "fac_Fish" then args.area = G.fac_fish_area end
 	return smods_add_to_deck_ref(card, args)
+end
+
+local card_open_ref = Card.open
+function Card:open()
+	G.GAME.fac_booster_opening = true
+	card_open_ref(self)
+	G.E_MANAGER:add_event(Event({
+		func = function()
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					G.GAME.fac_booster_opening = nil
+					return true;
+				end
+			}))
+			return true;
+		end
+	}))
+end
+
+local start_run_hook = Game.start_run
+function Game:start_run(args)
+	start_run_hook(self, args)
+	G.GAME.fac_fish_expanded = false
 end
