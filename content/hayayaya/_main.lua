@@ -56,6 +56,12 @@ PotatoPatchUtils.Developer({
 	colour = G.C.GOLD,
 	fac_partner = "Ellen (Haya)",
 	loc = true,
+	calculate = function(self, context)
+		-- Used for freedom motif
+		if context.fac_end_fishing and context.fish_obj and not context.failed then
+			context.fish_obj.ability.fac_bait_used = G.GAME.fac_active_bait
+		end
+	end,
 })
 
 -- Namespace for team specific utils

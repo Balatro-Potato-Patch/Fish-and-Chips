@@ -153,6 +153,14 @@ return {
 					"It's covered in algae...",
 				},
 			},
+			fish_fac_motif = {
+				name = "Freedom Motif",
+				text = {
+					"When a fish is {C:attention}sold{}, get",
+					"the {C:attention}bait{} you used back",
+					"{X:attention,C:white}X0{C:red} Fish sell cost",
+				},
+			},
 		},
 	},
 	misc = {
