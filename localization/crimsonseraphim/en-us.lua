@@ -5,7 +5,7 @@ return {
                 name = "Ruby & Jade",
                 text = {
                     "This will probably be a surprise to people",
-                    "who knew me but not super well but, I ({C:red}Ruby{}) am",
+                    "who knew me but not super well but, I ({C:red}R uby{}) am",
                     "not {C:green}alone{} in my own head. {C:green}Jade{} is also here",
                     " ",
                     "I would like to thank everyone who has helped",
@@ -130,8 +130,8 @@ return {
                     },
                     {
                         "When a {C:attention}Fish{} is sold average its",
-                        "Weight with this {C:attention}Fish's{} Mult and",
-                        "its Length with this {C:attention}Fish's{} Chips"
+                        "Length with this {C:attention}Fish's{} Mult and",
+                        "its Weight with this {C:attention}Fish's{} Chips"
                     }
                 },
                 flavor = {

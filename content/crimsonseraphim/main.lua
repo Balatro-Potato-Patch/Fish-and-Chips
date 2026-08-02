@@ -77,6 +77,10 @@ FishAndChips.Fish {
         backroom = 7,
         wormhole = 5,
 	},
+    stats = {
+		weight = {min = 20, max = 100},
+		length = {min = 0.3, max = 0.9}
+	},
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = {set = "Other", key = "fac_crimsonseraphim_transmute"}
 	end,
@@ -235,6 +239,10 @@ FishAndChips.Fish {
 		soup = 10,
         chocolate_river = 7,
 	},
+    stats = {
+		weight = {min = 0.15, max = 0.182},
+		length = {min = 0.07, max = 0.08}
+	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 2, 2 * 1125 / 1086, "fac_mealy_lore") } } }
 	end,
@@ -276,6 +284,10 @@ FishAndChips.Fish {
 	environments = {
 		styx = 7,
         aquifer = 7
+	},
+    stats = {
+		weight = {min = 61, max = 61},
+		length = {min = 1.8, max = 1.8}
 	},
 	loc_vars = function(self, info_queue, card)
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds_seal, "fac_crimsonseraphim_jade_crystalfish_seal")
@@ -489,6 +501,10 @@ FishAndChips.Fish {
 		styx = 8,
         aquifer = 8
 	},
+    stats = {
+		weight = {min = 61, max = 61},
+		length = {min = 1.8, max = 1.8}
+	},
 	loc_vars = function(self, info_queue, card)
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_crimsonseraphim_ruby_crystalfish")
         return {vars = {num, dem, localize{type = "name_text", set = "fac_Fish", key = "fish_fac_jade_crystalfish"}}}
@@ -552,6 +568,10 @@ FishAndChips.Fish {
 	environments = {
 		aquifer = 10,
         volcano = 10
+	},
+    stats = {
+		weight = {min = 3, max = 580},
+		length = {min = 0.9, max = 6.1}
 	},
 	loc_vars = function(self, info_queue, card)
 		
@@ -645,6 +665,10 @@ FishAndChips.Fish {
 	environments = {
 		garden = 5,
         wormhole = 5
+	},
+    stats = {
+		weight = {min = 1000, max = 2000},
+		length = {min = 67, max = 110}
 	},
     target = "",
     force_environment = function(card)
@@ -768,6 +792,10 @@ FishAndChips.Fish {
         wormhole = 5,
         backroom = 5
 	},
+    stats = {
+		weight = {min = 0, max = 0},
+		length = {min = 0.1, max = 0.2}
+	},
 	loc_vars = function(self, info_queue, card)
     return {
         vars = {
@@ -777,7 +805,16 @@ FishAndChips.Fish {
     }
 	end,
 	calculate = function(self, card, context)
-        
+        if context.selling_card and context.card.ability.set == "fac_Fish" then
+            card.ability.extra.mult = (card.ability.extra.mult + context.card.ability.stats.length) / 2
+            card.ability.extra.chips = (card.ability.extra.chips + context.card.ability.stats.weight) / 2
+        end
+        if context.joker_main then
+            return {
+                mult = card.ability.extra.mult,
+                chips = card.ability.extra.chips
+            }
+        end
 	end,
 }
 
@@ -815,6 +852,10 @@ FishAndChips.Fish {
 		volcano = 5,
         garden = 5,
         aquifer = 5,
+	},
+    stats = {
+		weight = {min = 20, max = 20},
+		length = {min = 2.2, max = 2.2}
 	},
 	loc_vars = function(self, info_queue, card)
     return {
@@ -887,6 +928,10 @@ FishAndChips.Fish {
         city_river = 5,
         pier = 5,
 	},
+    stats = {
+		weight = {min = 4*10, max = 5*10},
+		length = {min = 0.15 * 5, max = 0.75*6}
+	},
 	loc_vars = function(self, info_queue, card)
     return {
         vars = {
@@ -925,6 +970,10 @@ FishAndChips.Fish {
     config = {
         extra = {}
     },
+    stats = {
+		weight = {min = 0.25, max = 0.25},
+		length = {min = 0.3, max = 0.3}
+	},
     use = function(self, card)
         if card.ability.saved_card then
             if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
@@ -1059,6 +1108,10 @@ FishAndChips.Fish {
             shots = 4
         }
     },
+    stats = {
+		weight = {min = 0.6, max = 0.6},
+		length = {min = 0.2, max = 0.2}
+	},
     loc_vars = function(_, _, card)
         return {
             vars = {
@@ -1241,6 +1294,10 @@ FishAndChips.Fish {
             joker = "fish_fac_cod"
         }
     },
+    stats = {
+		weight = {min = 2.6, max = 20},
+		length = {min = 0.4, max = 1.2}
+	},
     loc_vars = function(self, q, card)
         return {
             vars = {
