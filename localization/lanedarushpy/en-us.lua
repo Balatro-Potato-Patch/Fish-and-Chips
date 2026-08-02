@@ -59,6 +59,17 @@ return {
                     "What in the world?"
                 }
             },
+
+            fish_fac_still_fish = {
+                name = "Still Fish",
+                text = {
+                    "Does nothing"
+                },
+                flavour = {
+                    "The hardest part was",
+                    "catching its unmoving body."
+                }
+            },
         },
         PotatoPatch = {
             PotatoPatchDev_lanedarushpy = {
