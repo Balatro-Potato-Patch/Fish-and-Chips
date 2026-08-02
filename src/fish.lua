@@ -63,6 +63,7 @@ function FishAndChips.modify_fish_stats(card, stats)
 		card.T.scale = card.T.scale * (0.6 + (stats_tot/2*0.7))
 	end
 	card.cost = (card.cost * scalar)
+	card.base_cost = card.cost
 	card:set_sell_value()
 end
 
