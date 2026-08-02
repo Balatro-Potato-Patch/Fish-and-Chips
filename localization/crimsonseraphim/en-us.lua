@@ -267,6 +267,53 @@ return {
                 flavor = {
                     "YOUR TAKING TOO LONG"
                 }
+            },
+
+            fish_fac_piranha_cruenta = {
+                name = "Piranha Cruenta",
+                text = {
+                    "{C:hearts}Hearts{} held in hand",
+                    "give {X:mult,C:white}X#1#{} Mult"
+                },
+                flavor = {
+                    "After a stronghold has been",
+                    "made of the bones, it is covered",
+                    "with flesh and blood, and there",
+                    "dwell in it old age and death,",
+                    "pride and deceit."
+                }
+            },
+            fish_fac_delphinus_dormiens = {
+                name = "Delphinus Dormiens",
+                text = {
+                    "When a non-{C:attention}Perishable Fish{}",
+                    "is used create a {C:attention}Perishable{} copy",
+                    "then {C:red}self-destruct{}",
+                    "{C:inactive}(Must have room)"
+                },
+                flavor = {
+                    "Whoever fights monsters should",
+                    "see to it that in the process",
+                    "he does not become a monster.",
+                    "And if you gaze long enough into",
+                    "an abyss, the abyss will gaze back",
+                    "into you",
+                }
+            },
+            fish_fac_anima = {
+                name = "Anima",
+                text = {
+                    "The next caught {C:attention}Treasure{}",
+                    "will always be a {C:purple,E:1}Treasure Fish{}"
+                },
+                flavor = {
+                    "Be still, my soul, be still; the arms",
+                    "you bear are brittle, Earth and high heaven",
+                    "are fixt of old and founded strong.",
+                    "Think rather, call to thought, if now",
+                    "you grieve a little, The days when we had",
+                    "rest, O soul, for they were long",
+                }
             }
         },
         Other = {

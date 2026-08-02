@@ -1623,6 +1623,7 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         
     end,
+    treasure = true
 }
 
 SMODS.Shader({
@@ -1701,4 +1702,95 @@ SMODS.ScreenShader {
     should_apply = function(self)
         return next(SMODS.find_card("fish_fac_jack_o_lantern"))
     end,
+}
+
+FishAndChips.Fish {
+	key = "piranha_cruenta",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "xmult", "hearts" },
+	environments = {
+        styx = 5,
+        swamp = 5,
+        pier = 5
+	},
+    config = {
+        extra = {
+            xmult = 1.25
+        }
+    },
+    stats = {
+		weight = {min = 4, max = 6},
+		length = {min = 0.5, max = 0.8}
+	},
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.xmult
+            }
+        }
+    end,
+    calculate = function(self, card ,context)
+        if context.individual and context.cardarea == G.hand and context.other_card:is_suit("Hearts") then
+            return {
+                xmult = card.ability.extra.xmult
+            }
+        end
+    end
+}
+
+FishAndChips.Fish {
+	key = "delphinus_dormiens",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "passive" },
+	environments = {
+        backroom = 5,
+        garden = 5,
+        pier = 5
+	},
+    stats = {
+		weight = {min = 40, max = 90},
+		length = {min = 1.2, max = 4}
+	},
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = {set = "Other", key = "perishable", vars = {5,5}}
+    end,
+    calculate = function(self, card ,context)
+        if context.fac_use_fish and not context.fac_use_fish.ability.perishable then
+            if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
+                local c = SMODS.add_card{key=context.fac_use_fish.config.center.key, area = G.fac_fish_area}
+                c.ability.perishable = true
+                c.ability.perish_tally = 5
+                SMODS.destroy_cards(card, nil, true)
+            end
+            return nil, true
+        end
+    end
+}
+
+--based on  Platinum Arowana
+FishAndChips.Fish {
+	key = "anima",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "passive" },
+	environments = {
+        calm_pond = 5,
+        garden = 5,
+        pier = 5
+	},
+    stats = {
+		weight = {min = 2.7, max = 6},
+		length = {min = 0.6, max = 0.9}
+	},
 }
