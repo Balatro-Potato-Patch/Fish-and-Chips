@@ -34,6 +34,10 @@ FishAndChips.Fish {
     ppu_coder = { "Equi" },
     ppu_artist = { "Equi" },
     attributes = { "chips", "rank" },
+    stats = {
+        weight = { min = 750, max = 900 },
+        length = { min = 55, max = 75 }
+    },
     config = {
         extra = {
             chips = 1
@@ -72,6 +76,10 @@ FishAndChips.Fish {
     ppu_coder = { "Equi" },
     ppu_artist = { "Equi" },
     attributes = { "generation" },
+    stats = {
+        weight = { min = 1.6, max = 2.5 },
+        length = { min = 5, max = 7 }
+    },
     config = {
         extra = {
             sand_dollar_req = 8
@@ -120,6 +128,10 @@ FishAndChips.Fish {
     ppu_coder = { "Equi" },
     ppu_artist = { "Equi" },
     attributes = { "xmult", "passive" },
+    stats = {
+        weight = { min = 3, max = 4 },
+        length = { min = 7, max = 11 }
+    },
     config = {
         extra = {
             xmult = 3
@@ -179,6 +191,10 @@ FishAndChips.Fish {
     ppu_coder = { "Equi" },
     ppu_artist = { "Equi" },
     attributes = { "generation" },
+    stats = {
+        weight = { min = 150, max = 250 },
+        length = { min = 8, max = 12 }
+    },
     config = {
         extra = {
             bait_given = 1, current_fails = 0, required_fails = 4
@@ -229,7 +245,15 @@ FishAndChips.Fish {
     ppu_coder = { "Equi" },
     ppu_artist = { "Equi" },
     attributes = { "generation" },
-    config = { extra = { chosen_bait = 2 } },
+    stats = {
+        weight = { min = 0.01, max = 0.02 },
+        length = { min = 99, max = 99 }
+    },
+    config = { 
+        extra = { 
+            chosen_bait = 2 
+        } 
+    },
     environments = {
         backroom = 1,
         wormhole = 0.25
