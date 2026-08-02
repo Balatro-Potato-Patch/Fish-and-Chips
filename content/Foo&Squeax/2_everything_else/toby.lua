@@ -60,14 +60,15 @@ function G.UIDEF.card_h_popup(card)
 		local search = SMODS.deepfind(ret.nodes[1].nodes, "Foo54", nil, true)[1]
 		local dynatext = search.objtree[#search.objtree - 1]
 		dynatext.config.string = {localize("k_fas_fas_annoying_dog")}
+		dynatext:update_text(true)
 		
 		--[[
-		local search = SMODS.deepfind(ret.nodes[1].nodes, "squeax09", nil, true)[1]
-		local dynatext = search.objtree[#search.objtree - 1]
-		dynatext.config.string = {localize("k_fas_fas_annoying_dog")}
+		local search2 = SMODS.deepfind(ret.nodes[1].nodes, "squeax09", nil, true)[1]
+		local dynatext2 = search2.objtree[#search2.objtree - 1]
+		dynatext2.config.string = {localize("k_fas_fas_annoying_dog")}
+		dynatext2:update_text(true)
 		--]] -- uncomment this when art is added
 
-		dynatext:update_text(true)
 		return ret
 	end
 	local ret = g_uidef_card_h_popup_ref(card)
