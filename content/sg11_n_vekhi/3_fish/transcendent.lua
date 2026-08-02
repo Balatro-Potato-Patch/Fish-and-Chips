@@ -15,7 +15,7 @@ FishAndChips.Fish({
 	ppu_artist = { "vevekhi" },
 	attributes = {},
 	config = {},
-	weight = 2,
+	weight = 4,
 	stats = {
 		weight = { min = 1, max = 1 },
 		length = { min = 1, max = 1 },
