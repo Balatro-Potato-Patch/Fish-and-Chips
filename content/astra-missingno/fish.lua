@@ -16,6 +16,10 @@ FishAndChips.Fish {
         pier = 10,
         wormhole = 5
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
         return { vars = { stg.factor, G.SETTINGS.SOUND.music_volume * stg.factor } }
@@ -104,6 +108,10 @@ FishAndChips.Fish {
         calm_pond = 1,
         garden = 1
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
         return { vars = { stg.xmult, stg.gain } }
@@ -165,6 +173,10 @@ FishAndChips.Fish {
         city_river = 5,
         backroom = 5,
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
         local loc_ctypes = {}
@@ -235,6 +247,10 @@ FishAndChips.Fish {
     environments = {
         pier = 10
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
         local hand_name = stg.hand and localize(stg.hand, 'poker_hands') or localize('k_none')
@@ -303,6 +319,10 @@ FishAndChips.Fish {
     environments = {
         wormhole = 5
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
         return { vars = { stg.retriggers } }
@@ -340,6 +360,10 @@ FishAndChips.Fish {
         pier = 5,
         city_river = 5,
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
 
@@ -378,6 +402,10 @@ FishAndChips.Fish {
         aquifer = 7,
         wormhole = 5
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
 
@@ -433,6 +461,10 @@ FishAndChips.Fish {
         city_river = 5,
         backroom = 5
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         if card.area and card.area == G.fac_fish_area then
             local other_joker
@@ -493,6 +525,10 @@ FishAndChips.Fish {
     environments = {
         pier = 7
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
         local num, den = SMODS.get_probability_vars(card, stg.prob, stg.odds, "fac_am_mola")
@@ -555,6 +591,10 @@ FishAndChips.Fish {
         aquifer = 8,
         swamp = 8
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
 
@@ -628,6 +668,10 @@ FishAndChips.Fish {
         wormhole = 5,
         styx = 5
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
 
@@ -686,6 +730,10 @@ FishAndChips.Fish {
     environments = {
         wormhole = 3,
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
 
@@ -742,6 +790,10 @@ FishAndChips.Fish {
         backroom = 2,
         soup = 2,
     },
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
 
