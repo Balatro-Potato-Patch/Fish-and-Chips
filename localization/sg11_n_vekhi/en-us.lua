@@ -84,7 +84,7 @@ return {
 				name = "Diamond Fish",
 				text = {
 					"Gain {C:money}$#1#{} if hand contains",
-					"scoring {C:attention}Glass Card{} that do not break",
+					"scoring {C:attention}Glass Cards{} that do not break",
 				},
 			},
 		},
