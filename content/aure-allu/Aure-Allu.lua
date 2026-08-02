@@ -28,6 +28,20 @@ SMODS.Atlas({
 })
 
 
+SMODS.Gradient {
+	key = "allu_bl_wh_g",
+	colours = {
+		HEX("000000"),
+		HEX("FFFFFF"),
+	},
+	cycle = 9.14,
+	inject = function (self, i)
+		SMODS.Gradient.inject(self, i)
+		PotatoPatchUtils.Developers.fac_AllUniversal.colour = self
+	end
+}
+
+
 zero_signed = function (value, infix)
 	local v = value ~= 0 and SMODS.signed(value) or "+0"
 	return string.sub(v, 1, 1) .. (infix or "") .. string.sub(v, 2)
@@ -1168,6 +1182,58 @@ FishAndChips.Fish {
 			return {
 				chips = sell_cost * card.ability.extra.chips_per_sand_dollar
 			}
+		end
+	end,
+}
+
+-- Cookiecutter Shark
+FishAndChips.Fish {
+	key = "cookiecutter_shark",
+	atlas = "aure-allu_fish",
+	pos = { x = 3, y = 3 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "chance", "destroy_card" },
+	stats = {weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 0.4}},
+	blueprint_compat = true,
+	config = {
+		extra = {
+			lucky_d6_odds = 6
+		},
+	},
+	environments = {
+		city_river = 5,
+		chocolate_river = 10,
+		soup = 2,
+	},
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue+1] = G.P_TAGS.tag_d_six
+		local numerator_cookie, denominator_cookie = SMODS.get_probability_vars(card, 1, card.ability.extra.lucky_d6_odds, "fac_aure-allu_cookiecutter_shark")
+		return { vars = { numerator_cookie, denominator_cookie } }
+	end,
+	calculate = function(self, card, context)
+		if context.individual and context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_lucky") then
+			if SMODS.pseudorandom_probability(card, "fac_aure-allu_cookiecutter_shark", 1, card.ability.extra.lucky_d6_odds) then
+				local pcard = context.other_card
+				G.E_MANAGER:add_event(Event({
+					trigger = 'before',
+                	delay = 0.0,
+					func = function ()
+						SMODS.destroy_cards(pcard, {immediate = true, pinch_anim = true})
+						play_sound('tarot1')
+						add_tag({key = "tag_d_six"})
+						play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+						play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+						return true
+					end
+				}))
+				return {
+					message = localize('k_aure_allu_cookiecutter'),
+					colour = G.C.GREEN,
+				}
+			end
+			return nil, true
 		end
 	end,
 }

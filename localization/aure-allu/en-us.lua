@@ -218,6 +218,19 @@ return {
                     "Yarr Fishee 're mine!"
                 }
             },
+            fish_fac_cookiecutter_shark = {
+                name = {"Cookiecutter Shark"},
+                text = {
+                    "{C:green}#1# in #2#{} chance for held",
+                    "{C:enhanced}Lucky {C:attention}cards{} to create a",
+                    "{C:attention}D6 Tag{} and be {C:mult}destroyed",
+                    "at {C:attention}end of round{}",                    
+                },
+                flavor = {
+                    "Warning: Do not store within",
+                    "reach of small Jimbos"
+                }
+            },
         },
     },
     misc = {
@@ -225,6 +238,7 @@ return {
             k_aure_allu_blooper = "Ink'd!",
             k_aure_allu_milk_button = "Milk",
             k_aure_allu_unicorn = "Nyaeigh!",
+            k_aure_allu_cookiecutter = "Cookie'd",
             k_aure_allu_starfish_1 = "I",
             k_aure_allu_starfish_2 = "will also",
             k_aure_allu_starfish_3 = "join.",
