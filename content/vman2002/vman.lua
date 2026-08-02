@@ -109,7 +109,11 @@ FishAndChips.Fish { --Chips
 			card.fac_chips_sprites[i]:draw_self(chips_col[card.ability.unriggable.fac_chips_col[i]])
 		end
 		card.children.center:draw_shader('dissolve')
-	end
+	end,
+	impulse_min = 0.1,
+	impulse_max = 0.2,
+	decision_min = 0.4,
+	decision_max = 0.6
 }
 
 FishAndChips.Fish { --Trust
@@ -135,7 +139,11 @@ FishAndChips.Fish { --Trust
 	end,
 	calculate = function(self, card, context)
 		--if context.joker_main then return { x_chips = card.ability.extra.xchips, score = card.ability.extra.score } end
-	end
+	end,
+	impulse_min = 0.1,
+	impulse_max = 0.3,
+	decision_min = 0.7,
+	decision_max = 0.8
 }
 
 local todeg, todeg2 = 180/math.pi, 8/360
@@ -246,7 +254,11 @@ FishAndChips.Fish { --Manos
 		return (G.GAME.current_round.hands_played == 0 or G.STATE ~= G.STATES.SELECTING_HAND) and not card.ability.extra.active
 	end,
 	keep_on_use = returnTrue,
-	usable = true
+	usable = true,
+	impulse_min = 0.3,
+	impulse_max = 0.4,
+	decision_min = 0.1,
+	decision_max = 0.4
 }
 
 FishAndChips.Fish { --Necklace
@@ -278,7 +290,7 @@ FishAndChips.Fish { --Coupon
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "tag" },
-	stats = { weight = { min = 0.02, max = 0.02 }, length = {min = 0.15, max = 0.21}},
+	stats = { weight = { min = 0.02, max = 0.02 }, length = {min = 0.015, max = 0.021}},
 	environments = {
 		wormhole = 1, pier = 0.9
 	},
@@ -294,7 +306,11 @@ FishAndChips.Fish { --Coupon
 	can_use = function()
 		return G.STATE ~= G.STATES.FAC_FISHING
 	end,
-	usable = true
+	usable = true,
+	impulse_min = 0.2,
+	impulse_max = 0.6,
+	decision_min = 0.3,
+	decision_max = 0.7
 }
 
 --#endregion
