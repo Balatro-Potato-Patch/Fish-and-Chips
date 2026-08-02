@@ -453,7 +453,6 @@ end
 
 G.FUNCS.fac_use_fish = function(e)
 	local card = e.config.ref_table
-	G.GAME.fac_last_used_fish = e.config.center_key
 	local prev_state = G.TAROT_INTERRUPT
 	G.TAROT_INTERRUPT = G.STATE
 	G.CONTROLLER.locks.use = true
@@ -483,6 +482,8 @@ G.FUNCS.fac_use_fish = function(e)
 			return true;
 		end
 	}))
+
+	G.GAME.fac_last_used_fish = e.config.center_key
 end
 
 local uielement_click_ref = UIElement.click
