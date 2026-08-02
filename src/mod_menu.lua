@@ -340,8 +340,8 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
     local caught = localize('ph_fac_first_caught')..(fish_caught and fish_data.first_catch or '')
     local rod = fish_caught and localize('ph_fac_with_rod')..localize({key = fish_data.rod, set = 'fac_Rod', type = 'name_text'}) or ' '
     local count = localize('ph_fac_times_caught')..(fish_caught and fish_data.times_caught or '')
-    local record_weight = fish_caught and localize('ph_fac_record_weight')..(fish_data.record_weight or 0)..'kg' or ' '
-    local record_length = fish_caught and localize('ph_fac_record_length')..(fish_data.record_length or 0)..'m' or ' '
+    local record_weight = fish_caught and localize('ph_fac_record_weight')..FishAndChips.format_measurement(fish_data.record_weight or nil, 'weight') or ' '
+    local record_length = fish_caught and localize('ph_fac_record_length')..FishAndChips.format_measurement(fish_data.record_length or nil, 'length') or ' '
 
     local text = {n=G.UIT.R, config = {align = left and 'cl' or 'cr', padding = 0.1}, nodes = {
         {n = G.UIT.C, config = {align = 'cl', padding = 0.03, minw = 3.2}, nodes = {

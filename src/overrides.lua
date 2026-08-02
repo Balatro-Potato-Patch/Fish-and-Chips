@@ -318,9 +318,9 @@ function G.UIDEF.card_h_popup(card)
 		
         table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], {n=G.UIT.R, config = {align = 'cm'}, nodes = {
 			{n=G.UIT.T, config = {text = localize('ph_fac_weight'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
-			{n=G.UIT.T, config = {text = stats.weight..'kg', scale = 0.27, colour = weight_col, shadow = true}},
+			{n=G.UIT.T, config = {text = FishAndChips.format_measurement(stats.weight, 'weight'), scale = 0.27, colour = weight_col, shadow = true}},
 			{n=G.UIT.T, config = {text = '  '..localize('ph_fac_length'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
-			{n=G.UIT.T, config = {text = stats.length..'m', scale = 0.27, colour = length_col, shadow = true}},
+			{n=G.UIT.T, config = {text = FishAndChips.format_measurement(stats.length, 'length'), scale = 0.27, colour = length_col, shadow = true}},
 		}})
     end
 	return ret

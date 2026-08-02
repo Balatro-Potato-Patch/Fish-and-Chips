@@ -67,6 +67,24 @@ function FishAndChips.modify_fish_stats(card, stats)
 	card:set_sell_value()
 end
 
+function FishAndChips.format_measurement(value, type)
+	if not value then return ' ' end
+	if type == 'weight' then
+		if value < 1 then
+			return value*1000 .. 'g'
+		else
+			return value .. 'kg'
+		end
+	end
+	if type == 'length' then
+		if value < 1 then
+			return value*100 .. 'cm'
+		else
+			return value .. 'm'
+		end
+	end
+end
+
 local create_card_hook = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 	local card = create_card_hook(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
