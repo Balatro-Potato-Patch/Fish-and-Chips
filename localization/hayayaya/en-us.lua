@@ -160,6 +160,9 @@ return {
 					"the {C:attention}bait{} you used back",
 					"{X:attention,C:white}X0{C:red} Fish sell cost",
 				},
+				flavor = {
+					"TURN ME INTO A [REAL BOY!!!]",
+				},
 			},
 		},
 	},
