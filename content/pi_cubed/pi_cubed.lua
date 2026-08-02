@@ -22,7 +22,9 @@ SMODS.Atlas({
 
 --#region Fish
 
--- Smaller Wrapped Fish
+-- Smaller Wrapped Fish 
+-- dev note for playtesters: i think this fish can create treasure fish. 
+-- this is not intended behaviour and i wouldn't mind it if it was no longer able to
 FishAndChips.Fish {
 	key = "pi_cubed_smallerwrappedfish",
 	atlas = "pi_cubed_fish",
@@ -40,6 +42,10 @@ FishAndChips.Fish {
     decision_min = 0.05,
     decision_max = 0.1,
     vel_limit = 0.2,
+    stats = {
+		weight = {min = 0.075, max = 0.35},
+		length = {min = 0.05, max = 0.3}
+	},
     attributes = { "rank", "two", "generation", "usable" },
 	config = {
 		extra = {
@@ -78,7 +84,15 @@ FishAndChips.Fish {
                 func = function()
                     if G.fac_fish_area.config.card_limit > #G.fac_fish_area.cards - 1 then
                         play_sound('timpani')
-                        SMODS.add_card({ set = 'fac_Fish', key_append = "smaller_wrapped_present" })
+                        local new_fish = SMODS.add_card({ set = 'fac_Fish', key_append = "smaller_wrapped_present" })
+                        new_fish.ability.stats = {}
+                        new_fish.ability.stats.l_prop = 0
+                        new_fish.ability.stats.w_prop = 0
+                        new_fish.ability.stats.length = G.P_CENTERS[new_fish.config.center_key].stats.length.min
+                        new_fish.ability.stats.weight = G.P_CENTERS[new_fish.config.center_key].stats.weight.min
+                        -- forcing stats on a fish doesn't seem to scale the sprite, so...
+                        new_fish.T.h = new_fish.T.h * 0.7
+                        new_fish.T.w = new_fish.T.w * 0.7
                         card:juice_up(0.3, 0.5)
                     end
                     return true
@@ -107,6 +121,10 @@ FishAndChips.Fish {
     decision_min = 0.5,
     decision_max = 0.55,
     vel_limit = 0.3,
+    stats = {
+		weight = {min = 30, max = 70},
+		length = {min = 0.3, max = 0.7}
+	},
     config = {
 		extra = {
 			min_cards = 5,
@@ -176,6 +194,10 @@ FishAndChips.Fish {
     decision_min = 0.85,
     decision_max = 1,
     vel_limit = 0.52,
+    stats = {
+		weight = {min = 25, max = 60},
+		length = {min = 0.5, max = 1.5}
+	},
     attributes = { "modify_card", "suit", "usable" },
     requires_hand = true,
 	config = {
@@ -318,6 +340,10 @@ FishAndChips.Fish {
     decision_min = 0.24,
     decision_max = 0.55,
     vel_limit = 0.5,
+    stats = {
+		weight = {min = 5, max = 200},
+		length = {min = 0.1, max = 2}
+	},
     attributes = { "x_mult", "scaling", "reset" },
 	config = {
 		extra = {
@@ -387,6 +413,10 @@ FishAndChips.Fish {
     decision_min = 0.01,
     decision_max = 0.01,
     vel_limit = 0.42,
+    stats = {
+		weight = {min = 0.6, max = 15},
+		length = {min = 0.1, max = 2}
+	},
     attributes = { "economy", "usable", "chance" },
 	config = {
 		extra = {
@@ -450,6 +480,10 @@ FishAndChips.Fish {
     decision_min = 0.01,
     decision_max = 0.1,
     vel_limit = 0.5,
+    stats = {
+		weight = {min = 0.1, max = 0.2},
+		length = {min = 0.15, max = 0.25}
+	},
     attributes = { "suit", "diamonds", "retrigger", "seals" },
 	config = {
 		extra = {
@@ -524,6 +558,10 @@ FishAndChips.Fish {
     decision_min = 0.05,
     decision_max = 0.4,
     vel_limit = 0.8,
+    stats = {
+		weight = {min = 10, max = 50},
+		length = {min = 0.5, max = 0.8}
+	},
     attributes = { "economy", "modify_card", "usable" },
     requires_hand = true,
 	config = {
