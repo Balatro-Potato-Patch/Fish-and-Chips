@@ -43,8 +43,8 @@ FishAndChips.Fish {
 		backroom = 0.5
 	},
 	stats = {
-		length = 0.0120,  --based on ordinary cd
-		weight = .02
+		length = { min = 0.0120, max = 1},  --based on ordinary cd
+		weight = { min = 0.02, max = 1}
 	},
 	blueprint_compat = true,
 	config = {
@@ -93,8 +93,8 @@ FishAndChips.Fish {
 		}
 	},
 	stats = {
-		length = 0.0278,  --0.0278m , 277.77g based on starship heat tile measurements, not sure where density was from?
-		weight = .2777
+		length = { min = 0.0278, max = 1},  --0.0278m , 277.77g based on starship heat tile measurements, not sure where density was from?
+		weight = { min = 0.2777, max = 1}
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.reroll_gain, card.ability.extra.rerolls, } }
@@ -137,8 +137,8 @@ FishAndChips.Fish {
 		city_river = 0.3
 	},
 	stats = {
-		length = 0.00197,  --based on average gold ring
-		weight = 0.007
+		length = { min = 0.00197, max = 1 },  --based on average gold ring
+		weight = { min = 0.007, max = 1 }
 	},
 	blueprint_compat = false,
 	config = {
@@ -252,8 +252,8 @@ FishAndChips.Fish {
 		backroom = 0.5
 	},
 	stats = {
-		length = 1.75,  --entirely vibes based
-		weight = 90
+		length = {min = 1.75, max = 2},  --entirely vibes based
+		weight = { min = 90, max = 100}
 	},
 	blueprint_compat = true,
 	config = {
@@ -277,24 +277,20 @@ FishAndChips.Fish {
 		end
 	end,
 	on_catch = function(self, card)
-		SMODS.calculate_effect{
-				message = "Hell yeah!",
-				colour = G.C.PURPLE,
-				card = card,
+		local is_perfect_catch = G.FAC_FISH_GAME.perfect
+		if is_perfect_catch then
+			SMODS.calculate_effect{
 				func = function()
-					play_sound('fac_pa_wiinormal',1,1)
+					play_sound('fac_pa_wiibonus')
 				end
 			}
-	end,
-	add_to_deck = function(self, card)
-		SMODS.calculate_effect{
-				message = "Hell yeah!",
-				colour = G.C.PURPLE,
-				card = card,
+		else
+			SMODS.calculate_effect{
 				func = function()
-					play_sound('fac_pa_wiinormal',1,1)
+					play_sound('fac_pa_wiinormal')
 				end
 			}
+		end
 	end,
 }
 
@@ -311,8 +307,8 @@ FishAndChips.Fish {
 		backroom = 0.5
 	},
 	stats = {
-		length = 0.01,  --vibes
-		weight = 0.0003
+		length = {min = 0.01, max = 1},  --vibes
+		weight = {min = 0.0003, max = 1}
 	},
 	blueprint_compat = true,
 	config = {
@@ -336,7 +332,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
         if context.setting_blind and not context.blueprint then
-			card.ability.extra.chosen_hand = pseudorandom("pa_mysteryfish", 0, G.GAME.current_round.hands_left)
+			card.ability.extra.chosen_hand = pseudorandom("pa_F", 0, G.GAME.current_round.hands_left)
         end
 
 		if context.joker_main then
@@ -371,8 +367,8 @@ FishAndChips.Fish {
 		backroom = 0.5
 	},
 	stats = {
-		length = 1.5,  --same size as normal fishing rod but heavier
-		weight = 8
+		length = {min = 1.5, max = 2},  --same size as normal fishing rod but heavier
+		weight = {min = 8, max = 10}
 	},
 	blueprint_compat = true,
 	config = {
@@ -452,8 +448,8 @@ FishAndChips.Fish {
 		backroom = 0.5
 	},
 	stats = {
-		length = 0.012,  --vaugely based on actual phone + measurements of a shell i have
-		weight = .125
+		length = {min = 0.012, max = 1},  --vaugely based on actual phone + measurements of a shell i have
+		weight = {min = 0.125, max = 1}
 	},
 	blueprint_compat = true,
 	config = {
@@ -498,7 +494,7 @@ FishAndChips.Fish {
 					scalar_value = "sell_value_increase",
 					operation = "+"
 				})
-				card:set_cost()
+				card:set_sell_value()
 				card.ability.extra.sequence = {}
 				card.ability.extra.current_position = 1
 
