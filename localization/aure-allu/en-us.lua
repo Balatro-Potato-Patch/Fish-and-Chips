@@ -231,6 +231,18 @@ return {
                     "reach of small Jimbos"
                 }
             },
+            fish_fac_chimaera = {
+                name = {"Chimaera"},
+                text = {
+                    "If {C:attention}played hand{} contains",
+                    "a {C:attention}Flush{}, a {C:attention}Pair{} and a",
+                    "{C:enhanced}Wild {C:attention}card{}, {C:dark_edition,E:1}morphs{} into",
+                    "last {C:attention}used {C:fac_fish}Fish"
+                },
+                flavor = {
+                    "This Chimaera ain't arced."
+                }
+            },
         },
     },
     misc = {
@@ -239,6 +251,7 @@ return {
             k_aure_allu_milk_button = "Milk",
             k_aure_allu_unicorn = "Nyaeigh!",
             k_aure_allu_cookiecutter = "Cookie'd",
+            k_aure_allu_chimaera_confoozed = "...",
             k_aure_allu_starfish_1 = "I",
             k_aure_allu_starfish_2 = "will also",
             k_aure_allu_starfish_3 = "join.",

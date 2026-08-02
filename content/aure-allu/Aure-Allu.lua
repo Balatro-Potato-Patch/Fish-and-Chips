@@ -1194,7 +1194,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "chance", "destroy_card" },
+	attributes = { "chance",  "tag", "destroy_card" },
 	stats = {weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 0.4}},
 	blueprint_compat = true,
 	config = {
@@ -1234,6 +1234,81 @@ FishAndChips.Fish {
 				}
 			end
 			return nil, true
+		end
+	end,
+}
+
+-- Chimaera
+local fac_use_fish_ref = G.FUNCS.fac_use_fish
+function G.FUNCS.fac_use_fish(e)
+	local ret = fac_use_fish_ref(e)
+	G.GAME.last_used_fish = e.config.ref_table.config.center.key
+	return ret
+end
+
+FishAndChips.Fish {
+	key = "chimaera",
+	atlas = "aure-allu_fish",
+	pos = { x = 4, y = 3 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "passive" },
+	stats = {weight = {min = 0.25, max = 30}, length = {min = 0.1, max = 1.5}},
+	blueprint_compat = false,
+	config = {
+		extra = {
+			
+		},
+	},
+	environments = {
+		city_river = 5,
+		chocolate_river = 10,
+		soup = 2,
+	},
+	loc_vars = function(self, info_queue, card)
+		local main_end = {
+			{
+				n = G.UIT.C,
+				config = { align = "bm", minh = 0.4 },
+				nodes = {
+					{
+						n = G.UIT.C,
+						config = { ref_table = card, align = "m", colour = G.GAME.last_used_fish and mix_colours(FishAndChips.C.FISH, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.BLACK, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
+						nodes = {
+							{ n = G.UIT.T, config = { text = G.GAME.last_used_fish and localize{type = 'name_text', key = G.GAME.last_used_fish, set = "fac_Fish"} or localize('k_none'), colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
+						}
+					}
+				}
+			}
+		}
+		return { main_end = main_end }
+	end,
+	calculate = function(self, card, context)
+		if context.before and next(context.poker_hands["Flush"]) and next(context.poker_hands["Pair"]) then
+			local has_wild = false
+			for i, pcard in ipairs(context.full_hand) do
+				if SMODS.has_enhancement(pcard, "m_wild") then has_wild = true; break end
+			end
+			if has_wild then
+				if G.GAME.last_used_fish then
+					G.E_MANAGER:add_event(Event({
+						trigger = "after",
+						delay = 0.3,
+						func = function ()
+							-- Todo : yassify
+							card:juice_up(1.2, 0.3)
+							card:set_ability(G.P_CENTERS[G.GAME.last_used_fish])
+							return true
+						end
+					}))
+				else 
+					return {
+						message = localize("k_aure_allu_chimaera_confoozed"),
+						colour = G.C.BLACK
+					}
+				end
+			end
 		end
 	end,
 }
