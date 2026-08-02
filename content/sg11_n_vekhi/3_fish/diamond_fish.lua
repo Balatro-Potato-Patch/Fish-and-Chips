@@ -35,21 +35,12 @@ FishAndChips.Fish({
 	end,
 	calculate = function(self, card, context)
 		if context.after then
-			local shattered_count = 0
-			local survived_count = 0
 			for k, v in pairs(context.scoring_hand) do
-				if SMODS.has_enhancement(v, "m_glass") then
-					if v.shattered then
-						shattered_count = shattered_count + 1
-					else
-						survived_count = survived_count + 1
-					end
+				if SMODS.has_enhancement(v, "m_glass") and not v.shattered then
+					return {
+						dollars = card.ability.extra.dollars,
+					}
 				end
-			end
-			if survived_count > 0 then
-				return {
-					dollars = card.ability.extra.dollars,
-				}
 			end
 		end
 	end,
