@@ -60,7 +60,7 @@ end
 function FishAndChips.is_environment_complete(environment)
     for _, k in ipairs(SMODS.get_attribute_pool(environment)) do
 		local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[k] or {}
-        if not (fish_data.times_caught and fish_data.times_caught > 0) then
+        if not (fish_data.times_caught and fish_data.times_caught > 0) and not G.P_CENTERS[k].no_collection then
 			return false
 		end
     end
