@@ -213,7 +213,7 @@ FishAndChips.Fish { --Manos
 		if not context.blueprint then
 			if context.joker_main then
 				local c = false
-				topuplib.inspect(context)
+				fac_topuplib_inspect(context)
 				if next(context.poker_hands.Flush) and ex.flushes_current < ex.flushes_goal then
 					SMODS.scale_card(card, {ref_value = "flushes_current", no_message = true})
 					c = true
