@@ -7,6 +7,7 @@ PotatoPatchUtils.Developer({
 	fac_partner = 'MissingNo',
 	click = function(self)
 		play_sound('fac_am_astra_click')
+		self:juice_up(0.1, 0.1)
 	end
 })
 
