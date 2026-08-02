@@ -52,7 +52,7 @@ FishAndChips.Fish { --Chips
 		}
 	},
 	environments = {
-		backroom = 0.7, soup = 0.3
+		backroom = 0.7, city_river = 0.4
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xchips, card.ability.extra.score } }
