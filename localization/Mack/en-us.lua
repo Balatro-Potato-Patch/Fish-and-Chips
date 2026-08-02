@@ -46,7 +46,7 @@ return {
                 name = "Sticky Steelhead",
                 text = {
                     "Copies the ability of",
-                    "the {C:attention}Fish{} to the left",
+                    "the {C:fac_fish}Fish{} to the left",
                 },
                 flavour = {
                     "Typically an ocean fish,",
@@ -133,7 +133,7 @@ return {
                 name = "Flatbread Flounder",
                 text = {
                     "Copies the ability of",
-                    "the rightmost {C:attention}Fish{}",
+                    "the rightmost {C:fac_fish}Fish{}",
                 },
                 flavour = {
                     "Quite bland on its own,",
