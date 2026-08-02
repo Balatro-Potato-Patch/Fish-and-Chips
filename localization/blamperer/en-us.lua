@@ -18,6 +18,7 @@ return {
                     "Earn {C:money}$#1#{} when returning",
                     "from fishing based on your",
                     "best streak of {C:gold}Perfect Catches",
+                    "{C:inactive}(Resets on payout)",
                     "{C:inactive}(Highest streak: {C:gold}#2#{C:inactive} in a row)"
                 },
                 flavor = {

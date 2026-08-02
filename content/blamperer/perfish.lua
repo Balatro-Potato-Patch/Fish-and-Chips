@@ -5,7 +5,7 @@ FishAndChips.Fish {
     ppu_coder = { "blamperer" },
     ppu_artist = { "blamperer" },
     attributes = {
-        "economy", "fac_perfect_catch"
+        "economy", "fac_perfect_catch", "scaling", "reset"
     },
     config = {
         extra = {
@@ -63,9 +63,8 @@ FishAndChips.Fish {
 
         if context.ending_fishing and card.ability.extra.best_streak > 0 then
             local reward = math.max(0, 2 * card.ability.extra.best_streak - 1)
-            -- BALANCE: Uncomment these to reset on payout
-            -- card.ability.extra.current_streak = 0
-            -- card.ability.extra.best_streak = 0
+            card.ability.extra.current_streak = 0
+            card.ability.extra.best_streak = 0
             return { dollars = reward }
         end
     end
