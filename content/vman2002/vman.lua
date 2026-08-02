@@ -126,8 +126,7 @@ FishAndChips.Fish { --Trust
 	attributes = { "xchips", "score" },
 	config = {
 		extra = {
-			xchips = 1.3,
-			score = 800
+			odds_add = 2
 		}
 	},
 	stats = { weight = { min = 0.01, max = 0.02 }, length = {min = 0.01, max = 0.02}}, --TODO: Stats
@@ -135,11 +134,13 @@ FishAndChips.Fish { --Trust
 		city_river = 0.4, pier = 0.6
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.xchips, card.ability.extra.score } }
+		return { vars = { card.ability.extra.odds_add } }
 	end,
-	calculate = function(self, card, context)
-		--if context.joker_main then return { x_chips = card.ability.extra.xchips, score = card.ability.extra.score } end
-	end,
+    calculate = function(self, card, context)
+		if context.mod_probability and G.GAME.fac_trust_active and G.GAME.current_round.hands_played == 0 then
+			return {numerator = context.numerator + card.ability.extra.odds_add}
+		end
+    end,
 	impulse_min = 0.1,
 	impulse_max = 0.3,
 	decision_min = 0.7,
