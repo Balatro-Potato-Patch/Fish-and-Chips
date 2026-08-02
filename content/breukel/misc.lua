@@ -3,7 +3,7 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_breukel_credit',
 	colour = HEX("ac4dff"),
 	pos = {x = 0, y = 0},
-	fac_partner = 'Comykel'
+	fac_partner = 'Comykel',
 })
 
 PotatoPatchUtils.Developer({
@@ -16,8 +16,8 @@ PotatoPatchUtils.Developer({
 
 SMODS.Atlas({
 	key = "fac_breukel_credit",
-	path = "breukel/credit.png",
-	px = 129,
+	path = "breukel/credit2.png",
+	px = 71,
 	py = 95,
 })
 
