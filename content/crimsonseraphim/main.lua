@@ -1370,3 +1370,153 @@ FishAndChips.Fish {
         end
     end,
 }
+
+FishAndChips.Fish {
+	key = "larp",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "useable", "passive" },
+	environments = {
+        city_river = 5,
+        calm_pond = 5,
+        garden = 5
+	},
+    config = {
+        extra = {
+            joker = "fish_fac_cod"
+        }
+    },
+    stats = {
+		weight = {min = 2.6, max = 20},
+		length = {min = 0.4, max = 1.2}
+	},
+    loc_vars = function(self, q, card)
+        return {
+            vars = {
+                localize{type = "name_text", key = card.ability.extra.joker, set = "fac_Fish"}
+            },
+        }
+    end,
+    use = function(self, card)
+        if G.P_CENTERS[card.ability.extra.joker].use then
+            G.P_CENTERS[card.ability.extra.joker]:use(card.dummy)
+        end
+	end,
+	can_use = function(self, card)
+		return G.P_CENTERS[card.ability.extra.joker].can_use and G.P_CENTERS[card.ability.extra.joker]:can_use(card.dummy) or nil
+	end,
+    keep_on_use = function(self, card)
+        return G.P_CENTERS[card.ability.extra.joker].keep_on_use and G.P_CENTERS[card.ability.extra.joker]:keep_on_use(card.dummy) or nil
+    end,
+    calculate = function(self, card, context)
+        if context.starting_shop then
+            G.E_MANAGER:add_event(Event{
+                trigger = "after",
+                func = function()
+                    card.ability.extra.joker = SMODS.poll_object{type = "fac_Fish"}
+                    Card.remove_from_deck(card.dummy)
+                    card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
+                    card.dummy.added_to_deck = nil
+                    Card.add_to_deck(card.dummy)
+                    card.dummy.added_to_deck = true
+                    card.ability.extra.dummy_abil = card.dummy.ability
+                    FishAndChips.modify_fish_stats(card, FishAndChips.create_fish_stats(card.dummy.config.center))
+                    card_eval_status_text(
+                        card,
+                        "extra",
+                        nil,
+                        nil,
+                        nil,
+                        { message = localize("k_switch_ex") }
+                    )
+                    return true
+                end
+            })
+        end
+        if not card.dummy then
+            card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
+            card.dummy.added_to_deck = true
+            if card.ability.extra.dummy_abil then card.dummy.ability = card.ability.extra.dummy_abil end
+        end
+        if card.ability.extra.joker == "fish_fac_steelhead" then
+            local other_fish = nil
+            for i = 2, #G.fac_fish_area.cards do
+                if G.fac_fish_area.cards[i] == card then other_fish = G.fac_fish_area.cards[i - 1] end
+            end
+            return SMODS.blueprint_effect(card, other_fish, context)
+        elseif card.ability.extra.joker == "fish_fac_flounder" then
+            if G.fac_fish_area.cards[#G.fac_fish_area.cards] ~= card then
+                return SMODS.blueprint_effect(card, G.fac_fish_area.cards[#G.fac_fish_area.cards], context)
+            end
+        else
+            local ret = Card.calculate_joker(card.dummy, context)
+            card.ability.extra.dummy_abil = card.dummy.ability
+            return ret
+        end
+    end,
+    calc_dollar_bonus = function(self, card)
+        if card.dummy then
+            local ret = Card.calculate_dollar_bonus(card.dummy)
+            card.ability.extra.dummy_abil = card.dummy.ability
+            return ret
+        end
+    end,
+}
+
+FishAndChips.Fish {
+	key = "still_life",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "mult" },
+	environments = {
+        backroom = 5
+	},
+    config = {
+        extra = {
+            mult = 4,
+            mult_gain = 4
+        }
+    },
+    stats = {
+		weight = {min = 1.00, max = 8.50},
+		length = {min = 0.20, max = 1.45}
+	},
+    loc_vars = function(self, q, card)
+        return {
+            vars = {
+                card.ability.extra.mult,
+                card.ability.extra.mult_gain
+            },
+        }
+    end,
+    calculate = function(self, card, context)
+        if context.setting_blind then
+            local fih = {}
+            for i, v in pairs(G.fac_fish_area.cards) do
+                if not SMODS.is_eternal(v) and v ~= card then
+                    fih[#fih+1] = v
+                end
+            end
+            if #fih > 0 then
+                SMODS.destroy_cards(pseudorandom_element(fih, pseudoseed("stilllife_card")), nil, true)
+            end
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "mult",
+                scalar_value = "mult_gain"
+            })
+            return nil, true
+        end
+        if context.joker_main then
+            return {
+                mult = card.ability.extra.mult
+            }
+        end
+    end,
+}

@@ -83,7 +83,7 @@ return {
                 name = {"Crystalfish", "(Ca{s:0.5}2{}[Mg,Fe]{s:0.5}5{}Si{s:0.5}8{}O{s:0.5}22{}[OH]{s:0.5}2{})"},
                 text = {
                     {
-                        "Caught {C:green}Fish{} have a ",
+                        "Caught {C:attention}Fish{} have a ",
                         "{C:green}#1# in #2#{} chance to",
                         "have a random Seal"
                     },
@@ -219,6 +219,21 @@ return {
                 flavor = {
                     "Theres no limit",
                     "to the carp."
+                }
+            },
+            fish_fac_still_life = {
+                name = "BaaaS͚icc baasS",
+                text = {
+                    "{C:red}+#1#{} MMulT",
+                    "{C:purple}dEsttrOy{} a randOM {C:spectral}Fish{} aaN̶d ggaiN",
+                    "{C:red}+#2#{} MuLt wHeen a BlIN̵d iS seleeCted"
+                },
+                flavor = {
+                    "ThiS fffisH iiiss oFtteeN",
+                    "ssseeeeeN at ThhE̗ ḆAcK̊ ỌF",
+                    "TH̵E $Tring sssectIoN̴̚ iN",
+                    "mmost orC̶heestraas. ......WWait",
+                    "No, wwroNG̊͒ bass..."
                 }
             }
         },
