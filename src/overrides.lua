@@ -290,7 +290,37 @@ function G.UIDEF.card_h_popup(card)
         end
         table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 1, {n=G.UIT.R, config = {align = 'cm'}, nodes = final_flavour})
     end
-    return ret
+	if card.ability and card.ability.set == 'fac_Fish' and card.area and not (card.area.config.collection or card.area.config.fac_compendium) then
+		local name = SMODS.deepfind(ret, 'main_box_flag', 'i')[1]
+        local name_node = name.objtree
+        local flavour_node = {}
+		local stats = card.ability.stats
+		local stat_proto = card.config.center.stats
+		local weight_perc = (stats.weight - stat_proto.weight.min)/(stat_proto.weight.max-stat_proto.weight.min)*100
+		local length_perc = (stats.length - stat_proto.length.min)/(stat_proto.length.max-stat_proto.length.min)*100
+		local colours = { -- TODO: are these colours okay?
+			darken(G.C.RED, 0.1),
+			G.C.RED,
+			G.C.ORANGE,
+			G.C.YELLOW,
+			G.C.GREEN,
+			G.ARGS.LOC_COLOURS.edition
+		}
+		
+		local weight_col_index = math.floor(weight_perc/20)
+		local weight_col = stats.weight == stat_proto.weight.max and colours[6] or mix_colours(colours[weight_col_index+1], colours[math.max(weight_col_index, 1)], (weight_perc - (weight_col_index * 20))/20)
+		
+		local length_col_index = math.max(math.floor(length_perc/20), 1)
+		local length_col = stats.length == stat_proto.length.max and colours[6] or mix_colours(colours[length_col_index+1], colours[length_col_index], (length_perc - (length_col_index * 20))/20)
+		
+        table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 1, {n=G.UIT.R, config = {align = 'cm'}, nodes = {
+			{n=G.UIT.T, config = {text = localize('ph_fac_weight'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
+			{n=G.UIT.T, config = {text = stats.weight..'kg', scale = 0.27, colour = weight_col, shadow = true}},
+			{n=G.UIT.T, config = {text = '  '..localize('ph_fac_length'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
+			{n=G.UIT.T, config = {text = stats.length..'m', scale = 0.27, colour = length_col, shadow = true}},
+		}})
+    end
+	return ret
 end
 
 local name_from_hook = name_from_rows
@@ -480,6 +510,13 @@ function Card:open()
 		end
 	}))
 end
+
+local start_run_hook = Game.start_run
+function Game:start_run(args)
+	start_run_hook(self, args)
+	G.GAME.fac_fish_expanded = false
+end
+
 
 local focusable = Controller.is_node_focusable
 function Controller:is_node_focusable(node)

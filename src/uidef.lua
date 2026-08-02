@@ -311,13 +311,17 @@ function G.UIDEF.fac_fishing_area_display()
 							colour = { G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65 },
 							padding = 0.1,
 							align = "cm",
+							id = 'environment_desc',
+							button = 'open_compendium_to_env',
+							button_dist = 0.05,
+							hover = true
 						},
 						nodes = {
 							{
 								n = G.UIT.R,
 								config = {
 									align = 'cm',
-									padding = 0.1
+									padding = 0.1,
 								},
 								nodes = {
 									{

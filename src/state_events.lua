@@ -65,6 +65,8 @@ function Game:update(dt)
 		if G.FISHING_STATE == G.FISHING_STATES.RESULTS then
 			G:update_fac_fishing_results(dt)
 		end
+	else
+		FishAndChips.stop_reel_sound()
 	end
 end
 
@@ -157,6 +159,7 @@ function FishAndChips.create_fishing_UI()
 	end
 	G.FISHING = {}
 	G.FAC_JIMBO_ANIMATION_STATE = nil
+	G.NOT_SAFE_TO_PRESS_BUTTONS = false
 	G.FISHING.fishing = UIBox({
 		definition = G.UIDEF.fac_fishing(),
 		config = {
