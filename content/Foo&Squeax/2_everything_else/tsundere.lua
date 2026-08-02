@@ -5,6 +5,7 @@ FishAndChips.Fish{
 		volcano = 1,
 		aquifer = 0.25
 	},
+	button_key = "b_fac_fas_act",
 	ppu_coder = {"Foo54"},
 	config = {
 		extra = {
@@ -189,47 +190,4 @@ function FishAndChips.FooSqueax.tsunderfish.create_act_uibox (card)
 			instance_type = "CARD"
 		}
 	}
-end
-
-local use_and_sell = G.UIDEF.use_and_sell_buttons
----@diagnostic disable-next-line: duplicate-set-field
-function G.UIDEF.use_and_sell_buttons(card)
-	local ret = use_and_sell(card)
-	if card.config.center.key == 'fish_fac_fas_tsundere' then
-		local sell = {n=G.UIT.C, config={align = "cr"}, nodes={
-			{n=G.UIT.C, config={ref_table = card, align = "cr",padding = 0.1, r=0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'sell_card', func = 'can_sell_card'}, nodes={
-				{n=G.UIT.B, config = {w=0.1,h=0.6}},
-				{n=G.UIT.C, config={align = "tm"}, nodes={
-					{n=G.UIT.R, config={align = "cm", maxw = 1.25}, nodes={
-						{n=G.UIT.T, config={text = localize('b_sell'),colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true}}
-					}},
-					{n=G.UIT.R, config={align = "cm"}, nodes={
-						{n=G.UIT.T, config={text = localize('$'),colour = G.C.WHITE, scale = 0.55, shadow = true, font = SMODS.Fonts["fac_sand_dollars"]}},
-						{n=G.UIT.T, config={ref_table = card, ref_value = 'sell_cost_label',colour = G.C.WHITE, scale = 0.55, shadow = true}}
-					}}
-				}}
-			}},
-		}}
-		local use = {n=G.UIT.C, config={align = "cr"}, nodes={
-			{n=G.UIT.C, config={ref_table = card, align = "cm",padding = 0.1, r=0.08, minw = 1.25, minh = 0.8, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, fac_ignore = true, button = 'fac_use_fish', func = "fac_can_use_fish", handy_insta_action = 'use'}, nodes={
-				{n=G.UIT.B, config = {w=0.1,h=0.6}},
-				{n=G.UIT.C, config={align = "cm"}, nodes={
-					{n=G.UIT.R, config={align = "cm", maxw = 1.25}, nodes={
-						{n=G.UIT.T, config={text = localize("b_fac_fas_act"), colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true}}
-					}},
-				}},
-			}},
-		}}
-		ret = {n=G.UIT.ROOT, config = {padding = 0, colour = G.C.CLEAR}, nodes={
-			{n=G.UIT.C, config={padding = 0.15, align = 'cl'}, nodes={
-				{n=G.UIT.R, config={align = 'cl'}, nodes={
-					sell
-				}},
-				{n=G.UIT.R, config={align = 'cl'}, nodes={
-					use
-				}},
-			}},
-		}}
-	end
-	return ret
 end
