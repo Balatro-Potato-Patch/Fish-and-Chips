@@ -80,13 +80,15 @@ local function fac_profile_from_center(center)
         rod = G.fac_rod_area.cards[1].ability.fishing
         key = G.fac_rod_area.cards[1].config.center.key
     end
+    local stats = FishAndChips.create_fish_stats(center)
     return {
         key = center.key,
         name = center.name or center.key,
+        stats = stats,
         bar_size = rod.bar_size == nil and t.bar_size or rod.bar_size,
         treasure_gain = rod.treasure_gain == nil and t.treasure_gain or rod.treasure_gain,
-        catch_gain = rod.catch_gain == nil and t.catch_gain or rod.catch_gain,
-        catch_loss = rod.catch_loss == nil and t.catch_loss or rod.catch_loss,
+        catch_gain = (rod.catch_gain == nil and t.catch_gain or rod.catch_gain) / (((0.5 + stats.w_prop * 0.5) + (0.5 + stats.l_prop * 0.5))/2),
+        catch_loss = (rod.catch_loss == nil and t.catch_loss or rod.catch_loss) * (((0.5 + stats.w_prop * 0.5) + (0.5 + stats.l_prop * 0.5))/2),
         vel_limit = (center.vel_limit or t.vel_limit) * (rod.vel_limit or 1),
         impulse_min = (center.impulse_min or t.impulse_min) * (rod.impulse_min or 1),
         impulse_max = (center.impulse_max or t.impulse_max) * (rod.impulse_max or 1),
@@ -294,8 +296,12 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     local first_catch = not (fish_data.times_caught and fish_data.times_caught > 0)
     profile.center.discovered = true
     play_sound('fac_fish_landed', math.random(0.8, 1.2))
+    FishAndChips.create_card_stats = profile.stats
     local added_card = SMODS.add_card({ area = reward_area, key = profile.key })
+    FishAndChips.create_card_stats = nil
     if added_card then
+        fish_data.record_weight = math.max(fish_data.record_weight or 0, profile.stats.weight)
+        fish_data.record_length = math.max(fish_data.record_length or 0, profile.stats.length)
         added_card:set_sprites(added_card.config.center)
         added_card.states.visible = false
         SMODS.calculate_context({fac_fish_caught = added_card, fish = profile.key, treasure = is_treasure_catch or false, perfect = state.perfect or false})
