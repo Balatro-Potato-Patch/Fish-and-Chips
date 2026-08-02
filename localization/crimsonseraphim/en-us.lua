@@ -250,6 +250,23 @@ return {
                     "universe but what is clear is that",
                     "it does not originate from it."
                 }
+            },
+            fish_fac_jack_o_lantern = {
+                name = "Jack O' Lantern",
+                text = {
+                    {
+                        "Your vision is constricted"
+                    },
+                    {
+                        "Earn {C:money}$#1#{} Every",
+                        "{C:attention}#2#{} times a {C:attention}Fish{} leaves",
+                        "your sweet spot.",
+                        "{C:inactive}(Currently: [{C:attention}#2#{C:inactive}/{C:attention}#3#{C:inactive}] times)"
+                    }
+                },
+                flavor = {
+                    "YOUR TAKING TOO LONG"
+                }
             }
         },
         Other = {

@@ -1579,3 +1579,126 @@ SMODS.Shader({
     key="crimsonseraphim_starblighted",
     path="crimsonseraphim/starblighted.fs",
 })
+
+SMODS.Atlas({
+	key = "crimsonseraphim_ultimate_weapon",
+	path = "crimsonseraphim/ultimate_weapon.png",
+	px = 102,
+	py = 70,
+    atlas_table = "ANIMATION_ATLAS",
+    fps = 10,
+    frames = 8
+})
+
+FishAndChips.Fish {
+	key = "ultimate_weapon",
+	atlas = "crimsonseraphim_ultimate_weapon",
+	pos = { x = 0, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "useable" },
+    pixel_size = {
+        w = 102,
+        h = 70
+    },
+    display_size = {
+        w = 71,
+        h = 71 * 70/102
+    },
+	environments = {
+        styx = 5,
+        backroom = 5,
+        city_river = 5
+	},
+    config = {
+        extra = {
+            
+        }
+    },
+    stats = {
+		weight = {min = 0, max = 0},
+		length = {min = 4.13, max = 4.13}
+	},
+    loc_vars = function(self, info_queue, card)
+        
+    end,
+}
+
+SMODS.Shader({
+    key="ultimate_weapon",
+    path="crimsonseraphim/ultimate_weapon.fs",
+})
+
+SMODS.DrawStep({
+	key = "ultimate_weapon",
+	order = 25,
+	func = function(self)
+        local card = self.config.center_key
+        if (card ~= "fish_fac_ultimate_weapon")  then return end
+        self.children.center:draw_shader('fac_ultimate_weapon', nil, self.ARGS.send_to_shader)
+	end,
+	conditions = { vortex = false, facing = "front" },
+})
+
+
+FishAndChips.Fish {
+	key = "jack_o_lantern",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 0 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "passive" },
+	environments = {
+        wormhole = 5
+	},
+    config = {
+        extra = {
+            money = 1,
+            times = 3,
+            times_done = 0
+        }
+    },
+    stats = {
+		weight = {min = 7, max = 7},
+		length = {min = .33, max = .33}
+	},
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.money,
+                card.ability.extra.times,
+                card.ability.extra.times_done
+            }
+        }
+    end,
+    calculate = function(self, card ,context)
+        if context.crimsonseraphim_fish_leaving_sweet_spot then
+            card.ability.extra.times_done = card.ability.extra.times_done + 1
+            if card.ability.extra.times_done >= card.ability.extra.times then
+                card.ability.extra.times_done = 0
+                return {
+                    dollars = card.ability.extra.money
+                }
+            end
+            return {
+                message = card.ability.extra.times_done .. "/" .. card.ability.extra.times
+            }
+        end
+    end
+}
+
+SMODS.ScreenShader {
+    key = "flashlight",
+    path = "crimsonseraphim/flashlight.fs",
+    send_vars = function(self)
+        return {
+            center_pos = { love.mouse.getX(), love.mouse.getY() },
+            dist = 350,
+        }
+    end,
+    should_apply = function(self)
+        return next(SMODS.find_card("fish_fac_jack_o_lantern"))
+    end,
+}
