@@ -51,6 +51,10 @@ FishAndChips.Fish{
 		backroom = 0.4,
 		aquifer = 0.01
 	},
+	stats = {
+		length = {min = 5, max = 5},
+		weight = {min = 5, max = 5}
+	},
 	config = {
 		extra = {
 			repetitions = 2,

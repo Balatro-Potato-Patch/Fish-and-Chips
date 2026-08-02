@@ -15,6 +15,10 @@ FishAndChips.Fish{
 			score = 40
 		}
 	},
+	stats = {
+		length = {min = 5, max = 5},
+		weight = {min = 5, max = 5}
+	},
 	attributes = {"usable", "score", "blind"},
 	loc_vars = function(self, info_queue, card)
 		return {vars = {card.ability.extra.score}}

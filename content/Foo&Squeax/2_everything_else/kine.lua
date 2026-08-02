@@ -11,6 +11,10 @@ FishAndChips.Fish{
 			id = nil,
 		}
 	},
+	stats = {
+		length = {min = 5, max = 5},
+		weight = {min = 5, max = 5}
+	},
 	load = function (self, card, card_table, other_card)
 		G.E_MANAGER:add_event(Event{
 			func = function ()

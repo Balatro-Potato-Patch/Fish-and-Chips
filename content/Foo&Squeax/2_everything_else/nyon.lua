@@ -47,6 +47,10 @@ FishAndChips.Fish{
 			slow = false,
 		}
 	},
+	stats = {
+		length = {min = 5, max = 5},
+		weight = {min = 5, max = 5}
+	},
 	attributes = {"xmult"},
 	loc_vars = function(self, info_queue, card)
 		return {vars = {card.ability.extra.xmult, card.ability.extra.call, pseudorandom_element({"Nyon!", "Ueueleuleuleue"}), card.ability.immutable.timer}}

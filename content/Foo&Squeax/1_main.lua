@@ -13,6 +13,9 @@ FishAndChips.FooSqueax = {
 	},
 	tsunderfish = {
 		
+	},
+	toby_fish = {
+		no_desc = nil
 	}
 }
 
@@ -81,7 +84,8 @@ function FishAndChips.mod.reset_game_globals (run_start)
 				on = false,
 				water_height = 1
 			},
-			wormholes = {}
+			wormholes = {},
+			tobies = 0,
 		}
 	end
 	G.GAME.fac_FooSqueax.wormholes.target = pseudorandom_element(PotatoPatchUtils.Developers).name

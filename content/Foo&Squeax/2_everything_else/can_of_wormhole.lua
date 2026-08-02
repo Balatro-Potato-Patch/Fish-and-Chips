@@ -11,6 +11,10 @@ FishAndChips.Fish{
 		wormhole = 1,
 		city_river = 0.2,
 	},
+	stats = {
+		length = {min = 0.01, max = 0.05},
+		weight = {min = 0.01, max = 0.05}
+	},
 	weight = 5,
 	config = {
 		extra = {

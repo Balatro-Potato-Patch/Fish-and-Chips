@@ -71,6 +71,10 @@ FishAndChips.Fish{
 	in_pool = function (self, args)
 		return false
 	end,
+	stats = {
+		length = {min = 5, max = 5},
+		weight = {min = 5, max = 5}
+	},
 	config = {
 		fac_fas_kebab = {
 			id = nil,
@@ -132,6 +136,10 @@ FishAndChips.Fish{
 	ppu_coder = {"Foo54"},
 	environments = {
 		soup = 1
+	},
+	stats = {
+		length = {min = 0.25, max = 0.5},
+		weight = {min = 0.05, max = 0.1}
 	},
 	weight = 5,
 	set_ability = function (self, card, initial, delay_sprites)

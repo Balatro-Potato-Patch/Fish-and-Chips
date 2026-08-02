@@ -177,6 +177,15 @@ return {
 					"It's not like I want to give you",
 					"{C:attention}+#1#{} selection limit. Hmph!"
 				}
+			},
+			fish_fac_fas_toby_fish = {
+				name = "Goby Fox",
+				flavour = {
+					"{element:1}"
+				},
+				text = {
+					"this should never appear"
+				}
 			}
 		},
 		PotatoPatch = {

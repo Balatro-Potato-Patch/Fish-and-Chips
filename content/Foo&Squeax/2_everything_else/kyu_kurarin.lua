@@ -14,6 +14,10 @@ FishAndChips.Fish{
 			gain = 7
 		}
 	},
+	stats = {
+		length = {min = 5, max = 5},
+		weight = {min = 5, max = 5}
+	},
 	attributes = {"chips"},
 	loc_vars = function(self, info_queue, card)
 ---@diagnostic disable-next-line: undefined-global
