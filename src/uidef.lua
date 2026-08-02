@@ -1028,11 +1028,11 @@ function G.FUNCS.buy_from_shop(e, ...)
 		SMODS.calculate_context { fac_buy_bait = c.config.center }
 		c:start_dissolve(nil, nil, 0.3)
 		if #c.area.cards > 1 then
-			local below = c.area.cards[#c.area.cards-1]
-			if below then
-				below.not_focusable = nil
+			local other_card = c.area.cards[#c.area.cards-1] or c.area.cards[#c.area.cards+1]
+			if other_card then
+				other_card.not_focusable = nil
 				if G.CONTROLLER.HID.controller then
-					G.CONTROLLER:snap_to{node = below}
+					G.CONTROLLER:snap_to{node = other_card}
 				end
 			end
 		end
