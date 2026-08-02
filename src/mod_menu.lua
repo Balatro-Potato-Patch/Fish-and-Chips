@@ -427,6 +427,18 @@ function FishAndChips.Compendium.condensed_fish_page(page_number, left)
     return page
 end
 
+G.FUNCS.open_compendium_to_env = function(e)
+    play_sound("fac_flip_page")
+
+    local page_to_turn = FishAndChips.Environments[G.GAME.fac_fishing_environment].order
+    page_to_turn = page_to_turn%2 == 0 and page_to_turn - 1 or page_to_turn
+    G.OVERLAY_MENU = UIBox{
+        definition = FishAndChips.Compendium.page({type = 'environment_page', left = page_to_turn, right = page_to_turn + 1}),
+        config =  {align = "cm", offset = {x=0,y=0}, major = G.ROOM_ATTACH, bond = 'Weak'}
+    }
+    G.OVERLAY_MENU:get_UIE_by_ID("overlay_menu_back_button").config.button = 'exit_overlay_menu'
+end
+
 function FishAndChips.Compendium.environment_page(page_number, left)
     local environment_key = FishAndChips.Environment.obj_buffer[page_number]
     local environment = FishAndChips.Environments[environment_key]

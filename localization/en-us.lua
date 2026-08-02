@@ -797,11 +797,16 @@ return {
                 "{C:inactive,s:0.9}He only accepts {C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}$ Sand Dollars{C:inactive,s:0.9}.){}"
             },
             fac_fishing_4a = {
+                "Ya can see ya progress in",
+                "this fishin' area by",
+                "clickin' this box"
+            },
+            fac_fishing_4b = {
                 "If ya get tired of this here",
                 "fishin' area, you can travel",
                 "{C:attention}somewhere new!{}"
             },
-            fac_fishing_4b = {
+            fac_fishing_4c = {
                 "But if ya do, I'd appreciate",
                 "it if ya left me a {C:attention}tip{}.",
                 "I need fuel to drive ya, and",
