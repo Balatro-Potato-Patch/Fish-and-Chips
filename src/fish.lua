@@ -77,6 +77,7 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
 end
 
 FishAndChips.submission_weight_limit = 75
+FishAndChips.fish_environment_limit = 6
 
 G.C.SET.fac_Fish = FishAndChips.C.FISH
 G.C.SECONDARY_SET.fac_Fish = FishAndChips.C.FISH
@@ -110,7 +111,6 @@ function FishAndChips.verify_submissions()
 	end
 
 	local devs = {}
-	-- TODO: handle duo submissions
 	for _, fish in ipairs(G.P_CENTER_POOLS.fac_Fish) do
 		devs[fish.ppu_coder[1]] = devs[fish.ppu_coder[1]] or {}
 		table.insert(devs[fish.ppu_coder[1]], fish)
@@ -132,6 +132,8 @@ function FishAndChips.verify_submissions()
 		for _, fish in ipairs(submission) do
 			total_weight = total_weight + fish.weight
 			if fish.treasure then treasure_fish_count = treasure_fish_count + 1 end
+			local in_envs = SMODS.table_size(fish.environments)
+			assert(in_envs <= FishAndChips.fish_environment_limit or dev_obj.ignore_limits, "Fish " .. fish.key .. " is in " .. in_envs .. " environments when the limit is " .. FishAndChips.fish_environment_limit)
 		end
 		local scalar = math.min(1, FishAndChips.submission_weight_limit / total_weight)
 		if submission.mod == FishAndChips.mod then
