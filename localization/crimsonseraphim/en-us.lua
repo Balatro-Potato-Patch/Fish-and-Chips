@@ -235,6 +235,21 @@ return {
                     "mmost orC̶heestraas. ......WWait",
                     "No, wwroNG̊͒ bass..."
                 }
+            },
+            fish_fac_starblight_eel = {
+                name = "Starblight Eel",
+                text = {
+                    "When caught create a",
+                    "{C:purple}Starblighted{} copy of",
+                    "{C:attention}#1#{} random {C:attention}Fish{}",
+                    "{C:inactive}(Must Have Room)"
+                },
+                flavor = {
+                    "It is unclear to Modern Science",
+                    "how it managed to get into this",
+                    "universe but what is clear is that",
+                    "it does not originate from it."
+                }
             }
         },
         Other = {
@@ -303,6 +318,14 @@ return {
                     "fish when a Blind is selected."
                 }
             },
+
+            crimsonseraphim_starblighted = {
+                name = "Starblighted",
+                text = {
+                    "{C:red}-#1#{} Mult",
+                    "then decreases by {C:red}#2#{} Mult"
+                }
+            }
         }
     },
     misc = {

@@ -29,35 +29,6 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_crimsonseraphim_credits',
 	colour = FishAndChips.crimsonseraphim.C.stupid_fucking_DOGGYYYYIEEEs,
     loc = true,
-    calculate = function(self, context)
-        local effects = {}
-        --TODO: hook calculate_joker
-        for _, c in pairs(G.jokers.cards) do
-            if not c.debuffed then
-                local ret = FishAndChips.crimsonseraphim.calculate_forged_joker(c, context)
-                if ret then
-                    ret.card = c
-                    ret.message_card = c
-                    ret.juice_card = c
-                    effects = SMODS.merge_effects({effects, ret})
-                    effects[1] = true
-                end
-            end
-        end
-        for _, c in pairs(G.fac_fish_area.cards) do
-            local ret = FishAndChips.crimsonseraphim.calculate_fish_seal(c, context)
-            if ret then
-                ret.card = c
-                ret.message_card = ret.fish_message_card or c
-                ret.juice_card = c
-                effects = SMODS.merge_effects({effects, ret})
-                effects[1] = true
-            end
-        end
-        if #effects ~= 0 then
-            return effects
-        end
-    end
 })
 
 FishAndChips.Fish {
@@ -207,7 +178,7 @@ SMODS.DrawStep({
             reverse = true
         }
         self.children.center:draw_shader('fac_aeonfish_transmute', nil, self.ARGS.send_to_shader)
-        sprite:draw_shader('fac_aeonfish_transmute', nil, self.ARGS.send_to_shader, nil, self.children.center)
+        sprite:draw_shaders('fac_aeonfish_transmute', nil, self.ARGS.send_to_shader, nil, self.children.center)
 	end,
 	conditions = { vortex = false, facing = "front" },
 })
@@ -1028,8 +999,9 @@ SMODS.DrawStep({
 	func = function(self)
         local card = self.config.center_key
         if (card ~= "fish_fac_another_bucket")  then return end
+        local shader = self.edition and G.P_CENTERS[self.edition.key].shader or "dissolve"
         self.children.center:set_sprite_pos({x=2,y=1})
-        self.children.center:draw_shader('dissolve', nil, nil)
+        self.children.center:draw_shader(shader, nil, nil)
         if self.ability.saved_card then
             self.ability.saved_card.card.T = copy_table(self.T)
             self.ability.saved_card.card.VT = copy_table(self.VT)
@@ -1039,7 +1011,7 @@ SMODS.DrawStep({
             end
         end
         self.children.center:set_sprite_pos({x=1,y=1})
-        self.children.center:draw_shader('dissolve', nil, nil)
+        self.children.center:draw_shader(shader, nil, nil)
 	end,
 	conditions = { vortex = false, facing = "front" },
 })
@@ -1520,3 +1492,90 @@ FishAndChips.Fish {
         end
     end,
 }
+
+FishAndChips.Fish {
+	key = "starblight_eel",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 1, y = 1 },
+	weight = 5, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "generation" },
+	environments = {
+        wormhole = 5
+	},
+    config = {
+        extra = {
+            copies = 2
+        }
+    },
+    stats = {
+		weight = {min = 6.00, max = 14.50},
+		length = {min = 20.20, max = 30.45}
+	},
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = {set = "Other", key = "crimsonseraphim_starblighted", vars = {1, -0.5}}
+        return {
+            vars = {
+                card.ability.extra.copies
+            }
+        }
+    end,
+    on_catch = function(self, card)
+        if #G.fac_fish_area.cards > 1 then
+            local cards = {}
+            for i, v in pairs(G.fac_fish_area.cards) do
+                if v ~= card then
+                    cards[#cards+1] = v
+                end
+            end
+            for i = 1, card.ability.extra.copies do
+                if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
+                    local c = copy_card(pseudorandom_element(cards, pseudoseed("starblight_eel")), nil)
+                    G.fac_fish_area:emplace(c)
+                    c:add_to_deck()
+                    c:start_materialize()
+                    c.ability.crimsonseraphim_starblighted = true
+                    c.ability.crimsonseraphim_starblighted_mult = 1
+                end
+            end
+        end
+    end
+}
+
+local calculate_joker_ref = Card.calculate_joker
+function Card:calculate_joker(context)
+    local effects = calculate_joker_ref(self, context)
+    local ret = FishAndChips.crimsonseraphim.calculate_forged_joker(self, context)
+    if ret then
+        effects = SMODS.merge_effects({effects or {}, ret})
+    end
+    
+    local ret = FishAndChips.crimsonseraphim.calculate_fish_seal(self, context)
+    if ret then
+        effects = SMODS.merge_effects({effects or {}, ret})
+    end
+
+    if context.joker_main then
+        if self.ability.crimsonseraphim_starblighted then
+            effects = SMODS.merge_effects({effects or {}, {
+                mult = -self.ability.crimsonseraphim_starblighted_mult
+            }})
+            self.ability.crimsonseraphim_starblighted_mult = self.ability.crimsonseraphim_starblighted_mult + 0.5 
+        end
+    end
+    return effects
+end
+
+local generate_ui_ref = SMODS.Center.generate_ui
+function SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    if card and card.ability.crimsonseraphim_starblighted then
+        info_queue[#info_queue+1] = {set = "Other", key = "crimsonseraphim_starblighted", vars = {card.ability.crimsonseraphim_starblighted_mult, 0.5}}
+    end
+    return generate_ui_ref(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+end
+
+SMODS.Shader({
+    key="crimsonseraphim_starblighted",
+    path="crimsonseraphim/starblighted.fs",
+})
