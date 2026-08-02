@@ -16,6 +16,7 @@ FishAndChips.Fish({
 		length = { min = 1, max = 1 },
 		weight = { min = 1, max = 1 },
 	},
+	badge_key = "k_fac_hayayaya_object",
 	calculate = function(self, card, context)
 		if
 			context.selling_card
