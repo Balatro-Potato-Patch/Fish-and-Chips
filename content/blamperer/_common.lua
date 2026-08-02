@@ -90,6 +90,10 @@ end
 --             vars = {}
 --         }
 --     end,
+--     stats = {
+--         weight = {min = 1, max = 1},
+--         length = {min = 1, max = 1},
+--     },
 --     weight = ,
 --     environments = {
 

@@ -12,6 +12,10 @@ FishAndChips.Fish {
             slot_mult = 0.25
         }
     },
+    stats = {
+        weight = {min = 0.003, max = 0.03},
+        length = {min = 0.006, max = 0.06},
+    },
     weight = 7,
     environments = {
         calm_pond = 10,
