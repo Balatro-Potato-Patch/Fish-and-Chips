@@ -13,10 +13,10 @@ FishAndChips.Fish({
 	ppu_artist = { "vevekhi" },
 	attributes = { "generation" },
 	config = {},
-	weight = 10,
+	weight = 13,
 	stats = {
-		weight = { min = 1, max = 1 },
-		length = { min = 1, max = 1 },
+		weight = { min = 1, max = 1.8 },
+		length = { min = 0.2, max = 0.45 },
 	},
 	environments = {
 		pier = 4,
