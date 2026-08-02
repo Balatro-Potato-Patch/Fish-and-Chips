@@ -1,5 +1,5 @@
 local function q(s)
-	local a = {I = "C:inactive", G = "C:green", A = "C:attention", S = "s:0.7,C:inactive"}
+	local a = {I = "C:inactive", G = "C:green", A = "C:attention", S = "s:0.7,C:inactive", x = "X:mult,C:white"}
 	return (s:gsub("~[%l%u]", function(n) return a[n:sub(2)] end))
 end
 
@@ -12,7 +12,16 @@ return {
 			fac_vman2002_manos4 = "I don't know anchovy anymore",
 			fac_vman2002_manos5 = "Stingray isn't descriptive enough",
 			fac_vman2002_manosorry = "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
-			fac_vman2002_manos_done = "oIy'owny mkoaeondtrvha nc  n"
+			fac_vman2002_manos_done = "oIy'owny mkoaeondtrvha nc  n",
+			fac_vman2002_timothy0 = "How do you get mods on Nintendo Switch?",
+			fac_vman2002_timothy1 = "I'm Timothy!",
+			fac_vman2002_timothy2 = "Are you a fishing guy?",
+			fac_vman2002_timothy3 = "Why is it called Balatro anyway?",
+			fac_vman2002_timothy4 = "Did the game have compounds and allotropes?",
+			fac_vman2002_timothy5 = "I can't move Ceremonial Dagger?",
+			fac_vman2002_timothy_active = "Yayyyyyy",
+			fac_vman2002_timothy_inactive = "Pay attention to me",
+			fac_vman2002_timothy_reset = "*crys* why..."
 		}
 	},
 	descriptions = {
@@ -33,7 +42,7 @@ return {
 			fish_fac_vman2002_trust = {
 				name = "Trust",
 				text = {
-					q("Raises {~G,E:1}probabilities{} by {~G}+2"),
+					q("Raises {~G,E:1}probabilities{} by {~G}+#1#"),
 					q("while scoring {~A}first hand"),
 					q("{~I}(ex: {~G}1 in 3{~I} -> {~G}3 in 3{~I})")
 				},
@@ -87,6 +96,21 @@ return {
 				text = {
 					"Create a {C:attention}Shop Edition Tag",
 					"Cannot be used while fishing"
+				}
+			},
+			fish_fac_vman2002_timothy = {
+				name = "Timothy",
+				flavor = {"Hi, I'm Timothy!","#3#"},
+				text = {
+					{
+						q("{~A}USE{} once per {~A}Ante{} to"),
+						q("pay {~A}attention{} to Timothy")
+					}, {
+						q("Gains {~x}X#2#{} Mult at {~A}end of round"),
+						q("Resets instead if {~A}Timothy{} is not"),
+						q("the most {~A}recently used{} {C:fac_fish}Fish"),
+						q("{~I}(Currently {~x}X#1#{~I} Mult)")
+					}
 				}
 			}
 		},

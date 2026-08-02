@@ -31,6 +31,18 @@ SMODS.Sound({
 	path = "vman2002/manosorry.ogg"
 })
 
+local function slowmf(lol)
+	local x = G.SETTINGS.GAMESPEED
+	G.SETTINGS.GAMESPEED = 1
+	lol()
+	G.E_MANAGER:add_event(Event({
+		func = function()
+			G.SETTINGS.GAMESPEED = x
+			return true
+		end
+	}))
+end
+
 fac_topuplib_inspect = topuplib and topuplib.inspect or function(name, value) --TODO: this is temporary (this is from topuplib, which has an incompatibility rn)
 	if not value then
 		value = name
@@ -241,12 +253,12 @@ FishAndChips.Fish { --Manos
 		local ex = card.ability.extra
 		if not ex.active then
 			ex.active = true
-			SMODS.calculate_effect({ message_card = card,
+			slowmf(function() SMODS.calculate_effect({ message_card = card,
 				message = localize("fac_vman2002_manosorry"),
 				sound = "fac_vman2002_manosorry",
 				colour = G.C.RED,
 				pitch = 1
-			}, card)
+			}, card) end)
 			card:add_sticker("eternal", true)
 			G.PROFILES[G.SETTINGS.profile].fac_manos_known = true
 		end
@@ -310,6 +322,66 @@ FishAndChips.Fish { --Coupon
 	usable = true,
 	impulse_min = 0.2,
 	impulse_max = 0.6,
+	decision_min = 0.3,
+	decision_max = 0.7
+}
+
+FishAndChips.Fish { --Timothy
+	key = "vman2002_timothy",
+	atlas = "vman2002_fish",
+	pos = { x = 1, y = 1 },
+	weight = 4,
+	ppu_coder = { "VMan_2002" },
+	ppu_artist = { "VMan_2002" },
+	attributes = { "tag" },
+	stats = { weight = { min = 0.21, max = 0.67 --[[i dont like 67 but it fits here]] }, length = {min = 0.017, max = 0.025}},
+	environments = {
+		calm_pond = 0.5, pier = 0.9
+	},
+	config = {
+		extra = {
+			ante_used = false,
+			xmult = 1,
+			xmult_gain = 0.5
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		local ex = card.ability.extra
+		return {vars = {ex.xmult, ex.xmult_gain, localize(G.GAME.fac_last_used_fish == "fish_fac_vman2002_timothy" and "fac_vman2002_timothy_active" or "fac_vman2002_timothy_inactive")}}
+	end,
+	use = function(self, card)
+		card.ability.extra.ante_used = true
+		slowmf(function() SMODS.calculate_effect({ message_card = card,
+			message = localize("fac_vman2002_timothy" .. (math.floor(os.clock() * 69420) % 6)),
+			colour = G.C.RED,
+			pitch = 1
+		}, card) end)
+	end,
+	can_use = function(self, card)
+		return not card.ability.extra.ante_used
+	end,
+	calculate = function(self, card, context)
+		if context.before and not context.blueprint then
+			if reset then
+				if card.ability.extra.xmult > 1 then
+					card.ability.extra.xmult = 1
+					return {message = localize('fac_vman2002_timothy_reset')}
+				end
+			else
+				SMODS.scale_card(card, {
+					ref_value = "xmult", -- the key to the value in the ref_table
+					scalar_value = "xmult_gain", -- the key to the value to scale by, in the ref_table by default
+				})
+			end
+		end
+		if context.joker_main then
+			return {xmult = card.ability.extra.xmult}
+		end
+	end,
+	keep_on_use = returnTrue,
+	usable = true,
+	impulse_min = 0.4,
+	impulse_max = 0.8,
 	decision_min = 0.3,
 	decision_max = 0.7
 }
