@@ -20,12 +20,11 @@ PotatoPatchUtils.Developer {
 
 --[[
 ideas:
-Gurmag Angler in Swamp, scales off of joker destruction
 Stewfish in Soup & Choco River?
-Docfish in Pier & City River, hiker but for aces with scholar stats
 Biblically accurate angelfish in backrooms
 Relicanth in Cavern Aquifer, Stone cards
 Gummigoo in Choco River & Swamp
+mystic remora in ?
 ]]
 
 ----------
@@ -200,6 +199,48 @@ FishAndChips.Fish{ --Xanax Sargo
       return{
         dollars = card.ability.extra.dollars,
         sand_dollars = card.ability.extra.sand_dollars
+      }
+    end
+  end
+}
+
+FishAndChips.Fish{ --Gurmag Angler
+  key = 'plaggeromega_gurmag',
+  atlas = 'plaggeromega_fish',
+  pos = {x=3,y=0},
+  weight = 8,
+  environments = {styx = 0.4, swamp = 0.7},
+  attributes = {'xmult'},
+  stats = {
+    weight = {min = 10.2, max = 25.4},
+    length = {min = 3, max = 7}
+  },
+  ppu_coder = {'PLagger'},
+  ppu_artist = {'Omegaflowey18'},
+  impulse_min = 0.2,
+  impulse_max = 0.3,
+  vel_limit = 0.7,
+  cost = 7,
+  blueprint_compat = true,
+  config = {extra = {xmult = 1, xmult_mod = 0.5}},
+
+  loc_vars = function (self, info_queue, card)
+    return{
+      vars = {card.ability.extra.xmult, card.ability.extra.xmult_mod}
+    }
+  end,
+
+  calculate = function (self, card, context)
+    if context.joker_type_destroyed and context.card.config.center.set == 'Joker' and not context.blueprint then
+      card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_mod
+      return{
+        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.xmult_mod}}
+      }
+    end
+
+    if context.joker_main then
+      return{
+        xmult = card.ability.extra.xmult
       }
     end
   end

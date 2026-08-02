@@ -38,6 +38,19 @@ return {
                     'levels for a round.'
                 }
             },
+            fish_fac_plaggeromega_gurmag = {
+                name = 'Gurmag Angler',
+                text = {
+                    'This Fish gains {X:mult,C:white}X#2#{} Mult',
+                    'whenever a {C:attention}Joker{} is destroyed',
+                    '{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)'
+                },
+                flavour = {
+                    'If everything in the Gurmag Swamp',
+                    'hungers for Joker flesh,',
+                    'what bait could be more effective?'
+                }
+            },
             fish_fac_plaggeromega_docfish = {
                 name = 'Docfish',
                 text = {
