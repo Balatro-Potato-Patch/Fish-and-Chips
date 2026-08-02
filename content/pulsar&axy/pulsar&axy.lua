@@ -20,6 +20,14 @@ SMODS.Atlas({
 	py = 95,
 })
 
+SMODS.Sound {
+	key = "pa_wiinormal",
+	path = "pulsar&axy/wiiplayfishingnormal.ogg"
+}
+SMODS.Sound {
+	key = "pa_wiibonus",
+	path = "pulsar&axy/wiiplayfishingbonus.ogg"
+}
 --#region Fish
 
 FishAndChips.Fish {
