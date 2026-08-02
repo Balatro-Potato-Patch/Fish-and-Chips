@@ -42,7 +42,7 @@ FishAndChips.Fish {
 		city_river = 2.5
 	},
 	stats = {
-		weight = {min = 5, max = 5},
+		weight = {min = 5, max = 12},
 		length = {min = 0.25, max = 0.50}
 	},
 	loc_vars = function(self, info_queue, card)
