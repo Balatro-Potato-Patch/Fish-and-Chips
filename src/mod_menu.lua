@@ -340,8 +340,13 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
     local caught = localize('ph_fac_first_caught')..(fish_caught and fish_data.first_catch or '')
     local rod = fish_caught and localize('ph_fac_with_rod')..localize({key = fish_data.rod, set = 'fac_Rod', type = 'name_text'}) or ' '
     local count = localize('ph_fac_times_caught')..(fish_caught and fish_data.times_caught or '')
-    local record_weight = fish_caught and localize('ph_fac_record_weight')..(fish_data.record_weight or 0)..'kg' or ' '
-    local record_length = fish_caught and localize('ph_fac_record_length')..(fish_data.record_length or 0)..'m' or ' '
+	local small_units = {weight = (fish_data.record_weight or 0) < 1, length = (fish_data.record_length or 0) < 1}
+	local displayed_stats = {
+		weight = small_units.weight and ((fish_data.record_weight or 0) * 1000)..'g' or fish_data.record_weight..'kg', -- kg to g conversion
+		length = small_units.length and ((fish_data.record_length or 0) * 100)..'cm' or fish_data.record_length..'m' -- m to cm conversion
+	}
+    local record_weight = fish_caught and localize('ph_fac_record_weight')..displayed_stats.weight or ' '
+    local record_length = fish_caught and localize('ph_fac_record_length')..displayed_stats.length or ' '
 
     local text = {n=G.UIT.R, config = {align = left and 'cl' or 'cr', padding = 0.1}, nodes = {
         {n = G.UIT.C, config = {align = 'cl', padding = 0.03, minw = 3.4}, nodes = {

@@ -298,6 +298,11 @@ function G.UIDEF.card_h_popup(card)
 		local stat_proto = card.config.center.stats
 		local weight_perc = (stats.weight - stat_proto.weight.min)/(stat_proto.weight.max-stat_proto.weight.min)*100
 		local length_perc = (stats.length - stat_proto.length.min)/(stat_proto.length.max-stat_proto.length.min)*100
+		local small_units = {weight = stats.weight < 1, length = stats.length < 1}
+		local displayed_stats = {
+			weight = small_units.weight and (stats.weight * 1000)..'g' or stats.weight..'kg', -- kg to g conversion
+			length = small_units.length and (stats.length * 100)..'cm' or stats.length..'m' -- m to cm conversion
+		}
 		local colours = { -- TODO: are these colours okay?
 			darken(G.C.RED, 0.1),
 			G.C.RED,
@@ -315,9 +320,9 @@ function G.UIDEF.card_h_popup(card)
 		
         table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 1, {n=G.UIT.R, config = {align = 'cm'}, nodes = {
 			{n=G.UIT.T, config = {text = localize('ph_fac_weight'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
-			{n=G.UIT.T, config = {text = stats.weight..'kg', scale = 0.27, colour = weight_col, shadow = true}},
+			{n=G.UIT.T, config = {text = displayed_stats.weight, scale = 0.27, colour = weight_col, shadow = true}},
 			{n=G.UIT.T, config = {text = '  '..localize('ph_fac_length'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
-			{n=G.UIT.T, config = {text = stats.length..'m', scale = 0.27, colour = length_col, shadow = true}},
+			{n=G.UIT.T, config = {text = displayed_stats.length, scale = 0.27, colour = length_col, shadow = true}},
 		}})
     end
 	return ret
