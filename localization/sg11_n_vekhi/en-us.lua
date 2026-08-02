@@ -80,6 +80,13 @@ return {
 				name = "Transcendent Fish",
 				text = {},
 			},
+			fish_fac_sg11_n_vekhi_diamond_fish = {
+				name = "Diamond Fish",
+				text = {
+					"Gain {C:money}$#1#{} if hand contains",
+					"{C:attention}Glass Card{} that survived",
+				},
+			},
 		},
 		PotatoPatch = {
 			fac_sleepyg11 = {
