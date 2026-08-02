@@ -16,6 +16,10 @@ FishAndChips.Fish({
 	attributes = {},
 	config = {},
 	weight = 2,
+	stats = {
+		weight = { min = 1, max = 1 },
+		length = { min = 1, max = 1 },
+	},
 	environments = {
 		backroom = 1,
 		wormhole = 1,

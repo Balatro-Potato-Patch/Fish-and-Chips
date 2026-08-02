@@ -23,6 +23,10 @@ local center = FishAndChips.Fish({
 		},
 	},
 	weight = 2,
+	stats = {
+		weight = { min = 1, max = 1 },
+		length = { min = 1, max = 1 },
+	},
 	environments = {
 		wormhole = 1,
 		volcano = 1,

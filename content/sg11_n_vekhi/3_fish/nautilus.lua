@@ -14,6 +14,10 @@ FishAndChips.Fish({
 	attributes = { "generation" },
 	config = {},
 	weight = 10,
+	stats = {
+		weight = { min = 1, max = 1 },
+		length = { min = 1, max = 1 },
+	},
 	environments = {
 		pier = 4,
 		garden = 1,

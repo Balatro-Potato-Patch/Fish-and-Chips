@@ -23,6 +23,10 @@ FishAndChips.Fish({
 		}
 	end,
 	weight = 7,
+	stats = {
+		weight = { min = 1, max = 1 },
+		length = { min = 1, max = 1 },
+	},
 	environments = {
 		backroom = 2,
 		city_river = 1,

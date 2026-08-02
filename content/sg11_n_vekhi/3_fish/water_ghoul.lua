@@ -18,6 +18,10 @@ FishAndChips.Fish({
 		},
 	},
 	weight = 4,
+	stats = {
+		weight = { min = 1, max = 1 },
+		length = { min = 1, max = 1 },
+	},
 	environments = {
 		styx = 1,
 		aquifer = 1,
