@@ -13,13 +13,13 @@ FishAndChips.Fish {
         }
     },
     stats = {
-        weight = {min = 0.003, max = 0.03},
-        length = {min = 0.006, max = 0.06},
+        weight = { min = 0.003, max = 0.03 },
+        length = { min = 0.006, max = 0.06 },
     },
     weight = 7,
     environments = {
-        calm_pond = 10,
-        pier = 2.5
+        calm_pond = 5,
+        garden = 10
     },
     loc_vars = function(self, info_queue, card)
         local fish_slots_open = math.max(G.fac_fish_area and (G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) or 0, 0)

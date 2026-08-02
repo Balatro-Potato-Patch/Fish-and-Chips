@@ -91,8 +91,8 @@ end
 --         }
 --     end,
 --     stats = {
---         weight = {min = 1, max = 1},
---         length = {min = 1, max = 1},
+--         weight = { min = 1, max = 1 },
+--         length = { min = 1, max = 1 },
 --     },
 --     weight = ,
 --     environments = {

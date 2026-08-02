@@ -8,8 +8,8 @@ FishAndChips.Fish {
         "swap"
     },
     stats = {
-        weight = {min = 2, max = 5.5},
-        length = {min = 0.3, max = 0.8},
+        weight = { min = 2, max = 5.5 },
+        length = { min = 0.3, max = 0.8 },
     },
     weight = 3,
     environments = {

@@ -21,8 +21,8 @@ FishAndChips.Fish {
         return { vars = { card.ability.extra.sandollars, card.ability.extra.seconds, card.ability.immutable.maximum } }
     end,
     stats = {
-        weight = {min = 0.018, max = 30.4},
-        length = {min = 0.1, max = 0.66},
+        weight = { min = 0.018, max = 30.4 },
+        length = { min = 0.1, max = 0.66 },
     },
     weight = 6,
     environments = {

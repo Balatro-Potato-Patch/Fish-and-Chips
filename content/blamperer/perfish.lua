@@ -23,13 +23,12 @@ FishAndChips.Fish {
     end,
     cost = 4,
     stats = {
-        weight = {min = 0.20, max = 1},
-        length = {min = 0.25, max = 1},
+        weight = { min = 0.20, max = 1 },
+        length = { min = 0.25, max = 1 },
     },
     weight = 3,
     environments = {
         pier = 10,
-        garden = 5
     },
     calculate = function(self, card, context)
         if context.fac_end_fishing then
