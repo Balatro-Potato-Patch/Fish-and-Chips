@@ -91,17 +91,17 @@ end
 
 function FishAndChips.show_fishing_buttons()
 	G.NOT_SAFE_TO_PRESS_BUTTONS = false
-	ease_value(FishAndChips.C.FISHING_BUTTONS_BG, 4, 0.65, nil, "REAL", true, 0.3)
-	ease_value(FishAndChips.C.FISHING_BUTTONS_ACTIVE, 4, 0.65, nil, "REAL", true, 0.3)
-	ease_value(FishAndChips.C.FISHING_BUTTONS_TEXT, 4, 1, nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_BG, 4, 0.65 - FishAndChips.C.FISHING_BUTTONS_BG[4], nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_ACTIVE, 4, 0.65 - FishAndChips.C.FISHING_BUTTONS_ACTIVE[4], nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_TEXT, 4, 1 - FishAndChips.C.FISHING_BUTTONS_TEXT[4], nil, "REAL", true, 0.3)
 	FishAndChips.set_fishing_buttons_active(true)
 end
 
 function FishAndChips.fade_fishing_buttons()
 	G.NOT_SAFE_TO_PRESS_BUTTONS = true
-	ease_value(FishAndChips.C.FISHING_BUTTONS_BG, 4, -0.65, nil, "REAL", true, 0.3)
-	ease_value(FishAndChips.C.FISHING_BUTTONS_ACTIVE, 4, -0.65, nil, "REAL", true, 0.3)
-	ease_value(FishAndChips.C.FISHING_BUTTONS_TEXT, 4, -1, nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_BG, 4, -0.65 - FishAndChips.C.FISHING_BUTTONS_BG[4], nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_ACTIVE, 4, -0.65 - FishAndChips.C.FISHING_BUTTONS_ACTIVE[4], nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_TEXT, 4, -1 - FishAndChips.C.FISHING_BUTTONS_TEXT[4], nil, "REAL", true, 0.3)
 	FishAndChips.set_fishing_buttons_active(false)
 end
 
