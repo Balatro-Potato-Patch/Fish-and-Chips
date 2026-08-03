@@ -883,7 +883,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "trout_population",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 5, y = 1 },
 	weight = 3, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
@@ -1150,6 +1150,7 @@ function G.FUNCS.fac_go_fish(e)
                                     delay = 0.075*G.SETTINGS.GAMESPEED,
                                     func = function()
                                         play_sound("fac_crimsonseraphim_revolver_shots_"..math.random(1, 8))
+                                        G.ROOM.jiggle = G.ROOM.jiggle + 3
                                         return true
                                     end
                                 })
@@ -1619,7 +1620,7 @@ FishAndChips.Fish {
 	},
     config = {
         extra = {
-            fish = 3
+            fish = 3    
         }
     },
     stats = {

@@ -440,7 +440,7 @@ return {
                 text = {
                     "Earn {C:money}$1{} for every other",
                     "fish when a Blind is selected."
-                }
+                }   
             },
 
             crimsonseraphim_starblighted = {
