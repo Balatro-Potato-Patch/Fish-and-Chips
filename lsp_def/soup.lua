@@ -16,8 +16,17 @@
 ---@field backroom? number
 ---@field wormhole? number
 
+---@class IntStats
+---@field min number Minimum value of this measurement
+---@field max number Maximum value of this measurement
+
+---@class Stats
+---@field weight IntStats Set a min and max value for weight, measure in kilograms
+---@field length IntStats Set a min and max value for length, measured in metres
+
 ---@class FishAndChips.Fish: SMODS.Center
 ---@field environments Environments where this fish can appear, key = weight
+---@field stats Stats Set a range for available measurements for the fish
 ---@field impulse_min? number base minimum movement distance when being caught; lower values are easier (for fish)
 ---@field impulse_max? number base maximum movement distance when being caught; lower values are easier (for fish)
 ---@field decision_min? number base minimum time before changing movement; higher values are easier (for fish)
@@ -31,8 +40,10 @@
 ---@field can_use? fun(self: FishAndChips.Fish, card: Card): boolean? Return `true` if the fish is allowed to be used.
 ---@field keep_on_use? fun(self: FishAndChips.Fish, card: Card): boolean? return `true` if the fish should be kept when used.
 ---@field treasure? boolean mark as true if this can be caught as a treasure 
+---@field disable_visual_scaling? boolean disable adjustments of the size of this fish based on its caught measurements
 ---@field on_catch? fun(self: FishAndChips.Fish, card: Card) If defined, this function will be called when this fish is called.
 ---@field badge_key? string replace the text on the fish badge with whatever is in misc.dictionary[badge_key]
+---@field button_key? string|fun(self: FishAndChips.Fish): string Replace the use button text key with the provided key. Providing a function replaces the text without localizing
 ---@overload fun(self: FishAndChips.Fish): FishAndChips.Fish
 FishAndChips.Fish = setmetatable({}, {
 	__call = function(self)
