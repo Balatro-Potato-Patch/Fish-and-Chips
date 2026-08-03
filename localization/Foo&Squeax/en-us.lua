@@ -9,16 +9,17 @@ return {
 				},
 				text = {
 					{
-						"figure out how to word this"
+						"Skewered {C:fac_fish}Fish{} still activate normally",
+						"At end of round, consume topmost {C:fac_fish}Fish{}"
 					},
 					{
 						"While Empty:",
-						"Use to skewer all fish",
-						"to the right of this fish",
+						"Use to skewer all {C:fac_fish}Fish{}",
+						"to the right of this {C:fac_fish}Fish{}",
 					},
 					{
 						"While filled:",
-						"Use to eat all skewered fish"
+						"Use to eat all skewered {C:fac_fish}Fish{}"
 					}
 				}
 			},
@@ -147,7 +148,7 @@ return {
 				},
 				text = {
 					{
-						"not sure how to word"
+						"Held Joker is treated as if it was a {C:fac_fish}Fish"
 					},
 					{
 						"Use to {C:red}consume{} held Joker",
