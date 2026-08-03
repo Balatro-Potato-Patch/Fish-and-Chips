@@ -35,7 +35,7 @@ FishAndChips.Fish {
 	key = "aeonfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 20,
+	weight = 5,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "usable", "generation" },
@@ -152,7 +152,6 @@ SMODS.Atlas {
     py = 95
 }
 
-SMODS.draw_ignore_keys.aeonfish_caustics = true
 SMODS.DrawStep({
 	key = "aeonfish",
 	order = 25,
@@ -242,7 +241,7 @@ FishAndChips.Fish {
 	key = "jade_crystalfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 5, y = 0 },
-	weight = 7,
+	weight = 5,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "passive", "chance" },
@@ -459,7 +458,7 @@ FishAndChips.Fish {
 	key = "ruby_crystalfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 6, y = 0 },
-	weight = 8,
+	weight = 5,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "passive", "chance" },
@@ -527,7 +526,7 @@ FishAndChips.Fish {
 	key = "hammerhead_shark",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 10, 
+	weight = 5, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "generation" },
@@ -1669,8 +1668,8 @@ FishAndChips.Fish {
         return {
             vars = {
                 card.ability.extra.money,
+                card.ability.extra.times_done,
                 card.ability.extra.times,
-                card.ability.extra.times_done
             }
         }
     end,
