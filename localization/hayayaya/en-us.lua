@@ -146,7 +146,7 @@ return {
 				name = "Rainbow Badge",
 				text = {
 					"Add {C:dark_edition}Polychrome{} to",
-					"a random {C:attention}Fish{}",
+					"a random {C:fac_fish}Fish{}",
 				},
 				flavor = {
 					"{C:white}Celadon City Gym Badge",
