@@ -114,7 +114,17 @@ return {
             PotatoPatchDev_metanite64 = {
                 name = "Meta",
                 text = {
-                    "Also play Stakes Redux!"
+                    {
+                        "Well, there is a {C:fac_meta}woman{} here.",
+                        "{C:inactive}...{}",
+                        "{C:fac_meta}She{} seems to have fished up a small bottle.",
+                        "{C:fac_meta}She{} smiles and hands it to you.",
+                        "You don't know how you know, but it seems to",
+                        "contain the element known as {C:fac_meta_quint}Quintessence{}."
+                    },
+                    {
+                        "Well, there is not a {C:fac_meta}woman{} here."
+                    }
                 }
             }
         }

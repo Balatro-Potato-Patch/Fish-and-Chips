@@ -1,7 +1,14 @@
 PotatoPatchUtils.Developer {
     name = "metanite64",
     colour = HEX("FF61F7"),
-    loc = true
+    loc = true,
+    atlas = "fac_meta_credits"
+}
+
+SMODS.Atlas {
+    key = "meta_credits",
+    path = "metanite64/credits.png",
+    px = 71, py = 95
 }
 
 SMODS.Atlas {
@@ -22,3 +29,6 @@ SMODS.current_mod.reset_game_globals = function(run_start)
         }
     end
 end
+
+G.ARGS.LOC_COLOURS.fac_meta = HEX("F399FF")
+G.ARGS.LOC_COLOURS.fac_meta_quint = HEX("7C008F")
