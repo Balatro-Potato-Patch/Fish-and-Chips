@@ -216,9 +216,9 @@ function FishAndChips.mod.custom_card_areas(game)
 	)
 	function G.fac_fas_kine_area:align_cards()
 		local scale = 4
-		for i, card in ipairs(self.cards) and not card.disable_align do
+		for i, card in ipairs(self.cards) do
 			for _, _card in ipairs(G.fac_fish_area.cards) do
-				if _card.config.center.key == "fish_fac_fas_kine" and _card.ability.immutable.id == card.ability.fac_fas_kine then
+				if _card.config.center.key == "fish_fac_fas_kine" and _card.ability.immutable.id == card.ability.fac_fas_kine and not card.disable_align then
 					card.T.x = _card.T.x + _card.T.w
 					card.T.y = _card.T.y + _card.T.h / 2
 					card.T.r = _card.T.r

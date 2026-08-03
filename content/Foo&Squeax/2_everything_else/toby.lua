@@ -121,26 +121,28 @@ function G.UIDEF.card_h_popup(card)
 			blockable = false,
 			type = "immediate",
 			func = function()
-				G.fac_fas_toby_fish[i] = UIBox{
-					definition = G.UIDEF.fac_fas_toby_fish(i, card),
-					config = {
-						major = card.children.h_popup,
-						align = "tli",
-						r_bond = "Weak",
-						instance_type = "POPUP",
-						offset = {
-							x = math.random() * card.children.h_popup.VT.w - 1,
-							y = math.random() * card.children.h_popup.VT.h - 1
+					if card.children.h_popup then
+					G.fac_fas_toby_fish[i] = UIBox{
+						definition = G.UIDEF.fac_fas_toby_fish(i, card),
+						config = {
+							major = card.children.h_popup,
+							align = "tli",
+							r_bond = "Weak",
+							instance_type = "POPUP",
+							offset = {
+								x = math.random() * card.children.h_popup.VT.w - 1,
+								y = math.random() * card.children.h_popup.VT.h - 1
+							}
 						}
 					}
-				}
-				
-				local card_children_h_popup_remove_ref = card.children.h_popup.remove
-				function card.children.h_popup:remove()
-					card_children_h_popup_remove_ref(self)
-					if G.fac_fas_toby_fish[i] then
-						G.fac_fas_toby_fish[i]:remove()
-						G.fac_fas_toby_fish[i] = nil
+					
+					local card_children_h_popup_remove_ref = card.children.h_popup.remove
+					function card.children.h_popup:remove()
+						card_children_h_popup_remove_ref(self)
+						if G.fac_fas_toby_fish[i] then
+							G.fac_fas_toby_fish[i]:remove()
+							G.fac_fas_toby_fish[i] = nil
+						end
 					end
 				end
 				return true
