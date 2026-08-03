@@ -1,0 +1,44 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''
+elseif not run_info then
+'''
+position = "before"
+payload = '''
+elseif next(SMODS.find_card 'fish_fac_bagels_european_perch') then
+  if not blind_choice.config.unskippable then extras = create_UIBox_blind_tag('Boss', run_info) end
+'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = '''
+G.GAME.round_resets.blind_tags.Big = get_next_tag_key()
+'''
+position = "after"
+payload = '''
+G.GAME.round_resets.blind_tags.Boss = get_next_tag_key()
+'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''
+self.GAME.round_resets.blind_tags.Big = G.SETTINGS.tutorial_progress and G.SETTINGS.tutorial_progress.forced_tags and G.SETTINGS.tutorial_progress.forced_tags[2] or get_next_tag_key()
+'''
+position = "after"
+payload = '''
+self.GAME.round_resets.blind_tags.Boss = get_next_tag_key()
+'''
+match_indent = true
+times = 1

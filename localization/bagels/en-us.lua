@@ -13,14 +13,14 @@ return {
 			},
 			PotatoPatchDev_Emik = {
 				name = 'Emik',
-				text = { 'Gwah?' },
+				text = { "And Escapey's here, too!" },
 			},
 		},
 		fac_Fish = {
-			fish_fac_bagels_gwah = {
-				name = 'Gwah',
-				text = { 'Gwah' },
-				flavor = { 'Gwah' },
+			fish_fac_bagels_european_perch = {
+				name = 'European Perch',
+				text = { 'You can {C:attention}Skip', '{C:attention}#1#{} Boss Blind' },
+				flavor = { "Today's fish is", 'trout a la creme.' },
 			},
 		},
 	},
