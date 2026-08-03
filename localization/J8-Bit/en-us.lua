@@ -384,6 +384,7 @@ return {
             ["k_J8-Bit_fishbadge_amphibian"] = "Amphibian",
             ["k_J8-Bit_fishbadge_echinoderm"] = "Echinoderm",
             ["k_J8-Bit_fishbadge_cephalopod"] = "Cephalopod",
+            ["k_J8-Bit_fishbadge_mammal"] = "Mammal",
             ["k_J8-Bit_fishbadge_reptile"] = "Reptile",
             ["k_J8-Bit_fishbadge_question_marks"] = "?????",
             ["k_J8-Bit_fishbadge_darkner"] = "Darkner",

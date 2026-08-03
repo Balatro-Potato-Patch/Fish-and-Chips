@@ -3,6 +3,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 0, y = 0 },
     weight = 8,
+    stats = {
+        weight = {
+            min = 127.0,
+            max = 1000.0
+        },
+        length = {
+            min = 1.8,
+            max = 2.5,
+        }
+    },
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
     blueprint_compat = true,
@@ -71,6 +81,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 1, y = 0 },
     weight = 8,
+    stats = {
+        weight = {
+            min = 0.5,
+            max = 1.0
+        },
+        length = {
+            min = 0.2,
+            max = 0.5,
+        }
+    },
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
     blueprint_compat = true,
@@ -120,6 +140,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 2, y = 0 },
     weight = 6,
+    stats = {
+        weight = {
+            min = 0.07,
+            max = 0.2
+        },
+        length = {
+            min = 0.2,
+            max = 0.36,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -208,6 +238,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 3, y = 0 },
     weight = 5,
+    stats = {
+        weight = {
+            min = 0.5,
+            max = 2.0
+        },
+        length = {
+            min = 0.25,
+            max = 0.5,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -262,6 +302,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 4, y = 0 },
     weight = 5,
+    stats = {
+        weight = {
+            min = 5.0,
+            max = 10.0
+        },
+        length = {
+            min = 0.75,
+            max = 1.5,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -379,6 +429,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 0, y = 1 },
     weight = 4.5,
+    stats = {
+        weight = {
+            min = 0.1,
+            max = 0.5
+        },
+        length = {
+            min = 0.25,
+            max = 0.75,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -481,6 +541,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 1, y = 1 },
     weight = 4.5,
+    stats = {
+        weight = {
+            min = 10.0,
+            max = 50.0
+        },
+        length = {
+            min = 4.0,
+            max = 8.0,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -510,9 +580,20 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
     key = "J8-Bit_boostorca",
+    badge_key = "k_J8-Bit_fishbadge_mammal",
     atlas = "fac_j8bit_fish",
     pos = { x = 2, y = 1 },
     weight = 4,
+    stats = {
+        weight = {
+            min = 3000.0,
+            max = 10000.0
+        },
+        length = {
+            min = 5.0,
+            max = 10.0,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -556,6 +637,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 3, y = 1 },
     weight = 4,
+    stats = {
+        weight = {
+            min = 360.0,
+            max = 450.0
+        },
+        length = {
+            min = 4.0,
+            max = 4.4,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -635,6 +726,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 4, y = 1 },
     weight = 4,
+    stats = {
+        weight = {
+            min = 7.0,
+            max = 13.0
+        },
+        length = {
+            min = 0.9,
+            max = 1.1,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -690,6 +791,16 @@ FishAndChips.Fish {
     badge_key = "k_J8-Bit_fishbadge_question_marks",
     atlas = "fac_j8bit_fish",
     pos = { x = 0, y = 2 },
+    stats = {
+        weight = {
+            min = 0.0,
+            max = 0.0
+        },
+        length = {
+            min = 10.0,
+            max = 100.0,
+        }
+    },
     weight = 4,
     cost = 4,
     ppu_coder = { "J8-Bit" },
@@ -735,6 +846,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 1, y = 2 },
     weight = 4,
+    stats = {
+        weight = {
+            min = 90.0,
+            max = 226.796
+        },
+        length = {
+            min = 1.375,
+            max = 2.286,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -747,14 +868,8 @@ FishAndChips.Fish {
     },
     environments = {
         calm_pond = 3.0,
-        chocolate_river = 4.0,
-        styx = 1.0,
         pier = 4.0,
-        swamp = 2.0,
-        aquifer = 3.0,
-        volcano = 1.0,
         city_river = 2.0,
-        soup = 1.0,
         garden = 4.0,
         backroom = 2.0,
         wormhole = 4.0,
@@ -862,6 +977,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 2, y = 2 },
     weight = 3.5,
+    stats = {
+        weight = {
+            min = 100.0,
+            max = 200.0
+        },
+        length = {
+            min = 1.875,
+            max = 2.125,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -935,6 +1060,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 3, y = 2 },
     weight = 3,
+    stats = {
+        weight = {
+            min = 0.5,
+            max = 1.0
+        },
+        length = {
+            min = 0.25,
+            max = 0.5,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -1113,6 +1248,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 4, y = 2 },
     weight = 2,
+    stats = {
+        weight = {
+            min = 0.5,
+            max = 1.0
+        },
+        length = {
+            min = 0.15,
+            max = 0.5,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -1217,13 +1362,24 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 0, y = 3 },
     weight = 2,
+    stats = {
+        weight = {
+            min = 40.0,
+            max = 100.0
+        },
+        length = {
+            min = 1.5,
+            max = 4.0,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
     blueprint_compat = false,
     config = {
         extra = {
-            rank = "Queen"
+            rank = "Queen",
+            shiny = false
         }
     },
     environments = {
@@ -1269,7 +1425,8 @@ FishAndChips.Fish {
             SMODS.debuff_card(playing_card, false, 'fac_J8-Bit_primarina')
             SMODS.recalc_debuff(playing_card)
         end
-    end
+    end,
+    set_ability = function(self, card, initial, delay_sprites) card.ability.extra.shiny = pseudorandom("J8-Bit_primarina_shiny", 1, 16) <= 1 end,
 }
 
 FishAndChips.Fish {
@@ -1278,6 +1435,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 1, y = 3 },
     weight = 1,
+    stats = {
+        weight = {
+            min = 87.0,
+            max = 87.0
+        },
+        length = {
+            min = 3.5,
+            max = 3.5,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -1402,6 +1569,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 2, y = 3 },
     weight = 1,
+    stats = {
+        weight = {
+            min = 90.0,
+            max = 100.0
+        },
+        length = {
+            min = 1.5,
+            max = 2.0,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -1480,6 +1657,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 3, y = 3 },
     weight = 1,
+    stats = {
+        weight = {
+            min = 8.6,
+            max = 8.6
+        },
+        length = {
+            min = 0.6,
+            max = 0.6,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -1530,6 +1717,16 @@ FishAndChips.Fish {
     atlas = "fac_j8bit_fish",
     pos = { x = 4, y = 3 },
     weight = 0.5,
+    stats = {
+        weight = {
+            min = 0.85,
+            max = 1.05
+        },
+        length = {
+            min = 0.25,
+            max = 0.46,
+        }
+    },
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
@@ -1541,16 +1738,10 @@ FishAndChips.Fish {
         }
     },
     environments = {
-        calm_pond = 1.0,
-        chocolate_river = 1.0,
         styx = 1.0,
         pier = 1.0,
-        swamp = 1.0,
         aquifer = 1.0,
-        volcano = 1.0,
         city_river = 1.0,
-        soup = 1.0,
-        garden = 1.0,
         backroom = 1.0,
         wormhole = 1.0,
     },
