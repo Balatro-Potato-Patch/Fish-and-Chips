@@ -45,7 +45,7 @@ return {
                     "After {C:attention}failing{} #3# catches,",
                     "create a random {C:attention}Targeted Bait{}",
                     "{C:inactive}(Currently #2#/#3#){}",
-                    "{C:inactive}(Maximum #4# times per round)"
+                    "{C:inactive}(Maximum #4# times per round){}"
                 },
                 flavor = {
                     "Just another day in",
@@ -63,6 +63,21 @@ return {
                 flavor = {
                     "Maybe a fish,",
                     "or maybe not."
+                }
+            },
+
+            fish_fac_mawray = {
+                name = "Maw Ray",
+                text = {
+                    "This Fish has {X:mult,C:white}XMult{} based",
+                    "on the {C:attention}length{} of your",
+                    "longest Fish",
+                    "{C:inactive}(Does not include Maw Ray){}",
+                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult){}"
+                },
+                flavour = {
+                    "When the moon",
+                    "hits your eye..."
                 }
             }
         },

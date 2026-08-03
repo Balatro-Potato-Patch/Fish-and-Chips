@@ -300,3 +300,66 @@ FishAndChips.Fish {
         card.ability.extra.chosen_bait = pseudorandom("equi_carpticalillusion", 2, #G.P_CENTER_POOLS.fac_Bait)
     end
 }
+
+--Mawray
+fac_equi_get_longest_fish = function(fish)
+    local max_length = 0
+    local longest_fish = nil
+    for k, v in pairs(fish) do
+        if v.ability.stats.length > max_length and v.config.center.key ~= "fish_fac_mawray" then
+            max_length = v.ability.stats.length
+            longest_fish = v
+        end
+    end
+    return max_length, longest_fish
+end
+
+fac_equi_get_mawray_xmult = function()
+    local max_length, _ = fac_equi_get_longest_fish(G.fac_fish_area.cards)
+    local xmult = (3 * math.log10((2 * max_length) + 1) + 1)
+    return xmult
+end
+
+FishAndChips.Fish {
+    key = "mawray",
+    atlas = "equi_fish",
+    pos = { x = 5, y = 0 },
+    display_size = { w = 62, h = 61 },
+    pixel_size = { w = 62, h = 61 },
+    weight = 5,
+    cost = 6,
+    blueprint_compat = true,
+    ppu_coder = { "Equi" },
+    ppu_artist = { "Equi" },
+    attributes = { "xmult" },
+    stats = {
+        weight = { min = 15, max = 30 },
+        length = { min = 2.5, max = 3.5 }
+    },
+    config = { 
+        extra = { 
+            xmult = 1
+        } 
+    },
+    environments = {
+        aquifer = 1,
+        styx = 0.1,
+        swamp = 0.1
+    },
+    loc_vars = function(self, info_queue, card)
+        if G.fac_fish_area then
+            card.ability.extra.xmult = fac_equi_get_mawray_xmult()
+        else
+            card.ability.extra.xmult = 1
+        end
+        return { vars = { card.ability.extra.xmult } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                xmult = card.ability.extra.xmult
+            }
+        end
+    end
+}
