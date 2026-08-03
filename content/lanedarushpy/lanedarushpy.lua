@@ -259,7 +259,7 @@ FishAndChips.Fish {
 	key = "flying_fih",
 	atlas = "lanedarushpy_flying",
 	pos = { x = 0, y = 0 },
-	weight = 50,
+	weight = 25,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "chips" },
@@ -269,9 +269,9 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		pier = 50,
-		city_river = 50,
-        calm_pond = 50,
+		pier = 25,
+		city_river = 25,
+        calm_pond = 25,
 	},
 
     display_size = { w = 142, h = 285 },
@@ -441,6 +441,31 @@ FishAndChips.Fish {
         calm_pond = 50,
 	},
 
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.chips } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then return { chips = card.ability.extra.chips } end
+	end,
+}
+
+FishAndChips.Fish {
+	key = "still_fish",
+	atlas = "pangaea47_main",
+	pos = { x = 3, y = 0 },
+	weight = 25,
+	ppu_coder = { "lanedarushpy" },
+	ppu_artist = { "pangaea47" },
+	attributes = { "chips" },
+	config = {
+		extra = {
+			chips = 30
+		}
+	},
+	environments = {
+		backroom = 25,
+		wormhole = 25,
+	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips } }
 	end,
