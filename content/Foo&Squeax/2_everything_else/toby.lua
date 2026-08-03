@@ -12,9 +12,18 @@ SMODS.Atlas{
 	py = 71
 }
 
+SMODS.Atlas{
+	key = "fas_toby_sona",
+	path = FishAndChips.FooSqueax.file_path .. "toby/tobysona_line.png",
+	px = 22,
+	py = 17
+}
+
+
 FishAndChips.Fish{
 	key = "fas_toby_fish",
 	ppu_coder = {"Foo54"},
+	ppu_artist = {"squeax09"},
 	weight = 5,
 	environments = {
 		wormhole = 1,
@@ -28,7 +37,7 @@ FishAndChips.Fish{
 		local scaling = 1.2
 		badges[#badges + 1] = {n=G.UIT.R, config={align = "cm"}, nodes={
       {n=G.UIT.R, config={align = "cm", colour = FishAndChips.C.FISH, r = 0.1, minw = 2, minh = 0.4*scaling, emboss = 0.05}, nodes={
-        {n=G.UIT.O, config={object = SMODS.create_sprite(0, 0, 0.5 * scaling, 0.5 * scaling, "fac_fas_toby")}},
+        {n=G.UIT.O, config={object = SMODS.create_sprite(0, 0, 0.5 * scaling, 0.5 * scaling / 62 * 52, "fac_fas_toby")}},
       }}
     }}
 	end,
@@ -81,14 +90,12 @@ function G.UIDEF.card_h_popup(card)
 		local search = SMODS.deepfind(ret.nodes[1].nodes, "Foo54", nil, true)[1]
 		local config = search.objtree[#search.objtree - 2]
 		config.object:remove()
-		config.object = SMODS.create_sprite(0, 0, 0.5, 0.5, "fac_fas_toby")
+		config.object = SMODS.create_sprite(0, 0, 0.5, 0.5 / 22 * 17, "fac_fas_toby_sona", {x = 1, y = 0})
 		
-		--[[
 		local search2 = SMODS.deepfind(ret.nodes[1].nodes, "squeax09", nil, true)[1]
 		local config2 = search2.objtree[#search2.objtree - 2]
 		config2.object:remove()
-		config2.object = SMODS.create_sprite(0, 0, 0.5, 0.5, "fac_fas_toby")
-		--]] -- uncomment this when art is added
+		config2.object = SMODS.create_sprite(0, 0, 0.5, 0.5 / 22 * 17, "fac_fas_toby_sona")
 
 		return ret
 	end
