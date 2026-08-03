@@ -51,7 +51,9 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     vec2 mask_size = vec2(max(old_size.x, new_size.x), max(old_size.y, new_size.y));
     vec2 rel_size = green ? old_size : new_size;
 
-    vec2 morph_uv = vec2((uv.x * rel_size.x + (mask_size.x - rel_size.x) / 2.0) / mask_size.x, (uv.y * rel_size.y + (mask_size.y - rel_size.y) / 2.0) / mask_size.y);
+    number m_uv_x = ((uv.x * rel_size.x) + ((mask_size.x - rel_size.x) / 2.0)) / mask_size.x;
+    number m_uv_y = ((uv.y * rel_size.y) + ((mask_size.y - rel_size.y) / 2.0)) / mask_size.y;
+    vec2 morph_uv = vec2(m_uv_x, m_uv_y);
     vec4 morph = Texel(morph_mask, morph_uv); 
 
     number important = chimaera.r + chimaera.g;
@@ -60,22 +62,26 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     number morph_ease = 0.05;
 
     number morph_threshold = 0.5;
-    if (morph.r <= 0.0 && (morph.g > 0.0 || morph.b > 0.0)) { // Fade out/in
+    if (morph.r <= 0.0) { // Fade out/in
         if (green) {
             morph_threshold = morph.g;
-            tex.a = mix(tex.a, 0, clamp((morph_progress - (morph_threshold - morph_ease))/(morph_threshold + morph_ease - (morph_threshold - morph_ease)), 0.0, 1.0));
+            tex.a = mix(tex.a, 0, clamp((morph_progress - (morph_threshold - morph_ease))/(morph_ease*2.0), 0.0, 1.0));
         } else {
             morph_threshold = morph.b;
-            tex.a = mix(0, tex.a, clamp((morph_progress - (morph_threshold - morph_ease))/(morph_threshold + morph_ease - (morph_threshold - morph_ease)), 0.0, 1.0));
+            tex.a = mix(0, tex.a, clamp((morph_progress - (morph_threshold - morph_ease))/(morph_ease*2.0), 0.0, 1.0));
         }
-    } else if (morph.r > 0.0 && !green) {
-        tex.a = mix(0, tex.a, morph_progress);
+    } else if (!green) {
+        tex.a = mix(0, tex.a, clamp(morph_progress, 0.0, 1.0));
     }
     if (green) {
-        tex.rgb = mix(tex.rgb, morph_col, morph_progress * 1.5);
+        tex.rgb = mix(tex.rgb, morph_col, clamp(morph_progress * 1.5, 0.0, 1.0));
+        tex.a = mix(tex.a, 0, clamp((morph_progress - 0.9) / 0.1, 0.0, 1.0));
     } else {
-        tex.rgb = mix(morph_col, tex.rgb, morph_progress * 1.5 - 0.5);
+        tex.rgb = mix(morph_col, tex.rgb, clamp(morph_progress * 1.5 - 0.5, 0.0, 1.0));
     }
+    // if (shadow && morph.r > 0.0) {
+    //     tex.a = tex.a * 0.5;
+    // }
 
     // required
     return dissolve_mask(tex*colour, texture_coords, uv);

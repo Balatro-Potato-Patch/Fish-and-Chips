@@ -234,10 +234,11 @@ return {
             fish_fac_chimaera = {
                 name = {"Chimaera"},
                 text = {
-                    "If {C:attention}played hand{} contains",
-                    "a {C:attention}Flush{}, a {C:attention}Pair{} and a",
-                    "{C:enhanced}Wild {C:attention}card{}, {C:dark_edition,E:1}morphs{} into",
-                    "last {C:attention}used {C:fac_fish}Fish"
+                    "After any {C:attention}played hand",
+                    "contained a {C:attention}Flush{}, a {C:attention}Pair{}",
+                    "and a {C:enhanced}Wild {C:attention}card{}, {C:attention}using",
+                    "this {C:fac_fish}Fish {C:dark_edition,E:1}morphs{} it into",
+                    "the {C:attention}last{} used {C:fac_fish}Fish"
                 },
                 flavor = {
                     "This Chimaera ain't arced."

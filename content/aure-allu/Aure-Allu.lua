@@ -1297,7 +1297,7 @@ function set_chimaera_morph_data(card, old_center, new_center, morph_time)
 		end
 		return r, g, b, a
 	end)
-	shader_data:encode("png", "chimaera_morph_1.png")
+	-- shader_data:encode("png", "chimaera_morph_1.png")
 
 	local max_distance_old = 1
 	local max_distance_new = 1
@@ -1318,7 +1318,7 @@ function set_chimaera_morph_data(card, old_center, new_center, morph_time)
 		end
 		return r, g, b, a
 	end)
-	shader_data:encode("png", "chimaera_morph_2.png")
+	-- shader_data:encode("png", "chimaera_morph_2.png")
 
 	shader_data:mapPixel(function (x, y, r, g, b, a)
 		if a > 0.0 and not (g <= 0.0 and b <= 0.0 or g > 0.0 and b > 0.0) then
@@ -1330,7 +1330,7 @@ function set_chimaera_morph_data(card, old_center, new_center, morph_time)
 		end
 		return r, g, b, a
 	end)
-	shader_data:encode("png", "chimaera_morph_3.png")
+	-- shader_data:encode("png", "chimaera_morph_3.png")
 	card.fac_aure_allu_chimaera_morph_data.mask = love.graphics.newImage(shader_data)
 	card.fac_aure_allu_chimaera_morph_data.start_time = G.TIMERS.REAL
 	card.fac_aure_allu_chimaera_morph_data.morph_time = morph_time or 2.0
@@ -1343,8 +1343,8 @@ function remove_chimaera_morph_data(card)
 	if card.children.chimaera_old_center then
 		card.children.chimaera_old_center:remove()
 		card.children.chimaera_old_center = nil
-		card.ignore_shadow.chimaera_morph = nil
 	end
+	card.ignore_shadow.chimaera_morph = nil
 end
 
 SMODS.clean_up_children_ignore.chimaera_old_center = true
@@ -1375,7 +1375,7 @@ SMODS.Shader {
 
 SMODS.DrawStep {
 	key = "aure-allu_chimaera",
-	order = -9,
+	order = -11,
 	func = function(self, layer)
 		if self.fac_aure_allu_chimaera_morph_data then
 			local morph_time = (G.TIMERS.REAL - self.fac_aure_allu_chimaera_morph_data.start_time) / (self.fac_aure_allu_chimaera_morph_data.morph_time)
@@ -1419,12 +1419,12 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "passive" },
+	attributes = { "passive", "usable" },
 	stats = {weight = {min = 0.25, max = 30}, length = {min = 0.1, max = 1.5}},
 	blueprint_compat = false,
 	config = {
 		extra = {
-			
+			active = false
 		},
 	},
 	environments = {
@@ -1457,26 +1457,38 @@ FishAndChips.Fish {
 				if SMODS.has_enhancement(pcard, "m_wild") then has_wild = true; break end
 			end
 			if has_wild then
-				if G.GAME.fac_last_used_fish then
-					G.E_MANAGER:add_event(Event({
-						trigger = "after",
-						delay = 0.3,
-						func = function ()
-							-- Todo : yassify
-							card:juice_up(1.2, 0.3)
-							morph_fish_into(card, G.P_CENTERS[G.GAME.fac_last_used_fish], 4.0)
-							return true
-						end
-					}))
-				else 
-					return {
-						message = localize("k_aure_allu_chimaera_confoozed"),
-						colour = G.C.BLACK
-					}
-				end
+				card.ability.extra.active = true
+				return {
+					message = localize("k_active_ex"),
+					colour = FishAndChips.C.FISH,
+				}
 			end
 		end
 	end,
+	use = function (self, card)
+		if G.GAME.fac_last_used_fish and G.GAME.fac_last_used_fish ~= "fish_fac_chimaera" then
+			G.E_MANAGER:add_event(Event({
+				trigger = "after",
+				delay = 0.3,
+				func = function ()
+					morph_fish_into(card, G.P_CENTERS[G.GAME.fac_last_used_fish], 2.5)
+					return true
+				end
+			}))
+			delay(2.6*G.SETTINGS.GAMESPEED)
+		-- else 
+		-- 	SMODS.calculate_effect({
+		-- 		message = localize("k_aure_allu_chimaera_confoozed"),
+		-- 		colour = G.C.BLACK,
+		-- 	}, card)
+		end
+	end,
+	keep_on_use = function (self, card)
+		return true
+	end,
+	can_use = function (self, card)
+		return card.ability.extra.active and G.GAME.fac_last_used_fish and G.GAME.fac_last_used_fish ~= "fish_fac_chimaera"
+	end
 }
 
 
