@@ -178,7 +178,7 @@ SMODS.DrawStep({
             reverse = true
         }
         self.children.center:draw_shader('fac_aeonfish_transmute', nil, self.ARGS.send_to_shader)
-        sprite:draw_shaders('fac_aeonfish_transmute', nil, self.ARGS.send_to_shader, nil, self.children.center)
+        sprite:draw_shader('fac_aeonfish_transmute', nil, self.ARGS.send_to_shader, nil, self.children.center)
 	end,
 	conditions = { vortex = false, facing = "front" },
 })

@@ -278,7 +278,7 @@ return {
                     },
                     {
                         "Earn {C:money}$#1#{} Every",
-                        "{C:attention}#2#{} times a {C:attention}Fish{} leaves",
+                        "{C:attention}#3#{} times a {C:attention}Fish{} leaves",
                         "your sweet spot.",
                         "{C:inactive}(Currently: [{C:attention}#2#{C:inactive}/{C:attention}#3#{C:inactive}] times)"
                     }
