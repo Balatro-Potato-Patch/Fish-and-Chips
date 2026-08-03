@@ -133,7 +133,7 @@ FishAndChips.Fish({
 	decision_max = math.huge,
 	impulse_min = 0,
 	impulse_max = 0,
-	vel_limit = 0,
+	vel_limit = 0.01,
 	atlas = "hayayaya_fih",
 	pos = { x = 0, y = 1 },
 	pixel_size = { w = 64, h = 64 },

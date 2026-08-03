@@ -16,6 +16,11 @@ FishAndChips.Fish({
 		length = { min = 1, max = 1 },
 		weight = { min = 1, max = 1 },
 	},
+	ecision_min = math.huge,
+	decision_max = math.huge,
+	impulse_min = 0,
+	impulse_max = 0,
+	vel_limit = 0.01,
 	badge_key = "k_fac_hayayaya_badge_q",
 	can_use = function(self, card)
 		local eligible = {}

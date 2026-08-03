@@ -19,6 +19,11 @@ FishAndChips.Fish({
 		weight = { min = 2, max = 3 },
 	},
 	badge_key = "k_fac_maybe_fish",
+	decision_min = 1.0,
+	decision_max = 2.0,
+	vel_limit = 2.0,
+	impulse_min = 0.0,
+	impulse_max = 0.5,
 	calculate = function(self, card, context)
 		if context.game_over then
 			G.E_MANAGER:add_event(Event({
