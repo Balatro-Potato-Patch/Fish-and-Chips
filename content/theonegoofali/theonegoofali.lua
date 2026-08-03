@@ -227,7 +227,10 @@ table.insert(fishregistry, {
 	calculate = function(self, card, context)
 		if context.retrigger_joker then return end
 		
-		if context.fac_toga_modify_rank and tonumber(context.amount) then return { amount = context.amount + 1 } end
+		if context.fac_toga_modify_rank and tonumber(context.amount) then
+			local setamt = math.abs(context.amount) + 1
+			return { amount = context.amount < 0 and -setamt or setamt }
+		end
 	end,
 	display_size = { w = 71, h = 84 },
 	stats = { weight = { min = 0.45, max = 1 }, length = { min = 0.07, max = 0.3 } }
