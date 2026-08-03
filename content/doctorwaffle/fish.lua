@@ -28,14 +28,65 @@ SMODS.Sound {
     path = "doctorwaffle/conch_nothing.ogg"
 }
 
+-- Functions
+local waffleFunctions = {}
+do
+    function waffleFunctions.flipFunctionCards(cards, applyFunc)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                play_sound('tarot1')
+                return true
+            end
+        }))
+        for i = 1, #cards do
+            local percent = math.max(1.15 - (i - 0.999) / (#cards - 0.998) * 0.3, 0)
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    cards[i]:flip()
+                    play_sound('card1', percent)
+                    cards[i]:juice_up(0.3, 0.3)
+                    return true
+                end
+            }))
+        end
+        delay(0.15)
+        for i = 1, #cards do
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    applyFunc(cards[i])
+                    return true
+                end
+            }))
+        end
+        delay(0.2)
+        for i = 1, #cards do
+            local percent = math.max(1.15 - (i - 0.999) / (#cards - 0.998) * 0.3, 0)
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    cards[i]:flip()
+                    play_sound('tarot2', percent, 0.6)
+                    cards[i]:juice_up(0.3, 0.3)
+                    return true
+                end
+            }))
+        end
+    end
+end
+
 -- Bonus Duck sounds
 local numDuckSounds = 7
 for i = 1, 7 do
     SMODS.Sound {
-    key = "fac_waffle_duck" .. i,
-    path = "doctorwaffle/duck" .. i .. ".ogg",
-    pitch = 1,
-}
+        key = "fac_waffle_duck" .. i,
+        path = "doctorwaffle/duck" .. i .. ".ogg",
+        pitch = 1,
+    }
 end
 
 -- Magic Conch
@@ -52,6 +103,10 @@ FishAndChips.Fish {
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     cost = 5,
+    stats = {
+        weight = { min = 0.1, max = 0.11 },
+        length = { min = 0.05, max = 0.051 }
+    },
     config = { extra = {
         odds = 2,
         used_this_round = false
@@ -259,7 +314,12 @@ FishAndChips.Fish {
             end
         end
     end,
-    attributes = { "generation", "joker", "chance" }
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_fac_waffle_conch'),
+            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
+            1.2)
+    end,
+    attributes = { "generation", "joker", "chance", "usable" }
 }
 
 -- Percheo
@@ -271,6 +331,10 @@ FishAndChips.Fish {
         garden = 1,
     },
     cost = 10,
+    stats = {
+        weight = { min = 0.45, max = 0.6 },
+        length = { min = 0.08, max = 0.12 }
+    },
     pos = { x = 1, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -301,6 +365,10 @@ FishAndChips.Fish {
     key = "waffle_dead_fish",
     atlas = "waffle_fish",
     pos = { x = 2, y = 0 },
+    stats = {
+        weight = { min = 1.30, max = 4.50 },
+        length = { min = 0.20, max = 0.45 }
+    },
     environments = {
         styx = 1,
         wormhole = 0.5
@@ -347,6 +415,10 @@ FishAndChips.Fish {
         chocolate_river = 1,
         pier = 0.75,
         soup = 0.6
+    },
+    stats = {
+        weight = { min = 0.04, max = 0.041 },
+        length = { min = 0.10, max = 0.101 }
     },
     loc_vars = function(self, info_queue, card)
         local quotes = {
@@ -405,7 +477,12 @@ FishAndChips.Fish {
     impulse_max = 0.8,
     impulse_min = 0.65,
     decision_min = 0.75,
-    decision_max = 0.95
+    decision_max = 0.95,
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_fac_waffle_cookie'),
+            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
+            1.2)
+    end,
 }
 
 -- Mudskipper
@@ -424,7 +501,11 @@ FishAndChips.Fish {
         calm_pond = 0.65,
         aquifer = 0.65,
     },
-    attributes = { "generation" }, -- Doesn't really generate cards, but this is really the only fitting bait attribute I can think of
+    stats = {
+        weight = { min = 0.05, max = 0.09 },
+        length = { min = 0.10, max = 0.30 }
+    },
+    attributes = { "generation" },                             -- Doesn't really generate cards, but this is really the only fitting bait attribute I can think of
     calculate = function(self, card, context)
         if context.fac_end_fishing and not context.failed then -- thanks eremel
             local tag_pool = get_current_pool('Tag')
@@ -458,6 +539,10 @@ FishAndChips.Fish {
     environments = {
         backroom = 1,
         wormhole = 1,
+    },
+    stats = {
+        weight = { min = 0.03, max = 0.45 },
+        length = { min = 0.03, max = 0.12 }
     },
     attributes = { "passive" },
     calculate = function(self, card, context)
@@ -496,6 +581,11 @@ FishAndChips.Fish {
             }))
         end
     end,
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_fac_waffle_echinoderm'),
+            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
+            1.2)
+    end,
 }
 
 -- Double Dicefin
@@ -511,13 +601,18 @@ FishAndChips.Fish {
         garden = 0.8,
         backroom = 0.6
     },
+    stats = {
+        weight = { min = 0.2, max = 0.4 },
+        length = { min = 0.16, max = 0.32 }
+    },
     config = { extra = {
         boost = 2,
         active = false
     } },
     cost = 6,
     loc_vars = function(self, info_queue, card)
-        local main_end = {
+        if card.area == G.fac_fish_area then
+            local main_end = {
             {
                 n = G.UIT.C,
                 config = { align = "bm", minh = 0.4 },
@@ -536,6 +631,7 @@ FishAndChips.Fish {
             main_end = main_end,
             vars = { card.ability.extra.boost }
         }
+        end
     end,
     blueprint_compat = false,
     calculate = function(self, card, context)
@@ -572,6 +668,10 @@ FishAndChips.Fish {
         aquifer = 1,
         pier = 0.4
     },
+    stats = {
+        weight = { min = 0.005, max = 0.01 },
+        length = { min = 0.10, max = 0.40 }
+    },
     pixel_size = { h = 76 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -597,11 +697,16 @@ FishAndChips.Fish {
             end
         end
     end,
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_fac_waffle_invertebrate'),
+            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
+            1.2)
+    end,
 }
 
 -- Bonus Duck
 -- Notes: duck value is stored in card.ability.fac_extra as card.ability.extra is wiped when changing card enhancement
--- I don't *think* this causes any issues? 
+-- I don't *think* this causes any issues? fingers crossed Lmao
 local bonusDuckRatio = 0.3
 FishAndChips.Fish {
     key = "waffle_bonus_duck",
@@ -610,10 +715,15 @@ FishAndChips.Fish {
     environments = {
         backroom = 1,
         styx = 1,
+        city_river = 0.6
+    },
+    stats = {
+        weight = { min = 0.2, max = 0.6 },
+        length = { min = 0.16, max = 0.32 }
     },
     pixel_size = { h = 88 },
     atlas = "waffle_fish",
-    pos = {x = 8, y = 0 },
+    pos = { x = 8, y = 0 },
     weight = 8,
     cost = 6,
     config = { extra = {
@@ -645,10 +755,9 @@ FishAndChips.Fish {
             return {
                 message = localize('k_upgrade_ex'),
                 message_card = card,
-                sound = "fac_waffle_duck" .. math.random(1,numDuckSounds),
+                sound = "fac_waffle_duck" .. math.random(1, numDuckSounds),
                 volume = 0.38
             }
-
         end
         if context.joker_main then
             return {
@@ -656,14 +765,19 @@ FishAndChips.Fish {
             }
         end
     end,
-    attributes = { "chips", "scaling" }
+    attributes = { "chips", "scaling" },
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_fac_waffle_duck'),
+            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
+            1.2)
+    end,
 }
 local shuffle_ref = CardArea.shuffle
 function CardArea:shuffle(_seed)
     shuffle_ref(self, _seed)
 
-    if self == G.deck then    -- idr if shuffle gets called on non-deck cardareas but better safe than sorry
-        local allCards = {}   -- Initialize list of cards in deck
+    if self == G.deck then        -- idr if shuffle gets called on non-deck cardareas but better safe than sorry
+        local allCards = {}       -- Initialize list of cards in deck
 
         for i = 1, #self.cards do -- Add cards in deck to allCards and reset their duck value
             self.cards[i].ability.fac_extra = self.cards[i].ability.fac_extra or {}
@@ -671,7 +785,7 @@ function CardArea:shuffle(_seed)
             allCards[#allCards + 1] = self.cards[i]
         end
 
-        local bonusDuckCards = {} -- Initialize list of cards to add ducks do
+        local bonusDuckCards = {}                           -- Initialize list of cards to add ducks do
 
         for i = 1, math.ceil(#allCards * bonusDuckRatio) do -- Remove cards from deck list as they are added to duck list (this ensures the same card doesn't get ducked twice)
             local chosenCardIndex = pseudorandom("fac_waffle_bonus_duck_choose", 1, #allCards)
@@ -685,13 +799,13 @@ function CardArea:shuffle(_seed)
         end
     end
 end
+
 -- Duck drawstep
 SMODS.DrawStep {
     key = "fac_waffle_duck_drawstep",
     order = 1,
-    func = function (card, layer)
+    func = function(card, layer)
         if next(SMODS.find_card("fish_fac_waffle_bonus_duck", true)) then -- Only draw ducks if Bonus Duck is held
-            
             if not G.fac_waffle_duck_sprite then
                 G.fac_waffle_duck_sprite = SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H,
                     "fac_waffle_duck",
@@ -704,10 +818,9 @@ SMODS.DrawStep {
                 G.fac_waffle_duck_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center)
                 G.fac_waffle_duck_sprite:draw_shader('booster', nil, card.ARGS.send_to_shader, nil, card.children.center)
             end
-        
         end
     end,
-    conditions = {facing = 'front'}
+    conditions = { facing = 'front' }
 }
 -- Duck atlas
 SMODS.Atlas {
@@ -715,4 +828,69 @@ SMODS.Atlas {
     path = "doctorwaffle/duck.png",
     px = 71,
     py = 95
+}
+
+-- Onion Fish
+FishAndChips.Fish {
+    key = "waffle_onion_fish",
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    atlas = "waffle_fish",
+    pos = { x = 9, y = 0 },
+    weight = 8,
+    cost = 5,
+    environments = {
+        soup = 1,
+        swamp = 1
+    },
+    pixel_size = { h = 77 },
+    config = { extra = {
+        cards_remaining = 8
+    } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.cards_remaining } }
+    end,
+    stats = {
+        weight = { min = 0.4, max = 1.6 },
+        length = { min = 0.08, max = 0.24 }
+    },
+    calculate = function(self, card, context)
+        if context.press_play then
+            local affectedCards = {}
+            for _, played_card in pairs(G.hand.highlighted) do
+                if card.ability.extra.cards_remaining > 0 and not SMODS.has_no_rank(played_card) then
+                    affectedCards[#affectedCards + 1] = played_card
+
+                    if not context.blueprint then
+                        SMODS.scale_card(card, {
+                            ref_table = card.ability.extra,
+                            ref_value = "cards_remaining",
+                            operation = function(ref_table, ref_value, initial)
+                                ref_table[ref_value] = initial - 1
+                            end,
+                            no_message = true
+                        })
+                    end
+                end
+            end
+            waffleFunctions.flipFunctionCards(affectedCards, function(modify_card)
+                SMODS.modify_rank(modify_card, -1)
+            end)
+            delay(0.875)
+            if not context.blueprint then
+                if card.ability.extra.cards_remaining > 0 then
+                    return {
+                        message = tostring(card.ability.extra.cards_remaining)
+                    }
+                end
+            end
+        end
+        if context.after and not context.blueprint and card.ability.extra.cards_remaining <= 0 then
+            SMODS.destroy_cards(card, nil, nil, true)
+            return {
+                message = localize("k_eaten_ex")
+            }
+        end
+    end,
+    attributes = { "rank", "food" }
 }

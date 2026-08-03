@@ -71,7 +71,7 @@ return {
                 name = "Mudskipper",
                 text = {
                     "Create a random {C:attention}Tag{}",
-                    "when {C:attention}reeling in{} a Fish"
+                    "when {C:attention}reeling in{} a {C:fac_fish}Fish{}"
                 },
                 flavor = {
                     "Stop staring at me",
@@ -82,12 +82,14 @@ return {
             fish_fac_waffle_reginald = {
                 name = "Reginald the Teleporting Sea Urchin",
                 text = {
-                    "Travel to a different {C:fac_environment}environment{}",
-                    "after reeling in a Fish"
+                    "Travel to a",
+                    "different {C:fac_environment}environment{}",
+                    "after catching a {C:fac_fish}Fish{}"
                 },
                 flavor = {
-                    "Currently on the run from the nautical police",
-                    "due to multiple accounts of undersea arson (somehow?)",
+                    "Currently on the run from the",
+                    "nautical police due to multiple",
+                    "accounts of undersea arson (somehow?)",
                 }
             },
 
@@ -128,7 +130,7 @@ return {
                         "{C:inactive}(rounded up)"
                     },
                     {
-                        "This Fish gains {C:chips}+#2#{} Chips whenever",
+                        "This {C:fac_fish}Fish{} gains {C:chips}+#2#{} Chips whenever",
                         "cards with {C:attention}Ducks{} are scored",
                         "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)"
                     },
@@ -139,6 +141,20 @@ return {
                 }
             },
 
+            fish_fac_waffle_onion_fish = {
+                name = "Onion Fish",
+                text = {
+                    {
+                        "Lower the {C:attention}rank{} of the",
+                        "next {C:attention}#1#{} cards played",
+                        "by {C:attention}1{} before scoring"
+                    }
+                },
+                flavor = {
+                    "Ogres are like onions. They stink."
+                }
+            }
+
         },
 
     },
@@ -148,7 +164,12 @@ return {
         dictionary = {
             k_fac_waffle_ready_ex = "Ready!",
             k_fac_waffle_tag = "+1 Tag",
-            k_fac_waffle_inactive = "inactive"
+            k_fac_waffle_inactive = "inactive",
+            k_fac_waffle_cookie = "Cookie",
+            k_fac_waffle_conch = "Plastic Toy",
+            k_fac_waffle_echinoderm = "Echinoderm",
+            k_fac_waffle_invertebrate = "Invertebrate",
+            k_fac_waffle_duck = "Duck",
         },
 
     }
