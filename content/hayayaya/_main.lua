@@ -60,6 +60,7 @@ PotatoPatchUtils.Developer({
 		-- Used for freedom motif
 		if context.fac_end_fishing and context.fish_obj and not context.failed and not context.perfect then
 			context.fish_obj.ability.fac_bait_used = G.GAME.fac_active_bait
+			context.fish_obj:set_cost()
 		end
 	end,
 })
