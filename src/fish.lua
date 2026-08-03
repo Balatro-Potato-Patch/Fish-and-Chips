@@ -74,7 +74,7 @@ function FishAndChips.format_measurement(value, type)
 	if not value then return ' ' end
 	if type == 'weight' then
 		if value > 10000 then
-			return strip_decimals(nil, value / 1000, 1) .. ' tons'
+			return strip_decimals(nil, value / 1000, 1) .. 't'
 		elseif value < 1 then
 			return value*1000 .. 'g'
 		else
