@@ -36,7 +36,7 @@ FishAndChips.Fish {
             return { chips = card.ability.extra.chips }
         end
 
-        if context.fac_end_fishing and not context.failed then
+        if context.fac_end_fishing and not context.failed and not context.blueprint then
             local this_environment_key = FishAndChips.get_environment().key
             if this_environment_key ~= card.ability.extra.last_catch_environment then
                 SMODS.scale_card(card, {

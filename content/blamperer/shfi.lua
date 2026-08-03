@@ -15,8 +15,9 @@ FishAndChips.Fish {
     environments = {
         styx = 8,
     },
+    blueprint_compat = false,
     calculate = function(self, card, context)
-        if context.initial_scoring_step then
+        if context.initial_scoring_step and not context.blueprint then
             return { swap = true }
         end
     end
