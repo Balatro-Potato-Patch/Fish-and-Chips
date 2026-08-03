@@ -1405,13 +1405,14 @@ SMODS.DrawStep {
 			self.ignore_shadow.chimaera_morph = nil
 			if not self.no_shadow and G.SETTINGS.GRAPHICS.shadows == 'On' and((self.ability.effect ~= 'Glass Card' and not self.greyed and self:should_draw_shadow() ) and ((self.area and self.area ~= G.discard and self.area.config.type ~= 'deck') or not self.area or self.states.drag.is)) then
 				self.shadow_height = 0*(0.08 + 0.4*math.sqrt(self.velocity.x^2)) + ((((self.highlighted and self.area == G.play) or self.states.drag.is) and 0.35) or (self.area and self.area.config.type == 'title_2') and 0.04 or 0.1)
-				self.children.chimaera_old_center:draw_shader('fac_aure-allu_chimaera', self.shadow_height)
 				self.children.center:draw_shader('fac_aure-allu_chimaera', self.shadow_height)
+				self.children.chimaera_old_center:draw_shader('fac_aure-allu_chimaera', self.shadow_height)
+				
 			end
 			self.ignore_shadow.chimaera_morph = true
 
-			self.children.chimaera_old_center:draw_shader("fac_aure-allu_chimaera")
 			self.children.center:draw_shader("fac_aure-allu_chimaera")
+			self.children.chimaera_old_center:draw_shader("fac_aure-allu_chimaera")
 		end
     end,
     conditions = { vortex = false, facing = 'front' },

@@ -70,18 +70,13 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
             morph_threshold = morph.b;
             tex.a = mix(0, tex.a, clamp((morph_progress - (morph_threshold - morph_ease))/(morph_ease*2.0), 0.0, 1.0));
         }
-    } else if (!green) {
-        tex.a = mix(0, tex.a, clamp(morph_progress, 0.0, 1.0));
     }
     if (green) {
-        tex.rgb = mix(tex.rgb, morph_col, clamp(morph_progress * 1.5, 0.0, 1.0));
-        tex.a = mix(tex.a, 0, clamp((morph_progress - 0.9) / 0.1, 0.0, 1.0));
+        tex.rgb = mix(tex.rgb, morph_col, clamp(morph_progress * 2.0, 0.0, 1.0));
+        tex.a = mix(tex.a, 0, clamp(morph_progress * 1.5 - 0.5, 0.0, 1.0));
     } else {
-        tex.rgb = mix(morph_col, tex.rgb, clamp(morph_progress * 1.5 - 0.5, 0.0, 1.0));
+        tex.rgb = mix(morph_col, tex.rgb, clamp((morph_progress - 0.9) / 0.1, 0.0, 1.0));
     }
-    // if (shadow && morph.r > 0.0) {
-    //     tex.a = tex.a * 0.5;
-    // }
 
     // required
     return dissolve_mask(tex*colour, texture_coords, uv);
