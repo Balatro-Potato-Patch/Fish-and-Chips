@@ -1,13 +1,13 @@
 SMODS.Atlas{
 	key = "fas_toby",
-	path = FishAndChips.FooSqueax.file_path .. "toby.png",
+	path = FishAndChips.FooSqueax.file_path .. "toby/toby.png",
 	px = 62,
 	py = 52
 }
 
 SMODS.Atlas{
 	key = "fas_toby_fish",
-	path = FishAndChips.FooSqueax.file_path .. "toby_fish.png",
+	path = FishAndChips.FooSqueax.file_path .. "toby/toby_fish.png",
 	px = 71,
 	py = 71
 }
