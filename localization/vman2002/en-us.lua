@@ -116,6 +116,8 @@ return {
 				name = "VMan_2002",
 				text = {
 					"meow mrrp mraow",
+					"{s:0.8} ",
+					"click me :3",
 					"{s:0.8}vman-2002.bsky.social"
 				}
 			}
