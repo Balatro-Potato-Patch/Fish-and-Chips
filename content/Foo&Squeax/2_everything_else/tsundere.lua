@@ -20,8 +20,8 @@ FishAndChips.Fish{
 	},
 	disable_visual_scaling = true,
 	stats = {
-		length = {min = 5, max = 5},
-		weight = {min = 5, max = 5}
+		length = {min = 25, max = 26},
+		weight = {min = 25, max = 26}
 	},
 	attributes = {"usable", "passive"},
 	loc_vars = function(self, info_queue, card)
@@ -123,7 +123,18 @@ function FishAndChips.FooSqueax.tsunderfish.create_act_uibox (card)
 						scale = 0.5,
 					}
 				}}
-			}}
+			}},
+			key == "check" and {n = G.UIT.R, nodes = {
+				{n = G.UIT.O, config = {object = 
+					DynaText{
+						string = {localize("ph_fac_fas_tsunderfish_" .. key .. "_3")},
+						colours = {G.C.WHITE},
+						pop_in = 1,
+						bump_amount = 0,
+						scale = 0.5,
+					}
+				}}
+			}} or nil
 		}
 	elseif state.option == 0 then
 		G.fac_fas_check = SMODS.create_sprite(0, 0, 0.3, 0.3, "fac_fas_icons")
