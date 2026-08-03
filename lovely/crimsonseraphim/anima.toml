@@ -13,6 +13,5 @@ if next(SMODS.find_card("fish_fac_anima")) then
     SMODS.destroy_cards(SMODS.find_card("fish_fac_anima")[1], nil, true)
     state.treasure_type = "fish"
 end
-print(state.treasure_type)
 '''
 match_indent = true

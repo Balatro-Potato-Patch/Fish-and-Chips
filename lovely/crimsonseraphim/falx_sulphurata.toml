@@ -1,0 +1,19 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = '''functions/state_events.lua'''
+pattern = '''
+inc_career_stat('c_cards_played', #G.hand.highlighted)
+inc_career_stat('c_hands_played', 1)
+ease_hands_played(-1)
+delay(0.4)
+'''
+position = "after"
+payload = '''
+SMODS.calculate_context{crimsonseraphim_before_hightlighted_moved = true}
+'''
+match_indent = true

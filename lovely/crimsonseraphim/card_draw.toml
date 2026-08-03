@@ -36,3 +36,19 @@ else
 end
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/card_draw.lua"]'''
+pattern = '''for k, v in pairs(SMODS.Stickers) do'''
+position = "before"
+payload = '''
+if self.ability.crimsonseraphim_temporary then
+    G.shared_stickers["crimsonseraphim_temporary"] = G.shared_stickers["crimsonseraphim_temporary"] or
+    Sprite(0, 0, G.CARD_W, G.CARD_H, G.ASSET_ATLAS["fac_crimsonseraphim_temporary"], { x = 0, y = 0 })
+    G.shared_stickers["crimsonseraphim_temporary"].role.draw_major = self
+    G.shared_stickers["crimsonseraphim_temporary"]:draw_shader('dissolve', nil, nil, nil, self.children.center)
+    G.shared_stickers["crimsonseraphim_temporary"]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center)
+end
+'''
+match_indent = true

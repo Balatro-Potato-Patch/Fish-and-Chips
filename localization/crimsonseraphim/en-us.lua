@@ -289,7 +289,7 @@ return {
             },
 
             fish_fac_piranha_cruenta = {
-                name = "Piranha Cruenta",
+                name = "Piranha cruenta",
                 text = {
                     "{C:hearts}Hearts{} held in hand",
                     "give {X:mult,C:white}X#1#{} Mult"
@@ -303,7 +303,7 @@ return {
                 }
             },
             fish_fac_delphinus_dormiens = {
-                name = "Delphinus Dormiens",
+                name = "Delphinus dormiens",
                 text = {
                     "When a non-{C:attention}Perishable Fish{}",
                     "is used create a {C:attention}Perishable{} copy",
@@ -332,6 +332,47 @@ return {
                     "Think rather, call to thought, if now",
                     "you grieve a little, The days when we had",
                     "rest, O soul, for they were long",
+                }
+            },
+            fish_fac_falx_sulphurata = {
+                name = "Falx sulphurata",
+                text = {
+                    "Before a hand is played",
+                    "if {C:attention}2{} or more cards are selected",
+                    "{C:red}destroy{} a {C:attention}random{} selected card",
+                },
+                flavor = {
+                    "Meditate on the horrors of Hell, which",
+                    "will last for eternity because of one",
+                    "easily-committed mortal sin. Try hard",
+                    "to be among the few who are chosen.",
+                    "Think of the eternal flames of Hell,",
+                    "and how few there are that are saved.",
+                }
+            },
+            fish_fac_squalus_aeternus = {
+                name = "Squalus aeternus",
+                text = {
+                    "Use this {C:attention}Fish{} to remove",
+                    "{C:attention}Eternal{} from a selected {C:attention}Fish{}",
+                    "or {C:attention}Joker{} then add {C:attention}Eternal{} to this {C:attention}Fish{}",
+                },
+                flavor = {
+                    "And when the entire mountain is",
+                    "chiseled away, the first second",
+                    "of eternity will have passed"
+                }
+            },
+            fish_fac_vanitas = {
+                name = "{X:white,C:crimsonseraphim_transparent}Vanitas{}",
+                text = {
+                    "When blind is selected",
+                    "fill {C:attention}Bucket{} slots with",
+                    "{C:attention}Temporary{} random {C:attention}Fish{}"
+                },
+                flavor = {
+                    "Silence will fall when the",
+                    "question is asked."
                 }
             }
         },
@@ -407,6 +448,13 @@ return {
                 text = {
                     "{C:red}-#1#{} Mult",
                     "then decreases by {C:red}#2#{} Mult"
+                }
+            },
+            crimsonseraphim_temporary = {
+                name = "Temporary",
+                text = {
+                    "Destroyed when",
+                    "entering the shop"
                 }
             }
         }
