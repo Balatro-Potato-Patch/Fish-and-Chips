@@ -1285,13 +1285,13 @@ function set_chimaera_morph_data(card, old_center, new_center, morph_time)
 
 	shader_data:mapPixel(function (x, y, r, g, b, a)
 		r, g, b, a = 0, 0, 0, 0
-		local real_old_x, real_old_y = math.floor((rel_px - old_px)/2 + x)*scale, math.floor((rel_py - old_py)/2 + y)*scale
-		local real_new_x, real_new_y = math.floor((rel_px - new_px)/2 + x)*scale, math.floor((rel_py - new_py)/2 + y)*scale
-		if real_old_x > 0 and real_old_x < old_data:getWidth() and real_old_y > 0 and real_old_y < old_data:getHeight() then
+		local real_old_x, real_old_y = math.floor(-(rel_px - old_px)/2 + x)*scale, math.floor(-(rel_py - old_py)/2 + y)*scale
+		local real_new_x, real_new_y = math.floor(-(rel_px - new_px)/2 + x)*scale, math.floor(-(rel_py - new_py)/2 + y)*scale
+		if real_old_x > 0 and real_old_x < old_px * scale and real_old_y > 0 and real_old_y < old_py * scale then
 			local _, _, _, old_a = old_data:getPixel(real_old_x + old_offset.x, real_old_y + old_offset.y)
 			g, a = old_a, old_a
 		end
-		if real_new_x > 0 and real_new_x < new_data:getWidth() and real_new_y > 0 and real_new_y < new_data:getHeight() then
+		if real_new_x > 0 and real_new_x < new_px * scale and real_new_y > 0 and real_new_y < new_py * scale then
 			local _, _, _, new_a = new_data:getPixel(real_new_x + new_offset.x, real_new_y + new_offset.y)
 			b, a = new_a, math.max(new_a, a)
 		end
@@ -1353,8 +1353,21 @@ function morph_fish_into(card, new_center, time)
 	local old_center = card.config.center
 	card.children.chimaera_old_center = card.children.center
 	card.children.chimaera_old_center.green = true
+	local w, h = card.children.chimaera_old_center.T.w, card.children.chimaera_old_center.T.h
+	card.children.chimaera_old_center.T = {
+		x = card.children.chimaera_old_center.T.x,
+		y = card.children.chimaera_old_center.T.y,
+		w = w,
+		h = h,
+		r = card.children.chimaera_old_center.T.r,
+		scale = card.children.chimaera_old_center.T.scale,
+	}
 	card.children.center = nil
 	card:set_ability(new_center)
+	local new_w, new_h = card.children.center.T.w, card.children.center.T.h 
+	card.children.chimaera_old_center:set_role({major = card, role_type = 'Minor', draw_major = card, xy_bond = "Strong", wh_bond = "Weak", r_bond = "Strong", scale_bond = "Strong", offset = {x=(new_w-w)/2.0,y=(new_h-h)/2.0}})
+	card.children.chimaera_old_center.T.r = 0
+	card.children.chimaera_old_center.VT.r = 0
 	set_chimaera_morph_data(card, old_center, new_center, time)
 end
 
