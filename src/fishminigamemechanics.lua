@@ -672,6 +672,7 @@ local function fac_finish_round(success, skip)
         end
     end
     SMODS.calculate_context({fac_end_fishing = true, failed = not success, fish = success and state.profile.key or nil, fish_obj = fish_obj or nil, treasure = success and state.got_treasure or false, treasure_available = state.treasure_enabled or false, treasure_progress = state.treasure_meter or 0, missed_treasure = success and state.treasure_enabled and not state.got_treasure or false, attempted_treasure = state.treasure_enabled and not state.got_treasure and (state.treasure_meter or 0) > 0 or false, treasure_obj = treasure_obj, perfect = success and state.perfect or false})
+    G.GAME.fac_forced_fish = nil
 end
 local function fac_begin_hooking_round()
     local state = fac_ensure_state()

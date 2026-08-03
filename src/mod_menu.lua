@@ -314,6 +314,7 @@ function FishAndChips.Compendium.compendium_card(fish, area, scale)
         self.ability_UIBox_table = self:generate_UIBox_ability_table()
         self.config.h_popup = G.UIDEF.card_h_popup(self)
         self.config.h_popup_config = self:align_h_popup()
+        play_sound('paper1', math.random() * 0.2 + 0.9, 0.35)
 
         Node.hover(self)
     end
@@ -757,11 +758,48 @@ function FishAndChips.Compendium.achievement_page(page_number, left)
     return page
 end
 
+function Node:hover() 
+    if self.config and self.config.h_popup then
+        if not self.children.h_popup then 
+            self.config.h_popup_config.instance_type = 'POPUP'
+            self.children.h_popup = UIBox{
+                definition = self.config.h_popup,
+                config = self.config.h_popup_config,
+            }
+            self.children.h_popup.states.collide.can = false
+            self.children.h_popup.states.drag.can = true
+        end
+    end
+    if self.config and self.config.h_popup_2 then
+        if not self.children.h_popup_2 then 
+            self.config.h_popup_2_config.instance_type = 'POPUP'
+            self.children.h_popup_2 = UIBox{
+                definition = self.config.h_popup_2,
+                config = self.config.h_popup_2_config,
+            }
+            self.children.h_popup_2.states.collide.can = false
+            self.children.h_popup_2.states.drag.can = true
+        end
+    end
+end
+
+local old_stop = Node.stop_hover
+function Node:stop_hover()
+    old_stop(self)
+    if self.children.h_popup_2 then
+        self.children.h_popup_2:remove()
+        self.children.h_popup_2 = nil
+    end
+end
+
+SMODS.draw_ignore_keys.h_popup_2 = true
+
 function FishAndChips.Compendium.dev_card(dev)
     if not dev then return nil end
+    local partner = PotatoPatchUtils.Developers[dev.fac_partner]
     
-    local temp_area = FishAndChips.Compendium.compendium_area()
-    local dev_card = Card(0, 0, G.CARD_W / 1.25, G.CARD_H / 1.25, nil, G.P_CENTERS.c_base)
+    local temp_area = FishAndChips.Compendium.compendium_area(1, dev.joint_credits and {0.2 + 4 * 71/95, 2})
+    local dev_card = Card(0, 0, (dev.joint_credits and 2 or 1) * G.CARD_W / 1.25, G.CARD_H / 1.25, nil, G.P_CENTERS.c_base)
     dev_card.children.center:remove()
     dev_card.children.center = SMODS.create_sprite(dev_card.T.x, dev_card.T.y, dev_card.T.w, dev_card.T.h, dev.atlas or "Joker", dev.pos or {x = 0, y = 0})
     dev_card.children.center.states.hover = dev_card.states.hover
@@ -781,62 +819,141 @@ function FishAndChips.Compendium.dev_card(dev)
     dev_card.no_shadow = true
 
     dev_card.ppu_member = dev
-    dev_card.click = dev.click or dev_card.click
+    dev_card.click = function(self)
+        if not dev.click and not (partner and partner.click) then
+            return Card.click(dev_card)
+        end
+        if dev.click then
+            dev.click(dev_card)
+        end
+        if partner.click then
+            partner.click(dev_card)
+        end
+    end
+
+    dev_card.align_h_popup = function(self, dir)
+        local focused_ui = self.children.focused_ui and true or false
+        local popup_direction = dir or self.config.h_popup_dir or (self.T.y < G.CARD_H*0.8) and 'bm' or 'tm'
+        local sign = 1
+        return {
+            major = self.children.focused_ui or self,
+            parent = self,
+            xy_bond = 'Strong',
+            r_bond = 'Weak',
+            wh_bond = 'Weak',
+            offset = {
+                x = popup_direction ~= 'cl' and popup_direction ~= 'cr' and 0 or
+                    focused_ui and sign*-0.05 or
+                    (self.ability.consumeable and 0.0) or
+                    (self.ability.set == 'Voucher' and 0.0) or
+                    sign*-0.05,
+                y = focused_ui and (
+                            popup_direction == 'tm' and (self.area and self.area == G.hand and -0.08 or-0.15) or
+                            popup_direction == 'bm' and 0.12 or
+                            0
+                        ) or
+                    popup_direction == 'tm' and -0.13 or
+                    popup_direction == 'bm' and 0.1 or
+                    0
+            },
+            type = popup_direction,
+        }
+
+    end
 
     -- Create tooltip
     dev_card.hover = function(self)
-        local info_nodes = {n = G.UIT.R, config = { align = "cm", padding = 0, colour = G.C.CLEAR }, nodes = {
-            {n = G.UIT.C, config = { align = "cm", padding = 0.2 }, nodes = {}},
-        }}
-        local text = dev.loc and G.localization.descriptions.PotatoPatch[dev.loc].text_parsed or nil
-        local loc_vars = dev.loc_vars and dev:loc_vars() or {}
-        loc_vars.text_colour = loc_vars.text_colour or G.C.UI.TEXT_LIGHT
-        loc_vars.font = loc_vars.font or SMODS.Fonts.fac_collection
-        if text then
-            if not text[1][1][1] then text = {text} end
-            for _, box in ipairs(text) do
-                local node = {n=G.UIT.R, config = {colour = G.C.L_BLACK, r=0.1, padding = 0.15, align = 'cm', shadow = true}, nodes = {}}
-                for _, v in ipairs(box) do
-                    table.insert(node.nodes, {n=G.UIT.R, config={align='cm'}, nodes = SMODS.localize_box(v, loc_vars)})
+        local create_tooltip = function(dev)
+            local info_nodes = {n = G.UIT.R, config = { align = "cm", padding = 0, colour = G.C.CLEAR }, nodes = {
+                {n = G.UIT.C, config = { align = "cm", padding = 0.2 }, nodes = {}},
+            }}
+            local text = dev.loc and G.localization.descriptions.PotatoPatch[dev.loc].text_parsed or nil
+            local loc_vars = dev.loc_vars and dev:loc_vars() or {}
+            loc_vars.text_colour = loc_vars.text_colour or G.C.UI.TEXT_LIGHT
+            loc_vars.font = loc_vars.font or SMODS.Fonts.fac_collection
+            if text then
+                if not text[1][1][1] then text = {text} end
+                for _, box in ipairs(text) do
+                    local node = {n=G.UIT.R, config = {colour = G.C.L_BLACK, r=0.1, padding = 0.15, align = 'cm', shadow = true}, nodes = {}}
+                    for _, v in ipairs(box) do
+                        table.insert(node.nodes, {n=G.UIT.R, config={align='cm'}, nodes = SMODS.localize_box(v, loc_vars)})
+                    end
+                    info_nodes.nodes[1].nodes[#info_nodes.nodes[1].nodes + 1] = {n=G.UIT.R, config = {align = 'cm'}, nodes = {{n=G.UIT.C, config = {align = 'cm', colour = G.C.WHITE, r=0.1, padding = 0.025}, nodes = {node}}}}
                 end
-                info_nodes.nodes[1].nodes[#info_nodes.nodes[1].nodes + 1] = {n=G.UIT.R, config = {align = 'cm'}, nodes = {{n=G.UIT.C, config = {align = 'cm', colour = G.C.WHITE, r=0.1, padding = 0.025}, nodes = {node}}}}
             end
+            return info_nodes
         end
         self:juice_up(0.05, 0.03)
         play_sound('paper1', math.random() * 0.2 + 0.9, 0.35)
-        dev_card.config.h_popup = info_nodes
-        dev_card.config.h_popup_config = self:align_h_popup()
+        dev_card.config.h_popup = create_tooltip(dev)
+        dev_card.config.h_popup_dir = dev.joint_credits and 'cl'
+        dev_card.config.h_popup_config = dev_card:align_h_popup()
+        if dev.joint_credits then
+            dev_card.config.h_popup_2 = create_tooltip(partner)
+            dev_card.config.h_popup_2_dir = 'cr'
+            dev_card.config.h_popup_2_config = dev_card:align_h_popup('cr')
+        end
         Moveable.hover(self)
     end
 
-    local name = {}
+    local name = {{}}
     if dev.always_use_dynatext or dev.text_effect or dev.shaders or dev.colours then
-        name = {n=G.UIT.O, config = {object = DynaText({
+        name[1] = {n=G.UIT.O, config = {align = 'bm', object = DynaText({
             string = dev.loc and localize({type = 'name_text', key = dev.loc, set = 'PotatoPatch'}) or dev.name or 'ERROR',
             colours = dev.colours or { dev.colour or FishAndChips.C.COMPENDIUM_TEXT }, scale = 0.47,
             text_effect = dev.text_effect or nil, shaders = dev.shaders or nil,
             silent = true, shadow = false, y_offset = -0.6, font = SMODS.Fonts.fac_collection, maxw = 1.45
         })}}
     else
-        localize({ type = 'name', set = 'PotatoPatch', key = dev.loc, nodes = name, scale = 0.8, maxw = 1.45, font = SMODS.Fonts.fac_collection, text_colour = dev.colour or FishAndChips.C.COMPENDIUM_TEXT, stylize = true, no_shadow = true, no_pop_in = true, no_bump = true, no_silent = true, no_spacing = true})
-        name = name[1] and name[1][1] or {n=G.UIT.O, config={object = DynaText({string = dev.name, colours = {dev.colour or FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 1.45, pop_in_rate = 0, scale = 0.4, silent = true})}}
+        localize({ type = 'name', set = 'PotatoPatch', key = dev.loc, nodes = name[1], scale = 0.8, maxw = 1.45, font = SMODS.Fonts.fac_collection, text_colour = dev.colour or FishAndChips.C.COMPENDIUM_TEXT, stylize = true, no_shadow = true, no_pop_in = true, no_bump = true, no_silent = true, no_spacing = true})
+        name[1] = name[1][1] and name[1][1][1] or {n=G.UIT.O, config={align = 'bm', object = DynaText({string = dev.name, colours = {dev.colour or FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 1.45, pop_in_rate = 0, scale = 0.4, silent = true})}}
+        name[1].config.align = 'bm'
+    end
+
+    if dev.joint_credits then
+        name[2] = {n=G.UIT.O, config = {align = 'bm', object = DynaText({
+                string = ' & ',
+                colours = {FishAndChips.C.COMPENDIUM_TEXT}, scale = 0.7,
+                silent = true, shadow = false, y_offset = -0.6, font = SMODS.Fonts.fac_collection, maxw = 0.3
+            })}}
+        if partner.always_use_dynatext or partner.text_effect or partner.shaders or partner.colours then
+            name[3] = {n=G.UIT.O, config = {align = 'bm', object = DynaText({
+                string = partner.loc and localize({type = 'name_text', key = partner.loc, set = 'PotatoPatch'}) or dev.name or 'ERROR',
+                colours = partner.colours or { partner.colour or FishAndChips.C.COMPENDIUM_TEXT }, scale = 0.47,
+                text_effect = partner.text_effect or nil, shaders = partner.shaders or nil,
+                silent = true, shadow = false, y_offset = -0.6, font = SMODS.Fonts.fac_collection, maxw = 1.45
+            })}}
+        else
+            name[3] = {}
+            localize({ type = 'name', set = 'PotatoPatch', key = partner.loc, nodes = name[3], scale = 0.8, maxw = 1.45, font = SMODS.Fonts.fac_collection, text_colour = partner.colour or FishAndChips.C.COMPENDIUM_TEXT, stylize = true, no_shadow = true, no_pop_in = true, no_bump = true, no_silent = true, no_spacing = true})
+            name[3] = name[3][1] and name[3][1][1] or {n=G.UIT.O, config={align = 'bm', object = DynaText({string = partner.name, colours = {partner.colour or FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 1.45, pop_in_rate = 0, scale = 0.4, silent = true})}}
+            name[3].config.align = 'bm'
+        end
+    end
+    for i, node in ipairs(name) do
+        name[i] = {n=G.UIT.C, config = {align = 'cm'}, nodes = {node}}
     end
 
     temp_area:emplace(dev_card)
 
+    if dev.modify_card then dev.modify_card(dev_card) end
+    if partner and partner.modify_card then partner.modify_card(dev_card) end
+
     return {n=G.UIT.C, config = {align = 'bm', padding = 0.1}, nodes = {
-        {n=G.UIT.R, config = {align = 'cm'}, nodes = {name}},
+        {n=G.UIT.R, config = {align = 'bm'}, nodes = name},
         {n=G.UIT.R, config = {align = 'cm'}, nodes = {{n=G.UIT.O, config={object=temp_area}}}},
     }}
 end
 
+local holding_partners = {}
+local partner_buffer = 0
 function FishAndChips.Compendium.credits_page(page_number, left)
     local page = {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {
         FishAndChips.Compendium.page_title(page_number == 1 and 'credits_page' or 'credits_page_2', 1),
         {n=G.UIT.R, config = {align = 'tm', minh = 7, minw = 5}, nodes = {}}
     }}
 
-    if page_number > 1 then 
+    if page_number > 1 then
         local mod_devs = {}
         for _, key in ipairs(PotatoPatchUtils.Developer.obj_buffer) do
             local dev = PotatoPatchUtils.Developers[key]
@@ -850,15 +967,66 @@ function FishAndChips.Compendium.credits_page(page_number, left)
         local start_index = (page_number - 2) * devs_per_page
         local rows = 2
         local devs_per_row = devs_per_page/rows
+        
+        if not next(holding_partners) or holding_partners[1] > start_index then
+            holding_partners = {}
+            partner_buffer = 0
+            if start_index > max then return {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {}} end
+            if mod_devs[start_index] and mod_devs[start_index].fac_partner then
+                holding_partners[#holding_partners+1] = start_index
+                local it = 1
+                while mod_devs[start_index + it] and mod_devs[start_index + it].fac_partner do
+                    holding_partners[#holding_partners+1] = start_index + it
+                    it = it + 1
+                end
+                it = 2
+                local offset = 0
+                while mod_devs[start_index - it] and mod_devs[start_index - it].fac_partner do
+                    if offset < 4 then
+                        table.insert(holding_partners, 1, start_index - it + 1)
+                        table.insert(holding_partners, 1, start_index - it)
+                    end
+                    offset = offset + 2
+                    it = it + 2
+                end
+                if #holding_partners%2 == 1 then holding_partners = {} else partner_buffer = #holding_partners/2 - 1 end
+            end
 
+        end
         local last_page = false
         for i=1, rows do
             local row = {n=G.UIT.R, config = {align = 'bm', minh = 6.8/2, minw = 5}, nodes = {}}
-            for j=1, devs_per_row do
+            local j=1
+            while j <= devs_per_row do
                 if last_page then break end
                 local index = start_index + (i-1)*devs_per_row + j
+                if j == devs_per_row then
+                    if next(holding_partners) then
+                        index = index + #holding_partners
+                        partner_buffer = partner_buffer - 1
+                    end
+                    while mod_devs[index] and mod_devs[index].fac_partner do
+                        holding_partners[#holding_partners+1] = index
+                        index = index + 1
+                    end
+                    if partner_buffer == 0 and next(holding_partners) then partner_buffer = #holding_partners/2 - 1 end
+                else
+                    if next(holding_partners) then index = holding_partners[1] end
+                end
                 table.insert(row.nodes, FishAndChips.Compendium.dev_card(mod_devs[index]))
-                if index >= max then last_page = true; break end
+                if mod_devs[index] and mod_devs[index].joint_credits then
+                    j = j + 1
+                elseif mod_devs[index] and mod_devs[index].fac_partner then
+                    table.insert(row.nodes, FishAndChips.Compendium.dev_card(mod_devs[index + 1]))
+                    j = j + 1
+                end
+                if next(holding_partners) and index == holding_partners[1] then
+                    table.remove(holding_partners, 1)
+                    table.remove(holding_partners, 1)
+                    index = start_index + (i-1)*devs_per_row + j
+                end
+                if start_index + (i-1)*devs_per_row + j >= max then last_page = true; break end
+                j = j + 1
             end
             table.insert(page.nodes[2].nodes, row)
             if last_page then break end
@@ -871,7 +1039,7 @@ function FishAndChips.Compendium.credits_page(page_number, left)
 
         return page
         
-    end -- TODO: add artwork to page 2
+    end
 
     local modNodes = {}
 
