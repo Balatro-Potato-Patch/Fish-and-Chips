@@ -16,6 +16,9 @@ FishAndChips.Fish({
 		length = { min = 1, max = 1 },
 		weight = { min = 1, max = 1 },
 	},
+	atlas = "hayayaya_fih",
+	pos = { x = 4, y = 1 },
+	pixel_size = { w = 71, h = 66 },
 	badge_key = "k_fac_hayayaya_object",
 	config = { extra = { mult = 0, mult_add = 1 } },
 	loc_vars = function(self, info_queue, card)
