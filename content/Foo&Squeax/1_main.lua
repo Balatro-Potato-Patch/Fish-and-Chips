@@ -68,12 +68,73 @@ PotatoPatchUtils.Developer{
 	colour = HEX("c551bd"),
 	fac_partner = "Foo54",
 	loc = true,
+	loc_vars = function(self, info_queue, card)
+		return {vars = {elements = {FishAndChips.FooSqueax.sqx_credit_ui_baits(), FishAndChips.FooSqueax.sqx_credit_ui_fish()}}}
+	end,
 	click = function(self)
 		local pickables = pseudorandom('ts gabby', 1, 11)
 		play_sound("fac_fas_gabby" .. pickables, 1, 0.8)
 		self:juice_up()
-	end
+	end,
 }
+
+
+function FishAndChips.FooSqueax.sqx_credit_ui_baits()
+	local area = CardArea(G.ROOM.T.x, G.ROOM.T.y, (G.CARD_W * 4.5), G.CARD_H*0.3, { card_limit = 15, type = 'title', highlight_limit = 0, collection = true }) 
+	for i=1, #G.P_CENTER_POOLS.fac_Bait do
+		local card = Card(area.T.x, area.T.y, G.CARD_W*0.4, G.CARD_H*0.4, G.P_CARDS.empty, G.P_CENTERS[G.P_CENTER_POOLS.fac_Bait[i].key])
+		area:emplace(card)
+		card.no_ui = true
+	end
+	return {
+        n = G.UIT.R,
+        config = { emboss = 0.05, r = 0.1, align = "cm", padding = 0.1, colour = G.C.CLEAR },
+        nodes = {
+			-- Card Area
+            {
+                n = G.UIT.R,
+                config = { align = "cm", padding = 0.1 },
+                nodes = {
+                    { n = G.UIT.O, config = { object = area } }
+                }
+            },
+        }
+    }
+end
+
+function FishAndChips.FooSqueax.sqx_credit_ui_fish()
+	local area = CardArea(G.ROOM.T.x, G.ROOM.T.y, (G.CARD_W * 4.5), G.CARD_H*0.5, { card_limit = 7, type = 'title', highlight_limit = 0, collection = true })
+	local listables = {
+		"submarine",
+		"fish_kebab",
+		"john_cod",
+		"kawkaw",
+		"toby_fish",
+		'isreal',
+		"super_bo_noise",
+		"kine",
+		'tsundere',
+	}
+	for i=1, #listables do
+		local card = Card(area.T.x, area.T.y, G.CARD_W*0.5, G.CARD_H*0.5, G.P_CARDS.empty, G.P_CENTERS['fish_fac_fas_' .. listables[i]])
+		area:emplace(card)
+		card.no_ui = true
+	end
+	return {
+        n = G.UIT.R,
+        config = { emboss = 0.05, r = 0.1, align = "cm", padding = 0.1, colour = G.C.CLEAR },
+        nodes = {
+			-- Card Area
+            {
+                n = G.UIT.R,
+                config = { align = "cm", padding = 0.1 },
+                nodes = {
+                    { n = G.UIT.O, config = { object = area } }
+                }
+            },
+        }
+    }
+end
 
 FishAndChips.mod.optional_features = FishAndChips.mod.optional_features or {}
 FishAndChips.mod.optional_features.retrigger_joker = true

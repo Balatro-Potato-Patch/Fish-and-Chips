@@ -246,7 +246,13 @@ return {
 				name = "squeax09",
 				text = {
 					{"ts {C:green,E:1}gabby{}"},
-					{"temp"}
+					{"{element:1}",
+					"As you may have seen, I was a {C:edition,E:1}Guest Dev{}, and helped make",
+					"art for the base mod itself.",
+					"{s:0.8}(Though you'll likely see I ended up spriting more stuff besides all the baits lol)",
+					"{element:2}",
+					"I also worked with Foo to art a lot of silly things",
+					"for our entry, so I do hope you enjoy the goofiness that's come of it! :3"}
 				}
 			}
 		}
