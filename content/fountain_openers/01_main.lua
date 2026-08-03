@@ -189,3 +189,104 @@ PotatoPatchUtils.Developer {
 	fac_partner = 'Alexi',
 	fac_dw_shader = true,
 }
+
+function FountainOpeners.format_measurement(fish, value, type)
+    local key = fish.key
+    if key == "fish_fac_fo_fishery" then
+        return "99999"
+
+    elseif key == "fish_fac_fo_neutron_starfish" and type == "length" then
+        return value * 1e-15 .. "fm"
+
+    elseif key == "fish_fac_fo_boids" then
+        return type == "weight" and "N/A" or "29px"
+
+    else return FishAndChips.format_measurement(value, type) end
+end
+
+local custom_measures = {
+    "fishery",
+    "neutron_starfish",
+    "boids",
+}
+
+--[[local guchp = G.UIDEF.card_h_popup
+function G.UIDEF.card_h_popup(card)
+    local ret = guchp(card)
+    if card.ability and card.ability.set == 'fac_Fish' and card.area and not (card.area.config.collection or card.area.config.fac_compendium) then
+        local use_custom = false
+        for _, a in ipairs(custom_measures) do
+            if "fish_fac_fo_" .. a == card.config.center.key then
+                use_custom = true
+                break
+            end
+        end
+
+        if use_custom then
+            local name = SMODS.deepfind(ret, 'main_box_flag', 'i')[1]
+            local name_node = name.objtree
+
+            local stats = card.ability.stats
+            local stat_proto = card.config.center.stats
+            local weight_perc = (stats.weight - stat_proto.weight.min)/(stat_proto.weight.max-stat_proto.weight.min)*100
+            local length_perc = (stats.length - stat_proto.length.min)/(stat_proto.length.max-stat_proto.length.min)*100
+            local colours = {
+                darken(G.C.RED, 0.1),
+                G.C.RED,
+                G.C.ORANGE,
+                G.C.YELLOW,
+                G.C.GREEN,
+                G.ARGS.LOC_COLOURS.edition
+            }
+
+            local weight_col_index = math.min(5, math.max(math.floor(weight_perc/20), 1))
+            local weight_col = stats.weight == stat_proto.weight.max and colours[6] or mix_colours(colours[weight_col_index+1], colours[math.max(weight_col_index, 1)], (weight_perc - (weight_col_index * 20))/20)
+
+            local length_col_index = math.min(5, math.max(math.floor(length_perc/20), 1))
+            local length_col = stats.length == stat_proto.length.max and colours[6] or mix_colours(colours[length_col_index+1], colours[length_col_index], (length_perc - (length_col_index * 20))/20)
+
+            name_node[#name_node - 4] = {n=G.UIT.R, config = {align = 'cm'}, nodes = {
+                {n=G.UIT.T, config = {text = localize('ph_fac_weight'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
+                {n=G.UIT.T, config = {text = FountainOpeners.format_measurement(card.config.center, stats.weight, 'weight'), scale = 0.27, colour = weight_col, shadow = true}},
+                {n=G.UIT.T, config = {text = '  '..localize('ph_fac_length'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
+                {n=G.UIT.T, config = {text = FountainOpeners.format_measurement(card.config.center, stats.length, 'length'), scale = 0.27, colour = length_col, shadow = true}},
+            }}
+        end
+    end
+
+    return ret
+end
+
+local efe = FishAndChips.Compendium.extended_fish_entry
+function FishAndChips.Compendium.extended_fish_entry(fish, left, ...)
+    local text = efe(fish, left, ...)
+
+    local use_custom = false
+    for _, a in ipairs(custom_measures) do
+        if "fish_fac_fo_" .. a == fish.key then
+            use_custom = true
+            break
+        end
+    end
+
+    if use_custom then
+        local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {
+            first_catch = '',
+            rod = '',
+            times_caught = '',
+            record_weight = '',
+            record_length = ''
+        }
+
+        local fish_caught = type(fish_data.times_caught) == 'number' and (fish_data.times_caught > 0)
+        local record_weight = fish_caught and localize('ph_fac_record_weight')..FishAndChips.format_measurement(fish, fish_data.record_weight or nil, 'weight') or ' '
+        local record_length = fish_caught and localize('ph_fac_record_length')..FishAndChips.format_measurement(fish, fish_data.record_length or nil, 'length') or ' '
+
+        text.nodes[1].nodes[5].nodes[1] = 
+            {n=G.UIT.O, config={object = DynaText({string = record_weight, colours = {FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 3.2, pop_in_rate = 0, scale = 0.3, silent = true})}}
+        text.nodes[1].nodes[6].nodes[1] = 
+            {n=G.UIT.O, config={object = DynaText({string = record_length, colours = {FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 3.2, pop_in_rate = 0, scale = 0.3, silent = true})}}
+    end
+
+    return text
+end]]

@@ -17,6 +17,11 @@ FishAndChips.Fish {
 	environments = {
 		wormhole = 1,
 	},
+    -- placeholder values
+    stats = {
+		weight = {min = 1, max = 1 + 0.00001},
+		length = {min = 0.02, max = 0.02 + 0.00001}
+	},
     loc_vars = function(self, info_queue, card)
 		return { vars = {
             card.ability.extra.amt,

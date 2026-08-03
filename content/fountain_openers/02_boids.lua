@@ -288,13 +288,21 @@ FishAndChips.Fish {
 	ppu_artist = { "Grahkon" },
 	attributes = { "chips" },
 	config = {
+		extra = {
+			chips = 0,
+			chips_mod = 1,
+		}
 	},
 	environments = {
 		wormhole = 1,
 		pier = 1,
 	},
+	stats = {
+		weight = {min = 0, max = 0}, -- fucking hell
+		length = {min = 0.008, max = 0.008 + 0.00001}
+	},
 	loc_vars = function(self, info_queue, card)
-		-- return { vars = { card.ability.extra.chips } }
+		return { vars = { card.ability.extra.chips, card.ability.extra.chips_mod } }
 	end,
 	calculate = function(self, card, context)
 		if context.worm_lfc_on_play_press then

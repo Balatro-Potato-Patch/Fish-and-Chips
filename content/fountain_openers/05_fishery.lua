@@ -37,6 +37,10 @@ FishAndChips.Fish {
 	environments = {
 		garden = 1,
 	},
+    stats = {
+		weight = {min = 80, max = 80 + 0.00001},
+		length = {min = 2.2, max = 2.2 + 0.00001}
+	},
     loc_vars = function(self, info_queue, card)
 		return { vars = {
             card.ability.extra.mult,

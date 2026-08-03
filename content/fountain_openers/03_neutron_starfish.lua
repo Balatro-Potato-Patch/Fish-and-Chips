@@ -13,6 +13,10 @@ FishAndChips.Fish {
 	environments = {
 		wormhole = 1,
 	},
+    stats = {
+		weight = {min = 1000, max = 2000},
+		length = {min = 2.5 * 10^-15, max = (2.5 + 0.00001) * 10^-15}
+	},
 	use = function(self, card, area)
         local amt = #G.hand.cards
         local hands = {}
