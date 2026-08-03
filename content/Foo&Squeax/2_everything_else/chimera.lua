@@ -24,6 +24,7 @@ FishAndChips.Fish{
 		length = {min = 15.5, max = 31},
 		weight = {min = 4.01, max = 40.01}
 	},
+	badge_key = "k_fac_fas_fatchud",
 	weight = 5,
 	ppu_coder = {"Foo54"},
 	environments = {
