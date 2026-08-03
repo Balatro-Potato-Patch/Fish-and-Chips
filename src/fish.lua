@@ -409,6 +409,7 @@ if SilkTouch then
         end,
 		focus_condition = function(card)
 			return old_focus_condition(card) and card.area and not card.area.config.fac_bait_shop and not card.area.config.fac_bait_inventory
+			and card.area ~= G.fac_bait_area and card.area ~= G.fac_rod_area
 		end,
     },
     true)
