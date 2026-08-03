@@ -125,7 +125,7 @@ FishAndChips.Fish({
 		calm_pond = 1,
 	},
 	ppu_coder = { "Ellen (Haya)" },
-	ppu_artist = { "Pepix" },
+	ppu_artist = { "Ellen (Haya)" },
 	attributes = {
 		"usable",
 	},
