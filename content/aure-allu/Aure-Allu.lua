@@ -1358,6 +1358,11 @@ function morph_fish_into(card, new_center, time)
 	set_chimaera_morph_data(card, old_center, new_center, time)
 end
 
+SMODS.Sound {
+	key = "aure-allu_chimaera_morph",
+	path = "aure-allu/chimaera-morph.ogg",
+}
+
 SMODS.Shader {
 	key = "aure-allu_chimaera",
     path = "aure-allu/chimaera.fs",
@@ -1451,7 +1456,7 @@ FishAndChips.Fish {
 		return { main_end = main_end }
 	end,
 	calculate = function(self, card, context)
-		if context.before and next(context.poker_hands["Flush"]) and next(context.poker_hands["Pair"]) then
+		if not card.ability.extra.active and context.before and next(context.poker_hands["Flush"]) and next(context.poker_hands["Pair"]) then
 			local has_wild = false
 			for i, pcard in ipairs(context.full_hand) do
 				if SMODS.has_enhancement(pcard, "m_wild") then has_wild = true; break end
@@ -1467,15 +1472,17 @@ FishAndChips.Fish {
 	end,
 	use = function (self, card)
 		if G.GAME.fac_last_used_fish and G.GAME.fac_last_used_fish ~= "fish_fac_chimaera" then
+			local new_center = G.P_CENTERS[G.GAME.fac_last_used_fish]
 			G.E_MANAGER:add_event(Event({
 				trigger = "after",
 				delay = 0.3,
 				func = function ()
-					morph_fish_into(card, G.P_CENTERS[G.GAME.fac_last_used_fish], 2.5)
+					play_sound("fac_aure-allu_chimaera_morph", 1.0, 1.75)
+					morph_fish_into(card, new_center, 1.7)
 					return true
 				end
 			}))
-			delay(2.6*G.SETTINGS.GAMESPEED)
+			delay(1.6*G.SETTINGS.GAMESPEED)
 		-- else 
 		-- 	SMODS.calculate_effect({
 		-- 		message = localize("k_aure_allu_chimaera_confoozed"),
