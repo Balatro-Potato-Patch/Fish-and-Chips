@@ -165,6 +165,19 @@ return {
 					"TURN ME INTO A [REAL BOY!!!]",
 				},
 			},
+			fish_fac_unown = {
+				name = "Unown",
+				text = {
+					"Prevents Death and",
+					"{C:attention}rewinds{} the ante by {C:attention}1{}",
+					"{C:red,E:2}self destructs",
+				},
+				flavor = {
+					"If there is an Unown for",
+					"every character, surely",
+					"ones exist for emojis...",
+				},
+			},
 		},
 	},
 	misc = {
@@ -178,6 +191,9 @@ return {
 			k_fac_hayayaya_badge_q = "Badge?",
 			k_fac_hayayaya_object = "Object",
 			k_fac_hayayaya_catfish = "Catfish",
+			-- Misc other stuff
+			k_fac_hayayaya_unown_saved = "WELCOME BACK",
+			k_fac_hayayaya_unown_saved_ex = "Rewind!",
 		},
 	},
 }
