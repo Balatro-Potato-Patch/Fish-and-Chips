@@ -14,7 +14,7 @@ SMODS.Atlas({
 
 local chips_atlas = SMODS.Atlas({
 	key = "vman2002_chips", -- Please include your name/team name in your atlas keys
-	path = "vman2002/chips.png",
+	path = "vman2002/chips_new.png",
 	px = 71,
 	py = 95,
 })
@@ -107,20 +107,37 @@ FishAndChips.Fish { --Chips
 		end
 	end,
 	draw = function(self, card, layer)
-		if not card.fac_chips_sprites then
-			card.fac_chips_sprites = {}
-			for i = 1, 5 do
-				--TODO: someone fix the sprite alignment positioning stuff (i'm not gonna. i would if i knew how)
-				local s = Sprite(card.VT.x, card.VT.y, card.VT.w, card.VT.h, chips_atlas, {x=6-i, y=0})
-				s.T = card.T
-				s.role.draw_major.tilt_var = card.children.center.role.draw_major.tilt_var
-				card.fac_chips_sprites[i] = s
-			end
+		local sc = G.SETTINGS.GRAPHICS.texture_scaling
+		if card.fac_chips_sprites ~= sc then
+			card.fac_chips_sprites = sc
+			local c = SMODS.CanvasSprite({X=card.T.x, Y=card.T.y, W=card.T.w, H=card.T.h, canvasScale = sc})
+			c.role = card.children.center.role
+			card.children.center = c
+			love.graphics.push()
+			love.graphics.origin()
+			c.canvas:renderTo(function()
+				local ps, zc, o_r, o_g, o_b, o_a, r_r, r_g, xa, ya = sc - 1
+				local imd = G.ASSET_ATLAS.fac_vman2002_chips.image_data
+				local off = bit.lshift(71, ps)
+				for x = 1, 70 do
+					for y = 1, 94 do
+						xa, ya = bit.lshift(x, ps), bit.lshift(y, ps)
+						--print("seek pixel ",xa,ya,xa+off)
+						o_r, o_g, o_b, o_a = imd:getPixel(xa, ya)
+						r_r, r_g = imd:getPixel(xa + off, ya)
+						if r_g < 0.5 then
+							zc = chips_col[card.ability.unriggable.fac_chips_col[math.ceil(r_r * 10)]]
+							--print("seek chip col ",math.ceil(r_r * 10))
+							love.graphics.setColor(o_r * zc[1], o_g * zc[2], o_b * zc[3], o_a)
+						else
+							love.graphics.setColor(o_r, o_g, o_b, o_a)
+						end
+						love.graphics.rectangle("fill", xa, ya, sc, sc)
+					end
+				end
+			end)
+			love.graphics.pop()
 		end
-		for i = 1, 5 do
-			card.fac_chips_sprites[i]:draw_self(chips_col[card.ability.unriggable.fac_chips_col[i]])
-		end
-		card.children.center:draw_shader('dissolve')
 	end,
 	impulse_min = 0.1,
 	impulse_max = 0.2,
@@ -374,10 +391,7 @@ FishAndChips.Fish { --Timothy
 					return {message = localize('fac_vman2002_timothy_reset')}
 				end
 			else
-				SMODS.scale_card(card, {
-					ref_value = "xmult", -- the key to the value in the ref_table
-					scalar_value = "xmult_gain", -- the key to the value to scale by, in the ref_table by default
-				})
+				SMODS.scale_card(card, {ref_value = "xmult", scalar_value = "xmult_gain",})
 			end
 			return
 		end

@@ -30,10 +30,7 @@ return {
 				name = "Chips",
 				text = {
 					"{X:chips,C:white}X#1#{} Chips",
-					"{C:purple}+#2#{} Score",
-					--TODO: Remove this part if the positioning shit gets fixed
-					q("{~S}how the frick do you make the"),
-					q("{~S}sprite positioning match up")
+					"{C:purple}+#2#{} Score"
 				},
 				flavor = {
 					"Yes."
