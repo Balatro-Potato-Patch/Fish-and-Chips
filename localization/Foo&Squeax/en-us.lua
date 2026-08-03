@@ -210,10 +210,13 @@ return {
 			fish_fac_fas_luka = {
 				name = "Tako Luka",
 				flavour = {
-
+					"{f:5}たこルカ★マグロフィーバー"
 				},
 				text = {
-
+					"Each {C:attention}8{} held in hand",
+					"at the end of round",
+					"has a {C:green}#1# in #2#{} change",
+					"to create a {C:attention}Bait"
 				}
 			},
 			fish_fac_fas_you = {
