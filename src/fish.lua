@@ -48,6 +48,7 @@ end
 
 
 function FishAndChips.create_fish_stats(center)
+	if center.set ~= 'fac_Fish' then return end
 	local stats = {
         weight = random_measurement(center.stats.weight),
         length = random_measurement(center.stats.length)
