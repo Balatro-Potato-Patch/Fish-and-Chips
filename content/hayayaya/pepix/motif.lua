@@ -56,9 +56,8 @@ function Card:set_sell_value()
 	-- Only when it's not a perfect fish as well
 	if
 		self.config.center.set == "fac_Fish"
-		and next(SMODS.find_card("fish_fac_motif"))
-		and self.ability
 		and self.ability.fac_bait_used
+		and next(SMODS.find_card("fish_fac_motif"))
 	then
 		self.sell_cost = 0
 	end
