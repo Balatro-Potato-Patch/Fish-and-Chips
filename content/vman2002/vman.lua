@@ -319,6 +319,11 @@ FishAndChips.Fish { --Coupon
 	can_use = function()
 		return G.STATE ~= G.STATES.FAC_FISHING
 	end,
+	draw = function(self, card)
+		if card.config.center.discovered or card.bypass_discovery_center then
+			card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+		end
+	end,
 	usable = true,
 	impulse_min = 0.2,
 	impulse_max = 0.6,
@@ -326,6 +331,7 @@ FishAndChips.Fish { --Coupon
 	decision_max = 0.7
 }
 
+local tim = "fish_fac_vman2002_timothy"
 FishAndChips.Fish { --Timothy
 	key = "vman2002_timothy",
 	atlas = "vman2002_fish",
@@ -333,7 +339,7 @@ FishAndChips.Fish { --Timothy
 	weight = 4,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
-	attributes = { "tag" },
+	attributes = { "xmult", "reset", "usable" },
 	stats = { weight = { min = 0.21, max = 0.67 --[[i dont like 67 but it fits here]] }, length = {min = 0.017, max = 0.025}},
 	environments = {
 		calm_pond = 0.5, pier = 0.9
@@ -342,12 +348,12 @@ FishAndChips.Fish { --Timothy
 		extra = {
 			ante_used = false,
 			xmult = 1,
-			xmult_gain = 0.5
+			xmult_gain = 0.2
 		}
 	},
 	loc_vars = function(self, info_queue, card)
 		local ex = card.ability.extra
-		return {vars = {ex.xmult, ex.xmult_gain, localize(G.GAME.fac_last_used_fish == "fish_fac_vman2002_timothy" and "fac_vman2002_timothy_active" or "fac_vman2002_timothy_inactive")}}
+		return {vars = {ex.xmult, ex.xmult_gain, localize(G.GAME.fac_last_used_fish == tim and "fac_vman2002_timothy_active" or "fac_vman2002_timothy_inactive")}}
 	end,
 	use = function(self, card)
 		card.ability.extra.ante_used = true
@@ -361,8 +367,8 @@ FishAndChips.Fish { --Timothy
 		return not card.ability.extra.ante_used
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint then
-			if reset then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+			if G.GAME.fac_last_used_fish ~= tim then
 				if card.ability.extra.xmult > 1 then
 					card.ability.extra.xmult = 1
 					return {message = localize('fac_vman2002_timothy_reset')}
@@ -373,6 +379,7 @@ FishAndChips.Fish { --Timothy
 					scalar_value = "xmult_gain", -- the key to the value to scale by, in the ref_table by default
 				})
 			end
+			return
 		end
 		if context.joker_main then
 			return {xmult = card.ability.extra.xmult}
