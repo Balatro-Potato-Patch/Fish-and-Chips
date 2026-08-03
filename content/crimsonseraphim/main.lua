@@ -1688,6 +1688,9 @@ function Card:remove(...)
             end
         end
     end
+    if self.config.center_key == "fish_fac_another_bucket" and self.ability.saved_card then
+        self.ability.saved_card.card:remove()
+    end
     return card_remove(self, ...)
 end
 
@@ -1836,7 +1839,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "delphinus_dormiens",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 4, y = 1 },
 	weight = 3, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
@@ -1989,7 +1992,7 @@ FishAndChips.Fish {
 	weight = 3, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "passive" },
+	attributes = { "generation" },
 	environments = {
         volcano = 5,
         styx = 5,
