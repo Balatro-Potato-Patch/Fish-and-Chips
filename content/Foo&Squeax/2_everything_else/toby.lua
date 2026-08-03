@@ -26,7 +26,7 @@ FishAndChips.Fish{
 	ppu_artist = {"squeax09"},
 	atlas = 'fas_fish_general',
 	pos = {x=3,y=0},
-	pixel_size = { w=66, h=65},
+	pixel_size = { w=66, h=66},
 	weight = 5,
 	environments = {
 		wormhole = 1,
