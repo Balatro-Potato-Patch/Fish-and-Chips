@@ -185,7 +185,9 @@ return {
                     "one random hand each round"
                 },
                 flavour = {
-
+                    'Quite a rare catch,',
+                    "still isn't the",
+                    "King of the Pond"
                 }
             },
             fish_fac_pa_F = {
@@ -196,13 +198,20 @@ return {
                     "{C:inactive}(Currently{} {C:mult}+#2#{} {C:inactive}Mult){}"
                 },
                 flavour = {
-                    "Brought to you by the letter F"
+                    'This alphabet soup',
+                    "Brought to you by",
+                    "the letter F"
                 }
             },
             fish_fac_pa_fishingfish = {
-                name = "The 'Fish'ing Rod",
+                name = 'The "Fish"ing Rod',
                 text = {
                     "Max fish {C:attention}#2#{} is #3# by {X:mult,C:white}X#4#{}"
+                },
+                flavour = {
+                    'Some traditional fishers prefer',
+                    'these over man-made fishing rods',
+                    "(they don't mind being fished with)"
                 }
             },
             fish_fac_pa_shellphone = {
@@ -216,7 +225,9 @@ return {
                     '{V:1}#1#{}{V:2}#2#{}{V:3}#3#{}{V:4}#4#{}{V:5}#5#{}{V:6}#6#{}{V:7}#7#{}{V:8}#8#{}', -- inactive or black, rank or '', repeat this 3-8 times in code
                 }},
                 flavour = {
-
+                    "This phone seems to",
+                    "get more phishing calls",
+                    'than usual phones'
                 }
             },
             fish_fac_pa_fromg = {
