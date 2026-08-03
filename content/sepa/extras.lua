@@ -23,7 +23,6 @@ SMODS.ObjectType({
 		c_fool = true,
 		c_hermit = true,
 		c_emperor = true,
-		c_high_priestess = true,
 		c_hanged_man = true,
 		c_death = true,
     },

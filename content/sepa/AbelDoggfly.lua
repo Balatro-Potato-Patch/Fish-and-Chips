@@ -18,14 +18,14 @@ PotatoPatchUtils.Developer({
 	loc = true
 })
 
+local pez = 'sepa_fish'
+
 SMODS.Atlas({
 	key = "sepa_fish",
 	path = "sepa/pezcaos.png",
 	px = 71,
 	py = 95,
 })
-
-local pez = 'sepa_fish'
 
 FishAndChips.Fish {
 	key = "clownfish",
@@ -55,11 +55,40 @@ FishAndChips.Fish {
 	end,
 }
 
+FishAndChips.Fish {
+	key = "lies",
+	atlas = pez,
+	pos = { x = 2, y = 1 },
+	weight = 10, --testestest
+	ppu_coder = { "AbelSketch" },
+	ppu_artist = { "AbelSketch" },
+	attributes = { "mult", "hands" },
+	config = {
+		extra = {
+			
+		}
+	},
+	environments = {
+		pier = 1,
+		styx = 0.5,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = {  } }
+	end,
+	calculate = function(self, card, context)
+	end,
+ 
+ 	set_badges = function(self, card, badges)
+ 		badges[#badges+1] = create_badge("Halucination", G.C.RED, G.C.WHITE, 1 )
+ 	end,
+
+}
+
 -- Im gonna be honest, half of this wouldnt have been possible without Vanilla remade
 FishAndChips.Fish {
 	key = "bombfish",
 	atlas = pez,
-	pos = { x = 3, y = 0 },
+	pos = { x = 0, y = 1 },
 	weight = 5,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
@@ -67,9 +96,10 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			poker_hand = 'High Card',
+			tarot_amount = 2,
 			defuse = 0,
-			goal = 4,
-			attempts = 4,
+			goal = 3,
+			attempts = 5,
 			minplayed = false
 		}
 	},
@@ -79,7 +109,8 @@ FishAndChips.Fish {
 		chocolate_river = 0.1
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, card.ability.extra.poker_hand} }
+	        info_queue[#info_queue+1] = {key = "fac_sepa_Tarot_infovar", set = "Other"}
+		return { vars = { card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, card.ability.extra.poker_hand, card.ability.extra.tarot_amount} }
 	end,
 
     calculate = function(self, card, context)
@@ -87,8 +118,9 @@ FishAndChips.Fish {
 			card.ability.extra.defuse = card.ability.extra.defuse + 1
 			card.ability.extra.minplayed = true
 
-			if card.ability.extra.defuse == card.ability.extra.goal then
-				for i = 1, math.min(2, G.consumeables.config.card_limit - #G.consumeables.cards) do
+			if card.ability.extra.defuse == card.ability.extra.goal then 
+				
+				for i = 1, math.min(card.ability.extra.tarot_amount, G.consumeables.config.card_limit - #G.consumeables.cards) do
             		G.E_MANAGER:add_event(Event({
                 		trigger = 'after',
                 		delay = 0.4,
@@ -102,6 +134,7 @@ FishAndChips.Fish {
                 	end
             		}))
         		end
+				
 				SMODS.destroy_cards(card)
 			end
 
@@ -181,44 +214,6 @@ FishAndChips.Fish {
     end
 }
 
-
-FishAndChips.Fish {
-	key = "klounfish",
-	atlas = pez,
-	pos = { x = 1, y = 1 },
-	weight = 8,
-	ppu_coder = { "DoggFly" },
-	ppu_artist = { "DoggFly" },
-	attributes = { "hands", "economy" },
-	config = {
-		extra = {
-			dollars = 1
-		}
-	},
-	environments = {
-		pier = 1
-	},
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.dollars } }
-	end,
-	calculate = function(self, card, context)
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-			local face_count = 0
-			for _, c in ipairs(G.hand.cards) do
-				if c:is_face() then
-					face_count = face_count + 1
-				end
-			end
-			if face_count > 0 then
-				return {
-					dollars = card.ability.extra.dollars * face_count
-				}
-			end
-		end
-	end,
-}
- 
-
 FishAndChips.Fish {
 	key = "freds_leg",
 	atlas = pez,
@@ -258,51 +253,3 @@ FishAndChips.Fish {
 		end
 	end,
 }
- 
- 
-FishAndChips.Fish {
-	key = "jimfish",
-	atlas = pez,
-	pos = { x = 0, y = 1 },
-	weight = 12,
-	ppu_coder = { "DoggFly" },
-	ppu_artist = { "DoggFly" },
-	attributes = { "mult" },
-	config = {
-		extra = {
-			mult = 4
-		}
-	},
-	environments = {
-		calm_pond = 1
-	},
-	loc_vars = function(self, info_queue, card)
-		local bucket_fish_count = 0
-		if G.fac_fish_area and G.fac_fish_area.cards then
-			for _, c in ipairs(G.fac_fish_area.cards) do
-				if c ~= card then
-					bucket_fish_count = bucket_fish_count + 1
-				end
-			end
-		end
-		return { vars = { card.ability.extra.mult, card.ability.extra.mult * bucket_fish_count } }
-	end,
-	calculate = function(self, card, context)
-		if context.joker_main then
-			local bucket_fish_count = 0
-			if G.fac_fish_area and G.fac_fish_area.cards then
-				for _, c in ipairs(G.fac_fish_area.cards) do
-					if c ~= card then
-						bucket_fish_count = bucket_fish_count + 1
-					end
-				end
-			end
-			if bucket_fish_count > 0 then
-				return {
-					mult = card.ability.extra.mult * bucket_fish_count
-				}
-			end
-		end
-	end,
-}
- 
