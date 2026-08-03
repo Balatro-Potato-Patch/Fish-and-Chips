@@ -206,11 +206,9 @@ return {
 				text = {
 					{
 						"{C:fac_fish}Fish{} with at most {C:attention}#1#",
-						"attributes give {C:chips}+#2#{} Chips"
-					},
-					{
-						"Use to see how many {C:attention}attributes",
-						"the {C:fac_fish}Fish{} to the left has"
+						"attributes give {C:chips}+#2#{} Chips",
+						"{C:inactive}#3#",
+						"{C:inactive}#4#",
 					}
 				}
 			},
@@ -281,6 +279,8 @@ return {
 			k_fas_fas_annoying_dog = "Annoying Fish",
 			k_fac_fas_toby = "Toby",
 			k_fac_fas_temmie = "Temmie",
+			k_fac_fas_left = "left",
+			k_fac_fas_right = "right",
 
 			k_fac_fas_flirt = "Flirt",
 			k_fac_fas_approach = "Approach",
@@ -322,7 +322,8 @@ return {
 			k_fac_fas_fatchud = "Fat Chud",
 		},
 		v_dictionary = {
-			k_fac_fas_attributes = "#1# Attribute#2#"
+			k_fac_fas_attributes = "The Fish to the #3# has #1# attribute#2#",
+			k_fac_fas_zaako_no_fish = "There are no Fish to the #1#",
 		}
 	}
 }
