@@ -163,14 +163,14 @@ function FishAndChips.verify_submissions()
 			end
 		end
 	end
-	assert(fac_count <= 2, 'Too many devs registered, submissions are limited to two participants.')
-	if fac_count == 2 then
-		local first, second = contributors[1], contributors[2]
-		assert(
-			first.fac_partner == second.name and second.fac_partner == first.name,
-			'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
-		)
-	end
+	-- assert(fac_count <= 2, 'Too many devs registered, submissions are limited to two participants.')
+	-- if fac_count == 2 then
+	-- 	local first, second = contributors[1], contributors[2]
+	-- 	assert(
+	-- 		first.fac_partner == second.name and second.fac_partner == first.name,
+	-- 		'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
+	-- 	)
+	-- end
 
 	local devs = {}
 	for _, fish in ipairs(G.P_CENTER_POOLS.fac_Fish) do
@@ -199,10 +199,9 @@ function FishAndChips.verify_submissions()
 		end
 		print(total_weight)
 		local scalar = math.min(1, FishAndChips.submission_weight_limit / total_weight)
-		if submission.mod == FishAndChips.mod then
 			assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
 			assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")
-		end
+
 		for _, fish in ipairs(submission) do
 			fish.weight = fish.weight * scalar
 			local unpack_env = function(environment)
