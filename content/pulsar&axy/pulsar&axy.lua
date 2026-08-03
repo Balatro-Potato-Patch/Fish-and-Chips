@@ -319,15 +319,17 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		local letter_count = 0
 		local charmap = {}
-		for _, fish in ipairs(G.fac_fish_area.cards) do
-			for letter in string.gmatch(localize({ type = 'name_text', set = "fac_Fish", key = fish.config.center.key }), '.') do
-				if not charmap[letter] then
-					charmap[letter] = true
-					letter_count = letter_count + 1
+		if G.fac_fish_area and G.fac_fish_area.cards then
+			for _, fish in ipairs(G.fac_fish_area.cards) do
+				for letter in string.gmatch(localize({ type = 'name_text', set = "fac_Fish", key = fish.config.center.key }), '.') do
+					if not charmap[letter] then
+						charmap[letter] = true
+						letter_count = letter_count + 1
+					end
 				end
 			end
 		end
-
+			
 		return { vars = { card.ability.extra.mult, letter_count * card.ability.extra.mult } }
 	end,
 	calculate = function(self, card, context)
@@ -587,6 +589,7 @@ FishAndChips.Fish {
 	end
 }
 
+-- lots of this code is from @foo54 on Discord, if we need help debugging, contact them
 FishAndChips.Fish {
 	key = "pa_box_jellyfish",
 	weight = 10,
@@ -606,17 +609,16 @@ FishAndChips.Fish {
 	blueprint_compat = true,
 	config = {
 		extra = {
-			chips_gain = 5,
-			chips = 0
+			has_booster = false
 		},
 		max_highlighted = 1,
 		immutable = {}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips_gain, card.ability.extra.chips } }
+		local description = if card.ability.extra.has_booster then "to store" else "during fishing to open"
+		return { vars = { description } }
 	end,
 	load = function(self, card, card_table, other_card)
-		-- 'Use to copy selected {C:attention}Booster Pack{}'
 		G.E_MANAGER:add_event(Event{
 			func = function ()
 				for _,_card in ipairs(G.fac_pa_box_jellyfish_area.cards) do
@@ -641,6 +643,7 @@ FishAndChips.Fish {
 	end,
     can_use = function(self, card)
 		local can_pick_booster = G.shop_booster and #G.shop_booster.highlighted > 0 and #G.shop_booster.highlighted <= card.ability.max_highlighted
+		local in_fishing_environment = G.GAME.fishing and not FishAndChips.in_tutorial
 		local can_use_booster
 		for _, _card in ipairs(G.fac_pa_box_jellyfish_area.cards) do
 			if _card.ability.fac_pa_box_jellyfish == card.ability.immutable.id then
@@ -648,7 +651,7 @@ FishAndChips.Fish {
 				break
 			end
 		end
-        return can_pick_booster or can_use_booster
+        return can_pick_booster or (in_fishing_environment and can_use_booster)
     end,
 	keep_on_use = function(self, card)
 		return true

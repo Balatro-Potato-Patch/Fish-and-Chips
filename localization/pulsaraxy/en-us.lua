@@ -242,7 +242,7 @@ return {
             fish_fac_pa_box_jellyfish = {
                 name = "Box Jellyfish",
                 text = {
-                    'Use to copy selected {C:attention}Booster Pack{}'
+                    'Use #1# selected {C:attention}Booster Pack{}'
                 }
             }
         },
