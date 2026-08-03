@@ -160,7 +160,7 @@ FishAndChips.Fish{ --Trout Earth Extinction
         fish:start_dissolve(nil, first_dissolve)
         first_dissolve = true
       end
-      play_sound('fac_gplaggeromega_meteor', 1, 2)
+      play_sound('fac_plaggeromega_meteor', 1, 2)
     end,
 
     can_use = function(self, card)
