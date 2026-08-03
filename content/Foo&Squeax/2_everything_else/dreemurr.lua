@@ -11,6 +11,7 @@ FishAndChips.Fish{
 		wormhole = 1,
 		styx = 0.5,
 	},
+	disable_visual_scaling = true,
 	config = {
 		extra = {
 			mult = 1

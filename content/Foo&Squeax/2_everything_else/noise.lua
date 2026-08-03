@@ -16,6 +16,7 @@ FishAndChips.Fish {
 		length = {min = 5, max = 5},
 		weight = {min = 5, max = 5}
 	},
+	disable_visual_scaling = true,
 	attributes = {"modify_card", "xmult"},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xmult } }

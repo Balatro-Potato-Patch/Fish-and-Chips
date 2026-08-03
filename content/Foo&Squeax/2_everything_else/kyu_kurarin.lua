@@ -18,6 +18,7 @@ FishAndChips.Fish{
 		length = {min = 5, max = 5},
 		weight = {min = 5, max = 5}
 	},
+	disable_visual_scaling = true,
 	attributes = {"chips"},
 	loc_vars = function(self, info_queue, card)
 ---@diagnostic disable-next-line: undefined-global

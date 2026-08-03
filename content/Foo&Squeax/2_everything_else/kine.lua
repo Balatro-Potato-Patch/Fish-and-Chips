@@ -15,6 +15,7 @@ FishAndChips.Fish{
 		length = {min = 5, max = 5},
 		weight = {min = 5, max = 5}
 	},
+	disable_visual_scaling = true,
 	load = function (self, card, card_table, other_card)
 		G.E_MANAGER:add_event(Event{
 			func = function ()

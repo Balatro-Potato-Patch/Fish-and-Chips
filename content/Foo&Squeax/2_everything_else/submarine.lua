@@ -47,6 +47,7 @@ FishAndChips.Fish{
 	ppu_artist = {"squeax09"},
 	badge_key = "k_fac_fas_submarine",
 	weight = 5,
+	disable_visual_scaling = true,
 	environments = {
 		pier = 1,
 		backroom = 0.4,

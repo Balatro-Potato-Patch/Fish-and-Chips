@@ -71,6 +71,7 @@ FishAndChips.Fish{
 	in_pool = function (self, args)
 		return false
 	end,
+	disable_visual_scaling = true,
 	stats = {
 		length = {min = 5, max = 5},
 		weight = {min = 5, max = 5}

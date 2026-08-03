@@ -20,6 +20,7 @@ FishAndChips.Fish{
 			fish = "fish_fac_flounder",
 		}
 	},
+	disable_visual_scaling = true,
 	stats = {
 		length = {min = 15.5, max = 31},
 		weight = {min = 4.01, max = 40.01}

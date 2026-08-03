@@ -37,6 +37,7 @@ FishAndChips.Fish{
 	badge_key = "k_fac_fas_nyon_label",
 	ppu_artist = {"squeax09"},
 	ppu_coder = {"Foo54"},
+	disable_visual_scaling = true,
 	config = {
 		extra = {
 			xmult = 4,

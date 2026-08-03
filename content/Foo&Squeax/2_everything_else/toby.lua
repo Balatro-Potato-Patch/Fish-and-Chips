@@ -44,9 +44,10 @@ FishAndChips.Fish{
       }}
     }}
 	end,
+	disable_visual_scaling = true,
 	stats = {
-		length = {min = 5, max = 5},
-		weight = {min = 5, max = 5}
+		length = {min = 0, max = 0},
+		weight = {min = 0, max = 0}
 	},
 	loc_vars = function(self, info_queue, card)
 		return {vars = {elements = {SMODS.create_sprite(0, 0, 2, 2 / 62 * 52, "fac_fas_toby")}}}
