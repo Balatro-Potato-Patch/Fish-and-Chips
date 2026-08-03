@@ -307,6 +307,27 @@ function Card:highlight(is_higlighted)
 		if self.children.select_button and not (self.highlighted and self.area and self.area.config.type ~= "shop") then
 			self.children.select_button:remove(); self.children.select_button = nil
 		end
+		if G.STATE == G.STATES.FAC_FISHING then
+			if self.config.center.requires_jokers then
+				if self.highlighted then
+					G.jokers.T.y = G.jokers.T.y + 15.25
+					G.jokers.T.x = G.jokers.T.x + 1.5 - (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
+				else
+					G.jokers.T.y = G.jokers.T.y - 15.25
+					G.jokers.T.x = G.jokers.T.x - 1.5 + (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
+				end
+			end
+			if self.config.center.requires_consumables then
+				if self.highlighted then
+					G.consumeables.T.y = G.consumeables.T.y + 15.25
+					G.consumeables.T.x = G.consumeables.T.x - 3.5
+				else
+					G.consumeables.T.y = G.consumeables.T.y - 15.25
+					G.consumeables.T.x = G.consumeables.T.x + 3.5
+				end
+		
+			end
+		end
 	else
 		card_highlight(self, is_higlighted)
 	end
