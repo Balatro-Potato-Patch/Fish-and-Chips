@@ -196,7 +196,11 @@ local card_remove_ref = Card.remove
 function Card:remove()
 ---@diagnostic disable-next-line: undefined-field
 	if self.config.center.key == "fish_fac_fas_kawkaw" and not self.dont_nyon then
-		if self.area and self.area.config.collection then return card_remove_ref(self) end
+		if (self.area and self.area.config.collection) or not self.area then
+			self.dont_nyon = true
+			self:remove()
+			return
+		end
 		self.REMOVED = true
 		play_sound("fac_fas_nyon!")
 		self.children.center:set_sprite_pos{x = 4, y = 1}
@@ -207,6 +211,8 @@ function Card:remove()
 				self.dont_nyon = true
 				if self.dissolve_params then
 					self:start_dissolve(self.dissolve_params[1], self.dissolve_params[2], self.dissolve_params[3], self.dissolve_params[4])
+				else
+					self:remove()
 				end
 				return true
 			end
