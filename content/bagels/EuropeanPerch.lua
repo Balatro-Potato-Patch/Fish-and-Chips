@@ -117,10 +117,13 @@ function G.FUNCS.skip_blind(e, ...)
 			reset_blinds()
 
 			G.blind_select:remove()
+			local old_prompt = G.blind_prompt_box
 			G.blind_select = UIBox {
 				definition = create_UIBox_blind_select(),
 				config = { align = 'bmi', offset = { x = 0, y = G.ROOM.T.y + 36 }, major = G.hand, bond = 'Weak' },
 			}
+			G.blind_prompt_box:remove()
+			G.blind_prompt_box = old_prompt
 			G.blind_select.alignment.offset.y = 0.8 - (G.hand.T.y - G.jokers.T.y) + G.blind_select.T.h
 			G.ROOM.jiggle = G.ROOM.jiggle + 3
 			G.blind_select.alignment.offset.x = 0
