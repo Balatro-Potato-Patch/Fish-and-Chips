@@ -21,14 +21,16 @@ FishAndChips.Fish{
 		return {vars = {num, dem}}
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.cardarea == G.hand then
+		if context.end_of_round and context.individual and context.cardarea == G.hand then
 			if context.other_card:get_id() == 8 then
 				if SMODS.pseudorandom_probability(card, "fac_fas_luka", card.ability.extra.num, card.ability.extra.dem) then
 					return {
+						message_card = context.other_card,
+						message = "+1 Bait",
 						func = function ()
 							G.E_MANAGER:add_event(Event{
 								func = function()
-									FishAndChips.add_bait_to_shop(SMODS.poll_object{type = "fac_Bait"})
+									FishAndChips.add_bait_to_inventory(SMODS.poll_object{type = "fac_Bait"})
 									return true
 								end
 							})
