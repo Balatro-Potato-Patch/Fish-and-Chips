@@ -56,6 +56,17 @@ return {
                     "you actually did!"
                 }
             },
+            fish_fac_pink_puffle = {
+                name = "Pink Puffle",
+                text = {
+                    "{C:attention}Treasure{} is easier to catch,",
+                    "but {C:fac_fish}Fish{} are harder to catch"
+                },
+                flavour = {
+                    "It is said that the Pink Puffle's fur",
+                    "can hold 30 times its weight in water."
+                }
+            },
             fish_fac_tripod = {
                 name = "Tripod Spiderfish",
                 text = {

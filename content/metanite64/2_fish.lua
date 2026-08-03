@@ -1,5 +1,5 @@
 -- TOTAL WEIGHT USED
--- 10 + 10 + 7 + 5 + 5 + 10 + 5 = 52
+-- 10 + 10 + 7 + 5 + 5 + 10 + 8 + 5 = 60
 
 FishAndChips.Fish {
     key = "yellow_pikman",
@@ -11,6 +11,10 @@ FishAndChips.Fish {
         aquifer = 5,
         garden = 7,
         backroom = 2
+    },
+    stats = {
+        weight = { min = 0.0005, max = 0.0015 },
+        length = { min = 0.008, max = 0.016 }
     },
     attributes = { "chips" },
     ppu_coder = { "metanite64" },
@@ -67,6 +71,10 @@ FishAndChips.Fish {
         swamp = 5,
         city_river = 5
     },
+    stats = {
+        weight = { min = 0.02, max = 1 },
+        length = { min = 0.01, max = 0.05 }
+    },
     attributes = { "xmult" },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
@@ -117,6 +125,10 @@ FishAndChips.Fish {
         styx = 7,
         pier = 7,
         aquifer = 7
+    },
+    stats = {
+        weight = { min = 0.8, max = 1.4 },
+        length = { min = 0.20, max = 0.45 }
     },
     attributes = { "generation" },
     ppu_coder = { "metanite64" },
@@ -171,6 +183,10 @@ FishAndChips.Fish {
         swamp = 2,
         aquifer = 5
     },
+    stats = {
+        weight = { min = 18, max = 30 },
+        length = { min = 1.3, max = 1.7 }
+    },
     attributes = { "xmult" },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
@@ -205,6 +221,10 @@ FishAndChips.Fish {
         volcano = 5,
         backroom = 5,
         wormhole = 3
+    },
+    stats = {
+        weight = { min = 0.025, max = 0.05 },
+        length = { min = 0.02, max = 0.4 }
     },
     attributes = { "usable", "generation", "destroy_card" },
     ppu_coder = { "metanite64" },
@@ -270,6 +290,10 @@ FishAndChips.Fish {
         soup = 2,
         garden = 10
     },
+    stats = {
+        weight = { min = 2, max = 3.8 },
+        length = { min = 0.4, max = 0.76 }
+    },
     attributes = { "rank" },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
@@ -322,6 +346,37 @@ FishAndChips.Fish {
         end
     end
 }
+
+FishAndChips.Fish {
+    key = "pink_puffle",
+    atlas = "meta_fish",
+    pos = { x = 3, y = 1 },
+    weight = 8,
+    environments = {
+        pier = 8,
+        city_river = 8,
+        garden = 4
+    },
+    stats = {
+        weight = { min = 0.001, max = 0.01 },
+        length = { min = 0.4, max = 0.6 }
+    },
+    attributes = { "passive" },
+    ppu_coder = { "metanite64" },
+    ppu_artist = { "metanite64" },
+
+    calculate = function(self, card, context)
+        if context.fishing_profile then
+            print(context.fishing_profile)
+            local fp = context.fishing_profile
+            fp.treasure_gain = fp.treasure_gain * 3
+            fp.vel_limit = fp.vel_limit * 2
+            fp.decision_min = fp.decision_min / 2
+            print(context.fishing_profile)
+        end
+    end
+}
+
 FishAndChips.Fish {
     key = "tsuchinoko",
     atlas = "meta_fish",
@@ -329,6 +384,10 @@ FishAndChips.Fish {
     weight = 5,
     environments = {
         wormhole = 1
+    },
+    stats = {
+        weight = { min = 50, max = 90 },
+        length = { min = 0.3, max = 0.8 }
     },
     treasure = true,
     attributes = { "usable" },
