@@ -186,6 +186,44 @@ return {
 				text = {
 					"this should never appear"
 				}
+			},
+			fish_fac_fas_isreal = {
+				name = "Bassriel Dreemurr",
+				flavour = {
+					"Don't krill, and don't be krilled, alright?"
+				},
+				text = {
+					"{C:mult}+#1#{} Mult per unique Fish",
+					"caught this run",
+					"{C:inactive}[Currently {C:mult}+#2#{C:inactive} Mult]"
+				}
+			},
+			fish_fac_fas_sardine = {
+				name = "Loser's Sardine",
+				flavour = {
+
+				},
+				text = {
+
+				}
+			},
+			fish_fac_fas_luka = {
+				name = "Tako Luka",
+				flavour = {
+
+				},
+				text = {
+
+				}
+			},
+			fish_fac_fas_you = {
+				name = "YOU",
+				flavour = {
+
+				},
+				text = {
+
+				}
 			}
 		},
 		PotatoPatch = {

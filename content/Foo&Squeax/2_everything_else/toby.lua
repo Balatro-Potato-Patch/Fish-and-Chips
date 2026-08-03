@@ -41,8 +41,8 @@ FishAndChips.Fish{
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval then
-			ease_sand_dollars(-1)
-			ease_dollars(-1)
+			card.ability.extra_cost = (card.ability.extra_cost or 0) - 1
+			card:set_cost()
 		end
 		if context.joker_main then
 			return {

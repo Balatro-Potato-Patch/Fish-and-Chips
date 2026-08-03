@@ -49,7 +49,12 @@ PotatoPatchUtils.Developer{
 	atlas = "fac_fas_credits_foo",
 	colour = HEX("ED5B5B"),
 	fac_partner = "squeax09",
-	loc = true
+	loc = true,
+	calculate = function(self, context)
+		if context.fac_end_fishing and context.fish then
+			G.GAME.fac_FooSqueax.fish_caught[context.fish] = true
+		end
+	end,
 }
 
 for i=1, 11 do
@@ -86,6 +91,7 @@ function FishAndChips.mod.reset_game_globals (run_start)
 			},
 			wormholes = {},
 			tobies = 0,
+			fish_caught = {}
 		}
 	end
 	G.GAME.fac_FooSqueax.wormholes.target = pseudorandom_element(PotatoPatchUtils.Developers).name
