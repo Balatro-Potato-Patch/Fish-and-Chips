@@ -43,8 +43,8 @@ FishAndChips.Fish {
 		backroom = 0.5
 	},
 	stats = {
-		length = { min = 0.0120, max = 1},  --based on ordinary cd
-		weight = { min = 0.02, max = 1}
+		length = { min = 0.0120, max = 0.0120},  --based on ordinary cd
+		weight = { min = 0.02, max = 0.02}
 	},
 	blueprint_compat = true,
 	config = {
@@ -93,8 +93,8 @@ FishAndChips.Fish {
 		}
 	},
 	stats = {
-		length = { min = 0.0278, max = 1},  --0.0278m , 277.77g based on starship heat tile measurements, not sure where density was from?
-		weight = { min = 0.2777, max = 1}
+		length = { min = 0.0278, max = 0.0278},  --0.0278m , 277.77g based on starship heat tile measurements, not sure where density was from?
+		weight = { min = 0.2777, max = 0.2777}
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.reroll_gain, card.ability.extra.rerolls, } }
@@ -137,8 +137,8 @@ FishAndChips.Fish {
 		city_river = 0.3
 	},
 	stats = {
-		length = { min = 0.00197, max = 1 },  --based on average gold ring
-		weight = { min = 0.007, max = 1 }
+		length = { min = 0.00197, max = 0.00197 },  --based on average gold ring
+		weight = { min = 0.008, max = 0.008 }
 	},
 	blueprint_compat = false,
 	config = {
@@ -252,8 +252,8 @@ FishAndChips.Fish {
 		backroom = 0.5
 	},
 	stats = {
-		length = {min = 1.75, max = 2},  --entirely vibes based
-		weight = { min = 90, max = 100}
+		length = {min = 1.5, max = 2.25},  --entirely vibes based
+		weight = { min = 60, max = 120}
 	},
 	blueprint_compat = true,
 	config = {
@@ -277,8 +277,8 @@ FishAndChips.Fish {
 		end
 	end,
 	on_catch = function(self, card)
-		local is_perfect_catch = G.FAC_FISH_GAME.perfect
-		if is_perfect_catch then
+		local is_perfect_catch = G.FAC_FISH_GAME.perfect    --it'd be nice if this could be delayed until around when the fish actually materializes
+		if is_perfect_catch then                            --because the normal sound is rather short
 			SMODS.calculate_effect{
 				func = function()
 					play_sound('fac_pa_wiibonus')
@@ -307,8 +307,8 @@ FishAndChips.Fish {
 		backroom = 0.5
 	},
 	stats = {
-		length = {min = 0.01, max = 1},  --vibes
-		weight = {min = 0.0003, max = 1}
+		length = {min = 0.01, max = 0.01},  --vibes
+		weight = {min = 0.0003, max = 0.0003}
 	},
 	blueprint_compat = true,
 	config = {
@@ -367,9 +367,9 @@ FishAndChips.Fish {
 		backroom = 0.5
 	},
 	stats = {
-		length = {min = 1.5, max = 2},  --same size as normal fishing rod but heavier
-		weight = {min = 8, max = 10}
-	},
+        weight = {min = 4, max = 10}, --similar range to actual fishing rods lengths, but heavier
+        length = {min = 1, max = 2.5}
+    },
 	blueprint_compat = true,
 	config = {
 		extra = {
@@ -448,8 +448,8 @@ FishAndChips.Fish {
 		backroom = 0.5
 	},
 	stats = {
-		length = {min = 0.012, max = 1},  --vaugely based on actual phone + measurements of a shell i have
-		weight = {min = 0.125, max = 1}
+		length = {min = 0.012, max = 0.012},  --vaugely based on actual phone + measurements of a shell i have
+		weight = {min = 0.125, max = 0.125}
 	},
 	blueprint_compat = true,
 	config = {
