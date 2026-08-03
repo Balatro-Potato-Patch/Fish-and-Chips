@@ -30,10 +30,15 @@ FishAndChips.Fish({
 			}))
 			ease_ante(-1)
 			return {
-				saved = "k_fac_hayayaya_unown_saved",
+				font = "fac_hayayaya_unown",
+				saved = "k_fac_hayayaya_unown_saved_" .. math.floor(pseudorandom("unown_text", 1, 7)),
 				message = localize("k_fac_hayayaya_unown_saved_ex"),
 				colour = G.C.RED,
 			}
 		end
 	end,
 })
+
+-- SMODS.calculation_keys["font"] = true
+table.insert(SMODS.other_calculation_keys, "font")
+SMODS.silent_calculation["font"] = true

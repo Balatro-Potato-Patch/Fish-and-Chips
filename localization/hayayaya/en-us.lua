@@ -194,6 +194,13 @@ return {
 			-- Misc other stuff
 			k_fac_hayayaya_unown_saved = "WELCOME BACK",
 			k_fac_hayayaya_unown_saved_ex = "Rewind!",
+			k_fac_hayayaya_unown_saved_1 = "WELCOME BACK",
+			k_fac_hayayaya_unown_saved_2 = "ARE YOU OKAY?",
+			k_fac_hayayaya_unown_saved_3 = "THE SIMULACRUM IS STILL STABLE",
+			k_fac_hayayaya_unown_saved_4 = "THE KING AWAITS",
+			k_fac_hayayaya_unown_saved_5 = "ARE YOU TRYING TO DECODE THIS",
+			k_fac_hayayaya_unown_saved_6 = "THERE IS A NEW ROCK BY THE POND",
+			k_fac_hayayaya_unown_saved_7 = "DON'T DO THAT AGAIN",
 		},
 	},
 }

@@ -41,6 +41,15 @@ SMODS.Font({
 	TEXT_OFFSET = { x = 0, y = -40 },
 })
 
+SMODS.Font({
+	key = "hayayaya_unown",
+	path = "hayayaya/unown.ttf",
+	FONTSCALE = 0.1,
+	squish = 1,
+	TEXT_HEIGHT_SCALE = 0.75,
+	TEXT_OFFSET = { x = 0, y = -20 },
+})
+
 PotatoPatchUtils.Developer({
 	name = "Ellen (Haya)",
 	atlas = "fac_hayayaya_credits",
