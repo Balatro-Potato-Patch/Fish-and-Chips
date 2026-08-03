@@ -390,10 +390,18 @@ if SilkTouch then
     --#endregion
 
     --#region Controller buttons
+	local old_get_side = SilkTouch.ControllerButtons.sell.get_side
     local old_font = SilkTouch.ControllerButtons.sell.font
 	local old_focus_condition = SilkTouch.ControllerButtons.sell.focus_condition
     SilkTouch.ControllerButton:take_ownership("sell",
     {
+		get_side = function(card)
+			local ret = old_get_side and old_get_side(card) or "left"
+			if card.ability.set == 'fac_Fish' then
+				ret = card:align_h_popup().type == "cl" and "right" or "left"
+			end
+			return ret
+		end,
         font = function(card)
             local t = old_font and old_font(card) or {
                 "default",
@@ -415,7 +423,9 @@ if SilkTouch then
     true)
 	SilkTouch.ControllerButton{
 		key = "fish_use",
-		side = "right",
+		get_side = function(card)
+			return card:align_h_popup().type == "cr" and "left" or "right"
+		end,
 		button_key = "rightshoulder",
 		button_order = 0,
 		text = function(card)
@@ -433,7 +443,9 @@ if SilkTouch then
 	}
 	SilkTouch.ControllerButton{
 		key = "bait_buy",
-		side = "right",
+		get_side = function(card)
+			return card:align_h_popup().type == "cr" and "left" or "right"
+		end,
 		button_key = "rightshoulder",
 		button_order = 0,
 		text = function(card)
