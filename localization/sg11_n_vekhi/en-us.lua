@@ -78,7 +78,12 @@ return {
 			},
 			fish_fac_sg11_n_vekhi_transcendent = {
 				name = "Transcendent Fish",
-				text = {},
+				text = {
+					"{E:1,C:mult}#1#{E:1} Mult for each",
+					"{C:attention,E:1}face down{} {E:1}card",
+					"{E:1,C:dark_edition}in visible existence",
+					"{C:inactive,E:1}(Currently {C:mult,E:1}#2#{C:inactive,E:1} Mult)",
+				},
 			},
 			fish_fac_sg11_n_vekhi_diamond_fish = {
 				name = "Diamond Fish",
