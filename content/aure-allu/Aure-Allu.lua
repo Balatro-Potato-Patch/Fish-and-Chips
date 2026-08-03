@@ -1239,11 +1239,177 @@ FishAndChips.Fish {
 }
 
 -- Chimaera
-local fac_use_fish_ref = G.FUNCS.fac_use_fish
-function G.FUNCS.fac_use_fish(e)
-	local ret = fac_use_fish_ref(e)
-	G.GAME.last_used_fish = e.config.ref_table.config.center.key
-	return ret
+local kernel_max = 100
+function get_pixel_distance(shader_data, x, y, width, height, green, scale)
+	local distance = 0
+	while distance < math.min(kernel_max, math.max(width, height)) do
+		distance = distance + 1
+		for x_d=math.max(x-distance*scale, 0), math.min(x+distance*scale, width-scale), scale do
+			for y_d=math.max(y-distance*scale, 0), math.min(y+distance*scale, height-scale), scale do
+				local _, g, b = shader_data:getPixel(x_d, y_d)
+				if green and b > 0.0 or (not green and g > 0.0) then
+					goto skip
+				end
+			end
+		end
+	end
+	::skip::
+	return distance
+end
+
+local pixel_distance_store_factor = 50
+function set_chimaera_morph_data(card, old_center, new_center, morph_time)
+	card.fac_aure_allu_chimaera_morph_data = {}
+	local scale = G.SETTINGS.GRAPHICS.texture_scaling
+	
+	local old_atlas = SMODS.get_atlas(old_center.atlas)
+	local old_data = old_atlas.image_data
+    local old_px = (old_center.pixel_size or {}).w or (old_center.display_size or {}).w or old_atlas.px
+	local old_py = (old_center.pixel_size or {}).h or (old_center.display_size or {}).h or old_atlas.py
+	local old_offset = {
+		x = old_atlas.px * old_center.pos.x * scale,
+		y = old_atlas.py * old_center.pos.y * scale,
+	}
+	local new_atlas = SMODS.get_atlas(new_center.atlas)
+	local new_data = new_atlas.image_data
+    local new_px = (new_center.pixel_size or {}).w or (new_center.display_size or {}).w or new_atlas.px
+	local new_py = (new_center.pixel_size or {}).h or (new_center.display_size or {}).h or new_atlas.py
+	local new_offset = {
+		x = new_atlas.px * new_center.pos.x * scale,
+		y = new_atlas.py * new_center.pos.y * scale,
+	}
+
+	local rel_px = math.max(old_px, new_px)
+	local rel_py = math.max(old_py, new_py)
+	local shader_data = love.image.newImageData(rel_px, rel_py)
+
+	shader_data:mapPixel(function (x, y, r, g, b, a)
+		r, g, b, a = 0, 0, 0, 0
+		local real_old_x, real_old_y = math.floor((rel_px - old_px)/2 + x)*scale, math.floor((rel_py - old_py)/2 + y)*scale
+		local real_new_x, real_new_y = math.floor((rel_px - new_px)/2 + x)*scale, math.floor((rel_py - new_py)/2 + y)*scale
+		if real_old_x > 0 and real_old_x < old_data:getWidth() and real_old_y > 0 and real_old_y < old_data:getHeight() then
+			local _, _, _, old_a = old_data:getPixel(real_old_x + old_offset.x, real_old_y + old_offset.y)
+			g, a = old_a, old_a
+		end
+		if real_new_x > 0 and real_new_x < new_data:getWidth() and real_new_y > 0 and real_new_y < new_data:getHeight() then
+			local _, _, _, new_a = new_data:getPixel(real_new_x + new_offset.x, real_new_y + new_offset.y)
+			b, a = new_a, math.max(new_a, a)
+		end
+		return r, g, b, a
+	end)
+	shader_data:encode("png", "chimaera_morph_1.png")
+
+	local max_distance_old = 1
+	local max_distance_new = 1
+	shader_data:mapPixel(function (x, y, r, g, b, a)
+		if a > 0.0 then
+			if g <= 0.0 and b <= 0.0 or g > 0.0 and b > 0.0 then
+				r = 1.0 -- fade = 0.5
+			else 
+				local distance = get_pixel_distance(shader_data, x, y, rel_px, rel_py, g > 0.0, 1.0)
+				if g > 0.0 then
+					g = distance / pixel_distance_store_factor
+					max_distance_old = math.max(max_distance_old, distance)
+				else
+					b = distance / pixel_distance_store_factor
+					max_distance_new = math.max(max_distance_new, distance)
+				end
+			end
+		end
+		return r, g, b, a
+	end)
+	shader_data:encode("png", "chimaera_morph_2.png")
+
+	shader_data:mapPixel(function (x, y, r, g, b, a)
+		if a > 0.0 and not (g <= 0.0 and b <= 0.0 or g > 0.0 and b > 0.0) then
+			if g > 0.0 then
+				g = 1.0 - (g * pixel_distance_store_factor) / max_distance_old
+			else
+				b = (b * pixel_distance_store_factor) / max_distance_new
+			end
+		end
+		return r, g, b, a
+	end)
+	shader_data:encode("png", "chimaera_morph_3.png")
+	card.fac_aure_allu_chimaera_morph_data.mask = love.graphics.newImage(shader_data)
+	card.fac_aure_allu_chimaera_morph_data.start_time = G.TIMERS.REAL
+	card.fac_aure_allu_chimaera_morph_data.morph_time = morph_time or 2.0
+	card.fac_aure_allu_chimaera_morph_data.texture_sizes = {old_px, old_py, new_px, new_py}
+	card.ignore_shadow.chimaera_morph = true
+end
+
+function remove_chimaera_morph_data(card)
+	card.fac_aure_allu_chimaera_morph_data = nil
+	if card.children.chimaera_old_center then
+		card.children.chimaera_old_center:remove()
+		card.children.chimaera_old_center = nil
+		card.ignore_shadow.chimaera_morph = nil
+	end
+end
+
+SMODS.clean_up_children_ignore.chimaera_old_center = true
+SMODS.draw_ignore_keys.chimaera_old_center = true
+function morph_fish_into(card, new_center, time)
+	local old_center = card.config.center
+	card.children.chimaera_old_center = card.children.center
+	card.children.chimaera_old_center.green = true
+	card.children.center = nil
+	card:set_ability(new_center)
+	set_chimaera_morph_data(card, old_center, new_center, time)
+end
+
+SMODS.Shader {
+	key = "aure-allu_chimaera",
+    path = "aure-allu/chimaera.fs",
+    send_vars = function (sprite, card)
+        if not card.fac_aure_allu_chimaera_morph_data then return end
+		local morph_time = (G.TIMERS.REAL - card.fac_aure_allu_chimaera_morph_data.start_time) / (card.fac_aure_allu_chimaera_morph_data.morph_time)
+        return {
+			texture_sizes = card.fac_aure_allu_chimaera_morph_data.texture_sizes, -- old, new
+            morph_mask = card.fac_aure_allu_chimaera_morph_data.mask,
+			morph_progress = morph_time,
+			green = sprite.green or false,
+        }
+    end
+}
+
+SMODS.DrawStep {
+	key = "aure-allu_chimaera",
+	order = -9,
+	func = function(self, layer)
+		if self.fac_aure_allu_chimaera_morph_data then
+			local morph_time = (G.TIMERS.REAL - self.fac_aure_allu_chimaera_morph_data.start_time) / (self.fac_aure_allu_chimaera_morph_data.morph_time)
+			if morph_time > 1.1 then
+				remove_chimaera_morph_data(self)
+				return
+			end
+			--Draw the shadows
+			self.ignore_shadow.chimaera_morph = nil
+			if not self.no_shadow and G.SETTINGS.GRAPHICS.shadows == 'On' and((self.ability.effect ~= 'Glass Card' and not self.greyed and self:should_draw_shadow() ) and ((self.area and self.area ~= G.discard and self.area.config.type ~= 'deck') or not self.area or self.states.drag.is)) then
+				self.shadow_height = 0*(0.08 + 0.4*math.sqrt(self.velocity.x^2)) + ((((self.highlighted and self.area == G.play) or self.states.drag.is) and 0.35) or (self.area and self.area.config.type == 'title_2') and 0.04 or 0.1)
+				self.children.chimaera_old_center:draw_shader('fac_aure-allu_chimaera', self.shadow_height)
+				self.children.center:draw_shader('fac_aure-allu_chimaera', self.shadow_height)
+			end
+			self.ignore_shadow.chimaera_morph = true
+
+			self.children.chimaera_old_center:draw_shader("fac_aure-allu_chimaera")
+			self.children.center:draw_shader("fac_aure-allu_chimaera")
+		end
+    end,
+    conditions = { vortex = false, facing = 'front' },
+}
+
+local draw_step_edition_func_ref = SMODS.DrawSteps.edition.func 
+function SMODS.DrawSteps.edition.func(self, layer)
+	if not self.fac_aure_allu_chimaera_morph_data then
+		return draw_step_edition_func_ref(self, layer)
+	end
+end
+local draw_step_center_func_ref = SMODS.DrawSteps.center.func
+function SMODS.DrawSteps.center.func(self, layer)
+	if not self.fac_aure_allu_chimaera_morph_data then
+		return draw_step_center_func_ref(self, layer)
+	end
 end
 
 FishAndChips.Fish {
@@ -1274,9 +1440,9 @@ FishAndChips.Fish {
 				nodes = {
 					{
 						n = G.UIT.C,
-						config = { ref_table = card, align = "m", colour = G.GAME.last_used_fish and mix_colours(FishAndChips.C.FISH, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.BLACK, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
+						config = { ref_table = card, align = "m", colour = G.GAME.fac_last_used_fish and mix_colours(FishAndChips.C.FISH, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.BLACK, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
 						nodes = {
-							{ n = G.UIT.T, config = { text = G.GAME.last_used_fish and localize{type = 'name_text', key = G.GAME.last_used_fish, set = "fac_Fish"} or localize('k_none'), colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
+							{ n = G.UIT.T, config = { text = G.GAME.fac_last_used_fish and localize{type = 'name_text', key = G.GAME.fac_last_used_fish, set = "fac_Fish"} or localize('k_none'), colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
 						}
 					}
 				}
@@ -1291,14 +1457,14 @@ FishAndChips.Fish {
 				if SMODS.has_enhancement(pcard, "m_wild") then has_wild = true; break end
 			end
 			if has_wild then
-				if G.GAME.last_used_fish then
+				if G.GAME.fac_last_used_fish then
 					G.E_MANAGER:add_event(Event({
 						trigger = "after",
 						delay = 0.3,
 						func = function ()
 							-- Todo : yassify
 							card:juice_up(1.2, 0.3)
-							card:set_ability(G.P_CENTERS[G.GAME.last_used_fish])
+							morph_fish_into(card, G.P_CENTERS[G.GAME.fac_last_used_fish], 4.0)
 							return true
 						end
 					}))
