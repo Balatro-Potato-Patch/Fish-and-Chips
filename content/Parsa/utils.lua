@@ -10,3 +10,10 @@ SMODS.Atlas({
 	px = 71,
 	py = 95,
 })
+SMODS.Atlas({
+	key = "Parsa_atlas_file",
+	path = "Parsa/fish.fac.png",
+	px = 71,
+	py = 95,
+})
+

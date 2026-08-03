@@ -20,6 +20,10 @@ FishAndChips.Fish {
     ppu_artist = {"Parsa"},
 
     atlas = 'fac_Parsa_atlas_dish',
+    stats = {
+    weight = { min = 10, max = 20 },
+    length = { min = 10, max = 20 },
+    },
     pos = { x = 0, y = 0 },
 
     cost = 3,
@@ -91,4 +95,83 @@ FishAndChips.Fish {
             end
         end
     end
+}
+
+
+FishAndChips.Fish {
+    key = 'Parsa_facfile',
+    weight = 2,
+    environments = { wormhole = 40, garden = 10 },
+    attributes = { copying = true, generation = true },
+
+    ppu_coder = {"Parsa"},
+    ppu_artist = {"Parsa"},
+
+    stats = {
+    weight = { min = 0.01, max = 0.1 },
+    length = { min = 10, max = 20 },
+    },
+
+    atlas = 'Parsa_atlas_file',
+    pos = { x = 0, y = 0 },
+
+    cost = 8,
+    blueprint_compat = false,
+
+    impulse_min = 0.2,
+    impulse_max = 0.45,
+    decision_min = 0.3,
+    decision_max = 0.6,
+    vel_limit = 0.5,
+    requires_hand = false,
+    treasure = false,
+
+    config = { extra = {} },
+
+    loc_vars = function(self, info_queue, card)
+        return {}
+    end,
+
+    get_copy_pool = function(self)
+        if self._copy_pool then return self._copy_pool end
+        local pool = {}
+        for k, c in pairs(G.P_CENTERS) do
+            if c.set == 'Joker' and not c.mod and c.calculate then
+                pool[#pool + 1] = k
+            end
+        end
+        self._copy_pool = pool
+        return pool
+    end,
+
+    calculate = function(self, card, context)
+
+        if context.setting_blind then
+            local pool = self:get_copy_pool()
+            local key = pseudorandom_element(pool, pseudoseed('facfile_' .. tostring(card.sort_id or 0)))
+            card.fac_copied_key = key
+            card.ability.extra = copy_table(G.P_CENTERS[key].config.extra or {})
+        end
+
+
+        if card.fac_copied_key then
+            local center = G.P_CENTERS[card.fac_copied_key]
+            if center and center.calculate then
+                local result = center.calculate(center, card, context)
+                if result then return result end
+            end
+        end
+
+
+        if context.end_of_round then
+            card.fac_rounds_played = (card.fac_rounds_played or 0) + 1
+        end
+
+        if context.check_eternal and context.other_card == card and (card.fac_rounds_played or 0) < 5 then
+            local trig = context.trigger
+            if type(trig) == 'table' and trig.from_sell then
+                return { no_destroy = true }
+            end
+        end
+    end,
 }

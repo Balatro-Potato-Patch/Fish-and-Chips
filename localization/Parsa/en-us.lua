@@ -18,6 +18,13 @@ return {
             "few minutes ago"
                 }
             },
+    fish_fac_Parsa_facfile = {
+        name = '!@#$*&.fac',
+        flavor = {
+            "Wait...",
+            "how did you find that?"
+            },
         }
     }
+}
 }
