@@ -34,6 +34,7 @@ FishAndChips.Fish{
 		garden = 0.75
 	},
 	atlas = "fas_nyon",
+	badge_key = "k_fac_fas_nyon_label",
 	ppu_artist = {"squeax09"},
 	ppu_coder = {"Foo54"},
 	config = {

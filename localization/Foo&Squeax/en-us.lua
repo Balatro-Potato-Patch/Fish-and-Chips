@@ -295,6 +295,12 @@ return {
 			ph_fac_fas_tsunderfish_approach_d_2 = "But not too closest.",
 			ph_fac_fas_tsunderfish_active = "Human, I...",
 			b_fac_fas_act = "ACT",
+
+			k_fac_fas_worm = "Can? Worms?",
+			k_fac_fas_skewer = "Skewer",
+			k_fac_fas_nyon_label = "Nyon",
+			k_fac_fas_submarine = "Submarine",
+			k_fac_fas_fatchud = "Fat Chud",
 		}
 	}
 }

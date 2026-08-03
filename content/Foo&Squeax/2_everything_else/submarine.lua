@@ -45,6 +45,7 @@ FishAndChips.Fish{
 	pixel_size = {w=70,h=87},
 	ppu_coder = {"Foo54"},
 	ppu_artist = {"squeax09"},
+	badge_key = "k_fac_fas_submarine",
 	weight = 5,
 	environments = {
 		pier = 1,

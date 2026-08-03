@@ -137,6 +137,7 @@ FishAndChips.Fish{
 	environments = {
 		soup = 1
 	},
+	badge_key = "k_fac_fas_skewer",
 	stats = {
 		length = {min = 0.25, max = 0.5},
 		weight = {min = 0.05, max = 0.1}
