@@ -251,6 +251,25 @@ return {
                     "it does not originate from it."
                 }
             },
+
+            fish_fac_ultimate_weapon = {
+                name = "The Ultimate Weapon",
+                text = {
+                    "Use this {C:attention}Fish{} to",
+                    "create a copy of the last",
+                    "{C:attention}#1#{} obtained {C:attention}Fish{}",
+                    "{C:inactive}(Must have room)"
+                },
+                flavor = {
+                    "W8W WILL YOU LOOK AT TH8T!",
+                    "IT'S THE FUCK8NG TREASURE!",
+                    "LOOKS LIKE SOME K8ND OF HUMAN HOUSE SHAPED THING!",
+                    "H8LY SHIT, DIDN'T SEE THAT C8MING!!!!!!!!",
+                    "NOW EVERYONE HOLD YOUR FUCKING H8RSES WHILE I",
+                    "ARTLESSLY EXPLAIN SOME MORE SHIT A8OUT IT!"
+                }
+            },
+
             fish_fac_jack_o_lantern = {
                 name = "Jack O' Lantern",
                 text = {

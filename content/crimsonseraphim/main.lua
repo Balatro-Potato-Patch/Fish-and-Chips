@@ -1612,7 +1612,7 @@ FishAndChips.Fish {
 	},
     config = {
         extra = {
-            
+            fish = 3
         }
     },
     stats = {
@@ -1620,7 +1620,28 @@ FishAndChips.Fish {
 		length = {min = 4.13, max = 4.13}
 	},
     loc_vars = function(self, info_queue, card)
-        
+        return {
+            vars = {
+                card.ability.extra.fish
+            }
+        }
+    end,
+    use = function(self, card)
+        if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
+            for i = 1, math.min(card.ability.extra.fish, G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) do
+                local c = G.GAME.crimsonseraphim_obtained_fish[#G.GAME.crimsonseraphim_obtained_fish]
+                if c then
+                    local car = SMODS.create_card{key = "j_joker", area = G.fac_fish_are}
+                    car:load(c.card and type(c.card) ~= "number" and c.card:save() or c.savetable)
+                    G.GAME.crimsonseraphim_obtained_fish[#G.GAME.crimsonseraphim_obtained_fish] = nil
+                    G.fac_fish_area:emplace(car)
+                    car:start_materialize()
+                end
+            end
+        end
+    end,
+    can_use = function()
+        return G.GAME.crimsonseraphim_obtained_fish
     end,
     treasure = true
 }
@@ -1641,6 +1662,70 @@ SMODS.DrawStep({
 	conditions = { vortex = false, facing = "front" },
 })
 
+local card_add_to_deck = Card.add_to_deck
+function Card:add_to_deck(...)
+    card_add_to_deck(self, ...)
+    if self.ability.set == "fac_Fish" and card.config.center_key ~= "fish_fac_ultimate_weapon" then
+        G.GAME.crimsonseraphim_obtained_fish = G.GAME.crimsonseraphim_obtained_fish or {}
+        G.GAME.crimsonseraphim_obtained_fish[#G.GAME.crimsonseraphim_obtained_fish+1] = {card = self, savetable = self:save()}
+    end
+end
+
+local card_remove = Card.remove
+function Card:remove(...)
+    if self.ability.set == "fac_Fish" and G.GAME.crimsonseraphim_obtained_fish then
+        for i, v in pairs(G.GAME.crimsonseraphim_obtained_fish) do
+            if v.card == self then
+                v.savetext = self:save()
+                v.card = nil
+            end
+        end
+    end
+    return card_remove(self, ...)
+end
+
+local card_start_dissolve = Card.start_dissolve
+function Card:start_dissolve(...)
+    if self.ability.set == "fac_Fish" and G.GAME.crimsonseraphim_obtained_fish then
+        for i, v in pairs(G.GAME.crimsonseraphim_obtained_fish) do
+            if v.card == self then
+                v.savetext = self:save()
+                v.card = nil
+            end
+        end
+    end
+    return card_start_dissolve(self, ...)
+end
+
+local save_run_ref = save_run
+function save_run(...)
+    for i, v in pairs(G.GAME.crimsonseraphim_obtained_fish or {}) do
+        if type(v.card) == "number" then
+            v.card = nil
+        end
+        if v.card then
+            v.savetable = v.card:save()
+            v.card = v.card.sort_id
+        end
+    end
+    return save_run_ref(...)
+end
+
+local game_new_run = Game.new_run
+function Game:new_run(args, ...)
+    game_new_run(args, ...)
+    if args.savetext and G.GAME.crimsonseraphim_obtained_fish then
+        for i, v in pairs(G.GAME.crimsonseraphim_obtained_fish) do
+            if v.card then
+                for i, c in pairs(G.I.CARD) do
+                    if c.sort_id == v.card and c.ability.set == "fac_Fish" then
+                        v.card = c
+                    end
+                end
+            end
+        end
+    end
+end
 
 FishAndChips.Fish {
 	key = "jack_o_lantern",
