@@ -4,8 +4,8 @@ extern float mixf;
 
 vec4 effect( vec4 colour, Image texture, vec2 uv, vec2 screen_coords )
 {
-	vec4 col = Texel(texture, uv);
-	vec4 col2 = Texel(texture, vec2(uv.x, uv.y + (sin((uv.x + (mixf * 0.1)) * 64.0) * fip)));
+	vec4 col = Texel(texture, vec2(uv.x, uv.y + (sin((uv.x + (mixf * -0.3)) * 16.0) * fip * 0.1)));
+	vec4 col2 = Texel(texture, vec2(uv.x, (uv.y + (sin((uv.x + (mixf * 0.1)) * 64.0) * fip))));
 	float fmid = -(uv.x - 0.5) * expand;
 	vec4 col3 = Texel(texture, vec2(uv.x + fmid, uv.y));
 
