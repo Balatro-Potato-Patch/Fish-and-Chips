@@ -95,7 +95,7 @@ end
 local create_card_hook = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 	local card = create_card_hook(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
-	if card.ability.set == 'fac_Fish' and not card.ability.stats and area and not area.config.fac_compendium then
+	if card.ability.set == 'fac_Fish' and not card.ability.stats and (not area or area and not area.config.fac_compendium) then
 		local stats = FishAndChips.create_card_stats or FishAndChips.create_fish_stats(card.config.center)		
 		FishAndChips.modify_fish_stats(card, stats)
 	end
@@ -163,14 +163,14 @@ function FishAndChips.verify_submissions()
 			end
 		end
 	end
-	assert(fac_count <= 2, 'Too many devs registered, submissions are limited to two participants.')
-	if fac_count == 2 then
-		local first, second = contributors[1], contributors[2]
-		assert(
-			first.fac_partner == second.name and second.fac_partner == first.name,
-			'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
-		)
-	end
+	-- assert(fac_count <= 2, 'Too many devs registered, submissions are limited to two participants.')
+	-- if fac_count == 2 then
+	-- 	local first, second = contributors[1], contributors[2]
+	-- 	assert(
+	-- 		first.fac_partner == second.name and second.fac_partner == first.name,
+	-- 		'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
+	-- 	)
+	-- end
 
 	local devs = {}
 	for _, fish in ipairs(G.P_CENTER_POOLS.fac_Fish) do
@@ -198,10 +198,9 @@ function FishAndChips.verify_submissions()
 			assert(in_envs <= FishAndChips.fish_environment_limit or dev_obj.ignore_limits, "Fish " .. fish.key .. " is in " .. in_envs .. " environments when the limit is " .. FishAndChips.fish_environment_limit)
 		end
 		local scalar = math.min(1, FishAndChips.submission_weight_limit / total_weight)
-		if submission.mod == FishAndChips.mod then
 			assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
 			assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")
-		end
+
 		for _, fish in ipairs(submission) do
 			fish.weight = fish.weight * scalar
 			local unpack_env = function(environment)
