@@ -23,8 +23,8 @@ FishAndChips.Fish {
         }
     end,
     stats = {
-        weight = { min = 1, max = 1 },
-        length = { min = 1, max = 1 },
+        weight = { min = 2.7, max = 18.8 },
+        length = { min = 0.3, max = 1.11 },
     },
     weight = 5,
     environments = {
