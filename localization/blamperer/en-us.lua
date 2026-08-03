@@ -30,7 +30,7 @@ return {
             },
             fish_fac_blamperer_timer = {
                 name = "Delayed Gratipiscation",
-                text = { 
+                text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for every {C:attention}5 seconds",
                     "you have a fish on your hook",
                     "{C:inactive}(Maximum of {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{C:inactive})"
@@ -69,6 +69,24 @@ return {
                 text = {
                     "{X:attention,C:white}#1#X{} Treasure rewards if",
                     "{C:fac_fish}Fish{} is caught {C:gold}perfectly"
+                },
+                flavor = {
+                    "This one's just trying",
+                    "to get your attention."
+                }
+            },
+            fish_fac_blamperer_atlas = {
+                name = "Soaked Atlas",
+                text = {
+                    "{C:chips}+#1#{} Chips each time you",
+                    "catch a {C:fac_fish}Fish{} in a",
+                    "different {C:fac_environment}Environment",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
+                },
+                flavor = {
+                    "Probably not suitable for any",
+                    "road trips any time soon,",
+                    "but can still show you around."
                 }
             }
         },

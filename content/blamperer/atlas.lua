@@ -1,0 +1,53 @@
+FishAndChips.Fish {
+    key = "blamperer_atlas",
+    -- atlas = "fitch",
+    -- pos = { x = 6, y = 0 },
+    ppu_coder = { "blamperer" },
+    ppu_artist = { "blamperer" },
+    attributes = {
+        "chips", "scaling"
+    },
+    config = {
+        extra = {
+            chip_gain = 20, -- BALANCE: Adjust this. I think 20 chips per 5 dollars and possibly 1 bait is reasonable personally but
+            chips = 0,
+            last_catch_environment = ""
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = { card.ability.extra.chip_gain, card.ability.extra.chips }
+        }
+    end,
+    stats = {
+        weight = { min = 1, max = 1 },
+        length = { min = 1, max = 1 },
+    },
+    weight = 8,
+    environments = {
+        pier = 5,
+        backroom = 5,
+        swamp = 2
+    },
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return { chips = card.ability.extra.chips }
+        end
+
+        if context.fac_end_fishing and not context.failed then
+            local this_environment_key = FishAndChips.get_environment().key
+            if this_environment_key ~= card.ability.extra.last_catch_environment then
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "chips",
+                    scalar_value = "chip_gain",
+                    scaling_message = {
+                        message = localize("k_upgrade_ex"),
+                        colour = G.C.CHIPS
+                    }
+                })
+                card.ability.extra.last_catch_environment = this_environment_key
+            end
+        end
+    end
+}
