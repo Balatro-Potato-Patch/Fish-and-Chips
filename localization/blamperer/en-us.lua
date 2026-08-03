@@ -4,8 +4,8 @@ return {
             fish_fac_blamperer_kala = {
                 name = "kala",
                 text = {
-                    "This Fish gives {X:mult,C:white}X#1#{} Mult for each",
-                    "empty {C:attention}Fish{} slot in your Bucket",
+                    "This {C:fac_fish}Fish{} gives {X:mult,C:white}X#1#{} Mult for each",
+                    "empty {C:fac_fish}Fish{} slot in your Bucket",
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
                 },
                 flavor = {
@@ -32,7 +32,7 @@ return {
                 name = "Delayed Gratipiscation",
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for every {C:attention}5 seconds",
-                    "you have a fish on your hook",
+                    "you have a {C:fac_fish}Fish{} on your hook",
                     "{C:inactive}(Maximum of {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{C:inactive})"
                 },
                 flavor = {
