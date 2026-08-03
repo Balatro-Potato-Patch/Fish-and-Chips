@@ -1,5 +1,19 @@
 return {
     descriptions = {
+        Other = {
+            fac_sepa_Tarot_infovar ={
+                name = "Specific Tarots",
+                text = {
+                    "The Fool",
+                    "The Emperor",
+                    "The Hermit",
+                    "The Hanged Man",
+                    "Death",
+                }
+            }
+
+        },
+
         fac_Fish = {
             fish_fac_clownfish = {
                 name = "Clownfish",
@@ -17,7 +31,7 @@ return {
                 name = "{f:fac_ultra}Bomb Fish{}",
                 text = {
                     {
-                        "Creates {C:attention}2{} two {C:tarot}tarot{} cards when",
+                        "Creates {C:attention}#5#{} specific {C:tarot}tarot{} cards when",
                         "defused. If {C:attention}attempt{} count hits 0,",
                         "sets money to {C:gold}$0{}. Play {C:attention}#4#{}",
                         "to advance the defuse count {C:green}[#1#/#2#]{}"
@@ -36,20 +50,21 @@ return {
                 }
             },
 
-
-   fish_fac_klounfish = {
-                name = "Kloun Fish",
+            fish_fac_lies= {
+                name = "Fish...?",
                 text = {
-                    "At {C:attention}end of round{},",
-                    "earn {C:money}$#1#{} for each",
-                    "{C:attention}face card{} held in hand"
+                    "When {C:attention}Blind{} is selected, destroy Fish to the", 
+                    "left and adds double its sell value as",
+                    "dollars given at end of round",
+                    "{C:inactive}(Currently{} {C:gold}$#1#{} {C:inactive}){}"
                 },
                 flavor = {
-                    "He made a statement",
-                    "so funny even the",
-                    "kids clowned his jokes"
+                    "Its still unknown if this",
+                    "fish is real or not, but",
+                    "for your bucket, it is"
                 }
             },
+            
             fish_fac_freds_leg = {
                 name = "Fred's Leg",
                 text = {
@@ -62,18 +77,6 @@ return {
                     "MY LEG!"
                 }
             },
-            fish_fac_jimfish = {
-                name = "JimFish",
-                text = {
-                    "{C:mult}+#1#{} Mult for each",
-                    "{C:attention}fish{} in your bucket",
-                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}"
-                },
-                flavor = {
-                    "Your favorite Joker, now as a fish"
-                }
-            },
- 
  
         },
 
