@@ -95,7 +95,7 @@ end
 local create_card_hook = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 	local card = create_card_hook(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
-	if card.ability.set == 'fac_Fish' and not card.ability.stats and area and not area.config.fac_compendium then
+	if card.ability.set == 'fac_Fish' and not card.ability.stats and (not area or area and not area.config.fac_compendium) then
 		local stats = FishAndChips.create_card_stats or FishAndChips.create_fish_stats(card.config.center)		
 		FishAndChips.modify_fish_stats(card, stats)
 	end
