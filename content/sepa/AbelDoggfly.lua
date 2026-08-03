@@ -35,6 +35,10 @@ FishAndChips.Fish {
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "DoggFly" },
 	attributes = { "mult", "hands" },
+	stats = {
+		weight = {min = 0.20, max = 0.32},
+		length = {min = 0.10 , max = 0.20}
+	},
 	config = {
 		extra = {
 			mult = 10
@@ -67,6 +71,10 @@ FishAndChips.Fish {
 		extra = {
 			
 		}
+	},
+	stats = {
+		weight = {min = 0.20, max = 0.32},
+		length = {min = 0.10 , max = 0.20}
 	},
 	environments = {
 		pier = 1,
@@ -102,6 +110,10 @@ FishAndChips.Fish {
 			attempts = 5,
 			minplayed = false
 		}
+	},
+	stats = {
+		weight = {min = 10, max = 12},
+		length = {min = 0.25 , max = 0.25}
 	},
 	environments = {
 		city_river = 1,
@@ -224,6 +236,10 @@ FishAndChips.Fish {
 	attributes = { "hands", "destruction" },
 	config = {
 		extra = {}
+	},
+	stats = {
+		weight = {min = 0.1, max = 0.1},
+		length = {min = 0.20 , max = 0.20}
 	},
 	environments = {
 		city_river = 1
