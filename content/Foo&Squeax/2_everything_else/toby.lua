@@ -48,6 +48,12 @@ FishAndChips.Fish{
 	loc_vars = function(self, info_queue, card)
 		return {vars = {elements = {SMODS.create_sprite(0, 0, 2, 2 / 62 * 52, "fac_fas_toby")}}}
 	end,
+	config = {
+		extra = {
+			add = 1,
+			mult = 1
+		}
+	},
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval then
 			card.ability.extra_cost = (card.ability.extra_cost or 0) - 1
@@ -55,13 +61,13 @@ FishAndChips.Fish{
 		end
 		if context.joker_main then
 			return {
-				chips = 1,
-				mult = 1,
-				xchips = 1.1,
-				xmult = 1.1,
-				score = 1,
-				xscore = 1.1,
-				blindsize = 1,
+				chips = 1 / card.ability.extra.add,
+				mult = 1 / card.ability.extra.add,
+				xchips = 1.1 / card.ability.extra.mult,
+				xmult = 1.1 / card.ability.extra.mult,
+				score = 1 / card.ability.extra.add,
+				xscore = 1.1 / card.ability.extra.mult,
+				blindsize = 1 / card.ability.extra.add,
 			}
 		end
 	end,
