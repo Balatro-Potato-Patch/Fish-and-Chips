@@ -58,6 +58,7 @@ FishAndChips.Fish{
 			mult = 1
 		}
 	},
+	attributes = {"chips", "mult", "xchips", "xmult", "score", "xscore", "blindsize", "passive", "economy"},
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval then
 			card.ability.extra_cost = (card.ability.extra_cost or 0) - 1

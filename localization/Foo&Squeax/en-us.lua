@@ -32,7 +32,7 @@ return {
 					{
 						"While Submerged:",
 						"All {C:attention}Jokers{} are debuffed",
-						"All Fish retrigger {C:attention}#1#{} times",
+						"All {C:fac_fish}Fish{} retrigger {C:attention}#1#{} times",
 						"{C:inactive}[#2#]"
 					},
 					{
@@ -53,8 +53,8 @@ return {
 						"more likely to appear"
 					},
 					{
-						"This Fish consumes",
-						"caught {C:attention}Food{} Fish",
+						"This {C:fac_fish}Fish{} consumes",
+						"caught {C:attention}Food{} {C:fac_fish}Fish{}",
 						"and gains {X:mult,C:white}X#3#{} Mult",
 						"{C:inactive}[Currently {X:mult,C:white}X#4#{C:inactive} Mult]"
 					}
@@ -98,11 +98,11 @@ return {
 				},
 				text = {
 					{
-						"This Fish gains {X:mult,C:white}X#1#{} Mult when a Fish made by {C:attention}#2#{} is caught",
+						"This {C:fac_fish}Fish{} gains {X:mult,C:white}X#1#{} Mult when a {C:fac_fish}Fish{} made by {C:attention}#2#{} is caught",
 						"{C:inactive}[Currently {X:mult,C:white}X#3#{C:inactive} Mult]   {C:inactive}[Target changes every round]"
 					},
 					{
-						"Use this Fish to convert it into {C:attention}#4#{} bait per {C:attention}#1# {X:mult,C:white}XMult{} gained"
+						"Use this {C:fac_fish}Fish{} to convert it into {C:attention}#4#{} bait per {C:attention}#1# {X:mult,C:white}XMult{} gained"
 					}
 				}
 			},
@@ -130,8 +130,8 @@ return {
 					"{f:5}わたし ちゅうぶらりん"
 				},
 				text = {
-					"This Fish gains {C:chips}+#1#{} Chips",
-					"when a Fish is {C:red}lost",
+					"This {C:fac_fish}Fish{} gains {C:chips}+#1#{} Chips",
+					"when a {C:fac_fish}Fish{} is {C:red}lost",
 					"or a treasure is {C:red}failed",
 					"{C:inactive}[Currently {C:chips}+#2#{C:inactive} Chips]"
 				}
@@ -193,18 +193,25 @@ return {
 					"Don't krill, and don't be krilled, alright?"
 				},
 				text = {
-					"{C:mult}+#1#{} Mult per unique Fish",
+					"{C:mult}+#1#{} Mult per unique {C:fac_fish}Fish{}",
 					"caught this run",
 					"{C:inactive}[Currently {C:mult}+#2#{C:inactive} Mult]"
 				}
 			},
 			fish_fac_fas_sardine = {
-				name = "Loser's Sardine",
+				name = "Loser's Zacco",
 				flavour = {
-
+					"{f:5}なに ちょっと無視しないで"
 				},
 				text = {
-
+					{
+						"{C:fac_fish}Fish{} with at most {C:attention}#1#",
+						"attributes give {C:chips}+#2#{} Chips"
+					},
+					{
+						"Use to see how many {C:attention}attributes",
+						"the {C:fac_fish}Fish{} to the left has"
+					}
 				}
 			},
 			fish_fac_fas_luka = {
@@ -313,6 +320,9 @@ return {
 			k_fac_fas_nyon_label = "Nyon",
 			k_fac_fas_submarine = "Submarine",
 			k_fac_fas_fatchud = "Fat Chud",
+		},
+		v_dictionary = {
+			k_fac_fas_attributes = "#1# Attribute#2#"
 		}
 	}
 }
