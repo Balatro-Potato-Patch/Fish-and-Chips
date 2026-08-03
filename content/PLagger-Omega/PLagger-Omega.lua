@@ -283,3 +283,36 @@ FishAndChips.Fish{ --Docfish
     end
   end
 }
+
+FishAndChips.Fish{ --Biblically Accurate Angelfish
+  key = 'plaggeromega_baa',
+  atlas = 'plaggeromega_fish',
+  pos = {x=1,y=1},
+  weight = 6,
+  environments = {backroom = 0.77},
+  attributes = {'generation'},
+  stats = {
+    weight = {min = 2222, max = 4444},
+    length = {min = 2222, max = 9999}
+  },
+  ppu_coder = {'PLagger'},
+  ppu_artist = {'Omegaflowey18'},
+  impulse_min = 0.12,
+  impulse_max = 0.23,
+  vel_limit = 1.11,
+  cost = 7,
+  blueprint_compat = true,
+  config = {extra = {}},
+
+  loc_vars = function (self, info_queue, card)
+    
+  end,
+
+  use = function (self, card, area)
+    print'shout out giada'
+  end,
+
+  can_use = function(self, card)
+    return G.jokers and #G.jokers.cards < G.jokers.config.card_limit
+  end
+}

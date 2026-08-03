@@ -61,6 +61,16 @@ return {
                 flavour = {
                     'Aces have no weaknesses'
                 }
+            },
+            fish_fac_plaggeromega_baa = {
+                name = 'Bibilically Accurate Angelfish',
+                text = {
+                    'Creates shit idk'
+                },
+                flavour = {
+                    'B E    N O T',
+                    'A R A I D'
+                }
             }
         }
     },
