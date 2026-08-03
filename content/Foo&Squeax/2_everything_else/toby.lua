@@ -24,6 +24,9 @@ FishAndChips.Fish{
 	key = "fas_toby_fish",
 	ppu_coder = {"Foo54"},
 	ppu_artist = {"squeax09"},
+	atlas = 'fas_fish_general',
+	pos = {x=3,y=0},
+	pixel_size = { w=66, h=65},
 	weight = 5,
 	environments = {
 		wormhole = 1,
