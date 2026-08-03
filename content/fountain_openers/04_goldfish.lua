@@ -10,7 +10,7 @@ FishAndChips.Fish {
 	attributes = { "economy" },
 	config = {
         extra = {
-            amt = 3,
+            amt = 5,
             dec = 1,
         }
 	},

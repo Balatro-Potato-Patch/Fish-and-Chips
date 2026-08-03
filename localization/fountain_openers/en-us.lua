@@ -5,9 +5,10 @@ return {
                 name = "Boids",
                 text = {
                     "Makes {C:attention}boids{} appear on screen",
-                    "This Fish gains {C:chips}+#1#{} Chips when you",
-                    "{C:attention}click{} on a boid while",
-                    "reeling in a fish"
+                    "This Fish gains {C:chips}+#2#{} Chips",
+                    "when you {C:attention}click{} on a boid",
+                    "while reeling in a Fish",
+                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
                 },
                 fac_flavor = {
                     "Bird? Fish?",
@@ -43,6 +44,9 @@ return {
                 text = {
                     "Use this fish to get",
                     "{X:mult,C:white}X#1#{} Mult next hand"
+                },
+                fac_flavor = {
+                    "Wrong one?"
                 }
             },
             fish_fac_fo_fishery = {
