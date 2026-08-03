@@ -92,6 +92,22 @@ return {
 					"scoring {C:attention}Glass Cards{} that do not break",
 				},
 			},
+			fish_fac_sg11_n_vekhi_sprat = {
+				name = "Sprat",
+				text = {
+					"{C:chips}#1#{} chips",
+					"Earn {C:money}$#2#{} at",
+					"end of round",
+				},
+			},
+			fish_fac_sg11_n_vekhi_sprat_can = {
+				name = "Sprats in a Can",
+				text = {
+					"{C:attention}Use{} to fill bucket",
+					"with {C:attention}10{} {C:attention}Sprat{}",
+					"{C:inactive}(Does not require room){}",
+				},
+			},
 		},
 		PotatoPatch = {
 			fac_sleepyg11 = {
