@@ -19,7 +19,8 @@ return {
                 }
             },
     fish_fac_Parsa_facfile = {
-        name = '!@#$*&.fac',
+        name = 'N/A.fac',
+        text = {"   "},
         flavor = {
             "Wait...",
             "how did you find that?"

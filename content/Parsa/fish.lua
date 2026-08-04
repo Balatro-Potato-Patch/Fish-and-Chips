@@ -22,7 +22,7 @@ FishAndChips.Fish {
     atlas = 'fac_Parsa_atlas_dish',
     stats = {
     weight = { min = 10, max = 20 },
-    length = { min = 10, max = 20 },
+    length = { min = 0.10, max = 0.20 },
     },
     pos = { x = 0, y = 0 },
 
@@ -101,7 +101,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
     key = 'Parsa_facfile',
     weight = 2,
-    environments = { wormhole = 40, garden = 10 },
+    environments = { wormhole = 20, garden = 0.2 },
     attributes = { copying = true, generation = true },
 
     ppu_coder = {"Parsa"},
@@ -109,7 +109,7 @@ FishAndChips.Fish {
 
     stats = {
     weight = { min = 0.01, max = 0.1 },
-    length = { min = 10, max = 20 },
+    length = { min = 0.10, max = 0.20 },
     },
 
     atlas = 'Parsa_atlas_file',
@@ -132,46 +132,59 @@ FishAndChips.Fish {
         return {}
     end,
 
-    get_copy_pool = function(self)
-        if self._copy_pool then return self._copy_pool end
-        local pool = {}
-        for k, c in pairs(G.P_CENTERS) do
-            if c.set == 'Joker' and not c.mod and c.calculate then
-                pool[#pool + 1] = k
-            end
+get_copy_pool = function(self)
+    if self._copy_pool then return self._copy_pool end
+    local pool = {}
+    for k, c in pairs(G.P_CENTERS) do
+        if c.set == 'Joker' and c.calculate
+            and (not c.mod or c.mod.id == 'Balatro') then
+            pool[#pool + 1] = k
         end
-        self._copy_pool = pool
-        return pool
-    end,
-
-    calculate = function(self, card, context)
-
-        if context.setting_blind then
-            local pool = self:get_copy_pool()
-            local key = pseudorandom_element(pool, pseudoseed('facfile_' .. tostring(card.sort_id or 0)))
-            card.fac_copied_key = key
-            card.ability.extra = copy_table(G.P_CENTERS[key].config.extra or {})
-        end
+    end
+    self._copy_pool = pool
+    return pool
+end,
 
 
-        if card.fac_copied_key then
-            local center = G.P_CENTERS[card.fac_copied_key]
-            if center and center.calculate then
-                local result = center.calculate(center, card, context)
-                if result then return result end
-            end
+calculate = function(self, card, context)
+
+    if context.setting_blind then
+        if card.fac_shadow then
+            card.fac_shadow:remove()
+            card.fac_shadow = nil
         end
 
+        local pool = self:get_copy_pool()
+        local key = pseudorandom_element(pool, pseudoseed('facfile_' .. tostring(card.sort_id or 0)))
+        card.fac_copied_key = key
 
-        if context.end_of_round then
-            card.fac_rounds_played = (card.fac_rounds_played or 0) + 1
+        if key then
+            card.fac_shadow_area = card.fac_shadow_area or CardArea(0, 0, 0, 0, { type = 'title' })
+            card.fac_shadow = SMODS.create_card({
+                type = 'Joker',
+                key = key,
+                area = card.fac_shadow_area,
+                skip_materialize = true,
+            })
+            card.fac_shadow:add_to_deck()
         end
+    end
 
-        if context.check_eternal and context.other_card == card and (card.fac_rounds_played or 0) < 5 then
-            local trig = context.trigger
-            if type(trig) == 'table' and trig.from_sell then
-                return { no_destroy = true }
-            end
+    -- Forward every relevant context through the real card's real method
+    if card.fac_shadow then
+        return card.fac_shadow:calculate_joker(context)
+    end
+
+    -- Round counter + sell-lock, kept fully separate from copied state
+    if context.end_of_round then
+        card.fac_rounds_played = (card.fac_rounds_played or 0) + 1
+    end
+
+    if context.check_eternal and context.other_card == card and (card.fac_rounds_played or 0) < 5 then
+        local trig = context.trigger
+        if type(trig) == 'table' and trig.from_sell then
+            return { no_destroy = true }
         end
-    end,
+    end
+end,
 }
