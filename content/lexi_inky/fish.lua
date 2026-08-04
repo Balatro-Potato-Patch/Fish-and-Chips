@@ -22,6 +22,8 @@ FishAndChips.Fish({
 	},
 	environments = {
 		city_river = 1,
+		pier = 1,
+		wormhole = 1,
 	},
 	cost = 4,
 	config = {
@@ -90,7 +92,19 @@ FishAndChips.Fish({
 			vars = {},
 		}
 	end,
-	calculate = function(self, card, context) end,
+	calculate = function(self, card, context)
+		if context.before and not context.blueprint then
+			for k, v in ipairs(context.full_hand) do
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						v:juice_up()
+						assert(SMODS.change_base(v, "Hearts"))
+						return true
+					end,
+				}))
+			end
+		end
+	end,
 	badge_key = "k_fac_l_i_feather",
 	disable_fish_scaling = true,
 })
@@ -112,7 +126,7 @@ FishAndChips.Fish({
 	},
 	environments = {
 		calm_pond = 1,
-		garden = 2,
+		garden = 1,
 	},
 	stats = {
 		weight = { min = 4, max = 12 },
@@ -208,7 +222,9 @@ FishAndChips.Fish({
 		"mult",
 	},
 	environments = {
-		wormhole = 1,
+		pier = 1,
+		styx = 1,
+		backroom = 1,
 	},
 	stats = {
 		weight = { min = 0.005, max = 0.01 },
@@ -284,6 +300,8 @@ FishAndChips.Fish({
 		"score",
 	},
 	environments = {
+		pier = 1,
+		styx = 1,
 		wormhole = 1,
 	},
 	stats = {
@@ -337,9 +355,136 @@ FishAndChips.Fish({
 	disable_fish_scaling = true,
 })
 
--- cat fish/fish bait
+FishAndChips.Fish({
+	key = "l_i_phish_bait",
+	atlas = "l_i_fish",
+	pos = { x = 2, y = 1 },
+	weight = 10,
+	ppu_coder = {
+		"lexi",
+	},
+	ppu_artist = {
+		"inky",
+	},
+	attributes = {
+		"xmult",
+	},
+	environments = {
+		backroom = 1,
+		city_river = 1,
+	},
+	stats = {
+		weight = { min = 0, max = 1 },
+		length = { min = 0, max = 1 },
+	},
+	cost = 4,
+	config = {
+		extra = {
+			xmult = 3,
+			caught = false,
+		},
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.xmult,
+			},
+			key = card.ability.extra.caught and "fish_fac_l_i_phish_bait_real" or nil,
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.before and not context.blueprint then
+			if not card.ability.extra.caught then
+				card.ability.extra.caught = true
+			end
+			local pos
+			for i = 1, #G.fac_fish_area.cards do
+				if G.fac_fish_area.cards[i] == card then
+					pos = i
+					break
+				end
+			end
+			local leftFish = G.fac_fish_area.cards[pos - 1]
+			local rightFish = G.fac_fish_area.cards[pos + 1]
+			for k, v in ipairs(G.fac_fish_area.cards) do
+				if v.fac_db_l_i_pb == true then
+					v.fac_db_l_i_pb = false
+					v.debuff = false
+				end
+			end
+			if leftFish then
+				if not leftFish.debuff then
+					leftFish.fac_db_l_i_pb = true
+					leftFish.debuff = true
+				end
+			end
+			if rightFish then
+				if not rightFish.debuff then
+					rightFish.fac_db_l_i_pb = true
+					rightFish.debuff = true
+				end
+			end
+		end
+		if context.joker_main then
+			return {
+				xmult = card.ability.extra.xmult,
+			}
+		end
+	end,
+	disable_fish_scaling = true,
+	badge_key = "b_fac_bait",
+})
 
--- yhsifishy
+FishAndChips.Fish({
+	key = "l_i_yhsifishy",
+	atlas = "l_i_fish",
+	pos = { x = 1, y = 0 },
+	weight = 8,
+	ppu_coder = {
+		"lexi",
+	},
+	ppu_artist = {
+		"inky",
+	},
+	attributes = {
+		"rank",
+	},
+	environments = {
+		aquifer = 1,
+		pier = 1,
+		calm_pond = 1,
+	},
+	stats = {
+		weight = { min = 1, max = 2 },
+		length = { min = 1, max = 2 },
+	},
+	cost = 4,
+	config = {
+		extra = {
+			sand = 3,
+		},
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.sand,
+			},
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main and #context.full_hand == 5 then
+			if
+				context.full_hand[1]:get_id() == context.full_hand[5]:get_id()
+				and context.full_hand[2]:get_id() == context.full_hand[4]:get_id()
+			then
+				return {
+					sand_dollars = card.ability.extra.sand,
+				}
+			end
+		end
+	end,
+	disable_fish_scaling = true,
+})
 
 SMODS.Sound({
 	key = "l_i_87",
@@ -361,8 +506,9 @@ FishAndChips.Fish({
 		"rank",
 	},
 	environments = {
-		wormhole = 1,
-		backroom = 0.5,
+		styx = 1,
+		chocolate_river = 1,
+		city_river = 1,
 	},
 	stats = {
 		weight = { min = 170, max = 187 },
@@ -407,154 +553,54 @@ FishAndChips.Fish({
 	disable_fish_scaling = true,
 })
 
--- kevin
-
-local use_and_sell = G.UIDEF.use_and_sell_buttons
----@diagnostic disable-next-line: duplicate-set-field
-function G.UIDEF.use_and_sell_buttons(card)
-	local ret = use_and_sell(card)
-	if card.config.center.key == "fish_fac_l_i_fof" then
-		local sell = {
-			n = G.UIT.C,
-			config = { align = "cr" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = {
-						ref_table = card,
-						align = "cr",
-						padding = 0.1,
-						r = 0.08,
-						minw = 1.25,
-						hover = true,
-						shadow = true,
-						colour = G.C.UI.BACKGROUND_INACTIVE,
-						one_press = true,
-						button = "sell_card",
-						func = "can_sell_card",
-					},
-					nodes = {
-						{ n = G.UIT.B, config = { w = 0.1, h = 0.6 } },
-						{
-							n = G.UIT.C,
-							config = { align = "tm" },
-							nodes = {
-								{
-									n = G.UIT.R,
-									config = { align = "cm", maxw = 1.25 },
-									nodes = {
-										{
-											n = G.UIT.T,
-											config = {
-												text = localize("b_sell"),
-												colour = G.C.UI.TEXT_LIGHT,
-												scale = 0.4,
-												shadow = true,
-											},
-										},
-									},
-								},
-								{
-									n = G.UIT.R,
-									config = { align = "cm" },
-									nodes = {
-										{
-											n = G.UIT.T,
-											config = {
-												text = localize("$"),
-												colour = G.C.WHITE,
-												scale = 0.55,
-												shadow = true,
-												font = SMODS.Fonts["fac_sand_dollars"],
-											},
-										},
-										{
-											n = G.UIT.T,
-											config = {
-												ref_table = card,
-												ref_value = "sell_cost_label",
-												colour = G.C.WHITE,
-												scale = 0.55,
-												shadow = true,
-											},
-										},
-									},
-								},
-							},
-						},
-					},
-				},
+FishAndChips.Fish({
+	key = "l_i_kevin",
+	atlas = "l_i_fish",
+	pos = { x = 3, y = 1 },
+	weight = 9,
+	ppu_coder = {
+		"lexi",
+	},
+	ppu_artist = {
+		"inky",
+	},
+	attributes = {
+		"xmult",
+	},
+	environments = {
+		volcano = 1,
+		city_river = 1,
+		garden = 1,
+	},
+	stats = {
+		weight = { min = 2.24, max = 2.33 },
+		length = { min = 0.039, max = 0.046 },
+	},
+	cost = 4,
+	config = {
+		extra = {
+			xmult = 2,
+		},
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.xmult,
+				25,
 			},
 		}
-		local use = {
-			n = G.UIT.C,
-			config = { align = "cr" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = {
-						ref_table = card,
-						align = "cm",
-						padding = 0.1,
-						r = 0.08,
-						minw = 1.25,
-						minh = 0.8,
-						hover = true,
-						shadow = true,
-						colour = G.C.UI.BACKGROUND_INACTIVE,
-						fac_ignore = true,
-						button = "fac_use_fish",
-						func = "fac_can_use_fish",
-						handy_insta_action = "use",
-					},
-					nodes = {
-						{ n = G.UIT.B, config = { w = 0.1, h = 0.6 } },
-						{
-							n = G.UIT.C,
-							config = { align = "cm" },
-							nodes = {
-								{
-									n = G.UIT.R,
-									config = { align = "cm", maxw = 1.25 },
-									nodes = {
-										{
-											n = G.UIT.T,
-											config = {
-												text = localize("b_fac_l_i_eat"),
-												colour = G.C.UI.TEXT_LIGHT,
-												scale = 0.55,
-												shadow = true,
-											},
-										},
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-		}
-		ret = {
-			n = G.UIT.ROOT,
-			config = { padding = 0, colour = G.C.CLEAR },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { padding = 0.15, align = "cl" },
-					nodes = {
-						{ n = G.UIT.R, config = { align = "cl" }, nodes = {
-							sell,
-						} },
-						{ n = G.UIT.R, config = { align = "cl" }, nodes = {
-							use,
-						} },
-					},
-				},
-			},
-		}
-	end
-	return ret
-end
+	end,
+	calculate = function(self, card, context)
+		if G.GAME.blind and G.GAME.blind.in_blind then
+			if G.GAME.chips <= G.GAME.blind.chips / 4 then
+				return {
+					xmult = card.ability.extra.xmult,
+				}
+			end
+		end
+	end,
+	disable_fish_scaling = true,
+})
 
 FishAndChips.Fish({
 	key = "l_i_fof",
@@ -582,7 +628,8 @@ FishAndChips.Fish({
 	},
 	environments = {
 		soup = 1,
-		city_river = 1,
+		chocolate_river = 1,
+		swamp = 1,
 	},
 	stats = {
 		weight = { min = 0.13, max = 0.15 },
@@ -609,6 +656,7 @@ FishAndChips.Fish({
 	end,
 	badge_key = "k_fac_l_i_burger",
 	disable_fish_scaling = true,
+	button_key = "b_fac_l_i_eat",
 })
 
 SMODS.Sound({
@@ -645,7 +693,11 @@ FishAndChips.Fish({
 		"economy",
 	},
 	disable_fish_scaling = true,
-	environments = {},
+	environments = {
+		swamp = 1,
+		calm_pond = 1,
+		backroom = 1,
+	},
 	stats = {
 		weight = { min = 0.035, max = 0.055 },
 		length = { min = 0.01, max = 0.015 },

@@ -11,7 +11,11 @@ return {
 						"click me to open my carrd page",
 					},
 					{
-						"I LOVE MUSIC",
+						'"You make me so anxious,',
+						"and being with you is dangerous,",
+						'so why do I take the risk?"',
+						"bluu! - anxious!",
+						"It's a great song",
 					},
 				},
 			},
@@ -38,6 +42,17 @@ return {
 				flavour = {
 					"Living once in wages,",
 					"nows stays taped to your pages",
+				},
+			},
+			fish_fac_l_i_feather = {
+				name = "Black Feather",
+				text = {
+					"All played cards are",
+					"converted to {C:hearts}Hearts{}",
+				},
+				flavour = {
+					"It's strangely cold to the touch",
+					"and smells like blood.",
 				},
 			},
 			fish_fac_l_i_square = {
@@ -85,8 +100,44 @@ return {
 					"{s:1.1}(Palacium pro plastei)",
 				},
 			},
-			fish_fac_l_i_cat = {},
-			fish_fac_l_i_yhsifishy = {},
+			fish_fac_l_i_phish_bait = {
+				name = "Phish Bait",
+				text = {
+					"{X:mult,C:white}X999{} Mult",
+				},
+				flavour = {
+					"{s:1.1}(Espem clikbeid)",
+					"{E:1,C:edition}INCREDIBLE FISH ABILITIES,",
+					"{E:1,C:edition}ALL AT AN ALL-TIME LOW COST!",
+					"{E:1,C:edition}HURRY TO FIND OUT!",
+				},
+			},
+			fish_fac_l_i_phish_bait_real = {
+				name = "Phish Bait",
+				text = {
+					"{X:mult,C:white}X3{} Mult",
+					"debuffs adjacent {C:fac_Fish}Fish",
+					"when a hand is played",
+				},
+				flavour = {
+					"{s:1.1}(Espem clikbeid)",
+					"{E:1,C:edition}INCREDIBLE FISH ABILITIES,",
+					"{E:1,C:edition}ALL AT AN ALL-TIME LOW COST!",
+					"{E:1,C:edition}HURRY TO FIND OUT!",
+				},
+			},
+			fish_fac_l_i_yhsifishy = {
+				name = "yhsiFishy",
+				text = {
+					"If played hand is {C:attention}5{} cards",
+					"and a palindrome, gain {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{}",
+					"{C:inactive}(Eg: 35653)",
+				},
+				flavour = {
+					"{s:1.1}(Reverseum muesrever)",
+					"Do geese see god?",
+				},
+			},
 			fish_fac_l_i_freddy = {
 				name = "Freddy Fishbear",
 				text = {
@@ -98,6 +149,18 @@ return {
 				flavour = {
 					"{s:1.1}(Phiv knight freedee)",
 					"Tastes similarly to pizza..",
+				},
+			},
+			fish_fac_l_i_kevin = {
+				name = "Kevin",
+				text = {
+					"If chips are less than {C:attention}#2#%",
+					"of required chips {X:mult,C:white}X#1#{} Mult",
+				},
+				flavour = {
+					"{s:1.1}(Kevus immortali)",
+					"This could been sent to your local museum,",
+					"but it insists to help you on your run.",
 				},
 			},
 			fish_fac_l_i_fof = {
@@ -124,6 +187,22 @@ return {
 				flavour = {
 					"{s:1.1}(Disckus roablots)",
 					"Reminds me of 2016 tycoons",
+				},
+			},
+			fish_fac_l_i_fishsocks = {
+				name = "Fishsocks",
+				text = {
+					"NCS music btw",
+					"{X:mult,C:white}X#1#{} Mult",
+					"{C:money}$#2#",
+					"{C:inactive}it sounds like shit on purpose",
+				},
+				flavour = {
+					"{s:1.1}(Reamainds mioherr)",
+					"...but in the end,",
+					"all we wanted to obtain from here",
+					"were some stupid fish socks...",
+					"Everything reminds me of her.",
 				},
 			},
 		},
