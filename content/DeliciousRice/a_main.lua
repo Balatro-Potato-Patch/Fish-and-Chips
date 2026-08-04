@@ -19,3 +19,8 @@ SMODS.Atlas({
 	px = 71,
 	py = 95,
 })
+
+SMODS.Sound({
+	key = "delrice_instakill",
+	path = "delrice/instakilled.ogg"
+})
