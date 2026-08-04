@@ -891,16 +891,17 @@ function G:update_fac_fishing_hooking(dt)
                 r_bond = "Weak"
             }
         }
-        
-        G.GAME.fac_treasure_text = UIBox {
-            definition = G.UIDEF.fac_treasure_text(),
-            config = {
-                align = "tr",
-                major = G.FISHING.fishing,
-                offset = {x = -2.33, y = 1.5},
-                r_bond = "Weak"
+        if state.treasure_enabled then
+            G.GAME.fac_treasure_text = UIBox {
+                definition = G.UIDEF.fac_treasure_text(),
+                config = {
+                    align = "tr",
+                    major = G.FISHING.fishing,
+                    offset = {x = -2.33, y = 1.5},
+                    r_bond = "Weak"
+                }
             }
-        }
+        end
     end
     local reeling = fac_reeling_held()
     local up_force = 2.25
