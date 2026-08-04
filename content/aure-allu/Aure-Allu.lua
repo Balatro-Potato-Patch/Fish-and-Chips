@@ -1242,12 +1242,22 @@ FishAndChips.Fish {
 
 -- Chimaera
 local kernel_max = 100
-function get_pixel_distance(shader_data, x, y, width, height, green, scale)
+function get_pixel_distance(shader_data, x, y, width, height, green)
 	local distance = 0
 	while distance < math.min(kernel_max, math.max(width, height)) do
 		distance = distance + 1
-		for x_d=math.max(x-distance*scale, 0), math.min(x+distance*scale, width-scale), scale do
-			for y_d=math.max(y-distance*scale, 0), math.min(y+distance*scale, height-scale), scale do
+		-- Min/max X
+		for y_d=math.max(y-distance, 0), math.min(y+distance, height-1), 1 do
+			for _, x_d in ipairs({math.max(x-distance, 0), math.min(x+distance, width-1)}) do
+				local _, g, b = shader_data:getPixel(x_d, y_d)
+				if green and b > 0.0 or (not green and g > 0.0) then
+					goto skip
+				end
+			end
+		end
+		-- Min/max Y (clamped within only new pixels)
+		for x_d=math.max(x-distance+1, 0), math.min(x+distance-1, width-1), 1 do
+			for _, y_d in ipairs({math.max(y-distance, 0), math.min(y+distance, height-1)}) do
 				local _, g, b = shader_data:getPixel(x_d, y_d)
 				if green and b > 0.0 or (not green and g > 0.0) then
 					goto skip
@@ -1308,7 +1318,7 @@ function set_chimaera_morph_data(card, old_center, new_center, morph_time)
 			if g <= 0.0 and b <= 0.0 or g > 0.0 and b > 0.0 then
 				r = 1.0 -- fade = 0.5
 			else 
-				local distance = get_pixel_distance(shader_data, x, y, rel_px, rel_py, g > 0.0, 1.0)
+				local distance = get_pixel_distance(shader_data, x, y, rel_px, rel_py, g > 0.0)
 				if g > 0.0 then
 					g = distance / pixel_distance_store_factor
 					max_distance_old = math.max(max_distance_old, distance)
