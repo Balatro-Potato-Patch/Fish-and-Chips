@@ -64,8 +64,8 @@ return {
             },
 
             fish_fac_icbf = {
-                name = "{f:fac_sepa_ultra}ICBFish",
-                text = "Does nothing",
+                name = "{f:fac_sepa_ultra}ICBFish{}",
+                text = "{ Does nothing }",
                 flavor = {
                     "{f:fac_sepa_ultra}Similar in nature to its{}",
                     "{f:fac_sepa_ultra}fish relative, only this time",
