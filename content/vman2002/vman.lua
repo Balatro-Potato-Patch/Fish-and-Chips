@@ -12,7 +12,7 @@ SMODS.Atlas({
 	py = 95,
 })
 
-local chips_atlas = SMODS.Atlas({
+SMODS.Atlas({
 	key = "vman2002_chips",
 	path = "vman2002/chips_new.png",
 	px = 71,
@@ -150,6 +150,12 @@ FishAndChips.Fish { --Chips
 			end)
 			love.graphics.pop()
 		end
+	end,
+	in_pool = function()
+		--because +score is so powerful in early antes
+		local a = (G.GAME.fac_chips_attempts or 0) + 1
+		G.GAME.fac_chips_attempts = a
+		return a >= 5 - G.GAME.round_resets.ante
 	end,
 	impulse_min = 0.1,
 	impulse_max = 0.2,
@@ -431,6 +437,7 @@ FishAndChips.Fish { --Timothy
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
 			if G.GAME.fac_last_used_fish ~= tim then
 				if card.ability.extra.xmult > 1 then
+					SMODS.reset_card(card, {ref_value = "xmult", reset_value = 0})
 					card.ability.extra.xmult = 1
 					return {message = localize('fac_vman2002_timothy_reset')}
 				end
