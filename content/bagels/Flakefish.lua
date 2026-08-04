@@ -8,7 +8,7 @@ SMODS.Atlas {
 FishAndChips.Fish {
 	key = 'bagels_flakefish',
 	atlas = 'bagels_flakefish',
-	-- display_size = { w = 118 * 1.33, h = 118 * 1.33 },
+	display_size = { w = 71 * 1.33, h = 71 * 1.33 },
 	ppu_coder = { 'BakersDozenBagels' },
 	ppu_artist = { 'BakersDozenBagels' },
 	weight = 10,
@@ -27,12 +27,16 @@ FishAndChips.Fish {
 	calculate = function(_, card, context)
 		if context.joker_main then
 			if mult > card.ability.extra.last_mult then
-				card.ability.extra.last_mult = mult
+				if not context.blueprint then
+					card.ability.extra.last_mult = mult
+				end
 				return {
 					xmult = card.ability.extra.xmult,
 				}
 			else
-				card.ability.extra.last_mult = 0
+				if not context.blueprint then
+					card.ability.extra.last_mult = 0
+				end
 				return {
 					xmult = 0,
 				}
