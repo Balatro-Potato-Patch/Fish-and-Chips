@@ -249,7 +249,7 @@ FishAndChips.Fish {
     stats = { weight = { min = 1, max = 2 }, length = { min = 0.2, max = 0.7 } },
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
-    attributes = { 'usable' },
+    attributes = { 'usable', 'editions' },
     atlas = 'fac_vv_fish',
     pos = { x = 7, y = 0 },
     environments = { pier = 3 },

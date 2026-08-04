@@ -120,8 +120,7 @@ return {
                     name = "Blobfish",
                     text = {
                         {
-                            "Give a random {C:blue}Fish{} a random {C:dark_edition}Edition{}",
-                            "{C:inactive}Cannot give Polychrome or Negative{}"
+                            "Give a random {C:blue}Fish{} either {C:dark_edition}Foil{} or {C:dark_edition}Holographic{}",
                         }
                     },
                     flavour = {
