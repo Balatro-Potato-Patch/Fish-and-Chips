@@ -347,8 +347,8 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
     local caught = localize('ph_fac_first_caught')..(fish_caught and fish_data.first_catch or '')
     local rod = fish_caught and localize('ph_fac_with_rod')..localize({key = fish_data.rod, set = 'fac_Rod', type = 'name_text'}) or ' '
     local count = localize('ph_fac_times_caught')..(fish_caught and fish_data.times_caught or '')
-    local record_weight = fish_caught and localize('ph_fac_record_weight')..FishAndChips.format_measurement(fish_data.record_weight or nil, 'weight') or ' '
-    local record_length = fish_caught and localize('ph_fac_record_length')..FishAndChips.format_measurement(fish_data.record_length or nil, 'length') or ' '
+    local record_weight = fish_caught and localize('ph_fac_record_weight')..FishAndChips.format_measurement(fish_data.record_weight or nil, 'weight', fish.stats.units) or ' '
+    local record_length = fish_caught and localize('ph_fac_record_length')..FishAndChips.format_measurement(fish_data.record_length or nil, 'length', fish.stats.units) or ' '
 
     local text = {n=G.UIT.R, config = {align = left and 'cl' or 'cr', padding = 0.1}, nodes = {
         {n = G.UIT.C, config = {align = 'cl', padding = 0.03, minw = 3.2}, nodes = {
@@ -385,7 +385,7 @@ function FishAndChips.Compendium.extended_fish_page(page_number, left)
         }}
     }}
 
-    local last_page = false
+    local last_page = start_index >= #pool
     for i = 1, fish_per_page do
         table.insert(page.nodes[2].nodes, FishAndChips.Compendium.extended_fish_entry(pool[start_index + i], i%2 == 1))
         if start_index + i >= #pool then last_page = true; break end
@@ -411,7 +411,7 @@ function FishAndChips.Compendium.condensed_fish_page(page_number, left)
         }}
     }}
 
-    local last_page = false
+    local last_page = start_index >= #pool
     for i=1, rows do
         local temp_area = FishAndChips.Compendium.compendium_area(fish_per_row)
 
@@ -594,7 +594,7 @@ function FishAndChips.Compendium.bait_page(page_number, left)
     local bait_per_row = bait_per_page/rows
     local start_index = (page_number - 1) * bait_per_page
 
-    local last_page = false
+    local last_page = start_index >= #G.P_CENTER_POOLS.fac_Bait
     for i=1, rows do
         local row = {n=G.UIT.R, config = {align = 'tm', minh = 7.8/3, minw = 5, padding = 0.1}, nodes = {}}
         for j=1, bait_per_row do
@@ -671,7 +671,7 @@ function FishAndChips.Compendium.rod_page(page_number, left)
 
     local rods_per_page = 4
     local start_index = (page_number - 1) * rods_per_page
-    local last_page = false
+    local last_page = start_index >= #G.P_CENTER_POOLS.fac_Rod
     for i=1, rods_per_page do
         table.insert(page.nodes[2].nodes, FishAndChips.Compendium.rod_entry(G.P_CENTER_POOLS.fac_Rod[i + start_index], i%2 == 1))
         if i + start_index >= #G.P_CENTER_POOLS.fac_Rod then last_page = true; break end
@@ -753,7 +753,7 @@ function FishAndChips.Compendium.achievement_page(page_number, left)
     local start_index = (page_number - 1) * achievements_per_page
     local achi_pool = FishAndChips.Compendium.get_achievements()
 
-    local last_page = false
+    local last_page = start_index >= #achi_pool
     for i = 1, achievements_per_page do
         table.insert(page.nodes[2].nodes, FishAndChips.Compendium.achievement(achi_pool[start_index + i], i%2 == (left and 0 or 1)))
         if start_index + i >= #achi_pool then last_page = true; break end
@@ -804,7 +804,7 @@ SMODS.draw_ignore_keys.h_popup_2 = true
 
 function FishAndChips.Compendium.dev_card(dev)
     if not dev then return nil end
-    local partner = PotatoPatchUtils.Developers[dev.fac_partner]
+    local partner = dev.joint_credits and PotatoPatchUtils.Developers[dev.fac_partner]
     
     local temp_area = FishAndChips.Compendium.compendium_area(1, dev.joint_credits and {0.2 + 4 * 71/95, 2})
     local dev_card = Card(0, 0, (dev.joint_credits and 2 or 1) * G.CARD_W / 1.25, G.CARD_H / 1.25, nil, G.P_CENTERS.c_base)
@@ -834,7 +834,7 @@ function FishAndChips.Compendium.dev_card(dev)
         if dev.click then
             dev.click(dev_card)
         end
-        if partner.click then
+        if partner and partner.click then
             partner.click(dev_card)
         end
     end
@@ -894,9 +894,9 @@ function FishAndChips.Compendium.dev_card(dev)
         self:juice_up(0.05, 0.03)
         play_sound('paper1', math.random() * 0.2 + 0.9, 0.35)
         dev_card.config.h_popup = create_tooltip(dev)
-        dev_card.config.h_popup_dir = dev.joint_credits and 'cl'
+        dev_card.config.h_popup_dir = partner and 'cl'
         dev_card.config.h_popup_config = dev_card:align_h_popup()
-        if dev.joint_credits then
+        if partner then
             dev_card.config.h_popup_2 = create_tooltip(partner)
             dev_card.config.h_popup_2_dir = 'cr'
             dev_card.config.h_popup_2_config = dev_card:align_h_popup('cr')
@@ -918,7 +918,7 @@ function FishAndChips.Compendium.dev_card(dev)
         name[1].config.align = 'bm'
     end
 
-    if dev.joint_credits then
+    if partner then
         name[2] = {n=G.UIT.O, config = {align = 'bm', object = DynaText({
                 string = ' & ',
                 colours = {FishAndChips.C.COMPENDIUM_TEXT}, scale = 0.7,
