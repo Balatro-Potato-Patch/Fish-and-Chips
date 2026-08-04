@@ -6,24 +6,31 @@ PotatoPatchUtils.Developer({
 })
 
 SMODS.Atlas({
-	key = "vman2002_fish", -- Please include your name/team name in your atlas keys
+	key = "vman2002_fish",
 	path = "vman2002/cards.png",
 	px = 71,
 	py = 95,
 })
 
 local chips_atlas = SMODS.Atlas({
-	key = "vman2002_chips", -- Please include your name/team name in your atlas keys
+	key = "vman2002_chips",
 	path = "vman2002/chips_new.png",
 	px = 71,
 	py = 95,
 })
 
 SMODS.Atlas({
-	key = "vman2002_manos", -- Please include your name/team name in your atlas keys
+	key = "vman2002_manos",
 	path = "vman2002/sinister.png",
 	px = 71,
 	py = 95,
+})
+
+SMODS.Atlas({
+	key = "vman2002_manohands",
+	path = "vman2002/allitthoughtabout.png", --casually ripped
+	px = 131,
+	py = 174,
 })
 
 SMODS.Sound({
@@ -200,7 +207,7 @@ FishAndChips.Fish { --Manos
 			repetitions = 1
 		}
 	},
-	stats = { weight = { min = 0.01, max = 0.02 }, length = {min = 0.01, max = 0.02}}, --TODO: Stats
+	stats = { length = { min = 3.8, max = 4.5 }, weight = {min = 600, max = 1100}},
 	environments = {
 		styx = 1
 	},
@@ -268,11 +275,38 @@ FishAndChips.Fish { --Manos
 	end,
 	draw = function(self, card)
 		if not card.ability.extra.active then return end
+		if not card.fac_manohands then
+			local s = 0.014
+			card.fac_manohands = {f = 0, d = {{0, 0.3, s, s, 1, 0}, {2, 0.3, -s, s, 1, 0}}, q = {}}
+			for i = 0, 14 do
+				card.fac_manohands.q[i] = love.graphics.newQuad(i * 131, 0, 131, 174, 1965, 174)
+			end
+			for i = 1, 3 do
+				local o = i*-0.5
+				local a = 0.8-(i*0.2)
+				table.insert(card.fac_manohands.d, 0, {0, 2.4, s, -s, a, o})
+				table.insert(card.fac_manohands.d, 0, {2, 2.4, -s, -s, a, o})
+			end
+		end
 		prep_draw(card, 1)
 		local mx, my = love.graphics.inverseTransformPoint(love.mouse.getPosition())
 		local xs = (math.floor(((math.atan2(mx - 0.6, my - 2.5) * todeg) + 112.5) * todeg2) % 8) + 1
 		if card.children.center.sprite_pos_copy.x ~= xs then
 			card.children.center:set_sprite_pos({x = xs, y = 0})
+		end
+		local mh = card.fac_manohands
+		local fd = love.timer.getDelta() * 35
+		if mh.f < 4 then
+			mh.f = mh.f + (0.255 * fd)
+		elseif mh.f <= 7 then
+			mh.f = mh.f + (0.755 * fd)
+		else
+			mh.f = (mh.f + (0.155 * fd)) % 15
+		end
+		local hi = G.ASSET_ATLAS.fac_vman2002_manohands.image
+		for k,v in pairs(mh.d) do
+			love.graphics.setColor(1,1,1,v[5])
+			love.graphics.draw(hi, mh.q[math.floor(mh.f + v[6]) % 15], v[1], v[2], 0, v[3], v[4], 65, 0)
 		end
 		love.graphics.pop()
 	end,
