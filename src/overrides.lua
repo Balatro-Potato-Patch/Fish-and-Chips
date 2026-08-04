@@ -1,5 +1,6 @@
 G.FUNCS.toggle_shop = function(e)
     stop_use()
+	if G.CONTROLLER.locks.toggle_shop then return end
     G.CONTROLLER.locks.toggle_shop = true
     if G.shop then
         SMODS.calculate_context({ ending_shop = true })
@@ -36,6 +37,7 @@ end
 
 G.FUNCS.fac_toggle_fishing = function(e)
     stop_use()
+	if G.CONTROLLER.locks.toggle_shop then return end
     G.CONTROLLER.locks.toggle_shop = true
     if G.GAME.fishing and not FishAndChips.in_tutorial then
         SMODS.calculate_context({ ending_fishing = true })
@@ -257,6 +259,11 @@ function G.UIDEF.card_h_popup(card)
 				}}
 			end
         end
+		if card.config.center.treasure then
+			t.nodes[#t.nodes+1] = {n = G.UIT.R, config = {align = 'cm', colour = G.C.MONEY, r=0.12, padding = 0.07, minh = 0.5, minw = 2.2, outline = 1, outline_colour = darken(FishAndChips.mod.badge_colour, 0.5)}, nodes = {
+					{n = G.UIT.T, config = {text = localize('k_fac_treasure_catch'), scale = 0.3, colour = G.C.UI.TEXT_LIGHT}}
+				}}
+		end
 		ret.nodes[#ret.nodes].n = G.UIT.R
 		ret.nodes[#ret.nodes].nodes[#ret.nodes[#ret.nodes].nodes].n = G.UIT.C
 
@@ -318,9 +325,9 @@ function G.UIDEF.card_h_popup(card)
 		
         table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], {n=G.UIT.R, config = {align = 'cm'}, nodes = {
 			{n=G.UIT.T, config = {text = localize('ph_fac_weight'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
-			{n=G.UIT.T, config = {text = FishAndChips.format_measurement(stats.weight, 'weight'), scale = 0.27, colour = weight_col, shadow = true}},
+			{n=G.UIT.T, config = {text = FishAndChips.format_measurement(stats.weight, 'weight', stats.units), scale = 0.27, colour = weight_col, shadow = true}},
 			{n=G.UIT.T, config = {text = '  '..localize('ph_fac_length'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
-			{n=G.UIT.T, config = {text = FishAndChips.format_measurement(stats.length, 'length'), scale = 0.27, colour = length_col, shadow = true}},
+			{n=G.UIT.T, config = {text = FishAndChips.format_measurement(stats.length, 'length', stats.units), scale = 0.27, colour = length_col, shadow = true}},
 		}})
     end
 	return ret
@@ -461,6 +468,7 @@ G.FUNCS.fac_use_fish = function(e)
         keep_on_use = center:keep_on_use(card)
     end
 	if center.use and type(center.use) == 'function' then
+		SMODS.calculate_context{fac_use_fish = card}
 		center:use(card)
 	end
 	card:juice_up()
@@ -480,12 +488,15 @@ G.FUNCS.fac_use_fish = function(e)
 			return true;
 		end
 	}))
+
+	G.GAME.fac_last_used_fish = card.config.center_key
 end
 
 local uielement_click_ref = UIElement.click
 ---@diagnostic disable-next-line: duplicate-set-field
 function UIElement:click(...)
 	if FishAndChips.safe_to_press_buttons() or self.config.fac_ignore then
+		if G.GAME.fac_fish_expanded and not self.config.fac_ignore then G.FUNCS.fac_open_fishing_menu() end
 		return uielement_click_ref(self, ...)
 	end
 end
