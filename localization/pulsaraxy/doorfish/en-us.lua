@@ -27,7 +27,10 @@ return {
             "{s:0.7}Herbert F. Finclair"
     },
     text = {
-        "Use to draft a {C:fac_fish}fish",
-        "{s:1}{C:inactive}(Currently at rank {C:fac_fish}#1#{}{C:inactive}){}"
+        "{C:attention}Drafts{} three fish per rank",
+        "Chosen fish will be {C:attention}guaranteed{} with the next catch",
+        "Rank increases upon catch",
+        "{s:1}{C:inactive}(Currently at rank {C:fac_fish}#1#{}{C:inactive}){}",
+        "{C:inactive}#2#"
     },
 }
