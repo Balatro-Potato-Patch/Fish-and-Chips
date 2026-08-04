@@ -283,8 +283,20 @@ function FishAndChips.mod.custom_card_areas(game)
 		for i, card in ipairs(self.cards) do
 			for _, _card in ipairs(G.fac_fish_area.cards) do
 				if _card.config.center.key == "fish_fac_fas_kine" and _card.ability.immutable.id == card.ability.fac_fas_kine and not card.disable_align then
-					card.T.x = _card.T.x + _card.T.w
-					card.T.y = _card.T.y + _card.T.h / 2
+					card.T.x = _card.T.x + _card.T.w - 0.1
+					card.T.y = _card.T.y + _card.T.h / 2 + 0.1
+					card.T.r = _card.T.r
+					if not card.memT then card.memT = copy_table(card.T) end
+					card.T.w = card.memT.w / G.CARD_W * _card.T.w / scale
+					card.T.h = card.memT.h / G.CARD_H * _card.T.h / scale
+					card.T.x = card.T.x - card.T.w
+					card.T.y = card.T.y - card.T.h / 2
+				end
+			end
+			for _, _card in ipairs(G.fac_fas_fish_kebab_area.cards) do
+				if _card.config.center.key == "fish_fac_fas_kine" and _card.ability.immutable.id == card.ability.fac_fas_kine and not card.disable_align then
+					card.T.x = _card.T.x + _card.T.w - 0.1
+					card.T.y = _card.T.y + _card.T.h / 2 + 0.1
 					card.T.r = _card.T.r
 					if not card.memT then card.memT = copy_table(card.T) end
 					card.T.w = card.memT.w / G.CARD_W * _card.T.w / scale
@@ -303,8 +315,8 @@ function FishAndChips.mod.custom_card_areas(game)
 		end
 	end
 	for index, box in ipairs(G.I.CARD) do
-		if box == G.fac_fishing_bucket_cards then
-			table.insert(G.I.CARD, index - 1, G.fac_fas_kine_area)
+		if box == G.fac_fishing_bucket_top then
+			table.insert(G.I.CARD, index, G.fac_fas_kine_area)
 			break
 		end
 	end

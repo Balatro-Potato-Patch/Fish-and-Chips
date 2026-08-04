@@ -73,6 +73,15 @@ FishAndChips.Fish{
 				score = 1 / card.ability.extra.add,
 				xscore = 1.1 / card.ability.extra.mult,
 				blindsize = 1 / card.ability.extra.add,
+				extra = {
+					chips = -1 / card.ability.extra.add,
+					mult = -1 / card.ability.extra.add,
+					xchips = card.ability.extra.mult / 1.1,
+					xmult = card.ability.extra.mult / 1.1,
+					score = -1 / card.ability.extra.add,
+					xscore = card.ability.extra.mult / 1.1,
+					blindsize = -1 / card.ability.extra.add,
+				}
 			}
 		end
 	end,
@@ -101,14 +110,18 @@ function G.UIDEF.card_h_popup(card)
 		FishAndChips.FooSqueax.toby_fish.custom_units = nil
 		
 		local search = SMODS.deepfind(ret.nodes[1].nodes, "Foo54", nil, true)[1]
-		local config = search.objtree[#search.objtree - 2]
-		config.object:remove()
-		config.object = SMODS.create_sprite(0, 0, 0.5, 0.5 / 22 * 17, "fac_fas_toby_sona", {x = 1, y = 0})
+		if search then
+			local config = search.objtree[#search.objtree - 2]
+			config.object:remove()
+			config.object = SMODS.create_sprite(0, 0, 0.5, 0.5 / 22 * 17, "fac_fas_toby_sona", {x = 1, y = 0})
+		end
 		
 		local search2 = SMODS.deepfind(ret.nodes[1].nodes, "squeax09", nil, true)[1]
-		local config2 = search2.objtree[#search2.objtree - 2]
-		config2.object:remove()
-		config2.object = SMODS.create_sprite(0, 0, 0.5, 0.5 / 22 * 17, "fac_fas_toby_sona")
+		if search2 then
+			local config2 = search2.objtree[#search2.objtree - 2]
+			config2.object:remove()
+			config2.object = SMODS.create_sprite(0, 0, 0.5, 0.5 / 22 * 17, "fac_fas_toby_sona")
+		end
 
 		return ret
 	end

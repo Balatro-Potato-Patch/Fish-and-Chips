@@ -44,7 +44,7 @@ FishAndChips.Fish{
 		card.ability.immutable.id = random_string(20, pseudoseed("fac_fas_kine"))
 	end,
 	calculate = function(self, card, context)
-		if not context.retrigger_joker then
+		if not context.retrigger_joker_check then
 			for _, _card in ipairs(G.fac_fas_kine_area.cards) do
 				if _card.ability.fac_fas_kine == card.ability.immutable.id then
 					return _card:calculate_joker(context)
