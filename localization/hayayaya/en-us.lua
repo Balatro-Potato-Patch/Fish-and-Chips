@@ -192,6 +192,15 @@ return {
 					"be blessed with eternal love.",
 				},
 			},
+			fish_fac_gfzrock = {
+				name = "GFZROCK",
+				text = {
+					"Does nothing",
+				},
+				flavor = {
+					"The games will never stop...",
+				},
+			},
 		},
 	},
 	misc = {

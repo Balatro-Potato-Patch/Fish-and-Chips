@@ -16,7 +16,7 @@ FishAndChips.Fish({
 		length = { min = 1, max = 1 },
 		weight = { min = 1, max = 1 },
 	},
-	ecision_min = math.huge,
+	decision_min = math.huge,
 	decision_max = math.huge,
 	impulse_min = 0,
 	impulse_max = 0,
