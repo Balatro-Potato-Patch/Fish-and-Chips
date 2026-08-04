@@ -1,5 +1,6 @@
 G.FUNCS.toggle_shop = function(e)
     stop_use()
+	if G.CONTROLLER.locks.toggle_shop then return end
     G.CONTROLLER.locks.toggle_shop = true
     if G.shop then
         SMODS.calculate_context({ ending_shop = true })
@@ -36,6 +37,7 @@ end
 
 G.FUNCS.fac_toggle_fishing = function(e)
     stop_use()
+	if G.CONTROLLER.locks.toggle_shop then return end
     G.CONTROLLER.locks.toggle_shop = true
     if G.GAME.fishing and not FishAndChips.in_tutorial then
         SMODS.calculate_context({ ending_fishing = true })
@@ -257,6 +259,11 @@ function G.UIDEF.card_h_popup(card)
 				}}
 			end
         end
+		if card.config.center.treasure then
+			t.nodes[#t.nodes+1] = {n = G.UIT.R, config = {align = 'cm', colour = G.C.MONEY, r=0.12, padding = 0.07, minh = 0.5, minw = 2.2, outline = 1, outline_colour = darken(FishAndChips.mod.badge_colour, 0.5)}, nodes = {
+					{n = G.UIT.T, config = {text = localize('k_fac_treasure_catch'), scale = 0.3, colour = G.C.UI.TEXT_LIGHT}}
+				}}
+		end
 		ret.nodes[#ret.nodes].n = G.UIT.R
 		ret.nodes[#ret.nodes].nodes[#ret.nodes[#ret.nodes].nodes].n = G.UIT.C
 
@@ -461,6 +468,7 @@ G.FUNCS.fac_use_fish = function(e)
         keep_on_use = center:keep_on_use(card)
     end
 	if center.use and type(center.use) == 'function' then
+		SMODS.calculate_context{fac_use_fish = card}
 		center:use(card)
 	end
 	card:juice_up()
@@ -480,6 +488,8 @@ G.FUNCS.fac_use_fish = function(e)
 			return true;
 		end
 	}))
+
+	G.GAME.fac_last_used_fish = card.config.center_key
 end
 
 local uielement_click_ref = UIElement.click
