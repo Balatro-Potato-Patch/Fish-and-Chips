@@ -14,7 +14,7 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_sepa_devs',
 	pos = {x = 0, y = 0},
 	soul_pos = {x = 0, y = 1}, 
-	colour = G.C.RED,-- Te recomendaria que lo cambies asi a un color de preferencia, agarre rojo nomas por que si
+	colour = G.C.PURPLE,
 	fac_partner = 'AbelSketch',
 	joint_credits = 2,
 	loc = true
@@ -308,4 +308,66 @@ FishAndChips.Fish {
  		badges[#badges+1] = create_badge("Halucination", G.C.RED, G.C.WHITE, 1 )
  	end,
 
+}
+
+FishAndChips.Fish {
+	key = "blinky",
+	atlas = pez,
+	pos = { x = 0, y = 1 },
+	weight = 9,
+	ppu_coder = { "DoggFly" },
+	ppu_artist = { "DoggFly" },
+	attributes = { "retrigger", "destroy_card" },
+	config = {
+		extra = {
+			odds = 3 
+		}
+	},
+		stats = {
+		weight = {min = 0.20, max = 0.32},
+		length = {min = 0.10 , max = 0.20}
+	},
+
+	environments = {
+		wormhole = 3,
+		city_river = 1
+	},
+	loc_vars = function(self, info_queue, card)
+		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_blinky_shatter")
+		return { vars = { num, dem } }
+	end,
+	calculate = function(self, card, context)
+
+		if context.repetition and context.cardarea == G.play
+			and G.GAME.current_round.hands_played == 0 then
+			return { repetitions = 1 }
+		end
+		if context.individual and context.cardarea == G.play
+			and G.GAME.current_round.hands_played == 0 then
+			if SMODS.pseudorandom_probability(
+				card, "fac_blinky_shatter_" .. tostring(context.other_card),
+				1, card.ability.extra.odds
+			) then
+				context.other_card.fac_blinky_doomed = true
+			end
+		end
+		if context.after and not context.blueprint then
+			local doomed = {}
+			for _, c in ipairs(G.play.cards) do
+				if c.fac_blinky_doomed then
+					doomed[#doomed + 1] = c
+				end
+			end
+			if #doomed > 0 then
+				for _, c in ipairs(doomed) do
+					c:juice_up(0.8, 0.8)
+					SMODS.destroy_cards(c)
+				end
+				return {
+					message = "Splash!",
+					colour = G.C.BLUE
+				}
+			end
+		end
+	end,
 }

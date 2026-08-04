@@ -89,7 +89,18 @@ return {
                 }
             },
             
-
+ fish_fac_blinky = {
+    name = "Blinky",
+    text = {
+        "{C:attention}Retriggers{} the",
+        "{C:attention}first hand{} played",
+        "Each played card has a",
+        "{C:green}#1# in #2#{} chance to be destroyed"
+    },
+    flavor = {
+        "Hi"
+    }
+},
  
         },
 
