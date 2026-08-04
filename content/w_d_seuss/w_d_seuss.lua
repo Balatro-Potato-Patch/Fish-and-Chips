@@ -615,7 +615,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = {  },
+	attributes = { "xblindsize" },
 	config = {
 		extra = {
 			blind = 1.5
