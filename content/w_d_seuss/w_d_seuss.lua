@@ -239,7 +239,6 @@ FishAndChips.Fish {
 	end,
 }
 
-loc_colour('red')
 G.ARGS.LOC_COLOURS['spalmon_pink'] = HEX("ffaec9")
 G.ARGS.LOC_COLOURS['spalmon_gold'] = HEX("fff200")
 
@@ -364,7 +363,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		wormhole = 5,
+		styx = 5,
 	},
 	stats = {
 		weight = {min = 33.53, max = 34.93},
@@ -398,7 +397,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		wormhole = 5,
+		styx = 5,
 	},
 	stats = {
 		weight = {min = 33.53, max = 34.93},
@@ -432,7 +431,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		wormhole = 5,
+		styx = 5,
 	},
 	stats = {
 		weight = {min = 33.53, max = 34.93},
@@ -466,7 +465,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		wormhole = 5,
+		styx = 5,
 	},
 	stats = {
 		weight = {min = 33.53, max = 34.93},
@@ -524,7 +523,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "mult", "chips", "destroy_card", "sell_value", "scaling", "destroy_card", "usable" },
+	attributes = { "mult", "chips", "destroy_card", "sell_value", "scaling", "usable" },
 	config = {
 		extra = {
 			attack = "Dismantle",
@@ -605,3 +604,54 @@ FishAndChips.Fish {
 		return card.ability.extra.attack == "Dismantle" and fish_sliced or card.ability.extra.attack == "Cleave" and G.hand and #G.hand.highlighted == 1
 	end
 }
+
+G.ARGS.LOC_COLOURS['inscryption_blue'] = HEX("01eaff")
+G.ARGS.LOC_COLOURS['jolyne'] = HEX("FCB3EA")
+
+FishAndChips.Fish {
+	key = "bad",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 2, y = 2 },
+	weight = 1,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = {  },
+	config = {
+		extra = {
+			blind = 1.5
+		}
+	},
+	environments = {
+		wormhole = 5,
+	},
+	stats = {
+		weight = {min = 0.5, max = 5},
+		length = {min = 1, max = 2}
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.blind } }
+	end,
+	calculate = function(self, card, context)
+		if context.setting_blind then
+			return {
+				xblindsize = card.ability.extra.blind
+			}
+		end
+		if context.final_scoring_step then
+			SMODS.destroy_cards(card, nil, nil, true)
+			return {
+				message = localize('k_extinct_ex'),
+				colour = HEX("01eaff")
+			}
+		end
+	end
+}
+
+local nosell_hook = Card.can_sell_card -- Thank you Hyperfixation Priceless
+function Card:can_sell_card(context)
+    nosell_hook(self, context)
+	if self.config.center.key == 'fish_fac_bad' then
+		return false
+    end
+end

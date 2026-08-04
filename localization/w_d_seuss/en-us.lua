@@ -98,8 +98,6 @@ return {
                     ""
                 },
                 flavour = {
-                    "ft. Lord X",
-                    " ",
                     "{element:1}"
                 }
             },
@@ -109,8 +107,6 @@ return {
                     ""
                 },
                 flavour = {
-                    "ft. Majin",
-                    " ",
                     "{element:1}"
                 }
             },
@@ -120,8 +116,6 @@ return {
                     ""
                 },
                 flavour = {
-                    "ft. Redglove",
-                    " ",
                     "{element:1}"
                 }
             },
@@ -131,8 +125,6 @@ return {
                     ""
                 },
                 flavour = {
-                    "ft. Faker",
-                    " ",
                     "{element:1}"
                 }
             },
@@ -158,6 +150,29 @@ return {
                 },
                 flavour = {
                     "King of Sturgeons"
+                }
+            },
+            fish_fac_bad = {
+                name = "Bad Fish",
+                text = {
+                    {
+                        "{X:blind,C:inscryption_blue}Brittle:",
+                        "{C:red}Instantly perish{} at the",
+                        "end of final score",
+                    },
+                    {
+                        "{X:blind,C:inscryption_blue}Annoying:",
+                        "When {C:attention}Blind{} is selected,",
+                        "Increase Blind",
+                        "Requirement by {X:blind,C:white}X#1#{}"
+                    },
+                    {
+                        "Cannot be sold",
+                        "{C:inactive,s:0.6}How {C:jolyne,s:0.6}priceless{C:inactive,s:0.6}..."
+                    }
+                },
+                flavour = {
+                    "Lost the 50/25/25 Lmao",
                 }
             },
         },
