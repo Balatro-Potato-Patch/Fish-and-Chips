@@ -31,9 +31,14 @@ SMODS.Sound({
 	path = "vman2002/manosorry.ogg"
 })
 
-local function slowmf(lol)
+SMODS.Sound({
+	key = "vman2002_manoboom",
+	path = "vman2002/manoboom.ogg"
+})
+
+local function slowmf(lol, speed)
 	local x = G.SETTINGS.GAMESPEED
-	G.SETTINGS.GAMESPEED = 1
+	G.SETTINGS.GAMESPEED = speed or 1
 	lol()
 	G.E_MANAGER:add_event(Event({
 		func = function()
@@ -231,12 +236,12 @@ FishAndChips.Fish { --Manos
 			if context.joker_main then
 				local c = false
 				fac_topuplib_inspect(context)
-				if next(context.poker_hands.Flush) and ex.flushes_current < ex.flushes_goal then
-					SMODS.scale_card(card, {ref_value = "flushes_current", no_message = true})
-					c = true
-				end
 				if next(context.poker_hands.Straight) and ex.straights_current < ex.straights_goal then
 					SMODS.scale_card(card, {ref_value = "straights_current", no_message = true})
+					c = true
+				end
+				if next(context.poker_hands.Flush) and ex.flushes_current < ex.flushes_goal then
+					SMODS.scale_card(card, {ref_value = "flushes_current", no_message = true})
 					c = true
 				end
 				return c and {message = tostring((ex.straights_goal + ex.flushes_goal) - (ex.straights_current + ex.flushes_current)), colour = G.C.RED} or nil
@@ -245,7 +250,12 @@ FishAndChips.Fish { --Manos
 				SMODS.destroy_cards(card, {bypass_eternal = true})
 				return {
 					message = localize('fac_vman2002_manos_done'),
-					colour = G.C.RED
+					sound = "fac_vman2002_manoboom",
+					colour = G.C.RED,
+					pitch = 1,
+					func = function()
+						
+					end
 				}
 			end
 			if G.GAME.current_round.hands_played == 0 then
