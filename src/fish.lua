@@ -171,14 +171,14 @@ function FishAndChips.verify_submissions()
 			end
 		end
 	end
-	-- assert(fac_count <= 2, 'Too many devs registered, submissions are limited to two participants.')
-	-- if fac_count == 2 then
-	-- 	local first, second = contributors[1], contributors[2]
-	-- 	assert(
-	-- 		first.fac_partner == second.name and second.fac_partner == first.name,
-	-- 		'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
-	-- 	)
-	-- end
+	assert(fac_count <= 2, 'Too many devs registered, submissions are limited to two participants.')
+	if fac_count == 2 then
+		local first, second = contributors[1], contributors[2]
+		assert(
+			first.fac_partner == second.name and second.fac_partner == first.name,
+			'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
+ 	)
+	end
 
 	local devs = {}
 	for _, fish in ipairs(G.P_CENTER_POOLS.fac_Fish) do
