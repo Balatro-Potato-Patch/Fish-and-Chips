@@ -38,7 +38,7 @@ FishAndChips.Fish {
 	key = "gneep_gnarp",
 	atlas = "fish",
 	pos = { x = 3, y = 0 },
-	weight = 75,
+	weight = 10,
 	ppu_coder = { "Blanthos" },
 	ppu_artist = { "Hunter" },
 	attributes = { "hand_level", "scaling", "hand_type", "space", "usable", "economy" },
@@ -135,18 +135,18 @@ end,
 FishAndChips.Fish {
 	key = "spectre_fish",
 	atlas = "fish",
-	pos = { x = 2, y = 0 },
+	pos = { x = 3, y = 0 },
 	weight = 10,
 	ppu_coder = { "Blanthos" },
 	ppu_artist = { "Hunter" },
-	attributes = { "mult" },
+	attributes = { "mult", "scaling" },
 	config = {
 		extra = {
-			mult = 4,
-			scaling = 4
+			mult = 14,
+			scaling = 14
 		},
 		immutable = {
-			active = "true"
+			inactive = false
 		}
 	},
 	environments = {
@@ -154,10 +154,14 @@ FishAndChips.Fish {
 		aquifer = 10
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult } }
+		return { vars = { card.ability.extra.mult, card.ability.extra.scaling, card.ability.immutable.inactive and "Inactive" or "Active" } }
 	end,
 	calculate = function(self, card, context)
-if context.joker_type_destroyed then
+        if context.end_of_round then
+            card.ability.immutable.inactive = false
+        end
+if (context.joker_type_destroyed and context.card == card and not card.ability.immutable.inactive) then
+            card.ability.immutable.inactive = true
                 SMODS.scale_card(card, {
                     ref_value = "mult",
                     scalar_value = "scaling",

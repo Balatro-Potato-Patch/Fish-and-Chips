@@ -30,6 +30,17 @@ return {
                     "ping-pong, lippy-tappy too-ta."
                 }
 	},
+            fish_fac_spectre_fish = {
+                name = "Spectre Fish",
+                text = {
+                    "The first time this would be {C:attention}destroyed{} each round",
+		"instead gain {C:mult}+#2# Mult{}",
+		"{C:inactive}Currently{} {C:mult}+#1# Mult{} {C:inactive}/{} {C:attention}#3#{}"
+},
+                flavor = {
+                    "It’s a little bit… {C:attention}OFF{}-putting."
+                }
+	},
         },
    misc = {
         dictionary = {
