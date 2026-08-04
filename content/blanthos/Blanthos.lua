@@ -68,6 +68,7 @@ FishAndChips.Fish {
         return true
     end,
 	use = function(self, card)
+ease_dollars(-card.ability.extra.food_cost)
             SMODS.scale_card(card, {
                     ref_value = "happiness",
                     scalar_value = "food_happiness",
@@ -77,7 +78,6 @@ FishAndChips.Fish {
                 })
                 return nil, true
 		end,
-
   calculate = function(self, card, context)
         if context.before then
             return {
@@ -129,8 +129,6 @@ end,
         card.ability.immutable.hand = pseudorandom_element(_poker_hands, 'fac_gneep_gnarp')
     end
 }
-
-
 
 FishAndChips.Fish {
 	key = "spectre_fish",
