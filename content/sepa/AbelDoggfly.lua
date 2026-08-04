@@ -1,10 +1,11 @@
 PotatoPatchUtils.Developer({
 	name = 'AbelSketch',
 	atlas = 'fac_sepa_devs',
-	pos = {x = 1, y = 0},
+	pos = {x = 0, y = 0},
 	soul_pos = {x = 1, y = 1}, 
 	colour = G.C.GRAY,
 	fac_partner = 'DoggFly',
+	joint_credits = 2,
 	loc = true,
 })
 
@@ -15,6 +16,7 @@ PotatoPatchUtils.Developer({
 	soul_pos = {x = 0, y = 1}, 
 	colour = G.C.RED,-- Te recomendaria que lo cambies asi a un color de preferencia, agarre rojo nomas por que si
 	fac_partner = 'AbelSketch',
+	joint_credits = 2,
 	loc = true
 })
 
@@ -59,37 +61,49 @@ FishAndChips.Fish {
 	end,
 }
 
+
 FishAndChips.Fish {
-	key = "lies",
+	key = "freds_leg",
 	atlas = pez,
-	pos = { x = 2, y = 1 },
-	weight = 10, --testestest
-	ppu_coder = { "AbelSketch" },
-	ppu_artist = { "AbelSketch" },
-	attributes = { "mult", "hands" },
+	pos = { x = 2, y = 0 },
+	weight = 6,
+	ppu_coder = { "DoggFly" },
+	ppu_artist = { "DoggFly" },
+	attributes = { "hands", "destruction" },
 	config = {
-		extra = {
-			
-		}
+		extra = {}
 	},
 	stats = {
-		weight = {min = 0.20, max = 0.32},
-		length = {min = 0.10 , max = 0.20}
+		weight = {min = 0.1, max = 0.1},
+		length = {min = 0.20 , max = 0.20}
 	},
 	environments = {
-		pier = 1,
-		styx = 0.5,
+		city_river = 1
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = {  } }
+		return {}
 	end,
 	calculate = function(self, card, context)
+		if context.before and not context.blueprint then
+			if G.hand and G.hand.cards and #G.hand.cards > 0 then
+				local rightmost = G.hand.cards[#G.hand.cards]
+				if rightmost then
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							play_sound('tarot1')
+							rightmost:juice_up(0.8, 0.8)
+							SMODS.destroy_cards(rightmost)
+							return true
+						end
+					}))
+					return {
+						message = "MY LEG!",
+						colour = G.C.RED
+					}
+				end
+			end
+		end
 	end,
- 
- 	set_badges = function(self, card, badges)
- 		badges[#badges+1] = create_badge("Halucination", G.C.RED, G.C.WHITE, 1 )
- 	end,
-
 }
 
 -- Im gonna be honest, half of this wouldnt have been possible without Vanilla remade
@@ -97,7 +111,7 @@ FishAndChips.Fish {
 	key = "bombfish",
 	atlas = pez,
 	pos = { x = 0, y = 1 },
-	weight = 5,
+	weight = 4,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
 	attributes = { "hands", "economy", "generation" },
@@ -227,45 +241,71 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "freds_leg",
+	key = "icbf",
 	atlas = pez,
-	pos = { x = 2, y = 0 },
-	weight = 6,
-	ppu_coder = { "DoggFly" },
-	ppu_artist = { "DoggFly" },
-	attributes = { "hands", "destruction" },
+	pos = { x = 1, y = 1 },
+	weight = 2,
+	ppu_coder = { "AbelSketch" },
+	ppu_artist = { "AbelSketch" },
+	attributes = { "hands", "economy", "generation" },
 	config = {
-		extra = {}
+		--[[ extra = { 
+			poker_hand = 'High Card',
+			spec_amount = 2,
+			defuse = 0,
+			goal = 3,
+			attempts = 5,
+			minplayed = false
+		} ]]
 	},
 	stats = {
-		weight = {min = 0.1, max = 0.1},
-		length = {min = 0.20 , max = 0.20}
+		weight = {min = 15, max = 20},
+		length = {min = 0.45 , max = 0.45}
 	},
 	environments = {
-		city_river = 1
+		city_river = 1,
+		styx = 0.5,
+		chocolate_river = 0.1
 	},
 	loc_vars = function(self, info_queue, card)
-		return {}
+	        --info_queue[#info_queue+1] = {key = "fac_sepa_Tarot_infovar", set = "Other"}
+		return { vars = { card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, card.ability.extra.poker_hand, card.ability.extra.tarot_amount} }
+	end,
+
+    calculate = function(self, card, context)
+	end
+}
+
+
+FishAndChips.Fish {
+	key = "lies",
+	atlas = pez,
+	pos = { x = 2, y = 1 },
+	weight = 8, --testestest
+	ppu_coder = { "AbelSketch" },
+	ppu_artist = { "AbelSketch" },
+	attributes = { "mult", "hands" },
+	config = {
+		extra = {
+			
+		}
+	},
+	stats = {
+		weight = {min = 0.20, max = 0.32},
+		length = {min = 0.10 , max = 0.20}
+	},
+	environments = {
+		pier = 1,
+		styx = 0.5,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = {  } }
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint then
-			if G.hand and G.hand.cards and #G.hand.cards > 0 then
-				local rightmost = G.hand.cards[#G.hand.cards]
-				if rightmost then
-					G.E_MANAGER:add_event(Event({
-						func = function()
-							play_sound('tarot1')
-							rightmost:juice_up(0.8, 0.8)
-							SMODS.destroy_cards(rightmost)
-							return true
-						end
-					}))
-					return {
-						message = "MY LEG!",
-						colour = G.C.RED
-					}
-				end
-			end
-		end
 	end,
+ 
+ 	set_badges = function(self, card, badges)
+ 		badges[#badges+1] = create_badge("Halucination", G.C.RED, G.C.WHITE, 1 )
+ 	end,
+
 }
