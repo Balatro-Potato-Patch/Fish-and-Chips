@@ -3,6 +3,7 @@ FishAndChips.Fish {
 	atlas = "tss_ellefish",
 	pos = { x = 2, y = 0 },
 	weight = 5,
+	stats = {weight = {min = 250, max = 350}, length = {min = 2.5, max = 3.5}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "xmult", "destroy_card" },
@@ -28,13 +29,12 @@ function CardArea:emplace(card, ...)
 	emplace_hook(self,card, ...)
 end
 
-
-
 FishAndChips.Fish {
 	key = "tss_resident",
 	atlas = "tss_ellefish",
 	pos = { x = 1, y = 0 },
 	weight = 13,
+	stats = {weight = {min = 75, max = 100}, length = {min = 1, max = 1.75}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "mult" },
@@ -60,7 +60,9 @@ FishAndChips.Fish {
 
 local function create_guppy_uibox(key)
 	G.OVERLAY_MENU = true
-	local fish = SMODS.create_card({key = key})
+	local d = G.P_CENTERS[key].discovered
+	local fish = SMODS.create_card({key = key, discover = false, bypass_discovery_center = false})
+	G.P_CENTERS[key].discovered = d
 	G.OVERLAY_MENU = false
 	fish:juice_up()
 	fish.states.drag.can = false
@@ -78,12 +80,13 @@ FishAndChips.Fish {
 	atlas = "tss_ellefish",
 	pos = { x = 0, y = 0 },
 	weight = 5,
+	stats = {weight = {min = .03, max = .08}, length = {min = .03, max = .04}}, -- actual size range of guppies
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "passive" },
 	environments = {
-		wormhole = 5,
-		backroom = 4
+		styx = 5,
+		city_river = 3
 	},
 	calculate = function(self, card, context)
 		if context.fac_fish_hooked and not FishAndChips.TheShitSquad.guppy_ui then
@@ -94,9 +97,11 @@ FishAndChips.Fish {
 			local a = FishAndChips.TheShitSquad.guppy_fish.config.center_key
 			FishAndChips.TheShitSquad.guppy_fish:start_dissolve()
 			G.E_MANAGER:add_event(Event({func = function()
-				FishAndChips.TheShitSquad.guppy_ui:remove()
-				FishAndChips.TheShitSquad.guppy_ui = nil
-				G.GAME.used_jokers[a] = G.GAME.used_jokers[a] or not context.failed
+				if FishAndChips.TheShitSquad.guppy_ui then
+					FishAndChips.TheShitSquad.guppy_ui:remove()
+					FishAndChips.TheShitSquad.guppy_ui = nil
+					G.GAME.used_jokers[a] = G.GAME.used_jokers[a] or not context.failed
+				end
 			return true end}))
 		end
 	end
@@ -107,6 +112,7 @@ FishAndChips.Fish {
 	atlas = "tss_ellefish",
 	pos = { x = 0, y = 0 },
 	weight = 5,
+	stats = {weight = {min = 0, max = 0}, length = {min = 0, max = 0}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "generation" },
@@ -124,7 +130,7 @@ FishAndChips.Fish {
 			end
 			
 			if card.area.cards[self_pos+1] then
-				devs[1] = PotatoPatchUtils.Developers["fac_"..card.area.cards[self_pos+1].config.center.ppu_coder[1]]
+				devs[1] = PotatoPatchUtils.Developers["fac_"..card.area.cards[self_pos+1].config.center.ppu_coder[1] ]
 				devs[2] = devs[1].fac_partner and PotatoPatchUtils.Developers["fac_"..devs[1].fac_partner] or nil
 			end
 
@@ -146,7 +152,35 @@ FishAndChips.Fish {
 			local target = card.area.cards[self_pos+1]
 			if not target then return end
 
-			--local key = FishAndChips.poll_fish()
+			local devs = {}
+			devs[1] = PotatoPatchUtils.Developers["fac_"..target.config.center.ppu_coder[1] ]
+			devs[2] = devs[1].fac_partner and PotatoPatchUtils.Developers["fac_"..devs[1].fac_partner] or nil
+
+			local showman_old = SMODS.showman
+			SMODS.showman = function() return true end
+			local key = SMODS.poll_object({type = 'fac_Fish', allow_duplicates = true, filter = function(t)
+				local newTable = {}
+
+				for i, v in ipairs(t) do
+					local a = false
+					if G.P_CENTERS[v.key] then
+						for _, dev in ipairs(devs) do
+							a = a or  G.P_CENTERS[v.key].ppu_coder[1] == dev.name
+						end
+					end
+					newTable[#newTable+1] = a and v or nil
+				end
+
+				return newTable
+			end})
+			SMODS.showman = showman_old
+
+			target:juice_up()
+			target:set_ability(key)
+			if target._fac_bucketed then
+				target.T.w = target.T.w * .7
+				target.T.h = target.T.h * .7
+			end
 		end
 	end
 }
@@ -154,8 +188,11 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "tss_caviar",
 	atlas = "tss_ellefish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 0, y = 1 },
 	weight = 8,
+	pixel_size = { w = 50, h = 40 },
+    display_size = { w = 50, h = 40 },
+	stats = {weight = {min = .003, max = .02}, length = {min = .03, max = .07}}, -- average caviar servings. in case you haven't been able to tell by now, i'm doing my research
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "economy" },
@@ -184,6 +221,7 @@ FishAndChips.Fish {
 	atlas = "tss_ellefish",
 	pos = { x = 0, y = 0 },
 	weight = 4,
+	stats = {weight = {min = 15, max = 25}, length = {min = .3, max = .5}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "rank" },
@@ -252,6 +290,7 @@ FishAndChips.Fish {
 	atlas = "tss_ellefish",
 	pos = { x = 3, y = 0 },
 	weight = 4,
+	stats = {weight = {min = 5.6, max = 5.6}, length = {min = .15, max = .15}}, -- assuming, based off the sprite, that it's 3x longer than it's wide, these would be the correct dimensions
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "rank" },

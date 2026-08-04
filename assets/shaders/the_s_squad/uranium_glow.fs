@@ -105,15 +105,15 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
 	vec2 cardpos = floor(size.xy/cardsize*texture_coords);
 
 	vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
-	vec2 radius = size.z/size.xy;
-    float a = Texel(texture, texture_coords).a;
+	float radius = (size.z/size.xy).x;
+	float a = Texel(texture, texture_coords).a;
 	for( float d=0.0;d<Pi;d+=Pi/float(dirs) ) {
-        for( float i=1.0/float(quality);i<=1.0;i+=1.0/float(quality) ) {
-            vec2 pos = texture_coords+vec2(cos(d),sin(d))*radius*i;
+		for( float i=1.0/float(quality);i<=1.0;i+=1.0/float(quality) ) {
+			vec2 pos = texture_coords+vec2(cos(d),sin(d))*radius*i;
 			
 			a += floor(size.xy/cardsize*pos) == cardpos ? Texel(texture, pos).a : 0.;
-        }
-    }
+		}
+	}
 
 	a /= float(quality)*float(dirs)+1.0;
 

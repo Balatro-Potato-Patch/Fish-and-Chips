@@ -1,17 +1,195 @@
 FishAndChips.Fish {
-	key = "tss_bee",
-	atlas = "tss_azfish",
+	key = "tss_shadow_cryscarp",
+	atlas = "tss_ellefish",
 	pos = { x = 0, y = 0 },
-	pixel_size = { w = 71/122*88, h = 95/122*71 },
-    display_size = { w = 88*.8, h = 71*.8 },
-	weight = 1,
+	weight = 4,
+	stats = {weight = {min = 0, max = 0}, length = {min = .4, max = .6}}, -- i imagine shadow crystals being weightless
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
 	attributes = { "passive" },
+	config = { extra = { speed = 2 } },
 	environments = {
-		calm_pond = 7,
-		garden = 10
-	}
+		styx = 10,
+		garden = 4
+	},
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue+1] = G.P_CENTERS.bait_fac_normal
+		return { vars = { card.ability.extra.speed } }
+	end,
+	calculate = function(self, card, context)
+		if context.fac_modify_fishing_profile and G.GAME.fac_active_bait == "bait_fac_normal" then
+			context.fishing_profile.treasure_gain = context.fishing_profile.treasure_gain * card.ability.extra.speed
+		end
+	end
+}
+
+FishAndChips.Fish {
+	key = "tss_medic",
+	atlas = "tss_ellefish",
+	pos = { x = 0, y = 0 },
+	weight = 5,
+	stats = {weight = {min = 200, max = 250}, length = {min = 2, max = 3}},
+	ppu_coder = { "slimestuff" },
+	ppu_artist = { "azazel" },
+	attributes = { "passive" },
+	config = { extra = { chips = 100, xmult = 2.5, sellcount = 4, odds = 40 } },
+	environments = {
+		pier = 10,
+		aquifer = 2
+	},
+	calculate = function(self, card, context)
+		if false then
+			local c = G.GAME.round_resets.hands
+			G.hand:change_size(c)
+			G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + c
+			G.E_MANAGER:add_event(Event{func = function()
+				SMODS.destroy_cards(card)	
+			return true end})
+
+			return {
+				message = localize("fac_tss_revive"),
+				colour = G.C[card.ability.extra.blu and "BLUE" or "RED"]
+			}
+		end
+	end
+}
+
+FishAndChips.Fish {
+	key = "tss_bfb",
+	atlas = "tss_ellefish",
+	pos = { x = 0, y = 0 },
+	weight = 3,
+	stats = {weight = {min = 2000, max = 2500}, length = {min = 7, max = 10}},
+	ppu_coder = { "slimestuff" },
+	ppu_artist = { "azazel" },
+	attributes = { "chips", "xmult", "generation" },
+	config = { extra = { chips = 100, xmult = 2.5, count = 4, odds = 40 } },
+	environments = {
+		pier = 10,
+		aquifer = 2
+	},
+	loc_vars = function(self, info_queue, card)
+		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fcc_tss_bfb")
+		return { vars = { card.ability.extra.chips, card.ability.extra.xmult, card.ability.extra.count, num, dem } }
+	end,
+	calculate = function(self, card, context)
+		if context.selling_self then
+			for i = 1, card.ability.extra.count do
+				local c = SMODS.create_card({area = G.fac_fish_area, key = "fish_fac_tss_moab"})
+				G.fac_fish_area:emplace(c)
+			end
+		end
+		if context.joker_main then
+			local destroy = SMODS.pseudorandom_probability(card, "fac_tss_moab", 1, card.ability.extra.odds)
+			return {
+				chips = card.ability.extra.chips,
+				xmult = card.ability.extra.xmult,
+				message = destroy and localize("fac_tss_popped") or nil,
+				colour = destroy and G.C.RED or nil,
+				func = destroy and function()
+					G.E_MANAGER:add_event(Event{func=function()
+						SMODS.destroy_cards(card)
+						card:start_dissolve()
+						local c = SMODS.create_card({area = G.fac_fish_area, key = "fish_fac_tss_moab"})
+						G.fac_fish_area:emplace(c)
+					return true end})
+				end or nil
+			}
+		end
+	end
+}
+
+FishAndChips.Fish {
+	key = "tss_moab",
+	atlas = "tss_ellefish",
+	pos = { x = 0, y = 0 },
+	weight = 6,
+	stats = {weight = {min = 800, max = 1000}, length = {min = 5, max = 7}},
+	ppu_coder = { "slimestuff" },
+	ppu_artist = { "azazel" },
+	attributes = { "xchips" }, -- not a bait attribute but oh well
+	config = { extra = { odds = 20, xchips = 1.5 } },
+	environments = {
+		pier = 10,
+		aquifer = 2
+	},
+	loc_vars = function(self, info_queue, card)
+		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fcc_tss_moab")
+		return { vars = { card.ability.extra.xchips, num, dem } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			local destroy = SMODS.pseudorandom_probability(card, "fac_tss_moab", 1, card.ability.extra.odds)
+			return {
+				xchips = card.ability.extra.xchips,
+				message = destroy and localize("fac_tss_popped") or nil,
+				colour = destroy and G.C.BLUE or nil,
+				func = destroy and function()
+					G.E_MANAGER:add_event(Event{func=function()
+						SMODS.destroy_cards(card)
+						card:start_dissolve()
+					return true end})
+				end or nil
+			}
+		end
+	end
+}
+
+FishAndChips.Fish {
+	key = "tss_cult",
+	atlas = "tss_ellefish",
+	pos = { x = 0, y = 0 },
+	weight = 3,
+	stats = {weight = {min = 3, max = 5}, length = {min = .8, max = 1.2}}, -- pls replace later
+	ppu_coder = { "slimestuff" },
+	ppu_artist = { "azazel" },
+	attributes = { "xmult", "active", "destroy_cards" },
+	environments = {
+		styx = 10,
+		swamp = 2
+	},
+	config = { extra = { xmult = 1, xmult_mod = .5, lose = 1, antecheck = false } },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.xmult_mod, card.ability.extra.xmult, card.ability.extra.lose, localize("fac_tss_cult_"..(card.ability.extra.antecheck and "used" or "available")) } }
+	end,
+	calculate = function(self, card, context)
+		if card.ability.extra.xmult ~= 1 then
+			if context.ante_change and context.ante_end and not card.ability.extra.antecheck then
+				card.ability.extra.xmult = math.max(card.ability.extra.xmult-card.ability.extra.lose, 1)
+				return {
+					message = localize("fac_tss_cult_fail")
+				}
+			end
+			if context.joker_main then
+				return {xmult = card.ability.extra.xmult}
+			end
+		end
+	end,
+	use = function(self, card)
+		card.ability.extra.antecheck = true
+		local self_pos = 0
+		for i = 1, #card.area.cards do
+			if card.area.cards[i] == card then self_pos = i break end
+		end
+		
+		local t = card.area.cards[self_pos+1]
+		SMODS.destroy_cards(t)
+		card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_mod
+		G.E_MANAGER:add_event(Event({func = function()
+			card.ability.extra.triggering = false
+		return true end}))
+	end,
+	can_use = function(self, card)
+		local self_pos = 0
+		for i = 1, #card.area.cards do
+			if card.area.cards[i] == card then self_pos = i break end
+		end
+		
+		return card.area.cards[self_pos+1] and not card.ability.extra.antecheck
+	end,
+	keep_on_use = function (self, card)
+		return true
+	end
 }
 
 FishAndChips.Fish {
@@ -19,23 +197,21 @@ FishAndChips.Fish {
 	atlas = "tss_ellefish",
 	pos = { x = 0, y = 0 },
 	weight = 3,
+	stats = {weight = {min = 0, max = 0}, length = {min = 0, max = 0}}, -- pls replace later
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
-	attributes = { "mult", "suit" },
+	attributes = { "passive" },
 	environments = {
-		city_river = 10
+		garden = 10
 	},
-	config = { extra = { mult = 1 } },
+	config = { extra = { odds = 3 } },
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult } }
+		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fcc_tss_watrena")
+		return { vars = { num, dem } }
 	end,
 	calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.play and context.other_card:is_suit("Hearts") then
-			fish:set_edition(poll_edition('fac_tss_watrena', nil, true, true))
-			return {
-				message = localize('k_upgrade_ex'),
-				colour = G.C.MULT
-			}
+		if context.fac_end_fishing and context.fish_obj and G.GAME.fac_fishing_environment == "garden" and SMODS.pseudorandom_probability(card,"fcc_tss_watrena",1,card.ability.extra.odds) then
+			context.fish_obj:set_edition(SMODS.poll_edition({key = 'fac_tss_watrena', guaranteed = true}))
 		end
 	end
 }
@@ -44,14 +220,16 @@ FishAndChips.Fish {
 	key = "tss_ferish",
 	atlas = "tss_azfish",
 	pos = { x = 1, y = 0 },
-	pixel_size = { w = 71/122*98, h = 95/122*100 },
-    display_size = { w = 98*.75, h = 100*.75 },
+	pixel_size = { w = 98, h = 100 },
+	display_size = { w = 98*.75, h = 100*.75 },
 	weight = 3,
+	stats = {weight = {min = 0, max = 0}, length = {min = 0, max = 0}}, -- pls replace later
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
 	attributes = { "mult", "suit" },
 	environments = {
-		city_river = 10
+		city_river = 10,
+		calm_pond = 8
 	},
 	config = { extra = { mult = 1 } },
 	loc_vars = function(self, info_queue, card)
@@ -67,4 +245,21 @@ FishAndChips.Fish {
 			}
 		end
 	end
+}
+
+FishAndChips.Fish {
+	key = "tss_bee",
+	atlas = "tss_azfish",
+	pos = { x = 0, y = 0 },
+	stats = {weight = {min = .04, max = .32}, length = {min = .04, max = .32}}, -- actual bee sizes but i added a couple zeros
+	pixel_size = { w = 88, h = 71 },
+	display_size = { w = 88*.8, h = 71*.8 },
+	weight = 1,
+	ppu_coder = { "slimestuff" },
+	ppu_artist = { "azazel" },
+	attributes = { "passive" },
+	environments = {
+		calm_pond = 1,
+		garden = 10
+	}
 }

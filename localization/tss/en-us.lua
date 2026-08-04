@@ -2,18 +2,83 @@ return {
 	descriptions = {
 		fac_Fish = {
 			-- - Azazel's Fish -
-			fish_fac_tss_bee = {
-				name = "Bee Fish",
+			fish_fac_tss_shadow_cryscarp = {
+				name = "Shadow Cryscarp",
 				text = {
-					"{E:1}This is good news"
+					"{C:attention}Classic Canned{} catches",
+					"Treasure {C:white,X:attention}X#1#{} faster"
 				},
 				flavour = {
-					"We can finally be bees",
-					"This is good news",
-					"You'll live for 30 years"
+					"A sharp shadow swims quickly",
+					"through water, even above the waves."
 				}
 			},
-
+			fish_fac_tss_medic = {
+				name = "Medic Shark",
+				text = {
+					"If you run out of {C:attention}hands{} and lose,",
+					"restore {C:attention}hands{} and {C:red}Self-destruct"
+				},
+				flavour = {
+					"They forgot to buy the Shield Upgrade."
+				}
+			},
+			fish_fac_tss_bfb = {
+				name = "Lobster BFB",
+				text = {
+					"{C:chips}+#1#{} Chips and {C:white,X:mult}X#2#{} Mult",
+					"Sell to create {C:attention}#3# Puffer MOAB{}s",
+					"{C:green}#4# in #5#{} chance to be {C:red}destroyed",
+					"after scoring, creating one {C:attention}Puffer MOAB"
+				},
+				flavour = {
+					"As if Pat wasn't hungry enough!"
+				}
+			},
+			fish_fac_tss_moab = {
+				name = "Puffer MOAB",
+				text = {
+					"{C:white,X:chips}X#1#{} Chips",
+					"{C:green}#2# in #3#{} chance to",
+					"be {C:red}destroyed{} after scoring"
+				},
+				flavour = {
+					"All blown up even",
+					"before it gets blown up."
+				}
+			},
+			fish_fac_tss_cult = {
+				name = "Cultfish",
+				text = {
+					{
+						"Once per {C:attention}Ante{}, Use this {C:fac_fish}Fish{}",
+						"to {C:red}Sacrifice{} the {C:fac_fish}Fish{} on the",
+						"right and gain {C:white,X:mult}X#1#{} Mult",
+						"{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult)"
+					},
+					{
+						"Lose {C:white,X:mult}X#3#{} Mult if no",
+						"{C:red}Sacrifice{} is made this {C:attention}Ante",
+						"{C:inactive}(#4#)"
+					}
+				},
+				flavour = {
+					'"No longer a servant,',
+					'no less than a God."'
+				}
+			},
+			fish_fac_tss_watrena = {
+				name = "Nymphfish",
+				text = {
+					"{C:green}#1# in #2#{} chance for {C:fac_fish}Fish",
+					"caught in {C:fac_environment}Garden of Hope",
+					"to be {C:dark_edition}Editioned"
+				},
+				flavour = {
+					"Don't tell anyone, Watrena",
+					"accidentally got turned into a fish."
+				}
+			},
 			fish_fac_tss_ferish = {
 				name = "Ferish",
 				text = {
@@ -24,6 +89,17 @@ return {
 				flavour = {
 					"The most popular",
 					"pop star of the deep!"
+				}
+			},
+			fish_fac_tss_bee = {
+				name = "Bee Fish",
+				text = {
+					"{E:1}This is good news"
+				},
+				flavour = {
+					"We can finally be bees",
+					"This is good news",
+					"You'll live for 30 years"
 				}
 			},
 
@@ -61,7 +137,7 @@ return {
 			fish_fac_tss_guppy = {
 				name = "Guppy",
 				text = {
-					"Show which {C:attention}fish{} is",
+					"Show which {C:fac_fish}Fish{} is",
 					"currently being caught"
 				},
 				flavour = {
@@ -71,9 +147,9 @@ return {
 			fish_fac_tss_plecoholder = {
 				name = "Plecoholder",
 				text = {
-					"When round starts, turn {C:attention}fish",
+					"When round starts, turn {C:fac_fish}Fish",
 					"to the right into another",
-					"{C:attention}fish{} by the same {C:attention}developers"
+					"{C:fac_fish}Fish{} by the same {C:attention}developers"
 				},
 				flavour = {
 					"pls add flavour text later"
@@ -82,9 +158,9 @@ return {
 			fish_fac_tss_plecoholder1 = {
 				name = "Plecoholder",
 				text = {
-					"When round starts, turn {C:attention}fish",
+					"When round starts, turn {C:fac_fish}Fish",
 					"to the right into another",
-					"{C:attention}fish{} by the same {C:attention}developers",
+					"{C:fac_fish}Fish{} by the same {C:attention}developers",
 					"{C:inactive}({V:1}#1#{C:inactive})"
 				},
 				flavour = {
@@ -94,9 +170,9 @@ return {
 			fish_fac_tss_plecoholder2 = {
 				name = "Plecoholder",
 				text = {
-					"When round starts, turn {C:attention}fish",
+					"When round starts, turn {C:fac_fish}Fish",
 					"to the right into another",
-					"{C:attention}fish{} by the same {C:attention}developers",
+					"{C:fac_fish}Fish{} by the same {C:attention}developers",
 					"{C:inactive}({V:1}#1# {C:inactive}and {V:2}#2#{C:inactive})"
 				},
 				flavour = {
@@ -161,6 +237,10 @@ return {
 			fac_tss_chesh_giggle_3 = "Mine~",
 			fac_tss_chesh_giggle_4 = "Thanks~",
 			fac_tss_forcefem = "Forcefem!",
+			fac_tss_cult_fail = "...", -- ask az what it should say next call
+			fac_tss_cult_used = "Used", -- ask az what it should say next call
+			fac_tss_cult_available = "Available", -- ask az what it should say next call
+			fac_tss_popped = "Popped!"
 		}
 	}
 }

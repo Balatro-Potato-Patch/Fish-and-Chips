@@ -15,7 +15,6 @@ PotatoPatchUtils.Developer{
 	calculate = function(self, context)
 		-- Putting Chesh here so they can all swarm at once like a pack of hungry piranhas
 		if context.fac_end_fishing and not context.failed then
-			local chesh_scale = 1.4
 			local chesh_speed = .75
 
 			local f = context.fish_obj or G.FISHING.fac_fish_reward_area.cards[1]
@@ -29,7 +28,7 @@ PotatoPatchUtils.Developer{
 			if not f or #cheshlist < 1 then return end
 
 			f.tss_cheshed = true
-			--f.states.click.can = false -- Apparently it should be like this already but they forgot. Will remove once that is patched :p
+			f.states.click.can = false -- Apparently it should be like this already but they forgot. Will remove once that is patched :p
 
 			if FishAndChips.TheShitSquad.force_swoon or pseudorandom("fac_tss_chesh_swoon",1,225)==1 or os.date("%m%d",os.time()) == "1225" then
 				FishAndChips.TheShitSquad.force_swoon = false
@@ -62,6 +61,7 @@ PotatoPatchUtils.Developer{
 				
 				G.E_MANAGER:add_event(Event({func=function()
 					for _, v in ipairs(cheshlist) do
+						v.ability.extra.xmult = v.ability.extra.xmult + v.ability.extra.xmult_mod
 						G.E_MANAGER:add_event(Event({func=function()
 							v.area:remove_card(v)
 							G.fac_fish_area:emplace(v)
@@ -88,8 +88,10 @@ PotatoPatchUtils.Developer{
 					table.insert(G.FISHING.fac_fish_reward_area.cards,v)
 
 					play_sound("whoosh")
-					v.T.w = v.T.w*chesh_scale
-					v.T.h = v.T.h*chesh_scale
+					if v._fac_bucketed then
+						v.T.w = v.T.w/.7
+						v.T.h = v.T.h/.7
+					end
 				return true end}))
 			end
 
@@ -123,8 +125,10 @@ PotatoPatchUtils.Developer{
 					v.area:remove_card(v)
 					G.fac_fish_area:emplace(v)
 					play_sound("fac_tss_burp")
-					v.T.w = v.T.w/chesh_scale
-					v.T.h = v.T.h/chesh_scale
+					if v._fac_bucketed then
+						v.T.w = v.T.w*.7
+						v.T.h = v.T.h*.7
+					end
 				return true end}))
 			end
 		end
@@ -135,8 +139,8 @@ PotatoPatchUtils.Developer{
 PotatoPatchUtils.Developer{
 	name = 'azazel',
 	atlas = 'fac_tss_devs',
-	pos = {x=2,y=0},
-	soul_pos = {x=3,y=0},
+	pos = {x=4,y=0},
+	soul_pos = {x=5,y=0},
 	colour = HEX("850021"),
 	fac_partner = 'slimestuff',
 	loc = true,
