@@ -153,8 +153,34 @@ return {
                 flavor = {
                     "Ogres are like onions. They stink."
                 }
+            },
+
+            fish_fac_waffle_finclair = {
+                name = "THE MAGNIFICENT FINCLAIR",
+                text = {
+                    "When {C:attention}Blind{} is selected, this {C:fac_fish}Fish{}",
+                    "becomes a copy of {C:fac_fish}Fish{} to the {C:attention}right{}",
+                    "with {X:attention,C:white}X#1#{} to {C:attention}listed values{}",
+                    "{C:inactive}(Reverts at end of round or when used,",
+                    "{C:inactive}cannot copy THE MAGNIFICENT FINCLAIR)"
+                },
+                flavor = {
+                    "Can we please pretend to like each other for 8 antes?",
+                    "I'm going to be optimistic and say... sure.",
+                },
             }
 
+        },
+
+        Other = {
+            fac_waffle_finclair_tooltip = {
+                name = "Finclair Copy",
+                text = {
+                    "This {C:fac_fish}Fish{} will turn into",
+                    "{C:attention}THE MAGNIFICENT FINCLAIR{}",
+                    "at end of round or when used",
+                }
+            }
         },
 
     },
@@ -170,6 +196,7 @@ return {
             k_fac_waffle_echinoderm = "Echinoderm",
             k_fac_waffle_invertebrate = "Invertebrate",
             k_fac_waffle_duck = "Duck",
+            k_fac_waffle_presto_ex = "Presto!",
         },
 
     }

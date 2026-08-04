@@ -77,6 +77,19 @@ do
             }))
         end
     end
+
+    function waffleFunctions.getCardToRight(card)
+    local cardToRight
+    if card.area then
+        for i = 1, #card.area.cards do
+            if card.area.cards[i] == card then
+                cardToRight = card.area.cards[i + 1]
+            end
+        end
+    end
+    return cardToRight
+    end
+
 end
 
 -- Bonus Duck sounds
@@ -611,8 +624,9 @@ FishAndChips.Fish {
     } },
     cost = 6,
     loc_vars = function(self, info_queue, card)
+        local main_end
         if card.area == G.fac_fish_area then
-            local main_end = {
+           main_end = {
             {
                 n = G.UIT.C,
                 config = { align = "bm", minh = 0.4 },
@@ -626,12 +640,12 @@ FishAndChips.Fish {
                     }
                 }
             }
-        }
+        } 
+        end
         return {
             main_end = main_end,
             vars = { card.ability.extra.boost }
         }
-        end
     end,
     blueprint_compat = false,
     calculate = function(self, card, context)
@@ -728,7 +742,8 @@ FishAndChips.Fish {
     cost = 6,
     config = { extra = {
         chips = 0,
-        chips_per = 4
+        chips_per = 4,
+        duck_ratio = bonusDuckRatio
     },
         immutable = {
             duck_ratio = bonusDuckRatio
@@ -736,7 +751,7 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                card.ability.immutable.duck_ratio * 100,
+                card.ability.extra.duck_ratio * 100,
                 card.ability.extra.chips_per,
                 card.ability.extra.chips
             }
@@ -776,7 +791,7 @@ local shuffle_ref = CardArea.shuffle
 function CardArea:shuffle(_seed)
     shuffle_ref(self, _seed)
 
-    if self == G.deck then        -- idr if shuffle gets called on non-deck cardareas but better safe than sorry
+    if self == G.deck and SMODS.find_card("fish_fac_waffle_bonus_duck") then        -- idr if shuffle gets called on non-deck cardareas but better safe than sorry
         local allCards = {}       -- Initialize list of cards in deck
 
         for i = 1, #self.cards do -- Add cards in deck to allCards and reset their duck value
@@ -786,6 +801,13 @@ function CardArea:shuffle(_seed)
         end
 
         local bonusDuckCards = {}                           -- Initialize list of cards to add ducks do
+
+        local duckRatio = bonusDuckRatio
+        for _, fish in pairs(G.fac_fish_area.cards) do
+            if fish.ability and fish.ability.extra and fish.ability.extra.duck_ratio then
+                duckRatio = math.max(duckRatio, fish.ability.extra.duck_ratio)
+            end
+        end
 
         for i = 1, math.ceil(#allCards * bonusDuckRatio) do -- Remove cards from deck list as they are added to duck list (this ensures the same card doesn't get ducked twice)
             local chosenCardIndex = pseudorandom("fac_waffle_bonus_duck_choose", 1, #allCards)
@@ -799,7 +821,6 @@ function CardArea:shuffle(_seed)
         end
     end
 end
-
 -- Duck drawstep
 SMODS.DrawStep {
     key = "fac_waffle_duck_drawstep",
@@ -893,4 +914,77 @@ FishAndChips.Fish {
         end
     end,
     attributes = { "rank", "food" }
+}
+
+
+
+-- THE MAGNIFICENT FINCLAIR
+FishAndChips.Fish {
+    key = "waffle_finclair",
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    environments = {
+        styx = 0.7,
+        city_river = 1
+    },
+    blueprint_compat = false,
+    cost = 8,
+    weight = 8,
+    stats = {
+        weight = { min = 1.30, max = 4.50 },
+        length = { min = 0.20, max = 0.45 }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {vars = {card.ability.extra.scale}}
+    end,
+    config = {
+        extra = {
+            scale = 2
+        }
+    },
+    calculate = function (self, card, context)
+
+        if context.setting_blind then
+            local fishToRight = waffleFunctions.getCardToRight(card)
+            if fishToRight and fishToRight.config.center.key ~= "fish_fac_waffle_finclair" then
+                local boost = card.ability.extra.scale
+                local cardKey = card.config.center.key
+                SMODS.copy_card(fishToRight, {
+                    new_card = card
+                })
+                if not G.GAME.fac_fish_expanded then
+                    card.T.scale = 0.7
+                end
+                card.ability.extra = card.ability.extra or {}
+                for i, v in pairs(card.ability.extra) do
+                    if type(v) == "number" then
+                        card.ability.extra[i] = v * boost
+                    end
+                end
+                card.ability.extra.fac_waffle_finclair_copy = cardKey
+                return {
+                    message = localize('k_fac_waffle_presto_ex'),
+                    colour = G.C.PURPLE
+                }
+            end
+        end
+
+    end,
+    attributes = { "copying" }
+}
+-- Finclair shader
+SMODS.Shader {
+    key = "finclair",
+    path = "waffle/finclair.fs"
+}
+-- Finclair copy shader drawstep
+SMODS.DrawStep {
+    key = "fac_waffle_finclair_drawstep",
+    order = 21,
+    func = function(card, layer)
+            if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.fac_waffle_finclair_copy then
+                card.children.center:draw_shader('fac_finclair', nil, card.ARGS.send_to_shader)
+            end
+    end,
+    conditions = { facing = 'front' }
 }
