@@ -28,6 +28,7 @@ FishAndChips.Fish {
 	ppu_coder = { "Alexi" },
 	ppu_artist = { "Grahkon" },
 	attributes = { "rank", "jack", "king", "queen", "mult", "xmult" },
+    disable_visual_scaling = true,
 	config = {
         extra = {
             mult = 2,
@@ -38,8 +39,8 @@ FishAndChips.Fish {
 		garden = 1,
 	},
     stats = {
-		weight = {min = 80, max = 80 + 0.00001},
-		length = {min = 2.2, max = 2.2 + 0.00001}
+        weight = {min = 80, max = 80.000001, units = {format = "fac_fo_flowery_unit", scale = 99999, precision = 3}},
+		length = {min = 2.2, max = 2.2000001, units = {format = "fac_fo_flowery_unit", scale = 99999, precision = 3}},
 	},
     loc_vars = function(self, info_queue, card)
 		return { vars = {

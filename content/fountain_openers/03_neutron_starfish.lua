@@ -3,6 +3,7 @@ FishAndChips.Fish {
 	atlas = "fish",
 	pos = { x = 3, y = 0 },
     eternal_compat = false,
+	disable_visual_scaling = true,
 	weight = 3,
 	ppu_coder = { "Alexi" },
 	ppu_artist = { "Grahkon" },
@@ -15,7 +16,7 @@ FishAndChips.Fish {
 	},
     stats = {
 		weight = {min = 1000, max = 2000},
-		length = {min = 2.5 * 10^-15, max = (2.5 + 0.00001) * 10^-15}
+        length = {min = 2.5 * 10^-15, max = (2.5 + 0.00001) * 10^-15, units = {format = "fac_fo_fm", scale = 1e-15, precision = 3}},
 	},
 	use = function(self, card, area)
         local amt = #G.hand.cards

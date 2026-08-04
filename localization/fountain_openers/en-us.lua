@@ -5,9 +5,10 @@ return {
                 name = "Boids",
                 text = {
                     "Makes {C:attention}boids{} appear on screen",
-                    "This Fish gains {C:chips}+#1#{} Chips when you",
-                    "{C:attention}click{} on a boid while",
-                    "reeling in a fish"
+                    "This Fish gains {C:chips}+#2#{} Chips",
+                    "when you {C:attention}click{} on a boid",
+                    "while reeling in a Fish",
+                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
                 },
                 fac_flavor = {
                     "Bird? Fish?",
@@ -81,6 +82,10 @@ return {
     misc = {
         dictionary = {
             fac_fo_hey_raly = "Hey Raly!",
+            fac_fo_kb = "%f KB",
+            fac_fo_fm = "%f fm",
+            fac_fo_px = "%f px",
+            fac_fo_flowery_unit = "99999"
         },
     }
 }

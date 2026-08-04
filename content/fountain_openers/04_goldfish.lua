@@ -5,12 +5,13 @@ FishAndChips.Fish {
 	weight = 3,
     blueprint_compat = false,
     eternal_compat = false,
+    disable_visual_scaling = true,
 	ppu_coder = { "Alexi" },
 	ppu_artist = { "Grahkon" },
 	attributes = { "economy" },
 	config = {
         extra = {
-            amt = 3,
+            amt = 5,
             dec = 1,
         }
 	},
