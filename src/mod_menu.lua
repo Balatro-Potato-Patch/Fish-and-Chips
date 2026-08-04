@@ -3,10 +3,16 @@ SMODS.Shader{
   path = "core/ui_image.fs",
   send_vars = function(element, extra)
     local atlas = SMODS.Atlases[element.config.atlas]
+    local pixel_size = element.config.pixel_size
+    local pos = element.config.pos and {element.config.pos.x, element.config.pos.y} or {0, 0}
+    if pixel_size then
+        pos[1] = pos[1] * (atlas.px / pixel_size.w)
+        pos[2] = pos[2] * (atlas.py / pixel_size.h)
+    end
     return {
       mask = atlas.image,
-      atlas_dim = {atlas.px/atlas.image:getWidth(), atlas.py/atlas.image:getHeight()},
-      atlas_pos = element.config.pos and {element.config.pos.x, element.config.pos.y} or {0, 0}
+      atlas_dim = {(pixel_size and pixel_size.w or atlas.px)/atlas.image:getWidth(), (pixel_size and pixel_size.h or atlas.py)/atlas.image:getHeight()},
+      atlas_pos = pos
     }
   end
 }
@@ -486,7 +492,9 @@ function FishAndChips.Compendium.environment_page(page_number, left)
             local fish = fish_pool[index]
             local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {}
             local fish_caught = fish_data.times_caught and fish_data.times_caught > 0
-            table.insert(row.nodes, {n=G.UIT.C, config = {shader = 'fac_ui_image', atlas = fish.atlas, pos = fish.pos, colour = fish_caught and G.C.WHITE or FishAndChips.C.COMPENDIUM_COLOUR, minh = 0.45 * 91/75, minw = 0.45}})
+            local atlas = SMODS.get_atlas(fish.atlas)
+            
+            table.insert(row.nodes, {n=G.UIT.C, config = {align = 'cm'}, nodes = {{n=G.UIT.R, config = {align = 'cm', shader = 'fac_ui_image', atlas = fish.atlas, pos = fish.pos, pixel_size = fish.pixel_size, colour = fish_caught and G.C.WHITE or FishAndChips.C.COMPENDIUM_COLOUR, minh = 0.45 * (fish.pixel_size and fish.pixel_size.h/fish.pixel_size.w or atlas.py/atlas.px), minw = 0.45}}}})
             if index >= #fish_pool then last_page = true end
         end
         table.insert(page.nodes[3].nodes[1].nodes, row)
@@ -796,7 +804,7 @@ SMODS.draw_ignore_keys.h_popup_2 = true
 
 function FishAndChips.Compendium.dev_card(dev)
     if not dev then return nil end
-    local partner = PotatoPatchUtils.Developers[dev.fac_partner]
+    local partner = PotatoPatchUtils.Developers['fac_' .. dev.fac_partner]
     
     local temp_area = FishAndChips.Compendium.compendium_area(1, dev.joint_credits and {0.2 + 4 * 71/95, 2})
     local dev_card = Card(0, 0, (dev.joint_credits and 2 or 1) * G.CARD_W / 1.25, G.CARD_H / 1.25, nil, G.P_CENTERS.c_base)
