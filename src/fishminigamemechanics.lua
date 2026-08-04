@@ -313,8 +313,8 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     local added_card = SMODS.add_card({ area = reward_area, key = profile.key })
     FishAndChips.create_card_stats = nil
     if added_card then
-        fish_stats.record_weight = math.max(profile.stats.weight, fish_stats.record_weight)
-        fish_stats.record_length = math.max(profile.stats.length, fish_stats.record_length)
+        fish_stats.record_weight = math.max(profile.stats.weight, fish_stats.record_weight or 0)
+        fish_stats.record_length = math.max(profile.stats.length, fish_stats.record_length or 0)
         added_card:set_sprites(added_card.config.center)
         added_card.states.visible = false
         SMODS.calculate_context({fac_fish_caught = added_card, fish = profile.key, treasure = is_treasure_catch or false, perfect = state.perfect or false})
