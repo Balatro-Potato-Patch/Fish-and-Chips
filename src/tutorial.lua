@@ -125,6 +125,18 @@ function FishAndChips.tutorial()
 	step = tutorial_info({
 		text_key = "fac_fishing_4a",
 		attach = {
+			major = G.FISHING.fishing_area_display:get_UIE_by_ID("environment_desc"),
+			type = "cm",
+			offset = { x = 0, y = 3 },
+		},
+		highlight = { G.FISHING.fishing_area_display:get_UIE_by_ID("environment_desc") },
+		align = "cr",
+		step = step,
+		fac_tutorial = true,
+	})
+	step = tutorial_info({
+		text_key = "fac_fishing_4b",
+		attach = {
 			major = G.FISHING.fishing_buttons:get_UIE_by_ID("fac_btn_reroll_location"),
 			type = "cm",
 			offset = { x = -3, y = 0 },
@@ -135,7 +147,7 @@ function FishAndChips.tutorial()
 		fac_tutorial = true,
 	})
 	step = tutorial_info({
-		text_key = "fac_fishing_4b",
+		text_key = "fac_fishing_4c",
 		attach = {
 			major = G.FISHING.fishing_buttons:get_UIE_by_ID("fac_btn_reroll_location"),
 			type = "cm",

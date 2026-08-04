@@ -80,13 +80,15 @@ local function fac_profile_from_center(center)
         rod = G.fac_rod_area.cards[1].ability.fishing
         key = G.fac_rod_area.cards[1].config.center.key
     end
+    local stats = FishAndChips.create_fish_stats(center)
     return {
         key = center.key,
         name = center.name or center.key,
+        stats = stats,
         bar_size = rod.bar_size == nil and t.bar_size or rod.bar_size,
         treasure_gain = rod.treasure_gain == nil and t.treasure_gain or rod.treasure_gain,
-        catch_gain = rod.catch_gain == nil and t.catch_gain or rod.catch_gain,
-        catch_loss = rod.catch_loss == nil and t.catch_loss or rod.catch_loss,
+        catch_gain = (rod.catch_gain == nil and t.catch_gain or rod.catch_gain) / (((0.5 + stats.w_prop * 0.5) + (0.5 + stats.l_prop * 0.5))/2),
+        catch_loss = (rod.catch_loss == nil and t.catch_loss or rod.catch_loss) * (((0.5 + stats.w_prop * 0.5) + (0.5 + stats.l_prop * 0.5))/2),
         vel_limit = (center.vel_limit or t.vel_limit) * (rod.vel_limit or 1),
         impulse_min = (center.impulse_min or t.impulse_min) * (rod.impulse_min or 1),
         impulse_max = (center.impulse_max or t.impulse_max) * (rod.impulse_max or 1),
@@ -290,16 +292,6 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
         and state.result_dollars_reward or state.result_reward
     local profile_data = G.PROFILES[G.SETTINGS.profile].fac_fishing
     profile_data.fish_data = profile_data.fish_data or {}
-    local fish_data = profile_data.fish_data[profile.key] or {}
-    local first_catch = not (fish_data.times_caught and fish_data.times_caught > 0)
-    profile.center.discovered = true
-    play_sound('fac_fish_landed', math.random(0.8, 1.2))
-    local added_card = SMODS.add_card({ area = reward_area, key = profile.key })
-    if added_card then
-        added_card:set_sprites(added_card.config.center)
-        added_card.states.visible = false
-        SMODS.calculate_context({fac_fish_caught = added_card, fish = profile.key, treasure = is_treasure_catch or false, perfect = state.perfect or false})
-    end
 
     local rod_key = FishAndChips.get_rod().key
     local bait_key = G.GAME.fac_active_bait
@@ -309,9 +301,25 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     profile_data.fish_data[profile.key] = profile_data.fish_data[profile.key] or {
         first_catch = os.date('%d %B'),
         times_caught = 0,
-        rod = rod_key
+        rod = rod_key,
+        record_weight = 0,
+        record_length = 0
     }
     local fish_stats = profile_data.fish_data[profile.key]
+    local first_catch = not (fish_stats.times_caught and fish_stats.times_caught > 0)
+    profile.center.discovered = true
+    play_sound('fac_fish_landed', math.random(0.8, 1.2))
+    FishAndChips.create_card_stats = profile.stats
+    local added_card = SMODS.add_card({ area = reward_area, key = profile.key })
+    FishAndChips.create_card_stats = nil
+    if added_card then
+        fish_stats.record_weight = math.max(profile.stats.weight, fish_stats.record_weight)
+        fish_stats.record_length = math.max(profile.stats.length, fish_stats.record_length)
+        added_card:set_sprites(added_card.config.center)
+        added_card.states.visible = false
+        SMODS.calculate_context({fac_fish_caught = added_card, fish = profile.key, treasure = is_treasure_catch or false, perfect = state.perfect or false})
+    end
+
     profile_data.career_fish_caught = (profile_data.career_fish_caught or 0) + 1
     fish_stats.times_caught = (fish_stats.times_caught or 0) + 1
     rod_stats.fish_caught = rod_stats.fish_caught + 1
@@ -666,6 +674,7 @@ local function fac_finish_round(success, skip)
         end
     end
     SMODS.calculate_context({fac_end_fishing = true, failed = not success, fish = success and state.profile.key or nil, fish_obj = fish_obj or nil, treasure = success and state.got_treasure or false, treasure_available = state.treasure_enabled or false, treasure_progress = state.treasure_meter or 0, missed_treasure = success and state.treasure_enabled and not state.got_treasure or false, attempted_treasure = state.treasure_enabled and not state.got_treasure and (state.treasure_meter or 0) > 0 or false, treasure_obj = treasure_obj, perfect = success and state.perfect or false})
+    G.GAME.fac_forced_fish = nil
 end
 local function fac_begin_hooking_round()
     local state = fac_ensure_state()

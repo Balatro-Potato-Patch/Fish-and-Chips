@@ -91,17 +91,17 @@ end
 
 function FishAndChips.show_fishing_buttons()
 	G.NOT_SAFE_TO_PRESS_BUTTONS = false
-	ease_value(FishAndChips.C.FISHING_BUTTONS_BG, 4, 0.65, nil, "REAL", true, 0.3)
-	ease_value(FishAndChips.C.FISHING_BUTTONS_ACTIVE, 4, 0.65, nil, "REAL", true, 0.3)
-	ease_value(FishAndChips.C.FISHING_BUTTONS_TEXT, 4, 1, nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_BG, 4, 0.65 - FishAndChips.C.FISHING_BUTTONS_BG[4], nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_ACTIVE, 4, 0.65 - FishAndChips.C.FISHING_BUTTONS_ACTIVE[4], nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_TEXT, 4, 1 - FishAndChips.C.FISHING_BUTTONS_TEXT[4], nil, "REAL", true, 0.3)
 	FishAndChips.set_fishing_buttons_active(true)
 end
 
 function FishAndChips.fade_fishing_buttons()
 	G.NOT_SAFE_TO_PRESS_BUTTONS = true
-	ease_value(FishAndChips.C.FISHING_BUTTONS_BG, 4, -0.65, nil, "REAL", true, 0.3)
-	ease_value(FishAndChips.C.FISHING_BUTTONS_ACTIVE, 4, -0.65, nil, "REAL", true, 0.3)
-	ease_value(FishAndChips.C.FISHING_BUTTONS_TEXT, 4, -1, nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_BG, 4, -0.65 - FishAndChips.C.FISHING_BUTTONS_BG[4], nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_ACTIVE, 4, -0.65 - FishAndChips.C.FISHING_BUTTONS_ACTIVE[4], nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_TEXT, 4, -1 - FishAndChips.C.FISHING_BUTTONS_TEXT[4], nil, "REAL", true, 0.3)
 	FishAndChips.set_fishing_buttons_active(false)
 end
 
@@ -112,21 +112,23 @@ function FishAndChips.safe_to_press_buttons()
 end
 
 function FishAndChips.update_bait_counter(major)
-	if G.FISHING.fishing_bait_count then
-		G.FISHING.fishing_bait_count:remove()
+	if G.FISHING then
+		if G.FISHING.fishing_bait_count then
+			G.FISHING.fishing_bait_count:remove()
+		end
+		G.FISHING.fishing_bait_count = UIBox({
+			definition = G.UIDEF.fac_bait_count(),
+			config = {
+				align = "br",
+				offset = { x = -0.5, y = -0.5 },
+				major = major,
+				bond = "Weak",
+				r_bond = "Weak",
+				instance_type = "CARD"
+			}
+		})
+		G.FISHING.fishing_bait_count.T.r = -0.3
 	end
-	G.FISHING.fishing_bait_count = UIBox({
-		definition = G.UIDEF.fac_bait_count(),
-		config = {
-			align = "br",
-			offset = { x = -0.5, y = -0.5 },
-			major = major,
-			bond = "Weak",
-			r_bond = "Weak",
-			instance_type = "CARD"
-		}
-	})
-	G.FISHING.fishing_bait_count.T.r = -0.3
 end
 
 function FishAndChips.fishing_button(key, text, price)
@@ -311,13 +313,17 @@ function G.UIDEF.fac_fishing_area_display()
 							colour = { G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65 },
 							padding = 0.1,
 							align = "cm",
+							id = 'environment_desc',
+							button = 'open_compendium_to_env',
+							button_dist = 0.05,
+							hover = true
 						},
 						nodes = {
 							{
 								n = G.UIT.R,
 								config = {
 									align = 'cm',
-									padding = 0.1
+									padding = 0.1,
 								},
 								nodes = {
 									{
