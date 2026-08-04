@@ -101,6 +101,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+    key = "pnf_untitled", -- Please include your name/team name in your atlas keys
+    path = "pnf/UntitledFish.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
     key = "pnf_star", -- Please include your name/team name in your atlas keys
     path = "pnf/OriginalStarfish.png",
     px = 71,
@@ -145,6 +152,7 @@ FishAndChips.Fish {
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
     attributes = { "mult", "chips", "xmult", "economy" },
+    weight = 1,
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
     config = {
         extra = {
@@ -157,8 +165,8 @@ FishAndChips.Fish {
         }
     },
     environments = {
-        wormhole = 1,
-        backroom = 1
+        wormhole = 0.1,
+        backroom = 0.1
     },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.scoring, card.ability.extra.gain, colours = { HEX("4db1f6") } } }
@@ -266,7 +274,7 @@ FishAndChips.Fish {
     },
     environments = {
         wormhole = 1,
-        backroom = 1
+        backroom = 0.1
     },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mult, card.ability.extra.mult_mod, colours = { HEX("4db1f6") } } }
@@ -582,4 +590,124 @@ FishAndChips.Fish {
 			end
         end
     end,
+}
+
+local SymbolsUNT = {
+    "+",
+    "X",
+    "/",
+    "<",
+    ">",
+    "#",
+    "^",
+    "!",
+    "-",
+    "%",
+    "?",
+    "||",
+    "$",
+    "*",
+    ";",
+    ":",
+    "nil",
+    "nan",
+    "inf",
+    "ERROR"
+}
+local CharacterUNT = {
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+}
+
+FishAndChips.Fish {
+    key = "untitledfish",
+    atlas = "pnf_untitled",
+    pos = { x = 0, y = 0 },
+    weight = 2,
+    blueprint_compat = true,
+    ppu_coder = { "FirstTry" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "destroy_card" },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+	environments = {
+        backroom = 0.1
+    },
+    config = { trigger = false, odds = 10, extra = { valuemin = 1, valuemax = 100 } },
+    loc_vars = function(self,info_queue,card)
+    local oddwin, oddnope = SMODS.get_probability_vars(card, 1, card.ability.odds, "fish_fac_untitledfish3")
+    local randomizer = pseudorandom(pseudoseed("fish_fac_untitledfish"),card.ability.extra.valuemin, card.ability.extra.valuemax)
+    local randomizer2 = pseudorandom(pseudoseed("fish_fac_untitledfish2"),card.ability.extra.valuemin, card.ability.extra.valuemax)
+        local randomtext = CharacterUNT[math.random(#CharacterUNT)]..SymbolsUNT[math.random(#SymbolsUNT)]..randomizer..CharacterUNT[math.random(#CharacterUNT)]..SymbolsUNT[math.random(#SymbolsUNT)]..randomizer2
+        return { vars = { oddwin, oddnope, randomizer, randomtext } }
+    end,
+    calculate = function(self, card, context)
+        local eval = function(card) return card.ability.trigger == true end
+        juice_card_until(card, eval, false)
+        if context.setting_blind then
+            if SMODS.pseudorandom_probability(card, "fish_fac_untitledfish3", 1, card.ability.odds, "fish_fac_untitledfish3") then
+                card.ability.trigger = true 
+            end
+        end
+        if context.after and G.GAME.current_round.hands_left == 1 then
+        local gamechips = G.GAME.chips
+        local randomizer = pseudorandom(pseudoseed("fish_fac_untitledfish"),card.ability.extra.valuemin, card.ability.extra.valuemax)
+        local randomizer2 = pseudorandom(pseudoseed("fish_fac_untitledfish2"),card.ability.extra.valuemin, card.ability.extra.valuemax)
+                G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.5 + math.random() * 0.4,
+            func = function()
+            G.GAME.chips = ((gamechips*randomizer)/(randomizer2/2))
+            play_sound('timpani')
+            return true
+            end
+        }))
+            G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.5 + math.random() * 0.4,
+            func = function()
+            G.GAME.chips = "#"..CharacterUNT[math.random(#CharacterUNT)]..SymbolsUNT[math.random(#SymbolsUNT)]..randomizer..CharacterUNT[math.random(#CharacterUNT)]..SymbolsUNT[math.random(#SymbolsUNT)]..randomizer2.."#"
+            G.hand_text_area.game_chips:juice_up()
+            play_sound('timpani')
+            return true
+            end
+        }))
+                G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.5 + math.random() * 0.4,
+            func = function()
+            G.GAME.chips = ((gamechips*randomizer2)/(randomizer/2))
+            play_sound('timpani')
+            return true
+            end
+        }))
+        if card.ability.trigger then
+            SMODS.destroy_cards(card)
+            card.ability.trigger = false
+        end
+    end
+end
 }
