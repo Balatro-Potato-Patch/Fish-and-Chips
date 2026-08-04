@@ -35,11 +35,15 @@ FishAndChips.Fish = SMODS.Center:extend {
 	end
 }
 
-local function random_measurement(stats)
-    local precision = math.max(string.len(stats.min - math.floor(stats.min)) - 2, string.len(stats.max - math.floor(stats.max)) - 2, 1)
-    local delta = stats.max - stats.min
-    local value = stats.min + (pseudorandom('fac_fish_measurement') * delta)
-    return tonumber(string.format(value < 100 and "%."..precision.."f" or "%.d", value))
+local function strip_decimals(stats, value, precision)
+	precision = precision or math.max(string.len(stats.min - math.floor(stats.min)) - 2, string.len(stats.max - math.floor(stats.max)) - 2, 1)
+	return tonumber(string.format(value < 100 and "%."..precision.."f" or "%.d", value))
+end
+
+local function random_measurement(stats, forced)
+	local delta = stats.max - stats.min
+	local value = stats.min + (pseudorandom('fac_fish_measurement') * delta)
+	return strip_decimals(stats, value)
 end
 
 
@@ -50,8 +54,8 @@ function FishAndChips.create_fish_stats(center)
     }
 	local w_delta = center.stats.weight.max - center.stats.weight.min
 	local l_delta = center.stats.length.max - center.stats.length.min
-    stats.w_prop = w_delta > 0 and (stats.weight - center.stats.weight.min)/w_delta or 1
-    stats.l_prop = l_delta > 0  and (stats.length - center.stats.length.min)/l_delta or 1
+    stats.w_prop = w_delta > 0 and (stats.weight - center.stats.weight.min)/w_delta or 0.5
+    stats.l_prop = l_delta > 0  and (stats.length - center.stats.length.min)/l_delta or 0.5
 	return stats
 end
 
@@ -62,18 +66,76 @@ function FishAndChips.modify_fish_stats(card, stats)
 	if not FishAndChips.mod.config.disable_fish_scaling and not G.P_CENTERS[card.config.center.key].disable_visual_scaling then
 		card.T.scale = card.T.scale * (0.6 + (stats_tot/2*0.7))
 	end
-	card.cost = (card.cost * scalar)
-	card:set_sell_value()
+	card.base_cost = card.config.center.cost * scalar
+	card:set_cost()
+end
+
+function FishAndChips.format_measurement(value, type)
+	if not value then return ' ' end
+	if type == 'weight' then
+		if value > 10000 then
+			return strip_decimals(nil, value / 1000, 1) .. 't'
+		elseif value < 1 then
+			return value*1000 .. 'g'
+		else
+			return value .. 'kg'
+		end
+	end
+	if type == 'length' then
+		if value > 10000 then
+			return strip_decimals(nil, value / 1000, 1) .. 'km'
+		elseif value < 1 then
+			return value*100 .. 'cm'
+		else
+			return value .. 'm'
+		end
+	end
 end
 
 local create_card_hook = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 	local card = create_card_hook(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
-	if card.ability.set == 'fac_Fish' and not card.ability.stats and area then
+	if card.ability.set == 'fac_Fish' and not card.ability.stats and (not area or area and not area.config.fac_compendium) then
 		local stats = FishAndChips.create_card_stats or FishAndChips.create_fish_stats(card.config.center)		
 		FishAndChips.modify_fish_stats(card, stats)
 	end
 	return card
+end
+
+local set_ability_hook = Card.set_ability
+function Card:set_ability(...)
+	local stats = self.ability and self.ability.stats
+	set_ability_hook(self, ...)
+	if self.ability.set == 'fac_Fish' and self.area and not self.area.config.fac_compendium then
+		if stats then
+			local new_base = self.config.center.stats
+			stats.weight = strip_decimals(new_base.weight, new_base.weight.min + stats.w_prop * (new_base.weight.max - new_base.weight.min))
+			stats.length = strip_decimals(new_base.length, new_base.length.min + stats.l_prop * (new_base.length.max - new_base.length.min))
+		else
+			stats = FishAndChips.create_fish_stats(self.config.center)
+		end
+		self.ability.stats = stats
+		FishAndChips.modify_fish_stats(self, stats)
+	end
+end
+
+local copy_card_hook = copy_card
+function copy_card(...)
+	local card = copy_card_hook(...)
+	if card.ability.set == 'fac_Fish' then
+		if not card.ability.stats then
+			local stats = FishAndChips.create_fish_stats(card.config.center)
+			card.ability.stats = stats
+		end
+		FishAndChips.modify_fish_stats(card, card.ability.stats)
+	end
+	return card
+end
+
+local load_hook = Card.load
+function Card:load(...)
+	load_hook(self, ...)
+	if self.ability.set == 'fac_Fish' and self.ability.stats then FishAndChips.modify_fish_stats(self, self.ability.stats) end
 end
 
 FishAndChips.submission_weight_limit = 75
@@ -101,14 +163,14 @@ function FishAndChips.verify_submissions()
 			end
 		end
 	end
-	assert(fac_count <= 2, 'Too many devs registered, submissions are limited to two participants.')
-	if fac_count == 2 then
-		local first, second = contributors[1], contributors[2]
-		assert(
-			first.fac_partner == second.name and second.fac_partner == first.name,
-			'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
-		)
-	end
+	-- assert(fac_count <= 2, 'Too many devs registered, submissions are limited to two participants.')
+	-- if fac_count == 2 then
+	-- 	local first, second = contributors[1], contributors[2]
+	-- 	assert(
+	-- 		first.fac_partner == second.name and second.fac_partner == first.name,
+	-- 		'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
+	-- 	)
+	-- end
 
 	local devs = {}
 	for _, fish in ipairs(G.P_CENTER_POOLS.fac_Fish) do
@@ -136,10 +198,9 @@ function FishAndChips.verify_submissions()
 			assert(in_envs <= FishAndChips.fish_environment_limit or dev_obj.ignore_limits, "Fish " .. fish.key .. " is in " .. in_envs .. " environments when the limit is " .. FishAndChips.fish_environment_limit)
 		end
 		local scalar = math.min(1, FishAndChips.submission_weight_limit / total_weight)
-		if submission.mod == FishAndChips.mod then
 			assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
 			assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")
-		end
+
 		for _, fish in ipairs(submission) do
 			fish.weight = fish.weight * scalar
 			local unpack_env = function(environment)
@@ -245,6 +306,27 @@ function Card:highlight(is_higlighted)
 		end
 		if self.children.select_button and not (self.highlighted and self.area and self.area.config.type ~= "shop") then
 			self.children.select_button:remove(); self.children.select_button = nil
+		end
+		if G.STATE == G.STATES.FAC_FISHING then
+			if self.config.center.requires_jokers then
+				if self.highlighted then
+					G.jokers.T.y = G.jokers.T.y + 15.25
+					G.jokers.T.x = G.jokers.T.x + 1.5 - (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
+				else
+					G.jokers.T.y = G.jokers.T.y - 15.25
+					G.jokers.T.x = G.jokers.T.x - 1.5 + (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
+				end
+			end
+			if self.config.center.requires_consumables then
+				if self.highlighted then
+					G.consumeables.T.y = G.consumeables.T.y + 15.25
+					G.consumeables.T.x = G.consumeables.T.x - 3.5
+				else
+					G.consumeables.T.y = G.consumeables.T.y - 15.25
+					G.consumeables.T.x = G.consumeables.T.x + 3.5
+				end
+		
+			end
 		end
 	else
 		card_highlight(self, is_higlighted)
