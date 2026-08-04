@@ -1,5 +1,14 @@
+SMODS.Atlas {
+	key = "thunder_and_aiko",
+	path = "thunder_and_aiko/fishing_event.png",
+	px = 71,
+	py = 95,
+}
+
 FishAndChips.Fish({
 	key = "trojan_fish",
+	atlas = "thunder_and_aiko",
+	pos = { x = 0, y = 0 },
 	stats = {
 		weight = {
 			min = 10000,
@@ -114,6 +123,8 @@ end
 
 FishAndChips.Fish({
 	key = "moai_statue",
+	atlas = "thunder_and_aiko",
+	pos = { x = 3, y = 0},
 	weight = 5,
 	environments = {
 		pier = 2,
@@ -185,6 +196,8 @@ end
 FishAndChips.Fish({
 	key = "nft",
 	weight = 5,
+	atlas = "thunder_and_aiko",
+	pos = { x = 1, y = 0},
 	environments = {
 		wormhole = 1,
 	},
@@ -338,6 +351,8 @@ FishAndChips.Fish({
 FishAndChips.Fish({
 	key = "soul_fysh",
 	weight = 5,
+	atlas = "thunder_and_aiko",
+	pos = { x = 2, y = 0},
 	environments = {
 		styx = 1,
 		wormhole = 1,
