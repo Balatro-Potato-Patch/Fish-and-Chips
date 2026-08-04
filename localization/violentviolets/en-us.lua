@@ -121,7 +121,7 @@ return {
                     text = {
                         {
                             "Give a random {C:blue}Fish{} a random {C:dark_edition}Edition{}",
-                            "{C:inactive}Cannot give Polychrome{}"
+                            "{C:inactive}Cannot give Polychrome or Negative{}"
                         }
                     },
                     flavour = {
