@@ -6,7 +6,7 @@ priority = 0
 [[patches]]
 [patches.pattern]
 target = 'game.lua'
-pattern = '''if self.achievement_notification then '''
+pattern = '''if self.CONTROLLER.dragging.target and self.CONTROLLER.dragging.target ~= self.CONTROLLER.focused.target then'''
 position = 'before'
 payload = '''
 FishAndChips.FooSqueax.undertale:draw()

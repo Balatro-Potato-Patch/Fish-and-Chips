@@ -357,7 +357,7 @@ function G.FUNCS.fac_fas_undertale_bottom_button_click (e)
 		if not G.consumeables or #G.consumeables.cards == 0 then
 			target.config.object = FishAndChips.FooSqueax.undertale:info("no_items", target)
 		else
-			target.config.object = CardArea(G.ROOM.T.x, G.ROOM.T.y-0.2, (G.CARD_W*7.1), G.CARD_H, { card_limit = #G.consumeables.cards, type = 'title', highlight_limit = 0, collection = true }) 
+			target.config.object = CardArea(G.ROOM.T.x, G.ROOM.T.y-0.2, (G.CARD_W*7.1), G.CARD_H, { card_limit = #G.consumeables.cards, type = 'title_2', highlight_limit = 0, collection = true }) 
 			for i=1, #G.consumeables.cards do
 				local card = Card(target.config.object.T.x, target.config.object.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS[G.consumeables.cards[i].config.center_key])
 				target.config.object:emplace(card)
