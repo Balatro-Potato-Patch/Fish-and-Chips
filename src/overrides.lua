@@ -247,6 +247,7 @@ local g_uidef_card_h_popup_ref = G.UIDEF.card_h_popup
 function G.UIDEF.card_h_popup(card)
 	if card.ability and card.ability.set == 'fac_Fish' and not FishAndChips.mod.config.disable_flavour then FishAndChips.tooltip_seed = (FishAndChips.tooltip_seed or 0) + 1 end
     local ret = g_uidef_card_h_popup_ref(card)
+	-- Environments tooltip
     if card.config and card.config.center and card.config.center.set == "fac_Fish" and card.area and (card.area.config.collection or card.area.config.fac_compendium) then
         local t = {n=G.UIT.C, config = {padding = 0.1, align = 'cm'}, nodes = {}}
         for _, env in ipairs(G.FAC_ENVIRONMENT_POOL) do
@@ -256,11 +257,16 @@ function G.UIDEF.card_h_popup(card)
 				}}
 			end
         end
+		if card.config.center.treasure then
+			t.nodes[#t.nodes+1] = {n = G.UIT.R, config = {align = 'cm', colour = G.C.MONEY, r=0.12, padding = 0.07, minh = 0.5, minw = 2.2, outline = 1, outline_colour = darken(FishAndChips.mod.badge_colour, 0.5)}, nodes = {
+					{n = G.UIT.T, config = {text = localize('k_fac_treasure_catch'), scale = 0.3, colour = G.C.UI.TEXT_LIGHT}}
+				}}
+		end
 		ret.nodes[#ret.nodes].n = G.UIT.R
 		ret.nodes[#ret.nodes].nodes[#ret.nodes[#ret.nodes].nodes].n = G.UIT.C
 
         table.insert(ret.nodes[#ret.nodes].nodes, 1, {n=G.UIT.C, config = {align = 'cm', padding = -0.175}, nodes = {
-			{n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.12, colour = darken(FishAndChips.mod.badge_colour, 0.6), emboss = 0.05}, nodes={
+			{n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.12, colour = darken(FishAndChips.mod.badge_colour, 0.6)}, nodes={
 				{n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.12, minw = 2.4, colour = lighten(FishAndChips.mod.badge_colour, 0.2), shader = 'fac_mod_badge'}, nodes={
 					{n=G.UIT.C, nodes = {
 						{n = G.UIT.R, config = {align = "cm", r = 0.1}, nodes = {
@@ -274,6 +280,7 @@ function G.UIDEF.card_h_popup(card)
 		}})
 		ret.nodes[#ret.nodes].nodes[2] = {n=G.UIT.C, nodes = {ret.nodes[#ret.nodes].nodes[2]}}
     end
+	-- Flavour text addition
     if card.ability and card.ability.set == 'fac_Fish' and not FishAndChips.mod.config.disable_flavour and card.config.center.discovered and G.localization.descriptions.fac_Fish[card.config.center_key] and G.localization.descriptions.fac_Fish[card.config.center_key].fac_flavour_parsed then
 		local name = SMODS.deepfind(ret, 'tooltip_id_'..FishAndChips.tooltip_seed, nil, true)[1]
         local name_node = name.objtree
@@ -290,7 +297,38 @@ function G.UIDEF.card_h_popup(card)
         end
         table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 1, {n=G.UIT.R, config = {align = 'cm'}, nodes = final_flavour})
     end
-    return ret
+	-- Measurements
+	if card.ability and card.ability.set == 'fac_Fish' and card.area and not (card.area.config.collection or card.area.config.fac_compendium) then
+		local name = SMODS.deepfind(ret, 'main_box_flag', 'i')[1]
+        local name_node = name.objtree
+        local flavour_node = {}
+		local stats = card.ability.stats
+		local stat_proto = card.config.center.stats
+		local weight_perc = (stats.weight - stat_proto.weight.min)/(stat_proto.weight.max-stat_proto.weight.min)*100
+		local length_perc = (stats.length - stat_proto.length.min)/(stat_proto.length.max-stat_proto.length.min)*100
+		local colours = { -- TODO: are these colours okay?
+			darken(G.C.RED, 0.1),
+			G.C.RED,
+			G.C.ORANGE,
+			G.C.YELLOW,
+			G.C.GREEN,
+			G.ARGS.LOC_COLOURS.edition
+		}
+		
+		local weight_col_index = math.min(5, math.max(math.floor(weight_perc/20), 1))
+		local weight_col = stats.weight == stat_proto.weight.max and colours[6] or mix_colours(colours[weight_col_index+1], colours[math.max(weight_col_index, 1)], (weight_perc - (weight_col_index * 20))/20)
+		
+		local length_col_index = math.min(5, math.max(math.floor(length_perc/20), 1))
+		local length_col = stats.length == stat_proto.length.max and colours[6] or mix_colours(colours[length_col_index+1], colours[length_col_index], (length_perc - (length_col_index * 20))/20)
+		
+        table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], {n=G.UIT.R, config = {align = 'cm'}, nodes = {
+			{n=G.UIT.T, config = {text = localize('ph_fac_weight'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
+			{n=G.UIT.T, config = {text = FishAndChips.format_measurement(stats.weight, 'weight', stats.units), scale = 0.27, colour = weight_col, shadow = true}},
+			{n=G.UIT.T, config = {text = '  '..localize('ph_fac_length'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
+			{n=G.UIT.T, config = {text = FishAndChips.format_measurement(stats.length, 'length', stats.units), scale = 0.27, colour = length_col, shadow = true}},
+		}})
+    end
+	return ret
 end
 
 local name_from_hook = name_from_rows
@@ -453,6 +491,7 @@ local uielement_click_ref = UIElement.click
 ---@diagnostic disable-next-line: duplicate-set-field
 function UIElement:click(...)
 	if FishAndChips.safe_to_press_buttons() or self.config.fac_ignore then
+		if G.GAME.fac_fish_expanded and not self.config.fac_ignore then G.FUNCS.fac_open_fishing_menu() end
 		return uielement_click_ref(self, ...)
 	end
 end

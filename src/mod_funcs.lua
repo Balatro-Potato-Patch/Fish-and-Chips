@@ -96,11 +96,11 @@ end
 
 FishAndChips.mod.calculate = function(self, context)
 	if context.end_of_round and context.main_eval and not context.game_over then
-		FishAndChips.add_bait_to_shop('bait_fac_normal', pseudorandom('fac_guaranteed_normal_bait' .. G.GAME.round_resets.ante, 1, 3))
 		local amt = pseudorandom("fac_bait_gen" .. G.GAME.round_resets.ante, 2, 5)
 		for _ = 1, amt do
 			FishAndChips.add_bait_to_shop(SMODS.poll_object({ type = "fac_Bait", append = 'fac_bait_shop' }))
 		end
+		FishAndChips.add_bait_to_shop('bait_fac_normal', pseudorandom('fac_guaranteed_normal_bait' .. G.GAME.round_resets.ante, 1, 3))
 		FishAndChips.clean_up_bait_shop()
 	end
 end
