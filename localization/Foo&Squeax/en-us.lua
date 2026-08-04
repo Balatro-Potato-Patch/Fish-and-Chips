@@ -374,7 +374,11 @@ return {
 					":3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3",
 				},
 				check_squeax = {
-					"GABBY 06 ATK 09 DEF"
+					"GABBY 06 ATK 09 DEF",
+					"A simple washed machine.",
+					"Allegedly a 'Guest Dev' of some kind.",
+					"It seems like her Credit Card",
+					"in the compendium has more information..."
 				},
 				spare = {
 					"You WON!",
