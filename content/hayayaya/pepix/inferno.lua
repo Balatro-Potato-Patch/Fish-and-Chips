@@ -39,6 +39,10 @@ FishAndChips.Fish({
 			then
 				G.E_MANAGER:add_event(Event({
 					func = function()
+						-- Get rid of active bait when we dont need to
+						if G.GAME.fac_active_bait and G.STATE ~= G.STATES.FAC_FISHING then
+							G.GAME.fac_active_bait = nil
+						end
 						FishAndChips.add_bait_to_inventory(bait, 1)
 						SMODS.calculate_effect(
 							{ message = localize("ph_facyou_hayayaya_returned"), instant = true },
