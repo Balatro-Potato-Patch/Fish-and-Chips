@@ -22,6 +22,16 @@ return {
 				text = { 'You can {C:attention}Skip', '{C:attention}#1#{} Boss Blind' },
 				flavor = { "Today's fish is", 'trout a la creme.' },
 			},
+			fish_fac_bagels_flakefish = {
+				name = 'Flakefish',
+				text = {
+					'{X:mult,C:white}X#1#{} Mult if this hand has',
+					'{C:attention}more{} Mult than the last one',
+					'or {X:mult,C:white}X0{} Mult otherwise',
+					'{C:inactive}(Previously {C:mult}#2#{C:inactive} Mult)',
+				},
+				flavor = { 'A tiny, delicate fish.', "It's said no two are alike." },
+			},
 		},
 	},
 }
