@@ -1,0 +1,44 @@
+FishAndChips.Fish{
+	key = "fas_you",
+	weight = 5,
+	environments = {
+		styx = 1,
+		backroom = 0.25,
+		swamp = 0.5
+	},
+	ppu_coder = {"Foo54"},
+	stats = {
+		weight = {min = 5, max = 5},
+		length = {min = 5, max = 5}
+	},
+	config = {
+		immutable = {
+			primed = false,
+			used = false
+		}
+	},
+	attributes = {"useable"},
+	blueprint_compat = false,
+	calculate = function(self, card, context)
+		if context.fac_fish_caught and not context.blueprint then
+			if card.ability.immutable.primed then
+				context.fac_fish_caught:set_edition(SMODS.poll_edition{no_negative = true, guaranteed = true})
+				card.ability.immutable.primed = false
+				card.ability.immutable.used = true
+			end
+		end
+		if context.ante_end and not context.blueprint then
+			card.ability.immutable.used = false
+		end
+	end,
+	can_use = function (self, card)
+		return not card.ability.immutable.used
+	end,
+	keep_on_use = function (self, card)
+		return true
+	end,
+	use = function(self, card)
+		card.ability.immutable.primed = not card.ability.immutable.primed
+		juice_card_until(card, function() return not card.ability.immutable.used and card.ability.immutable.primed end, true)
+	end,
+}
