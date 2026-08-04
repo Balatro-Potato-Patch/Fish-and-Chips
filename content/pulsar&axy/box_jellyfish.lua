@@ -1,15 +1,14 @@
 -- lots of this code is from @foo54 on Discord, if we need help debugging, contact them
 FishAndChips.Fish {
 	key = "pa_box_jellyfish",
-	weight = 10,
+	weight = 7,
 	atlas = "pa_pulsarfish",
 	pos = { x = 2, y = 0 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "xmult" },
+	attributes = { "usable" },
 	environments = {
-		calm_pond = 1,
-		backroom = 0.5
+		pier = 1,
 	},
 	stats = {
 		length = {min = 1.75, max = 2},

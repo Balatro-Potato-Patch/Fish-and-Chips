@@ -1,14 +1,13 @@
 FishAndChips.Fish {
 	key = "pa_videogame",
-	weight = 10,
+	weight = 4,
 	atlas = "pa_pulsarfish",
 	pos = { x = 5, y = 0 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "scaling" },
 	environments = {
-		soup = 1,
-		backroom = 0.5
+		city_river = 1
 	},
 	stats = {
 		length = { min = 0.0120, max = 0.0120},  --based on ordinary cd
@@ -18,7 +17,7 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			xmult = 1,
-            xmult_gain = 0.5
+            xmult_gain = 0.1
 		}
 	},
 	loc_vars = function(self, info_queue, card)

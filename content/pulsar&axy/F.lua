@@ -1,6 +1,6 @@
 FishAndChips.Fish {
 	key = "pa_F",
-	weight = 10,
+	weight = 8,
 	atlas = "pa_pulsarfish",
 	pos = { x = 2, y = 1 },
 	ppu_artist = { "Pulsar" },
@@ -8,7 +8,6 @@ FishAndChips.Fish {
 	attributes = { "mult", "food" },
 	environments = {
 		soup = 1,
-		backroom = 0.5
 	},
 	stats = {
 		length = {min = 0.01, max = 0.01},  --vibes

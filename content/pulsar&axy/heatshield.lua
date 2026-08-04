@@ -1,14 +1,14 @@
 FishAndChips.Fish {
 	key = "pa_heatshield",
-	weight = 10,
+	weight = 5,
 	atlas = "pa_pulsarfish",
 	pos = { x = 1, y = 0 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "economy" },
+	attributes = { "economy", "planet" },
 	environments = {
-		soup = 1,
-		backroom = 0.5
+		wormhole = 1,
+		pier = 0.3
 	},
 	blueprint_compat = false,
 	config = {

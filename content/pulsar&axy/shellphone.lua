@@ -1,14 +1,15 @@
 FishAndChips.Fish {
 	key = "pa_shellphone",
-	weight = 10,
+	weight = 5,
 	atlas = "pa_pulsarfish",
 	pos = { x = 5, y = 1 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "xmult" },
+	attributes = { "economy", "rank", "scaling"},
 	environments = {
-		soup = 1,
-		backroom = 0.5
+		city_river = 0.5,
+		pier = 1,
+		backrooms = 0.3,
 	},
 	stats = {
 		length = {min = 0.012, max = 0.012},  --vaugely based on actual phone + measurements of a shell i have

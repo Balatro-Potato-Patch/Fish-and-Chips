@@ -8,9 +8,9 @@ FishAndChips.Fish {
 	attributes = { "boss_blind", "scaling", "passive" },
 	environments = {
 		aquifer = 1,
-		chocolate_river = 0.3,
 		styx = 0.3,
-		city_river = 0.3
+		city_river = 0.3,
+		chocolate_river = 0.3
 	},
 	stats = {
 		length = { min = 0.00197, max = 0.00197 },  --based on average gold ring

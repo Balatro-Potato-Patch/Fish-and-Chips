@@ -1,13 +1,13 @@
 FishAndChips.Fish {
 	key = "pa_doorfish",
-	weight = 10,
+	weight = 5,
 	atlas = "pa_pulsarfish",
 	pos = { x = 6, y = 1 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "generation" },
+	attributes = { "generation", "usable" },
 	environments = {
-		calm_pond = 1,
+		city_river = 1,
 		backroom = 0.5
 	},
 	stats = {

@@ -1,14 +1,17 @@
 FishAndChips.Fish {
 	key = "pa_fromg",
-	weight = 10,
+	weight = 6,
 	atlas = "pa_pulsarfish",
 	pos = { x = 3, y = 0 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "xmult" },
+	attributes = { "chips", "usable", "destroy_card" },
 	environments = {
 		swamp = 1,
-		backroom = 0.5
+		garden = 1,
+		city_river = 1,
+		calm_pond = 1,
+		chocolate_river = 1
 	},
 	stats = {
 		length = {min = 1.75, max = 2},

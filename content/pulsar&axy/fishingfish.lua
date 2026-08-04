@@ -1,14 +1,15 @@
 FishAndChips.Fish {
 	key = "pa_fishingfish",
-	weight = 10,
+	weight = 5,
 	atlas = "pa_pulsarfish",
 	pos = { x = 1, y = 1 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "usable" },
+	attributes = { "usable", "passive"},
 	environments = {
-		soup = 1,
-		backroom = 0.5
+		pier = 0.5,
+		backroom = 1,
+		city_river = 0.5
 	},
 	stats = {
         weight = {min = 4, max = 10}, --similar range to actual fishing rods lengths, but heavier

@@ -1,14 +1,14 @@
 FishAndChips.Fish {
 	key = "pa_mysteryfish",
-	weight = 10,
+	weight = 5,
 	atlas = "pa_pulsarfish",
 	pos = { x = 6, y = 0 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "hands"},
 	environments = {
-		soup = 1,
-		backroom = 0.5
+		calm_pond = 1,
+		garden = 0.5
 	},
 	stats = {
 		length = {min = 1.5, max = 2.25},  --entirely vibes based
