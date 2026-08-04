@@ -28,7 +28,7 @@ SMODS.Atlas({
 function FishAndChips.crimsonseraphim.advance_center(center)
     local cards = {}
     for i, v in pairs(G.P_CENTERS) do
-        if v.ppu_artist and v.ppu_artist[1] == "crimsonseraphim" and v.set == "fac_Fish" and v.key ~= "fish_fac_ultimate_weapon" then
+        if v.ppu_artist and v.ppu_artist[1] == "crimsonseraphim" and v.set == "fac_Fish" then
             cards[#cards+1] = v
         end
     end
@@ -1755,11 +1755,11 @@ FishAndChips.Fish {
     can_use = function()
         return G.GAME.crimsonseraphim_obtained_fish
     end,
-    treasure = true
+    treasure = true,
 }
 
 SMODS.Shader({
-    key="ultimate_weapon",
+    key="crimsonseraphim_ultimate_weapon",
     path="crimsonseraphim/ultimate_weapon.fs",
 })
 
@@ -1769,7 +1769,7 @@ SMODS.DrawStep({
 	func = function(self)
         local card = self.config.center_key
         if (card ~= "fish_fac_ultimate_weapon")  then return end
-        self.children.center:draw_shader('fac_ultimate_weapon', nil, self.ARGS.send_to_shader)
+        self.children.center:draw_shader('fac_crimsonseraphim_ultimate_weapon', nil, self.ARGS.send_to_shader)
 	end,
 	conditions = { vortex = false, facing = "front" },
 })
