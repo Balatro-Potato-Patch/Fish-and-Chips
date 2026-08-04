@@ -60,13 +60,12 @@ function FishAndChips.mod.reset_game_globals(run_start)
     end
 end
 
-local game_update_ref = Game.update
-function Game:update(dt)
-    game_update_ref(self, dt)
-    if G.STATE == G.STATES.FAC_FISHING then
-        if G.FISHING_STATE == G.FISHING_STATES.HOOKING and G.FAC_FISH_GAME.decay_unlocked then
-            G.GAME.blamperer_hook_time = G.GAME.blamperer_hook_time + dt
-        end
+local upd_fac_fish_hooking_ref = G.update_fac_fishing_hooking
+function G:update_fac_fishing_hooking(dt)
+    upd_fac_fish_hooking_ref(self, dt)
+    if G.FAC_FISH_GAME.decay_unlocked then
+        G.GAME.blamperer_hook_time = G.GAME.blamperer_hook_time + dt
+        print(G.GAME.blamperer_hook_time)
     end
 end
 
