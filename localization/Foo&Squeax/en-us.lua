@@ -221,7 +221,7 @@ return {
 				text = {
 					"Each {C:attention}8{} held in hand",
 					"at the end of round",
-					"has a {C:green}#1# in #2#{} change",
+					"has a {C:green}#1# in #2#{} chance",
 					"to create a {C:attention}Bait"
 				}
 			},
