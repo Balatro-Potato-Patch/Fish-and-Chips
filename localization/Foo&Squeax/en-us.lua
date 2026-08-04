@@ -228,10 +228,12 @@ return {
 			fish_fac_fas_you = {
 				name = "YOU",
 				flavour = {
-
+					"I HAVE NO IDEA - medic tf2"
 				},
 				text = {
-
+					"Once per {C:attention}Ante",
+					"Use to wish a random {C:dark_edition}edition",
+					"upon the next {C:fac_fish}Fish{} caught"
 				}
 			}
 		},
