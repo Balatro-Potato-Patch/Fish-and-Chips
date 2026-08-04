@@ -108,6 +108,15 @@ return {
                     "placeholder",
                 }
             },
+            fish_fac_untitledfish = {
+                name = "Untitled",
+                text = {
+                    "Gives {C:purple}#4#{} Score on your {C:attention}penultimate hand"
+                },
+                flavor = {
+                    [[ERROR#4#ERROR#4#]]
+                }
+            },
         },
         PotatoPatch = {
             PotatoPatchDev_FirstTry = {
