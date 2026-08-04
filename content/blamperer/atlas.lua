@@ -18,7 +18,7 @@ FishAndChips.Fish {
     },
     loc_vars = function(self, info_queue, card)
         return {
-            vars = { card.ability.extra.chip_gain, card.ability.extra.chips }
+            vars = { SMODS.signed(card.ability.extra.chip_gain), SMODS.signed(card.ability.extra.chips) }
         }
     end,
     stats = {

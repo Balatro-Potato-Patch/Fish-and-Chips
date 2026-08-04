@@ -78,10 +78,10 @@ return {
             fish_fac_blamperer_atlas = {
                 name = "Soaked Atlas",
                 text = {
-                    "{C:chips}+#1#{} Chips each time you",
+                    "{C:chips}#1#{} Chips each time you",
                     "catch a {C:fac_fish}Fish{} in a",
                     "different {C:fac_environment}Environment",
-                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
+                    "{C:inactive}(Currently {C:chips}#2#{C:inactive} Chips)"
                 },
                 flavor = {
                     "Probably not suitable for any",
