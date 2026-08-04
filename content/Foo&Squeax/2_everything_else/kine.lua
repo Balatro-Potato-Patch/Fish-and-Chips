@@ -6,6 +6,10 @@ FishAndChips.Fish{
 		garden = 1
 	},
 	ppu_coder = {"Foo54"},
+	ppu_artist = {"squeax09"},
+	atlas = 'fas_fish_general',
+	pos = {x=4,y=0},
+	pixel_size = {w=59,h=95},
 	config = {
 		immutable = {
 			id = nil,
