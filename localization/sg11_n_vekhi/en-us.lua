@@ -103,8 +103,7 @@ return {
 			fish_fac_sg11_n_vekhi_sprat_can = {
 				name = "Sprats in a Can",
 				text = {
-					"{C:attention}Use{} to fill bucket",
-					"with {C:attention}10{} {C:attention}Sprat{}",
+					"{C:attention}Use{} to create {C:attention}#1#{} {C:attention}Sprats{}",
 					"{C:inactive}(Does not require room){}",
 				},
 			},
