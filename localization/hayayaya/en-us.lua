@@ -178,6 +178,20 @@ return {
 					"ones exist for emojis...",
 				},
 			},
+			fish_fac_luvdisc = {
+				name = "Luvdisc",
+				text = {
+					"This Fish gains {X:mult,C:white}X#1#{} Mult",
+					"if played card is {C:hearts}Hearts{}",
+					"{C:attention}Resets{} when not {C:hearts}Hearts{}",
+					"{C:inactive}(Currently{} {X:mult,C:white}X#2#{C:inactive} Mult)",
+				},
+				flavor = {
+					"It is said that a couple",
+					"finding this Pokémon will",
+					"be blessed with eternal love.",
+				},
+			},
 		},
 	},
 	misc = {
