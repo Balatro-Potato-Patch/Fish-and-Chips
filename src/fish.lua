@@ -95,7 +95,7 @@ end
 local create_card_hook = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 	local card = create_card_hook(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
-	if card.ability.set == 'fac_Fish' and not card.ability.stats and area and not area.config.fac_compendium then
+	if card.ability.set == 'fac_Fish' and not card.ability.stats and (not area or area and not area.config.fac_compendium) then
 		local stats = FishAndChips.create_card_stats or FishAndChips.create_fish_stats(card.config.center)		
 		FishAndChips.modify_fish_stats(card, stats)
 	end
@@ -306,6 +306,27 @@ function Card:highlight(is_higlighted)
 		end
 		if self.children.select_button and not (self.highlighted and self.area and self.area.config.type ~= "shop") then
 			self.children.select_button:remove(); self.children.select_button = nil
+		end
+		if G.STATE == G.STATES.FAC_FISHING then
+			if self.config.center.requires_jokers then
+				if self.highlighted then
+					G.jokers.T.y = G.jokers.T.y + 15.25
+					G.jokers.T.x = G.jokers.T.x + 1.5 - (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
+				else
+					G.jokers.T.y = G.jokers.T.y - 15.25
+					G.jokers.T.x = G.jokers.T.x - 1.5 + (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
+				end
+			end
+			if self.config.center.requires_consumables then
+				if self.highlighted then
+					G.consumeables.T.y = G.consumeables.T.y + 15.25
+					G.consumeables.T.x = G.consumeables.T.x - 3.5
+				else
+					G.consumeables.T.y = G.consumeables.T.y - 15.25
+					G.consumeables.T.x = G.consumeables.T.x + 3.5
+				end
+		
+			end
 		end
 	else
 		card_highlight(self, is_higlighted)
