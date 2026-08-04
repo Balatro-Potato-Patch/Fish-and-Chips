@@ -343,6 +343,9 @@ end
 function G.FUNCS.fac_fas_undertale_bottom_button_click (e)
 	local type = e.config.ref_table[3]
 	local target = FishAndChips.FooSqueax.undertale.UI.main_ui:get_UIE_by_ID("text_box")
+	if target.config.object.cards then
+		target.config.object.cards = {}
+	end
 	if type == "fight" then
 		target.config.object = FishAndChips.FooSqueax.undertale:info("combat", target)
 	elseif type == "act" then
@@ -351,8 +354,15 @@ function G.FUNCS.fac_fas_undertale_bottom_button_click (e)
 			{"squeax", "options", "squeax"}
 		}}, target)
 	elseif type == "item" then
-		if not G.consumables or #G.consumeables.cards == 0 then
+		if not G.consumeables or #G.consumeables.cards == 0 then
 			target.config.object = FishAndChips.FooSqueax.undertale:info("no_items", target)
+		else
+			target.config.object = CardArea(G.ROOM.T.x, G.ROOM.T.y-0.2, (G.CARD_W*7.1), G.CARD_H, { card_limit = #G.consumeables.cards, type = 'title', highlight_limit = 0, collection = true }) 
+			for i=1, #G.consumeables.cards do
+				local card = Card(target.config.object.T.x, target.config.object.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS[G.consumeables.cards[i].config.center_key])
+				target.config.object:emplace(card)
+				card.no_ui = true
+			end
 		end
 	elseif type == "mercy" then
 		target.config.object = FishAndChips.FooSqueax.undertale:options({{
@@ -409,6 +419,9 @@ local g_funcs_exit_overlay_menu_ref = G.FUNCS.exit_overlay_menu
 function G.FUNCS.exit_overlay_menu(...)
 	if FishAndChips.FooSqueax.undertale.active and not FishAndChips.FooSqueax.undertale.removing then
 		local target = FishAndChips.FooSqueax.undertale.UI.main_ui:get_UIE_by_ID("text_box")
+		if target.config.object.cards then
+			target.config.object.cards = {}
+		end
 		target.config.object = FishAndChips.FooSqueax.undertale:info("flee_" .. math.random(1, 4), target)
 		target.UIBox:recalculate()
 		FishAndChips.FooSqueax.undertale.removing = true
