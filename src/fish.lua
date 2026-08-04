@@ -43,14 +43,19 @@ end
 local function random_measurement(stats, forced)
 	local delta = stats.max - stats.min
 	local value = stats.min + (pseudorandom('fac_fish_measurement') * delta)
-	return strip_decimals(stats, value)
+	return stats.units and value or strip_decimals(stats, value)
 end
 
 
 function FishAndChips.create_fish_stats(center)
+	if center.set ~= 'fac_Fish' then return end
 	local stats = {
         weight = random_measurement(center.stats.weight),
-        length = random_measurement(center.stats.length)
+        length = random_measurement(center.stats.length),
+		units = {
+			length = center.stats.length.units,
+			weight = center.stats.weight.units
+		}
     }
 	local w_delta = center.stats.weight.max - center.stats.weight.min
 	local l_delta = center.stats.length.max - center.stats.length.min
@@ -70,9 +75,12 @@ function FishAndChips.modify_fish_stats(card, stats)
 	card:set_cost()
 end
 
-function FishAndChips.format_measurement(value, type)
+function FishAndChips.format_measurement(value, measurement, units)
 	if not value then return ' ' end
-	if type == 'weight' then
+	if units[measurement] then
+		return string.format(localize(units[measurement].format), strip_decimals(nil, value/units[measurement].scale, units[measurement].precision or 2))
+	end
+	if measurement == 'weight' then
 		if value > 10000 then
 			return strip_decimals(nil, value / 1000, 1) .. 't'
 		elseif value < 1 then
@@ -81,7 +89,7 @@ function FishAndChips.format_measurement(value, type)
 			return value .. 'kg'
 		end
 	end
-	if type == 'length' then
+	if measurement == 'length' then
 		if value > 10000 then
 			return strip_decimals(nil, value / 1000, 1) .. 'km'
 		elseif value < 1 then
