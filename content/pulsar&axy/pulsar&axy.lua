@@ -152,9 +152,11 @@ FishAndChips.Fish {
 		local opposite = 1 / (card.ability.extra.perma_xblind_size or 1)
 
 		local dupeCount = 0
-		for _, fish in ipairs(G.fac_fish_area.cards) do
-			if fish.config.center.key == self.key then
-				dupeCount = dupeCount + 1
+		if G.fac_fish_area then
+			for _, fish in ipairs(G.fac_fish_area.cards) do
+				if fish.config.center.key == self.key then
+					dupeCount = dupeCount + 1
+				end
 			end
 		end
 		local dupeCount = dupeCount > 7 and 7 or dupeCount -- stop at seven because six sevennn
@@ -615,7 +617,7 @@ FishAndChips.Fish {
 		immutable = {}
 	},
 	loc_vars = function(self, info_queue, card)
-		local description = if card.ability.extra.has_booster then "to store" else "during fishing to open"
+		local description = card.ability.extra.has_booster and "to store" or "during fishing to open"
 		return { vars = { description } }
 	end,
 	load = function(self, card, card_table, other_card)

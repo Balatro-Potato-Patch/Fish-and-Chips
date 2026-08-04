@@ -1,4 +1,4 @@
-return {
+local pa_fish = {
     descriptions = {
 		PotatoPatch = {
 			PotatoPatchDev_Axy = {
@@ -248,3 +248,5 @@ return {
         },
     }
 }
+pa_fish.descriptions.fac_Fish.fish_fac_pa_doorfish = SMODS.load_file("localization/pulsaraxy/doorfish/en-us.lua", "FishAndChips")()
+return pa_fish
