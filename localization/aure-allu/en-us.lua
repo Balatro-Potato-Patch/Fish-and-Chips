@@ -244,6 +244,18 @@ return {
                     "This Chimaera ain't arced."
                 }
             },
+            fish_fac_guppies = {
+                name = {"Guppies"},
+                text = {
+                    "All {C:attention}held {C:fac_fish}Fish{} have",
+                    "a {C:green}#1# in #2#{} chance",
+                    "to give {C:chips}#3#{} Chips"
+                },
+                flavor = {
+                    "Freshly fired",
+                    "from a tank"
+                }
+            },
         },
     },
     misc = {

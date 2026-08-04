@@ -1512,5 +1512,42 @@ FishAndChips.Fish {
 	end
 }
 
+-- Guppies
+FishAndChips.Fish {
+	key = "guppies",
+	atlas = "aure-allu_fish",
+	pos = { x = 0, y = 4 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "chips", "chance" },
+	stats = {weight = {min = 0.03, max = 0.1}, length = {min = 0.04, max = 0.12}},
+	blueprint_compat = true,
+	config = {
+		extra = {
+			chips_per_fish = 33,
+			chips_odds = 3,
+		},
+	},
+	environments = {
+		volcano = 5,
+		wormhole = 10,
+	},
+	loc_vars = function(self, info_queue, card)
+		local numerator_guppies, denominator_guppies = SMODS.get_probability_vars(card, 1, card.ability.extra.chips_odds, "fac_aure-allu_guppies")
+		return { vars = { numerator_guppies, denominator_guppies, zero_signed(card.ability.extra.chips_per_fish) } }
+	end,
+	calculate = function(self, card, context)
+		if context.other_unknown and context.other_unknown.ability.set == "fac_Fish" then
+			if SMODS.pseudorandom_probability(card, "fac_aure-allu_guppies", 1, card.ability.extra.chips_odds) then
+				return {
+					chips = card.ability.extra.chips_per_fish
+				}
+			end
+			return nil, true
+		end
+	end,
+}
+
 
 -- #endregion
