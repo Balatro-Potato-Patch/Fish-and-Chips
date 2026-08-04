@@ -437,8 +437,7 @@ FishAndChips.Fish { --Timothy
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
 			if G.GAME.fac_last_used_fish ~= tim then
 				if card.ability.extra.xmult > 1 then
-					SMODS.reset_card(card, {ref_value = "xmult", reset_value = 0, no_message = true})
-					return {message = localize('fac_vman2002_timothy_reset')}
+					return SMODS.reset_card(card, {ref_value = "xmult", reset_value = 0, reset_message = {message_key = "fac_vman2002_timothy_reset"}})
 				end
 			else
 				SMODS.scale_card(card, {ref_value = "xmult", scalar_value = "xmult_gain",})
