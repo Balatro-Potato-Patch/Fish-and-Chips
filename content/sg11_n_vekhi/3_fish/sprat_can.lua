@@ -1,6 +1,11 @@
+SMODS.Sound({
+	key = "sprat_can_opening",
+	path = "sg11_n_vekhi/can_opening.ogg",
+})
+
 SMODS.Atlas({
 	key = "sg11_n_vekhi_sprat_can",
-	path = "sg11_n_vekhi/nautilus.png",
+	path = "sg11_n_vekhi/sprat_can.png",
 	px = 71,
 	py = 95,
 })
@@ -40,6 +45,7 @@ FishAndChips.Fish({
 		return true
 	end,
 	use = function(self, card)
+		play_sound("fac_sprat_can_opening")
 		for i = 1, card.ability.extra.amount do
 			SMODS.add_card({ key = "fish_fac_sg11_n_vekhi_sprat", area = G.fac_fish_area })
 		end

@@ -1,8 +1,8 @@
 SMODS.Atlas({
 	key = "sg11_n_vekhi_sprat",
-	path = "sg11_n_vekhi/nautilus.png",
-	px = 71,
-	py = 95,
+	path = "sg11_n_vekhi/sprat.png",
+	px = 36,
+	py = 48,
 })
 
 FishAndChips.Fish({
@@ -23,20 +23,13 @@ FishAndChips.Fish({
 		weight = { min = 0.003, max = 0.012 },
 		length = { min = 0.06, max = 0.14 },
 	},
+	display_size = { w = 36, h = 48 },
 	environments = {
 		calm_pond = 1,
 		pier = 1,
 		garden = 1,
 		swamp = 1,
 	},
-	display_size = {
-		w = 71 / 2,
-		h = 95 / 2,
-	},
-	-- pixel_size = {
-	-- 	w = 71 * 2,
-	-- 	h = 95 * 2,
-	-- },
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = { SMODS.signed(card.ability.extra.chips), card.ability.extra.dollars },
