@@ -1,0 +1,25 @@
+[manifest]
+version = "0.1.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''if self.achievement_notification then '''
+position = 'before'
+payload = '''
+FishAndChips.FooSqueax.undertale:draw()
+'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = 'globals.lua'
+pattern = '''self.I = {'''
+position = 'after'
+payload = '''UNDERTALE = {},'''
+match_indent = true
+times = 1
+

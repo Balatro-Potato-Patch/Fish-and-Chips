@@ -243,7 +243,7 @@ return {
 				name = "Foo54",
 				text = {
 					{
-						"temp"
+						"You should click me it'll be funny trust"
 					},
 					{
 						"Defoko drawn by {C:ED5B5B}me",
@@ -321,6 +321,81 @@ return {
 			k_fac_fas_nyon_label = "Nyon",
 			k_fac_fas_submarine = "Submarine",
 			k_fac_fas_fatchud = "Fat Chud",
+
+			k_fac_fas_undertale_fight = "FIGHT",
+			k_fac_fas_undertale_act = "ACT",
+			k_fac_fas_undertale_item = "ITEM",
+			k_fac_fas_undertale_mercy = "MERCY",
+			
+			b_fac_fas_undertale_foo = "Foo54",
+			b_fac_fas_undertale_squeax = "Gabby",
+			b_fac_fas_undertale_check = "Check",
+			b_fac_fas_undertale_spare = "Spare",
+			b_fac_fas_undertale_flee = "Flee",
+			b_fac_fas_undertale_projects = "Mods",
+			b_fac_fas_undertale_worked_on = "Mods I've worked on (you should check them out after this)",
+			b_fac_fas_undertale_synthb = "SynthB - The Vocaloid Balatro Mod",
+			b_fac_fas_undertale_bad_director = "Bad Director - The Glitchiest Balatro Mod",
+			b_fac_fas_undertale_guest_dev = "Guest Dev",
+			b_fac_fas_undertale_colon_3 = ":3",
+
+			k_fac_fas_undertale_textbox = {
+				start = {
+					"Foo stumbles into combat!",
+					"Gabby flies in!"
+				},
+				combat = {
+					"Due to budget cuts,",
+					"we have removed the combat system.",
+					"",
+					"We apologize for the inconvience."
+				},
+				check_foo = {
+					"FOO 04 ATK 01 DEF",
+					"Programmer for (almost) everything between me and Gabby's submissions",
+					"Made this UI that way I could give her a break while still coding :3",
+					"Tried to learn art before this so I could go solo, but man fish are hard"
+				},
+				foo_guest_dev = {
+					"Yep, I'm a guest dev!",
+					"I was originally chosen for my ui work (see SynthB's credits, or this),",
+					"but ended up doing most of the API instead.",
+					"You wont actually see most of the things I did,",
+					"as its mostly the framework for fish and environments.",
+					"I had the idea for the bucket though (:"
+				},
+				foo_colon_3 = {
+					":3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3",
+					":3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3",
+					":3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3",
+					":3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3",
+					":3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3",
+					":3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3",
+					":3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3",
+				},
+				check_squeax = {
+					"GABBY [##] ATK [##] DEF"
+				},
+				spare = {
+					"You WON!",
+					"Earned 0 EXP and 0 GOLD"
+				},
+				flee_1 = {
+					"Escaped..."
+				},
+				flee_2 = {
+					"Don't slow me down."
+				},
+				flee_3 = {
+					"I'm outta here."
+				},
+				flee_4 = {
+					"I got better things to do."
+				},
+				no_items = {
+					"You aren't carrying any items on you"
+				}
+			}
 		},
 		v_dictionary = {
 			k_fac_fas_attributes = "The Fish to the #3# has #1# attribute#2#",

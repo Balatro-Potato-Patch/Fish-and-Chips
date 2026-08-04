@@ -11,16 +11,17 @@ FishAndChips.FooSqueax = {
 			card.T.w = card.T.w * card.ability.extra.xmult
 		end
 	},
-	tsunderfish = {
-		
-	},
+	tsunderfish = {},
 	toby_fish = {
 		no_desc = nil
-	}
+	},
+	undertale = {}
 }
 
 FishAndChips.C.FooSqueax = {
-	BLACK = {0, 0, 0, 1}
+	BLACK = {0, 0, 0, 1},
+	ORANGE = HEX("ff7f27"),
+	YELLOW = HEX("ffff40")
 }
 
 SMODS.Atlas{
@@ -55,6 +56,9 @@ PotatoPatchUtils.Developer{
 			G.GAME.fac_FooSqueax.fish_caught[context.fish] = true
 		end
 	end,
+	click = function(self)
+		FishAndChips.FooSqueax.undertale:init(self)
+	end
 }
 
 for i=1, 11 do
@@ -77,7 +81,6 @@ PotatoPatchUtils.Developer{
 		self:juice_up()
 	end,
 }
-
 
 function FishAndChips.FooSqueax.sqx_credit_ui_baits()
 	local area = CardArea(G.ROOM.T.x, G.ROOM.T.y, (G.CARD_W * 4.5), G.CARD_H*0.3, { card_limit = 15, type = 'title', highlight_limit = 0, collection = true }) 
