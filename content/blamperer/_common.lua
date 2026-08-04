@@ -69,11 +69,18 @@ function G:update_fac_fishing_hooking(dt)
     end
     -- Autotuna
     if G.FAC_FISH_GAME.profile.rod_key ~= "rod_fac_harpoon" then
+        local AUTOFACTOR = 0.33
         local autotuna = #SMODS.find_card("fish_fac_blamperer_autotuna")
-        local autoprogress = autotuna * (G.FAC_FISH_GAME.profile.catch_gain / 3) * dt
-        local decay_threshold = 0.15 -- FAC_DECAY_UNLOCK_THRESHOLD = 0.15, update if this value changes
-        if autoprogress > 0 and (G.FAC_FISH_GAME.decay_unlocked or (G.FAC_FISH_GAME.meter + autoprogress) < decay_threshold) then
-            G.FAC_FISH_GAME.meter = G.FAC_FISH_GAME.meter + autoprogress
+        if autotuna > 0 then
+            local autoprogress = autotuna * AUTOFACTOR * G.FAC_FISH_GAME.profile.catch_gain * dt
+            local decay_threshold = 0.15 -- FAC_DECAY_UNLOCK_THRESHOLD = 0.15, update if this value changes
+            if G.FAC_FISH_GAME.decay_unlocked or (G.FAC_FISH_GAME.meter + autoprogress) < decay_threshold then
+                G.FAC_FISH_GAME.meter = G.FAC_FISH_GAME.meter + autoprogress
+            end
+            if G.FAC_FISH_GAME.treasure_enabled and not G.FAC_FISH_GAME.got_treasure then
+                local autotreasure = autotuna * AUTOFACTOR * math.min(G.FAC_FISH_GAME.profile.treasure_gain, G.FAC_FISH_GAME.profile.catch_gain) * dt
+                G.FAC_FISH_GAME.treasure_meter = G.FAC_FISH_GAME.treasure_meter + autotreasure
+            end
         end
     end
 end
