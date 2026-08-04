@@ -14,6 +14,7 @@ FishAndChips.Fish {
 		length = { min = 0.0120, max = 0.0120},  --based on ordinary cd
 		weight = { min = 0.02, max = 0.02}
 	},
+	choose = 3,
 	blueprint_compat = true,
 	config = {
 		extra = {
@@ -28,6 +29,6 @@ FishAndChips.Fish {
         return in_fishing_environment
     end,
 	use = function(self, card)
-        
+        check_rank()
 	end,
 }
