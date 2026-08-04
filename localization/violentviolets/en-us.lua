@@ -5,8 +5,7 @@ return {
                     name = "FireIce",
                     text = {
                         {
-                            "{X:attention,C:white}X#1#{} Blind Requirement",
-                            "{C:inactive}Temporary Effect"
+                            "{X:attention,C:white}X#1#{} Blind Requirement"
                         }
                     },
                     flavour = {
@@ -30,7 +29,7 @@ return {
                     name = "BLAHAJ",
                     text = {
                         {
-                            "Effect not implemented!"
+                            "{C:dark_edition}Editioned{} Jokers give {X:mult,C:white}X#1#{} Mult"
                         }
                     },
                     flavour = {
@@ -102,6 +101,32 @@ return {
                     flavour = {
                         "It always knows where you are and slowly crawls towards you.",
                         "{s:1.5}What's your plan?"
+                    }
+                },
+                fish_fac_vv_seashroom = {
+                    name = "Sea Shroom",
+                    text = {
+                        {
+                            "{C:spades}Spades{} and {C:clubs}Clubs{} are {C:attention}retriggered{} once",
+                            "{C:red}Debuffed{} if a {C:hearts}Heart{} or {C:diamonds}Diamond{} is scored"
+                        }
+                    },
+                    flavour = {
+                        "Sea-Shroom has never seen the sea. It's in his name,",
+                        "he's heard loads about it, but he's just never found the time."
+                    }
+                },
+                fish_fac_vv_blobfish = {
+                    name = "Blobfish",
+                    text = {
+                        {
+                            "Give a random {C:blue}Fish{} a random {C:dark_edition}Edition{}",
+                            "{C:inactive}Cannot give Polychrome{}"
+                        }
+                    },
+                    flavour = {
+                        "It gained the reputation of being",
+                        "the ugliest fish, but it doesn't care."
                     }
                 },
         }
