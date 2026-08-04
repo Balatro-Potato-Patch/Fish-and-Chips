@@ -88,6 +88,18 @@ return {
                     "road trips any time soon,",
                     "but can still show you around."
                 }
+            },
+            fish_fac_blamperer_crackers = {
+                name = "Fish-shaped Crackers",
+                text = {
+                    "The next {C:attention}#1#{} scored cards give",
+                    "{C:mult}+1{} Mult for every {C:attention}played{} card"
+                },
+                flavor = {
+                    "Hey, at least it was the crackers.",
+                    "There are worse fish-shaped things",
+                    "to find in your food."
+                }
             }
         },
         PotatoPatch = {
