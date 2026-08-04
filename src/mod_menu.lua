@@ -804,7 +804,7 @@ SMODS.draw_ignore_keys.h_popup_2 = true
 
 function FishAndChips.Compendium.dev_card(dev)
     if not dev then return nil end
-    local partner = PotatoPatchUtils.Developers['fac_' .. dev.fac_partner]
+    local partner = PotatoPatchUtils.Developers[dev.fac_partner]
     
     local temp_area = FishAndChips.Compendium.compendium_area(1, dev.joint_credits and {0.2 + 4 * 71/95, 2})
     local dev_card = Card(0, 0, (dev.joint_credits and 2 or 1) * G.CARD_W / 1.25, G.CARD_H / 1.25, nil, G.P_CENTERS.c_base)
