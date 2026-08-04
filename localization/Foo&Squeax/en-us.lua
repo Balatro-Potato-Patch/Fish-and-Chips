@@ -374,7 +374,7 @@ return {
 					":3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3:3",
 				},
 				check_squeax = {
-					"GABBY [##] ATK [##] DEF"
+					"GABBY 06 ATK 09 DEF"
 				},
 				spare = {
 					"You WON!",
@@ -393,7 +393,7 @@ return {
 					"I got better things to do."
 				},
 				no_items = {
-					"You aren't carrying any items on you"
+					"You aren't carrying any items on you."
 				}
 			}
 		},
