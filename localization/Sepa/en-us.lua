@@ -27,8 +27,21 @@ return {
                     "of one his species lost son"
                 }
             },
+
+            fish_fac_freds_leg = {
+                name = "{f:fac_sepa_spongemeboy}Fred's Leg{}",
+                text = {
+                    "When a hand is played,",
+                    "{C:red}destroys{} the {C:attention}leftmost{}",
+                    "card held in hand"
+                },
+                flavor = {
+                    "{f:fac_sepa_spongemeboy}MY LEG!{}"
+                }
+            },
+
             fish_fac_bombfish = {
-                name = "{f:fac_ultra}Bomb Fish{}",
+                name = "{f:fac_sepa_ultra}Bomb Fish{}",
                 text = {
                     {
                         "Creates {C:attention}#5#{} specific {C:tarot}tarot{} cards when",
@@ -43,20 +56,31 @@ return {
                     }
                 },
                 flavor = {
-                    "{f:fac_ultra}Often found on flowing water.{}",
-                    "{f:fac_ultra}Has a self defence mechanism{}",
-                    "{f:fac_ultra}that causes bodly harm{}",
-                    "{f:fac_ultra}to unaware fishers.{}"
+                    "{f:fac_sepa_ultra}Often found on flowing water.{}",
+                    "{f:fac_sepa_ultra}Has a self defence mechanism{}",
+                    "{f:fac_sepa_ultra}that causes bodly harm{}",
+                    "{f:fac_sepa_ultra}to unaware fishers.{}"
+                }
+            },
+
+            fish_fac_icbf = {
+                name = "{f:fac_sepa_ultra}ICBFish",
+                text = "Does nothing",
+                flavor = {
+                    "{f:fac_sepa_ultra}Similar in nature to its{}",
+                    "{f:fac_sepa_ultra}fish relative, only this time",
+                    "{f:fac_sepa_ultra}it seems that this variant is",
+                    "{f:fac_sepa_ultra}much more dangerous"
                 }
             },
 
             fish_fac_lies= {
-                name = "Fish...?",
+                name = "{f:fac_sepa_spongemeboy}Fish...?{}",
                 text = {
-                    "When {C:attention}Blind{} is selected, destroy Fish to the", 
+                    "When {C:attention}Blind{} is selected, destroy {C:fac_fish}Fish{} to the", 
                     "left and adds double its sell value as",
                     "dollars given at end of round",
-                    "{C:inactive}(Currently{} {C:gold}$#1#{} {C:inactive}){}"
+                    "{C:inactive}(Currently{} {C:gold}$#1#{}{C:inactive}){}"
                 },
                 flavor = {
                     "Its still unknown if this",
@@ -65,18 +89,7 @@ return {
                 }
             },
             
-            fish_fac_freds_leg = {
-                name = "Fred's Leg",
-                text = {
-                    "When a hand is played,",
-                    "{C:red}destroys{} the {C:attention}leftmost{}",
-                    "card held in hand"
-                },
-                flavor = {
-                    "OUCH",
-                    "MY LEG!"
-                }
-            },
+
  
         },
 
