@@ -496,6 +496,7 @@ local uielement_click_ref = UIElement.click
 ---@diagnostic disable-next-line: duplicate-set-field
 function UIElement:click(...)
 	if FishAndChips.safe_to_press_buttons() or self.config.fac_ignore then
+		if G.GAME.fac_fish_expanded and not self.config.fac_ignore then G.FUNCS.fac_open_fishing_menu() end
 		return uielement_click_ref(self, ...)
 	end
 end
