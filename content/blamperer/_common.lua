@@ -63,9 +63,17 @@ end
 local upd_fac_fish_hooking_ref = G.update_fac_fishing_hooking
 function G:update_fac_fishing_hooking(dt)
     upd_fac_fish_hooking_ref(self, dt)
+    -- Increase hook time
     if G.FAC_FISH_GAME.decay_unlocked then
         G.GAME.blamperer_hook_time = G.GAME.blamperer_hook_time + dt
-        print(G.GAME.blamperer_hook_time)
+    end
+    -- Autotuna
+    if G.FAC_FISH_GAME.profile.rod_key ~= "rod_fac_harpoon" then
+        local autotuna = #SMODS.find_card("fish_fac_blamperer_autotuna")
+        local autoprogress = autotuna * (G.FAC_FISH_GAME.profile.catch_gain / 3) * dt
+        if autoprogress > 0 then
+            G.FAC_FISH_GAME.meter = G.FAC_FISH_GAME.meter + autoprogress
+        end
     end
 end
 

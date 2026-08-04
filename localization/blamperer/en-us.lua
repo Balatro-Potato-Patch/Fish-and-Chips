@@ -100,6 +100,16 @@ return {
                     "There are worse fish-shaped things",
                     "to find in your food."
                 }
+            },
+            fish_fac_blamperer_autotuna = {
+                name = "Autotuna",
+                text = {
+                    "Slowly {C:attention}raises{} catch progress",
+                },
+                flavor = {
+                    "Yeah, it'll help, but you still",
+                    "need to put in the work yourself."
+                }
             }
         },
         PotatoPatch = {
