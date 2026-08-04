@@ -4,7 +4,7 @@
 	#define MY_HIGHP_OR_MEDIUMP mediump
 #endif
 
-extern MY_HIGHP_OR_MEDIUMP vec2 ultimate_weapon;
+extern MY_HIGHP_OR_MEDIUMP vec2 crimsonseraphim_ultimate_weapon;
 extern MY_HIGHP_OR_MEDIUMP number dissolve;
 extern MY_HIGHP_OR_MEDIUMP number time;
 extern MY_HIGHP_OR_MEDIUMP vec4 texture_details;
@@ -130,7 +130,7 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     vec4 tex = Texel( texture, texture_coords);
     vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
     
-    if(uv.x > uv.x * 2.) uv.x = ultimate_weapon.x;
+    if(uv.x > uv.x * 2.) uv.x = crimsonseraphim_ultimate_weapon.x;
     vec4 col = tex;
     
     if(all(lessThan(abs(col - vec4(0,255,22,255)/255.), vec4(0.05)))) {
