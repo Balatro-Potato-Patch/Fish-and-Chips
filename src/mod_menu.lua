@@ -834,7 +834,7 @@ function FishAndChips.Compendium.dev_card(dev)
         if dev.click then
             dev.click(dev_card)
         end
-        if partner.click then
+        if partner and partner.click then
             partner.click(dev_card)
         end
     end
