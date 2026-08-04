@@ -2,7 +2,7 @@ PotatoPatchUtils.Developer({
 	name = 'Aure',
 	atlas = 'fac_aure-allu_cards',
 	colour = G.C.ORANGE,
-	fac_partner = 'AllUniversal'
+	fac_partner = 'fac_AllUniversal',
 })
 
 PotatoPatchUtils.Developer({
@@ -10,7 +10,7 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_aure-allu_cards',
 	pos = {x = 1, y = 0},
 	colour = G.C.GREY,
-	fac_partner = 'Aure'
+	fac_partner = 'fac_Aure',
 })
 
 SMODS.Atlas({
@@ -1459,7 +1459,7 @@ FishAndChips.Fish {
 				nodes = {
 					{
 						n = G.UIT.C,
-						config = { ref_table = card, align = "m", colour = G.GAME.fac_last_used_fish and mix_colours(FishAndChips.C.FISH, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.BLACK, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
+						config = { ref_table = card, align = "m", colour = G.GAME.fac_last_used_fish and G.GAME.fac_last_used_fish ~= "fish_fac_chimaera" and mix_colours(FishAndChips.C.FISH, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.BLACK, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
 						nodes = {
 							{ n = G.UIT.T, config = { text = G.GAME.fac_last_used_fish and localize{type = 'name_text', key = G.GAME.fac_last_used_fish, set = "fac_Fish"} or localize('k_none'), colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
 						}
