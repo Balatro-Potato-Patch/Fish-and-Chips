@@ -25,12 +25,116 @@ SMODS.Atlas({
 	py = 95,
 })
 
+function FishAndChips.crimsonseraphim.advance_center(center)
+    local cards = {}
+    for i, v in pairs(G.P_CENTERS) do
+        if v.ppu_artist and v.ppu_artist[1] == "crimsonseraphim" and v.set == "fac_Fish" and v.key ~= "fish_fac_ultimate_weapon" then
+            cards[#cards+1] = v
+        end
+    end
+    for i, v in pairs(cards) do
+        if v.key == center.key then
+            return cards[i+1] or cards[1] or v
+        end
+    end
+    return center
+end
+
+function FishAndChips.crimsonseraphim.draw_letter(letter, self)
+    local real_pop_in = self.config.min_cycle_time == 0 and 1 or letter.pop_in
+    local _shadow_norm = self.ARGS.draw_shadow_norm
+    _shadow_norm.x, _shadow_norm.y = 
+        self.shadow_parrallax.x/math.sqrt(self.shadow_parrallax.y*self.shadow_parrallax.y + self.shadow_parrallax.x*self.shadow_parrallax.x)*self.font.FONTSCALE/G.TILESIZE,
+        self.shadow_parrallax.y/math.sqrt(self.shadow_parrallax.y*self.shadow_parrallax.y + self.shadow_parrallax.x*self.shadow_parrallax.x)*self.font.FONTSCALE/G.TILESIZE
+    love.graphics.draw(
+        letter.letter,
+        0.5*(letter.dims.x - letter.offset.x)*self.font.FONTSCALE/G.TILESIZE + _shadow_norm.x,
+        0.5*(letter.dims.y - letter.offset.y)*self.font.FONTSCALE/G.TILESIZE + _shadow_norm.y, 
+        letter.r or 0,
+        real_pop_in*letter.scale*self.scale*self.font.FONTSCALE/G.TILESIZE,
+        real_pop_in*letter.scale*self.scale*self.font.FONTSCALE/G.TILESIZE,
+        0.5*letter.dims.x/(self.scale),
+        0.5*letter.dims.y/(self.scale)
+    )
+end
+
+SMODS.DynaTextEffect{
+    key = "crimsonseraphim_dev",
+    draw_letter = function(self, k, letter)
+        love.graphics.setColor(k <= 4 and G.C.RED or k >= 8 and G.C.GREEN or G.C.WHITE)
+        FishAndChips.crimsonseraphim.draw_letter(letter, self)
+    end
+}
+
+
+local game_update = Game.update
+function Game:update(dt)
+    if FishAndChips.crimsonseraphim.desc_card then
+        FishAndChips.crimsonseraphim.desc_card.dt =  FishAndChips.crimsonseraphim.desc_card.dt + dt
+        if FishAndChips.crimsonseraphim.desc_card.dt > 0.5 then
+            FishAndChips.crimsonseraphim.desc_card.center = FishAndChips.crimsonseraphim.advance_center(FishAndChips.crimsonseraphim.desc_card.center)
+            FishAndChips.crimsonseraphim.desc_card.card:stop_hover()
+            FishAndChips.crimsonseraphim.desc_card.card:set_ability(FishAndChips.crimsonseraphim.desc_card.center)
+            FishAndChips.crimsonseraphim.desc_card.card:hover()
+            -- FishAndChips.crimsonseraphim.desc_card.card.children.center.atlas = SMODS.get_atlas(FishAndChips.crimsonseraphim.desc_card.center.atlas)
+            -- FishAndChips.crimsonseraphim.desc_card.card.children.center:set_sprite_pos(FishAndChips.crimsonseraphim.desc_card.center.pos)
+            FishAndChips.crimsonseraphim.desc_card.dt = 0
+        end
+    end
+    return game_update(self, dt)
+end
+
 PotatoPatchUtils.Developer({
 	name = 'crimsonseraphim',
 	atlas = 'fac_crimsonseraphim_credits',
-	colour = FishAndChips.crimsonseraphim.C.stupid_fucking_DOGGYYYYIEEEs,
+	colour = G.C.WHITE,
     loc = true,
+    loc_vars = function(self, _, card)
+        local area = CardArea(
+            0, 0,
+            G.CARD_W*1.5,
+            G.CARD_H*1.5, 
+            {card_limit = 1, type = 'play', highlight_limit = 0, negative_info = 'joker'})
+        local c = SMODS.create_card({key = "fish_fac_aeonfish", area = area})
+        area:emplace(c)
+        FishAndChips.crimsonseraphim.desc_card = {
+            center = G.P_CENTERS.fish_fac_aeonfish,
+            dt = 0,
+            card = c,
+            area = area
+        }
+        G.E_MANAGER:add_event(Event{
+            func = function()
+                FishAndChips.crimsonseraphim.desc_card.card:hover()
+                return true
+            end
+        })
+        return { vars = { elements = { {n=G.UIT.O, config={object = area}} } } }
+    end,
+    stop_hover = function()
+        FishAndChips.crimsonseraphim.desc_card.card:stop_hover()
+        FishAndChips.crimsonseraphim.desc_card.card:remove()
+        FishAndChips.crimsonseraphim.desc_card.area:remove()
+        FishAndChips.crimsonseraphim.desc_card = nil
+    end,
+    text_effect = "fac_crimsonseraphim_dev"
 })
+
+local card_hover = Card.hover
+function Card:hover()
+    if self.ppu_member and self.ppu_member.hover then
+        self.ppu_member:hover(self)
+    end
+    return card_hover(self)
+end
+
+local card_stop_hover = Card.stop_hover
+function Card:stop_hover()
+    if self.ppu_member and self.ppu_member.stop_hover then
+        self.ppu_member:stop_hover(self)
+    end
+    return card_stop_hover(self)
+end
 
 FishAndChips.Fish {
 	key = "aeonfish",
@@ -114,7 +218,7 @@ function Card:transmute(seed, center)
     G.E_MANAGER:add_event(Event{
         blocking = false,
         func = function()
-            if math.abs((G.TIMERS.REAL - self.children.center.aeonfish_transmute.realtime_start) - 0.2) < 0.01 then
+            if self.children.center.aeonfish_transmute and math.abs((G.TIMERS.REAL - self.children.center.aeonfish_transmute.realtime_start) - 0.2) < 0.01 then
                 self:juice_up(0.6, 0.7)
                 return true
             end
@@ -1236,7 +1340,7 @@ function FishAndChips.crimsonseraphim.get_dummy(center, area, self)
         sell_cost = self.sell_cost,
         eligible_strength_jokers = eligible_editionless_jokers,
         eligible_editionless_jokers = eligible_editionless_jokers,
-        T = self.t,
+        T = self.T,
         VT = self.VT
     }
     for i, v in pairs(self) do
@@ -2032,8 +2136,6 @@ SMODS.DrawStep({
 	func = function(self)
         local card = self.config.center_key
         if (card ~= "fish_fac_vanitas") or not G.P_CENTERS[card].discovered or not G.P_CENTERS[card].unlocked then return end
-
-
         if not self.children.vanitas_censor then 
             self.children.vanitas_censor = SMODS.create_sprite(0, 0, self.T.w, self.T.h, "fac_crimsonseraphim_aeonfish", {x = 3, y = 1})
         end
@@ -2051,3 +2153,85 @@ SMODS.DrawStep({
 for i, v in pairs(FishAndChips.crimsonseraphim.C) do
     G.ARGS.LOC_COLOURS[i] = v
 end
+
+SMODS.Sound {
+    key = "crimsonseraphim_bounce",
+    path = "crimsonseraphim/bounce.ogg"
+}
+
+FishAndChips.Fish {
+	key = "silly_bunny",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 6, y = 1 },
+	weight = 3, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "generation" },
+	environments = {
+        calm_pond = 5
+	},
+    stats = {
+		weight = {min = 1.1, max = 1.6},
+		length = {min = .25, max = .30}
+	},
+    blueprint_compat = false,
+    calculate = function(self, card, context)
+        if context.crimsonseraphim_before_hightlighted_moved then
+            local xmult = 1
+            if #G.fac_fish_area.cards > 1 then
+                local self_pos = 1
+                for i, v in pairs(G.fac_fish_area.cards) do
+                    if v == card then self_pos = i end
+                end
+                local position = pseudorandom("crimsonseraphim_silly_bunny", 1, #G.fac_fish_area.cards)
+                local other = G.fac_fish_area.cards[position]
+                G.fac_fish_area.cards[position] = card
+                G.fac_fish_area.cards[self_pos] = other
+                play_sound("fac_crimsonseraphim_bounce")
+                xmult = self_pos
+            end
+        end
+        if context.joker_main then
+            local self_pos = 1
+            for i, v in pairs(G.fac_fish_area.cards) do
+                if v == card then self_pos = i end
+            end
+            return {
+                xmult = self_pos
+            }
+        end
+    end
+}
+
+FishAndChips.Fish {
+	key = "ronald_reagan_2",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 0 },
+	weight = 3, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "mod_chance" },
+	environments = {
+        calm_pond = 5
+	},
+    stats = {
+		weight = {min = .1, max = .3},
+		length = {min = 0.1, max = .20}
+	},
+    blueprint_compat = false,
+    calculate = function(self, card, context)
+        if context.end_of_round and context.main_eval then
+            for i, v in pairs(G.fac_fish_area.cards) do
+                v.ability.crimsonseraphim_ronald_reagan_is_my_saviour
+                = (v.ability.crimsonseraphim_ronald_reagan_is_my_saviour or 1) + 0.2
+                SMODS.calculate_effect{card = v, message = localize("k_upgrade_ex")}
+            end 
+        end
+        if context.mod_probability and context.trigger_obj and context.trigger_obj.ability 
+        and context.trigger_obj.ability.crimsonseraphim_ronald_reagan_is_my_saviour then
+            return {
+                numerator = context.numerator * context.trigger_obj.ability.crimsonseraphim_ronald_reagan_is_my_saviour
+            }
+        end
+    end
+}

@@ -4,15 +4,7 @@ return {
             PotatoPatchDev_crimsonseraphim = {
                 name = "Ruby & Jade",
                 text = {
-                    "This will probably be a surprise to people",
-                    "who knew me but not super well but, I ({C:red}R uby{}) am",
-                    "not {C:green}alone{} in my own head. {C:green}Jade{} is also here",
-                    " ",
-                    "I would like to thank everyone who has helped",
-                    "me with the process of figuring all of this out",
-                    "considering a lot of it happened during f&c development",
-                    " ",
-                    "Read {C:green}Homestuck{} Please."
+                    "{element:1}",
                 }
             },
         },
@@ -373,6 +365,33 @@ return {
                 flavor = {
                     "Silence will fall when the",
                     "question is asked."
+                }
+            },
+            fish_fac_silly_bunny = {
+                name = "Silly Bunny",
+                text = {
+                    "Moves to a random slot",
+                    "in the bucket before scoring",
+                    "gives {X:mult,C:white}XMult{} equal to ",
+                    "its position in the bucket."
+                },
+                flavor = {
+                    "What does he even do?"
+                }
+            },
+
+            fish_fac_ronald_reagan_2 = {
+                name = "Ronald Reagan II",
+                text = {
+                    "At the end of round the listed",
+                    "probabilites of all held {C:attention}Fish{}",
+                    "increase by {X:green,C:white}20%{} permanently."
+                },
+                flavor = {
+                    "Whatever grace might 'trickle down' from",
+                    "the higher regions of a given society to",
+                    "the lower is no more essential than that which",
+                    "rises and converges from the opposite direction"
                 }
             }
         },
