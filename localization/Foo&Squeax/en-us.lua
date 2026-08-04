@@ -380,7 +380,8 @@ return {
 					"A simple washed machine.",
 					"Allegedly a 'Guest Dev' of some kind.",
 					"It seems like her Credit Card",
-					"in the compendium has more information..."
+					"in the compendium has more information...",
+					"...but the numbers are impossible to read."
 				},
 				spare = {
 					"You WON!",
