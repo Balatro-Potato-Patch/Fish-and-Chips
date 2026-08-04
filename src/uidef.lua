@@ -106,9 +106,9 @@ function FishAndChips.fade_fishing_buttons()
 end
 
 function FishAndChips.safe_to_press_buttons()
-	local fish_expanded = G.GAME and G.GAME.fac_fish_expanded
+	-- local fish_expanded = G.GAME and G.GAME.fac_fish_expanded
 	local in_fishing_state = G.STATE == G.STATES.FAC_FISHING
-	return not (fish_expanded or (in_fishing_state and G.NOT_SAFE_TO_PRESS_BUTTONS)) or G.OVERLAY_MENU
+	return not ((in_fishing_state and G.NOT_SAFE_TO_PRESS_BUTTONS)) or G.OVERLAY_MENU
 end
 
 function FishAndChips.update_bait_counter(major)
