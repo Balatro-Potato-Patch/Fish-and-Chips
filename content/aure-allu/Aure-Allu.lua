@@ -669,6 +669,7 @@ FishAndChips.Fish {
 	end,
 	use = function (self, card)
 		--Thanks https://github.com/nh6574/VanillaRemade/blob/main/src/tarots.lua The Hanged Man
+		local number = #G.hand.highlighted
         G.E_MANAGER:add_event(Event({
 			trigger = "after", 
 			delay = 0.1, 
@@ -682,7 +683,7 @@ FishAndChips.Fish {
 			trigger = "after", 
 			delay = 0.1, 
 			func = function()
-				SMODS.destroy_cards(G.hand.highlighted)
+				SMODS.destroy_cards(G.hand.highlighted, {immediate = true})
 				return true
 			end
 		}))
@@ -691,7 +692,8 @@ FishAndChips.Fish {
 			trigger = "after", 
 			delay = 0.5, 
 			func = function()
-				local count = math.max(#G.hand.highlighted, G.hand.config.card_limit - #G.hand.cards + #G.hand.highlighted)
+				local count = G.hand.config.card_limit - #G.hand.cards + number
+				if count <= 0 then return end
 				for i=1, count do
 					local percent = 1.15 - (i - 0.999) / (count - 0.998) * 0.3
 					G.E_MANAGER:add_event(Event({
@@ -1447,9 +1449,10 @@ FishAndChips.Fish {
 		},
 	},
 	environments = {
-		city_river = 5,
-		chocolate_river = 10,
-		soup = 2,
+		swamp = 5,
+		aquifer = 10,
+		styx = 9,
+		backroom = 6,
 	},
 	loc_vars = function(self, info_queue, card)
 		local main_end = {
