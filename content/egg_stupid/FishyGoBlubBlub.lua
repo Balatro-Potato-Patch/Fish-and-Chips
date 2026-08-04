@@ -2,15 +2,16 @@
 
 PotatoPatchUtils.Developer({
 	name = 'stupid',
-	atlas = 'stupid_egg_credits',
+	atlas = 'fac_stupid_egg_credits',
+	pos = {x = 1, y = 0},
 	colour = G.C.BLUE,
 	fac_partner = 'egg_node'
 })
 
 PotatoPatchUtils.Developer({
 	name = 'egg_node',
-	atlas = 'stupid_egg_credits',
-	pos = {x = 1, y = 0},
+	atlas = 'fac_stupid_egg_credits',
+	pos = {x = 0, y = 0},
 	colour = G.C.MONEY,
 	fac_partner = 'stupid'
 })
@@ -69,6 +70,10 @@ FishAndChips.Fish {
 			chips = 30
 		}
 	},
+	stats = {
+		weight = {min = 0.1, max = 0.4},
+		length = {min = 0.1, max = 0.4}
+	},
 	environments = {
         -- TODO
 		pier = 10,
@@ -99,6 +104,10 @@ FishAndChips.Fish {
 			chips = 30
 		}
 	},
+	stats = {
+		weight = {min = 1, max = 10000.},
+		length = {min = 1., max = 10000.}
+	},
 	environments = {
         -- TODO
 		pier = 10,
@@ -128,6 +137,10 @@ FishAndChips.Fish {
 		extra = {
 			chips = 30
 		}
+	},
+	stats = {
+		weight = {min = 0.5, max = 15},
+		length = {min = 0.5, max = 10}
 	},
 	environments = {
         -- TODO
