@@ -75,12 +75,12 @@ function FishAndChips.modify_fish_stats(card, stats)
 	card:set_cost()
 end
 
-function FishAndChips.format_measurement(value, type, units)
+function FishAndChips.format_measurement(value, measurement, units)
 	if not value then return ' ' end
-	if units[type] then
-		return string.format(localize(units[type].format), strip_decimals(nil, value/units[type].scale, units[type].precision or 2))
+	if units[measurement] then
+		return string.format(localize(units[measurement].format), strip_decimals(nil, value/units[measurement].scale, units[measurement].precision or 2))
 	end
-	if type == 'weight' then
+	if measurement == 'weight' then
 		if value > 10000 then
 			return strip_decimals(nil, value / 1000, 1) .. 't'
 		elseif value < 1 then
@@ -89,7 +89,7 @@ function FishAndChips.format_measurement(value, type, units)
 			return value .. 'kg'
 		end
 	end
-	if type == 'length' then
+	if measurement == 'length' then
 		if value > 10000 then
 			return strip_decimals(nil, value / 1000, 1) .. 'km'
 		elseif value < 1 then
