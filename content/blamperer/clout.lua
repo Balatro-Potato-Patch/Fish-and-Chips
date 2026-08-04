@@ -28,7 +28,8 @@ FishAndChips.Fish {
     },
     weight = 5,
     environments = {
-        city_river = 10
+        city_river = 10,
+        wormhole = 5
     },
     calculate = function(self, card, context)
         if context.fac_treasure_reward_type and G.FAC_FISH_GAME.perfect then
