@@ -10,7 +10,6 @@ FishAndChips.Fish({
 	atlas = "l_i_fish",
 	pos = { x = 0, y = 1 },
 	weight = 3,
-	treasure = true,
 	ppu_coder = {
 		"lexi",
 	},
@@ -66,7 +65,6 @@ FishAndChips.Fish({
 	atlas = "l_i_fish",
 	pos = { x = 1, y = 1 },
 	weight = 3,
-	treasure = true,
 	ppu_coder = {
 		"lexi",
 	},
