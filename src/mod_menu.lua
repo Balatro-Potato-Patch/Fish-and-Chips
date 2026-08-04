@@ -828,13 +828,13 @@ function FishAndChips.Compendium.dev_card(dev)
 
     dev_card.ppu_member = dev
     dev_card.click = function(self)
-        if not dev.click and not (partner and partner.click) then
+        if not dev.click and not (dev.joint_credits and partner and partner.click) then
             return Card.click(dev_card)
         end
         if dev.click then
             dev.click(dev_card)
         end
-        if partner.click then
+        if dev.joint_credits and partner and partner.click then
             partner.click(dev_card)
         end
     end
