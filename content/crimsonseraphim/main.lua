@@ -1978,7 +1978,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "anima",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 0, y = 2 },
 	weight = 3, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
