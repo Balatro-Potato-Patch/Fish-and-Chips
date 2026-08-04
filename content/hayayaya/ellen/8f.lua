@@ -159,9 +159,19 @@ FishAndChips.Fish({
 
 		card:highlight(false)
 
+		play_sound("fac_hayayaya_rainer")
+
 		-- TODO Honestly, do the fucking animation here where a black bar appears in the center like in firered
 		-- That would be really cool.
-		delay(0.5 * G.SPEEDFACTOR)
+		G.E_MANAGER:add_event(Event({
+			delay = 0.5 * G.SPEEDFACTOR,
+			trigger = "after",
+			func = function()
+				-- RAINER, abyss this motherfucker
+				play_sound("fac_hayayaya_abyss")
+				return true
+			end,
+		}))
 
 		G.GAME.fac_rainer = 0
 
@@ -171,7 +181,7 @@ FishAndChips.Fish({
 			ref_table = G.GAME,
 			ref_value = "fac_rainer",
 			ease_to = 1,
-			delay = 0.75 * G.SPEEDFACTOR,
+			delay = 0.4 * G.SPEEDFACTOR,
 		}))
 
 		G.E_MANAGER:add_event(Event({
@@ -203,7 +213,7 @@ FishAndChips.Fish({
 			ref_table = G.GAME,
 			ref_value = "fac_rainer",
 			ease_to = 0.0,
-			delay = 0.75 * G.SPEEDFACTOR,
+			delay = 0.4 * G.SPEEDFACTOR,
 		}))
 
 		G.E_MANAGER:add_event(Event({

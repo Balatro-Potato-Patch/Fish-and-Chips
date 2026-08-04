@@ -32,6 +32,16 @@ SMODS.Sound({
 	path = "hayayaya/se_mistake.ogg",
 })
 
+SMODS.Sound({
+	key = "hayayaya_abyss",
+	path = "hayayaya/se_abyss.ogg",
+})
+
+SMODS.Sound({
+	key = "hayayaya_rainer",
+	path = "hayayaya/rainer.ogg",
+})
+
 SMODS.Font({
 	key = "hayayaya_pkmn",
 	path = "hayayaya/pokemon-font.ttf",
