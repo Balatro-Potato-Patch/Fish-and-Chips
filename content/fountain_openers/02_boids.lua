@@ -330,8 +330,8 @@ FishAndChips.Fish {
 		pier = 1,
 	},
 	stats = {
-		weight = {min = 1, max = 2, units = {format = "fac_fo_kb", scale = 1, precision = 3}},
-		length = {min = 29 * 0.00026458333, max = 29.0000001 * 0.00026458333, units = {format = "fac_fo_px", scale = 0.00026458333, precision = 3}},
+		weight = {min = 1, max = 2, units = {format = "fac_fo_kb", scale = 1, precision = 0}},
+		length = {min = 29 * 0.00026458333, max = 29.0000001 * 0.00026458333, units = {format = "fac_fo_px", scale = 0.00026458333, precision = 1}},
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips, card.ability.extra.chips_mod } }
