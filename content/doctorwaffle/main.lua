@@ -16,6 +16,7 @@ PPU.Developer({
     loc = true,
     calculate = function (self, context)
         
+        -- Finclair reverting at end of round
         if context.round_eval then
         
             for _, fish in pairs(G.fac_fish_area.cards) do
@@ -60,6 +61,8 @@ PPU.Developer({
                 end
             end
         end
+
+        -- Determine Feebas
 
     end
 })

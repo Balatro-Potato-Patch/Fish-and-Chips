@@ -364,6 +364,7 @@ FishAndChips.Fish {
         weight = { min = 0.45, max = 0.6 },
         length = { min = 0.08, max = 0.12 }
     },
+    requires_consumables = true,
     pos = { x = 1, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -1032,6 +1033,7 @@ FishAndChips.Fish {
             rank = nil -- Randomly decided when fished up
         }
     },
+    blueprint_compat = false,
     loc_vars = function(self, info_queue, card)
         local rank, key
         do
@@ -1080,5 +1082,63 @@ FishAndChips.Fish {
                 enhancement = enhancement
             }
         end
-    end
+    end,
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_fac_waffle_book'),
+            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
+            1.2)
+    end,
+    attributes = { "generation", "usable" },
+    impulse_max = 0.18,
+    vel_limit = 0.32
 }
+
+-- Feebas
+FishAndChips.Fish {
+    key = "waffle_feebas",
+    environments = {
+        calm_pond = 1,
+        pier = 1,
+        swamp = 1,
+        aquifer = 1,
+        garden = 1,
+        city_river = 1
+    },
+    weight = 8,
+    ppu_coder = { 'waffle' },
+    ppu_artist = { 'waffle' },
+    stats = {
+        length = {min = 0.4, max = 0.8},
+        weight = {min = 6.6, max = 8.0}
+    },
+    config = {extra = {
+        xmult = 3
+    }},
+    loc_vars = function (self, info_queue, card)
+        return {vars = {card.ability.extra.xmult}}
+    end,
+    blueprint_compat = true,
+    calculate = function (self, card, context)
+        if context.joker_main then
+            return {
+                xmult = card.ability.extra.xmult
+            }
+        end
+    end,
+    in_pool = function (self, args)
+        return G.GAME and G.GAME.fac_fishing_environment == G.GAME.fac_waffle_feebas_environment
+    end,
+    attributes = { "xmult" }
+}
+
+local rgg_ref = SMODS.current_mod.reset_game_globals
+function SMODS.current_mod.reset_game_globals(run_start)
+    if G.GAME and not G.GAME.fac_waffle_feebas_environment then
+        local environments = {}
+        for i, v in pairs(G.P_CENTERS.fish_fac_waffle_feebas.environments) do
+            environments[#environments+1] = i
+        end
+        G.GAME.fac_waffle_feebas_environment = pseudorandom_element(environments, "fac_waffle_feebas_environment")
+    end
+    rgg_ref(run_start)
+end
