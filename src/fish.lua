@@ -135,6 +135,7 @@ function FishAndChips.verify_submissions()
 			local in_envs = SMODS.table_size(fish.environments)
 			assert(in_envs <= FishAndChips.fish_environment_limit or dev_obj.ignore_limits, "Fish " .. fish.key .. " is in " .. in_envs .. " environments when the limit is " .. FishAndChips.fish_environment_limit)
 		end
+		totw = total_weight
 		local scalar = math.min(1, FishAndChips.submission_weight_limit / total_weight)
 		if submission.mod == FishAndChips.mod then
 			assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)

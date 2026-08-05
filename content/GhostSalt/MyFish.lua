@@ -1,3 +1,5 @@
+local fac_ghostsalt_common_weight = 7
+
 SMODS.Sound({
 	key = "ghostfish_1",
 	path = "GhostSalt/fac_ghostfish_1.ogg"
@@ -33,6 +35,11 @@ SMODS.Sound({
 	path = "GhostSalt/fac_tapcod_no.ogg"
 })
 
+SMODS.Sound({
+	key = "finvestor",
+	path = "GhostSalt/fac_finvestor.ogg"
+})
+
 SMODS.Font({
 	key = "speakerbox",
 	path = "speakerbox.ttf",
@@ -64,7 +71,8 @@ FishAndChips.Fish {
 	key = "ghostsalt_ghostfish",
 	atlas = "GhostSaltMyFish",
 	pos = { x = 0, y = 0 },
-	weight = 10,
+	weight = fac_ghostsalt_common_weight,
+	stats = { weight = { min = 0, max = 0 }, length = { min = 0.50, max = 1.00 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
 	attributes = { "modify_card" },
@@ -73,6 +81,7 @@ FishAndChips.Fish {
 		swamp = 5,
 		backroom = 2
 	},
+	blueprint_compat = true,
 	calculate = function(self, card, context)
 		if context.ending_shop and G.consumeables.config.card_limit - (#G.consumeables.cards + G.GAME.consumeable_buffer) < 1 then
 			local candidates = {}
@@ -90,9 +99,9 @@ FishAndChips.Fish {
 
 			G.E_MANAGER:add_event(Event({
 				trigger = "after",
-				delay = 0.4,
+				delay = 0.40,
 				func = function()
-					play_sound("fac_ghostfish_1", 0.9 + (math.random() / 5), 0.4)
+					play_sound("fac_ghostfish_1", 0.90 + (math.random() / 5), 0.4);
 					card:juice_up()
 					return true
 				end
@@ -101,13 +110,13 @@ FishAndChips.Fish {
 				trigger = "after",
 				delay = 0.15,
 				func = function()
-					selected_tarot:flip(); play_sound("card1"); selected_tarot:juice_up(0.3, 0.3); return true
+					selected_tarot:flip(); play_sound("card1"); selected_tarot:juice_up(0.30, 0.3); return true
 				end
 			}))
 			delay(0.2)
 			G.E_MANAGER:add_event(Event({
 				trigger = "after",
-				delay = 0.1,
+				delay = 0.10,
 				func = function()
 					selected_tarot:set_ability(SMODS.poll_object { type = "Spectral" } or "c_incantation")
 					return true
@@ -118,15 +127,15 @@ FishAndChips.Fish {
 				G.E_MANAGER:add_event(Event({
 					trigger = "before",
 					timer = "REAL",
-					delay = 0.6,
+					delay = 0.60,
 					func = function()
 						selected_tarot:juice_up()
-						play_sound("cancel", 1.2 + (math.random() / 5), 0.5)
+						play_sound("cancel", 1.20 + (math.random() / 5), 0.5)
 						return true
 					end
 				}))
 			end
-			local delay_time = math.random(0.5, 1)
+			local delay_time = math.random(0.50, 1)
 			G.E_MANAGER:add_event(Event({
 				trigger = "before",
 				timer = "REAL",
@@ -136,16 +145,16 @@ FishAndChips.Fish {
 				end
 			}))
 			G.E_MANAGER:add_event(Event({
-				trigger = "after",
-				delay = 0.15,
+				trigger = "before",
+				timer = "REAL",
+				delay = 0.4,
 				func = function()
-					selected_tarot:flip(); play_sound("fac_ghostfish_2", 0.9 + (math.random() / 5), 0.4); selected_tarot:juice_up(0.3, 0.3)
+					selected_tarot:flip(); play_sound("fac_ghostfish_2", 0.90 + (math.random() / 5), 0.4); selected_tarot:juice_up(0.30, 0.3);
 					card:juice_up()
 					selected_tarot.fac_ghostsalt_ghostfish_claimed = false
 					return true
 				end
 			}))
-			delay(0.6)
 		end
 	end,
 	pronouns = "she_her"
@@ -162,25 +171,40 @@ if next(SMODS.find_mod("cardpronouns")) then
 	CardPronouns.classifications["neutral"].pronouns[#CardPronouns.classifications["neutral"].pronouns] = "fac_ghostsalt_xe_xem"
 end
 
+local fac_use_fish_ref = G.FUNCS.fac_use_fish
+G.FUNCS.fac_use_fish = function(e)
+	local ret = fac_use_fish_ref(e)
+	SMODS.calculate_context { using_fish = e.config.ref_table }
+	return ret
+end
+
 FishAndChips.Fish {
 	key = "ghostsalt_gleebleglub",
 	atlas = "GhostSaltMyFish",
 	pos = { x = 1, y = 0 },
-	weight = 10,
+	config = { extra = { max_triggers = 10, current_triggers = 0 } },
+	weight = fac_ghostsalt_common_weight,
+	stats = { weight = { min = 0.40, max = 0.60 }, length = { min = 0.20, max = 0.50 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = {},
+	attributes = { "generation" },
 	environments = {
 		wormhole = 10,
 		soup = 5
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		return { vars = { card.ability.extra.max_triggers } }
 	end,
+	blueprint_compat = true,
 	calculate = function(self, card, context)
-		if context.using_consumeable and context.consumeable ~= card and context.consumeable.config.center.set == "fac_Fish"
-			and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+		if ((context.using_fish and context.using_fish ~= card) or
+				context.selling_card and context.card.ability.set == "fac_Fish" and context.card ~= card)
+			and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit
+			and card.ability.extra.current_triggers < card.ability.extra.max_triggers then
 			G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+			if not context.blueprint then
+				card.ability.extra.current_triggers = card.ability.extra.current_triggers + 1
+			end
 			G.E_MANAGER:add_event(Event({
 				func = function()
 					SMODS.add_card { set = "Planet", key_append = "fac_ghostsalt_gleebleglub" }
@@ -193,6 +217,10 @@ FishAndChips.Fish {
 				colour = G.C.SECONDARY_SET.Planet
 			}
 		end
+
+		if context.end_of_round and not context.individual and not context.repetition and not context.game_over and not context.blueprint then
+			card.ability.extra.current_triggers = 0
+		end
 	end,
 	pronouns = "fac_ghostsalt_xe_xem"
 }
@@ -202,6 +230,7 @@ FishAndChips.Fish {
 	atlas = "GhostSaltMyFish",
 	pos = { x = 2, y = 0 },
 	weight = 4,
+	stats = { weight = { min = 1.30, max = 4.00 }, length = { min = 0.20, max = 0.45 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
 	attributes = { "generation" },
@@ -212,7 +241,7 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		local tile = SMODS.create_sprite(0, 0, 2.5, 2.5 * (67 / 61), "fac_GhostSaltTapCodeTable", { x = 0, y = 0 })
+		local tile = SMODS.create_sprite(0, 0, 2.50, 2.50 * (67 / 61), "fac_GhostSaltTapCodeTable", { x = 0, y = 0 })
 		local n = {
 			n = G.UIT.C,
 			config = { align = "cm" },
@@ -291,7 +320,7 @@ end
 
 G.FUNCS.fac_ghostsalt_tapcod = function(e)
 	local card = e.config.ref_table
-	card:juice_up(0.3, 0.3)
+	card:juice_up(0.30, 0.3)
 	card.ability.fac_ghostsalt_no_of_cod_taps = (card.ability.fac_ghostsalt_no_of_cod_taps or 0) + 1
 	local prev = card.ability.fac_ghostsalt_no_of_cod_taps
 
@@ -299,13 +328,13 @@ G.FUNCS.fac_ghostsalt_tapcod = function(e)
 		card.children.use_button:remove()
 		card.children.use_button = UIBox {
 			definition = G.UIDEF.fac_ghostsalt_input_submit_ref(card),
-			config = { align = "cr", offset = { x = -0.4, y = 0 }, parent = card }
+			config = { align = "cr", offset = { x = -0.40, y = 0 }, parent = card }
 		}
 	end
 	G.E_MANAGER:add_event(Event({
 		trigger = "after",
 		timer = "REAL",
-		delay = 0.8,
+		delay = 0.80,
 		blocking = false,
 		blockable = false,
 		func = function()
@@ -327,7 +356,7 @@ G.FUNCS.fac_ghostsalt_tapcod = function(e)
 					card.children.use_button:remove()
 					card.children.use_button = UIBox {
 						definition = G.UIDEF.fac_ghostsalt_input_submit_ref(card),
-						config = { align = "cr", offset = { x = -0.4, y = 0 }, parent = card }
+						config = { align = "cr", offset = { x = -0.40, y = 0 }, parent = card }
 					}
 				end
 			end
@@ -353,7 +382,7 @@ G.FUNCS.fac_ghostsalt_tapcod_submit = function(e)
 			card.children.use_button:remove()
 			card.children.use_button = UIBox {
 				definition = G.UIDEF.fac_ghostsalt_only_sell_ref(card),
-				config = { align = "cr", offset = { x = -0.4, y = 0 }, parent = card }
+				config = { align = "cr", offset = { x = -0.40, y = 0 }, parent = card }
 			}
 		end
 		G.E_MANAGER:add_event(Event({
@@ -383,7 +412,7 @@ G.FUNCS.fac_ghostsalt_tapcod_submit = function(e)
 		G.E_MANAGER:add_event(Event({
 			timer = "REAL",
 			trigger = "after",
-			delay = is_silly and 1.3 or 3,
+			delay = is_silly and 1.30 or 3,
 			func = function()
 				card:start_dissolve()
 				return true
@@ -423,7 +452,7 @@ end
 --[[
 self.children.use_button = UIBox {
 			definition = G.UIDEF.use_and_sell_buttons(self),
-			config = { align = "cr", offset = { x = -0.4, y = 0 }, parent = self }
+			config = { align = "cr", offset = { x = -0.40, y = 0 }, parent = self }
 		}
 ]]
 
@@ -437,12 +466,12 @@ function Card:highlight(is_higlighted)
 			if self.ability.fac_ghostsalt_tap_cod_used then
 				self.children.use_button = UIBox {
 					definition = G.UIDEF.fac_ghostsalt_only_sell_ref(self),
-					config = { align = "cr", offset = { x = -0.4, y = 0 }, parent = self }
+					config = { align = "cr", offset = { x = -0.40, y = 0 }, parent = self }
 				}
 			else
 				self.children.use_button = UIBox {
 					definition = G.UIDEF.fac_ghostsalt_input_submit_ref(self),
-					config = { align = "cr", offset = { x = -0.4, y = 0 }, parent = self }
+					config = { align = "cr", offset = { x = -0.40, y = 0 }, parent = self }
 				}
 			end
 		end
@@ -461,9 +490,9 @@ function G.UIDEF.use_and_sell_buttons(card)
 			nodes = {
 				{
 					n = G.UIT.C,
-					config = { ref_table = card, align = "cr", padding = 0.1, r = 0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = "sell_card", func = "can_sell_card" },
+					config = { ref_table = card, align = "cr", padding = 0.10, r = 0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = "sell_card", func = "can_sell_card" },
 					nodes = {
-						{ n = G.UIT.B, config = { w = 0.1, h = 0.6 } },
+						{ n = G.UIT.B, config = { w = 0.10, h = 0.60 } },
 						{
 							n = G.UIT.C,
 							config = { align = "tm" },
@@ -472,7 +501,7 @@ function G.UIDEF.use_and_sell_buttons(card)
 									n = G.UIT.R,
 									config = { align = "cm", maxw = 1.25 },
 									nodes = {
-										{ n = G.UIT.T, config = { text = localize("b_sell"), colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true } }
+										{ n = G.UIT.T, config = { text = localize("b_sell"), colour = G.C.UI.TEXT_LIGHT, scale = 0.40, shadow = true } }
 									}
 								},
 								{
@@ -495,9 +524,9 @@ function G.UIDEF.use_and_sell_buttons(card)
 			nodes = {
 				{
 					n = G.UIT.C,
-					config = { ref_table = card, align = "cm", padding = 0.1, r = 0.08, minw = 1.25, minh = 0.8, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, fac_ignore = true, button = "fac_ghostsalt_tapcod", func = "fac_can_ghostsalt_tapcod" },
+					config = { ref_table = card, align = "cm", padding = 0.10, r = 0.08, minw = 1.25, minh = 0.80, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, fac_ignore = true, button = "fac_ghostsalt_tapcod", func = "fac_can_ghostsalt_tapcod" },
 					nodes = {
-						{ n = G.UIT.B, config = { w = 0.1, h = 0.6 } },
+						{ n = G.UIT.B, config = { w = 0.10, h = 0.60 } },
 						{
 							n = G.UIT.C,
 							config = { align = "cm" },
@@ -552,9 +581,9 @@ function G.UIDEF.fac_ghostsalt_input_submit_ref(card)
 		nodes = {
 			{
 				n = G.UIT.C,
-				config = { ref_table = card, align = "cr", padding = 0.1, r = 0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, fac_ignore = true, button = "fac_ghostsalt_tapcod_submit", func = "fac_can_ghostsalt_tapcod_submit" },
+				config = { ref_table = card, align = "cr", padding = 0.10, r = 0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, fac_ignore = true, button = "fac_ghostsalt_tapcod_submit", func = "fac_can_ghostsalt_tapcod_submit" },
 				nodes = {
-					{ n = G.UIT.B, config = { w = 0.1, h = 0.6 } },
+					{ n = G.UIT.B, config = { w = 0.10, h = 0.60 } },
 					{
 						n = G.UIT.C,
 						config = { align = "cm" },
@@ -578,9 +607,9 @@ function G.UIDEF.fac_ghostsalt_input_submit_ref(card)
 		nodes = {
 			{
 				n = G.UIT.C,
-				config = { ref_table = card, align = "cm", padding = 0.1, r = 0.08, minw = 1.25, minh = 0.8, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, fac_ignore = true, button = "fac_ghostsalt_tapcod", func = "fac_can_ghostsalt_tapcod" },
+				config = { ref_table = card, align = "cm", padding = 0.10, r = 0.08, minw = 1.25, minh = 0.80, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, fac_ignore = true, button = "fac_ghostsalt_tapcod", func = "fac_can_ghostsalt_tapcod" },
 				nodes = {
-					{ n = G.UIT.B, config = { w = 0.1, h = 0.6 } },
+					{ n = G.UIT.B, config = { w = 0.10, h = 0.60 } },
 					{
 						n = G.UIT.C,
 						config = { align = "cm" },
@@ -629,9 +658,9 @@ function G.UIDEF.fac_ghostsalt_only_sell_ref(card)
 		nodes = {
 			{
 				n = G.UIT.C,
-				config = { ref_table = card, align = "cr", padding = 0.1, r = 0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = "sell_card", func = "can_sell_card" },
+				config = { ref_table = card, align = "cr", padding = 0.10, r = 0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = "sell_card", func = "can_sell_card" },
 				nodes = {
-					{ n = G.UIT.B, config = { w = 0.1, h = 0.6 } },
+					{ n = G.UIT.B, config = { w = 0.10, h = 0.60 } },
 					{
 						n = G.UIT.C,
 						config = { align = "tm" },
@@ -640,7 +669,7 @@ function G.UIDEF.fac_ghostsalt_only_sell_ref(card)
 								n = G.UIT.R,
 								config = { align = "cm", maxw = 1.25 },
 								nodes = {
-									{ n = G.UIT.T, config = { text = localize("b_sell"), colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true } }
+									{ n = G.UIT.T, config = { text = localize("b_sell"), colour = G.C.UI.TEXT_LIGHT, scale = 0.40, shadow = true } }
 								}
 							},
 							{
@@ -680,7 +709,8 @@ FishAndChips.Fish {
 	key = "ghostsalt_chalkoutline",
 	atlas = "GhostSaltMyFish",
 	pos = { x = 3, y = 0 },
-	weight = 10,
+	stats = { weight = { min = 0.01, max = 0.01 }, length = { min = 0.40, max = 1.00 } },
+	weight = fac_ghostsalt_common_weight,
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
 	attributes = { "xmult" },
@@ -689,6 +719,7 @@ FishAndChips.Fish {
 		city_river = 8,
 		backroom = 4
 	},
+	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { G.fac_fish_area and math.max(1, (G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) + #SMODS.find_card("fish_fac_ghostsalt_chalkoutline", true)) or 1 } }
 	end,
@@ -704,7 +735,8 @@ FishAndChips.Fish {
 	key = "ghostsalt_halfmoon",
 	atlas = "GhostSaltMyFish",
 	pos = { x = 0, y = 1 },
-	weight = 10,
+	stats = { weight = { min = 1.00, max = 2.00 }, length = { min = 0.15, max = 0.30 } },
+	weight = fac_ghostsalt_common_weight,
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
 	attributes = { "modify_card" },
@@ -726,28 +758,28 @@ FishAndChips.Fish {
 			}))
 			G.E_MANAGER:add_event(Event({
 				trigger = "after",
-				delay = 0.2,
+				delay = 0.20,
 				func = function()
 					_card:flip()
 					play_sound("card1", 1)
-					_card:juice_up(0.3, 0.3)
+					_card:juice_up(0.30, 0.3)
 					return true
 				end
 			}))
 			G.E_MANAGER:add_event(Event({
 				trigger = "after",
-				delay = 0.5,
+				delay = 0.50,
 				func = function()
 					_card:change_suit("Clubs")
 					return true
 				end
 			}))
 			G.E_MANAGER:add_event(Event({
-				delay = 0.2,
+				delay = 0.20,
 				func = function()
 					_card:flip()
 					play_sound("tarot2", 1)
-					_card:juice_up(0.3, 0.3)
+					_card:juice_up(0.30, 0.3)
 					return true
 				end
 			}))
@@ -762,7 +794,8 @@ FishAndChips.Fish {
 	atlas = "GhostSaltMyFish",
 	pos = { x = 1, y = 1 },
 	config = { extra = { xmult = 2 } },
-	weight = 10,
+	weight = fac_ghostsalt_common_weight,
+	stats = { weight = { min = 0, max = 0 }, length = { min = 0.20, max = 0.45 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
 	attributes = { "xmult" },
@@ -773,6 +806,7 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xmult } }
 	end,
+	blueprint_compat = true,
 	calculate = function(self, card, context)
 		if context.joker_main then
 			local face
@@ -796,8 +830,9 @@ FishAndChips.Fish {
 	key = "ghostsalt_whitewhale",
 	atlas = "GhostSaltMyFish",
 	pos = { x = 2, y = 1 },
-	config = { extra = { xmult = 1.5 } },
+	config = { extra = { xmult = 1.50 } },
 	weight = 1,
+	stats = { weight = { min = 1450, max = 1550 }, length = { min = 5.00, max = 6.00 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
 	attributes = { "xmult" },
@@ -807,6 +842,7 @@ FishAndChips.Fish {
 		garden = 1,
 		chocolate_river = 1
 	},
+	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xmult } }
 	end,
@@ -823,7 +859,8 @@ FishAndChips.Fish {
 	atlas = "GhostSaltMyFish",
 	pos = { x = 3, y = 1 },
 	config = { extra = { sand_dollars = 1 } },
-	weight = 10,
+	weight = fac_ghostsalt_common_weight,
+	stats = { weight = { min = 1.00, max = 2.00 }, length = { min = 0.50, max = 0.60 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
 	attributes = { "economy" },
@@ -832,6 +869,7 @@ FishAndChips.Fish {
 		calm_pond = 3,
 		pier = 2,
 	},
+	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.sand_dollars } }
 	end,
@@ -841,4 +879,215 @@ FishAndChips.Fish {
 		end
 	end,
 	pronouns = "she_her"
+}
+
+FishAndChips.Fish {
+	key = "ghostsalt_finvestor",
+	atlas = "GhostSaltMyFish",
+	pos = { x = 0, y = 2 },
+	weight = fac_ghostsalt_common_weight,
+	stats = { weight = { min = 0.10, max = 0.20 }, length = { min = 3.00, max = 4.00 } },
+	ppu_coder = { "GhostSalt" },
+	ppu_artist = { "GhostSalt" },
+	attributes = { "economy", "usable" },
+	environments = {
+		city_river = 10,
+		volcano = 2,
+	},
+	blueprint_compat = false,
+	use = function(self, card)
+		G.E_MANAGER:add_event(Event {
+			trigger = "before",
+			delay = 0.6,
+			func = function()
+				card:juice_up()
+				ease_dollars(G.GAME.fac_sand_dollars)
+				ease_sand_dollars(-G.GAME.fac_sand_dollars)
+				play_sound("fac_finvestor", 1, 0.8)
+				return true
+			end
+		})
+	end,
+	can_use = function(self, card)
+		return G.GAME.fac_sand_dollars > 0
+	end,
+	pronouns = "he_him"
+}
+
+FishAndChips.Fish {
+	key = "ghostsalt_kitkatla",
+	atlas = "GhostSaltMyFish",
+	pos = { x = 1, y = 2 },
+	weight = fac_ghostsalt_common_weight,
+	stats = { weight = { min = 0.02, max = 0.02 }, length = { min = 0.1, max = 0.1 } },
+	ppu_coder = { "GhostSalt" },
+	ppu_artist = { "GhostSalt" },
+	attributes = { "modify_card", "usable" },
+	environments = {
+		chocolate_river = 10
+	},
+	blueprint_compat = false,
+	requires_hand = true,
+	use = function(self, card)
+		local _card = G.hand.highlighted[1]
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.4,
+			func = function()
+				play_sound("tarot1")
+				card:juice_up(0.3, 0.5)
+				return true
+			end
+		}))
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.15,
+			func = function()
+				_card:flip()
+				play_sound("card1")
+				_card:juice_up(0.3, 0.3)
+				return true
+			end
+		}))
+		delay(0.2)
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.1,
+			func = function()
+				local function find_rank(id)
+					for k, v in pairs(SMODS.Ranks) do
+						if v.id == id then return k end
+					end
+				end
+				local new_rank = _card:get_id()
+				if new_rank == 14 then new_rank = 1 end
+				new_rank = new_rank * 2
+				if new_rank <= 13 then
+					if new_rank == 1 then new_rank = 14 end -- this will never happen lol
+					assert(SMODS.change_base(_card, nil, find_rank(new_rank)))
+				else
+					for i = 1, #G.hand.cards do
+						if G.hand.cards[i] == _card then
+							local dos = SMODS.copy_card(_card)
+							dos.rank = (_card.rank or 0) + 0.5
+							table.sort(_card.area.cards, function(a, b) return a.rank < b.rank end)
+							_card.area:align_cards()
+
+							assert(SMODS.change_base(_card, nil, "King"))
+							local rank_b = new_rank - 13
+							if rank_b == 1 then rank_b = 14 end
+							assert(SMODS.change_base(dos, nil, find_rank(rank_b)))
+
+							dos.visible = nil
+							dos:start_materialize()
+							break
+						end
+					end
+				end
+				return true
+			end
+		}))
+		for i = 1, #G.hand.highlighted do
+			G.E_MANAGER:add_event(Event({
+				trigger = "after",
+				delay = 0.15,
+				func = function()
+					_card:flip()
+					play_sound("tarot2", 1, 0.6)
+					_card:juice_up(0.3, 0.3)
+					return true
+				end
+			}))
+		end
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.2,
+			func = function()
+				G.hand:unhighlight_all()
+				return true
+			end
+		}))
+		delay(0.5)
+	end,
+	can_use = function(self, card)
+		return #G.hand.highlighted == 1
+	end,
+	pronouns = "they_them"
+}
+
+FishAndChips.Fish {
+	key = "ghostsalt_troweltrout",
+	atlas = "GhostSaltMyFish",
+	pos = { x = 2, y = 2 },
+	weight = fac_ghostsalt_common_weight,
+	stats = { weight = { min = 0.80, max = 1.20 }, length = { min = 0.40, max = 0.60 } },
+	ppu_coder = { "GhostSalt" },
+	ppu_artist = { "GhostSalt" },
+	attributes = { "economy", "usable" },
+	environments = {
+		volcano = 10,
+		garden = 8,
+		soup = 4
+	},
+	blueprint_compat = false,
+	requires_hand = true,
+	use = function(self, card)
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.4,
+			func = function()
+				local money = G.hand.highlighted[1].base.nominal + G.hand.highlighted[2].base.nominal
+				play_sound("timpani")
+				ease_dollars(money)
+				card_eval_status_text(card, "extra", nil, nil, nil, { message = "$" .. money, colour = G.C.MONEY })
+				return true
+			end
+		}))
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.2,
+			func = function()
+				G.hand:unhighlight_all()
+				return true
+			end
+		}))
+		delay(0.5)
+	end,
+	can_use = function(self, card)
+		return #G.hand.highlighted == 2 and G.hand.highlighted[1]:is_suit("Spades") and G.hand.highlighted[2]:is_suit("Spades")
+	end,
+	pronouns = "they_them"
+}
+
+FishAndChips.Fish {
+	key = "ghostsalt_swimmingribbon",
+	atlas = "GhostSaltMyFish",
+	pos = { x = 3, y = 2 },
+	config = { extra = { set_chips = 100, given_chips = 20 } },
+	weight = fac_ghostsalt_common_weight,
+	stats = { weight = { min = 0.02, max = 0.03 }, length = { min = 2.00, max = 3.00 } },
+	ppu_coder = { "GhostSalt" },
+	ppu_artist = { "GhostSalt" },
+	attributes = { "chips" },
+	environments = {
+		calm_pond = 10,
+		styx = 5,
+		swamp = 2
+	},
+	blueprint_compat = true,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.set_chips, card.ability.extra.given_chips } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			hand_chips = mod_chips(card.ability.extra.set_chips)
+			update_hand_text({ delay = 0 }, { chips = hand_chips })
+			return { message = "="..card.ability.extra.set_chips, colour = G.C.CHIPS, card = card }
+		end
+
+		if context.other_main and context.other_main.ability.set == "fac_Fish" and context.other_main ~= card then
+			return { chips = card.ability.extra.given_chips }
+		end
+	end,
+	pronouns = "he_they"
 }

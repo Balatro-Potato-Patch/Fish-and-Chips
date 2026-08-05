@@ -18,9 +18,10 @@ return {
             fish_fac_ghostsalt_gleebleglub = {
                 name = "Gleebleglub",
                 text = {
-                    "Creates a {C:blue}Planet card",
-                    "when using any {C:attention}Fish{}",
-                    "{C:inactive}(Must have room){}"
+                    "Creates a {C:blue}Planet{} card when",
+                    "selling or using {C:attention}Fish{}",
+                    "{C:inactive}(Must have room, max{}",
+                    "{C:inactive}#1# triggers per round){}"
                 },
                 flavor = {
                     "{f:fac_speakerbox}WHY DO THEY CALL IT",
@@ -86,7 +87,7 @@ return {
             },
             fish_fac_ghostsalt_whitewhale = {
                 name = "White Whale",
-                text={
+                text = {
                     "{C:red}Rare{} Jokers",
                     "each give {X:mult,C:white}X#1#{} Mult",
                 },
@@ -105,6 +106,53 @@ return {
                     "The last survivor of the Golden Garden.",
                     "She fought bravely to protect Misthallery",
                     "and her two best friends, Arianna and Tony."
+                }
+            },
+            fish_fac_ghostsalt_finvestor = {
+                name = "Finvestor",
+                text = {
+                    "Use to convert all",
+                    "{C:fac_sand_dollars}sand dollars{} into an",
+                    "equal amount of {C:money}dollars{}"
+                },
+                flavor = {
+                    "I can't stop finning!"
+                }
+            },
+            fish_fac_ghostsalt_kitkatla = {
+                name = "KitKatla",
+                text = {
+                    "Use to {C:attention}double{} the rank",
+                    "of {C:attention}1{} selected card",
+                    "{C:inactive}(A = 1, J-K = 11-13){}"
+                },
+                flavor = {
+                    "Chocolate may be breakable,",
+                    "but these fish are inseparable."
+                }
+            },
+            fish_fac_ghostsalt_troweltrout = {
+                name = "Trowel Trout",
+                text = {
+                    "Select exactly {C:attention}2{} cards with",
+                    "{C:spades}Spades{} suit, use to earn",
+                    "{C:money}money{} equal to the sum of",
+                    "their base {C:chips}Chips{} values"
+                },
+                flavor = {
+                    "Both a very slow shovel",
+                    "and a very bad spoon."
+                }
+            },
+            fish_fac_ghostsalt_swimmingribbon = {
+                name = "Swimming Ribbon",
+                text = {
+                    "Sets Chips to {C:chips}#1#{},",
+                    "other {C:attention}Fish{} give {C:chips}+#2#{} Chips"
+                },
+                flavor = {
+                    "A group of this fish",
+                    "is called a confetti."
                 }
             },
         },
