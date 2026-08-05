@@ -1,7 +1,7 @@
--- SMODS.Sound({
--- 	key = "sprat_can_opening",
--- 	path = "sg11_n_vekhi/can_opening.ogg",
--- })
+SMODS.Sound({
+	key = "lemon_cut",
+	path = "sg11_n_vekhi/lemon_cut.ogg",
+})
 
 SMODS.Atlas({
 	key = "sg11_n_vekhi_lemon_fish",
@@ -24,8 +24,8 @@ FishAndChips.Fish({
 	},
 	weight = 5,
 	stats = {
-		weight = { min = 1, max = 1 },
-		length = { min = 1, max = 1 },
+		weight = { min = 0.06, max = 0.12 },
+		length = { min = 0.07, max = 0.2 },
 	},
 	environments = {
 		soup = 2,
@@ -40,11 +40,11 @@ FishAndChips.Fish({
 		return true
 	end,
 	use = function(self, card)
-		-- TODO: squeeze sound
-		-- play_sound("fac_sprat_can_opening")
+		play_sound("fac_lemon_cut")
+		card.T.r = 0.5
 		card:juice_up(0.3, 0.4)
 		card.states.drag.is = true
-		card.children.center.pinch.y = true
+		card.children.center.pinch.x = true
 		for i = 1, card.ability.extra.skip_tags do
 			local tag_pool = get_current_pool("Tag")
 			local selected_tag = pseudorandom_element(tag_pool, "fac_lemon_fish")
