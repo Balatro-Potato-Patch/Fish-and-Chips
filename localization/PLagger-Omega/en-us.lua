@@ -16,9 +16,9 @@ return {
             fish_fac_plaggeromega_troutearthextinct = {
                 name = 'Trout Earth Extinction',
                 text = {
-                    'Use this fish for',
+                    'Use this Fish for',
                     '{C:attention}-#1#{} Ante,',
-                    'destroys all fish'
+                    '{C:red,E:2}destroys{} all Fish'
                 },
                 flavour = {
                     'This will severely',
@@ -83,11 +83,23 @@ return {
                 text = {
                     'Use this Fish',
                     'to create a random',
-                    '{C:money}rental{} {C:rare}Rare {C:attention}Joker'
+                    '{C:money}rental{} {C:rare}Rare {C:attention}Joker',
+                    '{C:inactive}(Must have room)'
                 },
                 flavour = {
                     'B E    N O T',
                     'A F R A I D'
+                }
+            },
+            fish_fac_plaggeromega_relicanth = {
+                name = 'Relicanth',
+                text = {
+                    '{C:attention}Last{} played card',
+                    'used in scoring',
+                    'becomes {C:attention}Stone'
+                },
+                flavour = {
+                    'omega this is ur department you think of something'
                 }
             }
         }
@@ -96,7 +108,8 @@ return {
         dictionary = {
             fac_plaggeromega_active_ex = 'Active!',
             fac_plaggeromega_inactive = 'Inactive',
-            fac_plaggeromega_giada = 'Shout out Giada'
+            fac_plaggeromega_giada = 'Shout out Giada',
+            fac_plaggeromega_stone = 'Stone'
         }
     }
 }

@@ -388,6 +388,32 @@ FishAndChips.Fish{ --Relicanth
   impulse_max = 0.313,
   vel_limit = 0.44223,
   cost = 4,
-  blueprint_compat = true,
-  config = {extra = {}}
+  blueprint_compat = false,
+  config = {extra = {}},
+
+  loc_vars = function (self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS['m_stone']
+  end,
+
+  calculate = function (self, card, context)
+    if context.before and not context.blueprint then
+      local cards = 0
+      for _, scored_card in ipairs(context.scoring_hand) do
+        cards = cards + 1
+        if cards == #context.scoring_hand then
+          scored_card:set_ability('m_stone', nil, true)
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              scored_card:juice_up()
+              return true
+            end
+          }))
+        end
+      end
+      return{
+        message = localize('fac_plaggeromega_stone'),
+        colour = G.C.CHIPS
+      }
+    end
+  end
 }
