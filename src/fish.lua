@@ -400,7 +400,9 @@ if SilkTouch then
         key = "fish_use",
         moveable_t = "J_sell",
         text = function(card)
-            return {localize('b_use')}
+            return {type(card.config.center.button_key) == "function" and card.config.center.button_key()
+				or type(card.config.center.button_key) == "string" and localize(card.config.center.button_key)
+				or localize('b_use')}
         end,
         colour = G.C.ORANGE,
         drag_condition = function(card)
