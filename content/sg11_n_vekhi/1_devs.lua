@@ -18,7 +18,7 @@ PotatoPatchUtils.Developer({
 		if context.selling_card and not context.blueprint then
 			G.GAME.fac_yellowbin_sold_centers = G.GAME.fac_yellowbin_sold_centers or {}
 			table.insert(G.GAME.fac_yellowbin_sold_centers, context.card.config.center.key)
-			if #G.GAME.fac_yellowbin_sold_centers > 100 then
+			if #G.GAME.fac_yellowbin_sold_centers > 50 then
 				table.remove(G.GAME.fac_yellowbin_sold_centers, 1)
 			end
 		end
@@ -33,6 +33,3 @@ PotatoPatchUtils.Developer({
 	fac_partner = "sleepyg11",
 	loc = "fac_vevekhi",
 })
-
--- FishAndChips.mod.optional_features = FishAndChips.mod.optional_features or {}
--- FishAndChips.mod.optional_features.post_trigger = true

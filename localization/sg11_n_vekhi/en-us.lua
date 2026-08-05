@@ -107,6 +107,12 @@ return {
 					"{C:inactive}(Does not require room){}",
 				},
 			},
+			fish_fac_sg11_n_vekhi_lemon_fish = {
+				name = "Lemon Fish",
+				text = {
+					"{C:attention}Use{} to create {C:attention}#1#{} {C:attention}Skip Tags{}",
+				},
+			},
 		},
 		PotatoPatch = {
 			fac_sleepyg11 = {
