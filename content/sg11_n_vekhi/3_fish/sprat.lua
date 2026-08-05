@@ -14,7 +14,7 @@ FishAndChips.Fish({
 	attributes = {},
 	config = {
 		extra = {
-			chips = 20,
+			chips = 15,
 			dollars = 1,
 		},
 	},
