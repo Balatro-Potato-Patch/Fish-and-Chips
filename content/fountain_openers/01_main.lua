@@ -9,14 +9,6 @@ local alexi_text_colors = {
 }
 local alexi_click_count = 5
 
--- Also used by the shit squad
-function FountainOpeners.dark_flip(card)
-    local pos = card.children.center.sprite_pos
-    card.children.center:set_sprite_pos({x=pos.x,y=1-pos.y})
-    local pos2 = card.children.ppu_floating_sprite.sprite_pos
-    card.children.ppu_floating_sprite:set_sprite_pos({x=pos2.x,y=1-pos2.y})
-end
-
 SMODS.Atlas {
     key = "fo_dev_credits",
     path = "fountain_openers/fo_dev_credits.png",
@@ -218,8 +210,15 @@ PotatoPatchUtils.Developer {
     end,
 }
 
--- weird way of doing it but it ensures it happens after every dev object loads so Yea
 -- also used by the shit squad; shader by slimestuff
+function FountainOpeners.dark_flip(card)
+    local pos = card.children.center.sprite_pos
+    card.children.center:set_sprite_pos({x=pos.x,y=1-pos.y})
+    local pos2 = card.children.ppu_floating_sprite.sprite_pos
+    card.children.ppu_floating_sprite:set_sprite_pos({x=pos2.x,y=1-pos2.y})
+end
+
+-- weird way of doing it but it ensures it happens after every dev object loads so Yea
 G.E_MANAGER:add_event(Event({
     func = function()
         for _, dev in pairs(PotatoPatchUtils.Developers) do
