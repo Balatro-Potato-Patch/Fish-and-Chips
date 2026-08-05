@@ -39,8 +39,10 @@ FishAndChips.Fish{
         local luck, odds = SMODS.get_probability_vars(card, card.ability.extra.luck, card.ability.extra.odds, "minty_fac_fission_retrigger", false)
         
         return {
-            luck, odds,
-            card.ability.extra.retriggers, card.ability.extra.retriggers ~= 1 and "s" or ""
+            vars = {
+                luck, odds,
+                card.ability.extra.retriggers, card.ability.extra.retriggers ~= 1 and "s" or ""
+            }
         }
     end,
     calculate = function (self, card, context)
