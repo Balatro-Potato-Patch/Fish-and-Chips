@@ -35,12 +35,7 @@ FishAndChips.Fish {
                 no_message = true
             })
             if card.ability.extra.cards_left <= 0 then
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        SMODS.destroy_cards(card, { pinch_anim = true })
-                        return true
-                    end
-                }))
+                SMODS.destroy_cards(card, { pinch_anim = true })
             end
 
             return { mult = mult }
