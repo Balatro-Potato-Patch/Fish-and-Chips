@@ -15,6 +15,7 @@ FishAndChips.Fish {
             -- since we're only counting time when the decay is active (e.g. progress is already above the decay threshold)
             -- (100% - 15%) / 20%/s = 4.25s
             -- This is good because it's not really *meant* to give 1 sand dollar per fish caught, you really gotta work for it.
+            -- Fiberglass Rod takes about 7, but whatever.
             seconds = 5,
             time = 0
         },
