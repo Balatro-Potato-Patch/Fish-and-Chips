@@ -28,10 +28,3 @@ SMODS.Atlas {
     px = 71,
     py = 95
 }
-
-local fish = {
-    -- "skyfish"
-}
-for k, v in ipairs(fish) do
-    assert(SMODS.load_file("content/seabunny/" .. v .. ".lua"), "Missing file: content/seabunny/" .. v .. ".lua")()
-end
