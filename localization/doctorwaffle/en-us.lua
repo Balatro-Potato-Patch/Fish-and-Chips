@@ -208,20 +208,6 @@ return {
                 }
             },
 
-            fish_fac_waffle_feebas = {
-                name = "Feebas",
-                text = {
-                    {
-                        "{X:mult,C:white}X#1#{} Mult"
-                    },
-                    {
-                        "Can only be caught in one",
-                        "{C:fac_environment}Environment{} depending",
-                        "on the current run's {C:attention}seed{}"
-                    }
-                }
-            }
-
         },
 
         Other = {
@@ -251,7 +237,6 @@ return {
             k_fac_waffle_duck = "Duck",
             k_fac_waffle_presto_ex = "Presto!",
             k_fac_waffle_book = "Book",
-            k_fac_waffle_pokemon = "Pokemon"
         },
 
     }
