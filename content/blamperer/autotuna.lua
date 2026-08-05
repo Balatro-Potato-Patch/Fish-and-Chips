@@ -18,4 +18,5 @@ FishAndChips.Fish {
     in_pool = function (self, args)
         return G.fac_rod_area and G.fac_rod_area.cards[1] and G.fac_rod_area.cards[1].config.center.key ~= "rod_fac_harpoon"
     end
+    -- BALANCE: All Autotuna functionality is in _common.lua; Change AUTOFACTOR to affect speed of passive gain
 }
