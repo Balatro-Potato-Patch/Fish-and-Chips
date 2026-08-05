@@ -73,7 +73,27 @@ return {
                     "As the Shrimp NPC,"
                 },
                 text = {}
-            }
+            },
+            fish_fac_minty_goldfish = {
+                name = "Goldfish",
+                flavour = {
+                    "Smiles back, but",
+                    "it's not a snack"
+                },
+                text = {
+                    "Gains {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} sell value",
+                    "when gaining money"
+                }
+            },
+            fish_fac_minty_template = {
+                name = "fish",
+                flavour = {
+                    "yum"
+                },
+                text = {
+                    "does a thing"
+                }
+            },
         },
         PotatoPatch = {
             PotatoPatchDev_minty = {
