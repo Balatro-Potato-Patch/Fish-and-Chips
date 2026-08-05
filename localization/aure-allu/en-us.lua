@@ -6,7 +6,8 @@ return {
                 text = {
                     "Use this {V:1}Star{C:fac_fish}fish{}",
                     "for {C:attention}#1# {C:planet}levels{} 2 most",
-                    "played {C:attention}poker hand"
+                    "played {C:attention}poker hand",
+                    "{C:inactive}(Currently {C:attention}#2#{C:inactive})"
                 },
                 flavor = {
                     "These fish are pissing me off",
@@ -254,6 +255,21 @@ return {
                 flavor = {
                     "Freshly fired",
                     "from a tank"
+                }
+            },
+            fish_fac_neunauge = {
+                name = {"Neunauge"},
+                text = {
+                    "Retrigger {C:attention}all 9s{}",
+                    "if there's at most",
+                    "{C:attention}nine 9s{} in your",
+                    "{C:attention}remaining Deck{}",
+                    "{C:inactive}(Currently {C:attention}#1#{C:inactive})"
+                },
+                flavor = {
+                    "Nine eyes",
+                    "retriggerize",
+                    "ninewise"
                 }
             },
         },

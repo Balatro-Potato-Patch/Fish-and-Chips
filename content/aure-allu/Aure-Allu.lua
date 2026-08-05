@@ -2,7 +2,7 @@ PotatoPatchUtils.Developer({
 	name = 'Aure',
 	atlas = 'fac_aure-allu_cards',
 	colour = G.C.ORANGE,
-	fac_partner = 'fac_AllUniversal',
+	fac_partner = 'AllUniversal',
 })
 
 PotatoPatchUtils.Developer({
@@ -10,7 +10,7 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_aure-allu_cards',
 	pos = {x = 1, y = 0},
 	colour = G.C.GREY,
-	fac_partner = 'fac_Aure',
+	fac_partner = 'Aure',
 })
 
 SMODS.Atlas({
@@ -87,6 +87,17 @@ end
 --#region Fish
 
 -- The Original     Starfish
+local function get_most_played_pokerhand()
+	local _handname, _played, _order = 'High Card', -1, 100
+	for k, v in pairs(G.GAME.hands) do
+		if v.played > _played or (v.played == _played and _order > v.order) then 
+			_played = v.played
+			_handname = k
+		end
+	end
+	return _handname
+end
+
 local starwalker_col = HEX("fef200")
 FishAndChips.Fish {
 	key = "the_original___starfish",
@@ -118,10 +129,10 @@ FishAndChips.Fish {
 		-- soup = 10,
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { zero_signed(card.ability.extra.hand_levels), colours = { starwalker_col }} }
+		return { vars = { zero_signed(card.ability.extra.hand_levels), get_most_played_pokerhand(), colours = { starwalker_col }} }
 	end,
 	use = function (self, card)
-		SMODS.smart_level_up_hand(card, G.GAME.current_round.most_played_poker_hand, nil, card.ability.extra.hand_levels)
+		SMODS.smart_level_up_hand(card, get_most_played_pokerhand(), nil, card.ability.extra.hand_levels)
 	end,
 	can_use = function (self, card)
 		return true
@@ -191,7 +202,7 @@ FishAndChips.Fish {
 	ppu_artist = { "AllUniversal" },
 	attributes = { "chance", "economy" },
 	stats = {weight = {min = 7, max = 140}, length = {min = 0.8, max = 4.5}},
-	blueprint_compat = true,
+	blueprint_compat = false,
 	config = {
 		extra = {
 			refund_sand_dollars = 2,
@@ -209,7 +220,7 @@ FishAndChips.Fish {
 		return { vars = { numerator_cheap, denominator_cheap, card.ability.extra.refund_sand_dollars } }
 	end,
 	calculate = function(self, card, context)
-		if context.fac_buy_bait and SMODS.pseudorandom_probability(card, "fac_aure-allu_cheap_cheep", 1, card.ability.extra.refund_odds) then
+		if context.fac_buy_bait and not context.blueprint_card and SMODS.pseudorandom_probability(card, "fac_aure-allu_cheap_cheep", 1, card.ability.extra.refund_odds) then
 			return {
 				sand_dollars = card.ability.extra.refund_sand_dollars
 			}
@@ -399,13 +410,14 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.before and not context.blueprint_card then
             local same_slot = false
-			for _, slot in ipairs(card.ability.immutable.last_slots) do
-				if slot == table_find(G.fac_fish_area.cards, card) then
+			local slot = table_find(G.fac_fish_area.cards, card)
+			for _, prev_slot in ipairs(card.ability.immutable.last_slots) do
+				if prev_slot == slot then
 					same_slot = true; break
 				end
 			end
 			if #card.ability.immutable.last_slots >= card.ability.immutable.last_slots_max then table.remove(card.ability.immutable.last_slots, 1) end
-			table.insert(card.ability.immutable.last_slots, card.rank)
+			table.insert(card.ability.immutable.last_slots, slot)
             if same_slot then
                 local last_mult = card.ability.extra.total_mult
                 card.ability.extra.total_mult = 0
@@ -1095,7 +1107,7 @@ FishAndChips.Fish {
 		},
 	},
 	environments = {
-		city_river = 10,
+		city_river = 10, -- Maybe make this the treasure fish and only obtainable through treasure
 		styx = 7,
 		wormhole = 7,
 		backroom = 9,
@@ -1558,6 +1570,57 @@ FishAndChips.Fish {
 				}
 			end
 			return nil, true
+		end
+	end,
+}
+
+-- Neunauge
+FishAndChips.Fish {
+	key = "neunauge",
+	atlas = "aure-allu_fish",
+	pos = { x = 1, y = 4 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "retrigger", },
+	stats = {weight = {min = 0.5, max = 2.43}, length = {min = 0.15, max = 0.5}},
+	blueprint_compat = true,
+	config = {
+		extra = {
+			
+		},
+	},
+	environments = {
+		calm_pond = 4,
+		city_river = 8,
+		swamp = 10,
+		aquifer = 10,
+		soup = 2,
+	},
+	loc_vars = function(self, info_queue, card)
+		local tally = 0
+		if G.deck then
+			for _, pcard in ipairs(G.deck.cards) do
+				if pcard:get_id() == 9 then
+					tally = tally + 1
+				end
+			end
+		end
+		return { vars = { tally } }
+	end,
+	calculate = function(self, card, context)
+		if context.repetition and context.other_card:get_id() == 9 then
+			local tally = 0
+			for _, pcard in ipairs(G.deck.cards) do
+				if pcard:get_id() == 9 then
+					tally = tally + 1
+				end
+			end
+			if tally <= 9 then
+				return {
+					repetitions = 1
+				}
+			end
 		end
 	end,
 }
