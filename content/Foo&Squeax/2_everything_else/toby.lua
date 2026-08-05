@@ -46,8 +46,8 @@ FishAndChips.Fish{
 	end,
 	disable_visual_scaling = true,
 	stats = {
-		length = {min = 1, max = 1},
-		weight = {min = 1, max = 1}
+		length = {min = 1, max = 1, units = {format = "k_fac_fas_temmie", scale = 1, precision = 0}},
+		weight = {min = 1, max = 1, units = {format = "k_fac_fas_toby", scale = 1, precision = 0}}
 	},
 	loc_vars = function(self, info_queue, card)
 		return {vars = {elements = {SMODS.create_sprite(0, 0, 2, 2 / 62 * 52, "fac_fas_toby")}}}
@@ -105,9 +105,7 @@ local g_uidef_card_h_popup_ref = G.UIDEF.card_h_popup
 function G.UIDEF.card_h_popup(card)
 	if card.config and card.config.center and card.config.center.key == "fish_fac_fas_toby_fish" then
 		FishAndChips.FooSqueax.toby_fish.no_desc = true
-		FishAndChips.FooSqueax.toby_fish.custom_units = true
 		local ret = g_uidef_card_h_popup_ref(card)
-		FishAndChips.FooSqueax.toby_fish.custom_units = nil
 		
 		local search = SMODS.deepfind(ret.nodes[1].nodes, "Foo54", nil, true)[1]
 		if search then
@@ -229,13 +227,4 @@ function G.FUNCS.fac_fas_toby_update (e)
 			end
 		end
 	end
-end
-
-local fishandchips_format_measurement_ref = FishAndChips.format_measurement
----@diagnostic disable-next-line: duplicate-set-field
-function FishAndChips.format_measurement(value, type, ...)
-	if FishAndChips.FooSqueax.toby_fish.custom_units then
-		return value .. " " .. localize("k_fac_fas_" .. (type == "weight" and "toby" or "temmie"))
-	end
-	return fishandchips_format_measurement_ref(value, type, ...)
 end
