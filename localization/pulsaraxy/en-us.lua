@@ -35,7 +35,7 @@ local pa_fish = {
                 }
             },
             fish_fac_pa_onering = {
-                name = "The Null Fish",
+                name = "The One Fish",
                 text = {{
                     "Disable all {B:blind,C:white}boss blinds{}",
                     "Blind Size increases by {X:mult,C:white}X#1#{} each round while held",

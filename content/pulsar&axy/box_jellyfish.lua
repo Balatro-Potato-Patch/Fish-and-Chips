@@ -133,7 +133,15 @@ FishAndChips.Fish {
 				return true
 			end}))
 		end
-	end
+	end,
+	button_key = function(self)
+		for _, _card in ipairs(G.fac_pa_box_jellyfish_area.cards) do
+			if _card.ability.fac_pa_box_jellyfish == card.ability.immutable.id then
+				return "Open"
+			end
+		end
+		return "Consume"
+	end,
 }
 
 local FishAndChips_mod_custom_card_areas_ref = FishAndChips.mod.custom_card_areas

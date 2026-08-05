@@ -11,6 +11,9 @@ FishAndChips.Fish {
 		backroom = 1,
 		city_river = 0.5
 	},
+	button_key = function (self)
+		return "Toggle"
+	end,
 	stats = {
         weight = {min = 4, max = 10}, --similar range to actual fishing rods lengths, but heavier
         length = {min = 1, max = 2.5}
