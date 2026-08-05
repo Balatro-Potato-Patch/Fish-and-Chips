@@ -28,6 +28,44 @@ return {
                     "but you are the first fisher",
                     "to catch one in person."
                 }
+            },
+            fish_fac_ruby_snapper = {
+                name = "Ruby Snapper",
+                text = {
+                    {
+                        "Gains {C:attention}sell value{} of first",
+                        "fish sold each round"
+                    },
+                    {
+                        "{C:inactive}Enchanted: Double",
+                        "{C:inactive}sell value when sold"
+                    },
+                    {
+                        "To {C:dark_edition}Enchant{}: Sell #1# fishes",
+                        "{C:inactive}({C:attention}#2#{C:inactive} remaining)"
+                    }
+                },
+                flavor = {
+                    "Its eyes absorb the",
+                    "souls of the dying"
+                }
+            },
+            fish_fac_ruby_snapper_enchant = {
+                name = "Ruby Snapper",
+                text = {
+                    {
+                        "Gains {C:attention}sell value{} of first",
+                        "fish sold each round"
+                    },
+                    {
+                        "{C:dark_edition}Enchanted{}: Double",
+                        "{C:attention}sell value{} when sold"
+                    }
+                },
+                flavor = {
+                    "Its eyes absorb the",
+                    "souls of the dying"
+                }
             }
         },
     },
