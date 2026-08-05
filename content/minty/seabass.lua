@@ -1,18 +1,19 @@
+local base_weight = 50 --should be 75-(all other minty fish weights) but can't think of a way to get this number procedurally so i'm just gonna have to set it manually once i've designed all my other fish
+
 FishAndChips.Fish{
     key = "minty_seabass",
     atlas = "minty_fish",
     pos = {x=0, y=0},
-    weight = 50, --should be 75-(all other minty fish weights) but can't think of a way to get this number procedurally so i'm just gonna have to set it manually once i've designed all my other fish
-    native_weight = 5, --In the pier only, not affected by chumming
+    weight = base_weight,
     ppu_coder = {"minty"},
     ppu_artist = {"Animal Crossing devteam"},
     environments = {
-        pier = 10,
-        soup = 10,
-        chocolate_river = 10,
-        volcano = 10,
-        backroom = 10,
-        wormhole = 10,
+        pier = (5/base_weight),
+        soup = base_weight,
+        chocolate_river = base_weight,
+        volcano = base_weight,
+        backroom = base_weight,
+        wormhole = base_weight,
     },
     stats = {
         weight = {min = 2.5, max = 4},
@@ -62,16 +63,29 @@ FishAndChips.Fish{
             local bait = SMODS.poll_object{type = "fac_Bait"}
             FishAndChips.add_bait_to_inventory(bait, 1)
         end
-        if (FishAndChips.get_environment() or {}).key ~= "pier" then
-            G.GAME.minty_seabass_chummed = (G.GAME.minty_seabass_chummed or 0) + 1
+        local caught_env = card.ability.extra.caught_at
+        if caught_env ~= "pier" then
+            G.GAME.minty_seabass_chummed[caught_env] = G.GAME.minty_seabass_chummed[caught_env] + 1
+
+            if G.GAME.minty_seabass_chummed[caught_env] > 7 then
+                if SMODS.pseudorandom_probability(card, "minty_seabass_eradication_"..env, 1, 7, nil, true) then
+                    G.GAME.minty_seabass_eradicated[env] = true
+                end
+            end
         end
     end,
     can_use = function (self, card)
         return true
     end,
+    can_sell_card = function (self)
+        return false
+    end,
     on_catch = function (self, card)
-        if (FishAndChips.get_environment() or {}).key == "pier" then
+        local env = (FishAndChips.get_environment() or {}).key or "unknown area"
+        if env == "pier" then
             card.ability.extra.native = true
+        else
+            card.ability.extra.caught_at = env
         end
         if G.GAME.minty_seabass_ever_caught then
             SMODS.calculate_effect({message = localize("k_fac_minty_youagain_qex"), delay = 3 }, card)
@@ -79,11 +93,10 @@ FishAndChips.Fish{
             G.GAME.minty_seabass_ever_caught = true
         end
     end,
-    get_weight = function (self)
-        if (FishAndChips.get_environment() or {}).key == "pier" then return self.native_weight end
+    in_pool = function (self, args)
+        local env = (FishAndChips.get_environment() or {}).key
+        if not env then return false end
 
-        local chummed = math.min(G.GAME.minty_seabass_chummed or 0, self.weight)
-        return self.weight - chummed
+        return not G.GAME.minty_seabass_eradicated[env]
     end
-
 }
