@@ -13,8 +13,8 @@ FishAndChips.Fish({
 	-- atlas = "hayayaya_fih",
 	-- pos = { x = 1, y = 1 },
 	stats = {
-		length = { min = 1, max = 1 },
-		weight = { min = 1, max = 1 },
+		length = { min = 0.1, max = 0.1 },
+		weight = { min = 0.1, max = 0.1 },
 	},
 	decision_min = math.huge,
 	decision_max = math.huge,
