@@ -104,12 +104,12 @@ FishAndChips.mod.calculate = function(self, context)
 		FishAndChips.clean_up_bait_shop()
 		local function fac_sort_bait_shop(bait1, bait2)
 			if bait1.key == 'bait_fac_normal' then
+				print('sorted normal bait')
 				return true
-			elseif bait1.amt == bait2.amt then
-				return bait1.key < bait2.key
-			else
-				return bait1.amt > bait2.amt
+			elseif bait2.key == 'bait_fac_normal' then
+				return false
 			end
+			return bait1.amt > bait2.amt
 		end
 		table.sort(G.GAME.fac_bait_shop_items, fac_sort_bait_shop)
 	end
