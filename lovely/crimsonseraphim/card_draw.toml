@@ -11,12 +11,6 @@ position = "at"
 payload = '''
 if G.shared_shadow.aeonfish_transmute then
     G.shared_shadow:draw_shader('fac_aeonfish_transmute', self.shadow_height, self.ARGS.send_to_shader)
-    self.children.center.aeonfish_transmute.image.role.draw_major = self
-    self.children.center.aeonfish_transmute.image.aeonfish_transmute = {
-        realtime_start = self.children.center.aeonfish_transmute.realtime_start,
-        reverse = true
-    }
-    self.children.center.aeonfish_transmute.image:draw_shader('fac_aeonfish_transmute', self.shadow_height, self.ARGS.send_to_shader, nil, self.children.center)
 else
     G.shared_shadow:draw_shader('dissolve', self.shadow_height)
 end
@@ -50,5 +44,17 @@ if self.ability.crimsonseraphim_temporary then
     G.shared_stickers["crimsonseraphim_temporary"]:draw_shader('dissolve', nil, nil, nil, self.children.center)
     G.shared_stickers["crimsonseraphim_temporary"]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center)
 end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS FishAndChips "/src/overrides.lua"]'''
+pattern = '''local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}'''
+position = "at"
+payload = '''
+G.FAC_FLAVOR_VARS = true
+local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}
+G.FAC_FLAVOR_VARS = nil
 '''
 match_indent = true

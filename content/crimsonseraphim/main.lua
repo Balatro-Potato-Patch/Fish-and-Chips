@@ -18,71 +18,9 @@ FishAndChips.crimsonseraphim = {
     }
 }
 
-SMODS.Atlas({
-	key = "crimsonseraphim_credits",
-	path = "crimsonseraphim/credits.png",
-	px = 71,
-	py = 95,
-})
-
-function FishAndChips.crimsonseraphim.advance_center(center)
-    local cards = {}
-    for i, v in pairs(G.P_CENTERS) do
-        if v.ppu_artist and v.ppu_artist[1] == "crimsonseraphim" and v.set == "fac_Fish" then
-            cards[#cards+1] = v
-        end
-    end
-    for i, v in pairs(cards) do
-        if v.key == center.key then
-            return cards[i+1] or cards[1] or v
-        end
-    end
-    return center
-end
-
-function FishAndChips.crimsonseraphim.draw_letter(letter, self)
-    local real_pop_in = self.config.min_cycle_time == 0 and 1 or letter.pop_in
-    local _shadow_norm = self.ARGS.draw_shadow_norm
-    _shadow_norm.x, _shadow_norm.y = 
-        self.shadow_parrallax.x/math.sqrt(self.shadow_parrallax.y*self.shadow_parrallax.y + self.shadow_parrallax.x*self.shadow_parrallax.x)*self.font.FONTSCALE/G.TILESIZE,
-        self.shadow_parrallax.y/math.sqrt(self.shadow_parrallax.y*self.shadow_parrallax.y + self.shadow_parrallax.x*self.shadow_parrallax.x)*self.font.FONTSCALE/G.TILESIZE
-    love.graphics.draw(
-        letter.letter,
-        0.5*(letter.dims.x - letter.offset.x)*self.font.FONTSCALE/G.TILESIZE + _shadow_norm.x,
-        0.5*(letter.dims.y - letter.offset.y)*self.font.FONTSCALE/G.TILESIZE + _shadow_norm.y, 
-        letter.r or 0,
-        real_pop_in*letter.scale*self.scale*self.font.FONTSCALE/G.TILESIZE,
-        real_pop_in*letter.scale*self.scale*self.font.FONTSCALE/G.TILESIZE,
-        0.5*letter.dims.x/(self.scale),
-        0.5*letter.dims.y/(self.scale)
-    )
-end
-
-SMODS.DynaTextEffect{
-    key = "crimsonseraphim_dev",
-    draw_letter = function(self, k, letter)
-        love.graphics.setColor(k <= 4 and G.C.RED or k >= 8 and G.C.GREEN or G.C.WHITE)
-        FishAndChips.crimsonseraphim.draw_letter(letter, self)
-    end
+FishAndChips.crimsonseraphim.click_sounds = {
+    "null", "holiday", "flowery"
 }
-
-
-local game_update = Game.update
-function Game:update(dt)
-    if FishAndChips.crimsonseraphim.desc_card then
-        FishAndChips.crimsonseraphim.desc_card.dt =  FishAndChips.crimsonseraphim.desc_card.dt + dt
-        if FishAndChips.crimsonseraphim.desc_card.dt > 0.5 then
-            FishAndChips.crimsonseraphim.desc_card.center = FishAndChips.crimsonseraphim.advance_center(FishAndChips.crimsonseraphim.desc_card.center)
-            FishAndChips.crimsonseraphim.desc_card.card:stop_hover()
-            FishAndChips.crimsonseraphim.desc_card.card:set_ability(FishAndChips.crimsonseraphim.desc_card.center)
-            FishAndChips.crimsonseraphim.desc_card.card:hover()
-            -- FishAndChips.crimsonseraphim.desc_card.card.children.center.atlas = SMODS.get_atlas(FishAndChips.crimsonseraphim.desc_card.center.atlas)
-            -- FishAndChips.crimsonseraphim.desc_card.card.children.center:set_sprite_pos(FishAndChips.crimsonseraphim.desc_card.center.pos)
-            FishAndChips.crimsonseraphim.desc_card.dt = 0
-        end
-    end
-    return game_update(self, dt)
-end
 
 PotatoPatchUtils.Developer({
 	name = 'crimsonseraphim',
@@ -117,30 +55,23 @@ PotatoPatchUtils.Developer({
         FishAndChips.crimsonseraphim.desc_card.area:remove()
         FishAndChips.crimsonseraphim.desc_card = nil
     end,
-    text_effect = "fac_crimsonseraphim_dev"
+    remove = function()
+        FishAndChips.crimsonseraphim.desc_card.card:stop_hover()
+        FishAndChips.crimsonseraphim.desc_card.card:remove()
+        FishAndChips.crimsonseraphim.desc_card.area:remove()
+        FishAndChips.crimsonseraphim.desc_card = nil 
+    end,
+    text_effect = "fac_crimsonseraphim_dev",
+    crimsonseraphim_click_sound = function()
+        return pseudorandom_element(FishAndChips.crimsonseraphim.click_sounds, pseudoseed("crimsonseraphim_click_sound"))
+    end
 })
-
-local card_hover = Card.hover
-function Card:hover()
-    if self.ppu_member and self.ppu_member.hover then
-        self.ppu_member:hover(self)
-    end
-    return card_hover(self)
-end
-
-local card_stop_hover = Card.stop_hover
-function Card:stop_hover()
-    if self.ppu_member and self.ppu_member.stop_hover then
-        self.ppu_member:stop_hover(self)
-    end
-    return card_stop_hover(self)
-end
 
 FishAndChips.Fish {
 	key = "aeonfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 3,
+	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "usable", "generation" },
@@ -175,137 +106,12 @@ FishAndChips.Fish {
     end
 }
 
-SMODS.Sound {
-    key = "crimsonseraphim_shimmer",
-    path = "crimsonseraphim/shimmer.ogg"
-}
-
-function Card:transmute(seed, center)
-    local result = center
-    local s = {
-        w = self.T.w / self.original_T.w,
-        h = self.T.h / self.original_T.h
-    }
-    if not center then
-        local valid = {}
-        for attribute, _ in pairs(self.config.center.attributes or {}) do
-            if type(attribute) ~= "number" and not FishAndChips.Environments[attribute] then
-                valid[#valid+1] = attribute
-            end
-        end
-        result = G.P_CENTERS[SMODS.poll_object{type = "fac_Fish", attributes = valid, union = true}]
-    end
-    self.children.center.aeonfish_transmute = {
-        realtime_start = G.TIMERS.REAL,
-        image = SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H, result.atlas, result.pos),
-        center = result
-    }
-    self.states.hover.can = false
-    play_sound("fac_crimsonseraphim_shimmer")
-    G.E_MANAGER:add_event(Event{
-        blocking = false,
-        func = function()
-            if G.TIMERS.REAL - self.children.center.aeonfish_transmute.realtime_start > 0.6 then
-                self:set_ability(self.children.center.aeonfish_transmute.center)
-                self.children.center.aeonfish_transmute = nil
-                self.states.hover.can = true
-                self.T.w = self.T.w * s.w
-                self.T.h = self.T.h * s.h
-                return true
-            end
-        end
-    })
-    G.E_MANAGER:add_event(Event{
-        blocking = false,
-        func = function()
-            if self.children.center.aeonfish_transmute and math.abs((G.TIMERS.REAL - self.children.center.aeonfish_transmute.realtime_start) - 0.2) < 0.01 then
-                self:juice_up(0.6, 0.7)
-                return true
-            end
-        end
-    })
-end
-
-local data = NFS.newFileData(FishAndChips.mod.path .."/assets/1x/crimsonseraphim/caustics-texture.png")
-local _caustics = love.graphics.newImage(data)
-SMODS.Shader({
-    key="aeonfish_caustics",
-    path="crimsonseraphim/aeonfish_caustics.fs",
-    send_vars = function (sprite, card)
-        return {
-            realtime = G.TIMERS.REAL,
-            caustic_image = _caustics
-        }
-    end,
-})
-
-SMODS.Shader({
-    key="aeonfish_transmute",
-    path="crimsonseraphim/aeonfish_transmute.fs",
-    send_vars = function (sprite, card)
-        return {
-            realtime_offset = G.TIMERS.REAL - sprite.aeonfish_transmute.realtime_start,
-            reverse = not sprite.aeonfish_transmute.image,
-        }
-    end,
-})
-
-SMODS.Atlas {
-    key = "crimsonseraphim_aeonfish",
-    path = "crimsonseraphim/aeonfish.png",
-    px = 71,
-    py = 95
-}
-
-SMODS.DrawStep({
-	key = "aeonfish",
-	order = 25,
-	func = function(self)
-        local card = self.config.center_key
-        if (card ~= "fish_fac_aeonfish" and card ~= "fish_fac_gungir")  then return end
-        if card == "fish_fac_gungir" and not self.ability.extra.charged then return end
-        self.children.center:draw_shader('fac_aeonfish_caustics', nil, self.ARGS.send_to_shader)
-	end,
-	conditions = { vortex = false, facing = "front" },
-})
-
-SMODS.DrawStep({
-	key = "aeonfish_transmute",
-	order = 25,
-	func = function(self)
-        if not self.children.center.aeonfish_transmute then return end  
-        self.shadow_height = ((((self.highlighted and self.area == G.play) or self.states.drag.is) and 0.35) or (self.area and self.area.config.type == 'title_2') and 0.04 or 0.1)
-        local sprite = self.children.center.aeonfish_transmute.image
-        sprite.role.draw_major = self
-        sprite.aeonfish_transmute = {
-            realtime_start = self.children.center.aeonfish_transmute.realtime_start,
-            reverse = true
-        }
-        self.children.center:draw_shader('fac_aeonfish_transmute', nil, self.ARGS.send_to_shader)
-        sprite:draw_shader('fac_aeonfish_transmute', nil, self.ARGS.send_to_shader, nil, self.children.center)
-	end,
-	conditions = { vortex = false, facing = "front" },
-})
-
-SMODS.Atlas({
-	key = "mealy_lore",
-	path = "crimsonseraphim/mealy_lore.png",
-	px = 1125,
-	py = 1086,
-})
-
-local should_draw_base_ref = Card.should_draw_base_shader
-function Card:should_draw_base_shader(...)
-    if self.children.center.aeonfish_transmute then return nil end
-    return should_draw_base_ref(self, ...)
-end
-
 --When a fish is obtained sell it and this fish for 3x the sell price
 FishAndChips.Fish {
 	key = "mealy_apple",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 1 },
-	weight = 3,
+	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "economy" },
@@ -346,7 +152,7 @@ FishAndChips.Fish {
 	key = "jade_crystalfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 5, y = 0 },
-	weight = 3,
+	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "passive", "chance" },
@@ -382,13 +188,6 @@ FishAndChips.Fish {
         end
 	end,
 }
-
-SMODS.Atlas({
-	key = "crimsonseraphim_fish_seals",
-	path = "crimsonseraphim/fish_seals.png",
-	px = 71,
-	py = 95,
-})
 
 FishAndChips.crimsonseraphim.fish_seals = {
     Red = {
@@ -478,92 +277,11 @@ FishAndChips.crimsonseraphim.fish_seals = {
     }
 }
 
-function FishAndChips.crimsonseraphim.calculate_fish_seal(card, context)
-    if card.fish_seal and FishAndChips.crimsonseraphim.fish_seals[card.fish_seal] and FishAndChips.crimsonseraphim.fish_seals[card.fish_seal].calculate then
-        return FishAndChips.crimsonseraphim.fish_seals[card.fish_seal].calculate(card, context)
-    end
-end
-
-function Card:set_fish_seal(_seal, silent, immediate)
-    local fish_seals = FishAndChips.crimsonseraphim.fish_seals
-    self.seal = nil
-    if _seal then
-        self.fish_seal = _seal
-        self.ability.fish_seal = {}
-        self.ability.fish_seal.key = _seal
-        for k, v in pairs(fish_seals[_seal] and fish_seals[_seal].config or G.P_SEALS[_seal].config or {}) do
-            if type(v) == 'table' then
-                self.ability.fish_seal[k] = copy_table(v)
-            else
-                self.ability.fish_seal[k] = v
-            end
-        end
-        
-        self.ability.delay_seal = not silent
-    
-        G.CONTROLLER.locks.seal = true
-        local sound = (fish_seals[_seal] and fish_seals[_seal].sound or G.P_SEALS[_seal].sound) or {sound = 'gold_seal', per = 1.2, vol = 0.4}
-        if immediate then 
-            self:juice_up(0.3, 0.3)
-            self.ability.delay_seal = false
-            play_sound(sound.sound, sound.per, sound.vol)
-            G.CONTROLLER.locks.seal = false
-        else
-            G.E_MANAGER:add_event(Event({
-                trigger = 'after',
-                delay = 0.3,
-                func = function()
-                    self:juice_up(0.3, 0.3)
-                    self.ability.delay_seal = false
-                    play_sound(sound.sound, sound.per, sound.vol)
-                return true
-                end
-            }))
-            G.E_MANAGER:add_event(Event({
-                trigger = 'after',
-                delay = 0.15,
-                func = function()
-                    G.CONTROLLER.locks.seal = false
-                return true
-                end
-            }))
-        end
-        if type(fish_seals[_seal] and fish_seals[_seal].on_apply) == "function" then
-            fish_seals[_seal]:on_apply(self)
-        end
-    end
-    self:set_cost()
-end
-
-SMODS.DrawStep {
-    key = 'fish_seal',
-    order = 30,
-    func = function(self, layer)
-        local fish_seals = FishAndChips.crimsonseraphim.fish_seals
-        local seal = fish_seals[self.fish_seal] and fish_seals[self.fish_seal] or G.P_SEALS[self.fish_seal] or {}
-        if self.ability.delay_seal then return end
-        if type(seal.draw) == 'function' then
-            (seal.draw):draw(self, layer)
-        elseif self.fish_seal then
-            G.shared_seals["fish_"..self.fish_seal] = G.shared_seals["fish_"..self.fish_seal] or SMODS.create_sprite(0, 0, 2, 2, seal.atlas, seal.pos)
-            G.shared_seals["fish_"..self.fish_seal].role.draw_major = self
-            G.shared_seals["fish_"..self.fish_seal]:draw_shader('dissolve', nil, nil, nil, self.children.center)
-            if self.fish_seal == 'Gold' then G.shared_seals["fish_"..self.fish_seal]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center) end
-        end
-    end,
-    conditions = { vortex = false, facing = 'front' },
-}
-
-local get_badge_colour_ref = get_badge_colour
-function get_badge_colour(key)
-    return get_badge_colour_ref(key:gsub("fish_seal", "seal"))
-end
-
 FishAndChips.Fish {
 	key = "ruby_crystalfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 6, y = 0 },
-	weight = 3,
+	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "passive", "chance" },
@@ -611,27 +329,11 @@ FishAndChips.Fish {
     end
 }
 
-local get_poker_hand_info_ref = G.FUNCS.get_poker_hand_info
-function G.FUNCS.get_poker_hand_info(_cards)
-    local cards = {}
-    for i, v in pairs(_cards) do
-        cards[#cards+1] = v
-    end
-    if next(SMODS.find_card("fish_fac_ruby_crystalfish")) then
-        for i, v in pairs(G.I.CARD) do
-            if v.config and v.config.center and v.config.center.set == "fac_Fish" and not SMODS.in_scoring(_cards, v) and v.base.suit then
-                cards[#cards+1] = v
-            end
-        end
-    end
-    return get_poker_hand_info_ref(cards)
-end
-
 FishAndChips.Fish {
 	key = "hammerhead_shark",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "generation" },
@@ -671,64 +373,11 @@ FishAndChips.Fish {
 	end,
 }
 
-SMODS.Sound {
-    key = "crimsonseraphim_forge",
-    path = "crimsonseraphim/forge.ogg"
-}
-
-function Card:jokered_forge() 
-    self.ability.crimsonseraphim_forged = pseudorandom_element({
-        "fac_crimsonseraphim_forged_mult",
-        "fac_crimsonseraphim_forged_chips",
-        "fac_crimsonseraphim_forged_money",
-        "fac_crimsonseraphim_forged_sand",
-    })
-
-    self:juice_up()
-    play_sound("fac_crimsonseraphim_forge")
-end
-
-function FishAndChips.crimsonseraphim.create_forge_text(cfg)
-    if not cfg.crimsonseraphim_forged then return end
-    local text = G.localization.descriptions.Other[cfg.crimsonseraphim_forged].text or {}
-    if #text == 0 then return end
-    return text
-end
-
-local forge_effects = {
-    fac_crimsonseraphim_forged_mult = function(c, context)
-        if context.main_scoring then
-            return {mult = 4}
-        end
-    end,
-    fac_crimsonseraphim_forged_chips = function(c, context)
-        if context.main_scoring then
-            return {chips = 15}
-        end
-    end,
-    fac_crimsonseraphim_forged_money = function(c, context)
-        if context.setting_blind then
-            return {dollars  = 4}
-        end
-    end,
-    fac_crimsonseraphim_forged_sand = function(c, context)
-        if context.fac_end_fishing and context.fish then
-            return {sand_dollars = 1}
-        end
-    end,
-}
-
-function FishAndChips.crimsonseraphim.calculate_forged_joker(card, context)
-    if card.ability.crimsonseraphim_forged and forge_effects[card.ability.crimsonseraphim_forged] then
-        return forge_effects[card.ability.crimsonseraphim_forged](card, context)
-    end
-end
-
 FishAndChips.Fish {
 	key = "ghost_chaosfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 1, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "passive" },
@@ -775,83 +424,13 @@ FishAndChips.Fish {
             end
         })  
     end
-    -- calculate = function(self, card, context)
-    --     if context.fac_end_fishing then
-    --         if not context.perfect and G.GAME.fac_active_bait == "fish_fac_ghost_chaosfish" then
-    --             if not G.GHOST_CHAOSFISH_SLICED then
-    --                 G.GHOST_CHAOSFISH_SLICED = true
-    --                 SMODS.destroy_cards(FishAndChips.crimsonseraphim.find_fish("fish_fac_ghost_chaosfish")[1], nil, true)
-    --                 G.E_MANAGER:add_event(Event{func = function()
-    --                     G.GHOST_CHAOSFISH_SLICED = nil
-    --                     return true
-    --                 end, trigger = "after"})
-    --             end
-    --         end
-    --         local e
-    --         if #G.GAME.fac_bait_inventory == 0 or (G.GAME.fac_bait_inventory[1] and G.GAME.fac_bait_inventory[1].key == "fish_fac_ghost_chaosfish") then
-    --             e = true
-    --         end
-    --         G.E_MANAGER:add_event(Event{func = function()
-    --             FishAndChips.clean_up_bait_inventory()
-    --             if e then
-    --                 G.FUNCS.fac_set_active_bait({ config = G.GAME.fac_bait_inventory[1] })
-    --             end
-    --             return true
-    --         end})
-    --     end
-    -- end,
-    -- on_caught = function()
-    --     G.E_MANAGER:add_event(Event{func = function()
-    --         FishAndChips.clean_up_bait_inventory()
-    --         return true
-    --     end})
-    -- end
 }
-
-local poll_fish_ref = FishAndChips.poll_fish
-function FishAndChips.poll_fish(_fevn)
-    for i, v in pairs(SMODS.find_card("fish_fac_ghost_chaosfish")) do
-        _fenv = _fenv or v.config.center:force_environment(v)
-    end
-    return poll_fish_ref(_fevn)
-end
-
-local card_eval_status_text_ref = card_eval_status_text
-function card_eval_status_text(card, ...)
-    if card then
-        card_eval_status_text_ref(card, ...)
-    end
-end
-
--- local bait_inv_ref = FishAndChips.clean_up_bait_inventory
--- function FishAndChips.clean_up_bait_inventory()
---     bait_inv_ref()
---     if not G.GAME.fac_bait_inventory[1] or not G.GAME.fac_bait_inventory[1].amt or G.GAME.fac_bait_inventory[1].key == "fish_fac_ghost_chaosfish" then
---         G.GAME.fac_bait_inventory = {}
---     end
---     if next(FishAndChips.crimsonseraphim.find_fish("fish_fac_ghost_chaosfish")) and #G.GAME.fac_bait_inventory == 0 then
---         local tbl = SMODS.shallow_copy(G.P_CENTERS.fish_fac_ghost_chaosfish)
---         tbl.amt = #FishAndChips.crimsonseraphim.find_fish("fish_fac_ghost_chaosfish")
---         G.GAME.fac_bait_inventory[#G.GAME.fac_bait_inventory+1] = tbl
---     end
--- end
-
--- function FishAndChips.crimsonseraphim.find_fish(key)
---     local c = SMODS.find_card(key)
---     local cards = {}
---     for i, v in pairs(c) do
---         if v.area == G.fac_fish_area then
---             cards[#cards+1] = v
---         end
---     end
---     return cards
--- end
 
 FishAndChips.Fish {
 	key = "laplaces_angelfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 2, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "mult", "chips" },
@@ -893,28 +472,11 @@ FishAndChips.Fish {
 	end,
 }
 
-SMODS.Sound {
-    key = "crimsonseraphim_gungir_break",
-    path = "crimsonseraphim/gungir_break.ogg"
-}
-SMODS.Sound {
-    key = "crimsonseraphim_gungir_charge",
-    path = "crimsonseraphim/gungir_charge.ogg"
-}
-SMODS.Sound {
-    key = "crimsonseraphim_gungir_success",
-    path = "crimsonseraphim/gungir_success.ogg"
-}
-SMODS.Sound {
-    key = "crimsonseraphim_gungir_decharge",
-    path = "crimsonseraphim/gungir_decharge.ogg"
-}
-
 FishAndChips.Fish {
 	key = "gungir",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 3, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "generation" },
@@ -988,7 +550,7 @@ FishAndChips.Fish {
 	key = "trout_population",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 5, y = 1 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "generation" },
@@ -1033,7 +595,7 @@ FishAndChips.Fish {
 	key = "another_bucket",
 	atlas = "bucket",
 	pos = { x = 1, y = 1 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "squeax09" },
 	attributes = { "useable" },
@@ -1096,83 +658,11 @@ FishAndChips.Fish {
     end,
 }
 
-SMODS.draw_ignore_keys.bucket_front = true
-SMODS.DrawStep({
-	key = "bucket",
-	order = 25,
-	func = function(self)
-        local card = self.config.center_key
-        if (card ~= "fish_fac_another_bucket")  then return end
-        local shader = self.edition and G.P_CENTERS[self.edition.key].shader or "dissolve"
-        self.children.center:set_sprite_pos({x=2,y=1})
-        self.children.center:draw_shader(shader, nil, nil)
-        if self.ability.saved_card then
-            self.ability.saved_card.card.T = copy_table(self.T)
-            self.ability.saved_card.card.VT = copy_table(self.VT)
-            self.ability.saved_card.card.children.center:draw_shader('dissolve', nil, nil)  
-            for _, k in ipairs(SMODS.DrawStep.obj_buffer) do
-                if SMODS.DrawSteps[k]:check_conditions(self.ability.saved_card.card, 'both') then SMODS.DrawSteps[k].func(self.ability.saved_card.card, layer) end
-            end
-        end
-        self.children.center:set_sprite_pos({x=1,y=1})
-        self.children.center:draw_shader(shader, nil, nil)
-	end,
-	conditions = { vortex = false, facing = "front" },
-})
-
-local card_load_ref = Card.load
-function Card:load(tbl)
-    local ret = card_load_ref(self, tbl)
-    self.fish_seal = tbl.fish_seal
-    if self.ability.saved_card then
-        self.ability.saved_card.card = SMODS.create_card{set = "Joker"}
-        self.ability.saved_card.card:load(self.ability.saved_card.save_table)
-        self.ability.saved_card.card.states.collide.can = false
-        self.ability.saved_card.card.states.hover.can = false
-        self.ability.saved_card.card.states.click.can = false
-        self.ability.saved_card.card.states.drag.can = false
-        self.ability.saved_card.card.states.focus.can = false
-        self.ability.saved_card.card.states.visible = false
-    end
-    return ret
-end
-
-local card_save_ref = Card.save
-function Card:save()
-    local c = self.ability.saved_card and self.ability.saved_card.card
-    if c then
-        self.ability.saved_card.card = nil
-    end
-    local ret = card_save_ref(self)
-    ret.fish_seal = self.fish_seal
-    if c then
-        self.ability.saved_card.card = c
-    end
-    return ret
-end
-
-SMODS.Sound {
-    key = "crimsonseraphim_revolver_spin",
-    path = "crimsonseraphim/revolver_spin.ogg"
-}
-
-SMODS.Sound {
-    key = "crimsonseraphim_revolver_empty",
-    path = "crimsonseraphim/revolver_empty.ogg"
-}
-
-for i = 1, 8 do
-    SMODS.Sound {
-    key = "crimsonseraphim_revolver_shots_"..i,
-    path = "crimsonseraphim/revolver_shots_"..i..".ogg"
-}
-end
-
 FishAndChips.Fish {
 	key = "rusty_revolver",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 4, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "useable" },
@@ -1219,145 +709,11 @@ FishAndChips.Fish {
     end
 }
 
-function FishAndChips.crimsonseraphim.draw_reticle(x, y, size)
-    love.graphics.setColor({G.C.RED[1], G.C.RED[2], G.C.RED[3], G.GAME.REVOLVER_RETICLE_ALPHA or 1})
-    local w = love.graphics.getLineWidth()
-    love.graphics.setLineWidth(2)
-    x = x - 2.5
-    y = y + 1.5
-    love.graphics.ellipse("line", x, y, size, size)
-    love.graphics.ellipse("fill", x - size, y, size * 0.5, size * 0.2)
-    love.graphics.ellipse("fill", x + size, y, size * 0.5, size * 0.2)
-
-    love.graphics.ellipse("fill", x, y - size, size * 0.2, size * 0.5)
-    love.graphics.ellipse("fill", x, y + size, size * 0.2, size * 0.5)
-    love.graphics.setLineWidth(w)
-    if (G.GAME.REVOLVER_RETICLE_ALPHA or 1) <= 0 then G.GAME.REVOLVER_RETICLE_ALPHA = nil end
-end
-
-local go_fish = G.FUNCS.fac_go_fish
-function G.FUNCS.fac_go_fish(e)
-    go_fish(e)
-    if next(SMODS.find_card("fish_fac_rusty_revolver")) then
-        G.E_MANAGER:add_event(Event{
-            trigger = "after",
-            blocking = false,
-            func = function()
-                if G.FISHING_STATE == G.FISHING_STATES.HOOKING then
-                    local p
-                    for i, v in pairs(SMODS.find_card("fish_fac_rusty_revolver")) do
-                        if v.ability.extra.primed then
-                            p = true
-                            for i = 1, v.ability.extra.primed do
-                                G.E_MANAGER:add_event(Event{
-                                    trigger = "after",
-                                    delay = 0.075*G.SETTINGS.GAMESPEED,
-                                    func = function()
-                                        play_sound("fac_crimsonseraphim_revolver_shots_"..math.random(1, 8))
-                                        G.ROOM.jiggle = G.ROOM.jiggle + 3
-                                        return true
-                                    end
-                                })
-                            end
-                            v.ability.extra.primed = nil
-                        end
-                    end
-                    if p then 
-                        G.GAME.REVOLVER_RETICLE_ALPHA = 1
-                        G.E_MANAGER:add_event(Event({
-                            trigger = 'ease',
-                            blockable = false,
-                            blocking = false,
-                            ref_table = G.GAME,
-                            ref_value = 'REVOLVER_RETICLE_ALPHA',
-                            ease_to = 0,
-                            delay = 2*G.SETTINGS.GAMESPEED,
-                            func = (function(t) return t end)
-                        }))
-                    end
-                    return true
-                end
-            end
-        }) 
-    end
-end
-
-function FishAndChips.crimsonseraphim.get_dummy(center, area, self)
-    local abil = copy_table(center.config) or {}
-    abil.consumeable = copy_table(abil)
-    abil.name = center.name or center.key
-    abil.set = "Joker"
-    abil.t_mult = abil.t_mult or 0
-    abil.t_chips = abil.t_chips or 0
-    abil.x_mult = abil.x_mult or abil.Xmult or 1
-    abil.extra_value = abil.extra_value or 0
-    abil.d_size = abil.d_size or 0
-    abil.mult = abil.mult or 0
-    abil.effect = center.effect
-    abil.h_size = abil.h_size or 0
-    local eligible_editionless_jokers = {}
-    for i, v in pairs(G.jokers and G.jokers.cards or {}) do
-        if not v.edition then
-            eligible_editionless_jokers[#eligible_editionless_jokers+1] = v
-        end
-    end
-    local tbl = {
-        ability = abil,
-        config = {
-            center = center,
-            center_key = center.key
-        },
-        juice_up = function(_, ...)
-            return self:juice_up(...)
-        end,
-        start_dissolve = function(_, ...)
-            return self:start_dissolve(...)
-        end,
-        remove = function(_, ...)
-            return self:remove(...)
-        end,
-        flip = function(_, ...)
-            return self:flip(...)
-        end,
-        use_consumeable = function(self, ...)
-            self.bypass_echo = true
-            local ret = Card.use_consumeable(self, ...)
-            self.bypass_echo = nil
-        end,
-        can_use_consumeable = function(self, ...)
-            return Card.can_use_consumeable(self, ...)
-        end,
-        calculate_joker = function(self, ...)
-            return Card.calculate_joker(self, ...)
-        end,
-        can_calculate = function(self, ...)
-            return Card.can_calculate(self, ...)
-        end,
-        original_card = self,
-        area = area,
-        added_to_deck = added_to_deck,
-        cost = self.cost,
-        sell_cost = self.sell_cost,
-        eligible_strength_jokers = eligible_editionless_jokers,
-        eligible_editionless_jokers = eligible_editionless_jokers,
-        T = self.T,
-        VT = self.VT
-    }
-    for i, v in pairs(self) do
-        if type(v) == "function" and i ~= "flip_side" then
-            tbl[i] = function(_, ...)
-                return v(self, ...)
-            end
-        end
-    end
-    return tbl
-end
-
 FishAndChips.Fish {
 	key = "larp",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "useable", "passive" },
@@ -1452,7 +808,7 @@ FishAndChips.Fish {
 	key = "larp",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "useable", "passive" },
@@ -1547,7 +903,7 @@ FishAndChips.Fish {
 	key = "still_life",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "mult" },
@@ -1602,7 +958,7 @@ FishAndChips.Fish {
 	key = "starblight_eel",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 1, y = 1 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "generation" },
@@ -1648,64 +1004,11 @@ FishAndChips.Fish {
     end
 }
 
-local calculate_joker_ref = Card.calculate_joker
-function Card:calculate_joker(context)
-    local effects = calculate_joker_ref(self, context)
-    local ret = FishAndChips.crimsonseraphim.calculate_forged_joker(self, context)
-    if ret then
-        effects = SMODS.merge_effects({effects or {}, ret})
-    end
-    
-    local ret = FishAndChips.crimsonseraphim.calculate_fish_seal(self, context)
-    if ret then
-        effects = SMODS.merge_effects({effects or {}, ret})
-    end
-
-    if context.joker_main then
-        if self.ability.crimsonseraphim_starblighted then
-            effects = SMODS.merge_effects({effects or {}, {
-                mult = -self.ability.crimsonseraphim_starblighted_mult
-            }})
-            self.ability.crimsonseraphim_starblighted_mult = self.ability.crimsonseraphim_starblighted_mult + 0.5 
-        end
-    end
-    if context.starting_shop and self.ability.crimsonseraphim_temporary then
-        SMODS.destroy_cards(self, true, true)
-    end
-    return effects
-end
-
-local generate_ui_ref = SMODS.Center.generate_ui
-function SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    if card and card.ability.crimsonseraphim_starblighted then
-        info_queue[#info_queue+1] = {set = "Other", key = "crimsonseraphim_starblighted", vars = {card.ability.crimsonseraphim_starblighted_mult, 0.5}}
-    end
-    if card and card.ability.crimsonseraphim_temporary then
-        info_queue[#info_queue+1] = {set = "Other", key = "crimsonseraphim_temporary"}
-    end
-    return generate_ui_ref(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-end
-
-SMODS.Shader({
-    key="crimsonseraphim_starblighted",
-    path="crimsonseraphim/starblighted.fs",
-})
-
-SMODS.Atlas({
-	key = "crimsonseraphim_ultimate_weapon",
-	path = "crimsonseraphim/ultimate_weapon.png",
-	px = 102,
-	py = 70,
-    atlas_table = "ANIMATION_ATLAS",
-    fps = 10,
-    frames = 8
-})
-
 FishAndChips.Fish {
 	key = "ultimate_weapon",
 	atlas = "crimsonseraphim_ultimate_weapon",
 	pos = { x = 0, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "useable" },
@@ -1758,95 +1061,11 @@ FishAndChips.Fish {
     treasure = true,
 }
 
-SMODS.Shader({
-    key="crimsonseraphim_ultimate_weapon",
-    path="crimsonseraphim/ultimate_weapon.fs",
-})
-
-SMODS.DrawStep({
-	key = "ultimate_weapon",
-	order = 25,
-	func = function(self)
-        local card = self.config.center_key
-        if (card ~= "fish_fac_ultimate_weapon")  then return end
-        self.children.center:draw_shader('fac_crimsonseraphim_ultimate_weapon', nil, self.ARGS.send_to_shader)
-	end,
-	conditions = { vortex = false, facing = "front" },
-})
-
-local card_add_to_deck = Card.add_to_deck
-function Card:add_to_deck(...)
-    card_add_to_deck(self, ...)
-    if self.ability.set == "fac_Fish" and self.config.center_key ~= "fish_fac_ultimate_weapon" then
-        G.GAME.crimsonseraphim_obtained_fish = G.GAME.crimsonseraphim_obtained_fish or {}
-        G.GAME.crimsonseraphim_obtained_fish[#G.GAME.crimsonseraphim_obtained_fish+1] = {card = self, savetable = self:save()}
-    end
-end
-
-local card_remove = Card.remove
-function Card:remove(...)
-    if self.ability.set == "fac_Fish" and G.GAME.crimsonseraphim_obtained_fish then
-        for i, v in pairs(G.GAME.crimsonseraphim_obtained_fish) do
-            if v.card == self then
-                v.savetext = self:save()
-                v.card = nil
-            end
-        end
-    end
-    if self.config.center_key == "fish_fac_another_bucket" and self.ability.saved_card then
-        self.ability.saved_card.card:remove()
-    end
-    return card_remove(self, ...)
-end
-
-local card_start_dissolve = Card.start_dissolve
-function Card:start_dissolve(...)
-    if self.ability.set == "fac_Fish" and G.GAME.crimsonseraphim_obtained_fish then
-        for i, v in pairs(G.GAME.crimsonseraphim_obtained_fish) do
-            if v.card == self then
-                v.savetext = self:save()
-                v.card = nil
-            end
-        end
-    end
-    return card_start_dissolve(self, ...)
-end
-
-local save_run_ref = save_run
-function save_run(...)
-    for i, v in pairs(G.GAME.crimsonseraphim_obtained_fish or {}) do
-        if type(v.card) == "number" then
-            v.card = nil
-        end
-        if v.card then
-            v.savetable = v.card:save()
-            v.card = v.card.sort_id
-        end
-    end
-    return save_run_ref(...)
-end
-
-local game_new_run = Game.new_run
-function Game:new_run(args, ...)
-    game_new_run(args, ...)
-    if args.savetext and G.GAME.crimsonseraphim_obtained_fish then
-        for i, v in pairs(G.GAME.crimsonseraphim_obtained_fish) do
-            if v.card then
-                for i, c in pairs(G.I.CARD) do
-                    if c.sort_id == v.card and c.ability.set == "fac_Fish" then
-                        v.card = c
-                    end
-                end
-            end
-        end
-    end
-end
-
 FishAndChips.Fish {
 	key = "jack_o_lantern",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "passive" },
@@ -1889,25 +1108,11 @@ FishAndChips.Fish {
     end
 }
 
-SMODS.ScreenShader {
-    key = "flashlight",
-    path = "crimsonseraphim/flashlight.fs",
-    send_vars = function(self)
-        return {
-            center_pos = { love.mouse.getX(), love.mouse.getY() },
-            dist = 350,
-        }
-    end,
-    should_apply = function(self)
-        return next(SMODS.find_card("fish_fac_jack_o_lantern"))
-    end,
-}
-
 FishAndChips.Fish {
 	key = "piranha_cruenta",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "xmult", "hearts" },
@@ -1945,7 +1150,7 @@ FishAndChips.Fish {
 	key = "delphinus_dormiens",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 4, y = 1 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "passive" },
@@ -1979,7 +1184,7 @@ FishAndChips.Fish {
 	key = "anima",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 2 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "passive" },
@@ -1994,16 +1199,11 @@ FishAndChips.Fish {
 	},
 }
 
-SMODS.Sound {
-    key = "crimsonseraphim_sulfur_slash",
-    path = "crimsonseraphim/falx_sulphurata_slash.ogg"
-}
-
 FishAndChips.Fish {
 	key = "falx_sulphurata",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "destroy_card" },
@@ -2039,7 +1239,7 @@ FishAndChips.Fish {
 	key = "squalus_aeternus",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "passive" },
@@ -2094,7 +1294,7 @@ FishAndChips.Fish {
 	key = "vanitas",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 2, y = 1 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "generation" },
@@ -2122,48 +1322,15 @@ FishAndChips.Fish {
     end
 }
 
-SMODS.Atlas({
-	key = "crimsonseraphim_temporary",
-	path = "crimsonseraphim/temporary.png",
-	px = 71,
-	py = 95,
-})
-
-SMODS.draw_ignore_keys.vanitas_censor = true
-SMODS.DrawStep({
-	key = "vanitas",
-	order = 9e10,
-	func = function(self)
-        local card = self.config.center_key
-        if (card ~= "fish_fac_vanitas") or not G.P_CENTERS[card].discovered or not G.P_CENTERS[card].unlocked then return end
-        if not self.children.vanitas_censor then 
-            self.children.vanitas_censor = SMODS.create_sprite(0, 0, self.T.w, self.T.h, "fac_crimsonseraphim_aeonfish", {x = 3, y = 1})
-        end
-        local sprite = self.children.vanitas_censor
-        sprite.T.w = self.T.w
-        sprite.T.h = self.T.h
-        sprite.VT.x = math.floor(self.children.center.VT.x*3.5)/3.5
-        sprite.VT.y = math.floor(self.children.center.VT.y*3.5)/3.5
-        sprite.VT.r = 0
-        sprite:draw_shader("dissolve", nil, nil, true, nil, nil, 0)
-	end,
-	conditions = { vortex = false, facing = "front" },
-})
-
 for i, v in pairs(FishAndChips.crimsonseraphim.C) do
     G.ARGS.LOC_COLOURS[i] = v
 end
-
-SMODS.Sound {
-    key = "crimsonseraphim_bounce",
-    path = "crimsonseraphim/bounce.ogg"
-}
 
 FishAndChips.Fish {
 	key = "silly_bunny",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 6, y = 1 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "generation" },
@@ -2207,7 +1374,7 @@ FishAndChips.Fish {
 	key = "ronald_reagan_2",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
-	weight = 3, 
+	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "mod_chance" },
@@ -2231,6 +1398,224 @@ FishAndChips.Fish {
         and context.trigger_obj.ability.crimsonseraphim_ronald_reagan_is_my_saviour then
             return {
                 numerator = context.numerator * context.trigger_obj.ability.crimsonseraphim_ronald_reagan_is_my_saviour
+            }
+        end
+    end
+}
+
+FishAndChips.Fish {
+	key = "picayune_cursedfish",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 0 },
+	weight = 2, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "usable", "generation" },
+	environments = {
+        wormhole = 5
+	},
+    stats = {
+		weight = {min = .2, max = .6},
+		length = {min = 0.4, max = .70}
+	},
+    blueprint_compat = false,
+    use = function()
+        G.FUNCS.overlay_menu {
+            definition = create_UIBox_crimsonseraphim_cursedfish()
+        }
+    end,
+    can_use = function()
+        return true
+    end
+}
+
+FishAndChips.Fish {
+	key = "miniaturized_exoplanet",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 1, y = 2 },
+	weight = 2, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "usable" },
+	environments = {
+        wormhole = 5
+	},
+    stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
+    config = {
+        extra = {
+            planets = 4
+        }
+    },
+    loc_vars = function(self, _, card)
+        return {
+            vars = {
+                card.ability.extra.planets
+            }
+        }
+    end,
+    blueprint_compat = false,
+    use = function(self, card)
+        G.E_MANAGER:add_event(Event{
+            trigger = "after",
+            func = function()
+                local area
+                if G.STATE == G.STATES.HAND_PLAYED then
+                    if not G.redeemed_vouchers_during_hand then
+                        G.redeemed_vouchers_during_hand =
+                            CardArea(G.play.T.x, G.play.T.y, G.play.T.w, G.play.T.h, { type = "play", card_limit = 5 })
+                    end
+                    area = G.redeemed_vouchers_during_hand
+                else
+                    area = G.play
+                end
+                for i = 1, card.ability.extra.planets do
+                    local card = SMODS.create_card{set = "Planet"}
+                    card:add_to_deck()
+                    area:emplace(card)
+
+                    local top_dynatext = nil
+                    
+                    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                            top_dynatext = DynaText({string = localize{type = 'name_text', set = card.config.center.set, key = card.config.center.key}, colours = {G.C.WHITE}, rotate = 1,shadow = true, bump = true,float=true, scale = 0.9, pop_in = 0.6/G.SPEEDFACTOR, pop_in_rate = 1.5*G.SPEEDFACTOR})
+                            card:juice_up(0.3, 0.5)
+                            play_sound('card1')
+                            play_sound('coin1')
+                            card.children.top_disp = UIBox{
+                                definition =    {n=G.UIT.ROOT, config = {align = 'tm', r = 0.15, colour = G.C.CLEAR, padding = 0.15}, nodes={
+                                                    {n=G.UIT.O, config={object = top_dynatext}}
+                                                }},
+                                config = {align="tm", offset = {x=0,y=0},parent = card}
+                            }
+    
+                        return true end }))
+                    --G.GAME.current_round.voucher = nil
+
+
+                    delay(0.6)
+                    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 2.6, func = function()
+                        top_dynatext:pop_out(4)
+                        return true end }))
+                    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.5, func = function()
+                        card.children.top_disp:remove()
+                        card.children.top_disp = nil
+                    return true end }))
+
+                    card:use_consumeable()
+                    G.E_MANAGER:add_event(Event{
+                        trigger = "after",
+                        func = function()
+                            card:start_dissolve()
+                            return true
+                        end
+                    })
+                end
+                return true
+            end
+        })
+    end,
+    can_use = function()
+        return true
+    end
+}
+
+FishAndChips.crimsonseraphim.lotus_alts = {
+    "mf", "maxboi", "eris", "squeax09", "cassknows", "jade", "ruby",
+    "lizie"
+}
+for i, v in pairs(FishAndChips.crimsonseraphim.lotus_alts) do
+    SMODS.Atlas {
+        key = "crimsonseraphim_lotus_"..v,
+        path = "crimsonseraphim/lotuses/"..v..".png",
+        px = 71, py = 95,
+        atlas_table = "ANIMATION_ATLAS",
+        fps = 10,
+        frames = 8
+    }
+end
+
+local load_profile = Game.load_profile
+function Game:load_profile(p, ...)
+    local ret = load_profile(self, p, ...)
+    if G.P_CENTERS.fish_fac_nameless_lotus then
+        if not G.PROFILES[p] then p = 1 end
+        local prof = G.PROFILES[p]
+        G.P_CENTERS.fish_fac_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_default"
+        for i, v in pairs(FishAndChips.crimsonseraphim.lotus_alts) do
+            if string.lower(prof.name) == v then
+                G.P_CENTERS.fish_fac_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_"..v
+            end
+        end
+    end
+    return ret
+end
+local save_settings = G.save_settings
+function G:save_settings(...)
+    save_settings(self, ...)
+    if G.P_CENTERS.fish_fac_nameless_lotus then
+        local prof = G.PROFILES[G.SETTINGS.profile]
+        G.P_CENTERS.fish_fac_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_default"
+        for i, v in pairs(FishAndChips.crimsonseraphim.lotus_alts) do
+            if string.lower(prof.name) == v then
+                G.P_CENTERS.fish_fac_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_"..v
+            end
+        end
+    end
+end
+
+FishAndChips.Fish {
+	key = "nameless_lotus",
+	atlas = "crimsonseraphim_lotus_default",
+	pos = { x = 0, y = 0 },
+	weight = 2, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "xmult" },
+
+	environments = {
+        wormhole = 5
+	},
+    stats = {
+		weight = {min = 0, max = 0},
+		length = {min = 0, max = 0}
+	},
+    config = {
+        extra = {
+            mult = 1
+        }
+    },
+    loc_vars = function(self, _, card)
+        local heart
+        for i, v in pairs(FishAndChips.crimsonseraphim.lotus_alts) do
+            if string.lower(G.PROFILES[G.SETTINGS.profile].name) == v then
+                heart = true
+            end
+        end
+        return {
+            vars = {
+                card.ability.extra.mult,
+                card.ability.extra.mult * FishAndChips.crimsonseraphim.count_developers(),
+                --[Determiner] [Adjective] [Noun] [Verb] [Preposition] [Determiner] [Adjective] [Noun].
+                elements = G.FAC_FLAVOR_VARS and {
+                    FishAndChips.crimsonseraphim.get_word_cycle("determiners"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("adjectives"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("nouns"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("verbs"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("prepositions"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("determiners"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("adjectives"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("nouns")
+                } or nil
+            },
+            name_key = heart and "fish_fac_nameless_lotus_heart" or nil
+        }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                xmult = card.ability.extra.mult * FishAndChips.crimsonseraphim.count_developers()
             }
         end
     end

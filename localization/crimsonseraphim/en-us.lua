@@ -393,6 +393,48 @@ return {
                     "the lower is no more essential than that which",
                     "rises and converges from the opposite direction"
                 }
+            },
+            fish_fac_picayune_cursedfish = {
+                name = "Tier 1 Fish (Cursed)",
+                text = {
+                    "Use this {C:attention}Fish{} to select",
+                    "{C:attention}1{} of {C:attention}3{} random {C:attention}Fish{}",
+                    "to either obtain or banish."
+                },
+                flavor = {
+                    "Fish are best handled by strafing",
+                    "out of the way of their dashes and",
+                    "staying out of their range, as their",
+                    "movement speed is relatively slow otherwise."
+                }
+            },
+            fish_fac_miniaturized_exoplanet = {
+                name = "Miniaturized Exoplanet",
+                text = {
+                    "Use this {C:attention}Fish{} to",
+                    "instantly use {C:attention}#1#{}",
+                    "{C:planet}Planet{} cards"
+                },
+                flavor = {
+                    "Many are wondering how it",
+                    "became so light."
+                }
+            },
+            fish_fac_nameless_lotus = {
+                name = "{E:fac_nameless}Erilucyxwyn{}",
+                text = {
+                    "{E:fac_nameless}Gives {X:mult,C:white,E:fac_nameless}X#1# {E:fac_nameless} Mult for",
+                    "{E:fac_nameless}each unique {E:fac_nameless,C:attention}Developer {E:fac_nameless}or",
+                    "{E:fac_nameless,C:attention}Artist{E:fac_nameless} on held {E:fac_nameless,C:attention}Fish",
+                    "{E:fac_nameless,C:inactive}(Currently {X:mult,C:white,E:fac_nameless}X#2#{E:fac_nameless,C:inactive} Mult)"
+                },
+                flavor = {
+                    "{element:1} {element:2} {element:3} {element:4}",
+                    "{element:5} {element:6} {element:7} {element:8}"
+                }
+            },
+            fish_fac_nameless_lotus_heart = {
+                name = "{E:fac_nameless}Erilucyxwyn <3{}",
             }
         },
         Other = {
@@ -488,7 +530,9 @@ return {
         dictionary = {
             k_charged = "Charged",
             k_uncharged = "Uncharged",
-            k_switch_ex = "Switch!"
+            k_switch_ex = "Switch!",
+            k_banish_cursefish = "BANISH",
+            k_obtain_cursefish = "OBTAIN"
         }
     }
 }
