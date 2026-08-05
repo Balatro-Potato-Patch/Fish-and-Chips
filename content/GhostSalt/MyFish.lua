@@ -1075,7 +1075,7 @@ FishAndChips.Fish {
 		if context.joker_main then
 			hand_chips = mod_chips(card.ability.extra.set_chips)
 			update_hand_text({ delay = 0 }, { chips = hand_chips })
-			return { message = "="..card.ability.extra.set_chips, colour = G.C.CHIPS, card = card }
+			return { message = "=" .. card.ability.extra.set_chips, colour = G.C.CHIPS, card = card }
 		end
 
 		if context.other_main and context.other_main.ability.set == "fac_Fish" and context.other_main ~= card then
@@ -1100,5 +1100,68 @@ FishAndChips.Fish {
 		swamp = 5
 	},
 	blueprint_compat = false,
+	calculate = function(self, card, context)
+		if context.skip_blind and not G.fac_skipper_skipping then
+			G.fac_skipper_skipping = true
+			stop_use()
+
+			local amt = pseudorandom("fac_bait_gen" .. G.GAME.round_resets.ante, 2, 5)
+			for _ = 1, amt do
+				FishAndChips.add_bait_to_shop(SMODS.poll_object({ type = "fac_Bait", append = "fac_bait_shop" }))
+			end
+			FishAndChips.add_bait_to_shop("bait_fac_normal", pseudorandom("fac_guaranteed_normal_bait" .. G.GAME.round_resets.ante, 1, 3))
+			FishAndChips.clean_up_bait_shop()
+			local function fac_sort_bait_shop(bait1, bait2)
+				if bait1.key == "bait_fac_normal" then
+					return true
+				elseif bait2.key == "bait_fac_normal" then
+					return false
+				end
+				return bait1.amt > bait2.amt
+			end
+			table.sort(G.GAME.fac_bait_shop_items, fac_sort_bait_shop)
+
+			if G.blind_select then
+				G.GAME.facing_blind = true
+				G.blind_prompt_box:get_UIE_by_ID("prompt_dynatext1").config.object.pop_delay = 0
+				G.blind_prompt_box:get_UIE_by_ID("prompt_dynatext1").config.object:pop_out(5)
+				G.blind_prompt_box:get_UIE_by_ID("prompt_dynatext2").config.object.pop_delay = 0
+				G.blind_prompt_box:get_UIE_by_ID("prompt_dynatext2").config.object:pop_out(5)
+
+				G.E_MANAGER:add_event(Event({
+					trigger = "before",
+					delay = 0.2,
+					func = function()
+						G.fac_skipper_skipping = false
+						G.blind_prompt_box.alignment.offset.y = -10
+						G.blind_select.alignment.offset.y = 40
+						G.blind_select.alignment.offset.x = 0
+						return true
+					end
+				}))
+				G.E_MANAGER:add_event(Event({
+					trigger = "immediate",
+					func = function()
+						G.blind_select:remove()
+						G.blind_prompt_box:remove()
+						G.blind_select = nil
+						delay(0.2)
+						return true
+					end
+				}))
+				G.E_MANAGER:add_event(Event({
+					trigger = "after",
+					delay = 0.5,
+					func = function()
+						G.STATE_COMPLETE = false
+						G.GAME.fishing = true
+						G.STATE = G.STATES.FAC_FISHING
+						G.CONTROLLER.locks.toggle_shop = nil
+						return true
+					end
+				}))
+			end
+		end
+	end,
 	pronouns = "he_him"
 }
