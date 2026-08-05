@@ -32,12 +32,12 @@ SMODS.Sound {
 
 SMODS.Sound {
     key = "fac_fo_splat",
-    path = "fountain_openers/fac_fo_splat.ogg"
+    path = "fountain_openers/fac_fo_splat.wav"
 }
 
 SMODS.Sound {
     key = "fac_fo_knight_cut2",
-    path = "fountain_openers/fac_knight_cut2.ogg"
+    path = "fountain_openers/fac_fo_knight_cut2.wav"
 }
 
 SMODS.DynaTextEffect {
