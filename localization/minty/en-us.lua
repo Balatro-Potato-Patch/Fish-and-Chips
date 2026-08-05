@@ -22,9 +22,8 @@ return {
                 name = "Sea Bass",
                 flavour = {
                     "See? The sea!",
-                    "This is their native",
-                    "habitat, they're actually",
-                    "SUPPOSED to live here."
+                    "This is where they're",
+                    "SUPPOSED to live!"
                 },
                 text = {
                     "Use for {C:green}#1# in #2#{} chance",
@@ -49,8 +48,6 @@ return {
                 name = "Catfish",
                 flavour = {
                     "Mrrp mew mrew :3",
-                    "... no?",
-                    "Fine."
                 },
                 text = {
                     "{C:green}#1#{} denominator to",
@@ -66,7 +63,7 @@ return {
                 text = {
                     "{C:red}Destroy{} played {C:attention}Lucky Cards{}",
                     "and gain {C:white,X:mult}X#2#{} Mult for each",
-                    "{C:inactive}(Currently {C:white,X:mult}X#3#{C:inactive})"
+                    "{C:inactive}(Currently {C:white,X:mult}X#1#{C:inactive})"
                 }
             },
             fish_fac_minty_shrimp_npc = {
@@ -74,7 +71,8 @@ return {
                 flavour = {
                     "Hello there!",
                     "As the Shrimp NPC,"
-                }
+                },
+                text = {}
             }
         },
         PotatoPatch = {
