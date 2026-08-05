@@ -1661,8 +1661,8 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			x_sell_cost = 2,
-			max_uses = 1,
-			remaining_uses = 1,
+			max_uses = 2,
+			remaining_uses = 2,
 		},
 	},
 	environments = {
