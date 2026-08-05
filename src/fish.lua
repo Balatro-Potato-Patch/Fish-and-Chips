@@ -460,7 +460,9 @@ if SilkTouch then
 		button_order = 0,
 		text = function(card)
 			return {
-				localize('b_use'),
+				type(card.config.center.button_key) == "function" and card.config.center.button_key()
+				or type(card.config.center.button_key) == "string" and localize(card.config.center.button_key)
+				or localize('b_use'),
 				single_text = true,
 			}
 		end,
