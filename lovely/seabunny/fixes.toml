@@ -12,13 +12,5 @@ pattern = 'G.SHADERS[shader]:send("letter_rot", letter.r)'
 position = "at"
 match_indent = true
 payload = '''
---print(element.T.x * tile_scale)
---print(element.T.w * tile_scale)
---print(element.scale)
---print(letter_x)
---print(letter.dims.x * tile_scale)
---print(letter.scale)
---print("---")
---print(letter.dims.x)
 G.SHADERS[shader]:send("letter_rot", letter.r or 0)
 '''
