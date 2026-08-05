@@ -10,6 +10,13 @@ SMODS.Atlas({
 	py = 95,
 })
 
+SMODS.Atlas({
+	key = "sg11_n_vekhi_sprat_can_lore",
+	path = "sg11_n_vekhi/sprats_unite.png",
+	px = 316,
+	py = 353,
+})
+
 FishAndChips.Fish({
 	key = "sg11_n_vekhi_sprat_can",
 	atlas = "fac_sg11_n_vekhi_sprat_can",
@@ -38,7 +45,10 @@ FishAndChips.Fish({
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue + 1] = G.P_CENTERS.fish_fac_sg11_n_vekhi_sprat
 		return {
-			vars = { card.ability.extra.amount },
+			vars = {
+				card.ability.extra.amount,
+				elements = { SMODS.create_sprite(0, 0, 2, 2 / 316 * 353, "fac_sg11_n_vekhi_sprat_can_lore") },
+			},
 		}
 	end,
 	can_use = function(self, card)

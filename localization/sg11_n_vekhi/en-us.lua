@@ -106,6 +106,9 @@ return {
 					"{C:attention}Use{} to create {C:attention}#1#{} {C:attention}Sprats{}",
 					"{C:inactive}(Does not require room){}",
 				},
+				flavour = {
+					"{element:1}",
+				},
 			},
 			fish_fac_sg11_n_vekhi_lemon_fish = {
 				name = "Lemon Fish",
