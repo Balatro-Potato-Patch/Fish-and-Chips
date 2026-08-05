@@ -124,9 +124,9 @@ FishAndChips.Fish {
 		weight = {min = 0.15, max = 0.182},
 		length = {min = 0.07, max = 0.08}
 	},
-	loc_vars = function(self, info_queue, card)
-		return { vars = { elements = { SMODS.create_sprite(0, 0, 2, 2 * 1125 / 1086, "fac_mealy_lore") } } }
-	end,
+    flavour_vars = function()
+        return { vars = { elements = { SMODS.create_sprite(0, 0, 2, 2 * 1125 / 1086, "fac_mealy_lore") } } }
+    end,
 	calculate = function(self, card, context)
 		if context.fac_fish_caught then
             local money = card.sell_cost + context.fac_fish_caught.sell_cost
@@ -1586,6 +1586,22 @@ FishAndChips.Fish {
             mult = 1
         }
     },
+    flavour_vars = function()
+        return {
+            vars = {
+                elements = {
+                    FishAndChips.crimsonseraphim.get_word_cycle("determiners"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("adjectives"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("nouns"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("verbs"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("prepositions"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("determiners"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("adjectives"),
+                    FishAndChips.crimsonseraphim.get_word_cycle("nouns")
+                }
+            }
+        }
+    end,
     loc_vars = function(self, _, card)
         local heart
         for i, v in pairs(FishAndChips.crimsonseraphim.lotus_alts) do
@@ -1597,17 +1613,6 @@ FishAndChips.Fish {
             vars = {
                 card.ability.extra.mult,
                 card.ability.extra.mult * FishAndChips.crimsonseraphim.count_developers(),
-                --[Determiner] [Adjective] [Noun] [Verb] [Preposition] [Determiner] [Adjective] [Noun].
-                elements = G.FAC_FLAVOR_VARS and {
-                    FishAndChips.crimsonseraphim.get_word_cycle("determiners"),
-                    FishAndChips.crimsonseraphim.get_word_cycle("adjectives"),
-                    FishAndChips.crimsonseraphim.get_word_cycle("nouns"),
-                    FishAndChips.crimsonseraphim.get_word_cycle("verbs"),
-                    FishAndChips.crimsonseraphim.get_word_cycle("prepositions"),
-                    FishAndChips.crimsonseraphim.get_word_cycle("determiners"),
-                    FishAndChips.crimsonseraphim.get_word_cycle("adjectives"),
-                    FishAndChips.crimsonseraphim.get_word_cycle("nouns")
-                } or nil
             },
             name_key = heart and "fish_fac_nameless_lotus_heart" or nil
         }

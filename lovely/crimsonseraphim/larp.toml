@@ -59,9 +59,7 @@ if card.config.center_key == "fish_fac_larp" then
     local card = card.dummy
     if not FishAndChips.mod.config.disable_flavour and card.config.center.discovered and G.localization.descriptions.fac_Fish[card.config.center_key] and G.localization.descriptions.fac_Fish[card.config.center_key].fac_flavour_parsed then
         local flavour_node = {}
-        G.FAC_FLAVOR_VARS = true
         local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}
-        G.FAC_FLAVOR_VARS = nil
         localize({type = 'flavour', nodes = flavour_node, loc_target = G.localization.descriptions.fac_Fish[loc_vars.key or card.config.center_key], scale = 0.8, text_colour = G.C.JOKER_GREY, shadow = true, vars = loc_vars.vars})
         local final_flavour = {{n=G.UIT.R, config = {minh = 0.1}}}
         for i, line in ipairs(flavour_node) do
