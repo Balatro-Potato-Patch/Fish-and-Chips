@@ -357,6 +357,7 @@ function G:update_fac_fishing(dt)
 	end
 	if SilkTouch and (not G.SETTINGS.enable_action_buttons or G.CONTROLLER.HID.controller) then
 		if G.GAME.fac_fish_expanded then
+			G.fac_fish_area:unhighlight_all()
 			local req_jokers, req_consumables = false, false
 			for _, card in ipairs(G.fac_fish_area.cards) do
 				if card.config.center.requires_jokers then

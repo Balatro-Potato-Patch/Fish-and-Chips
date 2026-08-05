@@ -315,7 +315,7 @@ function Card:highlight(is_higlighted)
 		if self.children.select_button and not (self.highlighted and self.area and self.area.config.type ~= "shop") then
 			self.children.select_button:remove(); self.children.select_button = nil
 		end
-		if G.STATE == G.STATES.FAC_FISHING and not (SilkTouch and (not G.SETTINGS.enable_action_buttons or G.CONTROLLER.HID.controller)) then
+		if G.STATE == G.STATES.FAC_FISHING then
 			if self.config.center.requires_jokers then
 				if self.highlighted then
 					G.jokers.T.y = G.jokers.T.y + 15.25
