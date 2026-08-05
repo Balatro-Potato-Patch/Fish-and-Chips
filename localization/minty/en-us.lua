@@ -40,8 +40,9 @@ return {
                     "This isn't a fish??",
                 },
                 text = {
-                    "({C:green}#1# in #2#{} chance to",
-                    "retrigger any other fish)"
+                    "{C:green}#1# in #2#{} chance to",
+                    "retrigger any other fish",
+                    "#3# time#4#"
                 }
             },
             fish_fac_minty_catfish = {
