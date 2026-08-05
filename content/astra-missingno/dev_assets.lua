@@ -4,7 +4,7 @@ PotatoPatchUtils.Developer({
 	pos = { x = 1, y = 0 },
 	loc = true,
 	colour = G.C.PURPLE,
-	fac_partner = 'MissingNo',
+	fac_partner = 'fac_MissingNo',
 	click = function(self)
 		play_sound('fac_am_astra_click')
 		self:juice_up(0.1, 0.1)
@@ -17,7 +17,7 @@ PotatoPatchUtils.Developer({
 	pos = { x = 0, y = 0 },
 	loc = true,
 	colour = G.C.ORANGE,
-	fac_partner = 'theAstra',
+	fac_partner = 'fac_theAstra',
 	click = function(self)
 		play_sound('generic1')
 		love.system.openURL("https://www.youtube.com/@copykeys")

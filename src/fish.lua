@@ -175,7 +175,7 @@ function FishAndChips.verify_submissions()
 	if fac_count == 2 then
 		local first, second = contributors[1], contributors[2]
 		assert(
-			first.fac_partner == second.name and second.fac_partner == first.name,
+			first.fac_partner == second.key and second.fac_partner == first.key,
 			'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
  	)
 	end
@@ -205,7 +205,6 @@ function FishAndChips.verify_submissions()
 			local in_envs = SMODS.table_size(fish.environments)
 			assert(in_envs <= FishAndChips.fish_environment_limit or dev_obj.ignore_limits, "Fish " .. fish.key .. " is in " .. in_envs .. " environments when the limit is " .. FishAndChips.fish_environment_limit)
 		end
-		print(total_weight)
 		local scalar = math.min(1, FishAndChips.submission_weight_limit / total_weight)
 			assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
 			assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")
