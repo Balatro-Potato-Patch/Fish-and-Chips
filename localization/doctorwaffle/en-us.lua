@@ -161,8 +161,8 @@ return {
                     "When {C:attention}Blind{} is selected, this {C:fac_fish}Fish{}",
                     "becomes a copy of {C:fac_fish}Fish{} to the {C:attention}right{}",
                     "with {X:attention,C:white}X#1#{} to {C:attention}listed values{}",
-                    "{C:inactive}(Reverts at end of round or when used,",
-                    "{C:inactive}cannot copy THE MAGNIFICENT FINCLAIR)"
+                    "{C:inactive,s:0.85}(Reverts at end of round or when used,",
+                    "{C:inactive,say:0.85}cannot copy THE MAGNIFICENT FINCLAIR)"
                 },
                 flavor = {
                     "Can we please pretend to like each other for 8 antes?",
@@ -178,7 +178,8 @@ return {
                 text = {
                     "This {C:fac_fish}Fish{} will turn into",
                     "{C:attention}THE MAGNIFICENT FINCLAIR{}",
-                    "at end of round or when used",
+                    "at end of round, or",
+                    "if used and consumed",
                 }
             }
         },

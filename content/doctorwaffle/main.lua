@@ -23,9 +23,10 @@ PPU.Developer({
                 if fish.ability and fish.ability.extra and fish.ability.extra.fac_waffle_finclair_copy then
                     G.E_MANAGER:add_event(Event({
                         func = function ()
+                            local originalStats = fish.ability.extra.fac_waffle_finclair_stats
                             fish:set_ability(fish.ability.extra.fac_waffle_finclair_copy)
-                            if G.GAME.fac_fish_expanded then
-                            else
+                            fish.ability.stats = originalStats
+                            if not G.GAME.fac_fish_expanded then
                                 fish.T.scale = 0.7
                             end
                             return true
@@ -38,8 +39,26 @@ PPU.Developer({
         
         end
 
-        if context.using_consumeable then
-            print(context.consumeable.ability.set)
+        -- Finclair reverting when used
+        if context.fac_use_fish then
+            local fish = context.fac_use_fish
+            if fish.ability.extra.fac_waffle_finclair_copy then
+                --print("used finclair copy")
+                local originalStats = fish.ability.extra.fac_waffle_finclair_stats
+                if not context.kept_on_use then
+                    --print("do not keep")
+                    G.E_MANAGER:add_event(Event({
+                        func = function ()
+                            local card = SMODS.add_card({
+                                key = "fish_fac_waffle_finclair",
+                                area = G.fac_fish_area
+                            })
+                            card.ability.stats = originalStats
+                            return true
+                        end
+                    }))
+                end
+            end
         end
 
     end

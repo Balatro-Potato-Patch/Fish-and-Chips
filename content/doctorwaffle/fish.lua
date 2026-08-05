@@ -106,7 +106,7 @@ end
 FishAndChips.Fish {
     key = "waffle_magic_conch",
     atlas = "waffle_fish",
-    weight = 8,
+    weight = 7,
     environments = {
         pier = 1,
         calm_pond = 0.6
@@ -115,7 +115,7 @@ FishAndChips.Fish {
     blueprint_compat = false,
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    cost = 5,
+    cost = 3,
     stats = {
         weight = { min = 0.1, max = 0.11 },
         length = { min = 0.05, max = 0.051 }
@@ -339,7 +339,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
     key = "waffle_percheo",
     atlas = "waffle_fish",
-    weight = 2,
+    weight = 1,
     environments = {
         garden = 1,
     },
@@ -386,7 +386,7 @@ FishAndChips.Fish {
         styx = 1,
         wormhole = 0.5
     },
-    weight = 8,
+    weight = 7,
     cost = 4,
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -421,7 +421,7 @@ FishAndChips.Fish {
     pos = { x = 3, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 8,
+    weight = 7,
     pixel_size = { h = 83 },
     cost = 4,
     environments = {
@@ -507,7 +507,7 @@ FishAndChips.Fish {
     pos = { x = 4, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 8,
+    weight = 7,
     cost = 5,
     environments = {
         swamp = 1,
@@ -546,7 +546,7 @@ FishAndChips.Fish {
     pixel_size = { h = 60 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 8,
+    weight = 7,
     cost = 6,
     blueprint_compat = false,
     environments = {
@@ -608,7 +608,7 @@ FishAndChips.Fish {
     pos = { x = 6, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 8,
+    weight = 7,
     environments = {
         city_river = 1,
         garden = 0.8,
@@ -677,7 +677,7 @@ FishAndChips.Fish {
     key = "waffle_gossamer_worm",
     atlas = "waffle_fish",
     pos = { x = 7, y = 0 },
-    weight = 8,
+    weight = 7,
     environments = {
         aquifer = 1,
         pier = 0.4
@@ -738,7 +738,7 @@ FishAndChips.Fish {
     pixel_size = { h = 88 },
     atlas = "waffle_fish",
     pos = { x = 8, y = 0 },
-    weight = 8,
+    weight = 7,
     cost = 6,
     config = { extra = {
         chips = 0,
@@ -858,7 +858,7 @@ FishAndChips.Fish {
     ppu_artist = { "waffle" },
     atlas = "waffle_fish",
     pos = { x = 9, y = 0 },
-    weight = 8,
+    weight = 7,
     cost = 5,
     environments = {
         soup = 1,
@@ -916,8 +916,6 @@ FishAndChips.Fish {
     attributes = { "rank", "food" }
 }
 
-
-
 -- THE MAGNIFICENT FINCLAIR
 FishAndChips.Fish {
     key = "waffle_finclair",
@@ -927,9 +925,11 @@ FishAndChips.Fish {
         styx = 0.7,
         city_river = 1
     },
+    pos = {x = 0, y = 1},
+    atlas = "waffle_fish",
     blueprint_compat = false,
     cost = 8,
-    weight = 8,
+    weight = 7,
     stats = {
         weight = { min = 1.30, max = 4.50 },
         length = { min = 0.20, max = 0.45 }
@@ -949,12 +949,10 @@ FishAndChips.Fish {
             if fishToRight and fishToRight.config.center.key ~= "fish_fac_waffle_finclair" then
                 local boost = card.ability.extra.scale
                 local cardKey = card.config.center.key
+                local stats = card.ability.stats
                 SMODS.copy_card(fishToRight, {
                     new_card = card
                 })
-                if not G.GAME.fac_fish_expanded then
-                    card.T.scale = 0.7
-                end
                 card.ability.extra = card.ability.extra or {}
                 for i, v in pairs(card.ability.extra) do
                     if type(v) == "number" then
@@ -962,6 +960,10 @@ FishAndChips.Fish {
                     end
                 end
                 card.ability.extra.fac_waffle_finclair_copy = cardKey
+                card.ability.extra.fac_waffle_finclair_stats = stats
+                if not G.GAME.fac_fish_expanded then
+                    card.T.scale = 0.7
+                end
                 return {
                     message = localize('k_fac_waffle_presto_ex'),
                     colour = G.C.PURPLE
