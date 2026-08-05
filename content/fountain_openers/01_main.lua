@@ -233,5 +233,7 @@ G.E_MANAGER:add_event(Event({
             end
         end
         return true
-    end
+    end,
+    blockable = false,
+    blocking = false,
 }))
