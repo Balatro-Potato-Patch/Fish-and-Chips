@@ -1,7 +1,9 @@
 FishAndChips.Fish{
     key = "minty_goldfish",
+    --[[
     atlas = "minty_fish",
     pos = {x=20, y=0},
+    --]]
     weight = 1,
     ppu_coder = {"minty"},
     ppu_artist = {"?"},

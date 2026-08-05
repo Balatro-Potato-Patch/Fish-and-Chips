@@ -2,8 +2,10 @@ do return end
 
 FishAndChips.Fish{
     key = "minty_FISH",
+    --[[
     atlas = "minty_fish",
     pos = {x=20, y=0},
+    --]]
     weight = 1,
     ppu_coder = {"minty"},
     ppu_artist = {"whomstever"},
