@@ -367,6 +367,10 @@ function G:update_fac_fishing(dt)
 					req_consumables = true
 				end
 			end
+			req_jokers = req_jokers and not next(G.FISHING.fac_fish_reward_area.cards)
+        	and not next(G.FISHING.fac_treasure_reward_area.cards)
+			req_consumables = req_consumables and not next(G.FISHING.fac_fish_reward_area.cards)
+        	and not next(G.FISHING.fac_treasure_reward_area.cards)
 			if req_jokers and not G.GAME.fac_fish_requires_jokers then
 				G.GAME.fac_fish_requires_jokers = true
 				G.jokers.T.y = G.jokers.T.y + 15.25
