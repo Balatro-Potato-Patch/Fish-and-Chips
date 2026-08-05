@@ -17,6 +17,29 @@ function FountainOpeners.dark_flip(card)
     card.children.ppu_floating_sprite:set_sprite_pos({x=pos2.x,y=1-pos2.y})
 end
 
+SMODS.Atlas {
+    key = "fo_dev_credits",
+    path = "fountain_openers/fo_dev_credits.png",
+    px = 71,
+    py = 95,
+    atlas_table = "ASSET_ATLAS"
+}
+
+SMODS.Sound {
+    key = "fac_fo_explosion",
+    path = "fountain_openers/fac_fo_explosion.ogg"
+}
+
+SMODS.Sound {
+    key = "fac_fo_splat",
+    path = "fountain_openers/fac_fo_splat.ogg"
+}
+
+SMODS.Sound {
+    key = "fac_fo_knight_cut2",
+    path = "fountain_openers/fac_knight_cut2.ogg"
+}
+
 SMODS.DynaTextEffect {
     key = "alexi_text",
     func = function(dynatext, index, letter)
@@ -27,15 +50,17 @@ SMODS.DynaTextEffect {
 }
 
 PotatoPatchUtils.Developer {
-	name = 'Alexi',
-	atlas = 'fac_cards',
+	name = "Alexi",
+	atlas = "fac_fo_dev_credits",
+    pos = { x = 0, y = 0 },
+    soul_pos = { x = 1, y = 0 },
 	text_effect = "fac_alexi_text",
-	fac_partner = 'Grahkon',
+	fac_partner = "Grahkon",
 	fac_dw_shader = true, -- thanks elleeeee love youuu :3
 	click = function(self)
         FountainOpeners.dark_flip(self)
 
-        play_sound("fac_fo_splat",1.5-alexi_click_count*0.1)
+        play_sound("fac_fo_splat", 1.5-alexi_click_count*0.1)
         self:juice_up()
         if alexi_click_count == 1 then
             love.system.openURL("https://en.pronouns.page/@invalidOS")
@@ -182,10 +207,16 @@ PotatoPatchUtils.Developer {
 }
 
 PotatoPatchUtils.Developer {
-	name = 'Grahkon',
-	atlas = 'fac_cards',
-	-- pos = {x = 1, y = 0},
+	name = "Grahkon",
+	atlas = "fac_fo_dev_credits",
+    pos = { x = 2, y = 0 },
+    soul_pos = { x = 3, y = 0 },
 	colour = G.C.GREEN,
-	fac_partner = 'Alexi',
+	fac_partner = "Alexi",
 	fac_dw_shader = true,
+    click = function(self)
+        FountainOpeners.dark_flip(self)
+        play_sound("fac_fo_knight_cut2", 1)
+        self:juice_up()
+    end,
 }

@@ -10,11 +10,6 @@ local explosion_sprite = love.graphics.newImage(love.image.newImageData(SMODS.NF
 	"/assets/1x/fountain_openers/explosion.png")))
 local ex, ey = explosion_sprite:getDimensions()
 
-SMODS.Sound {
-    key = "fac_fo_explosion",
-    path = "fountain_openers/fac_fo_explosion.ogg"
-}
-
 -- adapted from vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html
 local visual_range = 150
 local protected_range = 40
