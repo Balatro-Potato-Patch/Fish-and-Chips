@@ -424,7 +424,7 @@ FishAndChips.Fish { --Timothy
 		return not card.ability.extra.ante_used
 	end,
 	calculate = function(self, card, context)
-		if context.ante_change and context.ante_end
+		if context.ante_change and context.ante_end then
 			card.ability.extra.ante_used = false
 		end
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
