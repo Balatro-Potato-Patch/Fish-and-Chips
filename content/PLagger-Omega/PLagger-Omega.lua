@@ -20,8 +20,7 @@ PotatoPatchUtils.Developer {
 
 --[[
 ideas:
-Stewfish in Soup & Choco River?
-Biblically accurate angelfish in backrooms
+
 Relicanth in Cavern Aquifer, Stone cards
 Gummigoo in Choco River & Swamp
 mystic remora in ?
@@ -108,6 +107,11 @@ FishAndChips.Fish{ --Hawaii Fish
       if context.pre_discard and not context.hook and not card.ability.extra.housed
           and G.FUNCS.get_poker_hand_info(G.hand.highlighted) == card.ability.extra.poker_hand then
           card.ability.extra.housed = true
+          local eval = function () return card.ability.extra.housed and not G.RESET_JIGGLES end
+        juice_card_until(card, eval, true)
+          return{
+            message = localize('k_active_ex')
+          }
       end
 
       if context.joker_main and card.ability.extra.housed then
@@ -246,6 +250,55 @@ FishAndChips.Fish{ --Gurmag Angler
   end
 }
 
+FishAndChips.Fish{ --Stewfish
+  key = 'plaggeromega_stewfish',
+  atlas = 'plaggeromega_fish',
+  pos = {x=4,y=0},
+  weight = 10,
+  environments = {soup = 0.6, chocolate_river = 0.1},
+  attributes = {'mult'},
+  stats = {
+    weight = {min = 7, max = 14},
+    length = {min = 0.25, max = 0.72}
+  },
+  ppu_coder = {'PLagger'},
+  ppu_artist = {'Omegaflowey18'},
+  impulse_min = 0.1,
+  impulse_max = 0.3,
+  vel_limit = 0.189,
+  cost = 6,
+  blueprint_compat = true,
+  config = {extra = {mult = 0, mult_mod = 1}},
+
+  loc_vars = function (self, info_queue, card)
+    return{
+      vars = {card.ability.extra.mult, card.ability.extra.mult_mod}
+    }
+  end,
+
+  calculate = function (self, card, context)
+    if context.fac_fish_caught then
+      if FishAndChips.get_environment().key == 'soup' then
+        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+        return{
+          message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}
+        }
+      elseif card.ability.extra.mult > 0 then
+        card.ability.extra.mult = 0
+        return{
+          message = localize('k_reset')
+        }
+      end
+    end
+
+    if context.joker_main then
+      return{
+        mult = card.ability.extra.mult
+      }
+    end
+  end
+}
+
 FishAndChips.Fish{ --Docfish
   key = 'plaggeromega_docfish',
   atlas = 'plaggeromega_fish',
@@ -288,9 +341,9 @@ FishAndChips.Fish{ --Biblically Accurate Angelfish
   key = 'plaggeromega_baa',
   atlas = 'plaggeromega_fish',
   pos = {x=1,y=1},
-  weight = 6,
-  environments = {backroom = 0.77},
-  attributes = {'generation'},
+  weight = 4,
+  environments = {backroom = 0.77, garden = 0.022},
+  attributes = {'usable', 'generation'},
   stats = {
     weight = {min = 2222, max = 4444},
     length = {min = 2222, max = 9999}
@@ -301,18 +354,40 @@ FishAndChips.Fish{ --Biblically Accurate Angelfish
   impulse_max = 0.23,
   vel_limit = 1.11,
   cost = 7,
-  blueprint_compat = true,
+  blueprint_compat = false,
   config = {extra = {}},
 
   loc_vars = function (self, info_queue, card)
-    
+    info_queue[#info_queue+1] = {set = 'Other', key = 'rental', vars = {G.GAME.rental_rate or 1}}
   end,
 
   use = function (self, card, area)
     print'shout out giada'
+    SMODS.add_card({set = 'Joker', rarity = 'Rare', force_stickers = {'rental'}, key_append = 'fac_plaggeromega_baa'})
   end,
 
   can_use = function(self, card)
     return G.jokers and #G.jokers.cards < G.jokers.config.card_limit
   end
+}
+
+FishAndChips.Fish{ --Relicanth
+  key = 'plaggeromega_relicanth',
+  atlas = 'plaggeromega_fish',
+  pos = {x=2,y=1},
+  weight = 8,
+  environments = {aquifer = 1},
+  attributes = {'passive', 'modify_card'}, --if there's better attributes for this fish i missed feel free to add them
+  stats = {
+    weight = {min = 69, max = 420},
+    length = {min = 2.01, max = 4.01}
+  },
+  ppu_coder = {'PLagger'},
+  ppu_artist = {'Omegaflowey18'},
+  impulse_min = 0.212,
+  impulse_max = 0.313,
+  vel_limit = 0.44223,
+  cost = 4,
+  blueprint_compat = true,
+  config = {extra = {}}
 }

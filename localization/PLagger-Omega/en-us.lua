@@ -9,7 +9,8 @@ return {
                     '{C:attention}discarded{} this round'
                 },
                 flavour = {
-                    'gay ass clown',
+                    'Why did fire erupted',
+                    'lands arrive?'
                 }
             },
             fish_fac_plaggeromega_troutearthextinct = {
@@ -51,6 +52,21 @@ return {
                     'what bait could be more effective?'
                 }
             },
+            fish_fac_plaggeromega_stewfish = {
+                name = 'Stewfish',
+                text = {
+                    'This Fish gains {C:mult}+#2#{} Mult',
+                    'per {C:attention}consecutive{} {C:fac_fish}Fish{} caught',
+                    'in the {C:attention}Soup{} environment',
+                    '{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)'
+                },
+                flavour = {
+                    'This species is rumoured',
+                    'to have simmered in perpetuity',
+                    'for at least 1000 years.',
+                    'Or was it hours?'
+                }
+            },
             fish_fac_plaggeromega_docfish = {
                 name = 'Docfish',
                 text = {
@@ -65,11 +81,13 @@ return {
             fish_fac_plaggeromega_baa = {
                 name = 'Bibilically Accurate Angelfish',
                 text = {
-                    'Creates shit idk'
+                    'Use this Fish',
+                    'to create a random',
+                    '{C:money}rental{} {C:rare}Rare {C:attention}Joker'
                 },
                 flavour = {
                     'B E    N O T',
-                    'A R A I D'
+                    'A F R A I D'
                 }
             }
         }
@@ -77,7 +95,8 @@ return {
     misc = {
         dictionary = {
             fac_plaggeromega_active_ex = 'Active!',
-            fac_plaggeromega_inactive = 'Inactive'
+            fac_plaggeromega_inactive = 'Inactive',
+            fac_plaggeromega_giada = 'Shout out Giada'
         }
     }
 }
