@@ -27,7 +27,7 @@ FishAndChips.Fish{
 
     },
     stats = {
-        weight = { min = 1, max = 1}, --In meters
-        length = { min = 1, max = 2}, --In kilograms
+        weight = { min = 1, max = 1}, --In kilograms
+        length = { min = 1, max = 2}, --In meters
     },
 }
