@@ -1,3 +1,4 @@
+local SECONDS_PER_MINUTE = 60
 FishAndChips.Fish {
     key = "blamperer_timer",
     atlas = "fitch",
@@ -10,15 +11,22 @@ FishAndChips.Fish {
     config = {
         extra = {
             sandollars = 1,
+            -- The average rod counts 4.25 seconds to catch a fish, discounting any effect of the fish's size
+            -- since we're only counting time when the decay is active (e.g. progress is already above the decay threshold)
+            -- (100% - 15%) / 20%/s = 4.25s
+            -- This is good because it's not really *meant* to give 1 sand dollar per fish caught, you really gotta work for it.
             seconds = 5,
             time = 0
         },
-        immutable = {
-            maximum = 12
-        }
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.sandollars, card.ability.extra.seconds, card.ability.immutable.maximum } }
+        return {
+            vars = {
+                card.ability.extra.sandollars,
+                card.ability.extra.seconds,
+                math.floor(SECONDS_PER_MINUTE / card.ability.extra.seconds)
+            }
+        }
     end,
     stats = {
         weight = { min = 0.018, max = 30.4 },
@@ -33,7 +41,7 @@ FishAndChips.Fish {
     blueprint_compat = false,
     calculate = function(self, card, context)
         if context.fac_end_fishing and not context.blueprint then
-            local reward = math.min(card.ability.immutable.maximum, math.floor(G.GAME.blamperer_hook_time / card.ability.extra.seconds))
+            local reward = math.floor(math.min(SECONDS_PER_MINUTE, G.GAME.blamperer_hook_time) / card.ability.extra.seconds)
             if reward > 0 then
                 return { sand_dollars = reward }
             end
