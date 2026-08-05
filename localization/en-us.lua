@@ -460,7 +460,8 @@ return {
             ph_fac_bucket_upgrade_1 = "Upgrade",
             ph_fac_bucket_upgrade_2 = "Bucket",
             ph_fac_upgrade = "Increase Bucket Slots",
-            ph_fac_shop_title = "Snapper's Shop"
+            ph_fac_shop_title = "Snapper's Shop",
+            k_fac_treasure_catch = 'Treasure'
         },
         achievement_names = {
             ach_fac_catch_1 = 'Rookie Rodder',
