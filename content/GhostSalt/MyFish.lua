@@ -171,13 +171,6 @@ if next(SMODS.find_mod("cardpronouns")) then
 	CardPronouns.classifications["neutral"].pronouns[#CardPronouns.classifications["neutral"].pronouns] = "fac_ghostsalt_xe_xem"
 end
 
-local fac_use_fish_ref = G.FUNCS.fac_use_fish
-G.FUNCS.fac_use_fish = function(e)
-	local ret = fac_use_fish_ref(e)
-	SMODS.calculate_context { using_fish = e.config.ref_table }
-	return ret
-end
-
 FishAndChips.Fish {
 	key = "ghostsalt_gleebleglub",
 	atlas = "GhostSaltMyFish",
@@ -197,7 +190,7 @@ FishAndChips.Fish {
 	end,
 	blueprint_compat = true,
 	calculate = function(self, card, context)
-		if ((context.using_fish and context.using_fish ~= card) or
+		if ((context.fac_use_fish and context.fac_use_fish ~= card) or
 				context.selling_card and context.card.ability.set == "fac_Fish" and context.card ~= card)
 			and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit
 			and card.ability.extra.current_triggers < card.ability.extra.max_triggers then
