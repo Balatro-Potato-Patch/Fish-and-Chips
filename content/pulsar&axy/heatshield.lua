@@ -18,7 +18,7 @@ FishAndChips.Fish {
 		}
 	},
 	stats = {
-		length = { min = 0.0278, max = 0.0278},  --0.0278m , 277.77g based on starship heat tile measurements, not sure where density was from?
+		length = { min = 0.278, max = 0.278},  --0.0278m , 277.77g based on starship heat tile measurements, not sure where density was from?
 		weight = { min = 0.2777, max = 0.2777}
 	},
 	loc_vars = function(self, info_queue, card)

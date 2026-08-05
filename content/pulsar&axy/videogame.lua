@@ -10,7 +10,7 @@ FishAndChips.Fish {
 		city_river = 1
 	},
 	stats = {
-		length = { min = 0.0120, max = 0.0120},  --based on ordinary cd
+		length = { min = 0.120, max = 0.120},  --based on ordinary cd
 		weight = { min = 0.02, max = 0.02}
 	},
 	blueprint_compat = true,
