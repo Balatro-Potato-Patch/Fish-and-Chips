@@ -1,4 +1,4 @@
-local fac_ghostsalt_common_weight = 7
+local fac_ghostsalt_common_weight = 6
 
 SMODS.Sound({
 	key = "ghostfish_1",
@@ -1083,4 +1083,22 @@ FishAndChips.Fish {
 		end
 	end,
 	pronouns = "he_they"
+}
+
+FishAndChips.Fish {
+	key = "ghostsalt_skipper",
+	atlas = "GhostSaltMyFish",
+	pos = { x = 0, y = 3 },
+	weight = fac_ghostsalt_common_weight,
+	stats = { weight = { min = 30.00, max = 40.00 }, length = { min = 0.80, max = 1.20 } },
+	ppu_coder = { "GhostSalt" },
+	ppu_artist = { "GhostSalt" },
+	attributes = { "generation" },
+	environments = {
+		pier = 10,
+		city_river = 10,
+		swamp = 5
+	},
+	blueprint_compat = false,
+	pronouns = "he_him"
 }

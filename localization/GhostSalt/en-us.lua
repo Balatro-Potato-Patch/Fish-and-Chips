@@ -155,6 +155,16 @@ return {
                     "is called a confetti."
                 }
             },
+            fish_fac_ghostsalt_skipper = {
+                name = "Skipper",
+                text = {
+                    "When skipping a",
+                    "{C:attention}Blind{}, go fishing"
+                },
+                flavor = {
+                    "Kowalski, analysis!"
+                }
+            },
         },
         Other = {
             fac_ghostsalt_tap_code = {
