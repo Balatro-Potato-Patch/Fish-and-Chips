@@ -244,8 +244,28 @@ local pa_fish = {
                 text = {
                     'Use #1# selected {C:attention}Booster Pack{}'
                 }
+            },
+            fish_fac_pa_blackhole = {
+                name = "Accretion Disk Fish",
+                text = {
+                    'Does nothing, but is',
+                    'Extremely {C:attention}large{}',
+                    'and extremely {C:attention}heavy{}'
+                },
+                flavour = {
+                    'An unusual form of life that lives',
+                    'around primordial black holes',
+                    'only the accretion disk is alive,',
+                    'but it depends on the singularity'
+                }
             }
         },
+    },
+    misc = {
+        dictionary = {
+            au_format = '%.4f AU',
+            yg_format = '%.3f Yg'
+        }
     }
 }
 pa_fish.descriptions.fac_Fish.fish_fac_pa_doorfish = SMODS.load_file("localization/pulsaraxy/doorfish/en-us.lua", "FishAndChips")()

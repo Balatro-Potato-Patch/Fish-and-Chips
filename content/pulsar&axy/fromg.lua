@@ -14,13 +14,13 @@ FishAndChips.Fish {
 		chocolate_river = 1
 	},
 	stats = {
-		length = {min = 1.75, max = 2},
-		weight = { min = 90, max = 100}
+		length = {min = 0.05, max = 0.10},
+		weight = { min = 0.025, max = 0.085}
 	},
 	blueprint_compat = true,
 	config = {
 		extra = {
-			chips_gain = 5,
+			chips_gain = 8,
 			chips = 0
 		},
 		max_highlighted = 1
