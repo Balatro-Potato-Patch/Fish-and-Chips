@@ -387,7 +387,7 @@ if SilkTouch then
         end,
         colour = FishAndChips.C.SAND_DOLLAR,
         drag_condition = function(card)
-            return card.area and (card.area == G.fac_fish_area or card.area == G.FISHING.fac_fish_reward_area or card.area == G.FISHING.fac_treasure_reward_area)
+            return card.area and (card.area == G.fac_fish_area or card.area == (G.FISHING or {}).fac_fish_reward_area or card.area == (G.FISHING or {}).fac_treasure_reward_area)
         end,
         active_check = function(card)
             return card:can_sell_card()
@@ -406,7 +406,7 @@ if SilkTouch then
         end,
         colour = G.C.ORANGE,
         drag_condition = function(card)
-            return card.area and (card.area == G.fac_fish_area or card.area == G.FISHING.fac_fish_reward_area or card.area == G.FISHING.fac_treasure_reward_area) and card.config.center.use and true
+            return card.area and (card.area == G.fac_fish_area or card.area == (G.FISHING or {}).fac_fish_reward_area or card.area == (G.FISHING or {}).fac_treasure_reward_area) and card.config.center.use and true
         end,
         active_check = function(card)
             local temp_config = {UIBox = {states = {visible = false}}, config = {ref_table = card}}
@@ -468,7 +468,7 @@ if SilkTouch then
 		end,
 		text_scale = function() return {0.5} end,
 		focus_condition = function(card)
-			return card.area and (card.area == G.fac_fish_area or card.area == G.FISHING.fac_fish_reward_area or card.area == G.FISHING.fac_treasure_reward_area) and card.config.center.use and true
+			return card.area and (card.area == G.fac_fish_area or card.area == (G.FISHING or {}).fac_fish_reward_area or card.area == (G.FISHING or {}).fac_treasure_reward_area) and card.config.center.use and true
 		end,
 		active_check_cb = "fac_can_use_fish",
 		press_func_cb = "fac_use_fish",
