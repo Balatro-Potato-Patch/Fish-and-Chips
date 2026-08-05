@@ -69,6 +69,7 @@ function G:update_fac_fishing_hooking(dt)
     end
     -- Autotuna
     if G.FAC_FISH_GAME.profile.rod_key ~= "rod_fac_harpoon" then
+        -- Passive gain relative to rod catch gain; consider it a catch speed boost (in this case, +33%)
         local AUTOFACTOR = 0.33
         local autotuna = #SMODS.find_card("fish_fac_blamperer_autotuna")
         if autotuna > 0 then
@@ -78,6 +79,7 @@ function G:update_fac_fishing_hooking(dt)
                 G.FAC_FISH_GAME.meter = G.FAC_FISH_GAME.meter + autoprogress
             end
             if G.FAC_FISH_GAME.treasure_enabled and not G.FAC_FISH_GAME.got_treasure then
+                -- You don't get to autocatch treasure faster if you're relying on autotune
                 local autotreasure = autotuna * AUTOFACTOR * math.min(G.FAC_FISH_GAME.profile.treasure_gain, G.FAC_FISH_GAME.profile.catch_gain) * dt
                 G.FAC_FISH_GAME.treasure_meter = G.FAC_FISH_GAME.treasure_meter + autotreasure
             end
