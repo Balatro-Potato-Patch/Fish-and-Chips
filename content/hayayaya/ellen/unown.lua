@@ -15,7 +15,7 @@ FishAndChips.Fish({
 	pixel_size = { w = 48, h = 58 },
 	display_size = { w = 48 * 1.33, h = 58 * 1.33 },
 	stats = {
-		length = { min = 1, max = 4 },
+		length = { min = 0.3, max = 1.3 },
 		weight = { min = 2, max = 3 },
 	},
 	badge_key = "k_fac_maybe_fish",

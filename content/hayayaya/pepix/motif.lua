@@ -13,8 +13,8 @@ FishAndChips.Fish({
 	atlas = "hayayaya_fih",
 	pos = { x = 2, y = 1 },
 	stats = {
-		length = { min = 1, max = 1 },
-		weight = { min = 1, max = 1 },
+		length = { min = 0.2, max = 0.2 },
+		weight = { min = 0.2, max = 0.2 },
 	},
 	badge_key = "k_fac_hayayaya_object",
 	calculate = function(self, card, context)

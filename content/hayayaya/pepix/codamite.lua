@@ -14,7 +14,7 @@ FishAndChips.Fish({
 	atlas = "hayayaya_fih",
 	pos = { x = 1, y = 0 },
 	stats = {
-		length = { min = 1, max = 2 },
+		length = { min = 0.5, max = 1.3 },
 		weight = { min = 0.8, max = 2.5 },
 	},
 	can_use = function(self, card)

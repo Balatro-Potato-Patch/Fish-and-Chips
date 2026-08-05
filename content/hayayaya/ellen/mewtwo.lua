@@ -16,7 +16,7 @@ FishAndChips.Fish({
 	-- TODO: Possibly tweak this????
 	config = { extra = { min = 0.5, max = 2 } },
 	stats = {
-		length = { min = 1, max = 2 },
+		length = { min = 0.4, max = 1.0 },
 		weight = { min = 0.75, max = 1.4 },
 	},
 	decision_min = 0.0,
