@@ -70,7 +70,7 @@ FishAndChips.Fish {
     pos = { x = 1, y = 0 },
     display_size = { w = 67, h = 51 },
     pixel_size = { w = 67, h = 51 },
-    weight = 15,
+    weight = 10,
     cost = 5,
     blueprint_compat = true,
     ppu_coder = { "Equi" },
@@ -159,8 +159,6 @@ FishAndChips.Fish {
                 end
             end
 
-            --kind of inconsistent and needs standardising
-
             if forced_count < G.hand.config.highlighted_limit then
                 G.hand:unhighlight_all()
                 local unselected_cards = {}
@@ -215,7 +213,6 @@ FishAndChips.Fish {
                 card.ability.extra.baits_this_round = card.ability.extra.baits_this_round + 1
                 local bait_number = pseudorandom("equi_fishedforitagain", 2, #G.P_CENTER_POOLS.fac_Bait)
                 local bait = G.P_CENTER_POOLS.fac_Bait[bait_number]
-                --may need to put a cap on this
                 FishAndChips.add_bait_to_inventory(bait.key, card.ability.extra.bait_given)
                 return {
                     message = localize {
@@ -356,6 +353,77 @@ FishAndChips.Fish {
     end,
 
     calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                xmult = card.ability.extra.xmult
+            }
+        end
+    end
+}
+
+FishAndChips.Fish {
+    key = "gofish",
+    atlas = "equi_fish",
+    pos = { x = 6, y = 0 },
+    display_size = { w = 61, h = 53 },
+    pixel_size = { w = 61, h = 53 },
+    weight = 5,
+    cost = 6,
+    blueprint_compat = true,
+    ppu_coder = { "Equi" },
+    ppu_artist = { "Equi" },
+    attributes = { "xmult, rank, destroy_card" },
+    stats = {
+        weight = { min = 0.0015, max = 0.0025 },
+        length = { min = 0.085, max = 0.095 }
+    },
+    config = { 
+        extra = { 
+            current_rank = "Ace",
+            xmult = 1,
+            xmult_gain = 0.1
+        } 
+    },
+    environments = {
+        calm_pond = 0.8,
+        city_river = 1,
+        garden = 0.8
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.current_rank, card.ability.extra.xmult, card.ability.extra.xmult_gain } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.setting_blind then
+            card.ability.extra.current_rank = pseudorandom_element(SMODS.Ranks, "equi_gofish").original_key
+            return {
+                message = localize {
+                    type = "variable",
+                    key = "k_fac_equi_go_fish_call",
+                    vars = { card.ability.extra.current_rank }
+                }
+            }
+        end
+
+        if context.after and G.GAME.current_round.hands_played == 0 then
+            local rank_check = true
+            for i = 1, #context.full_hand do
+                if context.full_hand[i].base.value ~= card.ability.extra.current_rank then
+                    rank_check = false
+                end
+            end
+
+            if rank_check == true then
+                for i = 1, #context.full_hand do
+                    SMODS.destroy_cards(context.full_hand[i])
+                    card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_gain
+                end
+                return {
+                    message = localize("k_fac_equi_go_fish_response")
+                }
+            end
+        end
+
         if context.joker_main then
             return {
                 xmult = card.ability.extra.xmult
