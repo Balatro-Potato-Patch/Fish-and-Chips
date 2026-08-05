@@ -43,14 +43,19 @@ end
 local function random_measurement(stats, forced)
 	local delta = stats.max - stats.min
 	local value = stats.min + (pseudorandom('fac_fish_measurement') * delta)
-	return strip_decimals(stats, value)
+	return stats.units and value or strip_decimals(stats, value)
 end
 
 
 function FishAndChips.create_fish_stats(center)
+	if center.set ~= 'fac_Fish' then return end
 	local stats = {
         weight = random_measurement(center.stats.weight),
-        length = random_measurement(center.stats.length)
+        length = random_measurement(center.stats.length),
+		units = {
+			length = center.stats.length.units,
+			weight = center.stats.weight.units
+		}
     }
 	local w_delta = center.stats.weight.max - center.stats.weight.min
 	local l_delta = center.stats.length.max - center.stats.length.min
@@ -70,9 +75,12 @@ function FishAndChips.modify_fish_stats(card, stats)
 	card:set_cost()
 end
 
-function FishAndChips.format_measurement(value, type)
+function FishAndChips.format_measurement(value, measurement, units)
 	if not value then return ' ' end
-	if type == 'weight' then
+	if units and units[measurement] then
+		return string.format(localize(units[measurement].format), strip_decimals(nil, value/units[measurement].scale, units[measurement].precision or 2))
+	end
+	if measurement == 'weight' then
 		if value > 10000 then
 			return strip_decimals(nil, value / 1000, 1) .. 't'
 		elseif value < 1 then
@@ -81,7 +89,7 @@ function FishAndChips.format_measurement(value, type)
 			return value .. 'kg'
 		end
 	end
-	if type == 'length' then
+	if measurement == 'length' then
 		if value > 10000 then
 			return strip_decimals(nil, value / 1000, 1) .. 'km'
 		elseif value < 1 then
@@ -95,7 +103,7 @@ end
 local create_card_hook = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 	local card = create_card_hook(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
-	if card.ability.set == 'fac_Fish' and not card.ability.stats and area and not area.config.fac_compendium then
+	if card.ability.set == 'fac_Fish' and not card.ability.stats and (not area or area and not area.config.fac_compendium) then
 		local stats = FishAndChips.create_card_stats or FishAndChips.create_fish_stats(card.config.center)		
 		FishAndChips.modify_fish_stats(card, stats)
 	end
@@ -169,7 +177,7 @@ function FishAndChips.verify_submissions()
 		assert(
 			first.fac_partner == second.name and second.fac_partner == first.name,
 			'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
-		)
+ 	)
 	end
 
 	local devs = {}
@@ -198,10 +206,9 @@ function FishAndChips.verify_submissions()
 			assert(in_envs <= FishAndChips.fish_environment_limit or dev_obj.ignore_limits, "Fish " .. fish.key .. " is in " .. in_envs .. " environments when the limit is " .. FishAndChips.fish_environment_limit)
 		end
 		local scalar = math.min(1, FishAndChips.submission_weight_limit / total_weight)
-		if submission.mod == FishAndChips.mod then
 			assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
 			assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")
-		end
+
 		for _, fish in ipairs(submission) do
 			fish.weight = fish.weight * scalar
 			local unpack_env = function(environment)
@@ -307,6 +314,27 @@ function Card:highlight(is_higlighted)
 		end
 		if self.children.select_button and not (self.highlighted and self.area and self.area.config.type ~= "shop") then
 			self.children.select_button:remove(); self.children.select_button = nil
+		end
+		if G.STATE == G.STATES.FAC_FISHING then
+			if self.config.center.requires_jokers then
+				if self.highlighted then
+					G.jokers.T.y = G.jokers.T.y + 15.25
+					G.jokers.T.x = G.jokers.T.x + 1.5 - (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
+				else
+					G.jokers.T.y = G.jokers.T.y - 15.25
+					G.jokers.T.x = G.jokers.T.x - 1.5 + (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
+				end
+			end
+			if self.config.center.requires_consumables then
+				if self.highlighted then
+					G.consumeables.T.y = G.consumeables.T.y + 15.25
+					G.consumeables.T.x = G.consumeables.T.x - 3.5
+				else
+					G.consumeables.T.y = G.consumeables.T.y - 15.25
+					G.consumeables.T.x = G.consumeables.T.x + 3.5
+				end
+		
+			end
 		end
 	else
 		card_highlight(self, is_higlighted)
