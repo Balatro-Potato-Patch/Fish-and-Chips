@@ -28,3 +28,7 @@ SMODS.Atlas {
     px = 71,
     py = 95
 }
+
+SEABUN = {
+  weight = 75 / 1
+}

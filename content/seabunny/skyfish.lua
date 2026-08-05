@@ -1,4 +1,8 @@
 -- Skyfish
+local should_update = function(length, i, has_i)
+    return has_i ~= length / 10 >= i
+end
+
 FishAndChips.Fish {
     key = "skyfish",
     atlas = "seabunny",
@@ -12,7 +16,7 @@ FishAndChips.Fish {
         return {vars = {card.ability.extra.max, 100 * card.ability.extra.shrink}}
     end,
     calculate = function(self, card, context)
-        if context.end_of_round then
+        if context.end_of_round and context.main_eval then
             local prev_l = card.ability.stats.length
             card.ability.stats.length = math.min(2 * card.ability.stats.length, card.ability.extra.max)
             return {
@@ -43,7 +47,7 @@ FishAndChips.Fish {
                 G.fac_temp_bait_area:emplace(bait)
                 FishAndChips.add_bait_to_inventory(bait.config.center.key)
                 return true end })
-        delay(3.2)
+        delay(2)
         G.E_MANAGER:add_event(Event {
             func = function()
                 G.fac_temp_bait_area.cards[1]:start_dissolve()
@@ -55,9 +59,9 @@ FishAndChips.Fish {
         return true
     end,
     keep_on_use = function(self, card)
-        return card.ability.stats.length > card.ability.extra.shrink
+        return card.ability.stats.length >= 2 * card.ability.extra.shrink
     end,
-    weight = 75,
+    weight = SEABUN.weight,
     environments = {
         calm_pond = 20,
         pier = 20,
@@ -71,5 +75,30 @@ FishAndChips.Fish {
     stats = {
         weight = {min = 0, max = 0},
         length = {min = 0.1, max = 0.2}
-    }
+    },
+    draw = function(self, card, layer)
+        if card.ability.stats then
+            for i = 2, 10 do
+                local key = "segment" .. i
+                if card.children[key] then
+                    if card.ability.stats.length * 10 < i then
+                        card.children[key]:remove()
+                        card.children[key] = nil
+                    elseif not card._fac_bucketed then
+                        local x = (1 - i) * card.T.w / 2
+                        local y = (1 - i) * card.T.h / 2
+                        card.children[key]:draw_shader("dissolve", 0, nil, nil, card.children.center, card.VT.scale * (1 - 0.2 * card.shadow_height) - 1, nil, x - card.shadow_parrallax.x * card.shadow_height, y - card.shadow_parrallax.y * card.shadow_height)
+                        card.children[key]:draw_shader("dissolve", nil, nil, nil, card.children.center, card.VT.scale - 1, nil, x, y)
+                    end
+                elseif card.ability.stats.length * 10 >= i then
+                    card.children[key] = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, card.children.center.atlas, card.children.center.sprite_pos)
+                    card.children[key].states.hover = card.states.hover
+                    card.children[key].states.click = card.states.click
+                    card.children[key].states.drag = card.states.drag
+                    card.children[key].states.collide.can = true
+                    card.children[key].custom_draw = true
+                end
+            end
+        end
+    end
 }
