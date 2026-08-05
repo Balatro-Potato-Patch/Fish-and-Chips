@@ -1,0 +1,61 @@
+FishAndChips.Fish{
+    key = "minty_dogfish",
+    atlas = "minty_fish",
+    pos = {x=20, y=0},
+    weight = 1,
+    ppu_coder = {"minty"},
+    ppu_artist = {"?"},
+    environments = { --Maximum 6
+        pier = 10,
+        city_river = 10,
+        aquifer = 10,
+        chocolate_river = 1,
+        --[[
+        calm_pond = 10,
+        styx = 10,
+        swamp = 10,
+        volcano = 10,
+        soup = 10,
+        garden = 10,
+        backroom = 10,
+        wormhole = 10,
+        --]]
+    },
+    attributes = {
+
+    },
+    stats = {
+        weight = { min = 1, max = 1}, --In kilograms
+        length = { min = 1, max = 2}, --In meters
+    },
+    config = {
+        extra = {
+            xmult = 1,
+            xmult_gain = 0.25
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.xmult,
+                card.ability.extra.xmult_gain
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.individual and SMODS.has_enhancement(context.other_card, "m_lucky") then
+            context.other_card.nommed_by_dogfish = true
+        end
+
+        if context.destroy_card and context.other_card.nommed_by_dogfish then
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "xmult",
+                scalar_value = "xmult_gain"
+            })
+            return {
+                remove = true
+            }
+        end
+    end,
+}
