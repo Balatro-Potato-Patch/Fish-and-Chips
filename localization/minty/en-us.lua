@@ -65,8 +65,8 @@ return {
                 },
                 text = {
                     "{C:red}Destroy{} played {C:attention}Lucky Cards{}",
-                    "and gain {C:white,X:mult}X#1#{} Mult for each",
-                    "{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive})"
+                    "and gain {C:white,X:mult}X#2#{} Mult for each",
+                    "{C:inactive}(Currently {C:white,X:mult}X#3#{C:inactive})"
                 }
             },
             fish_fac_minty_shrimp_npc = {
