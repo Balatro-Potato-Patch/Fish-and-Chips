@@ -1646,5 +1646,80 @@ FishAndChips.Fish {
 	end,
 }
 
+-- Old World Knifefish
+FishAndChips.Fish {
+	key = "old_world_knifefish",
+	atlas = "aure-allu_fish",
+	pos = { x = 2, y = 4 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "destroy_card", "economy", "usable" },
+	stats = {weight = {min = 0.2, max = 0.7}, length = {min = 0.07, max = 0.16}},
+	blueprint_compat = false,
+	requires_jokers = true,
+	config = {
+		extra = {
+			x_sell_cost = 2,
+			max_uses = 1,
+			remaining_uses = 1,
+		},
+	},
+	environments = {
+		pier = 5,
+		city_river = 5,
+		volcano = 10,
+		styx = 7,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.x_sell_cost, card.ability.extra.remaining_uses, card.ability.extra.max_uses } }
+	end,
+	calculate = function (self, card, context)
+		if context.end_of_round and not context.game_over and context.main_eval then
+			local before = card.ability.extra.remaining_uses
+			card.ability.extra.remaining_uses = card.ability.extra.max_uses
+			if before < card.ability.extra.max_uses then
+				return {
+					message = localize("k_reset"),
+					colour = G.C.IMPORTANT
+				}
+			end
+		end
+	end,
+	use = function (self, card)
+		card.ability.extra.remaining_uses = card.ability.extra.remaining_uses - 1
+		local own_i, joker
+		for i, fishee in ipairs(G.fac_fish_area.cards) do
+			if fishee == card then own_i = i; break end
+		end
+		joker = G.jokers.cards[own_i]
+        G.E_MANAGER:add_event(Event({
+			trigger = "after", 
+			delay = 0.1, 
+			func = function()
+				play_sound('tarot1')
+				card:juice_up(0.3, 0.5)
+				ease_dollars(joker.sell_cost * card.ability.extra.x_sell_cost)
+				SMODS.destroy_cards(joker, {immediate = true})
+				return true
+			end
+		}))
+		
+	end,
+	keep_on_use = function (self, card)
+		return true
+	end,
+	can_use = function (self, card)
+		local own_i, joker
+		if G.fac_fish_area then
+			for i, fishee in ipairs(G.fac_fish_area.cards) do
+				if fishee == card then own_i = i; break end
+			end
+		end
+		joker = G.jokers and G.jokers.cards[own_i]
+		return own_i and joker and not SMODS.is_eternal(joker) and card.ability.extra.remaining_uses > 0
+	end
+}
+
 
 -- #endregion

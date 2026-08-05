@@ -273,6 +273,20 @@ return {
                     "ninewise"
                 }
             },
+            fish_fac_old_world_knifefish = {
+                name = {"Old World", "Knifefish"},
+                text = {
+                    "Use this {C:fac_fish}Fish{} to",
+                    "{C:red}destroy{} the {C:attention}Joker",
+                    "at {C:fac_fish}its{} position, and",
+                    "gain {C:white,X:money}X#1#{C:attention} its {C:money}sell value",
+                    "{C:inactive,s:0.9}(Currently {C:attention,s:0.9}#2#{C:inactive,s:0.9}/#3#{C:inactive,s:0.9} uses)",
+                    "{C:inactive,s:0.8}(Resets at {C:attention,s:0.8}end of round{C:inactive,s:0.8})"
+                },
+                flavor = {
+                    "28 stab wounds"
+                }
+            },
         },
     },
     misc = {
