@@ -85,6 +85,29 @@ return {
                     "when gaining money"
                 }
             },
+            fish_fac_minty_starfish = {
+                name = "Starfish",
+                flavour = {
+                    "Why yes, this IS",
+                    "Fish and Chips,",
+                    "how can I help you?"
+                },
+                text = {
+                    "When leveling up any hand",
+                    "{C:green}#1# in #2#{} chance to",
+                    "level it up again"
+                }
+            },
+            fish_fac_minty_mimic_octopus = {
+                name = "Mimic Octopus",
+                flavour = {
+                    "Koppi, arms up!"
+                },
+                text = {
+                    "{C:attention}Use{} to copy fish to",
+                    "the right until end of round"
+                }
+            },
             fish_fac_minty_template = {
                 name = "fish",
                 flavour = {
