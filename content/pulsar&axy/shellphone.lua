@@ -12,7 +12,7 @@ FishAndChips.Fish {
 		backroom = 0.3,
 	},
 	stats = {
-		length = {min = 0.012, max = 0.012},  --vaugely based on actual phone + measurements of a shell i have
+		length = {min = 0.12, max = 0.12},  --vaugely based on actual phone + measurements of a shell i have
 		weight = {min = 0.125, max = 0.125}
 	},
 	blueprint_compat = true,

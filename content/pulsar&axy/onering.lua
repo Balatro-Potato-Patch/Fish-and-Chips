@@ -14,7 +14,7 @@ FishAndChips.Fish {
 		chocolate_river = 0.3
 	},
 	stats = {
-		length = { min = 0.00197, max = 0.00197 },  --based on average gold ring
+		length = { min = 0.0197, max = 0.0197 },  --based on average gold ring
 		weight = { min = 0.008, max = 0.008 }
 	},
 	blueprint_compat = false,
