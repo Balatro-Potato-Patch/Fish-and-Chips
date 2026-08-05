@@ -1477,20 +1477,41 @@ FishAndChips.Fish {
 		backroom = 6,
 	},
 	loc_vars = function(self, info_queue, card)
-		local main_end = {
-			{
-				n = G.UIT.C,
-				config = { align = "bm", minh = 0.4 },
-				nodes = {
-					{
-						n = G.UIT.C,
-						config = { ref_table = card, align = "m", colour = G.GAME.fac_last_used_fish and G.GAME.fac_last_used_fish ~= "fish_fac_chimaera" and mix_colours(FishAndChips.C.FISH, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.BLACK, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
-						nodes = {
-							{ n = G.UIT.T, config = { text = G.GAME.fac_last_used_fish and localize{type = 'name_text', key = G.GAME.fac_last_used_fish, set = "fac_Fish"} or localize('k_none'), colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
-						}
+		local active = {
+			n = G.UIT.C,
+			config = { align = "bm", minh = 0.4 },
+			nodes = {
+				{
+					n = G.UIT.C,
+					config = { ref_table = card, align = "m", colour = card.ability.extra.active and mix_colours(G.C.GREEN, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.RED, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
+					nodes = {
+						{ n = G.UIT.T, config = { text = card.ability.extra.active and localize("k_aure_allu_chimaera_active") or localize('k_aure_allu_chimaera_inactive'), colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
 					}
 				}
 			}
+		}
+		local fish = {
+			n = G.UIT.C,
+			config = { align = "bm", minh = 0.4 },
+			nodes = {
+				{
+					n = G.UIT.C,
+					config = { ref_table = card, align = "m", colour = G.GAME.fac_last_used_fish and G.GAME.fac_last_used_fish ~= "fish_fac_chimaera" and mix_colours(FishAndChips.C.FISH, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.BLACK, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
+					nodes = {
+						{ n = G.UIT.T, config = { text = G.GAME.fac_last_used_fish and localize{type = 'name_text', key = G.GAME.fac_last_used_fish, set = "fac_Fish"} or localize('k_none'), colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
+					}
+				}
+			}
+		}
+		local main_end = {
+			{
+				n = G.UIT.R,
+				config = { align = "bm", minh = 0.4 },
+				nodes = {
+					active,
+					fish,
+				}
+			},
 		}
 		return { main_end = main_end }
 	end,

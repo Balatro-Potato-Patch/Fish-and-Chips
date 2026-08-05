@@ -183,7 +183,8 @@ return {
                     "{C:inactive,s:0.7}at {C:attention,s:0.7}end of round"
                 },
                 flavor = {
-                    ""
+                    "Served for oil,",
+                    "now served with oil"
                 }
             },
             fish_fac_unicorn_fish = {
@@ -204,7 +205,7 @@ return {
                     "at this {C:fac_fish}Fish{}'s position"
                 },
                 flavor = {
-                    ""
+                    "Honk Blub"
                 }
             },
             fish_fac_pirate_perch = {
@@ -280,7 +281,9 @@ return {
             k_aure_allu_milk_button = "Milk",
             k_aure_allu_unicorn = "Nyaeigh!",
             k_aure_allu_cookiecutter = "Cookie'd",
-            k_aure_allu_chimaera_confoozed = "...",
+            -- k_aure_allu_chimaera_confoozed = "...",
+            k_aure_allu_chimaera_active = "Active",
+            k_aure_allu_chimaera_inactive = "Inactive",
             k_aure_allu_starfish_1 = "I",
             k_aure_allu_starfish_2 = "will also",
             k_aure_allu_starfish_3 = "join.",
