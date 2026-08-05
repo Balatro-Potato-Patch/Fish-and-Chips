@@ -77,7 +77,7 @@ end
 
 function FishAndChips.format_measurement(value, measurement, units)
 	if not value then return ' ' end
-	if units[measurement] then
+	if units and units[measurement] then
 		return string.format(localize(units[measurement].format), strip_decimals(nil, value/units[measurement].scale, units[measurement].precision or 2))
 	end
 	if measurement == 'weight' then
