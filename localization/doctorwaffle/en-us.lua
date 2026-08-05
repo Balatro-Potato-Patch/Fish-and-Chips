@@ -31,6 +31,19 @@ return {
                 }
             },
 
+            fish_fac_waffle_magic_conch_secret = {
+                name = "Magic Conch",
+                text = {
+                    "{C:attention}Once per round{}, ask the",
+                    "Magic Conch for a {C:attention}Food Joker{},",
+                    "{C:green}#1# in #2#{} chance for it to say {C:attention}yes{}",
+                    "{C:inactive}(Must have room)"
+                },
+                flavor = {
+                    "KILL EVERYONE",
+                }
+            },
+
             fish_fac_waffle_percheo = {
                 name = "Percheo",
                 text = {
@@ -168,6 +181,31 @@ return {
                     "Can we please pretend to like each other for 8 antes?",
                     "I'm going to be optimistic and say... sure.",
                 },
+            },
+
+            fish_fac_waffle_worn_book = {
+                name = "Worn Book",
+                text = {
+                    "Create {C:attention}#1#{} random {C:attention}Enhanced",
+                    "{C:attention}#2#s{} and draw them to {C:attention}hand"
+                },
+                flavor = {
+                    "Fittingly enough, the book is",
+                    "titled \"How to play Go Fish\""
+                }
+            },
+
+            fish_fac_waffle_worn_book_collection = {
+                name = "Worn Book",
+                text = {
+                    "Create {C:attention}#1#{} random {C:attention}Enhanced",
+                    "{C:attention}#2#s{} and draw them to {C:attention}hand",
+                    "{C:inactive,s:0.85}(Chooses a random rank when caught)"
+                },
+                flavor = {
+                    "Fittingly enough, the book is",
+                    "titled \"How to play Go Fish\""
+                }
             }
 
         },

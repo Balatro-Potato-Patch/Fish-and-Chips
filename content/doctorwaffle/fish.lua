@@ -79,17 +79,30 @@ do
     end
 
     function waffleFunctions.getCardToRight(card)
-    local cardToRight
-    if card.area then
-        for i = 1, #card.area.cards do
-            if card.area.cards[i] == card then
-                cardToRight = card.area.cards[i + 1]
+        local cardToRight
+        if card.area then
+            for i = 1, #card.area.cards do
+                if card.area.cards[i] == card then
+                    cardToRight = card.area.cards[i + 1]
+                end
+            end
+        end
+        return cardToRight
+    end
+
+    function waffleFunctions.isCardInCollection(card)
+        if G.your_collection then
+            for i, v in pairs(G.your_collection) do
+                if v.cards then
+                    for _, w in pairs(v.cards) do
+                        if w == card then
+                            return true
+                        end
+                    end
+                end
             end
         end
     end
-    return cardToRight
-    end
-
 end
 
 -- Bonus Duck sounds
@@ -106,7 +119,7 @@ end
 FishAndChips.Fish {
     key = "waffle_magic_conch",
     atlas = "waffle_fish",
-    weight = 7,
+    weight = 6,
     environments = {
         pier = 1,
         calm_pond = 0.6
@@ -116,6 +129,7 @@ FishAndChips.Fish {
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     cost = 3,
+    requires_jokers = true,
     stats = {
         weight = { min = 0.1, max = 0.11 },
         length = { min = 0.05, max = 0.051 }
@@ -126,7 +140,9 @@ FishAndChips.Fish {
     } },
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.odds)
+        
         return {
+            key = math.random() < 1/20 and "fish_fac_waffle_magic_conch_secret",
             vars = { num, den }
         }
     end,
@@ -339,7 +355,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
     key = "waffle_percheo",
     atlas = "waffle_fish",
-    weight = 1,
+    weight = 3,
     environments = {
         garden = 1,
     },
@@ -386,7 +402,7 @@ FishAndChips.Fish {
         styx = 1,
         wormhole = 0.5
     },
-    weight = 7,
+    weight = 6,
     cost = 4,
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -421,7 +437,7 @@ FishAndChips.Fish {
     pos = { x = 3, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 7,
+    weight = 6,
     pixel_size = { h = 83 },
     cost = 4,
     environments = {
@@ -507,7 +523,7 @@ FishAndChips.Fish {
     pos = { x = 4, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 7,
+    weight = 6,
     cost = 5,
     environments = {
         swamp = 1,
@@ -546,7 +562,7 @@ FishAndChips.Fish {
     pixel_size = { h = 60 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 7,
+    weight = 6,
     cost = 6,
     blueprint_compat = false,
     environments = {
@@ -608,7 +624,7 @@ FishAndChips.Fish {
     pos = { x = 6, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 7,
+    weight = 6,
     environments = {
         city_river = 1,
         garden = 0.8,
@@ -626,21 +642,21 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         local main_end
         if card.area == G.fac_fish_area then
-           main_end = {
-            {
-                n = G.UIT.C,
-                config = { align = "bm", minh = 0.4 },
-                nodes = {
-                    {
-                        n = G.UIT.C,
-                        config = { ref_table = card, align = "m", colour = card.ability.extra.active and G.C.GREEN or G.C.RED, r = 0.05, padding = 0.06 },
-                        nodes = {
-                            { n = G.UIT.T, config = { text = ' ' .. localize('k_' .. (card.ability.extra.active and 'active' or 'fac_waffle_inactive')) .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.9 } },
+            main_end = {
+                {
+                    n = G.UIT.C,
+                    config = { align = "bm", minh = 0.4 },
+                    nodes = {
+                        {
+                            n = G.UIT.C,
+                            config = { ref_table = card, align = "m", colour = card.ability.extra.active and G.C.GREEN or G.C.RED, r = 0.05, padding = 0.06 },
+                            nodes = {
+                                { n = G.UIT.T, config = { text = ' ' .. localize('k_' .. (card.ability.extra.active and 'active' or 'fac_waffle_inactive')) .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.9 } },
+                            }
                         }
                     }
                 }
             }
-        } 
         end
         return {
             main_end = main_end,
@@ -677,7 +693,7 @@ FishAndChips.Fish {
     key = "waffle_gossamer_worm",
     atlas = "waffle_fish",
     pos = { x = 7, y = 0 },
-    weight = 7,
+    weight = 6,
     environments = {
         aquifer = 1,
         pier = 0.4
@@ -738,7 +754,7 @@ FishAndChips.Fish {
     pixel_size = { h = 88 },
     atlas = "waffle_fish",
     pos = { x = 8, y = 0 },
-    weight = 7,
+    weight = 6,
     cost = 6,
     config = { extra = {
         chips = 0,
@@ -791,16 +807,16 @@ local shuffle_ref = CardArea.shuffle
 function CardArea:shuffle(_seed)
     shuffle_ref(self, _seed)
 
-    if self == G.deck and SMODS.find_card("fish_fac_waffle_bonus_duck") then        -- idr if shuffle gets called on non-deck cardareas but better safe than sorry
-        local allCards = {}       -- Initialize list of cards in deck
+    if self == G.deck and SMODS.find_card("fish_fac_waffle_bonus_duck") then -- idr if shuffle gets called on non-deck cardareas but better safe than sorry
+        local allCards = {}                                                  -- Initialize list of cards in deck
 
-        for i = 1, #self.cards do -- Add cards in deck to allCards and reset their duck value
+        for i = 1, #self.cards do                                            -- Add cards in deck to allCards and reset their duck value
             self.cards[i].ability.fac_extra = self.cards[i].ability.fac_extra or {}
             self.cards[i].ability.fac_extra.fac_waffle_duck = false
             allCards[#allCards + 1] = self.cards[i]
         end
 
-        local bonusDuckCards = {}                           -- Initialize list of cards to add ducks do
+        local bonusDuckCards = {} -- Initialize list of cards to add ducks do
 
         local duckRatio = bonusDuckRatio
         for _, fish in pairs(G.fac_fish_area.cards) do
@@ -821,6 +837,7 @@ function CardArea:shuffle(_seed)
         end
     end
 end
+
 -- Duck drawstep
 SMODS.DrawStep {
     key = "fac_waffle_duck_drawstep",
@@ -858,7 +875,7 @@ FishAndChips.Fish {
     ppu_artist = { "waffle" },
     atlas = "waffle_fish",
     pos = { x = 9, y = 0 },
-    weight = 7,
+    weight = 6,
     cost = 5,
     environments = {
         soup = 1,
@@ -925,25 +942,24 @@ FishAndChips.Fish {
         styx = 0.7,
         city_river = 1
     },
-    pos = {x = 0, y = 1},
+    pos = { x = 0, y = 1 },
     atlas = "waffle_fish",
     blueprint_compat = false,
     cost = 8,
-    weight = 7,
+    weight = 3,
     stats = {
         weight = { min = 1.30, max = 4.50 },
         length = { min = 0.20, max = 0.45 }
     },
-    loc_vars = function (self, info_queue, card)
-        return {vars = {card.ability.extra.scale}}
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.scale } }
     end,
     config = {
         extra = {
             scale = 2
         }
     },
-    calculate = function (self, card, context)
-
+    calculate = function(self, card, context)
         if context.setting_blind then
             local fishToRight = waffleFunctions.getCardToRight(card)
             if fishToRight and fishToRight.config.center.key ~= "fish_fac_waffle_finclair" then
@@ -970,7 +986,6 @@ FishAndChips.Fish {
                 }
             end
         end
-
     end,
     attributes = { "copying" }
 }
@@ -984,9 +999,86 @@ SMODS.DrawStep {
     key = "fac_waffle_finclair_drawstep",
     order = 21,
     func = function(card, layer)
-            if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.fac_waffle_finclair_copy then
-                card.children.center:draw_shader('fac_finclair', nil, card.ARGS.send_to_shader)
-            end
+        if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.fac_waffle_finclair_copy then
+            card.children.center:draw_shader('fac_finclair', nil, card.ARGS.send_to_shader)
+        end
     end,
     conditions = { facing = 'front' }
+}
+
+-- Worn Book
+FishAndChips.Fish {
+    key = "waffle_worn_book",
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    atlas = "waffle_fish",
+    pos = { x = 1, y = 1 },
+    environments = {
+        city_river = 1,
+        calm_pond = 0.6,
+        pier = 0.6
+    },
+    pixel_size = { h = 58 },
+    weight = 6,
+    stats = {
+        weight = { min = 0.3, max = 0.6 },
+        length = { min = 0.2, max = 0.25 },
+    },
+    config = {
+        extra = {
+            cards_created = 4
+        },
+        immutable = {
+            rank = nil -- Randomly decided when fished up
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        local rank, key
+        do
+            if card.ability.immutable.rank then
+                rank = card.ability.immutable.rank
+            else
+                rank = "Ace"
+            end
+            if waffleFunctions.isCardInCollection(card) then
+                key = "fish_fac_waffle_worn_book_collection"
+            end
+        end
+
+        return {
+            key = key,
+            vars = {
+                card.ability.extra.cards_created,
+                localize(rank, 'ranks')
+            }
+        }
+    end,
+    on_catch = function(self, card) -- Determine rank when caught
+        card.ability.immutable.rank = pseudorandom_element(SMODS.Ranks, 'fac_waffle_worn_book_rank').key
+    end,
+    add_to_deck = function (self, card, from_debuff) -- For adding via debug or other non-caught means
+        if not card.ability.immutable.rank then
+            card.ability.immutable.rank = pseudorandom_element(SMODS.Ranks, 'fac_waffle_worn_book_rank').key
+        end
+    end,
+    can_use = function (self, card)
+        return G.hand and #G.hand.cards > 1
+    end,
+    use = function (self, card)
+        for i = 1, card.ability.extra.cards_created do
+            local options = get_current_pool("Enhanced")
+            for i, v in pairs(options) do
+                if v == "m_stone" then
+                    table.remove(options, i)
+                end
+            end
+            local enhancement = SMODS.poll_enhancement({guaranteed = true, options = options})
+            SMODS.add_card{
+                set = "Base",
+                key_append = "fac_waffle_worn_book_enhancement",
+                rank = card.ability.immutable.rank,
+                enhancement = enhancement
+            }
+        end
+    end
 }
