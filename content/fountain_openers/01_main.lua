@@ -218,7 +218,8 @@ PotatoPatchUtils.Developer {
     end,
 }
 
--- weird way of doing it but it ensures it happens after every dev object loaded so Yea
+-- weird way of doing it but it ensures it happens after every dev object loads so Yea
+-- also used by the shit squad; shader by slimestuff
 G.E_MANAGER:add_event(Event({
     func = function()
         for _, dev in pairs(PotatoPatchUtils.Developers) do
