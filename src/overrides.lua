@@ -479,6 +479,7 @@ G.FUNCS.fac_use_fish = function(e)
 			G.E_MANAGER:add_event(Event({
 				delay = 0.1,
 				func = function()
+					if G.GAME.fac_fish_expanded and not next(G.fac_fish_area.cards) then G.FUNCS.fac_open_fishing_menu() end
 					G.TAROT_INTERRUPT = prev_state
 					G.CONTROLLER.locks.use = false
 					return true;
