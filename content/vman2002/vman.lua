@@ -358,7 +358,7 @@ FishAndChips.Fish { --Coupon
 	weight = 1,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
-	attributes = { "tag" },
+	attributes = { "tag", "usable" },
 	stats = { weight = { min = 0.02, max = 0.02 }, length = {min = 0.015, max = 0.021}},
 	environments = {
 		wormhole = 1, pier = 0.9
