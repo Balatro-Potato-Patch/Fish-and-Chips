@@ -17,11 +17,12 @@ return {
                 name = {"Cheap Cheep"},
                 text = {
                     "{C:green}#1# in #2#{} chance",
-                    "to refund {C:fac_sand_dollars,f:fac_sand_dollars}$#3#",
+                    "to {C:attention}refund {C:fac_sand_dollars,f:fac_sand_dollars}$#3#",
                     "upon buying {C:attention}bait"
                 },
                 flavor = {
-                    ""
+                    "Cheep Cheep I'm..",
+                    "not a sheep.."
                 }
             },
             fish_fac_blooper = {
@@ -39,7 +40,8 @@ return {
                     },
                 },
                 flavor = {
-                    ""
+                    "I can take you with",
+                    "eight cards flipped!"
                 }
             },
             fish_fac_goldfish = {
@@ -87,7 +89,7 @@ return {
                     "{C:inactive}(Currently {C:mult}#2#{C:inactive} Mult)"
                 },
                 flavor = {
-                    ""
+                    "Too red to fail"
                 }
             },
             fish_fac_eel_of_fortune = {

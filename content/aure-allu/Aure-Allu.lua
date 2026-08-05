@@ -242,7 +242,7 @@ FishAndChips.Fish {
 	blueprint_compat = true,
 	config = {
 		extra = {
-			face_down_x_chips = 0.1,
+			face_down_x_chips = 0.2,
 		},
 	},
 	environments = {
@@ -672,8 +672,8 @@ FishAndChips.Fish {
 	},
 	environments = {
 		pier = 5,
-		city_river = 10,
-		volcano = 8,
+		city_river = 8,
+		volcano = 10,
 		aquifer = 6,
 	},
 	loc_vars = function(self, info_queue, card)
