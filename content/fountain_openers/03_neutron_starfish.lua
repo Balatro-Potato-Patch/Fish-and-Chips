@@ -5,8 +5,8 @@ FishAndChips.Fish {
     eternal_compat = false,
 	disable_visual_scaling = true,
 	weight = 3,
-	ppu_coder = { "Alexi" },
-	ppu_artist = { "Grahkon" },
+	ppu_coder = { "fo_alexi" },
+	ppu_artist = { "fo_grahkon" },
 	attributes = { "destroy_card", "hand_level", "usable" },
 	config = {
         levels = 1,

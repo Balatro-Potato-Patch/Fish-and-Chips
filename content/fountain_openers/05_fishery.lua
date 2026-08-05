@@ -25,8 +25,8 @@ FishAndChips.Fish {
 	atlas = "fish",
 	pos = { x = 3, y = 0 },
 	weight = 5,
-	ppu_coder = { "Alexi" },
-	ppu_artist = { "Grahkon" },
+	ppu_coder = { "fo_alexi" },
+	ppu_artist = { "fo_grahkon" },
 	attributes = { "rank", "jack", "king", "queen", "mult", "xmult" },
     disable_visual_scaling = true,
 	config = {

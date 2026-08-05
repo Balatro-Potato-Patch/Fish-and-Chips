@@ -311,8 +311,8 @@ FishAndChips.Fish {
 	weight = 11,
 	blueprint_compat = true,
 	disable_visual_scaling = true,
-	ppu_coder = { "Alexi" },
-	ppu_artist = { "Grahkon" },
+	ppu_coder = { "fo_alexi" },
+	ppu_artist = { "fo_grahkon" },
 	attributes = { "chips" },
 	config = {
 		extra = {

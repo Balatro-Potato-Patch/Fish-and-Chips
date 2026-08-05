@@ -50,18 +50,16 @@ SMODS.DynaTextEffect {
 }
 
 PotatoPatchUtils.Developer {
-	name = "Alexi",
+	name = "fo_alexi",
 	atlas = "fac_fo_dev_credits",
     pos = { x = 0, y = 0 },
     soul_pos = { x = 1, y = 0 },
 	text_effect = "fac_alexi_text",
-	fac_partner = "Grahkon",
+	fac_partner = "fo_grahkon",
 	fac_dw_shader = true, -- thanks elleeeee love youuu :3
+    loc = true,
 	click = function(self)
-        FountainOpeners.dark_flip(self)
-
         play_sound("fac_fo_splat", 1.5-alexi_click_count*0.1)
-        self:juice_up()
         if alexi_click_count == 1 then
             love.system.openURL("https://en.pronouns.page/@invalidOS")
             alexi_click_count = 5
@@ -207,16 +205,32 @@ PotatoPatchUtils.Developer {
 }
 
 PotatoPatchUtils.Developer {
-	name = "Grahkon",
+	name = "fo_grahkon",
 	atlas = "fac_fo_dev_credits",
     pos = { x = 2, y = 0 },
     soul_pos = { x = 3, y = 0 },
 	colour = G.C.GREEN,
-	fac_partner = "Alexi",
+	fac_partner = "fo_alexi",
 	fac_dw_shader = true,
+    loc = true,
     click = function(self)
-        FountainOpeners.dark_flip(self)
         play_sound("fac_fo_knight_cut2", 1)
-        self:juice_up()
     end,
 }
+
+-- weird way of doing it but it ensures it happens after every dev object loaded so Yea
+G.E_MANAGER:add_event(Event({
+    func = function()
+        for _, dev in pairs(PotatoPatchUtils.Developers) do
+            if dev.fac_dw_shader then
+                dev.extra_click = dev.click
+                dev.click = function(card)
+                    FountainOpeners.dark_flip(card)
+                    card:juice_up()
+                    dev.extra_click(card)
+                end
+            end
+        end
+        return true
+    end
+}))
