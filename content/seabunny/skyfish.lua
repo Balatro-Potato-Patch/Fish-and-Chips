@@ -1,8 +1,4 @@
 -- Skyfish
-local should_update = function(length, i, has_i)
-    return has_i ~= length / 10 >= i
-end
-
 FishAndChips.Fish {
     key = "skyfish",
     atlas = "seabunny",
