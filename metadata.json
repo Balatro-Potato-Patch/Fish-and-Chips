@@ -17,7 +17,7 @@
 		"PotatoPatchUtils (>=1.0.13)"
 	],
 	"conflicts": [
-		"SilkTouch (<<1.2.5)"
+		"SilkTouch (<<1.2.5b)"
 	],
 	"allow_redistribution": true,
 	"icon_path": "core/modicon.png",
