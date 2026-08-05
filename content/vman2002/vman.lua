@@ -91,12 +91,7 @@ FishAndChips.Fish { --Chips
 	ppu_artist = { "VMan_2002" },
 	attributes = { "xchips", "score" },
 	pronouns = "they_them",
-	config = {
-		extra = {
-			xchips = 1.3,
-			score = 800
-		}
-	},
+	config = {extra = {xchips = 1.3, score = 800}},
 	stats = { weight = { min = 0.19, max = 0.2 }, length = {min = 0.051, max = 0.101}},
 	environments = {
 		backroom = 0.7, city_river = 0.4
@@ -171,11 +166,7 @@ FishAndChips.Fish { --Trust
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "xchips", "score" },
-	config = {
-		extra = {
-			odds_add = 2
-		}
-	},
+	config = {extra = {odds_add = 2}},
 	stats = { weight = { min = 0.01, max = 0.02 }, length = {min = 0.01, max = 0.02}}, --TODO: Stats
 	environments = {
 		city_river = 0.4, pier = 0.6
@@ -214,9 +205,7 @@ FishAndChips.Fish { --Manos
 		}
 	},
 	stats = { length = { min = 3.8, max = 4.5 }, weight = {min = 600, max = 1100}},
-	environments = {
-		styx = 1
-	},
+	environments = {styx = 1},
 	loc_vars = function(self, info_queue, card)
 		local manoline = 1
 		local ex = card.ability.extra
@@ -407,6 +396,7 @@ FishAndChips.Fish { --Timothy
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "xmult", "reset", "usable" },
+	pronouns = "he_him",
 	stats = { weight = { min = 0.21, max = 0.67 --[[i dont like 67 but it fits here]] }, length = {min = 0.017, max = 0.025}},
 	environments = {
 		calm_pond = 0.5, pier = 0.9
