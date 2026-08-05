@@ -39,13 +39,14 @@ FishAndChips.Fish {
 	-- set use cost based on total cost/weight of chosen fish, we have 6 sand dollars per ante
 	add_to_deck = function(self, card)
 		--draw fish based on rank 0
-		card.ability.extra.drawn_fish = self.choose_fish_in_pool(card.ability.extra.times_used)
+		card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
 		print("drawn fish:")
 		print(card.ability.extra.drawn_fish)
 	end,
 	calculate = function(self, card, context)
 		if context.fac_end_fishing and context.fish == card.ability.extra.drawn_fish[card.ability.extra.toggle] then
-			
+			card.ability.extra.times_used = card.ability.extra.times_used + 1
+			card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
 		end
 	end,
     can_use = function(self, card)
@@ -55,10 +56,8 @@ FishAndChips.Fish {
 		return true
 	end,
 	use = function(self, card)
-		-- Increment persistent variables
 		card.ability.extra.toggle = (card.ability.extra.toggle + 1) % 4 -- 0,1,2,3
-		card.ability.extra.times_used = card.ability.extra.times_used + 1
-
+		card.ability.extra.times_used = card.ability.extra.times_used + 1 -- remove after testing
 
 		local times_used = card.ability.extra.times_used
 		local sprite_change = times_used >= 7 and 3 or times_used >= 3 and 2 or 1
@@ -69,7 +68,23 @@ FishAndChips.Fish {
 				card.children.center:set_sprite_pos({x = 6, y = sprite_change})
 				return true
 			end}))
+		print("Card extra table: ")
 		print(card.ability.extra)
+
+		if card.ability.extra.times_used > 0 then
+			G.E_MANAGER.add_event(Event({
+				ease = "lerp",
+				trigger = "ease",
+				ref_table = G.GAME,
+				ref_value = "fac_pa_doorfish",
+				ease_to = 1,
+				delay = 0.4 * G.SPEEDFACTOR,
+				blockable = false,
+				no_delete = true
+			}))
+			print("Times used: ")
+			print(card.ability.extra.times_used)
+		end
 	end,
 	choose_fish_in_pool = function(self, rank)
 		-- find current environment, get all fish from it, set rarities based on weight
@@ -100,3 +115,51 @@ FishAndChips.Fish {
 		return "Toggle"
 	end
 }
+
+local old_draw_ref = Game.draw
+function Game:draw(...)
+	old_draw_ref(self, ...)
+	local cards = FishAndChips and SMODS.find_card('fish_fac_pa_doorfish') or nil
+	-- for _,v in pairs(cards) do
+	-- 	if v.ability.extra.times_used > 0 then -- == 8 when not testing
+	if G and G.GAME and G.GAME.fac_pa_doorfish and G.GAME.fac_pa_doorfish > 0 then
+			local image = SMODS.Atlases.fac_pa_pulsarfish.image
+			local w, h = image:getDimensions()
+			local width = love.graphics:getWidth() / 2 - w / 2
+			local height = love.graphics:getHeight() / 2 - h / 2
+
+			love.graphics.setColor(1,1,1,G.GAME.fac_pa_doorfish)
+			love.graphics.draw(image, width, height)
+	-- 	end
+	-- end
+	end
+end
+
+-- local old_load_ref = Game.load
+-- function Game:load(...)
+-- 	old_load_ref(self, ...)
+-- 	if FishAndChips then
+-- 		fac_pa_timer = 0
+-- 		fac_pa_alpha = 0
+-- 		fac_pa_fadein  = 3
+-- 		fac_pa_display = 6
+-- 		fac_pa_fadeout = 9
+-- 	end
+-- end
+
+-- local old_update_ref = Game.update
+-- function Game:update(...)
+-- 	old_update_ref(self, ...)
+-- 	if FishAndChips then
+-- 		fac_pa_timer = fac_pa_timer + self.TIMERS.REAL
+-- 		if 0 < fac_pa_timer and fac_pa_timer < fac_pa_fadein then 
+-- 			fac_pa_alpha = fac_pa_timer / fac_pa_fadein
+-- 		end
+-- 		if fac_pa_fadein < fac_pa_timer and fac_pa_timer < fac_pa_display then 
+-- 			fac_pa_alpha = 1
+-- 		end
+-- 		if fac_pa_display < fac_pa_timer and fac_pa_timer < fac_pa_fadeout then 
+-- 			fac_pa_alpha = 1 - ((fac_pa_timer - fac_pa_display) / (fac_pa_fadeout - fac_pa_display))
+-- 		end
+-- 	end
+-- end
