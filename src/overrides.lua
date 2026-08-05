@@ -287,7 +287,7 @@ function G.UIDEF.card_h_popup(card)
 		local name = SMODS.deepfind(ret, 'tooltip_id_'..FishAndChips.tooltip_seed, nil, true)[1]
         local name_node = name.objtree
         local flavour_node = {}
-        local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}
+        local loc_vars = G.P_CENTERS[card.config.center_key].flavour_vars and G.P_CENTERS[card.config.center_key]:flavour_vars({}, card) or {}
         localize({type = 'flavour', nodes = flavour_node, loc_target = G.localization.descriptions.fac_Fish[loc_vars.key or card.config.center_key], scale = 0.8, text_colour = G.C.JOKER_GREY, shadow = true, vars = loc_vars.vars})
         local final_flavour = {{n=G.UIT.R, config = {minh = 0.1}}}
         for i, line in ipairs(flavour_node) do
@@ -372,7 +372,7 @@ function Game:main_menu(change_context)
 
         G.SPLASH_FAC_LOGO.states.collide.can = true
 
-        -- Define node functions for Maximus Logo
+        -- Define node functions for FAC Logo
         function G.SPLASH_FAC_LOGO:click()
             play_sound('button', 1, 0.3)
             SMODS.LAST_SELECTED_MOD_TAB = nil
@@ -468,7 +468,6 @@ G.FUNCS.fac_use_fish = function(e)
         keep_on_use = center:keep_on_use(card)
     end
 	if center.use and type(center.use) == 'function' then
-		SMODS.calculate_context{fac_use_fish = card}
 		center:use(card)
 	end
 	card:juice_up()
@@ -489,6 +488,7 @@ G.FUNCS.fac_use_fish = function(e)
 		end
 	}))
 
+	SMODS.calculate_context{fac_use_fish = card, kept_on_use = keep_on_use}
 	G.GAME.fac_last_used_fish = card.config.center_key
 end
 
