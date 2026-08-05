@@ -325,9 +325,9 @@ function G.UIDEF.card_h_popup(card)
 		
         table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], {n=G.UIT.R, config = {align = 'cm'}, nodes = {
 			{n=G.UIT.T, config = {text = localize('ph_fac_weight'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
-			{n=G.UIT.T, config = {text = FishAndChips.format_measurement(stats.weight, 'weight'), scale = 0.27, colour = weight_col, shadow = true}},
+			{n=G.UIT.T, config = {text = FishAndChips.format_measurement(stats.weight, 'weight', stats.units), scale = 0.27, colour = weight_col, shadow = true}},
 			{n=G.UIT.T, config = {text = '  '..localize('ph_fac_length'), scale = 0.27, colour = G.C.WHITE, shadow = true}},
-			{n=G.UIT.T, config = {text = FishAndChips.format_measurement(stats.length, 'length'), scale = 0.27, colour = length_col, shadow = true}},
+			{n=G.UIT.T, config = {text = FishAndChips.format_measurement(stats.length, 'length', stats.units), scale = 0.27, colour = length_col, shadow = true}},
 		}})
     end
 	return ret
@@ -496,6 +496,7 @@ local uielement_click_ref = UIElement.click
 ---@diagnostic disable-next-line: duplicate-set-field
 function UIElement:click(...)
 	if FishAndChips.safe_to_press_buttons() or self.config.fac_ignore then
+		if G.GAME.fac_fish_expanded and not self.config.fac_ignore then G.FUNCS.fac_open_fishing_menu() end
 		return uielement_click_ref(self, ...)
 	end
 end
