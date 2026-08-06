@@ -24,7 +24,7 @@ FishAndChips.Fish{
 		if SynthB then SynthB.song_info(info_queue, card, "fac_zaako") end
 		local msg_left = localize{type = "variable", key = "k_fac_fas_zaako_no_fish", vars = {localize("k_fac_fas_left")}}
 		local msg_right = localize{type = "variable", key = "k_fac_fas_zaako_no_fish", vars = {localize("k_fac_fas_right")}}
-		if G.fac_fish_area then
+		if G.fac_fish_area and G.fac_fish_area.cards then
 			for i, _card in ipairs(G.fac_fish_area.cards) do
 				if _card == card then
 					local __card = G.fac_fish_area.cards[i - 1]
