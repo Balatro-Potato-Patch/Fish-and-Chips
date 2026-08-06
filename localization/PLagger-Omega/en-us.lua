@@ -99,7 +99,24 @@ return {
                     'becomes {C:attention}Stone'
                 },
                 flavour = {
-                    'omega this is ur department you think of something'
+                    'The reason it hasn\'t changed',
+                    'at all in a hundred million',
+                    'years is that it\'s apparently already',
+                    'a perfect life-form.'
+                }
+            },
+            fish_fac_plaggeromega_gummigoo = {
+                name = 'Gummigoo',
+                text = {
+                    'Retrigger all cards',
+                    'played for the next',
+                    '{C:attention}#1#{} rounds'
+                },
+                flavour = {
+                    'This gummy cowboy',
+                    'used to be friends with',
+                    'a clown, but seems to',
+                    'have no recollection of her...'
                 }
             }
         }

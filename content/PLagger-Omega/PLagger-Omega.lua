@@ -5,7 +5,7 @@
 PotatoPatchUtils.Developer {
   name = 'Omegaflowey18',
   colour = G.C.MULT,
-  fac_partner = 'PLagger',
+  fac_partner = 'fac_PLagger',
   atlas = 'fac_plaggeromega_credits',
   pos = {x = 0, y = 0}
 }
@@ -13,15 +13,13 @@ PotatoPatchUtils.Developer {
 PotatoPatchUtils.Developer {
   name = 'PLagger',
   colour = G.C.MULT,
-  fac_partner = 'Omegaflowey18',
+  fac_partner = 'fac_Omegaflowey18',
   atlas = 'fac_plaggeromega_credits',
   pos = {x = 1, y = 0}
 }
 
 --[[
 ideas:
-
-Relicanth in Cavern Aquifer, Stone cards
 Gummigoo in Choco River & Swamp
 mystic remora in ?
 ]]
@@ -415,5 +413,55 @@ FishAndChips.Fish{ --Relicanth
         colour = G.C.CHIPS
       }
     end
+  end
+}
+
+FishAndChips.Fish{ --Gummigoo
+  key = 'plaggeromega_gummigoo',
+  atlas = 'plaggeromega_fish',
+  pos = {x=3,y=1},
+  weight = 4,
+  environments = {chocolate_river = 0.76, swamp = 0.5},
+  attributes = {'retrigger'},
+  stats = {
+    weight = {min = 0.69, max = 4.20},
+    length = {min = 45, max = 224}
+  },
+  ppu_coder = {'PLagger'},
+  ppu_artist = {'Omegaflowey18'},
+  impulse_min = 0.31,
+  impulse_max = 0.39,
+  vel_limit = 0.6,
+  cost = 5,
+  blueprint_compat = true,
+  config = {extra = {rounds = 3}},
+
+  loc_vars = function (self, info_queue, card)
+    return{
+      vars = {card.ability.extra.rounds}
+    }
+  end,
+
+  calculate = function (self, card, context)
+      if context.repetition and context.cardarea == G.play then
+        return {
+          repetitions = 1
+          }
+      end
+      if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+        if card.ability.extra.rounds - 1 <= 0 then
+          SMODS.destroy_cards(card, nil, nil, true)
+          return{
+            message = localize('k_eaten_ex'),
+            colour = G.C.BLUE
+          }
+        else
+          card.ability.extra.rounds = card.ability.extra.rounds - 1
+          return{
+            message = card.ability.extra.rounds .. ' Rounds Left',
+            colour = G.C.FILTER
+          }
+        end
+      end
   end
 }
