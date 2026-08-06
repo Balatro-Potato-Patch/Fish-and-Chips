@@ -540,7 +540,7 @@ function Controller:is_node_focusable(node)
 	local ret = focusable(self, node)
 	if node.not_focusable then
 		ret = false
-	elseif node.always_focusable then
+	elseif node.always_focusable and (not G.SETTINGS.paused or node.created_on_pause) then
 		ret = true
 	end
 	return ret

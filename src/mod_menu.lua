@@ -232,15 +232,15 @@ end
 function FishAndChips.Compendium.nav_button(page_number, left, type, padding)
     return {n=G.UIT.R, config = {align = left and 'cl' or 'cr', minw = 5.2,}, nodes = {
         {n=G.UIT.R, config = {minw = 1, minh = padding or 0.5}},
-        {n=G.UIT.R, config = {minw = 1, minh = 0.8, r = 0.1, change = left and page_number-2 or page_number+1, hover = true, button_dist = 0,
+        {n=G.UIT.R, config = {minw = 1, minh = 0.8, r = 0.1, change = left and page_number-2 or page_number+1, hover = true, button_dist = 0, focus_args = {nav = 'wide', button = left and 'leftshoulder' or 'rightshoulder', orientation = 'cm'}, func = 'set_button_pip',
             type = type, button = 'compendium_nav_button', colour = adjust_alpha(lighten(HEX('764634'), 0.6), 0.4), shader = 'fac_ui_image', atlas = 'fac_arrows', pos = {x = left and 0 or 1, y = 0}}}
     }}
 end
 
 function FishAndChips.Compendium.back_button()
     return {n=G.UIT.R, config={align='cm'}, nodes={
-        {n=G.UIT.R, config = {colour = G.C.ORANGE, minw = 2, minh = 1, outline = 1, r=0.1, id='overlay_menu_back_button', align = 'cm', padding = 0.1, hover=true, button ='fac_return_to_mods'}, nodes = {
-            {n=G.UIT.T, config = {text = localize('b_fac_back_button'), scale = 0.5, colour = G.C.UI.TEXT_LIGHT}}
+        {n=G.UIT.R, config = {colour = G.C.ORANGE, minw = 2, minh = 1, outline = 1, r=0.1, id='overlay_menu_back_button', align = 'cm', padding = 0.1, hover=true, button ='fac_return_to_mods', focus_args = {nav = 'wide', button = 'b'}}, nodes = {
+            {n=G.UIT.T, config = {text = localize('b_fac_back_button'), scale = 0.5, colour = G.C.UI.TEXT_LIGHT, func = 'set_button_pip', focus_args = {button = 'b'}}}
         }}
     }}
 end
