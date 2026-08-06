@@ -47,7 +47,7 @@ return {
                 },
                 flavor = {
                     "Its eyes absorb the",
-                    "souls of the dying"
+                    "souls of the dying."
                 }
             },
             fish_fac_ruby_snapper_enchant = {
@@ -64,7 +64,7 @@ return {
                 },
                 flavor = {
                     "Its eyes absorb the",
-                    "souls of the dying"
+                    "souls of the dying."
                 }
             },
             fish_fac_quartz_pip = {
@@ -86,7 +86,7 @@ return {
                 },
                 flavor = {
                     "Fun fact: Amethyst is",
-                    "just purple quartz"
+                    "just purple quartz."
                 }
             },
             fish_fac_quartz_pip_enchant = {
@@ -103,7 +103,7 @@ return {
                 },
                 flavor = {
                     "Fun fact: Amethyst is",
-                    "just purple quartz"
+                    "just purple quartz."
                 }
             }
         },
