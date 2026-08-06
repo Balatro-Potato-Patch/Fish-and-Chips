@@ -16,7 +16,7 @@ FishAndChips.Fish {
 	ppu_coder = {"Foo54"},
 	ppu_artist = {'squeax09'},
 	atlas = "fas_bo_noise",
-	pos = {0,0},
+	pos = {x=0,y=0},
 	config = {
 		extra = {
 			xmult = 0.01
