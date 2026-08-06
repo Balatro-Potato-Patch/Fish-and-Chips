@@ -153,6 +153,7 @@ return {
 					"Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for every {C:attention}#2#",
 					"{C:attention}Fish{} owned at end",
 					"of round",
+					"{C:inactive}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{C:inactive})",
 				},
 				flavor = {
 					"something funny here",

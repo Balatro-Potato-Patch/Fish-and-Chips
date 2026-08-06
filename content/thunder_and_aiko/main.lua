@@ -125,7 +125,7 @@ FishAndChips.Fish({
 	key = "moai_statue",
 	atlas = "thunder_and_aiko",
 	pos = { x = 3, y = 0 },
-	weight = 5,
+	weight = 10,
 	environments = {
 		pier = 2,
 		calm_pond = 1,
@@ -609,7 +609,7 @@ FishAndChips.Fish({
 	key = "growfish",
 	atlas = "thunder_and_aiko",
 	pos = { x = 0, y = 1 },
-	weight = 5,
+	weight = 10,
 	environments = {
 		garden = 1,
 	},
@@ -753,8 +753,9 @@ FishAndChips.Fish({
 	weight = 5,
 	treasure = true,
 	environments = {
-		city_river = 1,
-		pier = 3,
+		garden = 1,
+		pier = 2,
+		chocolate_river = 1,
 	},
 	stats = {
 		weight = {
@@ -767,7 +768,7 @@ FishAndChips.Fish({
 		},
 	},
 	blueprint_compat = false,
-	attributes = { "economy", "generation", "usable", "tarot", "voucher" },
+	attributes = { "economy", "generation", "usable", "tarot" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
 	config = { extra = { dollars = 20, tarots = 2 } },
@@ -823,5 +824,49 @@ FishAndChips.Fish({
 	end,
 	can_use = function(self, card)
 		return true
+	end,
+})
+
+FishAndChips.Fish({
+	key = "snad",
+	weight = 5,
+	environments = {
+		volcano = 1,
+		pier = 1,
+		calm_pond = 1,
+	},
+	stats = {
+		weight = {
+			min = 1,
+			max = 1,
+		},
+		length = {
+			min = 0.2,
+			max = 0.2,
+		},
+	},
+	attributes = { "economy" },
+	ppu_coder = { "thunderedge" },
+	ppu_artist = { "aikoyori" },
+	config = { extra = { fish = 3, sand_dollars = 1 } },
+	loc_vars = function(self, info_queue, card)
+		local cards = G.fac_fish_area and #G.fac_fish_area.cards or 0
+		return {
+			vars = {
+				card.ability.extra.sand_dollars,
+				card.ability.extra.fish,
+				math.max(0, math.floor(cards / card.ability.extra.fish))
+					* card.ability.extra.sand_dollars,
+			},
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.modify_final_cashout then
+			local money = math.max(0, math.floor(#G.fac_fish_area.cards / card.ability.extra.fish))
+				* card.ability.extra.sand_dollars
+			if money > 0 then
+				return { sand_dollars = money }
+			end
+		end
 	end,
 })
