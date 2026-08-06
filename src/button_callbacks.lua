@@ -6,8 +6,8 @@ function G.FUNCS.fac_open_fishing_menu (e)
 	end
 	G.GAME.fac_fish_expanded = not G.GAME.fac_fish_expanded
 	G.fac_fish_area:unhighlight_all()
-	if G.GAME.fac_fish_expanded then ease_value(G.fac_fishing_bucket_bottom.T, "r", -math.pi / 2, nil, nil, true)
-	else ease_value(G.fac_fishing_bucket_bottom.T, "r", math.pi / 2, nil, nil, true) end
+	if G.GAME.fac_fish_expanded then G.fac_fishing_bucket_bottom.T.r = 0; ease_value(G.fac_fishing_bucket_bottom.T, "r", -math.pi / 2, nil, nil, true)
+	else G.fac_fishing_bucket_bottom.T.r = -math.pi / 2; ease_value(G.fac_fishing_bucket_bottom.T, "r", math.pi / 2, nil, nil, true) end
 	-- desired offset is 5, the extra 1 comes from moving the hand down (done in fish_shop.toml)
 	--[[if G.shop then
 		if G.GAME.fac_fish_expanded then G.shop.alignment.offset.y = G.shop.alignment.offset.y + 4
