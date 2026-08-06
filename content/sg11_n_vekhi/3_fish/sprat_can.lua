@@ -42,12 +42,18 @@ FishAndChips.Fish({
 		soup = 2,
 		chocolate_river = 2,
 	},
+	flavour_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				elements = { SMODS.create_sprite(0, 0, 2, 2 / 316 * 353, "fac_sg11_n_vekhi_sprat_can_lore") },
+			},
+		}
+	end,
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue + 1] = G.P_CENTERS.fish_fac_sg11_n_vekhi_sprat
 		return {
 			vars = {
 				card.ability.extra.amount,
-				elements = { SMODS.create_sprite(0, 0, 2, 2 / 316 * 353, "fac_sg11_n_vekhi_sprat_can_lore") },
 			},
 		}
 	end,
