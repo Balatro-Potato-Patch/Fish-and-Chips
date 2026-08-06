@@ -147,7 +147,42 @@ return {
                     "souls of the dying."
                 }
             },
-            fish_fac_lapis_catfish = {},
+            fish_fac_lapis_catfish = {
+                name = "Lapis Catfish",
+                text = {
+                    {
+                        "Balance {C:attention}#1#%{} of {C:chips}Chips{} and {C:mult}Mult",
+                        "{C:attention}-#2#%{} per round played"
+                    },
+                    {
+                        "{C:inactive}Enchanted: +#2#% per round instead",
+                        "{C:inactive}(Max #3#%)"
+                    },
+                    {
+                        "To {C:dark_edition}Enchant{}: {C:green}#4# in #5#{} chance when",
+                        "a fish is sold during a {C:attention}Blind"
+                    }
+                },
+                flavor = {
+                    "Blue like the sea."
+                }
+            },
+            fish_fac_lapis_catfish_enchant = {
+                name = "Lapis Catfish",
+                text = {
+                    {
+                        "Balance {C:attention}#1#%{} of {C:chips}Chips{} and {C:mult}Mult",
+                        "{C:attention}-#2#%{} per round played"
+                    },
+                    {
+                        "{C:dark_edition}Enchanted{}: {C:attention}+#2#%{} per round instead",
+                        "{C:inactive}(Max {C:attention}#3#%{C:inactive})"
+                    }
+                },
+                flavor = {
+                    "Blue like the sea."
+                }
+            },
             fish_fac_golden_goldfish = {
                 name = "Golden Goldfish",
                 text = {
@@ -155,7 +190,7 @@ return {
                         "{C:green}#1# in #2#{} chance to destroy last",
                         "scored card, double money if",
                         "it was {C:attention}Gold{}, halve otherwise",
-                        "{C:inactive}(Range of -{C:money}$#3#{C:inactive} to +{C:money}$#3#{C:inactive})"
+                        "{C:inactive}(Range of {C:money}-$#3#{C:inactive} to {C:money}+$#3#{C:inactive})"
                     },
                     {
                         "{C:inactive}Enchanted:",
@@ -178,11 +213,11 @@ return {
                         "{C:green}#1# in #2#{} chance to destroy last",
                         "scored card, double money if",
                         "it was {C:attention}Gold{}, halve otherwise",
-                        "{C:inactive}(Range of -{C:money}$#3#{C:inactive} to +{C:money}$#3#{C:inactive})"
+                        "{C:inactive}(Range of {C:money}-$#3#{C:inactive} to {C:money}+$#3#{C:inactive})"
                     },
                     {
-                        "{C:dark_edition}Enchanted:",
-                        "Range of -{C:money}$#3#{} to +{C:money}$#4#{} instead"
+                        "{C:dark_edition}Enchanted{}:",
+                        "Range of {C:money}-$#3#{} to {C:money}+$#4#{} instead"
                     }
                 },
                 flavor = {
@@ -194,7 +229,8 @@ return {
     },
     misc = {
         dictionary = {
-            k_fac_mineral_fish = "Mineral Fish"
+            k_fac_mineral_fish = "Mineral Fish",
+            k_fac_uma = "UMA"
         },
         v_dictionary = {
             a_cm = "+#1# cm"

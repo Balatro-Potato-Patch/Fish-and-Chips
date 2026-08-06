@@ -2,7 +2,7 @@
 FishAndChips.Fish {
     key = "golden_goldfish",
     atlas = "seabunny",
-    pos = {x = 0, y = 0},
+    pos = {x = 1, y = 0},
     config = {extra = {enchant = false, num = 1, denom = 2, max = 5, max_ench = 25, destroys = 5, left = 5}},
     blueprint_compat = true,
     badge_key = "k_fac_mineral_fish",

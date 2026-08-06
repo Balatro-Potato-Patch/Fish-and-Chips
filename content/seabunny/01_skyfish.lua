@@ -5,6 +5,7 @@ FishAndChips.Fish {
     pos = {x = 0, y = 0},
     config = {extra = {max = 1, shrink = 0.1}},
     blueprint_compat = true,
+    badge_key = "k_fac_uma",
     decision_min = 0,
     decision_max = 0.24,
     disable_visual_scaling = true,
@@ -79,10 +80,9 @@ FishAndChips.Fish {
                         card.children[key]:remove()
                         card.children[key] = nil
                     elseif not card._fac_bucketed then
-                        local x = (1 - i) * card.T.w / 2
-                        local y = (1 - i) * card.T.h / 2
-                        card.children[key]:draw_shader("dissolve", 0, nil, nil, card.children.center, card.VT.scale * (1 - 0.2 * card.shadow_height) - 1, nil, x - card.shadow_parrallax.x * card.shadow_height, y - card.shadow_parrallax.y * card.shadow_height)
-                        card.children[key]:draw_shader("dissolve", nil, nil, nil, card.children.center, card.VT.scale - 1, nil, x, y)
+                        local x = (1 - i) * card.T.w * 31 / 71
+                        card.children[key]:draw_shader("dissolve", 0, nil, nil, card.children.center, card.VT.scale * (1 - 0.2 * card.shadow_height) - 1, nil, x - card.shadow_parrallax.x * card.shadow_height, -card.shadow_parrallax.y * card.shadow_height)
+                        card.children[key]:draw_shader("dissolve", nil, nil, nil, card.children.center, card.VT.scale - 1, nil, x)
                     end
                 elseif card.ability.stats.length * 10 >= i then
                     card.children[key] = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, card.children.center.atlas, card.children.center.sprite_pos)
