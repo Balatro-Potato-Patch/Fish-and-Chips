@@ -77,7 +77,10 @@ return {
 					"{C:inactive}(Must have room)",
 				},
 				flavor = {
-					"Tastes like fish",
+					"I fished you a fish!",
+					"Oh boy, what flavour?",
+					"Fish flavoured fish",
+					"*guitar riff*",
 				},
 			},
 			fish_fac_killer = {

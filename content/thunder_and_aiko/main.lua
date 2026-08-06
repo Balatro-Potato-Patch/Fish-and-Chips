@@ -352,7 +352,7 @@ FishAndChips.Fish({
 	key = "soul_fysh",
 	weight = 5,
 	atlas = "thunder_and_aiko",
-	pos = { x = 2, y = 0},
+	pos = { x = 2, y = 0 },
 	environments = {
 		styx = 1,
 		wormhole = 1,
@@ -444,6 +444,8 @@ FishAndChips.Fish({
 
 FishAndChips.Fish({
 	key = "fish_flavored_fish",
+	atlas = "thunder_and_aiko",
+	pos = { x = 4, y = 0 },
 	weight = 5,
 	environments = {
 		soup = 1,
@@ -480,6 +482,8 @@ FishAndChips.Fish({
 
 FishAndChips.Fish({
 	key = "killer",
+	atlas = "thunder_and_aiko",
+	pos = { x = 1, y = 1 },
 	weight = 5,
 	environments = {
 		swamp = 1,
@@ -602,6 +606,8 @@ FishAndChips.Fish({
 
 FishAndChips.Fish({
 	key = "growfish",
+	atlas = "thunder_and_aiko",
+	pos = { x = 0, y = 1 },
 	weight = 5,
 	environments = {
 		garden = 1,
