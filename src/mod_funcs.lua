@@ -104,7 +104,6 @@ FishAndChips.mod.calculate = function(self, context)
 		FishAndChips.clean_up_bait_shop()
 		local function fac_sort_bait_shop(bait1, bait2)
 			if bait1.key == 'bait_fac_normal' then
-				print('sorted normal bait')
 				return true
 			elseif bait2.key == 'bait_fac_normal' then
 				return false
