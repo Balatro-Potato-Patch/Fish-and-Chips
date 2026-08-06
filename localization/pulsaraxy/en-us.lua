@@ -258,6 +258,34 @@ local pa_fish = {
                     'only the accretion disk is alive,',
                     'but it depends on the singularity'
                 }
+            },
+            fish_fac_pa_chocolate = {
+                name = "Chocolate Gar",
+                text = {
+                    'Gives {C:chips}+#1#{} Chips',
+                    'to all {C:attention}held{}',
+                    'cards permanently when used'
+                },
+                flavour = {
+                    'Common fish made entirely',
+                    'of solid milk chocolate',
+                    'usually described as better',
+                    ' than normal chocolate bars'
+                }
+            },
+            fish_fac_pa_cake = {
+                name = "Ocaketopus",
+                text = {
+                    'Gives {C:mult}+#1#{} Mult',
+                    'to all {C:attention}held{}',
+                    'cards permanently when used'
+                },
+                flavour = {
+                    'Mollusk made of plain',
+                    'cake and overly-sweet icing',
+                    "They're more intelligent",
+                    'than your average cake'
+                }
             }
         },
     },
