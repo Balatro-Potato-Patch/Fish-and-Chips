@@ -988,7 +988,12 @@ FishAndChips.Fish {
             end
         end
     end,
-    attributes = { "copying" }
+    attributes = { "copying" },
+    vel_limit = 0.7,
+    impulse_min = 0.42,
+    impulse_max = 0.48,
+    decision_max = 0.24,
+    decision_min = 0.1,
 }
 -- Finclair shader
 SMODS.Shader {

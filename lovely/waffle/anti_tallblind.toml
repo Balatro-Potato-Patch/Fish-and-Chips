@@ -1,0 +1,20 @@
+[manifest]
+version = "0.1.0"
+priority = 0 # Priority for loading the file
+
+# Fix calling remove_from_highlighted on an unhighlighted card falsely yeeting G.jokers and G.consumables
+[[patches]]
+[patches.pattern]
+target = 'cardarea.lua'
+match_indent = true
+position = 'at'
+pattern = '''
+self:remove_from_highlighted(card, true)
+'''
+payload = '''
+if card.highlighted then
+    self:remove_from_highlighted(card, true)
+end
+'''
+# credits to @HuyTheKiller
+# this is a fix to a vanilla bug, this file is temporary until it's incorporated into the mod proper/SMOS

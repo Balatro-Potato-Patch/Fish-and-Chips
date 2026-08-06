@@ -215,8 +215,9 @@ return {
                     "{C:attention}scoring{} cards, gain {C:blue}+#2#{} Hand#3#"
                 },
                 flavor = {
-                    "These saltwater fish make for quite the savory",
-                    "topping, but are an acquired taste for sure."
+                    "These saltwater fish make for",
+                    "quite the savory topping, but",
+                    "are an acquired taste for sure."
                 }
             }
 
