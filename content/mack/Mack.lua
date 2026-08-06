@@ -111,6 +111,9 @@ FishAndChips.Fish {
 		weight = {min = 250, max = 750},
 		length = {min = 1.50, max = 2}
 	},
+	flavour_vars = function(self, info_queue, card)
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 51 / 513, "fac_earthfish_lore")}}}
+	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money, card.ability.extra.money_needed, elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 51 / 513, "fac_earthfish_lore") } } }
 	end,
@@ -327,7 +330,7 @@ FishAndChips.Fish {
 		for i = 1, card.ability.extra.bait do
 			G.E_MANAGER:add_event(Event {
 				func = function()
-					G.fac_temp_bait_area.cards[1]:start_dissolve()
+					G.fac_temp_bait_area.cards[i]:start_dissolve()
 					return true
 				end
 			})
