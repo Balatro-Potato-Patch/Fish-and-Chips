@@ -286,6 +286,20 @@ local pa_fish = {
                     "They're more intelligent",
                     'than your average cake'
                 }
+            },
+            fish_fac_pa_goofball = {
+                name = "Perch Goofball",
+                text = {
+                    '{C:green}#1# in #2#{} chance',
+                    'for each scored {C:attention}4{}',
+                    'to give a random',
+                    '{C:spectral}Spectral{} card'
+                },
+                flavour = {
+                    "It's me, Perch Goofball,",
+                    'the main catch',
+                    'of ante number 4!'
+                }
             }
         },
     },

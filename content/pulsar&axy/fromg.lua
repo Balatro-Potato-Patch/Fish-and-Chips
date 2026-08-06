@@ -9,7 +9,6 @@ FishAndChips.Fish {
 	environments = {
 		swamp = 1,
 		garden = 1,
-		city_river = 1,
 		calm_pond = 1,
 		chocolate_river = 1
 	},
