@@ -1,5 +1,5 @@
 return {
-    name = "{s:1}{C:fac_fish}Entrance Hall Fish",
+    name = "{s:1}Entrance Hall {C:fac_fish}Fish",
     flavour = {
         "{s:0.7}I, Herbert F. Finclair, of the Mount Fishy Estate at Fishington,",
             "{s:0.7}do publish, and declare this instrument,",
@@ -12,23 +12,23 @@ return {
             "{s:0.7}and to the house and sea which I own near Mount Fishy",
             "{s:0.7}The above provision and bequest is contingent",
             "{s:0.7}on my aforementioned grand-nephew discovering",
-            "{s:0.7}the location of the {C:attention}46th{} fish of my forty-five",
-            "{s:0.7}fish estate.",
-            "{s:0.7}The location of the fish has been kept a secret",
+            "{s:0.7}the location of the {C:attention}46th{}{s:0.7} {C:fac_fish}fish{}{s:0.7} of my forty-five",
+            "{s:0.7}{C:fac_fish}fish{}{s:0.7} estate.",
+            "{s:0.7}The location of the {C:fac_fish}fish{}{s:0.7} has been kept a secret",
             "{s:0.7}from all of the staff and servants of the manor,",
             "{s:0.7}but I am confident that any heir worthy of the Finclair legacy",
             "{s:0.7}should have no trouble uncovering its whereabouts",
             "{s:0.7}within a timely manner.",
-            "{s:0.7}Should my grandnephew fail to uncover this fish",
+            "{s:0.7}Should my grandnephew fail to uncover this {C:fac_fish}fish{}",
             "{s:0.7}or provide proof of his discovery to the executors of my will",
-            "{s:0.7}then this gift shall {C:red}lapse{}.",
+            "{s:0.7}then this gift shall {C:red}lapse{}{s:0.7}.",
             "{s:0.7}In witness whereof, I have hereunto set my fin",
             "{s:0.7}this 18th day of March, 1993.",
             "{s:0.7}Herbert F. Finclair"
     },
     text = {
-        "{C:attention}Drafts{} three fish per rank",
-        "Chosen fish will be {C:attention}guaranteed{} with the next catch",
+        "{C:attention}Drafts{} three {C:fac_fish}fish{} per rank",
+        "Chosen {C:fac_fish}fish{} will be {C:attention}guaranteed{} with the next catch",
         "Rank increases upon catch",
         "{s:1}{C:inactive}(Currently at rank {C:fac_fish}#1#{}{C:inactive}){}",
         "{C:inactive}#2#"
