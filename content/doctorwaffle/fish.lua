@@ -119,7 +119,7 @@ end
 FishAndChips.Fish {
     key = "waffle_magic_conch",
     atlas = "waffle_fish",
-    weight = 6,
+    weight = 5,
     environments = {
         pier = 1,
         calm_pond = 0.6
@@ -355,7 +355,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
     key = "waffle_percheo",
     atlas = "waffle_fish",
-    weight = 3,
+    weight = 2,
     environments = {
         garden = 1,
     },
@@ -403,7 +403,7 @@ FishAndChips.Fish {
         styx = 1,
         wormhole = 0.5
     },
-    weight = 6,
+    weight = 5,
     cost = 4,
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -438,7 +438,7 @@ FishAndChips.Fish {
     pos = { x = 3, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 6,
+    weight = 5,
     pixel_size = { h = 83 },
     cost = 4,
     environments = {
@@ -524,7 +524,7 @@ FishAndChips.Fish {
     pos = { x = 4, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 6,
+    weight = 5,
     cost = 5,
     environments = {
         swamp = 1,
@@ -563,7 +563,7 @@ FishAndChips.Fish {
     pixel_size = { h = 60 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 6,
+    weight = 5,
     cost = 6,
     blueprint_compat = false,
     environments = {
@@ -625,7 +625,7 @@ FishAndChips.Fish {
     pos = { x = 6, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 6,
+    weight = 5,
     environments = {
         city_river = 1,
         garden = 0.8,
@@ -694,7 +694,7 @@ FishAndChips.Fish {
     key = "waffle_gossamer_worm",
     atlas = "waffle_fish",
     pos = { x = 7, y = 0 },
-    weight = 6,
+    weight = 5,
     environments = {
         aquifer = 1,
         pier = 0.4
@@ -755,7 +755,7 @@ FishAndChips.Fish {
     pixel_size = { h = 88 },
     atlas = "waffle_fish",
     pos = { x = 8, y = 0 },
-    weight = 6,
+    weight = 5,
     cost = 6,
     config = { extra = {
         chips = 0,
@@ -876,7 +876,7 @@ FishAndChips.Fish {
     ppu_artist = { "waffle" },
     atlas = "waffle_fish",
     pos = { x = 9, y = 0 },
-    weight = 6,
+    weight = 5,
     cost = 5,
     environments = {
         soup = 1,
@@ -947,7 +947,7 @@ FishAndChips.Fish {
     atlas = "waffle_fish",
     blueprint_compat = false,
     cost = 8,
-    weight = 3,
+    weight = 2,
     stats = {
         weight = { min = 1.30, max = 4.50 },
         length = { min = 0.20, max = 0.45 }
@@ -1020,7 +1020,7 @@ FishAndChips.Fish {
         pier = 0.6
     },
     pixel_size = { h = 58 },
-    weight = 6,
+    weight = 5,
     stats = {
         weight = { min = 0.3, max = 0.6 },
         length = { min = 0.2, max = 0.25 },
@@ -1091,4 +1091,51 @@ FishAndChips.Fish {
     attributes = { "generation", "usable" },
     impulse_max = 0.18,
     vel_limit = 0.32
+}
+
+-- Handchovies
+FishAndChips.Fish {
+    key = "waffle_handchovies",
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    weight = 5,
+    atlas = "waffle_fish",
+    pos = {x = 2, y = 1},
+    environments = {
+        pier = 1,
+        soup = 0.8,
+    },
+    stats = {
+        weight = {min = 0.0175, max = 0.0350},
+        length = {min = 0.35, max = 1.40}
+    },
+    config = {
+        extra = {
+            cards = 5,
+            hands = 2
+        }
+    },
+    pixel_size = { w = 67, h = 73},
+    loc_vars = function (self, info_queue, card)
+        return {vars = {
+            card.ability.extra.cards,
+            card.ability.extra.hands,
+            math.abs(card.ability.extra.hands) ~= 1 and "s" or ""
+        }}
+    end,
+    calculate = function (self, card, context)
+        if context.before and #context.scoring_hand == card.ability.extra.cards then
+            ease_hands_played(card.ability.extra.hands)
+            local message
+            if math.abs(card.ability.extra.hands) ~= 1 then
+                message = localize('k_fac_waffle_plus_hand') 
+            else
+                message = localize { type = 'variable', key = 'a_hands', vars = { card.ability.extra.hands } }
+            end
+            return {
+                message = message,
+                colour = G.C.BLUE
+            }
+        end
+    end
 }

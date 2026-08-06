@@ -175,7 +175,7 @@ return {
                     "becomes a copy of {C:fac_fish}Fish{} to the {C:attention}right{}",
                     "with {X:attention,C:white}X#1#{} to {C:attention}listed values{}",
                     "{C:inactive,s:0.85}(Reverts at end of round or when used,",
-                    "{C:inactive,say:0.85}cannot copy THE MAGNIFICENT FINCLAIR)"
+                    "{C:inactive,s:0.85}cannot copy THE MAGNIFICENT FINCLAIR)"
                 },
                 flavor = {
                     "Can we please pretend to like each other for 8 antes?",
@@ -208,6 +208,18 @@ return {
                 }
             },
 
+            fish_fac_waffle_handchovies = {
+                name = "Handchovies",
+                text = {
+                    "If played hand contains {C:attention}#1#{}",
+                    "{C:attention}scoring{} cards, gain {C:blue}+#2#{} Hand#3#"
+                },
+                flavor = {
+                    "These saltwater fish make for quite the savory",
+                    "topping, but are an acquired taste for sure."
+                }
+            }
+
         },
 
         Other = {
@@ -237,7 +249,12 @@ return {
             k_fac_waffle_duck = "Duck",
             k_fac_waffle_presto_ex = "Presto!",
             k_fac_waffle_book = "Book",
+            k_fac_waffle_plus_hand = "+1 Hand"
         },
+
+        v_dictionary = {
+            a_fac_waffle_hand
+        }
 
     }
 
