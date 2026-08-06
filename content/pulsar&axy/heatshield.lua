@@ -42,7 +42,9 @@ FishAndChips.Fish {
                 scalar_value = "reroll_gain",
 				operation = '-'
             })
-			ease_dollars(5)
+			return {
+				sand_dollars = 5
+			}
 		end
 	end,
 }

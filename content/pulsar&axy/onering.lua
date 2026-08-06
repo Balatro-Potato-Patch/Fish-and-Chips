@@ -1,11 +1,12 @@
 FishAndChips.Fish {
 	key = "pa_onering",
-	weight = 2,
+	weight = 7, -- 2
 	atlas = "pa_pulsarfish",
 	pos = { x = 3 , y = 1},
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
 	attributes = { "boss_blind", "scaling", "passive" },
+	treasure = true,
 	environments = {
 		aquifer = 1,
 		styx = 0.3,
@@ -27,15 +28,7 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		local opposite = 1 / (card.ability.extra.perma_xblind_size or 1)
 
-		local dupeCount = 0
-		if G.fac_fish_area then
-			for _, fish in ipairs(G.fac_fish_area.cards) do
-				if fish.config.center.key == self.key then
-					dupeCount = dupeCount + 1
-				end
-			end
-		end
-		local dupeCount = dupeCount > 7 and 7 or dupeCount -- stop at seven because six sevennn
+		local dupeCount = self:count_duplicates()
 
 		return { vars = {
 			card.ability.extra.blindsize_increase,
@@ -117,5 +110,16 @@ FishAndChips.Fish {
 				color = G.C.BLIND
 			}, card)
 		end
-	end
+	end,
+	count_duplicates = function()
+		local dupeCount = 0
+		if G.fac_fish_area then
+			for _, fish in ipairs(G.fac_fish_area.cards) do
+				if fish.config.center.key == self.key then
+					dupeCount = dupeCount + 1
+				end
+			end
+		end
+		return dupeCount > 7 and 7 or dupeCount -- stop at seven because six sevennn
+	end,
 }
