@@ -1,4 +1,11 @@
 
+SMODS.Atlas{
+	key = "fas_bo_noise",
+	path = FishAndChips.FooSqueax.file_path .. "bo_noise.png",
+	px = 71,
+	py = 95,
+}
+
 FishAndChips.Fish {
 	key = "fas_super_bo_noise",
 	weight = 5,
@@ -7,6 +14,9 @@ FishAndChips.Fish {
 		wormhole = 0.5,
 	},
 	ppu_coder = {"Foo54"},
+	ppu_artist = {'squeax09'},
+	atlas = "fas_bo_noise",
+	pos = {0,0},
 	config = {
 		extra = {
 			xmult = 0.01
