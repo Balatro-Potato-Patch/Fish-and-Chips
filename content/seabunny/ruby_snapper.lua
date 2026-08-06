@@ -3,18 +3,18 @@ FishAndChips.Fish {
     key = "ruby_snapper",
     atlas = "seabunny",
     pos = {x = 0, y = 0},
-    config = {extra = {enchant = false, max = 5, fish_left = 5}},
-    blueprint_compat = false,
+    config = {extra = {enchant = false, times = 5, fish_left = 5}},
+    blueprint_compat = true,
     badge_key = "k_fac_mineral_fish",
     loc_vars = function(self, info_queue, card)
         if card.ability.extra.enchant then
             return {key = self.key .. "_enchant"}
         end
-        return {vars = {card.ability.extra.max, card.ability.extra.fish_left}}
+        return {vars = {card.ability.extra.times, card.ability.extra.fish_left}}
     end,
     calculate = function(self, card, context)
         if context.selling_card and context.card.ability.set == "fac_Fish" then
-            if not card.ability.extra.enchant then
+            if not context.blueprint and not card.ability.extra.enchant then
                 card.ability.extra.fish_left = card.ability.extra.fish_left - 1
                 if card.ability.extra.fish_left <= 0 then
                     card.ability.extra.enchant = true
@@ -29,7 +29,7 @@ FishAndChips.Fish {
                     colour = FishAndChips.C.SAND_DOLLAR
                 }
             end
-        elseif context.selling_self and card.ability.extra.enchant then
+        elseif context.selling_self and not context.blueprint and card.ability.extra.enchant then
             card.sell_cost = 2 * card.sell_cost
         end
     end,

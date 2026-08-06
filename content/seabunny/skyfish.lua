@@ -4,7 +4,7 @@ FishAndChips.Fish {
     atlas = "seabunny",
     pos = {x = 0, y = 0},
     config = {extra = {max = 1, shrink = 0.1}},
-    blueprint_compat = false,
+    blueprint_compat = true,
     decision_min = 0,
     decision_max = 0.24,
     disable_visual_scaling = true,
