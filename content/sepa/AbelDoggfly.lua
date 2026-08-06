@@ -2,9 +2,8 @@ PotatoPatchUtils.Developer({
 	name = 'AbelSketch',
 	atlas = 'fac_sepa_devs',
 	pos = {x = 0, y = 0},
-	soul_pos = {x = 1, y = 1}, 
-	colour = G.C.GRAY,
-	fac_partner = 'DoggFly',
+	colour = G.C.BLACK,
+	fac_partner = 'fac_DoggFly',
 	joint_credits = 2,
 	loc = true,
 })
@@ -13,9 +12,8 @@ PotatoPatchUtils.Developer({
 	name = 'DoggFly',
 	atlas = 'fac_sepa_devs',
 	pos = {x = 0, y = 0},
-	soul_pos = {x = 0, y = 1}, 
 	colour = G.C.PURPLE,
-	fac_partner = 'AbelSketch',
+	fac_partner = 'fac_AbelSketch',
 	joint_credits = 2,
 	loc = true
 })
@@ -61,6 +59,67 @@ FishAndChips.Fish {
 	end,
 }
 
+FishAndChips.Fish {
+	key = "blinky",
+	atlas = pez,
+	pos = { x = 1, y = 0 },
+	weight = 9,
+	ppu_coder = { "DoggFly" },
+	ppu_artist = { "DoggFly" },
+	attributes = { "retrigger", "destroy_card" },
+	config = {
+		extra = {
+			odds = 3 
+		}
+	},
+		stats = {
+		weight = {min = 0.20, max = 0.32},
+		length = {min = 0.10 , max = 0.20}
+	},
+
+	environments = {
+		wormhole = 3,
+		city_river = 1
+	},
+	loc_vars = function(self, info_queue, card)
+		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_blinky_shatter")
+		return { vars = { num, dem } }
+	end,
+	calculate = function(self, card, context)
+
+		if context.repetition and context.cardarea == G.play
+			and G.GAME.current_round.hands_played == 0 then
+			return { repetitions = 1 }
+		end
+		if context.individual and context.cardarea == G.play
+			and G.GAME.current_round.hands_played == 0 then
+			if SMODS.pseudorandom_probability(
+				card, "fac_blinky_shatter_" .. tostring(context.other_card),
+				1, card.ability.extra.odds
+			) then
+				context.other_card.fac_blinky_doomed = true
+			end
+		end
+		if context.after and not context.blueprint then
+			local doomed = {}
+			for _, c in ipairs(G.play.cards) do
+				if c.fac_blinky_doomed then
+					doomed[#doomed + 1] = c
+				end
+			end
+			if #doomed > 0 then
+				for _, c in ipairs(doomed) do
+					c:juice_up(0.8, 0.8)
+					SMODS.destroy_cards(c)
+				end
+				return {
+					message = "Splash!",
+					colour = G.C.BLUE
+				}
+			end
+		end
+	end,
+}
 
 FishAndChips.Fish {
 	key = "freds_leg",
@@ -106,7 +165,9 @@ FishAndChips.Fish {
 	end,
 }
 
--- Im gonna be honest, half of this wouldnt have been possible without Vanilla remade
+
+
+-- Im gonna be honest, half of this wouldnt have been possible without Vanilla remade 
 FishAndChips.Fish {
 	key = "bombfish",
 	atlas = pez,
@@ -269,7 +330,7 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
 	        --info_queue[#info_queue+1] = {key = "fac_sepa_Tarot_infovar", set = "Other"}
-		return { vars = { card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, card.ability.extra.poker_hand, card.ability.extra.tarot_amount} }
+		return { vars = { }}-- card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, card.ability.extra.poker_hand, card.ability.extra.tarot_amount} }
 	end,
 
     calculate = function(self, card, context)
@@ -281,13 +342,13 @@ FishAndChips.Fish {
 	key = "lies",
 	atlas = pez,
 	pos = { x = 2, y = 1 },
-	weight = 8, --testestest
+	weight = 8,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
-	attributes = { "mult", "hands" },
+	attributes = { "economy", "hands", "destroy_card" },
 	config = {
 		extra = {
-			
+			dollars = 0
 		}
 	},
 	stats = {
@@ -299,75 +360,78 @@ FishAndChips.Fish {
 		styx = 0.5,
 	},
 	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.dollars } }
+	end,
+
+	calculate = function(self, card, context)
+		if context.setting_blind and not context.blueprint then
+            local my_pos = nil
+            for i = 1, #G.fac_fish_area.cards do
+                if G.fac_fish_area.cards[i] == card then
+                    my_pos = i
+                    break
+                end
+            end
+            if my_pos and G.fac_fish_area.cards[my_pos - 1] and not SMODS.is_eternal(G.fac_fish_area.cards[my_pos - 1], card) and not G.fac_fish_area.cards[my_pos - 1].getting_sliced then
+                local sliced_card = G.fac_fish_area.cards[my_pos - 1]
+                sliced_card.getting_sliced = true
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        card.ability.extra.dollars = card.ability.extra.dollars + sliced_card.sell_cost
+                        card:juice_up(0.3, 0.3)
+                        sliced_card:start_dissolve({ HEX("57ecab") }, nil, 2)
+                        play_sound('slice1')
+                        return true
+                    end
+                }))
+                return {
+                    message = "...",
+                    colour = G.C.RED,
+                    no_juice = true,
+                }
+            end
+        end
+	end,
+
+    calc_dollar_bonus = function(self, card)
+        return card.ability.extra.dollars
+    end,
+ 
+ 	set_badges = function(self, card, badges)
+ 		badges[#badges+1] = create_badge("Halucination...?", G.C.RED, G.C.WHITE, 1 )
+ 	end,
+
+}
+
+FishAndChips.Fish {
+	key = "devicehands",
+	atlas = pez,
+	pos = { x = 3, y = 1 },
+	weight = 8, --testestest
+	ppu_coder = { "AbelSketch" },
+	ppu_artist = { "AbelSketch" },
+	attributes = { "hands" },
+	config = {
+		extra = {
+			
+		}
+	},
+	stats = {
+		weight = {min = 0.20, max = 0.32},
+		length = {min = 0.10 , max = 0.20}
+	},
+	environments = {
+		pier = 1,
+		wormhole = 0.5,
+	},
+	loc_vars = function(self, info_queue, card)
 		return { vars = {  } }
 	end,
 	calculate = function(self, card, context)
 	end,
  
  	set_badges = function(self, card, badges)
- 		badges[#badges+1] = create_badge("Halucination", G.C.RED, G.C.WHITE, 1 )
+ 		badges[#badges+1] = create_badge("Darkner", G.C.BLACK, G.C.WHITE, 1 )
  	end,
 
-}
-
-FishAndChips.Fish {
-	key = "blinky",
-	atlas = pez,
-	pos = { x = 0, y = 1 },
-	weight = 9,
-	ppu_coder = { "DoggFly" },
-	ppu_artist = { "DoggFly" },
-	attributes = { "retrigger", "destroy_card" },
-	config = {
-		extra = {
-			odds = 3 
-		}
-	},
-		stats = {
-		weight = {min = 0.20, max = 0.32},
-		length = {min = 0.10 , max = 0.20}
-	},
-
-	environments = {
-		wormhole = 3,
-		city_river = 1
-	},
-	loc_vars = function(self, info_queue, card)
-		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_blinky_shatter")
-		return { vars = { num, dem } }
-	end,
-	calculate = function(self, card, context)
-
-		if context.repetition and context.cardarea == G.play
-			and G.GAME.current_round.hands_played == 0 then
-			return { repetitions = 1 }
-		end
-		if context.individual and context.cardarea == G.play
-			and G.GAME.current_round.hands_played == 0 then
-			if SMODS.pseudorandom_probability(
-				card, "fac_blinky_shatter_" .. tostring(context.other_card),
-				1, card.ability.extra.odds
-			) then
-				context.other_card.fac_blinky_doomed = true
-			end
-		end
-		if context.after and not context.blueprint then
-			local doomed = {}
-			for _, c in ipairs(G.play.cards) do
-				if c.fac_blinky_doomed then
-					doomed[#doomed + 1] = c
-				end
-			end
-			if #doomed > 0 then
-				for _, c in ipairs(doomed) do
-					c:juice_up(0.8, 0.8)
-					SMODS.destroy_cards(c)
-				end
-				return {
-					message = "Splash!",
-					colour = G.C.BLUE
-				}
-			end
-		end
-	end,
 }
