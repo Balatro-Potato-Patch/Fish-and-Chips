@@ -75,8 +75,8 @@ return {
                         "played unenhanced cards"
                     },
                     {
-                        "{C:inactive}Enchanted: Chance is",
-                        "{C:inactive}#3# in #4# instead"
+                        "{C:inactive}Enchanted: #3# in #4#",
+                        "{C:inactive}chance for extra retrigger"
                     },
                     {
                         "To {C:dark_edition}Enchant{}: Score",
@@ -97,8 +97,8 @@ return {
                         "played unenhanced cards"
                     },
                     {
-                        "{C:dark_edition}Enchanted{}: Chance is",
-                        "{C:green}#3# in #4#{} instead"
+                        "{C:dark_edition}Enchanted{}: {C:green}#3# in #4#",
+                        "chance for extra retrigger"
                     }
                 },
                 flavor = {

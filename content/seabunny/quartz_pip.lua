@@ -17,16 +17,17 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         if context.cardarea == G.play and context.other_card and context.other_card.ability.set == "Default" then
             if context.repetition then
-                local hit = false
-                if not context.blueprint and card.ability.extra.enchant then
-                    hit = SMODS.pseudorandom_probability(card, "fac_quartz_pip_ench", card.ability.extra.num_ench, card.ability.extra.denom_ench)
-                else
-                    hit = SMODS.pseudorandom_probability(card, "fac_quartz_pip", card.ability.extra.num, card.ability.extra.denom)
+                local reps = 0
+                if SMODS.pseudorandom_probability(card, "fac_quartz_pip", card.ability.extra.num, card.ability.extra.denom) then
+                    reps = 1
                 end
-                if hit then
+                if not context.blueprint and card.ability.extra.enchant and SMODS.pseudorandom_probability(card, "fac_quartz_pip_ench", card.ability.extra.num_ench, card.ability.extra.denom_ench) then
+                    reps = reps + 1
+                end
+                if reps > 0 then
                     return {
                         message = localize("k_again_ex"),
-                        repetitions = 1,
+                        repetitions = reps,
                         card = card
                     }
                 end
