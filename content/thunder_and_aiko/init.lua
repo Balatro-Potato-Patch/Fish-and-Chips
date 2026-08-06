@@ -36,7 +36,8 @@ PotatoPatchUtils.Developer({
 	loc = true,
 	atlas = "fac_cards",
 	colour = thunderedge_gradient,
-	fac_partner = "aikoyori",
+	fac_partner = "fac_aikoyori",
+	joint_credits = 2,
 })
 
 PotatoPatchUtils.Developer({
@@ -45,5 +46,6 @@ PotatoPatchUtils.Developer({
 	atlas = "fac_cards",
 	pos = { x = 1, y = 0 },
 	colour = G.C.YELLOW,
-	fac_partner = "thunderedge",
+	fac_partner = "fac_thunderedge",
+	joint_credits = 2,
 })

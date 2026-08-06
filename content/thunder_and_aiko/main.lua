@@ -646,8 +646,9 @@ FishAndChips.Fish({
 			})
 			G.E_MANAGER:add_event(Event({
 				func = function()
-					card.T.w = math.min(card.T.w + G.CARD_W * #context.full_hand / 100, G.CARD_W * 1.6)
-					card.T.h = math.min(card.T.h + G.CARD_H * #context.full_hand / 100, G.CARD_H * 1.6)
+					local scale = card._fac_bucketed and 0.7 or 1
+					card.T.w = math.min(card.T.w + G.CARD_W * #context.full_hand / 100 * scale, G.CARD_W * 1.6 * scale)
+					card.T.h = math.min(card.T.h + G.CARD_H * #context.full_hand / 100 * scale, G.CARD_H * 1.6 * scale)
 					return true
 				end
 			}))
@@ -655,6 +656,72 @@ FishAndChips.Fish({
 		if context.joker_main then
 			return {
 				chips = card.ability.extra.chips,
+			}
+		end
+	end,
+})
+
+FishAndChips.Fish({
+	key = "phish",
+	-- atlas = "thunder_and_aiko",
+	-- pos = { x = 0, y = 1 },
+	weight = 5,
+	environments = {
+		wormhole = 1,
+		swamp = 2,
+	},
+	stats = {
+		weight = {
+			min = 0.05,
+			max = 0.1,
+		},
+		length = {
+			min = 0.01,
+			max = 0.05,
+		}
+	},
+	config = { extra = { exp = 0.5 } },
+	attributes = { "scaling", "chips" },
+	ppu_coder = { "thunderedge" },
+	ppu_artist = { "aikoyori" },
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.exp,
+			},
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.after then
+			local current = G.GAME.dollars + (G.GAME.dollar_buffer or 0)
+			G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + current
+			return {
+				dollars = current,
+				func = function()
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							card:add_sticker("eternal", true)
+							G.GAME.dollar_buffer = 0
+							return true
+						end
+					}))
+				end
+			}
+		end
+		if context.end_of_round and context.main_eval and not context.game_over then
+			local current = G.GAME.dollars + (G.GAME.dollar_buffer or 0)
+			G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + math.floor(math.sqrt(current)) - current
+			return {
+				dollars = math.floor(math.sqrt(current)) - current,
+				func = function()
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							card:remove_sticker("eternal")
+							G.GAME.dollar_buffer = 0
+							return true
+						end
+					}))
+				end
 			}
 		end
 	end,

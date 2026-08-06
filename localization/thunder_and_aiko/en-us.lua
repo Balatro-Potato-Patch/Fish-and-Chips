@@ -115,6 +115,21 @@ return {
 					"{f:fac_papyrus,s:1.2,C:white}address me",
 				}
 			},
+			fish_fac_phish = {
+				name = "Phish",
+				text = {
+					{
+						"Doubles money after",
+						"playing a hand",
+					},
+					{
+						"At end of round, {X:money,C:white}$^#1#{}",
+					},
+				},
+				flavor = {
+					"Looks too good to be true...",
+				}
+			},
 		},
 		Other = {},
 		PotatoPatch = {
