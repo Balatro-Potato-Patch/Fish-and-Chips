@@ -726,7 +726,7 @@ function G.UIDEF.fac_treasure_reward(amount, kind)
 end
 
 function G.FUNCS.fac_upgrade_bucket (e)
-	ease_sand_dollars(-G.GAME.fac_bucket_price)
+	ease_sand_dollars(-G.GAME.fac_bucket_price, true)
 	G.GAME.fac_bucket_price = G.GAME.fac_bucket_price + 10
 	G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base + 1
 	G.GAME.fac_upgrade_text = localize{type = "variable", key = "ph_fac_upgrade_increase", vars = {G.fac_fish_area.config.card_limits.base, G.fac_fish_area.config.card_limits.base + 1}}
