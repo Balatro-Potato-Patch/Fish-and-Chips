@@ -80,7 +80,7 @@ FishAndChips.Fish {
 				return true
 			end}))
 			
-		if (not seal_unlocked) and card.ability.extra.blue_streak == 8 then -- change to blue_streak == 8 outside of testing
+		if (not seal_unlocked) and card.ability.extra.blue_streak == 8 then -- change to blue_streak == 8 outside of testing, times_used > 0 during testing
 			G.GAME.fac_pa_doorfish = 0
 			G.E_MANAGER:add_event(Event({
 				ease = "lerp",
@@ -167,12 +167,14 @@ local old_draw_ref = Game.draw
 function Game:draw(...)
 	old_draw_ref(self, ...)
 	if G and G.GAME and G.GAME.fac_pa_doorfish then
-			local image = SMODS.Atlases.fac_pa_pulsarfish.image
+			local image = SMODS.Atlases.fac_pa_doorfish.image
 			local w, h = image:getDimensions()
-			local width = love.graphics:getWidth() / 2 - w / 2
-			local height = love.graphics:getHeight() / 2 - h / 2
+			local sx = 5
+			local sy = 5
+			local width = love.graphics:getWidth() / 2 - (w * sx) / 2
+			local height = love.graphics:getHeight() / 2 - (h * sy) / 2
 
 			love.graphics.setColor(1,1,1,G.GAME.fac_pa_doorfish)
-			love.graphics.draw(image, width, height)
+			love.graphics.draw(image, width, height, 0, sx, sy)
 	end
 end
