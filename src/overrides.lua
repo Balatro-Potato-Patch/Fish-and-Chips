@@ -486,12 +486,9 @@ G.FUNCS.fac_use_fish = function(e)
 			return true;
 		end
 	}))
-<<<<<<< HEAD
-=======
 
 	SMODS.calculate_context{fac_use_fish = card, kept_on_use = keep_on_use}
 	G.GAME.fac_last_used_fish = card.config.center_key
->>>>>>> de61dd4bf32529bfb06713c0b09a7c1b75014486
 end
 
 local uielement_click_ref = UIElement.click
