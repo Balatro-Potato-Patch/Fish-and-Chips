@@ -1,9 +1,9 @@
-SMODS.Atlas {
+SMODS.Atlas({
 	key = "thunder_and_aiko",
 	path = "thunder_and_aiko/fishing_event.png",
 	px = 71,
 	py = 95,
-}
+})
 
 FishAndChips.Fish({
 	key = "trojan_fish",
@@ -17,7 +17,7 @@ FishAndChips.Fish({
 		length = {
 			min = 50,
 			max = 50,
-		}
+		},
 	},
 	weight = 10,
 	environments = {
@@ -124,7 +124,7 @@ end
 FishAndChips.Fish({
 	key = "moai_statue",
 	atlas = "thunder_and_aiko",
-	pos = { x = 3, y = 0},
+	pos = { x = 3, y = 0 },
 	weight = 5,
 	environments = {
 		pier = 2,
@@ -138,7 +138,7 @@ FishAndChips.Fish({
 		length = {
 			min = 9,
 			max = 10,
-		}
+		},
 	},
 	attributes = { "xmult" },
 	ppu_coder = { "thunderedge" },
@@ -197,7 +197,7 @@ FishAndChips.Fish({
 	key = "nft",
 	weight = 5,
 	atlas = "thunder_and_aiko",
-	pos = { x = 1, y = 0},
+	pos = { x = 1, y = 0 },
 	environments = {
 		wormhole = 1,
 	},
@@ -209,7 +209,7 @@ FishAndChips.Fish({
 		length = {
 			min = 0,
 			max = 0,
-		}
+		},
 	},
 	attributes = { "sell_value", "scaling", "economy", "mult" },
 	ppu_coder = { "thunderedge" },
@@ -365,7 +365,7 @@ FishAndChips.Fish({
 		length = {
 			min = 3,
 			max = 4,
-		}
+		},
 	},
 	attributes = { "xmult", "generation", "scaling", "usable" },
 	ppu_coder = { "thunderedge" },
@@ -458,7 +458,7 @@ FishAndChips.Fish({
 		length = {
 			min = 0.7,
 			max = 1.3,
-		}
+		},
 	},
 	attributes = { "generation" },
 	ppu_coder = { "thunderedge" },
@@ -489,6 +489,7 @@ FishAndChips.Fish({
 		swamp = 1,
 		city_river = 1,
 	},
+	blueprint_compat = false,
 	stats = {
 		weight = {
 			min = 1,
@@ -497,7 +498,7 @@ FishAndChips.Fish({
 		length = {
 			min = 0.3,
 			max = 0.9,
-		}
+		},
 	},
 	attributes = { "usable", "enhancements", "destroy_card" },
 	ppu_coder = { "thunderedge" },
@@ -620,7 +621,7 @@ FishAndChips.Fish({
 		length = {
 			min = 0.01,
 			max = 0.05,
-		}
+		},
 	},
 	display_size = { w = 71 / 4, h = 95 / 4 },
 	config = { extra = { chips = 1, chips_inc = 1 } },
@@ -650,7 +651,7 @@ FishAndChips.Fish({
 					card.T.w = math.min(card.T.w + G.CARD_W * #context.full_hand / 100 * scale, G.CARD_W * 1.6 * scale)
 					card.T.h = math.min(card.T.h + G.CARD_H * #context.full_hand / 100 * scale, G.CARD_H * 1.6 * scale)
 					return true
-				end
+				end,
 			}))
 		end
 		if context.joker_main then
@@ -672,16 +673,16 @@ FishAndChips.Fish({
 	},
 	stats = {
 		weight = {
-			min = 0.05,
-			max = 0.1,
+			min = 0,
+			max = 0,
 		},
 		length = {
-			min = 0.01,
-			max = 0.05,
-		}
+			min = 0,
+			max = 0,
+		},
 	},
 	config = { extra = { exp = 0.5 } },
-	attributes = { "scaling", "chips" },
+	attributes = { "economy" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
 	loc_vars = function(self, info_queue, card)
@@ -703,9 +704,9 @@ FishAndChips.Fish({
 							card:add_sticker("eternal", true)
 							G.GAME.dollar_buffer = 0
 							return true
-						end
+						end,
 					}))
-				end
+				end,
 			}
 		end
 		if context.end_of_round and context.main_eval and not context.game_over then
@@ -719,10 +720,108 @@ FishAndChips.Fish({
 							card:remove_sticker("eternal")
 							G.GAME.dollar_buffer = 0
 							return true
-						end
+						end,
 					}))
-				end
+				end,
 			}
 		end
+	end,
+})
+
+FishAndChips.thunder_and_aiko = {}
+FishAndChips.thunder_and_aiko.redeem_voucher = function(forced_key)
+	local selected_voucher = forced_key or SMODS.poll_object({ type = "Voucher" })
+	local voucher_card = SMODS.create_card({ area = G.play, key = selected_voucher }) -- Ignore the previous code and just use a key for a prefined voucher
+	voucher_card:start_materialize()
+	voucher_card.cost = 0
+	G.play:emplace(voucher_card)
+	delay(0.8)
+	G.FUNCS.use_card({ config = { ref_table = voucher_card } })
+
+	G.E_MANAGER:add_event(Event({
+		trigger = "after",
+		delay = 0.5,
+		func = function()
+			voucher_card:start_dissolve()
+			return true
+		end,
+	}))
+end
+
+FishAndChips.Fish({
+	key = "message",
+	weight = 5,
+	treasure = true,
+	environments = {
+		city_river = 1,
+		pier = 3,
+	},
+	stats = {
+		weight = {
+			min = 1,
+			max = 1,
+		},
+		length = {
+			min = 0.2,
+			max = 0.2,
+		},
+	},
+	blueprint_compat = false,
+	attributes = { "economy", "generation", "usable", "tarot", "voucher" },
+	ppu_coder = { "thunderedge" },
+	ppu_artist = { "aikoyori" },
+	config = { extra = { dollars = 20, tarots = 2 } },
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.dollars,
+				card.ability.extra.tarots,
+			},
+		}
+	end,
+	use = function(self, card)
+		local mode = pseudorandom("fac_message", 1, 3)
+		if mode == 1 then
+			G.E_MANAGER:add_event(Event({
+				trigger = "after",
+				delay = 0.4,
+				func = function()
+					play_sound("timpani")
+					card:juice_up(0.3, 0.5)
+					ease_dollars(card.ability.extra.dollars, true)
+					return true
+				end,
+			}))
+			delay(0.6)
+		elseif mode == 2 then
+			for i = 1, math.min(card.ability.extra.tarots, G.consumeables.config.card_limit - #G.consumeables.cards) do
+				G.E_MANAGER:add_event(Event({
+					trigger = "after",
+					delay = 0.4,
+					func = function()
+						if G.consumeables.config.card_limit > #G.consumeables.cards then
+							play_sound("timpani")
+							SMODS.add_card({ set = "Tarot", key_append = "fac_message" })
+							card:juice_up(0.3, 0.5)
+						end
+						return true
+					end,
+				}))
+			end
+			delay(0.6)
+		else
+			G.E_MANAGER:add_event(Event({
+				trigger = "after",
+				delay = 0.4,
+				func = function()
+					FishAndChips.thunder_and_aiko.redeem_voucher()
+					return true
+				end,
+			}))
+			delay(0.6)
+		end
+	end,
+	can_use = function(self, card)
+		return true
 	end,
 })

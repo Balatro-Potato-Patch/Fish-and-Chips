@@ -130,6 +130,34 @@ return {
 					"Looks too good to be true...",
 				}
 			},
+			fish_fac_message = {
+				name = "Message in a Bottle",
+				text = {
+					{
+						"Use to open",
+					},
+					{
+						"Contains either a",
+						"{C:attention}Voucher{}, {C:money}$#1#{}, or {C:attention}#2#{}",
+						"random {C:tarot}Tarot{} cards",
+						"{C:inactive}(Must have room)",
+					},
+				},
+				flavor = {
+					"I wonder who sent this?",
+				}
+			},
+			fish_fac_snad = {
+				name = "Snad",
+				text = {
+					"Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for every {C:attention}#2#",
+					"{C:attention}Fish{} owned at end",
+					"of round",
+				},
+				flavor = {
+					"something funny here",
+				}
+			},
 		},
 		Other = {},
 		PotatoPatch = {
