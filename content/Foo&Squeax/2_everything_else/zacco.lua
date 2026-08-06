@@ -24,23 +24,25 @@ FishAndChips.Fish{
 		if SynthB then SynthB.song_info(info_queue, card, "fac_zaako") end
 		local msg_left = localize{type = "variable", key = "k_fac_fas_zaako_no_fish", vars = {localize("k_fac_fas_left")}}
 		local msg_right = localize{type = "variable", key = "k_fac_fas_zaako_no_fish", vars = {localize("k_fac_fas_right")}}
-		for i, _card in ipairs(G.fac_fish_area.cards) do
-			if _card == card then
-				local __card = G.fac_fish_area.cards[i - 1]
-				if __card then
-					local attrs = #(__card.config.center.attributes or {})
-					local s = "s"
-					if attrs == 1 then s = "" end
-					msg_left = localize{type = "variable", key = "k_fac_fas_attributes", vars = {attrs, s, localize("k_fac_fas_left")}}
+		if G.fac_fish_area then
+			for i, _card in ipairs(G.fac_fish_area.cards) do
+				if _card == card then
+					local __card = G.fac_fish_area.cards[i - 1]
+					if __card then
+						local attrs = #(__card.config.center.attributes or {})
+						local s = "s"
+						if attrs == 1 then s = "" end
+						msg_left = localize{type = "variable", key = "k_fac_fas_attributes", vars = {attrs, s, localize("k_fac_fas_left")}}
+					end
+					local ___card = G.fac_fish_area.cards[i + 1]
+					if ___card then
+						local attrs = #(___card.config.center.attributes or {})
+						local s = "s"
+						if attrs == 1 then s = "" end
+						msg_right = localize{type = "variable", key = "k_fac_fas_attributes", vars = {attrs, s, localize("k_fac_fas_right")}}
+					end
+					break
 				end
-				local ___card = G.fac_fish_area.cards[i + 1]
-				if ___card then
-					local attrs = #(___card.config.center.attributes or {})
-					local s = "s"
-					if attrs == 1 then s = "" end
-					msg_right = localize{type = "variable", key = "k_fac_fas_attributes", vars = {attrs, s, localize("k_fac_fas_right")}}
-				end
-				break
 			end
 		end
 		return {vars = {card.ability.extra.limit, card.ability.extra.chips, msg_left, msg_right}}

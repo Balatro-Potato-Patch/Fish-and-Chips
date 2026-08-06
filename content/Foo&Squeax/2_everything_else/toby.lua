@@ -234,10 +234,7 @@ function G.FUNCS.fac_fas_toby_nuhuh (e)
 	G.FUNCS.can_sell_card(e)
 	if e.states.hover.is then
 		if not e.config.fac_fas_hovered then
-			e.config.ref_table.children.use_button:set_role{
-				
-				r_bond = "Weak"
-			}
+			e.config.ref_table.children.use_button:set_role{r_bond = "Weak"}
 			local target = {
 				x = 10 * (math.random() - 0.5),
 				y = 10 * (math.random() - 0.5)
