@@ -105,6 +105,47 @@ return {
                     "Fun fact: Amethyst is",
                     "just purple quartz."
                 }
+            },
+            fish_fac_iron_silverfish = {
+                name = "Iron Silverfish",
+                text = {
+                    {
+                        "When a {C:attention}Stone{} card is destroyed,",
+                        "create an unenhanced copy",
+                        "with permanent {C:chips}+#1#{} Chips"
+                    },
+                    {
+                        "{C:inactive}Enchanted: Stone cards",
+                        "{C:inactive}are destroyed when scored"
+                    },
+                    {
+                        "To {C:dark_edition}Enchant{}: Score a card with",
+                        "#2# or more chips #3# times",
+                        "{C:inactive}({C:attention}#4#{C:inactive} remaining)"
+                    }
+                },
+                flavor = {
+                    [[Here's another "quick silver"]],
+                    [[you don't want to eat!]]
+                }
+            },
+            fish_fac_iron_silverfish_enchant = {
+                name = "Iron Silverfish",
+                text = {
+                    {
+                        "When a {C:attention}Stone{} card is destroyed,",
+                        "create an unenhanced copy",
+                        "with permanent {C:chips}+#1#{} Chips"
+                    },
+                    {
+                        "{C:dark_edition}Enchanted{}: {C:attention}Stone{} cards",
+                        "are destroyed when scored"
+                    }
+                },
+                flavor = {
+                    [[Here's another "quick-silver"]],
+                    [[you don't want to eat!]]
+                }
             }
         },
     },

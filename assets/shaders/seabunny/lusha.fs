@@ -8,8 +8,9 @@ uniform float letter_rot;
 uniform bool text_shadow;
 
 vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
+    vec4 tex = Texel(texture, texture_coords);
     if (text_shadow) {
-        return vec4(0.0);
+        return vec4(vec3(0.0), 0.3 * tex.a);
     }
     vec3 palette[2] = vec3[](
         vec3(243.0, 51.0, 111.0) / 255.0,
@@ -17,7 +18,7 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
     );
     float alpha = 1.0;
     if (lusha.x >= 0 || text_rot == 0 || letter_details.x == 0 || letter_scale == 0 || letter_rot == 0) { // Uniform consumer
-        alpha = Texel(texture, texture_coords).a;
+        alpha = tex.a;
     }
     // Magic numbers needed to get the gradient more "centered". Not sure why.
     float u = 2 * text_scale * (screen_coords.x - text_details.x) / text_details.z - 1;

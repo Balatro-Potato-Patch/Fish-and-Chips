@@ -4,7 +4,7 @@ PotatoPatchUtils.Developer {
     colour = HEX("f96932"),
     atlas = "fac_seabunny",
     pos = {x = 0, y = 0},
-    fac_partner = "Lusha"
+    fac_partner = "fac_Lusha"
 }
 
 SMODS.Shader {
@@ -18,7 +18,7 @@ PotatoPatchUtils.Developer {
     shaders = {"fac_lusha"},
     atlas = "fac_seabunny",
     pos = {x = 0, y = 0},
-    fac_partner = "ouiiskey"
+    fac_partner = "fac_ouiiskey"
 }
 
 -- Fish
