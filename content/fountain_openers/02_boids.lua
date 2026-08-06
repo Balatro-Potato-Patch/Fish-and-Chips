@@ -1,6 +1,3 @@
-local len = 5
-local targettimer
-
 local boid_sprite = love.graphics.newImage(love.image.newImageData(SMODS.NFS.newFileData(FishAndChips.mod.path ..
 	'/assets/1x/fountain_openers/boid_1x.png')))
 local bx, by = boid_sprite:getDimensions()

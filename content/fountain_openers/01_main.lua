@@ -17,6 +17,24 @@ SMODS.Atlas {
     atlas_table = "ASSET_ATLAS"
 }
 
+SMODS.Atlas {
+    key = "fo_fucking_kill",
+    path = "fountain_openers/fucking_kill.png",
+    px = 377,
+    py = 105,
+    frames = 5,
+    atlas_table = "ANIMATION_ATLAS"
+}
+
+SMODS.Atlas {
+    key = "fo_fucking_killed",
+    path = "fountain_openers/fucking_killed.png",
+    px = 466,
+    py = 106,
+    frames = 5,
+    atlas_table = "ANIMATION_ATLAS"
+}
+
 SMODS.Sound {
     key = "fac_fo_explosion",
     path = "fountain_openers/fac_fo_explosion.ogg"
@@ -47,7 +65,7 @@ PotatoPatchUtils.Developer {
     pos = { x = 0, y = 0 },
     soul_pos = { x = 1, y = 0 },
 	text_effect = "fac_alexi_text",
-	fac_partner = "fo_grahkon",
+	fac_partner = "fac_fo_grahkon",
 	fac_dw_shader = true, -- thanks elleeeee love youuu :3
     loc = true,
 	click = function(self)
@@ -63,7 +81,7 @@ PotatoPatchUtils.Developer {
         local floweries = SMODS.find_card("fish_fac_fo_fishery")
         if #floweries > 0 then
             if context.fac_end_fishing then
-                if not context.fail and not context.fish == "fish_fac_fo_fishery" then
+                if not context.failed and not context.fish == "fish_fac_fo_fishery" then
                     if context.perfect or context.treasure then
                         FountainOpeners.random_flowery_sound({
                             "heh_one_more_for_the_fans",
@@ -193,6 +211,11 @@ PotatoPatchUtils.Developer {
                 end
             end
         end
+
+        if context.fac_end_fishing and not context.failed and (#SMODS.find_card("fish_fac_fo_anvil") > 0) then
+            print("FUCK")
+            context.fish_obj.fac_fo_anvil = true
+        end
     end,
 }
 
@@ -202,7 +225,7 @@ PotatoPatchUtils.Developer {
     pos = { x = 2, y = 0 },
     soul_pos = { x = 3, y = 0 },
 	colour = G.C.GREEN,
-	fac_partner = "fo_alexi",
+	fac_partner = "fac_fo_alexi",
 	fac_dw_shader = true,
     loc = true,
     click = function(self)

@@ -61,6 +61,24 @@ return {
                 fac_flavor = {
                     "Heh, it's my Jarona!"
                 }
+            },
+            fish_fac_fo_anvil = {
+                name = "Anvil",
+                text = {
+                    {
+                        "Caught {C:fac_fish}Fish{} may be",
+                        "{element:1}",
+                    },
+                    {
+                        "This Fish gains {C:mult}+#2#{} Mult when you",
+                        "{element:2}",
+                        "a {C:fac_fish}Fish",
+                        "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
+                    }
+                },
+                fac_flavor = {
+                    "kill everything :3"
+                }
             }
         },
         PotatoPatch = {
@@ -85,7 +103,10 @@ return {
             fac_fo_kb = "%f KB",
             fac_fo_fm = "%f fm",
             fac_fo_px = "%f px",
-            fac_fo_flowery_unit = "99999"
+            fac_fo_flowery_unit = "99999",
+
+            fac_fo_fucking_kill = "Fucking Kill",
+            fac_fo_take = "Take"
         },
     }
 }
