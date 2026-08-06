@@ -89,7 +89,7 @@ FishAndChips.Fish { --Chips
 	weight = 6,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
-	attributes = { "xchips", "score" },
+	attributes = { "xchips", "score" },--i did this knowingly
 	pronouns = "they_them",
 	config = {extra = {xchips = 1.3, score = 800}},
 	stats = { weight = { min = 0.19, max = 0.2 }, length = {min = 0.051, max = 0.101}},
@@ -165,7 +165,7 @@ FishAndChips.Fish { --Trust
 	weight = 8,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
-	attributes = { "xchips", "score" },
+	attributes = { "mod_chance" }, 
 	config = {extra = {odds_add = 2}},
 	stats = { weight = { min = 0.01, max = 0.02 }, length = {min = 0.01, max = 0.02}}, --TODO: Stats
 	environments = {
