@@ -3,7 +3,7 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_astra-missingno-credits',
 	pos = { x = 1, y = 0 },
 	loc = true,
-	colour = G.C.PURPLE,
+	colour = HEX('8710c7'),
 	fac_partner = 'fac_MissingNo',
 	click = function(self)
 		play_sound('fac_am_astra_click')
@@ -11,12 +11,27 @@ PotatoPatchUtils.Developer({
 	end
 })
 
+SMODS.Gradient({
+	key = "am_missingno_rainbow",
+	cycle = 1,
+	colours = {
+		HEX("FFB0B2"),
+		HEX("FFD7B0"),
+		HEX("FFFAB0"),
+		HEX("BFFFB0"),
+		HEX("B0FFED"),
+		HEX("B0E7FF"),
+		HEX("B0B0FF"),
+		HEX("E0B0FF"),
+	},
+})
+
 PotatoPatchUtils.Developer({
 	name = 'MissingNo',
 	atlas = 'fac_astra-missingno-credits',
 	pos = { x = 0, y = 0 },
 	loc = true,
-	colour = G.C.ORANGE,
+	colour = SMODS.Gradients["fac_am_missingno_rainbow"],
 	fac_partner = 'fac_theAstra',
 	click = function(self)
 		play_sound('generic1')
