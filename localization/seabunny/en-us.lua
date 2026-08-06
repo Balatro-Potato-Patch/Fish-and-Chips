@@ -146,13 +146,55 @@ return {
                     "Its eyes absorb the",
                     "souls of the dying."
                 }
+            },
+            fish_fac_lapis_catfish = {},
+            fish_fac_golden_goldfish = {
+                name = "Golden Goldfish",
+                text = {
+                    {
+                        "{C:green}#1# in #2#{} chance to destroy last",
+                        "scored card, double money if",
+                        "it was {C:attention}Gold{}, halve otherwise",
+                        "{C:inactive}(Range of -{C:money}$#3#{C:inactive} to +{C:money}$#3#{C:inactive})"
+                    },
+                    {
+                        "{C:inactive}Enchanted:",
+                        "{C:inactive}Range of -$#3# to +$#4# instead"
+                    },
+                    {
+                        "To {C:dark_edition}Enchant{}: Destroy #5# cards",
+                        "{C:inactive}({C:attention}#6#{C:inactive} remaining)"
+                    }
+                },
+                flavor = {
+                    "A goldfish made of gold? What's",
+                    "next? A silverfish made of iron?"
+                }
+            },
+            fish_fac_golden_goldfish_enchant = {
+                name = "Golden Goldfish",
+                text = {
+                    {
+                        "{C:green}#1# in #2#{} chance to destroy last",
+                        "scored card, double money if",
+                        "it was {C:attention}Gold{}, halve otherwise",
+                        "{C:inactive}(Range of -{C:money}$#3#{C:inactive} to +{C:money}$#3#{C:inactive})"
+                    },
+                    {
+                        "{C:dark_edition}Enchanted:",
+                        "Range of -{C:money}$#3#{} to +{C:money}$#4#{} instead"
+                    }
+                },
+                flavor = {
+                    "A goldfish made of gold? What's",
+                    "next? A silverfish made of iron?"
+                }
             }
         }
     },
     misc = {
         dictionary = {
-            k_fac_mineral_fish = "Mineral Fish",
-            k_fac_infested = "Infested!"
+            k_fac_mineral_fish = "Mineral Fish"
         },
         v_dictionary = {
             a_cm = "+#1# cm"
