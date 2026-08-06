@@ -70,7 +70,10 @@ FishAndChips.Fish {
 		G.GAME.fac_forced_fish = card.ability.extra.toggle > 0 and card.ability.extra.drawn_fish[card.ability.extra.toggle].key or G.GAME.fac_forced_fish
 
 		local blue_streak = card.ability.extra.blue_streak
-		local seal_unlocked = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish.seal_unlocked
+		local seal_unlocked = G.PROFILES[G.SETTINGS.profile].fac_fishing
+			and G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data
+			and G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish
+			and G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish.seal_unlocked
 		local sprite_change = seal_unlocked and 3 or (blue_streak >= 7 and 3 or blue_streak >= 3 and 2 or 1)
 		G.E_MANAGER:add_event(Event({
 			trigger = 'after',
@@ -81,31 +84,7 @@ FishAndChips.Fish {
 			end}))
 			
 		if (not seal_unlocked) and card.ability.extra.blue_streak == 8 then -- change to blue_streak == 8 outside of testing, times_used > 0 during testing
-			G.GAME.fac_pa_doorfish = 0
-			G.E_MANAGER:add_event(Event({
-				ease = "lerp",
-				trigger = "ease",
-				ref_table = G.GAME,
-				ref_value = "fac_pa_doorfish",
-				ease_to = 1,
-				delay = 0.6 * G.SPEEDFACTOR,
-				blockable = false,
-			}))
-			G.E_MANAGER:add_event(Event({
-				trigger = 'immediate',
-				func = function()
-					play_sound('fac_treasure_get')
-					return true
-				end}))
-			G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish.seal_unlocked = true
-			G.E_MANAGER:add_event(Event({
-				ease = "lerp",
-				trigger = "ease",
-				ref_table = G.GAME,
-				ref_value = "fac_pa_doorfish",
-				ease_to = 0,
-				delay = 0.6 * G.SPEEDFACTOR,
-			}))
+			self:show_seal_unlocked()
 		end
 	end,
 	choose_fish_in_pool = function(self, rank)
@@ -160,7 +139,34 @@ FishAndChips.Fish {
 	end,
 	button_key = function (self)
 		return "Toggle"
-	end
+	end,
+	show_seal_unlocked = function(self)
+		G.GAME.fac_pa_doorfish = 0
+		G.E_MANAGER:add_event(Event({
+			ease = "lerp",
+			trigger = "ease",
+			ref_table = G.GAME,
+			ref_value = "fac_pa_doorfish",
+			ease_to = 1,
+			delay = 0.6 * G.SPEEDFACTOR,
+			blockable = false,
+		}))
+		G.E_MANAGER:add_event(Event({
+			trigger = 'immediate',
+			func = function()
+				play_sound('fac_treasure_get')
+				return true
+			end}))
+		G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish.seal_unlocked = true
+		G.E_MANAGER:add_event(Event({
+			ease = "lerp",
+			trigger = "ease",
+			ref_table = G.GAME,
+			ref_value = "fac_pa_doorfish",
+			ease_to = 0,
+			delay = 0.6 * G.SPEEDFACTOR,
+		}))
+	end,
 }
 
 local old_draw_ref = Game.draw
