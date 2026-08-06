@@ -282,6 +282,29 @@ local function fac_get_fishing_stats(rod_key, bait_key)
     return profile_data, rod_stats, bait_stats
 end
 
+local function fac_set_caught_reward_box_shift(state, enable)
+    local reward_box = G.FISHING and G.FISHING.fac_fishing_reward_box
+    if not (reward_box and reward_box.alignment and reward_box.alignment.offset) then
+        return
+    end
+    if enable then
+        if not state.fac_reward_box_shifted then
+            state.fac_reward_box_original_x = reward_box.alignment.offset.x or 0
+            reward_box.alignment.offset.x = state.fac_reward_box_original_x + 2.2
+            state.fac_reward_box_shifted = true
+        end
+    elseif state.fac_reward_box_shifted then
+        reward_box.alignment.offset.x = state.fac_reward_box_original_x or 0
+        state.fac_reward_box_shifted = false
+        state.fac_reward_box_original_x = nil
+    end
+end
+
+local function fac_recompute_reward_box_shift(state)
+    local both_stalled = state.treasure_type == "fish" and state.fac_main_fish_stalled and state.fac_treasure_fish_stalled
+    fac_set_caught_reward_box_shift(state, both_stalled)
+end
+
 local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_catch)
     reward_area = reward_area or G.FISHING.fac_fish_reward_area
     if not (profile.center and G.fac_fish_area) then
@@ -348,31 +371,7 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
 
     G:save_progress()
 
-    local shifted_reward_box = false
-    local original_reward_box_x = nil
-    local function set_caught_reward_box_shift(enable)
-        local reward_box = G.FISHING and G.FISHING.fac_fishing_reward_box
-        if not (reward_box and reward_box.alignment and reward_box.alignment.offset) then
-            return
-        end
-        if enable then
-            if not shifted_reward_box then
-                original_reward_box_x = reward_box.alignment.offset.x or 0
-                reward_box.alignment.offset.x = original_reward_box_x + 2.2
-                shifted_reward_box = true
-            end
-        elseif shifted_reward_box then
-            reward_box.alignment.offset.x = original_reward_box_x or 0
-            shifted_reward_box = false
-            original_reward_box_x = nil
-        end
-    end
-
     local function build_caught_box(show_full)
-        local has_treasure_fish_pair = state.treasure_type == "fish"
-        if show_full and has_treasure_fish_pair and not is_treasure_catch then
-            set_caught_reward_box_shift(true)
-        end
         return UIBox{
             definition = G.UIDEF.fac_fish_data(added_card, show_full),
             config = {
@@ -529,6 +528,12 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
                 G.NOT_SAFE_TO_PRESS_BUTTONS = false
                 if not card_limit_stalled then
                     card_limit_stalled = true
+                    if is_treasure_catch then
+                        state.fac_treasure_fish_stalled = true
+                    else
+                        state.fac_main_fish_stalled = true
+                    end
+                    fac_recompute_reward_box_shift(state)
 
                     reward_area.config.highlight_limit = 1
                     reward_area.config.highlighted_limit = 1
@@ -577,7 +582,12 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
                 reward_area:remove_card(added_card)
                 area:emplace(added_card)
             end
-            set_caught_reward_box_shift(false)
+            if is_treasure_catch then
+                state.fac_treasure_fish_stalled = false
+            else
+                state.fac_main_fish_stalled = false
+            end
+            fac_recompute_reward_box_shift(state)
             caught_box:remove()
             if discovery_text then discovery_text:remove() end
             if perfect_catch_text then perfect_catch_text:remove() end
@@ -648,6 +658,16 @@ local function fac_finish_round(success, skip)
             check_for_unlock({type = 'fac_treasure', value = G.GAME.fac_treasure_earned})
         end
         FishAndChips.rod_function("on_catch", state.profile.key)
+        state.fac_main_fish_stalled = false
+        state.fac_treasure_fish_stalled = false
+        if state.treasure_type == "fish" then
+            local bucket_area = FishAndChips.get_area_for_center(state.profile.center)
+            if bucket_area.config.card_limit - #bucket_area.cards <= 0 then
+                state.fac_main_fish_stalled = true
+                state.fac_treasure_fish_stalled = true
+                fac_recompute_reward_box_shift(state)
+            end
+        end
         fish_obj = fac_reveal_catch(state, state.profile)
         if treasure_profile then
             FishAndChips.rod_function("on_catch", treasure_profile.key)
@@ -1108,7 +1128,8 @@ local function fac_draw_vertical_meter(x, y, w, h, value, bg, fg)
 
     local filled = h * fac_clamp(value, 0, 1)
     love.graphics.setColor(fg[1], fg[2], fg[3], 0.97)
-    love.graphics.rectangle("fill", x, y + (h - filled), w, filled, 10, 10)
+    local fill_radius = math.min(10, filled / 2)
+    love.graphics.rectangle("fill", x, y + (h - filled), w, filled, fill_radius, fill_radius)
 
     love.graphics.setColor(1, 1, 1, 0.18)
     love.graphics.rectangle("line", x, y, w, h, 10, 10)
