@@ -54,7 +54,7 @@ local nxkooli_pick = function(pool, roll)
 		error("pool is nil")
 	end
 end
-
+--[[
 
 local nxkooli_ins_fishTable = {
 {key = "fish_fac_nxkooli_ins_good_fish", weight = 1},
@@ -237,7 +237,7 @@ FishAndChips.Fish {
 	end,
 }
 
-
+]]
 --end garfield phone
 --pronoun palace
 
@@ -325,14 +325,14 @@ FishAndChips.Fish {
 	key = "nxkooli_pp_tile",
 	atlas = "fac_nxkooli_pp_fish",
 	pos = { x = 26, y = 0 },
-	weight = 5,
+	weight = 75,
 	stats = {
 		weight = {min = 1, max = 2},
 		length = {min = 0.6, max = 0.6},
 	},
 	cost = 5,
-	ppu_coder = { "LasagnaFelidae" },
-	ppu_artist = { "LasagnaFelidae" },
+	ppu_coder = { "LasagnaFelidae, Nxkoo" },
+	ppu_artist = { "LasagnaFelidae, Nxkoo" },
 	attributes = { "mult", "chips", "xchips", "xmult" },
 	config = {
 		extra = {
