@@ -1066,13 +1066,15 @@ function FishAndChips.Compendium.credits_page(page_number, left)
     return page
 end
 
+FishAndChips.mod.config_tab = true
+
 function FishAndChips.Compendium.config_page(page_number, left)
     if page_number > 1 then return end -- TODO: add artwork to page 2
     FishAndChips.Compendium.reset_warning = G.STAGE ~= G.STAGES.RUN and localize('ph_fac_reset_all') or localize('ph_fac_cannot_reset')
     
     local page = {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {
         FishAndChips.Compendium.page_title('config_page', page_number),
-        {n=G.UIT.R, config = {minh = 1}},
+        {n=G.UIT.R, config = {minh = 0.4}},
         {n=G.UIT.R, config = {align = 'tm', minh = 3, minw = 5}, nodes = {
             FishAndChips.Compendium.toggle {text_key = 'b_fac_ambience_toggle', ref_value = "ambience", callback = G.FUNCS.fac_toggle_ambience},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_menu_toggle', ref_value = "menu"},
@@ -1080,6 +1082,7 @@ function FishAndChips.Compendium.config_page(page_number, left)
             FishAndChips.Compendium.toggle {text_key = 'b_fac_flavour_text', ref_value = "disable_flavour"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_flashing_lights', ref_value = "disable_flashing"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_fish_scaling', ref_value = "disable_fish_scaling"},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_performance_mode', ref_value = "performance_mode"},
         }},
         {n=G.UIT.R, config = {align = 'cm', minh = 2}, nodes = {
             {n=G.UIT.R, config = {align = 'cm', colour = FishAndChips.C.COMPENDIUM_COLOUR, r = 0.1, hover = true, button = 'fac_reset_all_progress', func = 'fac_can_reset_progress', minw = 3.2, minh = 0.8, padding = 0.05}, nodes = {
