@@ -1,4 +1,4 @@
-PotatoPatchUtils.Developer({
+FishAndChips.vman2002 = PotatoPatchUtils.Developer({
 	name = 'VMan_2002',
 	atlas = 'fac_vman2002_fish',
 	colour = G.C.BLUE,
@@ -54,6 +54,7 @@ local function slowmf(lol, speed)
 		end
 	}))
 end
+FishAndChips.vman2002.slowmf = slowmf
 
 fac_topuplib_inspect = topuplib and topuplib.inspect or function(name, value) --TODO: this is temporary (this is from topuplib, which has an incompatibility rn)
 	if not value then
@@ -82,6 +83,7 @@ local returnTrue = topuplib and topuplib.returnTrue or function() return true en
 --#region Fish
 
 local chips_col = {HEX("EBF6F8"), HEX("FD5F55"), HEX("55A383"), HEX("009CFD"), HEX("4F6367"), HEX("8A71E1"), HEX("E47C4C"), HEX("F2C255")}
+FishAndChips.vman2002.chips_col = chips_col
 FishAndChips.Fish { --Chips
 	key = "vman2002_chips",
 	atlas = "vman2002_chips",
