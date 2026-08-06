@@ -32,16 +32,15 @@ FishAndChips.Fish {
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
 	attributes = { "passive" },
-	config = { extra = { chips = 100, xmult = 2.5, sellcount = 4, odds = 40 } },
+	config = { extra = { blu = false } },
+	blueprint_compat = false,
 	environments = {
 		pier = 10,
 		aquifer = 2
 	},
 	calculate = function(self, card, context)
-		if false then
-			local c = G.GAME.round_resets.hands
-			G.hand:change_size(c)
-			G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + c
+		if context.after and not context.blueprint and G.GAME.current_round.hands_left <= 0 and G.GAME.chips < G.GAME.blind.chips then
+			ease_hands_played(G.GAME.round_resets.hands)
 			G.E_MANAGER:add_event(Event{func = function()
 				SMODS.destroy_cards(card)	
 			return true end})
@@ -51,6 +50,13 @@ FishAndChips.Fish {
 				colour = G.C[card.ability.extra.blu and "BLUE" or "RED"]
 			}
 		end
+	end,
+	set_ability = function(self, card, initial, delay_sprites)
+		card.ability.extra.blu = pseudorandom("fac_tss_medic",0,1) == 0
+		card.children.center:set_sprite_pos({x=0, y=card.ability.extra.blu and 1 or 0})
+	end,
+	update = function(self, card, dt)
+		card.children.center:set_sprite_pos({x=0, y=card.ability.extra.blu and 1 or 0})
 	end
 }
 
@@ -221,7 +227,7 @@ FishAndChips.Fish {
 	atlas = "tss_azfish",
 	pos = { x = 1, y = 0 },
 	pixel_size = { w = 98, h = 100 },
-	display_size = { w = 98*.75, h = 100*.75 },
+	display_size = { w = 98*.9, h = 100*.9 },
 	weight = 3,
 	stats = {weight = {min = 0, max = 0}, length = {min = 0, max = 0}}, -- pls replace later
 	ppu_coder = { "slimestuff" },
@@ -261,5 +267,14 @@ FishAndChips.Fish {
 	environments = {
 		calm_pond = 1,
 		garden = 10
-	}
+	},
+	calculate = function(self, card, context)
+		if pseudorandom("fac_tss_bee", 1, 1000) == 1 then -- we do a little bit of trolling
+			return {
+				message = localize("fac_tss_good_news"),
+				colour = G.C.YELLOW,
+				card = card
+			}
+		end
+	end
 }

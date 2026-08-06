@@ -218,9 +218,8 @@ SMODS.DrawSteps.ppu_floating_sprite.func = function(card, layer)
 	end
 end
 
--- Credits shader stuff :3
 SMODS.Shader {
-	key = 'tss_uranium', -- Doesn't have team name in as also used by another team :3
+	key = 'tss_uranium',
 	path = 'the_s_squad/uranium.fs'
 }
 
@@ -229,21 +228,79 @@ SMODS.ScreenShader {
 	shader = "fac_tss_uranium",
 
 	send_vars = function(self, sprite, card)
-		local t = G.TIMERS.REAL
+		local t = 0
 		for _, v in ipairs(SMODS.find_card("fish_fac_tss_uranium")) do
-			t = math.min(t,v.ability.extra.pickup)
+			t = math.max(t,v.ability.extra.pickup)
 		end
 
 		local w,h = love.graphics.getDimensions()
 		return {
 			screen_dims = {w,h},
-			t = G.TIMERS.REAL-t-10
+			t = t,
+			size = #SMODS.find_card("fish_fac_tss_slop")>0 and 2 or 1
 		}
 	end,
 	should_apply = function(self)
 		return not FishAndChips.mod.config.disable_flashing and #SMODS.find_card("fish_fac_tss_uranium")>0
 	end,
 	order = 0
+}
+
+SMODS.Shader {
+	key = 'tss_jpeg_encode',
+	path = 'the_s_squad/jpeg_encode.fs'
+}
+SMODS.Shader {
+	key = 'tss_jpeg_decode',
+	path = 'the_s_squad/jpeg_decode.fs'
+}
+
+local w,h = love.graphics:getDimensions()
+local jpeg_buffer = love.graphics.newCanvas(w,h,{format = "rgba16f"})
+
+local function jpeg_draw(canvas)
+	love.graphics.clear()
+	love.graphics.draw(canvas,0,0)
+end
+
+SMODS.ScreenShader {
+	key = "fac_tss_jpeg",
+	shader = "fac_tss_jpeg_decode",
+	should_apply = function(self)
+		return #SMODS.find_card("fish_fac_tss_slop")>0 or #SMODS.find_card("fish_fac_tss_uranium")>0
+	end,
+	order = 10,
+
+	draw = function(self,shader,canvas)
+		local buffer_w, buffer_h = jpeg_buffer:getDimensions()
+		local w,h = love.graphics.getDimensions()
+		-- Replace json_buffer if screen resolution changes
+		if buffer_w ~= w or buffer_h ~= h then
+			--print("Replacing Canvas Uh Oh")
+			jpeg_buffer:release()
+			jpeg_buffer = love.graphics.newCanvas(w,h,{format = "rgba16f"})
+		end
+
+		local decode = G.SHADERS.fac_tss_jpeg_decode
+		local encode = G.SHADERS.fac_tss_jpeg_encode
+
+		local slop = #SMODS.find_card("fish_fac_tss_slop")>0
+		local q = slop and .7 or .9
+		local s = slop and 8 or 4
+
+		encode:send("quality", q)
+		encode:send("dims", {w,h})
+		encode:send("samples", s)
+
+		decode:send("dims", {w,h})
+		decode:send("samples", s)
+
+		love.graphics.setShader(encode)
+		jpeg_buffer:renderTo(jpeg_draw, canvas)
+		
+		love.graphics.setShader(decode)
+		love.graphics.draw(jpeg_buffer,0,0)
+	end
 }
 
 SMODS.Atlas{

@@ -78,8 +78,8 @@ end
 FishAndChips.Fish {
 	key = "tss_guppy",
 	atlas = "tss_ellefish",
-	pos = { x = 0, y = 0 },
-	weight = 5,
+	pos = { x = 2, y = 1 },
+	weight = 3,
 	stats = {weight = {min = .03, max = .08}, length = {min = .03, max = .04}}, -- actual size range of guppies
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
@@ -219,7 +219,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "tss_forcefish",
 	atlas = "tss_ellefish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 1, y = 1 },
 	weight = 4,
 	stats = {weight = {min = 15, max = 25}, length = {min = .3, max = .5}},
 	ppu_coder = { "slimestuff" },
@@ -306,11 +306,19 @@ FishAndChips.Fish {
 				SMODS.change_base(c, nil, pseudorandom_element(SMODS.Ranks, "fac_tss_uranium").key)
 			end
 		end
-	end,
-	add_to_deck = function(self, card)
-		card.ability.extra.pickup = G.TIMERS.REAL
 	end
 }
+
+G.E_MANAGER:add_event(Event({blocking = false, blockable = false, func = function()
+	local f = love.update
+	function love.update(dt)
+		f(dt)
+		for i, v in ipairs(SMODS.find_card("fish_fac_tss_uranium")) do
+			v.ability.extra.pickup = v.ability.extra.pickup+dt
+		end
+	end
+return true end}))
+
 
 SMODS.Shader {
 	key = 'tss_uranium_glow',
@@ -337,4 +345,23 @@ SMODS.DrawStep {
 		end
 	end,
 	conditions = { vortex = false, facing = 'front' },
+}
+
+FishAndChips.Fish {
+	key = "tss_slop",
+	atlas = "tss_ellefish",
+	pos = { x = 3, y = 1 },
+	weight = 5,
+	stats = {weight = {min = 15, max = 25}, length = {min = .3, max = .5}},
+	ppu_coder = { "slimestuff" },
+	ppu_artist = { "slimestuff" },
+	attributes = { "passive" },
+	config = { extra = { } },
+	environments = {
+		wormhole = 2,
+		soup = 3,
+		backroom = 2,
+		calm_pond = 1,
+		chocolate_river = 2
+	}
 }

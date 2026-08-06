@@ -213,6 +213,22 @@ return {
 					"Who threw this away?",
 					"This is definitely radioactive..."
 				}
+			},
+			fish_fac_tss_slop = {
+				name = "fishingslop",
+				text = {
+					"Idk yet.",
+					"{C:inactive,s:.7}Toggle Graphically Intense",
+					"{C:inactive,s:.7}Shaders in Mod Settings"
+				},
+				flavour = {
+					"{C:red}>>283505479 (OP) #",
+					"this is just fishingslop. You",
+					"only like it because it's fish",
+					" ",
+					"{C:red}>>283509426 #",
+					"What?"
+				}
 			}
 		},
 		PotatoPatch = {
@@ -238,9 +254,11 @@ return {
 			fac_tss_chesh_giggle_4 = "Thanks~",
 			fac_tss_forcefem = "Forcefem!",
 			fac_tss_cult_fail = "...", -- ask az what it should say next call
-			fac_tss_cult_used = "Used", -- ask az what it should say next call
-			fac_tss_cult_available = "Available", -- ask az what it should say next call
-			fac_tss_popped = "Popped!"
+			fac_tss_cult_used = "Used",
+			fac_tss_cult_available = "Available",
+			fac_tss_popped = "Popped!",
+
+			fac_tss_good_news = "Good News!"
 		}
 	}
 }
