@@ -12,7 +12,7 @@ PotatoPatchUtils.Developer {
 	pos = { x = 0, y = 1 },
 	soul_pos = { x = 1, y = 1 },
 	colour = G.C.BLACK,
-	fac_partner = 'BakersDozenBagels',
+	fac_partner = 'fac_BakersDozenBagels',
 }
 PotatoPatchUtils.Developer {
 	name = 'BakersDozenBagels',
@@ -21,5 +21,5 @@ PotatoPatchUtils.Developer {
 	pos = { x = 0, y = 0 },
 	soul_pos = { x = 1, y = 0 },
 	colour = HEX 'EDD198',
-	fac_partner = 'Emik',
+	fac_partner = 'fac_Emik',
 }
