@@ -24,10 +24,10 @@ position = "after"
 payload = '''
 if _center.set == "fac_Fish" or _center.set == "fac_Bait" then
     if _center.pixel_size and _center.pixel_size.h and _center.unlocked and not (_center.discovered or self.bypass_discovery_center) then
-        self.children.center.scale.y = self.children.center.scale.y*(_center.pixel_size.h/95)
+        self.children.center.scale.y = self.children.center.scale.y*(_center.pixel_size.h/SMODS.get_atlas(_center.atlas).py)
     end
     if _center.pixel_size and _center.pixel_size.w and _center.unlocked and not (_center.discovered or self.bypass_discovery_center) then
-        self.children.center.scale.x = self.children.center.scale.x*(_center.pixel_size.w/71)
+        self.children.center.scale.x = self.children.center.scale.x*(_center.pixel_size.w/SMODS.get_atlas(_center.atlas).px)
     end
 end
 '''
@@ -44,14 +44,14 @@ if center.set == "fac_Fish" or center.set == "fac_Bait" then
         H = H*(center.display_size.h/95)
         self.T.h = H
     elseif center.pixel_size and center.pixel_size.h and center.unlocked and not (center.discovered or self.bypass_discovery_center) then
-        H = H*(center.pixel_size.h/95)
+        H = H*(center.pixel_size.h/SMODS.get_atlas(center.atlas).py)
         self.T.h = H
     end
     if center.display_size and center.display_size.w and center.unlocked and not (center.discovered or self.bypass_discovery_center) then
         W = W*(center.display_size.w/71)
         self.T.w = W
     elseif center.pixel_size and center.pixel_size.w and center.unlocked and not (center.discovered or self.bypass_discovery_center) then
-        W = W*(center.pixel_size.w/71)
+        W = W*(center.pixel_size.w/SMODS.get_atlas(center.atlas).px)
         self.T.w = W
     end
 end
