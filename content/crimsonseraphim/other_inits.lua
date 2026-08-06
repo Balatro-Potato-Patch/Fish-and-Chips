@@ -44,6 +44,16 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+	key = "crimsonseraphim_picayune",
+	path = "crimsonseraphim/CursedFishA.png",
+	px = 71,
+	py = 95,
+    atlas_table = "ANIMATION_ATLAS",
+    fps = 10,
+    frames = 10
+})
+
+SMODS.Atlas({
 	key = "crimsonseraphim_temporary",
 	path = "crimsonseraphim/temporary.png",
 	px = 71,

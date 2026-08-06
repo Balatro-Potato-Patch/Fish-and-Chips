@@ -1407,7 +1407,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = "picayune_cursedfish",
-	atlas = "crimsonseraphim_aeonfish",
+	atlas = "crimsonseraphim_picayune",
 	pos = { x = 0, y = 0 },
 	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
