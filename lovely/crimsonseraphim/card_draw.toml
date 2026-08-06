@@ -26,7 +26,16 @@ payload = '''
 if self.ability.crimsonseraphim_starblighted then
     self.children.center:draw_shader('fac_crimsonseraphim_starblighted', nil, self.ARGS.send_to_shader)
 else
-    self.children.center:draw_shader('dissolve')
+    if self.config.center_key == "fish_fac_roaring_fish" then
+        for i = 5, 1, -1 do
+            G.afterimage_alpha = 1/i
+            self.children.center:draw_shader('fac_crimsonseraphim_afterimage', nil, nil, nil, self.children.center,scale_mod, 0,nil, 0.1-0.15/2 + 0.25*math.sin(1.8*(G.TIMERS.REAL-0.3*(i+1))),nil, 0.6)	
+        end
+        G.afterimage_alpha = nil
+        self.children.center:draw_shader('dissolve', nil, nil, nil, self.children.center,scale_mod, 0,nil, 0.1-0.15/2 + 0.25*math.sin(1.8*(G.TIMERS.REAL-0.3)),nil, 0.6)
+    else
+        self.children.center:draw_shader('dissolve')
+    end
 end
 '''
 match_indent = true
@@ -49,12 +58,12 @@ match_indent = true
 
 [[patches]]
 [patches.pattern]
-target = '''=[SMODS FishAndChips "/src/overrides.lua"]'''
-pattern = '''local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}'''
-position = "at"
+target = '''cardarea.lua'''
+pattern = '''if self.children.view_deck then'''
+position = "before"
 payload = '''
-G.FAC_FLAVOR_VARS = true
-local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}
-G.FAC_FLAVOR_VARS = nil
+for k, card in ipairs(self.cards) do
+    if card.config and card.config.center and card.config.center.no_rotation then card.T.r = 0; card.VT.r = 0 end
+end
 '''
 match_indent = true

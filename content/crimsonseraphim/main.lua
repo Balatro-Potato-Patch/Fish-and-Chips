@@ -19,7 +19,7 @@ FishAndChips.crimsonseraphim = {
 }
 
 FishAndChips.crimsonseraphim.click_sounds = {
-    "null", "holiday", "flowery"
+    "null", "holiday", "flowery", "omega"
 }
 
 PotatoPatchUtils.Developer({
@@ -50,12 +50,14 @@ PotatoPatchUtils.Developer({
         return { vars = { elements = { {n=G.UIT.O, config={object = area}} } } }
     end,
     stop_hover = function()
+        if not FishAndChips.crimsonseraphim.desc_card then return end
         FishAndChips.crimsonseraphim.desc_card.card:stop_hover()
         FishAndChips.crimsonseraphim.desc_card.card:remove()
         FishAndChips.crimsonseraphim.desc_card.area:remove()
         FishAndChips.crimsonseraphim.desc_card = nil
     end,
     remove = function()
+        if not FishAndChips.crimsonseraphim.desc_card then return end
         FishAndChips.crimsonseraphim.desc_card.card:stop_hover()
         FishAndChips.crimsonseraphim.desc_card.card:remove()
         FishAndChips.crimsonseraphim.desc_card.area:remove()
@@ -1458,6 +1460,9 @@ FishAndChips.Fish {
     end,
     blueprint_compat = false,
     use = function(self, card)
+        if G.GAME.fac_fish_expanded then
+            G.FUNCS.fac_open_fishing_menu()
+        end
         G.E_MANAGER:add_event(Event{
             trigger = "after",
             func = function()
@@ -1575,7 +1580,8 @@ FishAndChips.Fish {
 	attributes = { "xmult" },
 
 	environments = {
-        wormhole = 5
+        wormhole = 5,
+        garden = 5, 
 	},
     stats = {
 		weight = {min = 0, max = 0},
@@ -1622,6 +1628,154 @@ FishAndChips.Fish {
             return {
                 xmult = card.ability.extra.mult * FishAndChips.crimsonseraphim.count_developers()
             }
+        end
+    end
+}
+
+FishAndChips.Fish {
+	key = "sans_door",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 0, y = 999 },
+	weight = 2, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "useable" },
+
+	environments = {
+        wormhole = 5,
+        garden = 5, 
+	},
+    stats = {
+		weight = {min = 5, max = 5},
+		length = {min = 1.9, max = 1.9}
+	},
+    config = {
+        extra = {
+            environment = "calm_pond",
+            cost = 3
+        }
+    },
+    loc_vars = function(self, _, card)
+        return {
+            vars = {
+                card.ability.extra.cost,
+                localize{type = "name_text", set = "fac_Env", key = card.ability.extra.environment}
+            },
+        }
+    end,
+    use = function(self, card)
+        G.TAROT_INTERRUPT = nil
+        FishAndChips:stop_ambience()
+		local old_env = G.GAME.fac_fishing_environment
+		G.GAME.fac_fishing_environment = card.ability.extra.environment
+		SMODS.calculate_context{fac_environment_changed = G.GAME.fac_fishing_environment, old_environment = old_env, forced = true}
+		G.FISHING_STATE = G.FISHING_STATES.MOVING
+		G.FISHING_STATE_COMPLETE = false
+        SMODS.scale_card(card, {
+            ref_table = card.ability.extra,
+            ref_value = "cost"
+        })
+        ease_dollars(-card.ability.extra.cost)
+        card.ability.extra.environment = pseudorandom_element(FishAndChips.Environments, "fac_next_location", {
+			in_pool = function (v, args)
+				return v.key ~= G.GAME.fac_fishing_environment
+			end
+		}).key
+    end,
+    can_use = function(self, card)
+        return G.GAME.dollars + G.GAME.bankrupt_at > card.ability.extra.cost
+    end,
+    keep_on_use = function()
+        return true
+    end,
+    no_rotation = true,
+    calculate = function(self, card, context)
+        if context.end_of_round and context.main_eval then
+            card.ability.extra.cost = 3
+            return {
+                message = localize("k_reset_ex")
+            }
+        end
+    end
+}
+
+SMODS.draw_ignore_keys.sans_door_canvas = true
+SMODS.DrawStep({
+	key = "sans_door",
+	order = 25,
+	func = function(self)
+        local card = self.config.center_key
+        if (card ~= "fish_fac_sans_door")  then return end
+        if not self.children.sans_door_canvas then 
+            self.children.sans_door_canvas = SMODS.CanvasSprite(
+                {X=0, Y=0, W=71, H=95, canvasW=71, canvasH=95, canvasScale=1}
+            )
+        end
+        love.graphics.push()
+        love.graphics.origin()
+        self.children.sans_door_canvas.canvas:renderTo(function() 
+            local scale = G.T_CANV_SCALE or 1.25
+            love.graphics.clear({0,0,0,1})
+            local environment = FishAndChips.Environments[self.ability.extra.environment]
+            local atlas = SMODS.get_atlas(environment.atlas == "fac_Env" and "fac_background" or environment.atlas)
+            local pos = environment.background_pos or {x=0,y=0}
+            love.graphics.setColor(G.C.WHITE)
+            local quad = love.graphics.newQuad(560 * pos.x, 322 * pos.y, 560, 322, atlas.image:getWidth(), atlas.image:getHeight())
+            local ts = 3.3488*3.3488
+            love.graphics.draw(atlas.image, quad, -self.T.x*ts*scale*2*scale, -self.T.y*ts*scale*2*scale, 0, scale, scale, 0, 0) 
+
+            local open = self.area == G.fac_fish_area
+            local quad = love.graphics.newQuad(open and 71 or 0, 0, 71, 95, 71*2, 95)
+            local di = SMODS.get_atlas("fac_crimsonseraphim_door").image
+            love.graphics.draw(di, quad, 0,0, 0, 1,1, 0, 0) 
+        end)
+        love.graphics.pop()
+        self.children.sans_door_canvas.role.draw_major = self
+        self.children.sans_door_canvas:draw_shader("dissolve", nil, nil, nil, self.children.center)
+	end,
+	conditions = { vortex = false, facing = "front" },
+})
+
+
+FishAndChips.Fish {
+	key = "roaring_fish",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 2, y = 2 },
+	weight = 2, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "useable", },
+
+	environments = {
+        wormhole = 5,
+        garden = 5, 
+	},
+    stats = {
+		weight = {min = 0.1, max = 0.2},
+		length = {min = 0.15, max = 0.2}
+	},
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+    end,
+    calculate = function(self, card, context)
+        if context.ending_shop then
+            local cards = {}
+            for i, v in pairs(G.fac_fish_area.cards) do
+                if not SMODS.is_eternal(v) then
+                    cards[#cards+1] = v
+                end
+            end
+            FishAndChips.crimsonseraphim.swoon()
+            G.E_MANAGER:add_event(Event{
+                func = function()
+                    pseudoshuffle(cards, pseudoseed("fac_fish_roaring_fish"))
+                    cards[1]:start_dissolve()
+                    pseudoshuffle(cards, pseudoseed("fac_fish_roaring_fish"))
+                    cards[1]:set_edition("e_negative")
+                    return true
+                end
+            })
+            return nil, true
         end
     end
 }

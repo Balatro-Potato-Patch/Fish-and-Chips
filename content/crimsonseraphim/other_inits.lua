@@ -27,6 +27,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+	key = "crimsonseraphim_door",
+	path = "crimsonseraphim/door.png",
+	px = 71,
+	py = 95,
+})
+
+SMODS.Atlas({
 	key = "crimsonseraphim_ultimate_weapon",
 	path = "crimsonseraphim/ultimate_weapon.png",
 	px = 102,
@@ -286,6 +293,8 @@ SMODS.Shader({
     path="crimsonseraphim/ultimate_weapon.fs",
 })
 
+SMODS.Shader({key = 'crimsonseraphim_afterimage', path = 'crimsonseraphim/afterimage.fs', send_vars = function(s) return {alpha = G.afterimage_alpha or 1} end})
+
 local data = SMODS.NFS.newFileData(FishAndChips.mod.path .."/assets/1x/crimsonseraphim/jade.png")
 local _jade = love.graphics.newImage(data)
 SMODS.ScreenShader({
@@ -360,4 +369,10 @@ SMODS.Sound {
     select_music_track = function()
         return next(SMODS.find_card("fish_fac_nameless_lotus")) and 1e307
     end
+}
+
+SMODS.Sound {
+	key = "crimsonseraphim_swoon",
+	path = "crimsonseraphim/swoon.ogg",
+	pitch = 1,
 }

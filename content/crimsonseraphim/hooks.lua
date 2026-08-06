@@ -254,3 +254,42 @@ function Game:new_run(args, ...)
         end
     end
 end
+
+local function loadmyimageistg(fn)
+    local full_path = (FishAndChips.mod.path
+        .. "assets/1x/crimsonseraphim/" .. fn)
+    local file_data = assert(NFS.newFileData(full_path), ("Epic fail"))
+    local tempimagedata = assert(love.image.newImageData(file_data), ("Epic fail 2"))
+    --print ("LTFNI: Successfully loaded " .. fn)
+    return (assert(love.graphics.newImage(tempimagedata), ("Epic fail 3")))
+end
+
+local drawhook = love.draw
+function love.draw()
+	drawhook()
+	-- SWOON screen
+	if G.swoon and (G.swoon > 0) then
+        local _xscale = love.graphics.getWidth() / 1920
+	    local _yscale = love.graphics.getHeight() / 1080
+		if FishAndChips.crimsonseraphim.swooned == nil then FishAndChips.crimsonseraphim.swooned = loadmyimageistg("swoonslash.png") end
+		love.graphics.setColor(1, 1, 1, 1)
+		love.graphics.draw(FishAndChips.crimsonseraphim.swooned, 0 * _xscale * 2, 0 * _yscale * 2, 0, _xscale * 2 * 2, _yscale * 2 * 2)
+	end
+end
+
+local upd = Game.update
+function Game:update(dt)
+	upd(self, dt)
+
+	-- tick based events
+	if FishAndChips.crimsonseraphim.ticks == nil then FishAndChips.crimsonseraphim.ticks = 0 end
+	if FishAndChips.crimsonseraphim.dtcounter == nil then FishAndChips.crimsonseraphim.dtcounter = 0 end
+	FishAndChips.crimsonseraphim.dtcounter = FishAndChips.crimsonseraphim.dtcounter + dt
+	FishAndChips.crimsonseraphim.dt = dt
+
+	while FishAndChips.crimsonseraphim.dtcounter >= 0.010 do
+		FishAndChips.crimsonseraphim.ticks = FishAndChips.crimsonseraphim.ticks + 1
+		FishAndChips.crimsonseraphim.dtcounter = FishAndChips.crimsonseraphim.dtcounter - 0.010
+		if G.swoon and G.swoon > 0 then G.swoon = G.swoon - 1 end
+	end
+end

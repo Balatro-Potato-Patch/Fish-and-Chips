@@ -378,6 +378,7 @@ end
 
 local generate_ui_ref = SMODS.Center.generate_ui
 function SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+    local cfg = card and card.ability or self.config
     if card and card.ability.crimsonseraphim_starblighted then
         info_queue[#info_queue+1] = {set = "Other", key = "crimsonseraphim_starblighted", vars = {card.ability.crimsonseraphim_starblighted_mult, 0.5}}
     end
@@ -505,4 +506,18 @@ function FishAndChips.crimsonseraphim.count_developers()
         tot = tot + 1
     end
     return tot > 0 and tot or 1
+end
+
+function FishAndChips.crimsonseraphim.swoon()
+    FishAndChips.crimsonseraphim.vol = G.SETTINGS.SOUND.music_volume
+    G.SETTINGS.SOUND.music_volume = 0
+    G.E_MANAGER:add_event(Event({
+        trigger = 'immediate',
+        blocking = false,
+        func = (function()
+            G.swoon = 60 * G.SETTINGS.GAMESPEED
+            play_sound("fac_crimsonseraphim_swoon", 1, 1)
+            return true
+        end),
+    }))
 end

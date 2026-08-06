@@ -435,6 +435,42 @@ return {
             },
             fish_fac_nameless_lotus_heart = {
                 name = "{E:fac_nameless}Erilucyxwyn <3{}",
+            },
+            fish_fac_sans_door = {
+                name = "Mysterious Door.",
+                text = {
+                    {
+                        "Use this {C:attention}Fish{} for {C:money}$#1#{} to change",
+                        "the current {C:attention}Environment{} to {C:attention}#2#{}",
+                        "then increase the cost by {C:money}$1{} and",
+                        "randomize the selected {C:attention}Environment{}",
+                    },
+                    {
+                        "Resets cost to {C:money}$3{}",
+                        "at the end of round."
+                    }
+                },
+                flavor = {
+                    "... Where'd this door come from?",
+                    "Dunno... come to think of it,",
+                    "I've never seen it before."
+                }
+            },
+            fish_fac_roaring_fish = {
+                name = "Roaring Fish",
+                text = {
+                    {
+                        "At the end of the shop",
+                        "{C:red}Destroy{} a random {C:attention}Fish",
+                        "and apply {C:dark_edition}Negative{} to a",
+                        "random {C:attention}Fish{}"
+                    },
+
+                },
+                flavor = {
+                    "Good thing im stuck",
+                    "in this cutscene..."
+                }
             }
         },
         Other = {
