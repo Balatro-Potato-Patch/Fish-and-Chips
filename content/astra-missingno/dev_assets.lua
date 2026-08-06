@@ -1,3 +1,5 @@
+G.E_MANAGER.queues.astra_notif_queue = {}
+
 PotatoPatchUtils.Developer({
 	name = 'theAstra',
 	atlas = 'fac_astra-missingno-credits',
@@ -8,6 +10,48 @@ PotatoPatchUtils.Developer({
 	click = function(self)
 		play_sound('fac_am_astra_click')
 		self:juice_up(0.1, 0.1)
+
+		local notif = UIBox {
+			definition = {
+				n = G.UIT.ROOT,
+				config = { colour = G.C.CLEAR, },
+				nodes = {
+					{
+						n = G.UIT.O,
+						config = {
+							object = SMODS.create_sprite(0, 0, 3.99, 1, "fac_astra-missingno-notification", { x = 0, y = 0 }),
+						},
+					},
+				},
+			},
+			config = {
+				align = "br",
+				offset = { y = 1, x = -2.5 },
+				major = G.ROOM_ATTACH,
+				bond = "weak",
+				instance_type = 'POPUP'
+			}
+		}
+		ease_value(notif.alignment.offset, 'y', -1.25)
+		G.E_MANAGER:add_event(Event({
+			delay = 6,
+			trigger = 'after',
+			blockable = false,
+			func = function()
+				ease_value(notif.alignment.offset, 'y', 1.25)
+				return true;
+			end
+		}, "astra_notif_queue"))
+
+		G.E_MANAGER:add_event(Event({
+			delay = 6,
+			trigger = 'after',
+			func = function()
+				notif:remove()
+				notif = nil
+				return true;
+			end
+		}, "astra_notif_queue"))
 	end
 })
 
@@ -51,6 +95,13 @@ SMODS.Atlas({
 	path = "astra-missingno/credits.png",
 	px = 71,
 	py = 95,
+})
+
+SMODS.Atlas({
+	key = 'astra-missingno-notification',
+	path = "astra-missingno/notification.png",
+	px = 351,
+	py = 88,
 })
 
 for i = 1, 3 do
