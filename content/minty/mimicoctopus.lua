@@ -29,6 +29,7 @@ FishAndChips.Fish{
     config = {
         extra = {
             target_val = nil,
+            target_name = localize("k_none"),
             copying = false
         }
     },
@@ -84,7 +85,7 @@ FishAndChips.Fish{
             end
         end
 
-        local ret = SMODS.blueprint_effect(card, target_card, context)
+        local ret = SMODS.blueprint_effect(card, target_card, context) or {}
 
         if context.end_of_round and context.main_eval and not context.blueprint then
             local reset = {
@@ -101,9 +102,9 @@ FishAndChips.Fish{
                 message = localize("k_reset")
             }
 
-            if ret and next(ret) then return SMODS.merge_effects(ret, reset) else return reset end
+            ret = SMODS.merge_effects(ret, reset)
         end
 
-        return ret and next(ret) and ret or nil
+        return next(ret) and ret or nil
     end,
 }
