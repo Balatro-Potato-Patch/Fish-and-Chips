@@ -167,14 +167,23 @@ FishAndChips.Fish {
 
 -- Old Fish
 
+SMODS.Attribute {
+    key = 'deltarune'
+}
+
+SMODS.Sound{
+    key = "gerson_laugh",
+    path = "w_d_seuss/gerson_laugh.ogg",
+}
+
 FishAndChips.Fish {
 	key = "old",
 	atlas = "w_d_seuss_fish",
 	pos = { x = 4, y = 0 },
-	weight = 2,
+	weight = 8,
 	ppu_coder = { "Nick" },
-	ppu_artist = { "Nick" },
-	attributes = { },
+	ppu_artist = { "Jolyne" },
+	attributes = { "treasure", "usable", "generation", "deltarune" },
 	config = {
 		extra = {
 		}
@@ -187,10 +196,34 @@ FishAndChips.Fish {
 		length = {min = 1.70, max = 1.80}
 	},
 	blueprint_compat = false,
+	treasure = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
 	end,
-	calculate = function(self, card, context)
+	use = function(self, card, area)
+		G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+				play_sound('fac_gerson_laugh')
+				local cen_pool = {}
+				for _, deltarune_fish_center in pairs(G.P_CENTER_POOLS["fac_Fish"]) do
+					if deltarune_fish_center.attributes.deltarune then
+						cen_pool[#cen_pool + 1] = deltarune_fish_center
+					end
+				end
+				local deltarune_fish = pseudorandom_element(cen_pool, 'gerson').key
+				if deltarune_fish then
+                	SMODS.add_card({key = deltarune_fish, area = G.fac_fish_area})
+				end
+                card:juice_up(0.3, 0.5)
+                return true
+            end
+        }))
+        delay(0.6)
+	end,
+	can_use = function(self, card)
+		return G.fac_fish_area and #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit
 	end
 }
 
@@ -244,7 +277,9 @@ function Card:can_sell_card(context)
     nosell_hook(self, context)
 	if self.config.center.key == 'fish_fac_bad' then
 		return false
-    end
+    else
+		return true
+	end
 end
 
 -- Darwin
@@ -255,26 +290,68 @@ FishAndChips.Fish {
 	pos = { x = 1, y = 1 },
 	weight = 1,
 	ppu_coder = { "Nick" },
-	ppu_artist = { "Nick" },
-	attributes = { },
+	ppu_artist = { "Jolyne" },
+	attributes = { "xmult" },
 	config = {
 		extra = {
+			xmult = 3,
+			rounds = 5,
+			rounds_total = 5
 		}
 	},
+	mf_rotate_by = 3 * math.pi / 2,
 	environments = {
 		garden = 5,
 	},
 	stats = {
-		weight = {min = 79, max = 85},
+		weight = {min = 79.00, max = 85.00},
 		length = {min = 1.82, max = 1.94}
 	},
-	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { } }
+		return { vars = { card.ability.extra.xmult, card.ability.extra.rounds_total, card.ability.extra.rounds, card.ability.extra.rounds == 0 and "Active" or "Not Active"} }
 	end,
 	calculate = function(self, card, context)
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+			if card.ability.extra.rounds <= 0 then
+				card.ability.extra.rounds = card.ability.extra.rounds_total
+				return {
+					message = localize('k_lost'),
+				}
+			else
+				card.ability.extra.rounds = card.ability.extra.rounds - 1
+				local eval = function(card) return card.ability.extra.rounds == 0 and not card.REMOVED end
+                juice_card_until(card, eval, true)
+				return {
+					message = localize('k_omw'),
+				}
+			end
+		end
+		if context.joker_main and card.ability.extra.rounds <= 0 then 
+			return {
+				xmult = card.ability.extra.xmult
+			}
+		end
 	end
 }
+
+local card_draw = Card.draw -- Thank you MoreFluff Rotarot
+function Card:draw(layer, ...)
+	if self.config and self.config.center and self.config.center.key == 'fish_fac_darwin' then
+		self.VT.r = self.VT.r + ( 3 * math.pi / 2 )
+		for k, v in pairs(self.children) do
+			v.VT.r = v.VT.r + ( 3 * math.pi / 2 )
+		end
+	end
+
+	card_draw(self, layer, ...)
+
+	if self.config and self.config.center and self.config.center.key == 'fish_fac_darwin' then
+		self.VT.r = self.VT.r - ( 3 * math.pi / 2 )
+		for k, v in pairs(self.children) do
+			v.VT.r = v.VT.r - ( 3 * math.pi / 2 )
+		end
+	end
+end
 
 -- Pear Fish
 
@@ -466,13 +543,12 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		garden = 5,
+		styx = 5,
 	},
 	stats = {
 		weight = {min = 79.00, max = 84.00},
 		length = {min = 1.80, max = 2.10}
 	},
-	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
 	end,
@@ -544,7 +620,6 @@ FishAndChips.Fish {
 		weight = {min = 33.53, max = 34.93},
 		length = {min = 0.98, max = 1.01}
 	},
-	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_sinister") } } }
 	end,
@@ -580,7 +655,6 @@ FishAndChips.Fish {
 		weight = {min = 33.53, max = 34.93},
 		length = {min = 2.24, max = 2.51}
 	},
-	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_red_handed") } } }
 	end,
@@ -616,7 +690,6 @@ FishAndChips.Fish {
 		weight = {min = 33.53, max = 34.93},
 		length = {min = 0.98, max = 1.01}
 	},
-	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_st_solis") } } }
 	end,
@@ -652,7 +725,7 @@ FishAndChips.Fish {
 	weight = 6,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "generation" },
+	attributes = { "generation", "deltarune" },
 	config = {
 		extra = {
 			f1 = true,
@@ -740,7 +813,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "sell_value", "scaling", "economy" },
+	attributes = { "sell_value", "scaling", "economy", "deltarune" },
 	config = {
 		extra = {
 			price = 1

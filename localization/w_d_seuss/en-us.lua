@@ -69,10 +69,12 @@ return {
             fish_fac_old = {
                 name = "Old Fish",
                 text = {
-                    ""
+                    "Creates a Fish with",
+                    "a {C:blind}Deltarune{} attribute",
+                    "{C:inactive}(Must have room)",
                 },
                 flavour = {
-                    ""
+                    "{C:green}Gyaa Ha Ha!"
                 }
             },
             fish_fac_bad = {
@@ -101,10 +103,12 @@ return {
             fish_fac_darwin = {
                 name = "Darwin",
                 text = {
-                    ""
+                    "{X:mult,C:white}X#1#{} Mult after",
+                    "{C:attention}#2#{C:inactive} [#3#]{} rounds",
+                    "{C:inactive}#4#"
                 },
                 flavour = {
-                    ""
+                    "I'm on my way, I'm on my way!"
                 }
             },
             fish_fac_pear = {
@@ -224,10 +228,12 @@ return {
     },
     misc = {
         dictionary = {
-            k_bigtrout = "[[BIG TROUT]]",
-            k_hokimama = "[HOKI MAMA]",
+            k_omw = "I'm on my way!",
+            k_lost = "I'm lost :(",
             k_dismantle = "Dismantle",
             k_cleave = "Cleave",
+            k_bigtrout = "[[BIG TROUT]]",
+            k_hokimama = "[HOKI MAMA]",
         },
         achievement_names = {
         },
