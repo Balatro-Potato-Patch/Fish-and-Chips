@@ -29,44 +29,6 @@ return {
                     "to catch one in person."
                 }
             },
-            fish_fac_ruby_snapper = {
-                name = "Ruby Snapper",
-                text = {
-                    {
-                        "Gains {C:attention}sell value{} of first",
-                        "fish sold each round"
-                    },
-                    {
-                        "{C:inactive}Enchanted: Double",
-                        "{C:inactive}sell value when sold"
-                    },
-                    {
-                        "To {C:dark_edition}Enchant{}: Sell #1# fishes",
-                        "{C:inactive}({C:attention}#2#{C:inactive} remaining)"
-                    }
-                },
-                flavor = {
-                    "Its eyes absorb the",
-                    "souls of the dying."
-                }
-            },
-            fish_fac_ruby_snapper_enchant = {
-                name = "Ruby Snapper",
-                text = {
-                    {
-                        "Gains {C:attention}sell value{} of first",
-                        "fish sold each round"
-                    },
-                    {
-                        "{C:dark_edition}Enchanted{}: Double",
-                        "{C:attention}sell value{} when sold"
-                    }
-                },
-                flavor = {
-                    "Its eyes absorb the",
-                    "souls of the dying."
-                }
-            },
             fish_fac_quartz_pip = {
                 name = "Quartz Pip",
                 text = {
@@ -120,7 +82,7 @@ return {
                     },
                     {
                         "To {C:dark_edition}Enchant{}: Score a card with",
-                        "#2# or more chips #3# times",
+                        "{C:chips}#2#{} or more chips #3# times",
                         "{C:inactive}({C:attention}#4#{C:inactive} remaining)"
                     }
                 },
@@ -146,8 +108,46 @@ return {
                     [[Here's another "quick-silver"]],
                     [[you don't want to eat!]]
                 }
+            },
+            fish_fac_ruby_snapper = {
+                name = "Ruby Snapper",
+                text = {
+                    {
+                        "Gains {C:attention}sell value{} of first",
+                        "fish sold each round"
+                    },
+                    {
+                        "{C:inactive}Enchanted: Double",
+                        "{C:inactive}sell value when sold"
+                    },
+                    {
+                        "To {C:dark_edition}Enchant{}: Sell #1# fishes",
+                        "{C:inactive}({C:attention}#2#{C:inactive} remaining)"
+                    }
+                },
+                flavor = {
+                    "Its eyes absorb the",
+                    "souls of the dying."
+                }
+            },
+            fish_fac_ruby_snapper_enchant = {
+                name = "Ruby Snapper",
+                text = {
+                    {
+                        "Gains {C:attention}sell value{} of first",
+                        "fish sold each round"
+                    },
+                    {
+                        "{C:dark_edition}Enchanted{}: Double",
+                        "{C:attention}sell value{} when sold"
+                    }
+                },
+                flavor = {
+                    "Its eyes absorb the",
+                    "souls of the dying."
+                }
             }
-        },
+        }
     },
     misc = {
         dictionary = {
