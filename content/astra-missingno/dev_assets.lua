@@ -1,4 +1,7 @@
 G.E_MANAGER.queues.astra_notif_queue = {}
+FishAndChips.AstraMissingno = {
+	notif_stack = {}
+}
 
 PotatoPatchUtils.Developer({
 	name = 'theAstra',
@@ -32,19 +35,30 @@ PotatoPatchUtils.Developer({
 				instance_type = 'POPUP'
 			}
 		}
-		ease_value(notif.alignment.offset, 'y', -1.25)
+		
+		table.insert(FishAndChips.AstraMissingno.notif_stack, notif)
+		for _, v in pairs(FishAndChips.AstraMissingno.notif_stack) do
+			ease_value(v.alignment.offset, 'y', v == notif and -1.25 or -1)
+		end
+
 		G.E_MANAGER:add_event(Event({
 			delay = 6,
 			trigger = 'after',
 			blockable = false,
 			func = function()
-				ease_value(notif.alignment.offset, 'y', 1.25)
+				ease_value(notif.alignment.offset, 'y', 1 - notif.alignment.offset.y)
+				for i = 1, #FishAndChips.AstraMissingno.notif_stack do
+					if FishAndChips.AstraMissingno.notif_stack[i] == notif then
+						table.remove(FishAndChips.AstraMissingno.notif_stack, i)
+						break
+					end
+				end
 				return true;
 			end
 		}, "astra_notif_queue"))
 
 		G.E_MANAGER:add_event(Event({
-			delay = 6,
+			delay = 0.25,
 			trigger = 'after',
 			func = function()
 				notif:remove()
