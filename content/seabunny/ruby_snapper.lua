@@ -5,6 +5,7 @@ FishAndChips.Fish {
     pos = {x = 0, y = 0},
     config = {extra = {enchant = false, max = 5, fish_left = 5}},
     blueprint_compat = false,
+    badge_key = "k_fac_mineral_fish",
     loc_vars = function(self, info_queue, card)
         if card.ability.extra.enchant then
             return {key = self.key .. "_enchant"}
@@ -12,7 +13,7 @@ FishAndChips.Fish {
         return {vars = {card.ability.extra.max, card.ability.extra.fish_left}}
     end,
     calculate = function(self, card, context)
-        if context.selling_card and context.card.config.center:is(FishAndChips.Fish) then
+        if context.selling_card and context.card.ability.set == "fac_Fish" then
             if not card.ability.extra.enchant then
                 card.ability.extra.fish_left = card.ability.extra.fish_left - 1
                 if card.ability.extra.fish_left <= 0 then
@@ -33,10 +34,10 @@ FishAndChips.Fish {
         end
     end,
     weight = SEABUN.weight,
+    attributes = {"economy"},
     environments = {
         -- TODO
     },
-    attributes = {"economy"},
     ppu_coder = {"ouiiskey"},
     ppu_artist = {"Lusha"},
     stats = {

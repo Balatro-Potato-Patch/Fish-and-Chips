@@ -23,7 +23,7 @@ PotatoPatchUtils.Developer {
 
 -- Fish
 SEABUN = {
-    weight = 75 / 2
+    weight = 75 / 3
 }
 
 SMODS.Atlas {
@@ -55,7 +55,7 @@ SMODS.Sound {
 
 local Scmc_ref = SMODS.current_mod.calculate
 SMODS.current_mod.calculate = function(self, context)
-    if context.selling_card and context.card.config.center:is(FishAndChips.Fish) then
+    if context.selling_card and context.card.ability.set == "fac_Fish" then
         G.GAME.current_round.fish_sold = true
     elseif context.end_of_round then
         G.GAME.current_round.fish_sold = false

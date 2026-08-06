@@ -66,10 +66,52 @@ return {
                     "Its eyes absorb the",
                     "souls of the dying"
                 }
+            },
+            fish_fac_quartz_pip = {
+                name = "Quartz Pip",
+                text = {
+                    {
+                        "{C:green}#1# in #2#{} chance to retrigger",
+                        "played unenhanced cards"
+                    },
+                    {
+                        "{C:inactive}Enchanted: Chance is",
+                        "{C:inactive}#3# in #4# instead"
+                    },
+                    {
+                        "To {C:dark_edition}Enchant{}: Score",
+                        "unenhanced cards #5# times",
+                        "{C:inactive}({C:attention}#6#{C:inactive} remaining)"
+                    }
+                },
+                flavor = {
+                    "Fun fact: Amethyst is",
+                    "just purple quartz"
+                }
+            },
+            fish_fac_quartz_pip_enchant = {
+                name = "Quartz Pip",
+                text = {
+                    {
+                        "{C:green}#1# in #2#{} chance to retrigger",
+                        "played unenhanced cards"
+                    },
+                    {
+                        "{C:dark_edition}Enchanted{}: Chance is",
+                        "{C:green}#3# in #4#{} instead"
+                    }
+                },
+                flavor = {
+                    "Fun fact: Amethyst is",
+                    "just purple quartz"
+                }
             }
         },
     },
     misc = {
+        dictionary = {
+            k_fac_mineral_fish = "Mineral Fish"
+        },
         v_dictionary = {
             a_cm = "+#1# cm"
         }

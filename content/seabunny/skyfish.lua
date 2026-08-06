@@ -58,6 +58,7 @@ FishAndChips.Fish {
         return card.ability.stats.length >= 2 * card.ability.extra.shrink
     end,
     weight = SEABUN.weight,
+    attributes = {"economy", "usable", "generation"},
     environments = {
         calm_pond = 20,
         pier = 20,
@@ -65,7 +66,6 @@ FishAndChips.Fish {
         city_river = 10,
         backroom = 10,
     },
-    attributes = {"economy", "usable", "generation"},
     ppu_coder = {"ouiiskey"},
     ppu_artist = {"Lusha"},
     stats = {
