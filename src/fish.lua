@@ -175,7 +175,7 @@ function FishAndChips.verify_submissions()
 	if fac_count == 2 then
 		local first, second = contributors[1], contributors[2]
 		assert(
-			first.fac_partner == second.name and second.fac_partner == first.name,
+			first.fac_partner == second.key and second.fac_partner == first.key,
 			'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
  	)
 	end
