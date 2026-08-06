@@ -19,6 +19,8 @@ SMODS.Atlas({
 	py = 95,
 })
 
+-- One Fish
+
 FishAndChips.Fish {
 	key = "one",
 	atlas = "w_d_seuss_fish",
@@ -52,6 +54,8 @@ FishAndChips.Fish {
 	end,
 }
 
+-- Two Fish
+
 FishAndChips.Fish {
 	key = "two",
 	atlas = "w_d_seuss_fish",
@@ -69,8 +73,8 @@ FishAndChips.Fish {
 		calm_pond = 5,
 	},
 	stats = {
-		weight = {min = 1, max = 2.82},
-		length = {min = 0.3, max = 0.60}
+		weight = {min = 1.00, max = 2.82},
+		length = {min = 0.30, max = 0.60}
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
@@ -84,6 +88,8 @@ FishAndChips.Fish {
 		end
 	end,
 }
+
+-- Red Fish
 
 FishAndChips.Fish {
 	key = "red",
@@ -121,6 +127,8 @@ FishAndChips.Fish {
     end
 }
 
+-- Blue Fish
+
 FishAndChips.Fish {
 	key = "blue",
 	atlas = "w_d_seuss_fish",
@@ -157,10 +165,123 @@ FishAndChips.Fish {
     end
 }
 
+-- Old Fish
+
+FishAndChips.Fish {
+	key = "old",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 4, y = 0 },
+	weight = 2,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		garden = 5,
+	},
+	stats = {
+		weight = {min = 0.90, max = 1.80},
+		length = {min = 1.70, max = 1.80}
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+-- Bad Fish
+
+G.ARGS.LOC_COLOURS['inscryption_blue'] = HEX("01eaff")
+G.ARGS.LOC_COLOURS['jolyne'] = HEX("FCB3EA")
+
+FishAndChips.Fish {
+	key = "bad",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 0, y = 1 },
+	weight = 1,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { "xblindsize" },
+	config = {
+		extra = {
+			blind = 1.5
+		}
+	},
+	environments = {
+		wormhole = 5,
+	},
+	stats = {
+		weight = {min = 0.50, max = 5.00},
+		length = {min = 1.00, max = 2.00}
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.blind } }
+	end,
+	calculate = function(self, card, context)
+		if context.setting_blind then
+			return {
+				xblindsize = card.ability.extra.blind
+			}
+		end
+		if context.final_scoring_step then
+			SMODS.destroy_cards(card, nil, nil, true)
+			return {
+				message = localize('k_extinct_ex'),
+				colour = HEX("01eaff")
+			}
+		end
+	end
+}
+
+local nosell_hook = Card.can_sell_card -- Thank you Hyperfixation Priceless
+function Card:can_sell_card(context)
+    nosell_hook(self, context)
+	if self.config.center.key == 'fish_fac_bad' then
+		return false
+    end
+end
+
+-- Darwin
+
+FishAndChips.Fish {
+	key = "darwin",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 1, y = 1 },
+	weight = 1,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		garden = 5,
+	},
+	stats = {
+		weight = {min = 79, max = 85},
+		length = {min = 1.82, max = 1.94}
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+-- Pear Fish
+
 FishAndChips.Fish {
 	key = "pear",
 	atlas = "w_d_seuss_fish",
-	pos = { x = 4, y = 0 },
+	pos = { x = 2, y = 1 },
 	weight = 4,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
@@ -239,287 +360,12 @@ FishAndChips.Fish {
 	end,
 }
 
-G.ARGS.LOC_COLOURS['spalmon_pink'] = HEX("ffaec9")
-G.ARGS.LOC_COLOURS['spalmon_gold'] = HEX("fff200")
-
-SMODS.Sound{
-    key = "spamtonf1",
-    path = "w_d_seuss/spamtonf1.ogg",
-}
-
-local keypress = love.keypressed
-function love.keypressed(key)
-    if key == "f1" then
-        if G and G.jokers and G.jokers.cards and not G.SETTINGS.paused then
-            SMODS.calculate_context({ key_press_f1 = true })
-        end
-    end
-    return (keypress(key))
-end
-
-FishAndChips.Fish {
-	key = "spalmon",
-	atlas = "w_d_seuss_fish",
-	pos = { x = 0, y = 1 },
-	weight = 6,
-	ppu_coder = { "Nick" },
-	ppu_artist = { "Nick" },
-	attributes = { "generation" },
-	config = {
-		extra = {
-			f1 = true,
-			bait = 1
-		}
-	},
-	stats = {
-		weight = {min = 13.61, max = 22.68},
-		length = {min = 1.57, max = 1.63}
-	},
-	environments = {
-		wormhole = 5,
-	},
-	blueprint_compat = false,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { } }
-	end,
-	calculate = function(self, card, context)
-		if context.key_press_f1 and card.ability.extra.f1 == true and G.STATE == G.STATES.FAC_FISHING then
-			local w = (G.CARD_W + 0.1) * card.ability.extra.bait * 2 - 0.1
-			local h = G.CARD_H
-			G.fac_temp_bait_area = CardArea(
-				card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h,
-				w, h,
-				{
-					type = "joker",
-					card_limit = card.ability.extra.bait,
-					highlight_limit = 1,
-					highlighted_limit = 1,
-					align_buttons = true,
-					bg_colour = G.C.CLEAR,
-					fixed_limit = true,
-					no_card_count = true,
-				}
-			)
-			play_sound('fac_spamtonf1')
-			for i = 1, card.ability.extra.bait do
-				G.E_MANAGER:add_event(Event({
-					trigger = 'after',
-					delay = 0.4,
-					func = function()
-						card.ability.extra.f1 = false
-						local bait = SMODS.add_card({ set = 'fac_Bait', area = G.fac_temp_bait_area })
-						FishAndChips.add_bait_to_inventory(bait.config.center_key)
-						card:juice_up(0.3, 0.5)
-						return true
-					end
-				}))
-			end
-			delay(0.5)
-			for i = 1, card.ability.extra.bait do
-				G.E_MANAGER:add_event(Event {
-					func = function()
-						G.fac_temp_bait_area.cards[1]:start_dissolve()
-						return true
-					end
-				})
-			end
-			delay(0.5)
-			G.E_MANAGER:add_event(Event {
-				func = function()
-					G.fac_temp_bait_area:remove()
-					return true
-				end
-			})
-			return {
-                message = localize('k_bigtrout'),
-            }
-		end
-		if context.end_of_round and context.game_over == false and context.main_eval and card.ability.extra.f1 == false then
-			card.ability.extra.f1 = true
-			return {
-                message = localize('k_hokimama'),
-            }
-		end
-	end
-}
-
-SMODS.Atlas({
-	key = "i_miss_the_quiet",
-	path = "w_d_seuss/i_miss_the_quiet.png",
-	px = 128,
-	py = 72,
-})
-
-FishAndChips.Fish {
-	key = "lordx",
-	atlas = "w_d_seuss_fish",
-	pos = { x = 1, y = 1 },
-	weight = 2,
-	ppu_coder = { "Nick" },
-	ppu_artist = { "Nick" },
-	attributes = { },
-	config = {
-		extra = {
-		}
-	},
-	environments = {
-		styx = 5,
-	},
-	stats = {
-		weight = {min = 33.53, max = 34.93},
-		length = {min = 0.98, max = 1.01}
-	},
-	blueprint_compat = false,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_i_miss_the_quiet") } } }
-	end,
-	calculate = function(self, card, context)
-	end
-}
-
-SMODS.Atlas({
-	key = "sinister",
-	path = "w_d_seuss/sinister.png",
-	px = 128,
-	py = 72,
-})
-
-FishAndChips.Fish {
-	key = "majin",
-	atlas = "w_d_seuss_fish",
-	pos = { x = 2, y = 1 },
-	weight = 2,
-	ppu_coder = { "Nick" },
-	ppu_artist = { "Nick" },
-	attributes = { },
-	config = {
-		extra = {
-		}
-	},
-	environments = {
-		styx = 5,
-	},
-	stats = {
-		weight = {min = 33.53, max = 34.93},
-		length = {min = 0.98, max = 1.01}
-	},
-	blueprint_compat = false,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_sinister") } } }
-	end,
-	calculate = function(self, card, context)
-	end
-}
-
-SMODS.Atlas({
-	key = "red_handed",
-	path = "w_d_seuss/red_handed.png",
-	px = 128,
-	py = 72,
-})
-
-FishAndChips.Fish {
-	key = "redglove",
-	atlas = "w_d_seuss_fish",
-	pos = { x = 3, y = 1 },
-	weight = 2,
-	ppu_coder = { "Nick" },
-	ppu_artist = { "Nick" },
-	attributes = { },
-	config = {
-		extra = {
-		}
-	},
-	environments = {
-		styx = 5,
-	},
-	stats = {
-		weight = {min = 33.53, max = 34.93},
-		length = {min = 2.24, max = 2.51}
-	},
-	blueprint_compat = false,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_red_handed") } } }
-	end,
-	calculate = function(self, card, context)
-	end
-}
-
-SMODS.Atlas({
-	key = "st_solis",
-	path = "w_d_seuss/st_solis.png",
-	px = 128,
-	py = 72,
-})
-
-FishAndChips.Fish {
-	key = "faker",
-	atlas = "w_d_seuss_fish",
-	pos = { x = 4, y = 1 },
-	weight = 2,
-	ppu_coder = { "Nick" },
-	ppu_artist = { "Nick" },
-	attributes = { },
-	config = {
-		extra = {
-		}
-	},
-	environments = {
-		styx = 5,
-	},
-	stats = {
-		weight = {min = 33.53, max = 34.93},
-		length = {min = 0.98, max = 1.01}
-	},
-	blueprint_compat = false,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_st_solis") } } }
-	end,
-	calculate = function(self, card, context)
-	end
-}
-
-
-FishAndChips.Fish {
-	key = "forgotten",
-	atlas = "w_d_seuss_fish",
-	pos = { x = 0, y = 2 },
-	weight = 1,
-	ppu_coder = { "Nick" },
-	ppu_artist = { "Nick" },
-	attributes = { "sell_value", "scaling", "economy" },
-	config = {
-		extra = {
-			price = 1
-		}
-	},
-	environments = {
-		wormhole = 5,
-	},
-	stats = {
-		weight = {min = 0.89, max = 1.12},
-		length = {min = 0.46, max = 0.81}
-	},
-	blueprint_compat = false,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.price } }
-	end,
-	calculate = function(self, card, context)
-		if context.fac_end_fishing then
-			card.ability.extra_value = card.ability.extra_value + card.ability.extra.price
-            card:set_cost()
-            return {
-                message = localize('k_val_up'),
-                colour = FishAndChips.C.SAND_DOLLAR
-            }
-		end
-	end
-}
+-- Sutuna, King of Sturgeons
 
 FishAndChips.Fish {
 	key = "sukuna",
 	atlas = "w_d_seuss_fish",
-	pos = { x = 1, y = 2 },
+	pos = { x = 3, y = 1 },
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
@@ -605,53 +451,320 @@ FishAndChips.Fish {
 	end
 }
 
-G.ARGS.LOC_COLOURS['inscryption_blue'] = HEX("01eaff")
-G.ARGS.LOC_COLOURS['jolyne'] = HEX("FCB3EA")
+-- Troutoru GoFish
 
 FishAndChips.Fish {
-	key = "bad",
+	key = "gojo",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 4, y = 1 },
+	weight = 2,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		garden = 5,
+	},
+	stats = {
+		weight = {min = 79.00, max = 84.00},
+		length = {min = 1.80, max = 2.10}
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+-- Lord X-ray (Lord X)
+
+SMODS.Atlas({
+	key = "i_miss_the_quiet",
+	path = "w_d_seuss/i_miss_the_quiet.png",
+	px = 128,
+	py = 72,
+})
+
+FishAndChips.Fish {
+	key = "lordx",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 0, y = 2 },
+	weight = 2,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		styx = 5,
+	},
+	stats = {
+		weight = {min = 33.53, max = 34.93},
+		length = {min = 0.98, max = 1.01}
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_i_miss_the_quiet") } } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+-- Marlin (Majin)
+
+SMODS.Atlas({
+	key = "sinister",
+	path = "w_d_seuss/sinister.png",
+	px = 128,
+	py = 72,
+})
+
+FishAndChips.Fish {
+	key = "majin",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 1, y = 2 },
+	weight = 2,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		styx = 5,
+	},
+	stats = {
+		weight = {min = 33.53, max = 34.93},
+		length = {min = 0.98, max = 1.01}
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_sinister") } } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+-- Red-Herring (Redglove)
+
+SMODS.Atlas({
+	key = "red_handed",
+	path = "w_d_seuss/red_handed.png",
+	px = 128,
+	py = 72,
+})
+
+FishAndChips.Fish {
+	key = "redglove",
 	atlas = "w_d_seuss_fish",
 	pos = { x = 2, y = 2 },
+	weight = 2,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		styx = 5,
+	},
+	stats = {
+		weight = {min = 33.53, max = 34.93},
+		length = {min = 2.24, max = 2.51}
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_red_handed") } } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+-- Flounder (Faker)
+
+SMODS.Atlas({
+	key = "st_solis",
+	path = "w_d_seuss/st_solis.png",
+	px = 128,
+	py = 72,
+})
+
+FishAndChips.Fish {
+	key = "faker",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 3, y = 2 },
+	weight = 2,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		styx = 5,
+	},
+	stats = {
+		weight = {min = 33.53, max = 34.93},
+		length = {min = 0.98, max = 1.01}
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_st_solis") } } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+
+-- Spalmon
+
+G.ARGS.LOC_COLOURS['spalmon_pink'] = HEX("ffaec9")
+G.ARGS.LOC_COLOURS['spalmon_gold'] = HEX("fff200")
+
+SMODS.Sound{
+    key = "spamtonf1",
+    path = "w_d_seuss/spamtonf1.ogg",
+}
+
+local keypress = love.keypressed
+function love.keypressed(key)
+    if key == "f1" then
+        if G and G.jokers and G.jokers.cards and not G.SETTINGS.paused then
+            SMODS.calculate_context({ key_press_f1 = true })
+        end
+    end
+    return (keypress(key))
+end
+
+FishAndChips.Fish {
+	key = "spalmon",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 4, y = 2 },
+	weight = 6,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Nick" },
+	attributes = { "generation" },
+	config = {
+		extra = {
+			f1 = true,
+			bait = 1
+		}
+	},
+	stats = {
+		weight = {min = 13.61, max = 22.68},
+		length = {min = 1.57, max = 1.63}
+	},
+	environments = {
+		wormhole = 5,
+	},
+	blueprint_compat = false,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+		if context.key_press_f1 and card.ability.extra.f1 == true and G.STATE == G.STATES.FAC_FISHING then
+			local w = (G.CARD_W + 0.1) * card.ability.extra.bait * 2 - 0.1
+			local h = G.CARD_H
+			G.fac_temp_bait_area = CardArea(
+				card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h,
+				w, h,
+				{
+					type = "joker",
+					card_limit = card.ability.extra.bait,
+					highlight_limit = 1,
+					highlighted_limit = 1,
+					align_buttons = true,
+					bg_colour = G.C.CLEAR,
+					fixed_limit = true,
+					no_card_count = true,
+				}
+			)
+			play_sound('fac_spamtonf1')
+			for i = 1, card.ability.extra.bait do
+				G.E_MANAGER:add_event(Event({
+					trigger = 'after',
+					delay = 0.4,
+					func = function()
+						card.ability.extra.f1 = false
+						local bait = SMODS.add_card({ set = 'fac_Bait', area = G.fac_temp_bait_area })
+						FishAndChips.add_bait_to_inventory(bait.config.center_key)
+						card:juice_up(0.3, 0.5)
+						return true
+					end
+				}))
+			end
+			delay(0.5)
+			for i = 1, card.ability.extra.bait do
+				G.E_MANAGER:add_event(Event {
+					func = function()
+						G.fac_temp_bait_area.cards[1]:start_dissolve()
+						return true
+					end
+				})
+			end
+			delay(0.5)
+			G.E_MANAGER:add_event(Event {
+				func = function()
+					G.fac_temp_bait_area:remove()
+					return true
+				end
+			})
+			return {
+                message = localize('k_bigtrout'),
+            }
+		end
+		if context.end_of_round and context.game_over == false and context.main_eval and card.ability.extra.f1 == false then
+			card.ability.extra.f1 = true
+			return {
+                message = localize('k_hokimama'),
+            }
+		end
+	end
+}
+
+-- Forgotten Fish
+
+FishAndChips.Fish {
+	key = "forgotten",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 0, y = 3 },
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "xblindsize" },
+	attributes = { "sell_value", "scaling", "economy" },
 	config = {
 		extra = {
-			blind = 1.5
+			price = 1
 		}
 	},
 	environments = {
 		wormhole = 5,
 	},
 	stats = {
-		weight = {min = 0.5, max = 5},
-		length = {min = 1, max = 2}
+		weight = {min = 0.89, max = 1.12},
+		length = {min = 0.46, max = 0.81}
 	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.blind } }
+		return { vars = { card.ability.extra.price } }
 	end,
 	calculate = function(self, card, context)
-		if context.setting_blind then
-			return {
-				xblindsize = card.ability.extra.blind
-			}
-		end
-		if context.final_scoring_step then
-			SMODS.destroy_cards(card, nil, nil, true)
-			return {
-				message = localize('k_extinct_ex'),
-				colour = HEX("01eaff")
-			}
+		if context.fac_end_fishing then
+			card.ability.extra_value = card.ability.extra_value + card.ability.extra.price
+            card:set_cost()
+            return {
+                message = localize('k_val_up'),
+                colour = FishAndChips.C.SAND_DOLLAR
+            }
 		end
 	end
 }
-
-local nosell_hook = Card.can_sell_card -- Thank you Hyperfixation Priceless
-function Card:can_sell_card(context)
-    nosell_hook(self, context)
-	if self.config.center.key == 'fish_fac_bad' then
-		return false
-    end
-end

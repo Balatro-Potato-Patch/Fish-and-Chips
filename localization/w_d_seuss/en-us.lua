@@ -66,6 +66,47 @@ return {
                     "with Red Fish :/"
                 }
             },
+            fish_fac_old = {
+                name = "Old Fish",
+                text = {
+                    ""
+                },
+                flavour = {
+                    ""
+                }
+            },
+            fish_fac_bad = {
+                name = "Bad Fish",
+                text = {
+                    {
+                        "{X:blind,C:inscryption_blue}Brittle:",
+                        "{C:red}Instantly perish{} at the",
+                        "end of final score",
+                    },
+                    {
+                        "{X:blind,C:inscryption_blue}Annoying:",
+                        "When {C:attention}Blind{} is selected,",
+                        "Increase Blind",
+                        "Requirement by {X:blind,C:white}X#1#{}"
+                    },
+                    {
+                        "Cannot be sold",
+                        "{C:inactive,s:0.6}How {C:jolyne,s:0.6}priceless{C:inactive,s:0.6}..."
+                    }
+                },
+                flavour = {
+                    "Lost the 50/25/25 Lmao",
+                }
+            },
+            fish_fac_darwin = {
+                name = "Darwin",
+                text = {
+                    ""
+                },
+                flavour = {
+                    ""
+                }
+            },
             fish_fac_pear = {
                 name = "Pear Fish",
                 text = {
@@ -80,16 +121,26 @@ return {
                     "even in its absence."
                 }
             },
-            fish_fac_spalmon = {
-                name = "[[{C:spalmon_pink}SPA{}L{C:spalmon_gold}MON{}]]",
+            fish_fac_sukuna = {
+                name = "Ryomen Sutuna",
                 text = {
-                    "{s:2}[Press F1 For] HELP",
-                    "{C:inactive}at a [[phishing]] [site]"
+                    "Switch {C:attention}current",
+                    "{C:attention}ability{} when used",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+                    "{C:inactive}(Currently: #3#)"
                 },
                 flavour = {
-                    "ARE {s:0.5,C:hearts}YOU{} GETTING ALL THIS {s:1.5,C:white}[Mack]{}!?",
-                    "{s:0.7}I'M FINALLY {s:1.3}I'M FINALLY{} GONNA",
-                    "BE A {s:2,C:spalmon_pink}BIG {s:2,C:spalmon_gold}TROUT{s:2}!!!{}"
+                    "King of Sturgeons"
+                }
+            },
+            fish_fac_gojo = {
+                name = "Troutoru GoFish",
+                text = {
+                    ""
+                },
+                flavour = {
+                    ""
                 }
             },
             fish_fac_lordx = {
@@ -128,6 +179,18 @@ return {
                     "{element:1}"
                 }
             },
+            fish_fac_spalmon = {
+                name = "[[{C:spalmon_pink}SPA{}L{C:spalmon_gold}MON{}]]",
+                text = {
+                    "{s:2}[Press F1 For] HELP",
+                    "{C:inactive}at a [[phishing]] [site]"
+                },
+                flavour = {
+                    "ARE {s:0.5,C:hearts}YOU{} GETTING ALL THIS {s:1.5,C:white}[Mack]{}!?",
+                    "{s:0.7}I'M FINALLY {s:1.3}I'M FINALLY{} GONNA",
+                    "BE A {s:2,C:spalmon_pink}BIG {s:2,C:spalmon_gold}TROUT{s:2}!!!{}"
+                }
+            },
             fish_fac_forgotten = {
                 name = "Forgotten Fish",
                 text = {
@@ -137,42 +200,6 @@ return {
                 },
                 flavour = {
                     "Well, there is a fish here."
-                }
-            },
-            fish_fac_sukuna = {
-                name = "Ryomen Sutuna",
-                text = {
-                    "Switch {C:attention}current",
-                    "{C:attention}ability{} when used",
-                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
-                    "{C:inactive}(Currently: #3#)"
-                },
-                flavour = {
-                    "King of Sturgeons"
-                }
-            },
-            fish_fac_bad = {
-                name = "Bad Fish",
-                text = {
-                    {
-                        "{X:blind,C:inscryption_blue}Brittle:",
-                        "{C:red}Instantly perish{} at the",
-                        "end of final score",
-                    },
-                    {
-                        "{X:blind,C:inscryption_blue}Annoying:",
-                        "When {C:attention}Blind{} is selected,",
-                        "Increase Blind",
-                        "Requirement by {X:blind,C:white}X#1#{}"
-                    },
-                    {
-                        "Cannot be sold",
-                        "{C:inactive,s:0.6}How {C:jolyne,s:0.6}priceless{C:inactive,s:0.6}..."
-                    }
-                },
-                flavour = {
-                    "Lost the 50/25/25 Lmao",
                 }
             },
         },
