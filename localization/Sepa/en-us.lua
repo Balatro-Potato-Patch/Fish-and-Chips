@@ -40,6 +40,19 @@ return {
                 }
             },
 
+            fish_fac_blinky = {
+                name = "Blinky",
+                text = {
+                    "{C:attention}Retriggers{} the",
+                    "{C:attention}first hand{} played",
+                    "Each played card has a",
+                    "{C:green}#1# in #2#{} chance to be destroyed"
+                },
+                flavor = {
+                    "Hi"
+                }
+            },
+
             fish_fac_bombfish = {
                 name = "{f:fac_sepa_ultra}Bomb Fish{}",
                 text = {
@@ -65,7 +78,7 @@ return {
 
             fish_fac_icbf = {
                 name = "{f:fac_sepa_ultra}ICBFish{}",
-                text = "{ Does nothing }",
+                text = {"Does nothing"},
                 flavor = {
                     "{f:fac_sepa_ultra}Similar in nature to its{}",
                     "{f:fac_sepa_ultra}fish relative, only this time",
@@ -78,29 +91,17 @@ return {
                 name = "{f:fac_sepa_spongemeboy}Fish...?{}",
                 text = {
                     "When {C:attention}Blind{} is selected, destroy {C:fac_fish}Fish{} to the", 
-                    "left and adds double its sell value as",
-                    "dollars given at end of round",
+                    "left and adds its sell value as",
+                    "dollars given at the end of round",
                     "{C:inactive}(Currently{} {C:gold}$#1#{}{C:inactive}){}"
                 },
                 flavor = {
-                    "Its still unknown if this",
-                    "fish is real or not, but",
-                    "for your bucket, it is"
+                    "Its still unknown if this fish is ",
+                    "real or not, but for your bucket, it is",
                 }
             },
             
- fish_fac_blinky = {
-    name = "Blinky",
-    text = {
-        "{C:attention}Retriggers{} the",
-        "{C:attention}first hand{} played",
-        "Each played card has a",
-        "{C:green}#1# in #2#{} chance to be destroyed"
-    },
-    flavor = {
-        "Hi"
-    }
-},
+
  
         },
 
