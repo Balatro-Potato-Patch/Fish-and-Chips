@@ -49,6 +49,16 @@ FishAndChips.Fish{
             }
         }
     end,
+    flavour_vars = function (self, info_queue, card)
+        local key = self.key
+        if card.ability.extra.native then
+            key = key.."_alt"
+        end
+
+        return {
+            key = key
+        }
+    end,
     use = function (self, card)
         SMODS.destroy_cards(card, {colours = {G.C.RED}})
         local luck = card.ability.extra.luck

@@ -108,6 +108,36 @@ return {
                     "the right until end of round"
                 }
             },
+            fish_fac_minty_electric_eel = {
+                name = "Electric Eel",
+                flavour = {
+                    "If there were four of",
+                    "them, Outkast would have",
+                    "to sing an apology."
+                },
+                text = {
+                    "{C:attention}Use{} to ready a stored",
+                    "charge ({C:blue}#1#{} available)",
+                    "For each readied charge ({C:red}#2#{}),",
+                    "retrigger every Joker and",
+                    "fish next hand"
+                    
+                }
+            },
+            fish_fac_minty_electric_eel_alt = {
+                name = "Electric Eel",
+                flavour = {
+                    "#1#"
+                },
+                text = {
+                    "{C:attention}Use{} to ready a stored",
+                    "charge ({C:blue}#1#{} available)",
+                    "For each readied charge ({C:red}#2#{}),",
+                    "retrigger every Joker and",
+                    "fish next hand"
+                    
+                }
+            },
             fish_fac_minty_template = {
                 name = "fish",
                 flavour = {
@@ -132,7 +162,13 @@ return {
         achievement_names={},
         challenge_names={},
         dictionary={
-            k_fac_minty_youagain_qex = "You again?!"
+            k_fac_minty_youagain_qex = "You again?!",
+            k_fac_minty_ready_ex = "Ready!",
+            k_fac_minty_charged_ex = "Charged!",
+            k_fac_minty_iamfoureels1 = "I'm sorry Ms. Jackson",
+            k_fac_minty_iamfoureels2 = "I am four eels",
+            k_fac_minty_iamfoureels3 = "Never meant to make your daughter cry",
+            k_fac_minty_iamfoureels4 = "I am several fish and not a guy",
         },
         labels={},
         poker_hand_descriptions={},
