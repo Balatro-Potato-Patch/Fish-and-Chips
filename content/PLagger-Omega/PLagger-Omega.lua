@@ -20,7 +20,6 @@ PotatoPatchUtils.Developer {
 
 --[[
 ideas:
-Gummigoo in Choco River & Swamp
 mystic remora in ?
 ]]
 
@@ -463,5 +462,55 @@ FishAndChips.Fish{ --Gummigoo
           }
         end
       end
+  end
+}
+
+FishAndChips.Fish{ --Frozen Chicken
+  key = 'plaggeromega_frozenchicken',
+  atlas = 'plaggeromega_fish',
+  pos = {x=4,y=1},
+  weight = 5,
+  environments = {styx = 1},
+  attributes = {'chips', 'deltarune'},
+  stats = {
+    weight = {min = 60, max = 90},
+    length = {min = 130, max = 150},
+  },
+  ppu_coder = {'PLagger'},
+  ppu_artist = {'Omegaflowey18'},
+  impulse_min = 0,
+  impulse_max = 0,
+  vel_limit = 0,
+  cost = 6,
+  blueprint_compat = true,
+  config = {extra = {chips = 0, chips_mod = 30}},
+
+  loc_vars = function (self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    local glasses = 0
+    if G.playing_cards then
+      for _, playing_card in ipairs(G.playing_cards) do
+        if SMODS.has_enhancement(playing_card, 'm_glass') then
+          glasses = glasses + 1
+        end
+      end
+      return{
+        vars = {card.ability.extra.chips, card.ability.extra.chips_mod}
+      }
+    end
+  end,
+
+  calculate = function (self, card, context)
+    if context.joker_main then
+      local glasses = 0
+      for _, playing_card in ipairs(G.playing_cards) do
+        if SMODS.has_enhancement(playing_card, 'm_glass') then
+          glasses = glasses + 1
+        end
+      end
+      return{
+        chips = card.ability.extra.chips + card.ability.extra.chips_mod * glasses
+      }
+    end
   end
 }

@@ -118,6 +118,23 @@ return {
                     'a clown, but seems to',
                     'have no recollection of her...'
                 }
+            },
+            fish_fac_plaggeromega_frozenchicken = {
+                name = 'Frozen Chicken?',
+                text = {
+                    'Gives {C:chips}+#2#{} Chips',
+                    'for each {C:attention}Glass Card',
+                    'in your {C:attention}full deck',
+                    '{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)'
+                },
+                flavour = {
+                    'A solid block of ice,',
+                    'trapping some sort of avian',
+                    'within. Weirdly, it feels',
+                    'like you can become',
+                    'stronger if you use it',
+                    'to its full potential...'
+                }
             }
         }
     },
