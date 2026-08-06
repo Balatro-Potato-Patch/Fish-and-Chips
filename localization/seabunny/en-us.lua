@@ -75,8 +75,8 @@ return {
                         "played unenhanced cards"
                     },
                     {
-                        "{C:inactive}Enchanted: #3# in #4#",
-                        "{C:inactive}chance for extra retrigger"
+                        "{C:inactive}Enchanted: #3# in #4# chance",
+                        "{C:inactive}for a separate retrigger"
                     },
                     {
                         "To {C:dark_edition}Enchant{}: Score",
@@ -97,8 +97,8 @@ return {
                         "played unenhanced cards"
                     },
                     {
-                        "{C:dark_edition}Enchanted{}: {C:green}#3# in #4#",
-                        "chance for extra retrigger"
+                        "{C:dark_edition}Enchanted{}: {C:green}#3# in #4# chance",
+                        "for a separate retrigger"
                     }
                 },
                 flavor = {
@@ -111,8 +111,8 @@ return {
                 text = {
                     {
                         "When a {C:attention}Stone{} card is destroyed,",
-                        "create an unenhanced copy",
-                        "with permanent {C:chips}+#1#{} Chips"
+                        "add an unenhanced copy to",
+                        "deck with permanent {C:chips}+#1#{} Chips"
                     },
                     {
                         "{C:inactive}Enchanted: Stone cards",
@@ -125,7 +125,7 @@ return {
                     }
                 },
                 flavor = {
-                    [[Here's another "quick silver"]],
+                    [[Here's another "quick-silver"]],
                     [[you don't want to eat!]]
                 }
             },
@@ -134,8 +134,8 @@ return {
                 text = {
                     {
                         "When a {C:attention}Stone{} card is destroyed,",
-                        "create an unenhanced copy",
-                        "with permanent {C:chips}+#1#{} Chips"
+                        "add an unenhanced copy to",
+                        "deck with permanent {C:chips}+#1#{} Chips"
                     },
                     {
                         "{C:dark_edition}Enchanted{}: {C:attention}Stone{} cards",
@@ -151,7 +151,8 @@ return {
     },
     misc = {
         dictionary = {
-            k_fac_mineral_fish = "Mineral Fish"
+            k_fac_mineral_fish = "Mineral Fish",
+            k_fac_infested = "Infested!"
         },
         v_dictionary = {
             a_cm = "+#1# cm"

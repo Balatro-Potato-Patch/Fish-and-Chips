@@ -17,8 +17,7 @@ FishAndChips.Fish {
             if not context.blueprint and not card.ability.extra.enchant then
                 card.ability.extra.fish_left = card.ability.extra.fish_left - 1
                 if card.ability.extra.fish_left <= 0 then
-                    card.ability.extra.enchant = true
-                    play_sound("fac_enchant", 1, 0.8)
+                    SEABUN.enchant(card)
                 end
             end
             if not G.GAME.current_round.fish_sold then

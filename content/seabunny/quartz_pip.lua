@@ -34,8 +34,7 @@ FishAndChips.Fish {
             elseif context.individual and not context.blueprint and not card.ability.extra.enchant then
                 card.ability.extra.uenh_left = card.ability.extra.uenh_left - 1
                 if card.ability.extra.uenh_left <= 0 then
-                    card.ability.extra.enchant = true
-                    play_sound("fac_enchant", 1, 0.8)
+                    SEABUN.enchant(card)
                 end
             end
         end

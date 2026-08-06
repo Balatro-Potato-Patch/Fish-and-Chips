@@ -23,7 +23,14 @@ PotatoPatchUtils.Developer {
 
 -- Fish
 SEABUN = {
-    weight = 75 / 3
+    weight = 75 / 4,
+    enchant = function(card)
+        card.ability.extra.enchant = true
+        G.E_MANAGER:add_event(Event{func = function()
+            card.ability.extra.show_enchant = true
+            play_sound("fac_enchant", 1, 0.8)
+            return true end })
+    end
 }
 
 SMODS.Atlas {
@@ -42,7 +49,7 @@ SMODS.DrawStep {
     key = "enchant",
     order = 21,
     func = function(card, layer)
-        if type(card.ability.extra) == "table" and card.ability.extra.enchant then
+        if type(card.ability.extra) == "table" and card.ability.extra.show_enchant then
             card.children.center:draw_shader("fac_enchant", nil, G.TIMERS.REAL)
         end
     end

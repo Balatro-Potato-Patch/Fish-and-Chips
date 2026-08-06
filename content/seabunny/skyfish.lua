@@ -37,17 +37,15 @@ FishAndChips.Fish {
 			}
 		)
 		delay(1)
-        G.E_MANAGER:add_event(Event {
-            func = function()
-                local bait = SMODS.create_card{key = "bait_fac_normal"}
-                G.fac_temp_bait_area:emplace(bait)
-                FishAndChips.add_bait_to_inventory(bait.config.center.key)
-                return true end })
+        G.E_MANAGER:add_event(Event{func = function()
+            local bait = SMODS.create_card{key = "bait_fac_normal"}
+            G.fac_temp_bait_area:emplace(bait)
+            FishAndChips.add_bait_to_inventory(bait.config.center.key)
+            return true end })
         delay(2)
-        G.E_MANAGER:add_event(Event {
-            func = function()
-                G.fac_temp_bait_area.cards[1]:start_dissolve()
-                return true end })
+        G.E_MANAGER:add_event(Event{func = function()
+            G.fac_temp_bait_area.cards[1]:start_dissolve()
+            return true end })
         delay(0.7)
         card.ability.stats.length = card.ability.stats.length - card.ability.extra.shrink
     end,
