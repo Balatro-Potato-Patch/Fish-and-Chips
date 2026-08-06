@@ -36,7 +36,7 @@ FishAndChips.Fish {
 	-- rotate through four effects: inactive, fish 1/2/3
 	-- after successful catch of chosen fish, increase rank and redraw fish based on rank, stop at rank 9
 	-- set use cost based on total cost/weight of chosen fish, we have 6 sand dollars per ante
-	on_catch = function(self, card)
+	add_to_deck = function(self, card, from_debuff)
 		--draw fish based on rank 0
 		card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
 		local seal_unlocked = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish.seal_unlocked
