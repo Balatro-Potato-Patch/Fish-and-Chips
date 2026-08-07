@@ -1,5 +1,6 @@
 local tarot_anim = function(cards, func, args)
     args = args or {}
+    args.func_delay = args.func_delay or 0.1
     args.flip_delay = args.flip_delay or 0.2
     args.unhighlight = args.unhighlight or true
     for i = 1, #cards do
@@ -19,7 +20,7 @@ local tarot_anim = function(cards, func, args)
     for i = 1, #cards do
         G.E_MANAGER:add_event(Event({
             trigger = "after",
-            delay = 0.1,
+            delay = args.func_delay,
             func = function()
                 func(cards[i]); return true
             end
