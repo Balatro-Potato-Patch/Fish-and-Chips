@@ -43,14 +43,19 @@ end
 local function random_measurement(stats, forced)
 	local delta = stats.max - stats.min
 	local value = stats.min + (pseudorandom('fac_fish_measurement') * delta)
-	return strip_decimals(stats, value)
+	return stats.units and value or strip_decimals(stats, value)
 end
 
 
 function FishAndChips.create_fish_stats(center)
+	if center.set ~= 'fac_Fish' then return end
 	local stats = {
         weight = random_measurement(center.stats.weight),
-        length = random_measurement(center.stats.length)
+        length = random_measurement(center.stats.length),
+		units = {
+			length = center.stats.length.units,
+			weight = center.stats.weight.units
+		}
     }
 	local w_delta = center.stats.weight.max - center.stats.weight.min
 	local l_delta = center.stats.length.max - center.stats.length.min
@@ -70,9 +75,17 @@ function FishAndChips.modify_fish_stats(card, stats)
 	card:set_cost()
 end
 
-function FishAndChips.format_measurement(value, type)
+function FishAndChips.update_fish_records(save_record, stats)
+	save_record.record_weight = math.max(stats.weight, save_record.record_weight or 0)
+	save_record.record_length = math.max(stats.length, save_record.record_length or 0)
+end
+
+function FishAndChips.format_measurement(value, measurement, units)
 	if not value then return ' ' end
-	if type == 'weight' then
+	if units and units[measurement] then
+		return string.format(localize(units[measurement].format), strip_decimals(nil, value/units[measurement].scale, units[measurement].precision or 2))
+	end
+	if measurement == 'weight' then
 		if value > 10000 then
 			return strip_decimals(nil, value / 1000, 1) .. 't'
 		elseif value < 1 then
@@ -81,7 +94,7 @@ function FishAndChips.format_measurement(value, type)
 			return value .. 'kg'
 		end
 	end
-	if type == 'length' then
+	if measurement == 'length' then
 		if value > 10000 then
 			return strip_decimals(nil, value / 1000, 1) .. 'km'
 		elseif value < 1 then
@@ -163,14 +176,14 @@ function FishAndChips.verify_submissions()
 			end
 		end
 	end
-	-- assert(fac_count <= 2, 'Too many devs registered, submissions are limited to two participants.')
-	-- if fac_count == 2 then
-	-- 	local first, second = contributors[1], contributors[2]
-	-- 	assert(
-	-- 		first.fac_partner == second.name and second.fac_partner == first.name,
-	-- 		'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
-	-- 	)
-	-- end
+	assert(fac_count <= 2, 'Too many devs registered, submissions are limited to two participants.')
+	if fac_count == 2 then
+		local first, second = contributors[1], contributors[2]
+		assert(
+			first.fac_partner == second.key and second.fac_partner == first.key,
+			'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
+ 	)
+	end
 
 	local devs = {}
 	for _, fish in ipairs(G.P_CENTER_POOLS.fac_Fish) do
