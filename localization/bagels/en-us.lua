@@ -32,6 +32,16 @@ return {
 				},
 				flavor = { 'A tiny, delicate fish.', "It's said no two are alike." },
 			},
+			fish_fac_bagels_hookworm = {
+				name = 'Hookworm',
+				text = { '{C:attention}+#1#{} Bait when any', 'Booster Pack is opened' },
+				flavor = { 'I think this is the', 'same worm you used', 'as bait. It must really', 'like your hook.' },
+			},
+		},
+	},
+	misc = {
+		dictionary = {
+			k_fac_bagels_plus_bait = '+1 Bait',
 		},
 	},
 }
