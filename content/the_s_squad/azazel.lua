@@ -1,7 +1,9 @@
 FishAndChips.Fish {
 	key = "tss_shadow_cryscarp",
-	atlas = "tss_ellefish",
-	pos = { x = 0, y = 0 },
+	atlas = "tss_azfish",
+	pos = { x = 2, y = 0 },
+	pixel_size = { w = 100, h = 93 },
+	display_size = { w = 100*.7, h = 93*.7 },
 	weight = 4,
 	stats = {weight = {min = 0, max = 0}, length = {min = .4, max = .6}}, -- i imagine shadow crystals being weightless
 	ppu_coder = { "slimestuff" },
@@ -143,8 +145,10 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = "tss_cult",
-	atlas = "tss_ellefish",
-	pos = { x = 0, y = 0 },
+	atlas = "tss_azfish",
+	pos = { x = 3, y = 0 },
+	pixel_size = { w = 83, h = 109 },
+	display_size = { w = 83*.8, h = 109*.8 },
 	weight = 3,
 	stats = {weight = {min = 3, max = 5}, length = {min = .8, max = 1.2}}, -- pls replace later
 	ppu_coder = { "slimestuff" },

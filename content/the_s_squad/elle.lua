@@ -25,8 +25,7 @@ FishAndChips.Fish {
 
 local emplace_hook = CardArea.emplace
 function CardArea:emplace(card, ...)
-	if card.tss_cheshed then emplace_hook(G.FISHING.fac_fish_reward_area, card, ...) return end
-	emplace_hook(self,card, ...)
+	emplace_hook(card.tss_cheshed and G.FISHING.fac_fish_reward_area or self,card, ...)
 end
 
 FishAndChips.Fish {
@@ -356,12 +355,33 @@ FishAndChips.Fish {
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "passive" },
-	config = { extra = { } },
+	config = { immutable = { odds = 2 } },
 	environments = {
 		wormhole = 2,
 		soup = 3,
 		backroom = 2,
 		calm_pond = 1,
 		chocolate_river = 2
-	}
+	},
+	loc_vars = function(self, info_queue, card)
+		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.immutable.odds, "fac_tss_slop", nil, true)
+		return { vars = { num, dem } }
+	end,
+	calculate = function(self, card, context)
+		if context.retrigger_joker_check and context.other_card.area == G.fac_fish_area and context.other_card.config.center_key ~= "fish_fac_tss_slop" then
+			local count = 0
+			while SMODS.pseudorandom_probability(card,"fac_tss_slop", 1,card.ability.immutable.odds, nil, true) do
+				count = count + 1
+			end
+			if count>0 then
+				return {
+					repetitions = count,
+					message = localize("k_again_ex") .. " x" .. count
+				}
+			end
+		end
+	end
 }
+
+FishAndChips.mod.optional_features = FishAndChips.mod.optional_features or {}
+FishAndChips.mod.optional_features.retrigger_joker = true

@@ -10,7 +10,7 @@ PotatoPatchUtils.Developer{
 	pos = {x=0,y=0},
 	soul_pos = {x=1,y=0},
 	colour = HEX("FF53A9"),
-	fac_partner = 'azazel',
+	fac_partner = 'fac_azazel',
 	loc = true,
 	calculate = function(self, context)
 		-- Putting Chesh here so they can all swarm at once like a pack of hungry piranhas
@@ -28,8 +28,8 @@ PotatoPatchUtils.Developer{
 			if not f or #cheshlist < 1 then return end
 
 			f.tss_cheshed = true
-			f.states.click.can = false -- Apparently it should be like this already but they forgot. Will remove once that is patched :p
-
+			f.states.click.can = false
+			
 			if FishAndChips.TheShitSquad.force_swoon or pseudorandom("fac_tss_chesh_swoon",1,225)==1 or os.date("%m%d",os.time()) == "1225" then
 				FishAndChips.TheShitSquad.force_swoon = false
 				G.E_MANAGER:add_event(Event({func=function()
@@ -142,7 +142,7 @@ PotatoPatchUtils.Developer{
 	pos = {x=4,y=0},
 	soul_pos = {x=5,y=0},
 	colour = HEX("850021"),
-	fac_partner = 'slimestuff',
+	fac_partner = 'fac_slimestuff',
 	loc = true,
 	fac_dw_shader = true
 }
@@ -237,7 +237,7 @@ SMODS.ScreenShader {
 		return {
 			screen_dims = {w,h},
 			t = t,
-			size = #SMODS.find_card("fish_fac_tss_slop")>0 and 2 or 1
+			size = (#SMODS.find_card("fish_fac_tss_slop")>0 and not FishAndChips.mod.config.performance_mode) and 2 or 1
 		}
 	end,
 	should_apply = function(self)
@@ -263,11 +263,22 @@ local function jpeg_draw(canvas)
 	love.graphics.draw(canvas,0,0)
 end
 
+function FishAndChips.TheShitSquad.get_slop_count()
+	count = 0
+	for i, v in ipairs(G.I.CARD) do
+		if v.config.center_key == "fish_fac_tss_slop" and v.config.center.discovered then
+			count = count + ((v.children.h_popup or v.area == G.fac_fish_area) and 1 or 0)
+		end
+	end
+	return math.min(count,8)
+end
+
 SMODS.ScreenShader {
 	key = "fac_tss_jpeg",
 	shader = "fac_tss_jpeg_decode",
 	should_apply = function(self)
-		return #SMODS.find_card("fish_fac_tss_slop")>0 or #SMODS.find_card("fish_fac_tss_uranium")>0
+		local ret = FishAndChips.TheShitSquad.get_slop_count()>0
+		return ret and not FishAndChips.mod.config.performance_mode
 	end,
 	order = 10,
 
@@ -276,7 +287,6 @@ SMODS.ScreenShader {
 		local w,h = love.graphics.getDimensions()
 		-- Replace json_buffer if screen resolution changes
 		if buffer_w ~= w or buffer_h ~= h then
-			--print("Replacing Canvas Uh Oh")
 			jpeg_buffer:release()
 			jpeg_buffer = love.graphics.newCanvas(w,h,{format = "rgba16f"})
 		end
@@ -284,9 +294,9 @@ SMODS.ScreenShader {
 		local decode = G.SHADERS.fac_tss_jpeg_decode
 		local encode = G.SHADERS.fac_tss_jpeg_encode
 
-		local slop = #SMODS.find_card("fish_fac_tss_slop")>0
-		local q = slop and .7 or .9
-		local s = slop and 8 or 4
+		local slop = FishAndChips.TheShitSquad.get_slop_count()
+		local q = slop and .85-slop*.05 or .9
+		local s = slop and 7+slop or 4
 
 		encode:send("quality", q)
 		encode:send("dims", {w,h})

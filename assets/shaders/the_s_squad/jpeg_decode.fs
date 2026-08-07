@@ -1,9 +1,8 @@
-// Code not taken from https://youtu.be/Qr3VsZYQy4s?t=1888 but the uploaded did give me the code
+// Code not taken from https://youtu.be/Qr3VsZYQy4s?t=1888 but the uploader did give me the code
 
 uniform vec2 dims;
 uniform float samples;
 const float PI = 3.1415926535;
-const vec2 texSize = vec2(.1);
 
 vec3 samp(vec2 uv, Image texture) {
 	return Texel(texture, uv/dims).rgb/samples/samples;

@@ -217,9 +217,11 @@ return {
 			fish_fac_tss_slop = {
 				name = "fishingslop",
 				text = {
-					"Idk yet.",
-					"{C:inactive,s:.7}Toggle Graphically Intense",
-					"{C:inactive,s:.7}Shaders in Mod Settings"
+					"{C:fac_fish}Fish{} have a fixed {C:green}#1# in #2#",
+					"chance to retrigger {C:attention}repeatedly",
+					"until the probability fails",
+					"{C:inactive,s:.7}Toggle Low Performance Mode in Mod Settings",
+					"{C:inactive,s:.7}...but if you can read this, it's already off"
 				},
 				flavour = {
 					"{C:red}>>283505479 (OP) #",
