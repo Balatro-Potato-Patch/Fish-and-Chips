@@ -43,7 +43,7 @@ return {
                     {
                         "To {C:dark_edition}Enchant{}: Score",
                         "unenhanced cards #5# times",
-                        "{C:inactive}({C:attention}#6#{C:inactive} remaining)"
+                        "{C:inactive}(Currently {C:attention}#6#{C:inactive}/#5#)"
                     }
                 },
                 flavor = {
@@ -83,7 +83,7 @@ return {
                     {
                         "To {C:dark_edition}Enchant{}: Score a card with",
                         "{C:chips}#2#{} or more chips #3# times",
-                        "{C:inactive}({C:attention}#4#{C:inactive} remaining)"
+                        "{C:inactive}(Currently {C:attention}#4#{C:inactive}/#3#)"
                     }
                 },
                 flavor = {
@@ -122,7 +122,7 @@ return {
                     },
                     {
                         "To {C:dark_edition}Enchant{}: Sell #1# {C:attention}Fishes",
-                        "{C:inactive}({C:attention}#2#{C:inactive} remaining)"
+                        "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#)"
                     }
                 },
                 flavor = {
@@ -198,7 +198,7 @@ return {
                     },
                     {
                         "To {C:dark_edition}Enchant{}: Destroy #5# cards",
-                        "{C:inactive}({C:attention}#6#{C:inactive} remaining)"
+                        "{C:inactive}(Currently {C:attention}#6#{C:inactive}/#5#)"
                     }
                 },
                 flavor = {
@@ -270,6 +270,52 @@ return {
                     "This fish uses its gemstone",
                     "as a light source to survive",
                     "in the depths it calls home."
+                }
+            },
+            fish_fac_prismond_bunnyfish = {
+                name = "Prismond Bunnyfish",
+                text = {
+                    {
+                        "If {C:attention}poker hand{} contains",
+                        "#1# {C:attention}Suits{}, add {C:dark_edition}Polychrome{} to a",
+                        "random card of each rank in it"
+                    },
+                    {
+                        "{C:inactive}Enchanted: Played cards",
+                        "{C:inactive}with Polychrome give",
+                        "{X:inactive,C:white}X#2#{C:inactive} Mult when scored",
+                    },
+                    {
+                        "To {C:dark_edition}Enchant{}: Discard a hand",
+                        "that contains a {C:attention}Straight",
+                        "or {C:attention}Flush{} #3# times",
+                        "{C:inactive}(Currently {C:attention}#4#{C:inactive}/#3#)"
+                    }
+                },
+                flavor = {
+                    "They say rabbits' feet",
+                    "bring you luck. Too bad",
+                    "this fish has no feet."
+                }
+            },
+            fish_fac_prismond_bunnyfish_enchant = {
+                name = "Prismond Bunnyfish",
+                text = {
+                    {
+                        "If {C:attention}poker hand{} contains",
+                        "#1# {C:attention}Suits{}, add {C:dark_edition}Polychrome{} to a",
+                        "random card of each rank in it"
+                    },
+                    {
+                        "{C:dark_edition}Enchanted{}: Played cards",
+                        "with {C:dark_edition}Polychrome{} give",
+                        "{X:mult,C:white}X#2#{} Mult when scored",
+                    }
+                },
+                flavor = {
+                    "They say rabbits' feet",
+                    "bring you luck. Too bad",
+                    "this fish has no feet."
                 }
             },
             fish_fac_enchantfish = {

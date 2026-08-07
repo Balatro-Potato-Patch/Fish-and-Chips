@@ -3,14 +3,14 @@ FishAndChips.Fish {
     key = "iron_silverfish",
     atlas = "seabunny",
     pos = {x = 0, y = 0},
-    config = {extra = {chips = 50, req = 50, times = 10, left = 10}},
+    config = {extra = {chips = 50, req = 50, times = 10, count = 10}},
     blueprint_compat = true,
     badge_key = "k_fac_seabunny_mineral_fish",
     loc_vars = function(self, info_queue, card)
         if card.ability.extra.enchant then
             return {vars = {card.ability.extra.chips}, key = self.key .. "_enchant"}
         end
-        return {vars = {card.ability.extra.chips, card.ability.extra.req, card.ability.extra.times, card.ability.extra.left}}
+        return {vars = {card.ability.extra.chips, card.ability.extra.req, card.ability.extra.times, card.ability.extra.count}}
     end,
     calculate = function(self, card, context)
         if context.remove_playing_cards then
@@ -38,10 +38,13 @@ FishAndChips.Fish {
                     remove = true
                 }
             elseif context.individual and not card.ability.extra.enchant and context.cardarea == G.play and context.other_card:get_chip_bonus() + (context.other_card.edition and context.other_card.edition.chips or 0) >= card.ability.extra.req then
-                card.ability.extra.left = card.ability.extra.left - 1
-                if card.ability.extra.left <= 0 then
-                    SEABUN.enchant(card)
+                card.ability.extra.count = card.ability.extra.count + 1
+                if card.ability.extra.count < card.ability.extra.times then
+                    return {
+                        message = card.ability.extra.count .. "/" .. card.ability.extra.times
+                    }
                 end
+                SEABUN.enchant(card)
             end
         end
     end,

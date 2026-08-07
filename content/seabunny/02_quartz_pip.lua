@@ -3,7 +3,7 @@ FishAndChips.Fish {
     key = "quartz_pip",
     atlas = "seabunny",
     pos = {x = 0, y = 0},
-    config = {extra = {num = 1, denom = 2, num_ench = 3, denom_ench = 4, times = 50, uenh_left = 50}},
+    config = {extra = {num = 1, denom = 2, num_ench = 3, denom_ench = 4, times = 50, count = 0}},
     blueprint_compat = true,
     badge_key = "k_fac_seabunny_mineral_fish",
     loc_vars = function(self, info_queue, card)
@@ -12,7 +12,7 @@ FishAndChips.Fish {
         if card.ability.extra.enchant then
             return {vars = {num, denom, num_ench, denom_ench}, key = self.key .. "_enchant"}
         end
-        return {vars = {num, denom, num_ench, denom_ench, card.ability.extra.times, card.ability.extra.uenh_left}}
+        return {vars = {num, denom, num_ench, denom_ench, card.ability.extra.times, card.ability.extra.count}}
     end,
     calculate = function(self, card, context)
         if context.cardarea == G.play and context.other_card and context.other_card.ability.set == "Default" then
@@ -32,10 +32,13 @@ FishAndChips.Fish {
                     }
                 end
             elseif context.individual and not context.blueprint and not card.ability.extra.enchant then
-                card.ability.extra.uenh_left = card.ability.extra.uenh_left - 1
-                if card.ability.extra.uenh_left <= 0 then
-                    SEABUN.enchant(card)
+                card.ability.extra.count = card.ability.extra.count + 1
+                if card.ability.extra.count < card.ability.extra.times then
+                    return {
+                        message = card.ability.extra.count .. "/" .. card.ability.extra.times
+                    }
                 end
+                SEABUN.enchant(card)
             end
         end
     end,

@@ -3,7 +3,7 @@ FishAndChips.Fish {
     key = "golden_goldfish",
     atlas = "seabunny",
     pos = {x = 5, y = 0},
-    config = {extra = {num = 1, denom = 2, max = 5, max_ench = 25, destroys = 5, left = 5}},
+    config = {extra = {num = 1, denom = 2, max = 5, max_ench = 25, times = 5, count = 5}},
     blueprint_compat = true,
     badge_key = "k_fac_seabunny_mineral_fish",
     loc_vars = function(self, info_queue, card)
@@ -11,7 +11,7 @@ FishAndChips.Fish {
         if card.ability.extra.enchant then
             return {vars = {num, denom, card.ability.extra.max, card.ability.extra.max_ench}, key = self.key .. "_enchant"}
         end
-        return {vars = {num, denom, card.ability.extra.max, card.ability.extra.max_ench, card.ability.extra.destroys, card.ability.extra.left}}
+        return {vars = {num, denom, card.ability.extra.max, card.ability.extra.max_ench, card.ability.extra.times, card.ability.extra.count}}
     end,
     calculate = function(self, card, context)
         if context.destroy_card and context.destroying_card == context.scoring_hand[#context.scoring_hand] and SMODS.pseudorandom_probability(card, "fac_golden_goldfish", card.ability.extra.num, card.ability.extra.denom) then
@@ -28,10 +28,13 @@ FishAndChips.Fish {
                 remove = true
             }
         elseif context.remove_playing_cards and not context.blueprint and not card.ability.extra.enchant then
-            card.ability.extra.left = card.ability.extra.left - #context.removed
-            if card.ability.extra.left <= 0 then
-                SEABUN.enchant(card)
+            card.ability.extra.count = card.ability.extra.count + #context.removed
+            if card.ability.extra.count < card.ability.extra.times then
+                return {
+                    message = card.ability.extra.count .. "/" .. card.ability.extra.times
+                }
             end
+            SEABUN.enchant(card)
         end
     end,
     in_pool = function(self, args)

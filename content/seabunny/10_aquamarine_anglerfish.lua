@@ -30,9 +30,6 @@ FishAndChips.Fish {
             elseif context.pre_discard and not card.ability.extra.enchant then
                 if #context.full_hand == card.ability.extra.cards then
                     card.ability.extra.count = card.ability.extra.count + 1
-                    if card.ability.extra.count >= card.ability.extra.times then
-                        SEABUN.enchant(card)
-                    end
                 else
                     card.ability.extra.count = 0
                 end
@@ -41,6 +38,7 @@ FishAndChips.Fish {
                         message = card.ability.extra.count .. "/" .. card.ability.extra.times
                     }
                 end
+                SEABUN.enchant(card)
             end
         elseif context.joker_main then
             return {
