@@ -11,7 +11,7 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 0 },
 	ppu_coder = { "sleepyg11" },
 	ppu_artist = { "vevekhi" },
-	attributes = { "generation" },
+	attributes = { "generation", "tarot" },
 	config = {},
 	weight = 13,
 	stats = {

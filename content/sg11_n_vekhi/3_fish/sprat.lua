@@ -11,7 +11,7 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 0 },
 	ppu_coder = { "sleepyg11" },
 	ppu_artist = { "vevekhi" },
-	attributes = {},
+	attributes = { "chips", "economy" },
 	config = {
 		extra = {
 			chips = 10,

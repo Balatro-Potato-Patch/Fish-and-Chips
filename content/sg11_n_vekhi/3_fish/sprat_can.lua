@@ -23,7 +23,7 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 0 },
 	ppu_coder = { "sleepyg11" },
 	ppu_artist = { "vevekhi" },
-	attributes = {},
+	attributes = { "usable" },
 	config = {
 		extra = {
 			amount = 6,

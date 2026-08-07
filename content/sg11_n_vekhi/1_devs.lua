@@ -10,7 +10,7 @@ PotatoPatchUtils.Developer({
 	atlas = "fac_sg11_n_vekhi_credits",
 	pos = { x = 1, y = 0 },
 	colour = G.C.CHIPS,
-	fac_partner = "vevekhi",
+	fac_partner = "fac_vevekhi",
 	loc = "fac_sleepyg11",
 	calculate = function(self, context)
 		FishAndChips.QuantumFish.calculate(context)
@@ -30,6 +30,6 @@ PotatoPatchUtils.Developer({
 	atlas = "fac_sg11_n_vekhi_credits",
 	pos = { x = 0, y = 0 },
 	colour = G.C.MULT,
-	fac_partner = "sleepyg11",
+	fac_partner = "fac_sleepyg11",
 	loc = "fac_vevekhi",
 })

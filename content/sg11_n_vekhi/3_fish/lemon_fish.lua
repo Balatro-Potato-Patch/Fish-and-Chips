@@ -16,7 +16,12 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 0 },
 	ppu_coder = { "sleepyg11" },
 	ppu_artist = { "vevekhi" },
-	attributes = {},
+	attributes = {
+		"usable",
+		"generation",
+		"tag",
+		"food",
+	},
 	config = {
 		extra = {
 			skip_tags = 2,
