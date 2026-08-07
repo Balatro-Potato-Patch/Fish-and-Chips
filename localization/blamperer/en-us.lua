@@ -110,6 +110,21 @@ return {
                     "Yeah, it'll help, but you still",
                     "need to put in the work yourself."
                 }
+            },
+            fish_fac_blamperer_multisquid = {
+                name = "Multicolor Squid",
+                text = {
+                    "Convert up to {C:attention}#1#{} selected cards",
+                    "into a {C:fac_suits}suit{} that {C:attention}isn't{} selected,",
+                    "{C:green}#2# in #3#{} chance each",
+                    "card becomes {C:attention}Wild"
+                },
+                flavor = {
+                    "Normal squids use their ink",
+                    "to defend themselves from predation.",
+                    "The multiple colors might imply",
+                    "this squid has a sense of showmanship."
+                }
             }
         },
         PotatoPatch = {
