@@ -134,9 +134,9 @@ FishAndChips.Fish {
 			end}))
 		end
 	end,
-	button_key = function(self)
+	button_key = function(self, card)
 		for _, _card in ipairs(G.fac_pa_box_jellyfish_area.cards) do
-			if _card.ability.fac_pa_box_jellyfish then -- == card.ability.immutable.id
+			if _card.ability.fac_pa_box_jellyfish == card.ability.immutable.id then
 				return "Open"
 			end
 		end
