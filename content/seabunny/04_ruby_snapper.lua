@@ -35,7 +35,7 @@ FishAndChips.Fish {
             card.sell_cost = 2 * card.sell_cost
         end
     end,
-    weight = SEABUN.weight,
+    weight = 4,
     attributes = {"economy"},
     environments = {
         -- TODO

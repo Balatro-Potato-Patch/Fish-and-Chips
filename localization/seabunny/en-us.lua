@@ -293,9 +293,8 @@ return {
                     }
                 },
                 flavor = {
-                    "They say rabbits' feet",
-                    "bring you luck. Too bad",
-                    "this fish has no feet."
+                    "They say rabbits' feet bring you luck.",
+                    "Too bad this fish has no feet."
                 }
             },
             fish_fac_prismond_bunnyfish_enchant = {
@@ -328,9 +327,8 @@ return {
                     "{C:inactive}(Currently {C:attention}#3#{C:inactive}/#1#)"
                 },
                 flavor = {
-                    "{f:fac_sga}Is this a book brought to li",
-                    "{f:fac_sga}fe by magic or a fish brough",
-                    "{f:fac_sga}t to magic by life Who knows"
+                    "{f:fac_sga}Is this a book brought to life by magic or",
+                    "{f:fac_sga}a fish brought to magic by life Who knows"
                 }
             }
         }

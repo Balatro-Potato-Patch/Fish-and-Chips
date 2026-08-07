@@ -56,7 +56,7 @@ FishAndChips.Fish {
         end
         return false
     end,
-    weight = SEABUN.weight,
+    weight = 4,
     attributes = {"chips", "generation", "destroy_card"},
     environments = {
         -- TODO

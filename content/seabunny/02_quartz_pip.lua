@@ -42,7 +42,7 @@ FishAndChips.Fish {
             end
         end
     end,
-    weight = SEABUN.weight,
+    weight = 4,
     attributes = {"retrigger"},
     environments = {
         -- TODO

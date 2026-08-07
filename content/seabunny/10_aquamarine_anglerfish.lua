@@ -46,7 +46,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    weight = SEABUN.weight,
+    weight = 4,
     attributes = {"xmult", "retrigger"},
     environments = {
         pier = 20,

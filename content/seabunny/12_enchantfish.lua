@@ -33,7 +33,7 @@ FishAndChips.Fish {
             end
         end
     end,
-    weight = SEABUN.weight,
+    weight = 4,
     attributes = {"economy"},
     environments = {
         swamp = 20,

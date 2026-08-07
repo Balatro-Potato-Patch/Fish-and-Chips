@@ -56,7 +56,7 @@ FishAndChips.Fish {
     keep_on_use = function(self, card)
         return card.ability.stats.length >= 2 * card.ability.extra.shrink
     end,
-    weight = SEABUN.weight,
+    weight = 4,
     attributes = {"economy", "usable", "generation"},
     environments = {
         calm_pond = 20,
