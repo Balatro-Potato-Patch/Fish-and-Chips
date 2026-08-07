@@ -188,6 +188,14 @@ FishAndChips.Fish { --Trust
 }
 
 local todeg, todeg2 = 180/math.pi, 8/360
+local manohands_quads, manohands_sprites, mano_rate_check = {}, {}
+mano_rate_check = {0, {[false] = returnTrue, [true] = function()
+	if mano_rate_check[1] == 7 then
+		mano_rate_check[1] = 0
+		return true
+	end
+	mano_rate_check[1] = mano_rate_check[1] + 1
+end}, {[false] = 35, [true] = 8*35}}
 FishAndChips.Fish { --Manos
 	key = "vman2002_manos",
 	atlas = "vman2002_manos",
@@ -206,6 +214,8 @@ FishAndChips.Fish { --Manos
 			repetitions = 1
 		}
 	},
+	_manohands_quads = manohands_quads,
+	_manohands_sprites = manohands_sprites,
 	stats = { length = { min = 3.8, max = 4.5 }, weight = {min = 600, max = 1100}},
 	environments = {styx = 1},
 	loc_vars = function(self, info_queue, card)
@@ -274,36 +284,44 @@ FishAndChips.Fish { --Manos
 		if not card.ability.extra.active then return end
 		if not card.fac_manohands then
 			local s = 0.014
-			card.fac_manohands = {f = 0, d = {{0, 0.3, s, s, 1, 0}, {2, 0.3, -s, s, 1, 0}}, q = {}}
-			for i = 0, 14 do
-				card.fac_manohands.q[i] = love.graphics.newQuad(i * 131, 0, 131, 174, 1965, 174)
-			end
-			for i = 1, 3 do
-				local o = i*-0.5
-				local a = 0.8-(i*0.2)
-				table.insert(card.fac_manohands.d, 0, {0, 2.4, s, -s, a, o})
-				table.insert(card.fac_manohands.d, 0, {2, 2.4, -s, -s, a, o})
+			card.fac_manohands = {f = 0}
+			if not next(manohands_quads) then
+				for i = 0, 14 do
+					manohands_quads[i] = love.graphics.newQuad(i * 131, 0, 131, 174, 1965, 174)
+				end
+				manohands_sprites[1] = {0, 0.3, s, s, 1, 0}
+				manohands_sprites[2] = {2, 0.3, -s, s, 1, 0}
+				for i = 1, 3 do
+					local o = i*-0.5
+					local a = 0.8-(i*0.2)
+					table.insert(manohands_sprites, 1, {0, 2.4, s, -s, a, o})
+					table.insert(manohands_sprites, 1, {2, 2.4, -s, -s, a, o})
+				end
 			end
 		end
 		prep_draw(card, 1)
-		local mx, my = love.graphics.inverseTransformPoint(love.mouse.getPosition())
-		local xs = (math.floor(((math.atan2(mx - 0.6, my - 2.5) * todeg) + 112.5) * todeg2) % 8) + 1
-		if card.children.center.sprite_pos_copy.x ~= xs then
-			card.children.center:set_sprite_pos({x = xs, y = 0})
-		end
 		local mh = card.fac_manohands
-		local fd = love.timer.getDelta() * 35
-		if mh.f < 4 then
-			mh.f = mh.f + (0.255 * fd)
-		elseif mh.f <= 7 then
-			mh.f = mh.f + (0.755 * fd)
-		else
-			mh.f = (mh.f + (0.155 * fd)) % 15
+		local pf = FishAndChips.mod.config.performance_mode
+		if mano_rate_check[2][pf]() then
+			local mx, my = love.graphics.inverseTransformPoint(love.mouse.getPosition())
+			local xs = (math.floor(((math.atan2(mx - 0.6, my - 2.5) * todeg) + 112.5) * todeg2) % 8) + 1
+			if card.children.center.sprite_pos_copy.x ~= xs then
+				card.children.center:set_sprite_pos({x = xs, y = 0})
+			end
+			local fd = love.timer.getDelta() * mano_rate_check[3][pf]
+			if mh.f < 4 then
+				mh.f = mh.f + (0.255 * fd)
+			elseif mh.f <= 7 then
+				mh.f = mh.f + (0.755 * fd)
+			else
+				mh.f = (mh.f + (0.155 * fd)) % 15
+			end
 		end
 		local hi = G.ASSET_ATLAS.fac_vman2002_manohands.image
-		for k,v in pairs(mh.d) do
+		for k = pf and 5 or 1, 8 do
+			local v = manohands_sprites[k]
 			love.graphics.setColor(1,1,1,v[5])
-			love.graphics.draw(hi, mh.q[math.floor(mh.f + v[6]) % 15], v[1], v[2], 0, v[3], v[4], 65, 0)
+			love.graphics.draw(hi, manohands_quads[math.floor(mh.f + v[6]) % 15], v[1], v[2], 0, v[3], v[4], 65, 0)
 		end
 		love.graphics.pop()
 	end,
