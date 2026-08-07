@@ -50,7 +50,7 @@ FishAndChips.Fish {
 		card.ability.immutable.id = random_string(20, pseudoseed(self.key))
 	end,
     can_use = function(self, card)
-		local can_pick_booster = G.shop_booster and #G.shop_booster.highlighted > 0 and #G.shop_booster.highlighted <= card.ability.max_highlighted
+		local can_pick_booster = G.shop_booster and #G.shop_booster.highlighted > 0 and #G.shop_booster.highlighted <= card.ability.max_highlighted and not card.ability.immutable.id
 		local in_fishing_environment = G.GAME.fishing and not FishAndChips.in_tutorial
 		local can_use_booster
 		for _, _card in ipairs(G.fac_pa_box_jellyfish_area.cards) do
@@ -136,7 +136,7 @@ FishAndChips.Fish {
 	end,
 	button_key = function(self)
 		for _, _card in ipairs(G.fac_pa_box_jellyfish_area.cards) do
-			if _card.ability.fac_pa_box_jellyfish == card.ability.immutable.id then
+			if _card.ability.fac_pa_box_jellyfish then -- == card.ability.immutable.id
 				return "Open"
 			end
 		end
