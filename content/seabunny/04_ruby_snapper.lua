@@ -3,7 +3,7 @@ FishAndChips.Fish {
     key = "ruby_snapper",
     atlas = "seabunny",
     pos = {x = 0, y = 0},
-    config = {extra = {enchant = false, times = 5, fish_left = 5}},
+    config = {extra = {times = 5, fish_left = 5}},
     blueprint_compat = true,
     badge_key = "k_fac_mineral_fish",
     loc_vars = function(self, info_queue, card)

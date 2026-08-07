@@ -3,7 +3,7 @@ FishAndChips.Fish {
     key = "iron_silverfish",
     atlas = "seabunny",
     pos = {x = 0, y = 0},
-    config = {extra = {enchant = false, chips = 50, req = 50, times = 10, left = 10}},
+    config = {extra = {chips = 50, req = 50, times = 10, left = 10}},
     blueprint_compat = true,
     badge_key = "k_fac_mineral_fish",
     loc_vars = function(self, info_queue, card)

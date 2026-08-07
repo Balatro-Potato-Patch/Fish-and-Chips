@@ -47,10 +47,10 @@ uniform float enchant;
 
 vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
     vec4 color_main = vec4(139.0, 77.0, 255.0, 80.0) / 255.0;
-    vec4 color_sub = vec4(200.0, 128.0, 255.0, 40.0) / 255.0;
+    vec4 color_sub = vec4(200.0, 128.0, 255.0, 64.0) / 255.0;
     vec2 uv = (texture_coords * image_details - texture_details.xy * texture_details.zw) / texture_details.zw;
     float rate_main = 2 * max(distance(mod(0.906 * uv.x + 0.423 * uv.y + 0.8 * enchant, 1), 0.5), distance(mod(0.423 * uv.x - 0.906 * uv.y - enchant, 1), 0.5));
-    float rate_sub = 2 * max(distance(mod(1.3 * (0.906 * uv.x - 0.423 * uv.y - 1.218 * enchant), 1), 0.5), distance(mod(1.3 * (0.423 * uv.x + 0.906 * uv.y + 1.218 * enchant), 1), 0.5));
+    float rate_sub = 2 * max(distance(mod(1.3 * (0.8 * uv.x - 0.423 * uv.y - 1.6 * enchant), 1), 0.5), distance(mod(1.3 * (0.3 * uv.x + 0.906 * uv.y + 1.4 * enchant), 1), 0.5));
     vec4 glint_main = mix(vec4(0.0), color_main, rate_main * rate_main * rate_main * 0.7 + 0.3);
     vec4 glint_sub = mix(vec4(0.0), color_sub, rate_sub * rate_sub * 0.67 + 0.33);
     vec3 base_rgb = mix(glint_main.rgb, glint_sub.rgb, glint_sub.a);

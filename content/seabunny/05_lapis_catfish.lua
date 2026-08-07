@@ -3,7 +3,7 @@ FishAndChips.Fish {
     key = "lapis_catfish",
     atlas = "seabunny",
     pos = {x = 0, y = 0},
-    config = {extra = {enchant = false, percent = 25, delta = 5, max = 100, num = 1, denom = 3}},
+    config = {extra = {percent = 25, delta = 5, max = 100, num = 1, denom = 3}},
     blueprint_compat = true,
     badge_key = "k_fac_mineral_fish",
     loc_vars = function(self, info_queue, card)

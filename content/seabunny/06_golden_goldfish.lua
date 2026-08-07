@@ -3,7 +3,7 @@ FishAndChips.Fish {
     key = "golden_goldfish",
     atlas = "seabunny",
     pos = {x = 5, y = 0},
-    config = {extra = {enchant = false, num = 1, denom = 2, max = 5, max_ench = 25, destroys = 5, left = 5}},
+    config = {extra = {num = 1, denom = 2, max = 5, max_ench = 25, destroys = 5, left = 5}},
     blueprint_compat = true,
     badge_key = "k_fac_mineral_fish",
     loc_vars = function(self, info_queue, card)
@@ -45,8 +45,8 @@ FishAndChips.Fish {
     weight = SEABUN.weight,
     attributes = {"economy", "destroy_card"},
     environments = {
-        pier = 25,
-        aquifer = 75
+        pier = 20,
+        aquifer = 80
     },
     ppu_coder = {"ouiiskey"},
     ppu_artist = {"Lusha"},

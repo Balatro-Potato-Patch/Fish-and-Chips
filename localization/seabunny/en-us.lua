@@ -121,7 +121,7 @@ return {
                         "{C:inactive}sell value when sold"
                     },
                     {
-                        "To {C:dark_edition}Enchant{}: Sell #1# fishes",
+                        "To {C:dark_edition}Enchant{}: Sell #1# {C:attention}Fishes",
                         "{C:inactive}({C:attention}#2#{C:inactive} remaining)"
                     }
                 },
@@ -223,6 +223,21 @@ return {
                 flavor = {
                     "A goldfish made of gold? What's",
                     "next? A silverfish made of iron?"
+                }
+            },
+            fish_fac_enchantfish = {
+                name = "Enchantfish",
+                text = {
+                    "After {C:attention}#1#{} rounds, sell this to",
+                    "{C:dark_edition}enchant{} your {C:attention}Mineral Fishes",
+                    "then double sell value of your",
+                    "unenchanted {C:attention}Fishes{}, up to {C:money}+$#2#",
+                    "{C:inactive}(Currently {C:attention}#3#{C:inactive}/#1#)"
+                },
+                flavor = {
+                    "{f:fac_sga}Is this a book brought to li",
+                    "{f:fac_sga}fe by magic or a fish brough",
+                    "{f:fac_sga}t to magic by life Who knows"
                 }
             }
         }
