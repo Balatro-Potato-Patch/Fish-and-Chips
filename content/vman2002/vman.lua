@@ -117,20 +117,27 @@ FishAndChips.Fish { --Chips
 	end,
 	draw = function(self, card, layer)
 		local sc = G.SETTINGS.GRAPHICS.texture_scaling
-		if card.fac_chips_sprites ~= sc then
-			card.fac_chips_sprites = sc
-			local c = SMODS.CanvasSprite({X=card.T.x, Y=card.T.y, W=card.T.w, H=card.T.h, canvasScale = sc})
+		local rsc = FishAndChips.mod.config.performance_mode and 1 or sc
+		if card.fac_chips_sprites ~= rsc then
+			card.fac_chips_sprites = rsc
+			if card.children.center.canvas then
+				card.children.center.canvas:release()
+			end
+			local c = SMODS.CanvasSprite({X=card.T.x, Y=card.T.y, W=card.T.w, H=card.T.h, canvasScale = rsc})
+			if rsc == 1 then
+				c.canvas:setFilter("nearest")
+			end
 			c.role = card.children.center.role
 			card.children.center = c
 			love.graphics.push()
 			love.graphics.origin()
 			c.canvas:renderTo(function()
-				local ps, zc, o_r, o_g, o_b, o_a, r_r, r_g, xa, ya = sc - 1
+				local ps, rps, zc, o_r, o_g, o_b, o_a, r_r, r_g, xa, ya = sc - 1, rsc - 1
 				local imd = G.ASSET_ATLAS.fac_vman2002_chips.image_data
 				local off = bit.lshift(71, ps)
 				for x = 1, 70 do
 					for y = 1, 94 do
-						xa, ya = bit.lshift(x, ps), bit.lshift(y, ps)
+						xa, ya, rxa, rya = bit.lshift(x, ps), bit.lshift(y, ps), bit.lshift(x, rps), bit.lshift(y, rps)
 						--print("seek pixel ",xa,ya,xa+off)
 						o_r, o_g, o_b, o_a = imd:getPixel(xa, ya)
 						r_r, r_g = imd:getPixel(xa + off, ya)
@@ -141,7 +148,7 @@ FishAndChips.Fish { --Chips
 						else
 							love.graphics.setColor(o_r, o_g, o_b, o_a)
 						end
-						love.graphics.rectangle("fill", xa, ya, sc, sc)
+						love.graphics.rectangle("fill", rxa, rya, rsc, rsc)
 					end
 				end
 			end)
