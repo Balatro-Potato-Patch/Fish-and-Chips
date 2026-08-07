@@ -38,7 +38,7 @@ FishAndChips.Fish{
     loc_vars = function (self, info_queue, card)
         return {
             vars = {
-                card.ability.extra.oddshelp,
+                -card.ability.extra.oddshelp,
                 math.max(5 - card.ability.extra.oddshelp, 1)
             }
         }

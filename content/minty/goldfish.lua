@@ -1,9 +1,16 @@
+local atlas, pos
+if G.SETTINGS.reduced_motion then
+    atlas = "minty_nolineboilfish"
+    pos = {x=0, y=0}
+else
+    atlas = "minty_lineboilfish"
+    pos = {y=0}
+end
+
 FishAndChips.Fish{
     key = "minty_goldfish",
-    --[[
-    atlas = "minty_fish",
-    pos = {x=20, y=0},
-    --]]
+    atlas = atlas,
+    pos = pos,
     weight = 1,
     ppu_coder = {"minty"},
     ppu_artist = {"?"},
@@ -42,6 +49,20 @@ FishAndChips.Fish{
                 card.ability.extra.value_gain
             }
         }
+    end,
+    update = function (self, card, dt)
+        if G.SETTINGS.reduced_motion and not card.nomotion then
+            card.nomotion = true
+            self.atlas = "fac_minty_nolineboilfish"
+            self.pos = {x=0,y=0}
+            card:set_sprites(self)
+        end
+        if not G.SETTINGS.reduced_motion and (card.nomotion ~= false) then
+            card.nomotion = false
+            self.atlas = "fac_minty_lineboilfish"
+            self.pos = {y=0}
+            card:set_sprites(self)
+        end
     end,
     calculate = function (self, card, context)
         if (context.money_altered or context.sand_dollars_altered) and context.amount > 0 then
