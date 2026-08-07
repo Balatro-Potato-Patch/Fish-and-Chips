@@ -890,7 +890,7 @@ FishAndChips.Fish({
 	attributes = { "xmult", "destroy_cards" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
-	config = { extra_slots_used = 1, extra = { xmult = 1, xmult_gain = 0.2, hungry = false } },
+	config = { extra_slots_used = 1, extra = { xmult = 1, xmult_gain = 0.1, hungry = false } },
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -928,10 +928,10 @@ FishAndChips.Fish({
 			end
 		end
 		if context.setting_blind and not context.blueprint and card.ability.extra.hungry then
-			if SMODS.pseudorandom_probability(card, "fac_reaper_death", 2, 2, nil, true) then
+			if SMODS.pseudorandom_probability(card, "fac_reaper_death", 1, 2, nil, true) then
 				G.E_MANAGER:add_event(Event({
 					func = function()
-						play_sound("fac_reaper")
+						play_sound("fac_reaper", nil, 1.2)
 						FishAndChips.thunder_and_aiko.play_animation("fac_reaper_death")
 						return true
 					end,
@@ -961,10 +961,10 @@ FishAndChips.Fish({
 		delay(0.8 * G.SETTINGS.GAMESPEED)
 		G.E_MANAGER:add_event(Event({
 			func = function()
-				play_sound("fac_warning", nil, 0.8)
+				play_sound("fac_warning", nil, 1.5)
 				return true
 			end,
 		}))
-		delay(7.2 * G.SETTINGS.GAMESPEED)
+		delay(7.6 * G.SETTINGS.GAMESPEED)
 	end,
 })

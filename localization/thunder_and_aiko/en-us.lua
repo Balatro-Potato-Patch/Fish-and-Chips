@@ -174,8 +174,10 @@ return {
 					},
 				},
 				flavor = {
-					"Detecting multiple leviathan class lifeforms in the region.",
-					"Are you certain whatever you're doing is worth it?",
+					"Detecting multiple leviathan",
+					"class lifeforms in the region.",
+					"Are you certain whatever",
+					"you're doing is worth it?",
 				},
 			},
 		},
