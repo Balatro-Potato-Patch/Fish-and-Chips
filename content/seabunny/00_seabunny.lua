@@ -23,13 +23,13 @@ PotatoPatchUtils.Developer {
 
 -- Fish
 SEABUN = {
-    weight = 75 / 5,
+    weight = 75 / 6,
     enchant = function(card)
         card.ability.extra.enchant = true
         G.E_MANAGER:add_event(Event{func = function()
             card.ability.extra.show_enchant = true
             play_sound("fac_enchant", 1, 0.8)
-            return true end })
+            return true end})
     end
 }
 

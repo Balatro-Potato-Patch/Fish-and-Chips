@@ -229,11 +229,14 @@ return {
     },
     misc = {
         dictionary = {
+            k_fac_eroded = "Eroded!",
             k_fac_mineral_fish = "Mineral Fish",
             k_fac_uma = "UMA"
         },
         v_dictionary = {
-            a_cm = "+#1# cm"
+            a_cm = "+#1# cm",
+            a_percent = "#1#%",
+            a_percent_plus = "+#1#%"
         }
     }
 }
