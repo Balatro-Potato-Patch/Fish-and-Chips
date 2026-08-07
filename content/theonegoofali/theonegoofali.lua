@@ -2,13 +2,17 @@
 -- hundreds of chips, hundreds and hundreds of them, and I ate the lot! - "The Hollywood", Michael Rosen
 
 -- Registering in the database...
-local sfx_toga_thing = {}
+local sfx_toga_thing, img_toga_thing = {}, {}
 PotatoPatchUtils.Developer({
 	name = 'theonegoofali',
 	atlas = 'fac_theonegoofali_credits',
 	colour = G.C.ORANGE,
 	loc = true,
-	click = function()
+	loc_vars = function(self)
+		local img = next(img_toga_thing) and img_toga_thing[math.random(1, #img_toga_thing)]
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 4.2, 3.5, img or "fac_theonegoofali_ifound", { x = 0, y = 0 } ) } } }
+	end,
+	click = function(self)
 		if sfx_toga_thing[1] then
 			play_sound(sfx_toga_thing[math.random(1, #sfx_toga_thing)], 1, 0.35)
 		end
@@ -16,88 +20,47 @@ PotatoPatchUtils.Developer({
 })
 
 -- Assets...
-SMODS.Atlas({
-	key = "theonegoofali_credits",
-	path = "theonegoofali/toga_credits.png",
-	px = 71,
-	py = 95,
-	disable_mipmap = true
-})
-
-SMODS.Atlas({
-	key = "theonegoofali_fish",
-	path = "theonegoofali/toga_fish.png",
-	px = 52,
-	py = 95,
-	disable_mipmap = true
-})
-
-SMODS.Atlas({
-	key = "theonegoofali_ad_blue_tanger",
-	path = "theonegoofali/toga_afterdark_blue_tanger.png",
-	px = 53,
-	py = 108,
-	disable_mipmap = true
-})
-
-SMODS.Atlas({
-	key = "theonegoofali_ad_butterfly",
-	path = "theonegoofali/toga_afterdark_butterfly.png",
-	px = 71,
-	py = 84,
-	disable_mipmap = true
-})
-
-SMODS.Atlas({
-	key = "theonegoofali_ad_emperor",
-	path = "theonegoofali/toga_afterdark_emperor.png",
-	px = 55,
-	py = 101,
-	disable_mipmap = true
-})
-
-SMODS.Atlas({
-	key = "theonegoofali_ad_pinksquirrel",
-	path = "theonegoofali/toga_afterdark_pinksquirrel.png",
-	px = 52,
-	py = 113,
-	disable_mipmap = true
-})
-
-SMODS.Atlas({
-	key = "theonegoofali_ad_red_clown",
-	path = "theonegoofali/toga_afterdark_red_clown.png",
-	px = 60,
-	py = 86,
-	disable_mipmap = true
-})
-
-SMODS.Atlas({
-	key = "theonegoofali_ad_trigger",
-	path = "theonegoofali/toga_afterdark_trigger.png",
-	px = 66,
-	py = 114,
-	disable_mipmap = true
-})
-
-SMODS.Atlas({
-	key = "theonegoofali_ad_yellow_tang",
-	path = "theonegoofali/toga_afterdark_yellow_tang.png",
-	px = 68,
-	py = 89,
-	disable_mipmap = true
-})
-
-SMODS.Atlas({
-	key = "theonegoofali_thefish",
-	path = "theonegoofali/toga_thefish.png",
-	px = 64,
-	py = 64,
-	disable_mipmap = true
-})
+for k, v in ipairs({
+	{ key = "theonegoofali_credits", path = "theonegoofali/toga_credits.png", px = 71, py = 95 },
+	{ key = "theonegoofali_fish", path = "theonegoofali/toga_fish.png", px = 52, py = 95 },
+	{ key = "theonegoofali_ad_blue_tanger", path = "theonegoofali/toga_afterdark_blue_tanger.png", px = 53, py = 108 },
+	{ key = "theonegoofali_ad_butterfly", path = "theonegoofali/toga_afterdark_butterfly.png", px = 71, py = 84 },
+	{ key = "theonegoofali_ad_emperor", path = "theonegoofali/toga_afterdark_emperor.png", px = 55, py = 101 },
+	{ key = "theonegoofali_ad_pinksquirrel", path = "theonegoofali/toga_afterdark_pinksquirrel.png", px = 52, py = 113 },
+	{ key = "theonegoofali_ad_red_clown", path = "theonegoofali/toga_afterdark_red_clown.png", px = 60, py = 86 },
+	{ key = "theonegoofali_ad_trigger", path = "theonegoofali/toga_afterdark_trigger.png", px = 66, py = 114 },
+	{ key = "theonegoofali_ad_yellow_tang", path = "theonegoofali/toga_afterdark_yellow_tang.png", px = 68, py = 89 },
+	-- Sprite stuff.
+	{ key = "theonegoofali_thefish", path = "theonegoofali/toga_thefish.png", px = 64, py = 64 },
+	{ key = "theonegoofali_theoffering.png", path = "theonegoofali/other/toga_billmayer_theoffering.png", px = 433, py = 320, fac_toga_fimsh = true },
+	{ key = "theonegoofali_bornto", path = "theonegoofali/other/toga_bornto.png", px = 264, py = 309, fac_toga_fimsh = true },
+	{ key = "theonegoofali_glorpy", path = "theonegoofali/other/toga_glorpy.png", px = 293, py = 352, fac_toga_fimsh = true },
+	{ key = "theonegoofali_happyfish", path = "theonegoofali/other/toga_happyfish.png", px = 281, py = 298, fac_toga_fimsh = true },
+	{ key = "theonegoofali_huh", path = "theonegoofali/other/toga_huh.png", px = 347, py = 347, fac_toga_fimsh = true },
+	{ key = "theonegoofali_ifound", path = "theonegoofali/other/toga_ifound.png", px = 320, py = 307, fac_toga_fimsh = true },
+	{ key = "theonegoofali_minnowfin", path = "theonegoofali/other/toga_minnowfin.png", px = 334, py = 244, fac_toga_fimsh = true },
+	{ key = "theonegoofali_sucker", path = "theonegoofali/other/toga_sucker.png", px = 300, py = 300, fac_toga_fimsh = true },
+}) do
+	v.disable_mipmap = true
+	if v.fac_toga_fimsh then
+		v.fac_toga_fimsh = nil
+		table.insert(img_toga_thing, "fac_"..v.key)
+	end
+	SMODS.Atlas(v)
+end
 
 SMODS.Sound({key = "toga_fish", path = "theonegoofali/fish.ogg"})
 SMODS.Sound({key = "toga_fishreverse", path = "theonegoofali/fishreverse.ogg"})
+SMODS.Sound({key = "toga_spidersolitairehint", path = "theonegoofali/126.wav"})
+SMODS.Sound({
+	key = "music_toga_shhh",
+	path = "theonegoofali/silence.ogg",
+	pitch = 1,
+	select_music_track = function()
+		return G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('fac_toga_oopsnothing') and 69e42
+	end,
+	sync = false,
+})
 
 for _, v in ipairs({ "chimes", "chord", "comedy", "dialog-error", "dialog-question", "dialog-warning", "ding", "Indigo", "Laugh", "Wild-Eep" }) do
 	local k = string.lower(v)
@@ -193,7 +156,7 @@ table.insert(fishregistry, {
 	weight = 8,
 	ppu_coder = { "theonegoofali" },
 	ppu_artist = { "theonegoofali" },
-	attributes = { "passive" },
+	attributes = { "chips", "passive" },
 	environments = {
 		swamp = 4,
 		aquifer = 4,
@@ -227,10 +190,7 @@ table.insert(fishregistry, {
 	calculate = function(self, card, context)
 		if context.retrigger_joker then return end
 		
-		if context.fac_toga_modify_rank and tonumber(context.amount) then
-			local setamt = math.abs(context.amount) + 1
-			return { amount = context.amount < 0 and -setamt or setamt }
-		end
+		if context.fac_toga_modify_rank and tonumber(context.amount) then return { amount = 1 } end
 	end,
 	display_size = { w = 71, h = 84 },
 	stats = { weight = { min = 0.45, max = 1 }, length = { min = 0.07, max = 0.3 } }
@@ -392,7 +352,10 @@ function SMODS.modify_rank(card, amount, manual_sprites)
 	SMODS.calculate_context({ fac_toga_modify_rank = true, amount = amount }, facbtrflycalc)
 	for _, eval in pairs(facbtrflycalc) do
 		for key, eval2 in pairs(eval) do
-			if eval2.amount then amount = eval2.amount end
+			if eval2.amount then
+				local amt = math.abs(amount) + 1
+				amount = amount < 0 and -amt or amt
+			end
 		end
 	end
 	return modifyrankref(card, amount, manual_sprites)
@@ -437,5 +400,75 @@ function get_flush(hand)
 			return ret
 		end
 		return {}
+	end
+end
+
+-- No achievements? At least show something for all those clicks.
+function G.FUNCS.fac_toga_close(e)
+	if G.ACTIVE_MOD_UI and G.ACTIVE_MOD_UI.id == 'FishAndChips' then G.FUNCS.openModUI_FishAndChips() else G.FUNCS.exit_overlay_menu() end
+end
+
+function FishAndChips.toga_oopsnothinguidef()
+	local rtxt = G.localization.misc.ui_strings.fac_toga_oopsnothing
+	return { n = G.UIT.ROOT, config = { align = "cm", colour = {0,0,0,0.8}, padding = 32.01, r = 0.1, minw = 5, id = 'fac_toga_oopsnothing'}, nodes = {
+		{n = G.UIT.C, config = { align = "cl", outline = 1, outline_colour = HEX('C3C3C3'), colour = G.C.UI.BACKGROUND_INACTIVE, padding = 0.035 }, nodes = {
+			{n = G.UIT.R, config = {align = "cl", colour = HEX('000082'), minw = 5}, nodes = {
+				{n = G.UIT.C, config = { align = "cl", padding = 0.1 }, nodes = {
+					{n = G.UIT.T, config = { text = rtxt[1], scale = 0.5, colour = G.C.UI.TEXT_LIGHT }},
+				}},
+			}},
+			{n = G.UIT.R, config = { align = "cl", minw = 5 }, nodes = {
+				{n = G.UIT.C, config = { align = "tl", padding = 0.05 }, nodes = {
+					{n = G.UIT.O, config = { w = 1, h = 1, object = SMODS.create_sprite(0, 0, 0.8*1, 0.8*1, SMODS.get_atlas('fac_modicon')) } },
+				}},
+				{n = G.UIT.C, config = { align = "cl", padding = -0.05}, nodes = {
+					{n = G.UIT.R, config = { align = "cl", padding = 0.2 }, nodes = {
+						{n = G.UIT.R, config = { align = "cl", padding = -0.05 }, nodes = {
+							{n = G.UIT.T, config = { text = rtxt[2], scale = 0.5, colour = G.C.UI.TEXT_LIGHT }},
+						}},
+						{n = G.UIT.R, config = { align = "cl", padding = -0.05 }, nodes = {
+							{n = G.UIT.T, config = { text = rtxt[3], scale = 0.5, colour = G.C.UI.TEXT_LIGHT }},
+						}},
+					}},
+				}},
+			}},
+			{n = G.UIT.R, config = {align = "cm", colour = HEX('c0c0c0'), padding = 0.15}, nodes = {
+				{n = G.UIT.C, config = { align = "cm" }, nodes = {
+					UIBox_button({label = { localize('fac_toga_ok') }, button = "fac_toga_close", minw = 2, minh = 0.65, colour = HEX('555555')})
+				}},
+			}},
+		}},
+	}}
+end
+
+local clickcount, hastriggered = 0, false
+function FishAndChips.toga_updateclick(self)
+	if self and self.ppu_member and not hastriggered then
+		clickcount = (clickcount or 0) + 1
+		if clickcount >= 1337 then
+			hastriggered = true
+			FishAndChips.toga_oopsnothing()
+			sendInfoMessage("54 68 65 20 45 61 73 74 65 72 20 45 67 67 20 77 61 73 20 74 72 69 67 67 65 72 65 64 2e", "Fish and Chips - TheOneGoofAli")
+			sendInfoMessage("54 68 61 6e 6b 73 20 66 6f 72 20 70 6c 61 79 69 6e 67 20 46 69 73 68 20 61 6e 64 20 43 68 69 70 73 21", "Fish and Chips - TheOneGoofAli")
+		end
+	end
+end
+
+local hasshown = false
+function FishAndChips.toga_oopsnothing()
+	if not hasshown then
+		hasshown = true
+		G.SETTINGS.paused = true
+		G.FUNCS.overlay_menu({
+			definition = FishAndChips.toga_oopsnothinguidef(),
+			config = {
+				align = "cm",
+				offset = {x = 0, y = 0},
+				bond = 'Weak',
+				no_esc = true,
+				no_back = true,
+			}
+		})
+		play_sound('fac_toga_spidersolitairehint', 1, 0.5)
 	end
 end

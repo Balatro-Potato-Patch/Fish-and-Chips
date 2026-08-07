@@ -4,9 +4,8 @@ return {
 			PotatoPatchDev_theonegoofali = {
                 name = 'TheOneGoofAli',
                 text = {
-					{ "Additionally known under the {C:attention}TOGA{} acronym.", "Very much interested in (old) computers.", "{C:inactive}And older versions of Windows too." },
-					{ "Previously participated in {C:attention}Wormhole{} and {C:attention}Stocking Stuffer{}." },
-					{ "Card art by: {X:inactive,C:white}GhostSalt{} (from {C:attention}Wormhole{})" },
+					{ "Additionally known under the {C:attention}TOGA{} acronym.", "Also check out {C:attention}TOGA's Stuff{}!", "Card art by: {X:inactive,C:white}GhostSalt{}" },
+					{ "{element:1}" },
 				}
 			},
 		},
@@ -109,6 +108,10 @@ return {
 	misc = {
 		dictionary = {
 			fac_toga_red_clown_debuff = "Scoring hand must contain a face card",
+			fac_toga_ok = "OK",
 		},
+		ui_strings = {
+			fac_toga_oopsnothing = { "Fish and Chips", "Sorry, nothing here this time around. :)", "The dedication is acknowledged, however." }
+		}
 	},
 }
