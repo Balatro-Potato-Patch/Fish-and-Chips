@@ -12,7 +12,7 @@ return {
 			fish_fac_sg11_n_vekhi_water_ghoul = {
 				name = "Water Ghoul",
 				text = {
-					"When {C:attention}primed{}, next caught Fish",
+					"When {C:attention}primed{}, next caught {C:fac_fish}Fish{}",
 					"will be {C:dark_edition}Negative{},",
 					"{S:1.1,C:red,E:2}self destructs{} afterwards",
 				},
@@ -20,7 +20,7 @@ return {
 			fish_fac_sg11_n_vekhi_water_ghoul_primed = {
 				name = "Water Ghoul",
 				text = {
-					"Next caught Fish",
+					"Next caught {C:fac_fish}Fish{}",
 					"will be {C:dark_edition}Negative{}",
 					"{S:1.1,C:red,E:2}self destructs{}, afterwards",
 				},
@@ -29,7 +29,7 @@ return {
 				name = "Quantum Fish",
 				text = {
 					"{C:attention}Random{} card on screen gives",
-					"{C:white,X:mult}X#1#{} Mult during scoring",
+					"{C:white,X:mult}X#1#{} Mult when scored",
 				},
 				flavour = {
 					"Exist in all places at the same time",
@@ -40,7 +40,7 @@ return {
 				name = "Quantum Fish (photo)",
 				text = {
 					"{C:attention}Random{} card on screen gives",
-					"{C:white,X:mult}X#1#{} Mult during scoring",
+					"{C:white,X:mult}X#1#{} Mult when scored",
 				},
 				flavour = {
 					"Exist in all places at the same time",
@@ -51,7 +51,7 @@ return {
 				name = "Soul Cannonfish",
 				text = {
 					"Prevents death",
-					"Must {C:red}destroy{} {C:attention}#1#{} random Fish",
+					"Must {C:red}destroy{} {C:attention}#1#{} random {C:fac_fish}Fish{}",
 					"and {C:attention}#1#{} Bucket Slots to trigger",
 				},
 			},
@@ -88,8 +88,8 @@ return {
 			fish_fac_sg11_n_vekhi_diamond_fish = {
 				name = "Diamond Fish",
 				text = {
-					"Gain {C:money}$#1#{} if hand contains",
-					"scoring {C:attention}Glass Cards{} that do not break",
+					"Gain {C:money}$#1#{} if hand contains scoring",
+					"{C:attention}Glass Cards{} that do not break",
 				},
 			},
 			fish_fac_sg11_n_vekhi_sprat = {
