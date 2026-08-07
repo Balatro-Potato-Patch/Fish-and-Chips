@@ -129,7 +129,7 @@ SMODS.DrawStep({
         if (card ~= "fish_fac_another_bucket")  then return end
         local shader = self.edition and G.P_CENTERS[self.edition.key].shader or "dissolve"
         self.children.center:set_sprite_pos({x=2,y=1})
-        self.children.center:draw_shader(shader, nil, nil)
+        FishAndChips.crimsonseraphim.draw_sprite(self.children.center, self)
         if self.ability.saved_card then
             self.ability.saved_card.card.T = copy_table(self.T)
             self.ability.saved_card.card.VT = copy_table(self.VT)
@@ -138,8 +138,9 @@ SMODS.DrawStep({
                 if SMODS.DrawSteps[k]:check_conditions(self.ability.saved_card.card, 'both') then SMODS.DrawSteps[k].func(self.ability.saved_card.card, layer) end
             end
         end
+
         self.children.center:set_sprite_pos({x=1,y=1})
-        self.children.center:draw_shader(shader, nil, nil)
+        FishAndChips.crimsonseraphim.draw_sprite(self.children.center, self)
 	end,
 	conditions = { vortex = false, facing = "front" },
 })
@@ -150,6 +151,7 @@ SMODS.DrawStep({
 	func = function(self)
         local card = self.config.center_key
         if (card ~= "fish_fac_ultimate_weapon")  then return end
+        FishAndChips.crimsonseraphim.draw_sprite(self.children.center, self)
         self.children.center:draw_shader('fac_crimsonseraphim_ultimate_weapon', nil, self.ARGS.send_to_shader)
 	end,
 	conditions = { vortex = false, facing = "front" },

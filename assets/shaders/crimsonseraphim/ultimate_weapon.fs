@@ -144,7 +144,7 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
         return dissolve_mask(col, texture_coords, uv);
     }
 
-    return dissolve_mask(tex, texture_coords, uv);
+    return dissolve_mask(vec4(0,0,0,0), texture_coords, uv);
 }
 
 extern MY_HIGHP_OR_MEDIUMP vec2 mouse_screen_pos;

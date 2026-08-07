@@ -334,7 +334,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "hammerhead_shark",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 4, y = 2 },
 	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
@@ -1731,7 +1731,9 @@ SMODS.DrawStep({
         end)
         love.graphics.pop()
         self.children.sans_door_canvas.role.draw_major = self
-        self.children.sans_door_canvas:draw_shader("dissolve", nil, nil, nil, self.children.center)
+        FishAndChips.crimsonseraphim.draw_sprite(self.children.sans_door_canvas, self, {
+            nil, nil, nil, self.children.center
+        })
 	end,
 	conditions = { vortex = false, facing = "front" },
 })

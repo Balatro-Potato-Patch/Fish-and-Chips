@@ -521,3 +521,16 @@ function FishAndChips.crimsonseraphim.swoon()
         end),
     }))
 end
+
+function FishAndChips.crimsonseraphim.draw_sprite(sprite, card, args)
+    local edition = card.edition
+    args = args or {}
+    sprite:draw_shader("dissolve", unpack(args))
+    if edition and G.P_CENTERS[edition.key].shader then
+        args[2] = args[2] or card.ARGS.send_to_shader
+        sprite:draw_shader(G.P_CENTERS[edition.key].shader, unpack(args))
+        if edition.negative then
+            sprite:draw_shader("negative_shine", unpack(args)) 
+        end
+    end
+end

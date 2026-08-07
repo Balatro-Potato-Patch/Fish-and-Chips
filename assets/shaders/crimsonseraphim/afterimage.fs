@@ -9,7 +9,7 @@ extern MY_HIGHP_OR_MEDIUMP number time;
 extern MY_HIGHP_OR_MEDIUMP vec4 texture_details;
 extern MY_HIGHP_OR_MEDIUMP vec4 colour;
 extern MY_HIGHP_OR_MEDIUMP vec2 image_details;
-extern MY_HIGHP_OR_MEDIUMP vec2 afterimage;
+extern MY_HIGHP_OR_MEDIUMP vec2 crimsonseraphim_afterimage;
 extern MY_HIGHP_OR_MEDIUMP number alpha;
 extern bool shadow;
 extern MY_HIGHP_OR_MEDIUMP vec4 burn_colour_1;
@@ -66,7 +66,7 @@ vec4 effect( vec4 col, Image texture, vec2 texture_coords, vec2 screen_coords )
         }
     }
     if (uv.x > uv.x * 2) {
-        uv.x = afterimage.x;
+        uv.x = crimsonseraphim_afterimage.x;
     }
 
     return dissolve_mask(vec4(tex.r,tex.g,tex.b,tex.a*alpha), texture_coords, uv);
