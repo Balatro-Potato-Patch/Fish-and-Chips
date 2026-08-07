@@ -899,6 +899,7 @@ FishAndChips.Fish({
 			},
 		}
 	end,
+	eternal_compat = false,
 	calculate = function(self, card, context)
 		if context.end_of_round and not context.game_over and not context.blueprint and context.main_eval then
 			local index = 1
@@ -928,27 +929,13 @@ FishAndChips.Fish({
 			end
 		end
 		if context.setting_blind and not context.blueprint and card.ability.extra.hungry then
-			if SMODS.pseudorandom_probability(card, "fac_reaper_death", 1, 2, nil, true) then
-				G.E_MANAGER:add_event(Event({
+			if SMODS.pseudorandom_probability(card, "fac_reaper_leaving", 1, 2, nil, true) then
+				return {
+					message = localize("k_fac_left_ex"),
 					func = function()
-						play_sound("fac_reaper", nil, 1.2)
-						FishAndChips.thunder_and_aiko.play_animation("fac_reaper_death")
-						return true
-					end,
-				}))
-				delay(3.5 * G.SETTINGS.GAMESPEED)
-				G.E_MANAGER:add_event(Event({
-					func = function()
-						G.STATE = G.STATES.GAME_OVER
-						if not G.GAME.won and not G.GAME.seeded and not G.GAME.challenge then
-							G.PROFILES[G.SETTINGS.profile].high_scores.current_streak.amt = 0
-						end
-						G:save_settings()
-						G.FILE_HANDLER.force = true
-						G.STATE_COMPLETE = false
-						return true
-					end,
-				}))
+						SMODS.destroy_cards(card, { skip_anim = true })
+					end
+				}
 			end
 		end
 		if context.joker_main then

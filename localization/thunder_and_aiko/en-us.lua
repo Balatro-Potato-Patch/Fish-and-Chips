@@ -168,8 +168,8 @@ return {
 						"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
 					},
 					{
-						"{C:attention}Fixed{} {C:green}1 in 2{} chance to {C:red,E:2}lose the run{}",
-						"when selecting a {C:attention}Blind{} if no",
+						"{C:attention}Fixed{} {C:green}1 in 2{} chance to leave your",
+						"bucket when selecting a {C:attention}Blind{} if no",
 						"{C:attention}Fish{} was eaten last round",
 					},
 				},
@@ -202,6 +202,7 @@ return {
 	misc = {
 		dictionary = {
 			k_fac_boom_ex = "Boom!",
+			k_fac_left_ex = "Left!",
 			k_fac_nft_sell_value1 = "Gains",
 			k_fac_nft_sell_value1_alt = "Loses",
 			k_fac_nft_sell_value2 = "of sell value",

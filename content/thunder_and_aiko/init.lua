@@ -18,11 +18,6 @@ SMODS.Sound({
 })
 
 SMODS.Sound({
-	key = "reaper",
-	path = "thunder_and_aiko/reaper.ogg",
-})
-
-SMODS.Sound({
 	key = "warning",
 	path = "thunder_and_aiko/warning.ogg",
 })
