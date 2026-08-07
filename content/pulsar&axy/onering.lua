@@ -111,7 +111,7 @@ FishAndChips.Fish {
 			}, card)
 		end
 	end,
-	count_duplicates = function()
+	count_duplicates = function(self)
 		local dupeCount = 0
 		if G.fac_fish_area then
 			for _, fish in ipairs(G.fac_fish_area.cards) do
