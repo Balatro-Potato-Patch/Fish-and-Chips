@@ -1,5 +1,8 @@
 return {
     misc = {
+        v_dictionary={
+            a_discards="+#1# Discards",
+        },
         dictionary = {
             k_fac_pi_cubed_mult = "Mult",
             k_fac_pi_cubed_bonus = "Bonus",
@@ -90,7 +93,7 @@ return {
                 name = "Smaller Wrapped Fish",
                 text = {
                     {
-                        "After scoring #1# {C:inactive}[#2#]{} cards",
+                        "After scoring {C:attention}#1#{} {C:inactive}[#2#]{} cards",
                         "of rank {C:attention}2{}, {C:attention}Use{} this Fish",
                         "to create {C:attention}#3#{} random {C:fac_fish}Fish{}",
                         "{C:inactive}(Must have room){}",
@@ -138,6 +141,23 @@ return {
                     "The can might qualify for",
                     "Containers for Change, but",
                     "prepare for a dispute with the fish.",
+                }
+            },
+            fish_fac_pi_cubed_intergalacticdrunkfish = {
+                name = "Intergalactic Drunkfish",
+                text = {
+                    {
+                        "{C:red}+#1#{} Discard for {C:attention}this round{}",
+                        "and each played card",
+                        "gives {C:money}$#2#{} when scored if",
+                        "poker hand is a {C:attention}#3#{}",
+                        "{s:0.8}poker hand changes every {C:attention,s:0.8}hand{}",
+                    },
+                },
+                flavor = {
+                    "Supergiant Cider, Voidka, Piña Solada,",
+                    "Stargarita, Big Bang Brandy, Absinthe...",
+                    "this fish has downed it all!",
                 }
             },
         },

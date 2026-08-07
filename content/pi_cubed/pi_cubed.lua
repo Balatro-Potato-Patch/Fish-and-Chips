@@ -24,18 +24,19 @@ SMODS.Atlas({
 
 -- Smaller Wrapped Fish 
 -- dev note for playtesters: i think this fish can create treasure fish. 
--- this is not intended behaviour and i wouldn't mind it if it was no longer able to
+-- this is not intended behaviour and i wouldn't mind if it was no longer able to
 FishAndChips.Fish {
 	key = "pi_cubed_smallerwrappedfish",
 	atlas = "pi_cubed_fish",
-	pos = { x = 0, y = 1 },
+	pos = { x = 0, y = 2 },
     pixel_size = { w = 54, h = 61 },
 	ppu_coder = { "pi_cubed" },
 	ppu_artist = { "pi_cubed" },
-	weight = 15,
+	weight = 10,
     environments = {
-		wormhole = 1,
-		calm_pond = 1,
+		wormhole = 4,
+		calm_pond = 3,
+        backroom = 1,
 	},
     impulse_min = 0.05,
     impulse_max = 0.1,
@@ -43,17 +44,26 @@ FishAndChips.Fish {
     decision_max = 0.1,
     vel_limit = 0.2,
     stats = {
-		weight = {min = 0.075, max = 0.35},
+		weight = {min = 0.5, max = 10},
 		length = {min = 0.05, max = 0.3}
 	},
     attributes = { "rank", "two", "generation", "usable" },
 	config = {
 		extra = {
-			req_cards = 8, count_cards = 8, amt_create = 3
+			req_cards = 8, count_cards = 8, amt_create = 3, card_art = nil
 		}
 	},
+    cost = 6,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.req_cards, card.ability.extra.count_cards, card.ability.extra.amt_create } }
+    end,
+    set_ability = function(self, card, inital, delay_sprites)
+        if (card.config.center.discovered or card.bypass_discovery_center) then
+            if not card.ability.extra.card_art then
+                card.ability.extra.card_art = math.random(0,3)
+            end
+            card.children.center:set_sprite_pos({x = card.ability.extra.card_art, y = 2})
+        end
     end,
     calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play and context.other_card:get_id() == 2 and not context.blueprint then
@@ -113,8 +123,9 @@ FishAndChips.Fish {
 	ppu_artist = { "pi_cubed" },
 	weight = 10,
     environments = {
-		city_river = 1,
-        volcano = 1,
+		pier = 4,
+        volcano = 2,
+        city_river = 1,
 	},
     impulse_min = 0.25,
     impulse_max = 0.3,
@@ -125,12 +136,13 @@ FishAndChips.Fish {
 		weight = {min = 30, max = 70},
 		length = {min = 0.3, max = 0.7}
 	},
+    attributes = { 'mult', 'chips', 'enhancements', 'modify_card' },
     config = {
 		extra = {
 			min_cards = 5,
 		}
 	},
-    attributes = { 'mult', 'chips', 'enhancements', 'modify_card' },
+    cost = 4,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_mult
         info_queue[#info_queue+1] = G.P_CENTERS.m_bonus
@@ -186,8 +198,8 @@ FishAndChips.Fish {
 	ppu_artist = { "pi_cubed" },
 	weight = 10,
     environments = {
-		city_river = 1,
-        aquifer = 1,
+		city_river = 4,
+        aquifer = 2,
 	},
     impulse_min = 0.12,
     impulse_max = 0.3,
@@ -202,12 +214,13 @@ FishAndChips.Fish {
     requires_hand = true,
 	config = {
 		extra = {
-			num_cards = 5,
+			num_cards = 6,
 		}
 	},
+    cost = 4,
     loc_vars = function(self, info_queue, card)
         local suit = (G.GAME.current_round.fac_pi_cubed_squid_card or {}).suit or 'Spades'
-        return { vars = { card.ability.extra.num_cards, localize(suit, 'suits_singular'), colours = { G.C.SUITS[suit] } } }
+        return { vars = { card.ability.extra.num_cards, localize(suit, 'suits_plural'), colours = { G.C.SUITS[suit] } } }
     end,
     use = function(self, card, area, copier)
         G.E_MANAGER:add_event(Event({
@@ -248,7 +261,7 @@ FishAndChips.Fish {
         delay(0.2)
         for i = 1, #G.hand.cards do
             if selected_cards[G.hand.cards[i]] then
-                local percent = 1.15 - (i - 0.999) / (5 - 0.998) * 0.3
+                local percent = 1.15 - (i - 0.999) / (card.ability.extra.num_cards - 0.998) * 0.3
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after',
                     delay = 0.15,
@@ -276,7 +289,7 @@ FishAndChips.Fish {
         end
         for i = 1, #G.hand.cards do
             if selected_cards[G.hand.cards[i]] then
-                local percent = 0.85 + (i - 0.999) / (5 - 0.998) * 0.3
+                local percent = 0.85 + (i - 0.999) / (card.ability.extra.num_cards - 0.998) * 0.3
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after',
                     delay = 0.15,
@@ -332,8 +345,8 @@ FishAndChips.Fish {
 	ppu_artist = { "pi_cubed" },
 	weight = 10,
     environments = {
-		wormhole = 1,
-		styx = 1,
+		styx = 4,
+        wormhole = 2,
 	},
     impulse_min = 0.05,
     impulse_max = 0.5,
@@ -350,6 +363,7 @@ FishAndChips.Fish {
 			xmult_mod = 0.2, xmult = 1
 		}
 	},
+    cost = 4,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xmult_mod, card.ability.extra.xmult } }
     end,
@@ -399,14 +413,14 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "pi_cubed_mysteriouscanfish",
 	atlas = "pi_cubed_fish",
-	pos = { x = 2, y = 1 },
+	pos = { x = 0, y = 1 },
     pixel_size = { w = 56, h = 94 },
 	ppu_coder = { "pi_cubed" },
 	ppu_artist = { "pi_cubed" },
 	weight = 10,
     environments = {
-		pier = 1,
-		soup = 1,
+		pier = 4,
+		soup = 3,
 	},
     impulse_min = 0.12,
     impulse_max = 0.3,
@@ -423,6 +437,7 @@ FishAndChips.Fish {
 			odds = 10, eor_sand = 20, use_sand = 10, use_dollars = 20
 		}
 	},
+    cost = 4,
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'mysteriouscanfish')
         return { vars = { numerator, denominator, card.ability.extra.eor_sand, card.ability.extra.use_sand, card.ability.extra.use_dollars } }
@@ -462,6 +477,73 @@ FishAndChips.Fish {
     end,
 }
 
+-- Intergalactic Drunkfish
+FishAndChips.Fish {
+	key = "pi_cubed_intergalacticdrunkfish",
+	atlas = "pi_cubed_fish",
+	pos = { x = 2, y = 1 },
+    pixel_size = { w = 71, h = 95 },
+	ppu_coder = { "pi_cubed" },
+	ppu_artist = { "pi_cubed" },
+	weight = 10,
+    environments = {
+		wormhole = 4,
+		chocolate_river = 2,
+	},
+    impulse_min = 0.5,
+    impulse_max = 0.5,
+    decision_min = 1.5,
+    decision_max = 3,
+    vel_limit = 1,
+    stats = {
+		weight = {min = 5, max = 100},
+		length = {min = 0.5, max = 5}
+	},
+    attributes = { "economy", "discard", "hand_type" },
+	config = {
+		extra = {
+			dollars = 2, discard_mod = 1, poker_hand = 'High Card'
+		}
+	},
+    cost = 6,
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.discard_mod, card.ability.extra.dollars, localize(card.ability.extra.poker_hand or 'High Card', 'poker_hands') } }
+    end,
+    calculate = function(self, card, context)
+		if context.before and next(context.poker_hands[card.ability.extra.poker_hand]) then
+            ease_discard(card.ability.extra.discard_mod)
+            SMODS.calculate_effect({ message = localize { type = 'variable', key = 'a_discards', vars = { card.ability.extra.discard_mod } }, colour = G.C.RED, }, card)
+        end
+        if context.individual and context.cardarea == G.play and
+        next(context.poker_hands[card.ability.extra.poker_hand]) then
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.dollars
+            G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
+            return {
+                dollars = card.ability.extra.dollars,
+            }
+        end
+        if context.after and context.main_eval and not context.blueprint then
+            local _poker_hands = {}
+            for handname, _ in pairs(G.GAME.hands) do
+                if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand then
+                    _poker_hands[#_poker_hands + 1] = handname
+                end
+            end
+            card.ability.extra.poker_hand = pseudorandom_element(_poker_hands, 'pi_cubed_intergalacticdrunkfish')
+            SMODS.calculate_effect({ message = localize(card.ability.extra.poker_hand, 'poker_hands')}, card)
+        end
+	end,
+    set_ability = function(self, card, initial, delay_sprites)
+        local _poker_hands = {}
+        for handname, _ in pairs(G.GAME.hands) do
+            if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand then
+                _poker_hands[#_poker_hands + 1] = handname
+            end
+        end
+        card.ability.extra.poker_hand = pseudorandom_element(_poker_hands, 'pi_cubed_intergalacticdrunkfish')
+    end
+}
+
 -- Yellow Tang (with a hat)
 FishAndChips.Fish {
 	key = "pi_cubed_yellowtangwithahat",
@@ -472,8 +554,8 @@ FishAndChips.Fish {
 	ppu_artist = { "pi_cubed" },
 	weight = 10,
     environments = {
-		wormhole = 1,
-		garden = 1,
+		wormhole = 4,
+		garden = 2,
 	},
     impulse_min = 0.2,
     impulse_max = 0.5,
@@ -490,6 +572,7 @@ FishAndChips.Fish {
 			req_cards = 3, repetitions = 1,
 		}
 	},
+    cost = 6,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.req_cards, card.ability.extra.retriggers } }
     end,
@@ -547,10 +630,10 @@ FishAndChips.Fish {
     pixel_size = { w = 65, h = 65 },
 	ppu_coder = { "pi_cubed" },
 	ppu_artist = { "pi_cubed" },
-	weight = 10,
+	weight = 5,
     environments = {
-		pier = 1,
-		city_river = 1,
+		pier = 4,
+		city_river = 2,
 	},
     treausre = true,
     impulse_min = 0.5,
@@ -562,7 +645,7 @@ FishAndChips.Fish {
 		weight = {min = 10, max = 50},
 		length = {min = 0.5, max = 0.8}
 	},
-    attributes = { "economy", "modify_card", "usable" },
+    attributes = { "economy", "modify_card", "enhancements", "usable" },
     requires_hand = true,
 	config = {
 		extra = {
