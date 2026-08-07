@@ -2,7 +2,7 @@ PotatoPatchUtils.Developer({
 	name = 'Aure',
 	atlas = 'fac_aure-allu_cards',
 	colour = G.C.ORANGE,
-	fac_partner = 'AllUniversal',
+	fac_partner = 'fac_AllUniversal',
 })
 
 PotatoPatchUtils.Developer({
@@ -10,7 +10,7 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_aure-allu_cards',
 	pos = {x = 1, y = 0},
 	colour = G.C.GREY,
-	fac_partner = 'Aure',
+	fac_partner = 'fac_Aure',
 })
 
 SMODS.Atlas({
@@ -384,7 +384,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "mult", "scaling" },
+	attributes = { "mult", "scaling", "position", },
 	stats = {weight = {min = 0.04, max = 0.20}, length = {min = 0.06, max = 0.09}},
 	blueprint_compat = true,
 	config = {
@@ -1099,7 +1099,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "copy" },
+	attributes = { "copy", "position", },
 	stats = {weight = {min = 0.06, max = 0.4}, length = {min = 0.05, max = 0.12}},
 	config = {
 		extra = {
@@ -1654,7 +1654,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "destroy_card", "economy", "usable" },
+	attributes = { "destroy_card", "economy", "usable", "position", },
 	stats = {weight = {min = 0.2, max = 0.7}, length = {min = 0.07, max = 0.16}},
 	blueprint_compat = false,
 	requires_jokers = true,
@@ -1721,5 +1721,169 @@ FishAndChips.Fish {
 	end
 }
 
+-- Thrasher Shark
+SMODS.Sound {
+	key = "aure-allu_trasher",
+	path = "aure-allu/thrasher.ogg"
+}
+
+FishAndChips.Fish {
+	key = "thrasher_shark",
+	atlas = "aure-allu_fish",
+	pos = { x = 3, y = 4 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "modify_card", "rank", "position", "economy" },
+	stats = {weight = {min = 25, max = 500}, length = {min = 1.3, max = 6.1}},
+	blueprint_compat = true,
+	config = {
+		extra = {
+			reduce_rank = 1,
+			dollar_cost = 1,
+			sand_dollar_cost = 1,
+		},
+	},
+	environments = {
+		pier = 10,
+		city_river = 10,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.reduce_rank, card.ability.extra.dollar_cost, card.ability.extra.sand_dollar_cost } }
+	end,
+	calculate = function (self, card, context)
+		if context.individual and context.cardarea == G.play and context.other_card == context.scoring_hand[1] then
+			local other_card = context.other_card
+			G.E_MANAGER:add_event(Event({
+				func = function ()
+					SMODS.modify_rank(other_card, -card.ability.extra.reduce_rank)
+					-- play_sound("fac_aure_allu_trasher")
+					-- ease_dollars(-card.ability.extra.dollar_cost, true)
+					-- ease_sand_dollars(-card.ability.extra.sand_dollar_cost, true)
+					card.ability.extra_value = card.ability.extra_value + card.ability.extra.sand_dollar_cost
+					card:set_cost()
+					return true
+				end
+			}))
+			return {
+				dollars = -card.ability.extra.dollar_cost,
+				sand_dollars = -card.ability.extra.sand_dollar_cost,
+				message = localize("k_aure_allu_trasher"),
+				colour = G.C.GREY
+			}
+		end
+	end,
+}
+
+-- Blahaj
+local blahaj_suits_map = {
+	Hearts = "Clubs",
+	Diamonds = "Spades",
+	Clubs = "Hearts",
+	Spades = "Diamonds"
+}
+FishAndChips.Fish {
+	key = "blahaj",
+	atlas = "aure-allu_fish",
+	pos = { x = 4, y = 4 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "usable", "suits", "modify_card" },
+	stats = {weight = {min = 0.55, max = 1}, length = {min = 0.6, max = 3}},
+	blueprint_compat = false,
+	requires_hand = true,
+	config = {
+		extra = {
+			max_cards = 4,
+			max_uses = 1,
+			remaining_uses = 1,
+		},
+	},
+	environments = {
+		city_river = 9,
+		volcano = 6,
+		aquifer = 10,
+		backroom = 2,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.max_cards, card.ability.extra.remaining_uses, card.ability.extra.max_uses } }
+	end,
+	calculate = function (self, card, context)
+		if context.end_of_round and not context.game_over and context.main_eval then
+			local before = card.ability.extra.remaining_uses
+			card.ability.extra.remaining_uses = card.ability.extra.max_uses
+			if before < card.ability.extra.max_uses then
+				return {
+					message = localize("k_reset"),
+					colour = G.C.IMPORTANT
+				}
+			end
+		end
+	end,
+	use = function (self, card)
+		card.ability.extra.remaining_uses = card.ability.extra.remaining_uses - 1
+        G.E_MANAGER:add_event(Event({
+			trigger = "after", 
+			delay = 0.1, 
+			func = function()
+				play_sound('tarot1')
+				card:juice_up(0.3, 0.5)
+				return true
+			end
+		}))
+		for i = 1, #G.hand.highlighted do
+            local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    G.hand.highlighted[i]:flip()
+                    play_sound('card1', percent)
+                    return true
+                end
+            }))
+		end
+        delay(0.4)
+		for _, pcard in ipairs(G.hand.highlighted) do
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+					SMODS.change_base(pcard, blahaj_suits_map[pcard.base.suit] or "Hearts")
+					pcard:juice_up(0.3, 0.3)
+                    return true
+                end
+            }))
+		end
+        delay(0.4)
+        for i = 1, #G.hand.highlighted do
+            local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    G.hand.highlighted[i]:flip()
+                    play_sound('card1', percent)
+                    return true
+                end
+            }))
+		end
+		G.E_MANAGER:add_event(Event({
+			trigger = 'after',
+			delay = 0.2,
+			func = function()
+				G.hand:unhighlight_all()
+				return true
+			end
+		}))
+	end,
+	keep_on_use = function (self, card)
+		return true
+	end,
+	can_use = function (self, card)
+		return G.hand and #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.max_cards and card.ability.extra.remaining_uses > 0
+	end
+}
 
 -- #endregion

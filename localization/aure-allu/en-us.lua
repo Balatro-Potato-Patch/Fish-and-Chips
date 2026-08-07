@@ -7,7 +7,7 @@ return {
                     "Use this {V:1}Star{C:fac_fish}fish{}",
                     "for {C:attention}#1# {C:planet}levels{} 2 most",
                     "played {C:attention}poker hand",
-                    "{C:inactive}(Currently {C:attention}#2#{C:inactive})"
+                    "{C:inactive,s:0.8}(Currently {C:attention,s:0.8}#2#{C:inactive,s:0.8})"
                 },
                 flavor = {
                     "These fish are pissing me off",
@@ -289,6 +289,35 @@ return {
                     "28 stab wounds"
                 }
             },
+            fish_fac_thrasher_shark = {
+                name = {"Thrasher Shark"},
+                text = {
+                    "When scored, {C:attention}first",
+                    "scoring card's {C:attention}Rank",
+                    "is {C:attention}reduced{} by {C:attention}#1#{} and",
+                    "you lose {C:money}$#2#{} and {C:fac_sand_dollars,f:fac_sand_dollars}$#3#",
+                    "{C:inactive,s:0.9}{C:fac_sand_dollars,f:fac_sand_dollars,s:0.9}${C:inactive,s:0.9} are added to",
+                    "{C:inactive,s:0.9}this {C:fac_fish,s:0.9}Fish{C:inactive,s:0.9}'s {C:money,s:0.9}sell value{C:inactive,s:0.9}"
+                },
+                flavor = {
+                    "Grrr >:C (<- Angery)"
+                }
+            },
+            fish_fac_blahaj = {
+                name = {"Balåhaj"},
+                text = {
+                    "Use this {C:fac_fish}Fish{} to",
+                    "{C:attention}change{} {C:fac_suits}suits{} of up",
+                    "to {C:attention}#1#{} selected cards",
+                    "{C:hearts,s:0.8}Hearts {C:inactive,s:0.8}<-> {C:clubs,s:0.8}Clubs",
+                    "{C:diamonds,s:0.8}Diamonds {C:inactive,s:0.8}<-> {C:spades,s:0.8}Spades",
+                    "{C:inactive,s:0.8}(Currently {C:attention,s:0.8}#2#{C:inactive,s:0.8}/#3#{C:inactive,s:0.8} uses)",
+                    "{C:inactive,s:0.8}(Resets at {C:attention,s:0.8}end of round{C:inactive,s:0.8})"
+                },
+                flavor = {
+                    ":3"
+                }
+            },
         },
     },
     misc = {
@@ -297,6 +326,7 @@ return {
             k_aure_allu_milk_button = "Milk",
             k_aure_allu_unicorn = "Nyaeigh!",
             k_aure_allu_cookiecutter = "Cookie'd",
+            k_aure_allu_trasher = "#&%@",
             -- k_aure_allu_chimaera_confoozed = "...",
             k_aure_allu_chimaera_active = "Active",
             k_aure_allu_chimaera_inactive = "Inactive",
