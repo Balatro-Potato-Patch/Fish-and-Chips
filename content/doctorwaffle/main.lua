@@ -62,5 +62,10 @@ PPU.Developer({
             end
         end
 
+        -- Clear snail marker at end of round
+        if context.end_of_round and context.main_eval and not context.game_over then
+            G.GAME.fac_waffle_snail_activated = nil
+        end
+
     end
 })

@@ -76,15 +76,15 @@ return {
                     "in deck into {V:1}#4#{} suit"
                 },
                 flavor = {
-                    "#5#"
+                    "#1#"
                 }
             },
 
             fish_fac_waffle_mudskipper = {
                 name = "Mudskipper",
                 text = {
-                    "Create a random {C:attention}Tag{}",
-                    "when {C:attention}reeling in{} a {C:fac_fish}Fish{}"
+                    "First {C:attention}catch{} each fishing trip",
+                    "creates a random {C:attention}Tag{}"
                 },
                 flavor = {
                     "Stop staring at me",
@@ -219,6 +219,34 @@ return {
                     "quite the savory topping, but",
                     "are an acquired taste for sure."
                 }
+            },
+
+            fish_fac_waffle_unemployster = {
+                name = "Unemployster",
+                text = {
+                    "Instead of earning {C:fac_sand_dollars}Sand Dollars{}, this",
+                    "{C:fac_fish}Fish{} gains {C:white,X:mult}X#1#{} Mult per {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}1{} earned",
+                    "{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult)"
+                },
+                flavor = {
+                    "It's hard to get a job when you're",
+                    "literally a sessile organism."
+                }
+            },
+
+            fish_fac_waffle_scaly_foot_snail = {
+                name = "Scaly-Foot Snail",
+                text = {
+                    "When entering {C:attention}Boss Blind{},",
+                    "cards in {C:attention}first hand drawn{}",
+                    "are enhanced into {C:attention}Steel Cards{},",
+                    "then {C:red,E:2}self destructs{}"
+                },
+                flavor = {
+                    "Also known as the volcano snail,",
+                    "these creatures live in hydrothermal",
+                    "vents that reach temperatures of 400°C"
+                }
             }
 
         },
@@ -250,7 +278,9 @@ return {
             k_fac_waffle_duck = "Duck",
             k_fac_waffle_presto_ex = "Presto!",
             k_fac_waffle_book = "Book",
-            k_fac_waffle_plus_hand = "+1 Hand"
+            k_fac_waffle_plus_hand = "+1 Hand",
+            k_fac_waffle_mollusc = "Mollusc",
+            k_fac_waffle_gastropod = "Gastropod"
         },
 
         v_dictionary = {

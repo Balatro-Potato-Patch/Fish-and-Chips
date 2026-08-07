@@ -140,9 +140,9 @@ FishAndChips.Fish {
     } },
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.odds)
-        
+
         return {
-            key = math.random() < 1/20 and "fish_fac_waffle_magic_conch_secret",
+            key = math.random() < 1 / 20 and "fish_fac_waffle_magic_conch_secret",
             vars = { num, den }
         }
     end,
@@ -450,7 +450,7 @@ FishAndChips.Fish {
         weight = { min = 0.04, max = 0.041 },
         length = { min = 0.10, max = 0.101 }
     },
-    loc_vars = function(self, info_queue, card)
+    flavour_vars = function()
         local quotes = {
             "Hungry...",
             "Sorrow...",
@@ -465,14 +465,16 @@ FishAndChips.Fish {
             "Into... water...",
             "Remember... nothing..."
         }
+        return { vars = { quotes[math.random(1, #quotes)] } }
+    end,
+    loc_vars = function(self, info_queue, card)
         return {
             vars = {
                 card.ability.extra.dollars,
                 card.ability.extra.conv_amount,
                 card.ability.extra.conv_amount > 1 and "s" or "",
                 card.ability.extra.conv_suit,
-                quotes[math.random(1, #quotes)],
-                colours = { G.C.SUITS[card.ability.extra.conv_suit] }
+                colours = { G.C.SUITS[card.ability.extra.conv_suit] },
             }
         }
     end,
@@ -503,9 +505,9 @@ FishAndChips.Fish {
     end,
     attributes = { "suit" },
     pronouns = "they_them",
-    vel_limit = 0.7,
-    impulse_max = 0.8,
-    impulse_min = 0.65,
+    vel_limit = 0.6,
+    impulse_max = 0.75,
+    impulse_min = 0.62,
     decision_min = 0.75,
     decision_max = 0.95,
     set_card_type_badge = function(self, card, badges)
@@ -535,9 +537,12 @@ FishAndChips.Fish {
         weight = { min = 0.05, max = 0.09 },
         length = { min = 0.10, max = 0.30 }
     },
-    attributes = { "generation" },                             -- Doesn't really generate cards, but this is really the only fitting bait attribute I can think of
+    config = {extra = {
+        tag_created = false
+    }},
+    attributes = { "generation" }, -- Doesn't really generate cards, but this is really the only fitting bait attribute I can think of
     calculate = function(self, card, context)
-        if context.fac_end_fishing and not context.failed then -- thanks eremel
+        if context.fac_end_fishing and not context.failed and not card.ability.extra.tag_created then -- thanks eremel
             local tag_pool = get_current_pool('Tag')
             local selected_tag = pseudorandom_element(tag_pool, 'fac_waffle_mudskipper_tag')
             local it = 1
@@ -546,9 +551,13 @@ FishAndChips.Fish {
                 selected_tag = pseudorandom_element(tag_pool, 'fac_waffle_mudskipper_tag_resample' .. it)
             end
             add_tag(Tag(selected_tag, false, 'Small'))
+            card.ability.extra.tag_created = true
             return {
                 message = localize('k_fac_waffle_tag')
             }
+        end
+        if context.ending_fishing then
+            card.ability.extra.tag_created = false
         end
     end,
     impulse_max = 0.45
@@ -1063,15 +1072,15 @@ FishAndChips.Fish {
     on_catch = function(self, card) -- Determine rank when caught
         card.ability.immutable.rank = pseudorandom_element(SMODS.Ranks, 'fac_waffle_worn_book_rank').key
     end,
-    add_to_deck = function (self, card, from_debuff) -- For adding via debug or other non-caught means
+    add_to_deck = function(self, card, from_debuff)  -- For adding via debug or other non-caught means
         if not card.ability.immutable.rank then
             card.ability.immutable.rank = pseudorandom_element(SMODS.Ranks, 'fac_waffle_worn_book_rank').key
         end
     end,
-    can_use = function (self, card)
+    can_use = function(self, card)
         return G.hand and #G.hand.cards > 1
     end,
-    use = function (self, card)
+    use = function(self, card)
         for i = 1, card.ability.extra.cards_created do
             local options = get_current_pool("Enhanced")
             for i, v in pairs(options) do
@@ -1079,8 +1088,8 @@ FishAndChips.Fish {
                     table.remove(options, i)
                 end
             end
-            local enhancement = SMODS.poll_enhancement({guaranteed = true, options = options})
-            SMODS.add_card{
+            local enhancement = SMODS.poll_enhancement({ guaranteed = true, options = options })
+            SMODS.add_card {
                 set = "Base",
                 key_append = "fac_waffle_worn_book_enhancement",
                 rank = card.ability.immutable.rank,
@@ -1089,7 +1098,7 @@ FishAndChips.Fish {
         end
     end,
     set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_book'),
+        badges[#badges + 1] = create_badge(localize('k_fac_maybe_fish'),
             G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
             1.2)
     end,
@@ -1105,14 +1114,14 @@ FishAndChips.Fish {
     ppu_artist = { "waffle" },
     weight = 5,
     atlas = "waffle_fish",
-    pos = {x = 2, y = 1},
+    pos = { x = 2, y = 1 },
     environments = {
         pier = 1,
         soup = 0.8,
     },
     stats = {
-        weight = {min = 0.0175, max = 0.0350},
-        length = {min = 0.35, max = 1.40}
+        weight = { min = 0.0175, max = 0.0350 },
+        length = { min = 0.35, max = 1.40 }
     },
     config = {
         extra = {
@@ -1120,20 +1129,22 @@ FishAndChips.Fish {
             hands = 2
         }
     },
-    pixel_size = { w = 67, h = 73},
-    loc_vars = function (self, info_queue, card)
-        return {vars = {
-            card.ability.extra.cards,
-            card.ability.extra.hands,
-            math.abs(card.ability.extra.hands) ~= 1 and "s" or ""
-        }}
+    pixel_size = { w = 67, h = 73 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.cards,
+                card.ability.extra.hands,
+                math.abs(card.ability.extra.hands) ~= 1 and "s" or ""
+            }
+        }
     end,
-    calculate = function (self, card, context)
+    calculate = function(self, card, context)
         if context.before and #context.scoring_hand == card.ability.extra.cards then
             ease_hands_played(card.ability.extra.hands)
             local message
-            if math.abs(card.ability.extra.hands) ~= 1 then
-                message = localize('k_fac_waffle_plus_hand') 
+            if math.abs(card.ability.extra.hands) == 1 then
+                message = localize('k_fac_waffle_plus_hand')
             else
                 message = localize { type = 'variable', key = 'a_hands', vars = { card.ability.extra.hands } }
             end
@@ -1143,4 +1154,116 @@ FishAndChips.Fish {
             }
         end
     end
+}
+
+-- Unemployster
+FishAndChips.Fish {
+    key = "waffle_unemployster",
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    weight = 5,
+    atlas = "waffle_fish",
+    pos = { x = 3, y = 1 },
+    pixel_size = { h = 72 },
+    environments = {
+        city_river = 1,
+        pier = 1
+    },
+    stats = {
+        weight = { min = 0.10, max = 0.20 },
+        length = { min = 0.08, max = 0.12 }
+    },
+    config = { extra = {
+        xmult = 1,
+        xmult_per_sand_dollar = 0.05
+    } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xmult_per_sand_dollar, card.ability.extra.xmult } }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main and card.ability.extra.xmult ~= 1 then
+            return {
+                xmult = card.ability.extra.xmult
+            }
+        end
+    end,
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_fac_waffle_mollusc'),
+            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
+            1.2)
+    end,
+    attributes = { "xmult" },
+}
+-- Unemployster hook
+local ease_sand_dollars_ref = ease_sand_dollars
+function ease_sand_dollars(mod, instant)
+    local unemploysters = SMODS.find_card("fish_fac_waffle_unemployster")
+    if mod > 0 and unemploysters[1] then
+        for _, oyster in pairs(unemploysters) do
+            SMODS.scale_card(oyster, {
+                ref_table = oyster.ability.extra,
+                ref_value = "xmult",
+                scalar_value = "xmult_per_sand_dollar",
+                operation = function(ref_table, ref_value, initial, change)
+                    ref_table[ref_value] = initial + mod * change
+                end,
+                message_colour = G.C.RED,
+                message = localize { type = 'variable', key = 'a_xmult', vars = { oyster.ability.extra.Xmult } }
+            })
+        end
+    else
+        return ease_sand_dollars_ref(mod, instant)
+    end
+end
+
+-- Scaly-Foot Snail
+FishAndChips.Fish {
+    key = "waffle_scaly_foot_snail",
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    weight = 5,
+    stats = {
+        weight = { min = 0.05, max = 0.15 },
+        length = { min = 0.04, max = 0.06 }
+    },
+    atlas = "waffle_fish",
+    pos = { x = 4, y = 1 },
+    pixel_size = { w = 68, h = 58 },
+    environments = {
+        volcano = 1
+    },
+    config = { extra = {
+        enhancement = "m_steel"
+    } },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.extra.enhancement]
+    end,
+    blueprint_compat = false,
+    calculate = function(self, card, context)
+        if context.hand_drawn and context.first_hand_drawn and G.GAME.blind and G.GAME.blind.boss and not G.GAME.fac_waffle_snail_activated then
+            G.GAME.fac_waffle_snail_activated = true
+            G.E_MANAGER:add_event(Event {
+                func = function()
+                    waffleFunctions.flipFunctionCards(context.hand_drawn, function(drawn_card)
+                        drawn_card:set_ability(card.ability.extra.enhancement)
+                    end)
+                    G.E_MANAGER:add_event(Event {
+                        trigger = "after",
+                        delay = 1,
+                        func = function()
+                            SMODS.destroy_cards(card, { pinch_anim = true })
+                            return true
+                        end
+                    })
+                    return true
+                end
+            })
+        end
+    end,
+    attributes = { "boss_blind" },
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_fac_waffle_gastropod'),
+            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
+            1.2)
+    end,
 }
