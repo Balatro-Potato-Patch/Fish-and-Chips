@@ -69,11 +69,14 @@ FishAndChips.Fish {
 	key = "segg_pale_oil",
 	atlas = "segg_fishies",
 	pos = { x = 0, y = 0 },
-	weight = 10,
+
+	weight = 5,
+
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
 
 	treasure = true, -- Our only treasure :)
+	blueprint_compat = false,
 
 	attributes = { "usable", "function" },
 	config = {
@@ -112,15 +115,15 @@ FishAndChips.Fish {
 	key = "segg_void_fish",
 	atlas = "segg_fishies",
 	pos = { x = 1, y = 0 },
-	weight = 10,
+
+	weight = 5,
+
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
-    -- TODO
-	attributes = { "chips" },
+	attributes = { "retrigger" },
 	config = {
-        -- TODO
 		extra = {
-			chips = 30
+			money = 0
 		}
 	},
 	stats = {
@@ -128,17 +131,23 @@ FishAndChips.Fish {
 		length = {min = 1., max = 10000.}
 	},
 	environments = {
-        -- TODO
-		pier = 10,
-		city_river = 2.5
+		backroom = 10,
+		swamp = 1.5
 	},
 	loc_vars = function(self, info_queue, card)
-        -- TODO
-		return { vars = { card.ability.extra.chips } }
+		return { vars = { card.ability.extra.money } }
 	end,
 	calculate = function(self, card, context)
-        -- TODO
-		if context.joker_main then return { chips = card.ability.extra.chips } end
+		if context.ending_shop and not context.blueprint then
+			-- Set muhnee to 0
+			local muhnee = G.GAME.dollars
+			ease_dollars(-muhnee)
+		end
+		if context.repetition and context.other_card.area == G.play then
+			return {
+				repetitions = 1
+			}
+		end
 	end,
 }
 

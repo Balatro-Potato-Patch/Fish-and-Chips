@@ -21,7 +21,19 @@ return {
                     "rare sylphean slug."
                 }
             },
-            
+            fish_fac_segg_void_fish = {
+                name = "Void Fish",
+                text = {
+                    "Retriggers all played cards,",
+                    "but sets money to {C:money}$0",
+                    "at the end of the {C:attention}shop"
+                },
+                flavor = {
+                    "Lashing fragments of pure darkness,",
+                    "shaped into sharpened tentacles."
+                }
+            },
+
         },
     }
 }
