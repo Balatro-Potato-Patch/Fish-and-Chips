@@ -25,12 +25,26 @@ return {
                 name = "Void Fish",
                 text = {
                     "Retriggers all played cards,",
-                    "but sets money to {C:money}$0",
+                    "but sets money to {C:money}$#1#",
                     "at the end of the {C:attention}shop"
                 },
                 flavor = {
                     "Lashing fragments of pure darkness,",
                     "shaped into sharpened tentacles."
+                }
+            },
+            fish_fac_segg_root_fish = {
+                name = "Rootfish",
+                text = {
+                    "When {C:attention}Blind{} is selected,",
+                    "lowers {C:attention}sell value{} of all Jokers",
+                    "by {C:money}$#1#{} and gains {X:mult,C:white} X#2# {} Mult",
+                    "for each dollar removed",
+                    "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)"
+                },
+                flavor = {
+                    "The time... ,",
+                    "the time of birth approaches."
                 }
             },
 

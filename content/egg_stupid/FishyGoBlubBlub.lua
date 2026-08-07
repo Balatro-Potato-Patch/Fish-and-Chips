@@ -155,15 +155,18 @@ FishAndChips.Fish {
 	key = "segg_root_fish",
 	atlas = "segg_fishies",
 	pos = { x = 1, y = 0 },
-	weight = 10,
+
+	weight = 5,
+
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
-    -- TODO
-	attributes = { "chips" },
+
+	attributes = { "xmult" },
 	config = {
-        -- TODO
 		extra = {
-			chips = 30
+			dollars = 1,
+			xmult_mod = 0.1,
+			xmult = 1,
 		}
 	},
 	stats = {
@@ -171,17 +174,39 @@ FishAndChips.Fish {
 		length = {min = 0.5, max = 10}
 	},
 	environments = {
-        -- TODO
-		pier = 10,
-		city_river = 2.5
+		swamp = 5,
+		aquifer = 1.0,
+		backroom = 0.5
 	},
 	loc_vars = function(self, info_queue, card)
-        -- TODO
-		return { vars = { card.ability.extra.chips } }
+		return { vars = { card.ability.extra.dollars,  } }
 	end,
 	calculate = function(self, card, context)
-        -- TODO
-		if context.joker_main then return { chips = card.ability.extra.chips } end
+		
+        if context.setting_blind and not context.blueprint then
+			local xmult_gained = 0
+			for _, joker in pairs(G.jokers) do
+				if joker.set_cost and joker.sell_cost > 0 then
+					joker.ability.extra_value = (joker.ability.extra_value or 0) - card.ability.extra.dollars
+                    joker:set_cost()
+
+					xmult_gained = xmult_gained + card.ability.extra.xmult_mod
+				end
+			end
+
+			if xmult_gained > 0 then
+				card.ability.extra.xmult = card.ability.extra.xmult + xmult_gained
+
+				return {
+					message = localize('k_upgrade_ex'),
+                	colour = G.C.MULT,
+				}
+			end
+		end
+
+		if context.joker_main then
+			return { xmult = card.ability.extra.xmult }
+		end
 	end,
 }
 
