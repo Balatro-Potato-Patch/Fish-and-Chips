@@ -31,7 +31,13 @@ FishAndChips.Fish {
 			ranks.colours[#ranks.colours+1] = (card.ability.extra.current_position > i and G.C.UI.TEXT_INACTIVE or G.C.UI.TEXT_DARK)
 			ranks[#ranks+1] = card.ability.extra.sequence[i] or {card_key = ''}
 
-			local display_value = if ranks[#ranks].config.card.value in {'King', 'Queen', 'Jack'} then ranks[#ranks].card_key else ranks[#ranks].config.card.value
+			local display_value = ranks[#ranks].config.card.value
+			for i in {'King', 'Queen', 'Jack'} do
+				if ranks[#ranks].config.card.value == i then
+					display_value = ranks[#ranks].card_key
+					break
+				end
+			end
 			ranks[#ranks] = (i >= #card.ability.extra.sequence and (display_value) or (display_value .. ', '))
 		end
 		return { vars = ranks }
