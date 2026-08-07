@@ -933,7 +933,7 @@ FishAndChips.Fish({
 				return {
 					message = localize("k_fac_left_ex"),
 					func = function()
-						SMODS.destroy_cards(card, { skip_anim = true })
+						SMODS.destroy_cards(card, { skip_anim = true, pinch_anim = true })
 					end
 				}
 			end
