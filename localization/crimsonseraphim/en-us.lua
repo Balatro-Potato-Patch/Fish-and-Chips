@@ -4,7 +4,13 @@ return {
             PotatoPatchDev_crimsonseraphim = {
                 name = "Ruby & Jade",
                 text = {
+                    "Plural, {C:red}Ruby - it/its{}, {C:green}Jade - she/her{}",
+                    "#1# Years Old, {C:fac_transgender_gradient}Transgender",
+                    " ",
+                    "https://lord-ruby.github.io/crimsonseraphim/",
+                    " ",
                     "{element:1}",
+                    "{element:2}"
                 }
             },
         },
@@ -54,11 +60,8 @@ return {
                 text = {
                     {
                         "All other {C:attention}Fish{} have",
-                        "random Suits and ranks"
-                    },
-                    {
-                        "All other {C:attention}Fish{} contribute",
-                        "to poker hand calculation"
+                        "random Suits and ranks and contribute",
+                        "to poker hand formation"
                     },
                     {
                         "{C:green}#1# in #2#{} chance to turn into",

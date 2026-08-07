@@ -45,7 +45,7 @@ end
 '''
 position = "after"
 payload = '''
-if card.config.center_key == "fish_fac_larp" then
+if card.config.center_key == "fish_fac_larp" and not card.area.config.collection and not card.area.config.fac_compendium then
     if not card.dummy then
         card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
         card.dummy.added_to_deck = true

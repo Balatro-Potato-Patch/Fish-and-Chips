@@ -14,6 +14,15 @@ FishAndChips.crimsonseraphim = {
                 G.C.GREEN
             }
         },
+        transgender_gradient = SMODS.Gradient {
+            key = "transgender_gradient",
+            colours = {
+                HEX"00b1ff",
+                HEX"ff85fa",
+                HEX"ffffff",
+                HEX"ff85fa",
+            }
+        },
         crimsonseraphim_transparent = {0,0,0,0}
     }
 }
@@ -21,6 +30,16 @@ FishAndChips.crimsonseraphim = {
 FishAndChips.crimsonseraphim.click_sounds = {
     "null", "holiday", "flowery", "omega"
 }
+
+
+local function getYearsSince(birthYear, birthMonth, birthDay)
+    local current = os.date("*t") -- Get current date
+    local years = current.year - birthYear
+    if current.month < birthMonth or (current.month == birthMonth and current.day < birthDay) then
+        years = years - 1
+    end
+    return years
+end
 
 PotatoPatchUtils.Developer({
 	name = 'crimsonseraphim',
@@ -30,28 +49,34 @@ PotatoPatchUtils.Developer({
     loc_vars = function(self, _, card)
         local area = CardArea(
             0, 0,
-            G.CARD_W*1.5,
-            G.CARD_H*1.5, 
-            {card_limit = 1, type = 'play', highlight_limit = 0, negative_info = 'joker'})
-        local c = SMODS.create_card({key = "fish_fac_aeonfish", area = area})
+            G.CARD_W*0.75,
+            G.CARD_H*0.75, 
+            {card_limit = 1, type = 'play', highlight_limit = 0, negative_info = 'joker', collection = true})
+        local c = SMODS.create_card({key = "fish_fac_jade_crystalfish", area = area})
         area:emplace(c)
         FishAndChips.crimsonseraphim.desc_card = {
-            center = G.P_CENTERS.fish_fac_aeonfish,
+            center = G.P_CENTERS.fish_fac_jade_crystalfish,
             dt = 0,
             card = c,
             area = area
         }
         G.E_MANAGER:add_event(Event{
             func = function()
+                FishAndChips.crimsonseraphim.desc_card.card.config.h_popup_dir = "bm"
                 FishAndChips.crimsonseraphim.desc_card.card:hover()
+                FishAndChips.crimsonseraphim.desc_card.h_popup = FishAndChips.crimsonseraphim.desc_card.card.children.h_popup
+                FishAndChips.crimsonseraphim.desc_card.card.children.h_popup.parent = nil
+                FishAndChips.crimsonseraphim.desc_card.card.children.h_popup = nil
+                FishAndChips.crimsonseraphim.desc_card.dt = 0.5
                 return true
             end
         })
-        return { vars = { elements = { {n=G.UIT.O, config={object = area}} } } }
+        return { vars = { getYearsSince(2005, 12, 4), elements = { {n=G.UIT.O, config={object = area}}, FishAndChips.crimsonseraphim.desc_card.h_popup } } }
     end,
     stop_hover = function()
         if not FishAndChips.crimsonseraphim.desc_card then return end
         FishAndChips.crimsonseraphim.desc_card.card:stop_hover()
+        FishAndChips.crimsonseraphim.desc_card.h_popup:remove()
         FishAndChips.crimsonseraphim.desc_card.card:remove()
         FishAndChips.crimsonseraphim.desc_card.area:remove()
         FishAndChips.crimsonseraphim.desc_card = nil
@@ -59,6 +84,7 @@ PotatoPatchUtils.Developer({
     remove = function()
         if not FishAndChips.crimsonseraphim.desc_card then return end
         FishAndChips.crimsonseraphim.desc_card.card:stop_hover()
+        FishAndChips.crimsonseraphim.desc_card.h_popup:remove()
         FishAndChips.crimsonseraphim.desc_card.card:remove()
         FishAndChips.crimsonseraphim.desc_card.area:remove()
         FishAndChips.crimsonseraphim.desc_card = nil 
@@ -66,6 +92,9 @@ PotatoPatchUtils.Developer({
     text_effect = "fac_crimsonseraphim_dev",
     crimsonseraphim_click_sound = function()
         return pseudorandom_element(FishAndChips.crimsonseraphim.click_sounds, pseudoseed("crimsonseraphim_click_sound"))
+    end,
+    h_popup_dir = function(self, card)
+        return "cl"
     end
 })
 
@@ -127,7 +156,7 @@ FishAndChips.Fish {
 		length = {min = 0.07, max = 0.08}
 	},
     flavour_vars = function()
-        return { vars = { elements = { SMODS.create_sprite(0, 0, 2, 2 * 1125 / 1086, "fac_mealy_lore") } } }
+        return { vars = { elements = { SMODS.create_sprite(0, 0, 2, 0.75 * 1125 / 1086, "fac_mealy_lore") } } }
     end,
 	calculate = function(self, card, context)
 		if context.fac_fish_caught then

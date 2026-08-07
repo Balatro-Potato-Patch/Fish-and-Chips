@@ -20,10 +20,10 @@ function Card:click(...)
         FishAndChips.crimsonseraphim.click_timer = true
         
         local sound = self.ppu_member:crimsonseraphim_click_sound()
-        local timeout = 8
+        local timeout = 6.5
         if sound == "flowery" then
             FishAndChips.crimsonseraphim.jade_flashbang = G.TIMERS.REAL
-            timeout = 2.5
+            timeout = 2
         end
         G.E_MANAGER:add_event(Event{
             trigger = "after",
@@ -48,9 +48,14 @@ function Game:update(dt)
         FishAndChips.crimsonseraphim.desc_card.dt =  FishAndChips.crimsonseraphim.desc_card.dt + dt
         if FishAndChips.crimsonseraphim.desc_card.dt > 0.5 then
             FishAndChips.crimsonseraphim.desc_card.center = FishAndChips.crimsonseraphim.advance_center(FishAndChips.crimsonseraphim.desc_card.center)
+            FishAndChips.crimsonseraphim.desc_card.h_popup:remove()
             FishAndChips.crimsonseraphim.desc_card.card:stop_hover()
             FishAndChips.crimsonseraphim.desc_card.card:set_ability(FishAndChips.crimsonseraphim.desc_card.center)
+            FishAndChips.crimsonseraphim.desc_card.card.config.h_popup_dir = "bm"
             FishAndChips.crimsonseraphim.desc_card.card:hover()
+            FishAndChips.crimsonseraphim.desc_card.h_popup = FishAndChips.crimsonseraphim.desc_card.card.children.h_popup
+            FishAndChips.crimsonseraphim.desc_card.card.children.h_popup.parent = nil
+            FishAndChips.crimsonseraphim.desc_card.card.children.h_popup = nil
             -- FishAndChips.crimsonseraphim.desc_card.card.children.center.atlas = SMODS.get_atlas(FishAndChips.crimsonseraphim.desc_card.center.atlas)
             -- FishAndChips.crimsonseraphim.desc_card.card.children.center:set_sprite_pos(FishAndChips.crimsonseraphim.desc_card.center.pos)
             FishAndChips.crimsonseraphim.desc_card.dt = 0

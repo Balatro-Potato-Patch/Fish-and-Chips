@@ -99,3 +99,26 @@ for k, card in ipairs(self.cards) do
 end
 '''
 match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS FishAndChips "/src/mod_menu.lua"]'''
+pattern = "local popup_direction = dir or self.config.h_popup_dir or (self.T.y < G.CARD_H*0.8) and 'bm' or 'tm'"
+position = "at"
+payload = '''
+local popup_direction = (self.ppu_member.h_popup_dir and self.ppu_member:h_popup_dir(self)) or dir or self.config.h_popup_dir or (self.T.y < G.CARD_H*0.8) and 'bm' or 'tm'
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''card.lua'''
+pattern = '''
+local popup_direction = (self.children.buy_button or (self.area and self.area.config.view_deck) or (self.area and self.area.config.type == 'shop')) and 'cl' or 
+'''
+position = "at"
+payload = '''
+local popup_direction = self.config.h_popup_dir or (self.children.buy_button or (self.area and self.area.config.view_deck) or (self.area and self.area.config.type == 'shop')) and 'cl' or 
+'''
+match_indent = true
