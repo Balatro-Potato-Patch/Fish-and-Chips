@@ -30,7 +30,9 @@ FishAndChips.Fish {
 		for i=1,card.ability.extra.sequence_max do
 			ranks.colours[#ranks.colours+1] = (card.ability.extra.current_position > i and G.C.UI.TEXT_INACTIVE or G.C.UI.TEXT_DARK)
 			ranks[#ranks+1] = card.ability.extra.sequence[i] or {card_key = ''}
-			ranks[#ranks] = (i >= #card.ability.extra.sequence and (ranks[#ranks].card_key) or (ranks[#ranks].card_key .. ', '))
+
+			local display_value = if ranks[#ranks].config.card.value in {'King', 'Queen', 'Jack'} then ranks[#ranks].card_key else ranks[#ranks].config.card.value
+			ranks[#ranks] = (i >= #card.ability.extra.sequence and (display_value) or (display_value .. ', '))
 		end
 		return { vars = ranks }
 	end,
@@ -46,7 +48,7 @@ FishAndChips.Fish {
 		end
 
 		if context.joker_main and not context.blueprint then
-			if card.ability.extra.current_position >= #card.ability.extra.sequence then -- sequence is complete
+			if card.ability.extra.current_position > #card.ability.extra.sequence then -- sequence is complete
 				SMODS.scale_card(card, {
 					ref_table = card.ability,
 					ref_value = "extra_value",
