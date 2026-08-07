@@ -50,6 +50,16 @@ SMODS.Sound {
     path = "fountain_openers/fac_fo_knight_cut2.wav"
 }
 
+SMODS.Sound {
+    key = "fac_fo_explosion2",
+    path = "fountain_openers/fac_fo_explosion2.ogg"
+}
+
+SMODS.Sound {
+    key = "fac_fo_parry",
+    path = "fountain_openers/ultrakill_parry.ogg"
+}
+
 SMODS.DynaTextEffect {
     key = "alexi_text",
     func = function(dynatext, index, letter)

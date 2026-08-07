@@ -6,9 +6,150 @@ local anvil_quad = love.graphics.newQuad(0, 0, 1, 1, 1, 1)
 -- Borrowed from https://github.com/real-niacat/Aquillarri/blob/70b99dc8dec14a0e4e8c4ca5e56c259fa8bb32fd/items/p_utils.lua#L236-L241
 local function get_movable_pixel_pos(mov)
     return {
-        (G.ROOM.T.x + mov.VT.x + mov.VT.w * 0.5) * (G.TILESIZE * G.TILESCALE),
-        (G.ROOM.T.y + mov.VT.y + mov.VT.h * 0.5) * (G.TILESIZE * G.TILESCALE),
+        x = (G.ROOM.T.x + mov.VT.x + mov.VT.w * 0.5) * (G.TILESIZE * G.TILESCALE),
+        y = (G.ROOM.T.y + mov.VT.y + mov.VT.h * 0.5) * (G.TILESIZE * G.TILESCALE),
+        ytop = (G.ROOM.T.y + mov.VT.y) * (G.TILESIZE * G.TILESCALE)
     }
+end
+
+local function set_freezeframe(image)
+    FountainOpeners.anvil_animation.freeze_img = love.graphics.newImage(image)
+end
+
+SMODS.Shader {
+	key = "fo_impact_frame",
+	path = "fountain_openers/impact_frame.fs"
+}
+
+SMODS.ScreenShader {
+	key = "fo_impact_frame",
+	shader = "fac_fo_impact_frame",
+
+	send_vars = function(self)
+		return {
+			frame = FountainOpeners.anvil_animation.freeze_img
+		}
+	end,
+	should_apply = function(self)
+		return FountainOpeners.anvil_animation.freeze_img
+	end,
+	order = math.huge
+}
+
+SMODS.Shader {
+	key = "fo_fade",
+	path = "fountain_openers/fade.fs"
+}
+
+SMODS.ScreenShader {
+	key = "fo_fade",
+	shader = "fac_fo_fade",
+
+	send_vars = function(self)
+		return {
+			fade = FountainOpeners.anvil_animation.white_fade
+		}
+	end,
+	should_apply = function(self)
+		return FountainOpeners.anvil_animation.white_fade >= 1/256
+	end,
+	order = math.huge
+}
+
+FountainOpeners.anvil_animation = {
+    active = false,
+    pos = {
+        x = 0,
+        y = 0
+    },
+
+    starting_y = 0,
+    target_y = 0,
+    start_timer = 0,
+    end_timer = 0,
+
+    freeze_img = nil,
+    white_fade = 0,
+
+    play = function(self, card)
+		G.E_MANAGER:add_event(Event({func = function()
+			self.active = true
+            self.start_timer = G.TIMERS.REAL
+            self.end_timer = self.start_timer + 0.5
+            self.card = card
+
+            local pos = get_movable_pixel_pos(card)
+            self.pos.x = pos.x
+            self.pos.y = pos.y - (love.graphics.getHeight()*0.5 + 600)
+            self.starting_y = self.pos.y
+            self.target_y = pos.ytop
+		return true end}))
+
+        -- don't think i can use an ease event here because of how this is structured
+        -- handles the anvil falling animation
+        G.E_MANAGER:add_event(Event({func = function()
+            self.pos.y = self.starting_y + (self.target_y - self.starting_y) *
+                (1 - SMODS.ease_types.outquad(math.min(1, (self.end_timer - G.TIMERS.REAL) / (self.end_timer - self.start_timer))))
+		    if G.TIMERS.REAL > self.end_timer then
+                love.graphics.captureScreenshot(set_freezeframe)
+                play_sound("fac_fo_parry")
+                return true
+            end
+        end}))
+
+        -- handles the freezeframe
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                self.freeze_img = nil
+                play_sound("fac_fo_explosion2")
+                self.white_fade = 1
+                self.active = false
+                return true
+            end,
+            trigger = "after",
+            delay = 1,
+            timer = "REAL"
+        }))
+
+        -- handles aftereffects
+        G.E_MANAGER:add_event(Event({
+            trigger = "ease",
+            delay = 5,
+            ref_table = self,
+            ref_value = "white_fade",
+            ease_to = 0,
+            blocking = false,
+            timer = "REAL"
+        }))
+
+		G.E_MANAGER:add_event(Event({func = function()
+			SMODS.destroy_cards(card)
+            for _, j in ipairs(SMODS.find_card("fish_fac_fo_anvil")) do
+                SMODS.scale_card(j, {
+                    ref_table = j.ability.extra,
+                    ref_value = "mult",
+                    scalar_value = "mult_mod",
+                })
+            end
+		return true end}))
+	end,
+}
+
+-- Draw the anvil
+if not love.draw then function love.draw() end end
+local draw_hook = love.draw
+function love.draw()
+	draw_hook()
+
+    local anim = FountainOpeners.anvil_animation
+    if anim.active and not anim.freeze_img then
+        local color = {love.graphics.getColor()}
+        love.graphics.setColor(1, 1, 1, 1)
+
+        anvil_quad:setViewport(0, 0, ax, ay, ax, ay) -- Reposition quad to use the correct frame
+		love.graphics.draw(anvil_sprite, anvil_quad, anim.pos.x, anim.pos.y, 0, 4, 4, ax, ay)
+        love.graphics.setColor(unpack(color))
+    end
 end
 
 FishAndChips.Fish {
@@ -98,15 +239,7 @@ end
 
 G.FUNCS.fac_fo_fucking_kill_fish = function(e)
 	local card = e.config.ref_table
-	SMODS.destroy_cards(card)
-
-	for _, j in ipairs(SMODS.find_card("fish_fac_fo_anvil")) do
-		SMODS.scale_card(j, {
-			ref_table = j.ability.extra,
-			ref_value = "mult",
-			scalar_value = "mult_mod",
-		})
-	end
+    FountainOpeners.anvil_animation:play(card)
 end
 
 local uasb = G.UIDEF.use_and_sell_buttons
