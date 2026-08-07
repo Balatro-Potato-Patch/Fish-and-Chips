@@ -210,5 +210,33 @@ FishAndChips.Fish {
 	end,
 }
 
+
+-- Plasmium Phial
+-- Use to add +3 hands this round
+
+
+
+-- Fleash (Awoo!)
+-- goes “awoo” and it’s gone (gives sand dollart)
+-- could also spawn random consumable (must have room) (small chance for spectrals also)
+
+
+
+-- Lost Lay's
+-- (+80 chips, -10 chips at end of round? u can never eat just one chip)
+
+
+
+-- Courier's Rasher
+-- +1 hands size for every discard remaining <- soup fish
+
+
+
+-- Yumama
+-- Use to add 3 randomly enhanced cards with the rank of 1 selected card to your hand
+
+
+
+
 --#endregion
 
