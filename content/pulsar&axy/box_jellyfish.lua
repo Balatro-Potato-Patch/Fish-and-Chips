@@ -78,7 +78,7 @@ FishAndChips.Fish {
 				if _card.ability.fac_pa_box_jellyfish == card.ability.immutable.id then
 					G.fac_fish_area:unhighlight_all()
 					G.GAME.fac_fish_expanded = false
-					ease_value(G.fac_fishing_bucket_bottom.T, "r", math.pi / 2, nil, nil, true)
+					G.fac_fishing_bucket_bottom.T.r = 0; ease_value(G.fac_fishing_bucket_bottom.T, "r", -math.pi / 2, nil, nil, true)
 					
 					G.E_MANAGER:add_event(Event({
 						trigger = 'after',
