@@ -7,7 +7,7 @@ SMODS.Atlas({
 
 SMODS.Font{
     key = "sepa_ultra",
-    path = "VCR_OSD_MONO_1.001.ttf",
+    path = "sepa/VCR_OSD_MONO_1.001.ttf",
     render_scale = 200,
     TEXT_HEIGHT_SCALE = 0.83,
     TEXT_OFFSET = {x=0,y=0},
@@ -18,7 +18,7 @@ SMODS.Font{
 
 SMODS.Font{
     key = "sepa_spongemeboy",
-    path = "Spongeboy Me Bob.ttf",
+    path = "sepa/Spongeboy Me Bob.ttf",
     render_scale = 170,
     TEXT_HEIGHT_SCALE = 0.83,
     TEXT_OFFSET = {x=0,y=0},
@@ -39,18 +39,21 @@ SMODS.ObjectType({
     },
 })
 
---[[SMODS.ObjectType({
-    key = "fac_sepa_goodspectrals",
+SMODS.ObjectType({
+    key = "fac_sepa_goodspec",
     default = "c_fool",
     cards = {
-		c_fool = true,
-		c_hermit = true,
-		c_emperor = true,
-		c_high_priestess = true,
-		c_hanged_man = true,
-		c_death = true,
+        c_talisman = true,
+        c_ectoplasm = true,
+        c_immolate = true,
+        c_deja_vu = true,
+        c_hex = true,
+        c_trance = true,
+        c_medium = true,
+        c_cryptid = true,
+        c_aura = true,
     },
-})]]
+})
 
 SMODS.Sound{
     key = "ultrakill-explosion",
@@ -58,3 +61,19 @@ SMODS.Sound{
     pitch = 1,
     volume = 0.5,
 }
+
+
+for i = 1, 7 do
+    SMODS.Sound({
+        key = 'credits_voices_' .. i,
+        path = 'sepa/CreditVoices/audio' .. i .. '.ogg'
+   })
+end
+
+
+for i = 1, 5 do
+    SMODS.Sound({
+        key = 'credits_audio_' .. i,
+        path = 'sepa/audio' .. i .. '.ogg'
+   })
+end

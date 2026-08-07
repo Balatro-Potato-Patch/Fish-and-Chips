@@ -6,6 +6,17 @@ PotatoPatchUtils.Developer({
 	fac_partner = 'fac_DoggFly',
 	joint_credits = 2,
 	loc = true,
+
+  click = function(self)
+	local voice_sound = math.random(1, 7)
+
+	if voice_sound >= 4 then
+		play_sound('fac_credits_voices_' .. math.random(1, 7))
+	else
+		play_sound('fac_credits_audio_' .. math.random(1, 5))
+	end
+  end
+
 })
 
 PotatoPatchUtils.Developer({
@@ -227,7 +238,7 @@ FishAndChips.Fish {
 
 			local _poker_hands = {}
             for handname, _ in pairs(G.GAME.hands) do
-                if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand then
+                if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand or  'Straight Flush' then
                     _poker_hands[#_poker_hands + 1] = handname
                 end
             end
@@ -261,7 +272,7 @@ FishAndChips.Fish {
 
 				local _poker_hands = {}
             	for handname, _ in pairs(G.GAME.hands) do
-                	if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand then
+                	if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand or  'Straight Flush' then
                     	_poker_hands[#_poker_hands + 1] = handname
                 	end
             	end
@@ -276,7 +287,7 @@ FishAndChips.Fish {
 
 			local _poker_hands = {}
             for handname, _ in pairs(G.GAME.hands) do
-                if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand then
+                if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand or  'Straight Flush' then
                     _poker_hands[#_poker_hands + 1] = handname
                 end
             end
@@ -293,7 +304,7 @@ FishAndChips.Fish {
     set_ability = function(self, card, initial, delay_sprites)
         local _poker_hands = {}
         for handname, _ in pairs(G.GAME.hands) do
-            if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand then
+            if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand or  'Straight Flush' then
                 _poker_hands[#_poker_hands + 1] = handname
             end
         end
@@ -306,18 +317,20 @@ FishAndChips.Fish {
 	atlas = pez,
 	pos = { x = 1, y = 1 },
 	weight = 2,
+	impulse_min = 0.5,
+	impulse_max = 1,
+	vel_limit = 1.5,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
 	attributes = { "hands", "economy", "generation" },
 	config = {
-		--[[ extra = { 
-			poker_hand = 'High Card',
-			spec_amount = 2,
+		extra = { 
+			poker_hand = 'Pair',
+			tarot_amount = 2,
 			defuse = 0,
-			goal = 3,
-			attempts = 5,
-			minplayed = false
-		} ]]
+			goal = 6,
+			attempts = 10,
+		} 
 	},
 	stats = {
 		weight = {min = 15, max = 20},
@@ -328,13 +341,91 @@ FishAndChips.Fish {
 		styx = 0.5,
 		chocolate_river = 0.1
 	},
+	treasure = true,
 	loc_vars = function(self, info_queue, card)
-	        --info_queue[#info_queue+1] = {key = "fac_sepa_Tarot_infovar", set = "Other"}
-		return { vars = { }}-- card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, card.ability.extra.poker_hand, card.ability.extra.tarot_amount} }
+	        info_queue[#info_queue+1] = {key = "fac_sepa_Spectral_infovar", set = "Other"}
+		return { vars = { card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, card.ability.extra.poker_hand, card.ability.extra.tarot_amount} } 
 	end,
 
     calculate = function(self, card, context)
-	end
+        if context.before and context.scoring_name == card.ability.extra.poker_hand then
+			card.ability.extra.defuse = card.ability.extra.defuse + 1
+
+			if card.ability.extra.defuse == card.ability.extra.goal then 
+				for i = 1, math.min(card.ability.extra.tarot_amount, G.consumeables.config.card_limit - #G.consumeables.cards) do
+            		G.E_MANAGER:add_event(Event({
+                		trigger = 'after',
+                		delay = 0.4,
+                		func = function()
+                    		if G.consumeables.config.card_limit > #G.consumeables.cards then
+                        		play_sound('timpani')
+                        		SMODS.add_card({set = 'fac_sepa_goodspec'})
+                        		card:juice_up()
+                    		end
+                    	return true
+                	end
+            		}))
+        		end
+				
+				SMODS.destroy_cards(card)
+			end
+
+			local _poker_hands = {}
+            for handname, _ in pairs(G.GAME.hands) do
+                if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand then
+                    _poker_hands[#_poker_hands + 1] = handname
+                end
+            end
+            card.ability.extra.poker_hand = pseudorandom_element(_poker_hands, 'pezbombastico')
+
+            return {
+                message = (card.ability.extra.defuse.. "/" ..card.ability.extra.goal),
+				colour = G.C.GOLD
+            }
+        end
+
+        if context.before and context.scoring_name ~= card.ability.extra.poker_hand then
+				card.ability.extra.attempts = card.ability.extra.attempts - 1
+
+					if card.ability.extra.attempts <= 0 then
+    			        SMODS.destroy_cards(card)
+ 						G.E_MANAGER:add_event(Event({
+            			trigger = 'after',
+ 			           	delay = 0.4,
+      			      	func = function()
+ 			               	play_sound('fac_ultrakill-explosion')
+  			              	if G.GAME.dollars ~= 0 then
+		                    	ease_dollars(-15, true)
+		                	end
+                		return true
+            			end
+        				}))
+					end
+
+				local _poker_hands = {}
+            	for handname, _ in pairs(G.GAME.hands) do
+                	if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand then
+                    	_poker_hands[#_poker_hands + 1] = handname
+                	end
+            	end
+            	card.ability.extra.poker_hand = pseudorandom_element(_poker_hands, 'pezbombastico')
+
+				return {                
+					message = "-1 Attempt",
+					colour = G.C.RED
+				}
+			end
+    end,
+
+    set_ability = function(self, card, initial, delay_sprites)
+        local _poker_hands = {}
+        for handname, _ in pairs(G.GAME.hands) do
+            if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand or  'High Card' then
+                _poker_hands[#_poker_hands + 1] = handname
+            end
+        end
+        card.ability.extra.poker_hand = pseudorandom_element(_poker_hands, 'pezbombastico')
+    end
 }
 
 
@@ -407,7 +498,7 @@ FishAndChips.Fish {
 	key = "devicehands",
 	atlas = pez,
 	pos = { x = 3, y = 1 },
-	weight = 8, --testestest
+	weight = 6,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
 	attributes = { "hands" },
@@ -417,11 +508,11 @@ FishAndChips.Fish {
 		}
 	},
 	stats = {
-		weight = {min = 0.20, max = 0.32},
+		weight = {min = 0.50, max = 0.65},
 		length = {min = 0.10 , max = 0.20}
 	},
 	environments = {
-		pier = 1,
+		styx = 1,
 		wormhole = 0.5,
 	},
 	loc_vars = function(self, info_queue, card)
