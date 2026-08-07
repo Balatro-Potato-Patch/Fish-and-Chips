@@ -173,6 +173,7 @@ function CardArea:emplace(card, ...)
     dev_card2.children.center.states.drag = dev_card2.states.drag
     dev_card2.children.center.states.collide.can = true
     dev_card2.children.center:set_role({major = dev_card2, role_type = 'Glued', draw_major = dev_card2})
+		dev_card2.fac_fas_do_shader = true
     dev_card2.no_shadow = true
 		function dev_card2:hover() end
 		self:emplace(dev_card2)
