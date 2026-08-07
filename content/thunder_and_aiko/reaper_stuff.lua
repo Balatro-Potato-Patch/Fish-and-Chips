@@ -198,7 +198,7 @@ end
 FishAndChips.thunder_and_aiko.init_animation({
     key = "reaper_death",
     frames = 80,
-    duration = 2.8,
+    duration = 3,
     path = "reaper.png",
     columns = 5,
     px = 400,

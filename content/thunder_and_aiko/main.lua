@@ -897,7 +897,6 @@ FishAndChips.Fish({
 				card.ability.extra.xmult_gain,
 				card.ability.extra.xmult,
 			},
-			key = card.ability.extra.hungry and "fish_fac_reaper_leviathan_hungry" or "fish_fac_reaper_leviathan_normal"
 		}
 	end,
 	calculate = function(self, card, context)
@@ -937,7 +936,7 @@ FishAndChips.Fish({
 						return true
 					end,
 				}))
-				delay(3.2 * G.SETTINGS.GAMESPEED)
+				delay(3.5 * G.SETTINGS.GAMESPEED)
 				G.E_MANAGER:add_event(Event({
 					func = function()
 						G.STATE = G.STATES.GAME_OVER
@@ -957,5 +956,15 @@ FishAndChips.Fish({
 				xmult = card.ability.extra.xmult,
 			}
 		end
+	end,
+	on_catch = function(self, card)
+		delay(0.8 * G.SETTINGS.GAMESPEED)
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				play_sound("fac_warning", nil, 0.8)
+				return true
+			end,
+		}))
+		delay(7.2 * G.SETTINGS.GAMESPEED)
 	end,
 })

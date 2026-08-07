@@ -159,28 +159,7 @@ return {
 					"something funny here",
 				},
 			},
-			fish_fac_reaper_leviathan_normal = {
-				name = "Reaper Leviathan",
-				text = {
-					{
-						"At end of round, eats both adjacent {C:attention}Fish",
-						"Played cards give {X:mult,C:white}X#1#{} Mult per {C:attention}Fish{} eaten",
-						"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
-					},
-					{
-						"Something might go",
-						"awry if this Fish goes",
-						"{C:red,E:2}hungry{} at end of round...",
-					},
-				},
-				flavor = {
-					"Detecting multiple leviathan",
-					"class lifeforms in the region.",
-					"Are you certain whatever",
-					"you're doing is worth it?",
-				},
-			},
-			fish_fac_reaper_leviathan_hungry = {
+			fish_fac_reaper_leviathan = {
 				name = "Reaper Leviathan",
 				text = {
 					{
@@ -195,10 +174,8 @@ return {
 					},
 				},
 				flavor = {
-					"Detecting multiple leviathan",
-					"class lifeforms in the region.",
-					"Are you certain whatever",
-					"you're doing is worth it?",
+					"Detecting multiple leviathan class lifeforms in the region.",
+					"Are you certain whatever you're doing is worth it?",
 				},
 			},
 		},
