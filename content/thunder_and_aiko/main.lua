@@ -855,8 +855,7 @@ FishAndChips.Fish({
 			vars = {
 				card.ability.extra.sand_dollars,
 				card.ability.extra.fish,
-				math.max(0, math.floor(cards / card.ability.extra.fish))
-					* card.ability.extra.sand_dollars,
+				math.max(0, math.floor(cards / card.ability.extra.fish)) * card.ability.extra.sand_dollars,
 			},
 		}
 	end,
@@ -867,6 +866,96 @@ FishAndChips.Fish({
 			if money > 0 then
 				return { sand_dollars = money }
 			end
+		end
+	end,
+})
+
+FishAndChips.Fish({
+	key = "reaper_leviathan",
+	weight = 5,
+	environments = {
+		aquifer = 1,
+		backroom = 1,
+	},
+	stats = {
+		weight = {
+			min = 25000,
+			max = 30000,
+		},
+		length = {
+			min = 50,
+			max = 60,
+		},
+	},
+	attributes = { "xmult", "destroy_cards" },
+	ppu_coder = { "thunderedge" },
+	ppu_artist = { "aikoyori" },
+	config = { extra_slots_used = 1, extra = { xmult = 1, xmult_gain = 0.2, hungry = false } },
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.xmult_gain,
+				card.ability.extra.xmult,
+			},
+			key = card.ability.extra.hungry and "fish_fac_reaper_leviathan_hungry" or "fish_fac_reaper_leviathan_normal"
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.end_of_round and not context.game_over and not context.blueprint and context.main_eval then
+			local index = 1
+			for i, fish in ipairs(G.fac_fish_area.cards) do
+				if fish == card then
+					index = i
+					break
+				end
+			end
+			local cards_to_destroy = {}
+			if G.fac_fish_area.cards[index - 1] and not SMODS.is_eternal(G.fac_fish_area.cards[index - 1], card) then
+				cards_to_destroy[#cards_to_destroy + 1] = G.fac_fish_area.cards[index - 1]
+			end
+			if G.fac_fish_area.cards[index + 1] and not SMODS.is_eternal(G.fac_fish_area.cards[index + 1], card) then
+				cards_to_destroy[#cards_to_destroy + 1] = G.fac_fish_area.cards[index + 1]
+			end
+			if not next(cards_to_destroy) then
+				card.ability.extra.hungry = true
+			else
+				card.ability.extra.hungry = false
+				SMODS.destroy_cards(cards_to_destroy)
+				SMODS.scale_card(card, {
+					ref_value = "xmult",
+					scalar_table = { #cards_to_destroy * card.ability.extra.xmult_gain },
+					scalar_value = 1,
+				})
+			end
+		end
+		if context.setting_blind and not context.blueprint and card.ability.extra.hungry then
+			if SMODS.pseudorandom_probability(card, "fac_reaper_death", 2, 2, nil, true) then
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						play_sound("fac_reaper")
+						FishAndChips.thunder_and_aiko.play_animation("fac_reaper_death")
+						return true
+					end,
+				}))
+				delay(3.2 * G.SETTINGS.GAMESPEED)
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						G.STATE = G.STATES.GAME_OVER
+						if not G.GAME.won and not G.GAME.seeded and not G.GAME.challenge then
+							G.PROFILES[G.SETTINGS.profile].high_scores.current_streak.amt = 0
+						end
+						G:save_settings()
+						G.FILE_HANDLER.force = true
+						G.STATE_COMPLETE = false
+						return true
+					end,
+				}))
+			end
+		end
+		if context.individual and context.cardarea == G.play then
+			return {
+				xmult = card.ability.extra.xmult,
+			}
 		end
 	end,
 })

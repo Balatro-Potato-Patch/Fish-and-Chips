@@ -1,0 +1,18 @@
+[manifest]
+version = "0.1.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+if (self.OVERLAY_MENU) or (not self.F_HIDE_BG) then
+'''
+position = 'before'
+payload = '''
+FishAndChips.thunder_and_aiko.update_drawables()
+FishAndChips.thunder_and_aiko.handle_other_drawing()
+'''
+match_indent = true
+times = 1

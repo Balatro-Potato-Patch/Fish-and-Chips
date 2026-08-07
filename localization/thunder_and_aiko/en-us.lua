@@ -97,7 +97,7 @@ return {
 						"Fish and turn {C:attention}1{} selected",
 						"card into a {C:attention}Glass Card",
 						"{C:inactive}(Currently {C:attention}#1#{C:inactive} charges)",
-					}
+					},
 				},
 				flavor = {
 					"I don't know what I am,",
@@ -113,7 +113,7 @@ return {
 				},
 				flavor = {
 					"{f:fac_papyrus,s:1.2,C:white}address me",
-				}
+				},
 			},
 			fish_fac_phish = {
 				name = "Phish",
@@ -128,7 +128,7 @@ return {
 				},
 				flavor = {
 					"Looks too good to be true...",
-				}
+				},
 			},
 			fish_fac_message = {
 				name = "Message in a Bottle",
@@ -145,7 +145,7 @@ return {
 				},
 				flavor = {
 					"I wonder who sent this?",
-				}
+				},
 			},
 			fish_fac_snad = {
 				name = "Snad",
@@ -157,7 +157,49 @@ return {
 				},
 				flavor = {
 					"something funny here",
-				}
+				},
+			},
+			fish_fac_reaper_leviathan_normal = {
+				name = "Reaper Leviathan",
+				text = {
+					{
+						"At end of round, eats both adjacent {C:attention}Fish",
+						"Played cards give {X:mult,C:white}X#1#{} Mult per {C:attention}Fish{} eaten",
+						"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+					},
+					{
+						"Something might go",
+						"awry if this Fish goes",
+						"{C:red,E:2}hungry{} at end of round...",
+					},
+				},
+				flavor = {
+					"Detecting multiple leviathan",
+					"class lifeforms in the region.",
+					"Are you certain whatever",
+					"you're doing is worth it?",
+				},
+			},
+			fish_fac_reaper_leviathan_hungry = {
+				name = "Reaper Leviathan",
+				text = {
+					{
+						"At end of round, eats both adjacent {C:attention}Fish",
+						"Played cards give {X:mult,C:white}X#1#{} Mult per {C:attention}Fish{} eaten",
+						"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+					},
+					{
+						"{C:attention}Fixed{} {C:green}1 in 2{} chance to {C:red,E:2}lose the run{}",
+						"when selecting a {C:attention}Blind{} if no",
+						"{C:attention}Fish{} was eaten last round",
+					},
+				},
+				flavor = {
+					"Detecting multiple leviathan",
+					"class lifeforms in the region.",
+					"Are you certain whatever",
+					"you're doing is worth it?",
+				},
 			},
 		},
 		Other = {},

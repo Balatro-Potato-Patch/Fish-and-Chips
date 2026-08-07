@@ -17,6 +17,16 @@ SMODS.Sound({
 	path = "thunder_and_aiko/bruh.ogg",
 })
 
+SMODS.Sound({
+	key = "reaper",
+	path = "thunder_and_aiko/reaper.ogg",
+})
+
+SMODS.Sound({
+	key = "warning",
+	path = "thunder_and_aiko/warning.ogg",
+})
+
 SMODS.Font({
     key = "fac_kreon",
     path = "thunder_and_aiko/Kreon.ttf",
