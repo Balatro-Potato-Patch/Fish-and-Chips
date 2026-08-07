@@ -171,4 +171,35 @@ if (context.joker_type_destroyed and context.card == card and not card.ability.i
 	end,
 }
 
+
+FishAndChips.Fish {
+	key = "gaster_hat",
+	atlas = "fish",
+	pos = { x = 3, y = 0 },
+	weight = 10,
+	ppu_coder = { "Blanthos" },
+	ppu_artist = { "Hunter" },
+	attributes = { "mult", "scaling" },
+	config = {
+		extra = {
+			odds = 4
+		}
+	},
+	environments = {
+		styx = 10,
+		pier = 10,
+		garden = 10
+	},
+	loc_vars = function(self, info_queue, card)
+        local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'fac_gaster_fish')
+        return { vars = { numerator, denominator } }
+	end,
+	calculate = function(self, card, context)
+if context.selling_card and context.card.ability.set == 'Joker' and SMODS.pseudorandom_probability(card, 'fac_gaster_hat', 1, card.ability.extra.odds) then
+return {
+sand_dollars = math.random(5)
+}
+end
+end,
+}
 --#endregion

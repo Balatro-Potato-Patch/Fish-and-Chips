@@ -41,6 +41,16 @@ return {
                     "It’s a little bit… {C:attention}OFF{}-putting."
                 }
 	},
+            fish_fac_gaster_hat = {
+                name = "{C:dark_edition}Green Pirate Hat{}",
+                text = {
+                    "Whenever ye sell a {C:attention}Joker{}, ye 'ave a {C:green}#1#/#2#{} chance to",
+		"plunder a random amount of {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}Sand Dollars{}"
+},
+                flavor = {
+                    "{C:green}CHIPS AHOY, LANDMAGGOTS{}"
+                }
+	},
         },
    misc = {
         dictionary = {
