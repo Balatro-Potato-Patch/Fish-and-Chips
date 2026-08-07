@@ -2,14 +2,14 @@ PotatoPatchUtils.Developer({
 	name = 'Nick',
 	loc = true,
 	colour = HEX("d0d0d0"),
-	fac_partner = 'Jolyne'
+	fac_partner = 'fac_Jolyne'
 })
 
 PotatoPatchUtils.Developer({
 	name = 'Jolyne',
 	loc = true,
 	colour = HEX("FCB3EA"),
-	fac_partner = 'Nick'
+	fac_partner = 'fac_Nick'
 })
 
 SMODS.Atlas({
@@ -208,7 +208,7 @@ FishAndChips.Fish {
 				play_sound('fac_gerson_laugh')
 				local cen_pool = {}
 				for _, deltarune_fish_center in pairs(G.P_CENTER_POOLS["fac_Fish"]) do
-					if deltarune_fish_center.attributes.deltarune then
+					if deltarune_fish_center.attributes.deltarune and deltarune_fish_center.key ~= 'fish_fac_old' then
 						cen_pool[#cen_pool + 1] = deltarune_fish_center
 					end
 				end
