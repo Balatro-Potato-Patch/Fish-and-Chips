@@ -1,32 +1,3 @@
-FishAndChips.crimsonseraphim = {
-    C = {
-        spectral_gradient = SMODS.Gradient {
-            key = "spectral_gradient",
-            colours = {
-                HEX"5e7297",
-                HEX"c7b24a"
-            }
-        },
-        stupid_fucking_DOGGYYYYIEEEs = SMODS.Gradient {
-            key = "stupid_fucking_DOGGYYYYIEEEs",
-            colours = {
-                G.C.RED,
-                G.C.GREEN
-            }
-        },
-        transgender_gradient = SMODS.Gradient {
-            key = "transgender_gradient",
-            colours = {
-                HEX"00b1ff",
-                HEX"ff85fa",
-                HEX"ffffff",
-                HEX"ff85fa",
-            }
-        },
-        crimsonseraphim_transparent = {0,0,0,0}
-    }
-}
-
 FishAndChips.crimsonseraphim.click_sounds = {
     "null", "holiday", "flowery", "omega"
 }
@@ -1810,3 +1781,186 @@ FishAndChips.Fish {
         end
     end
 }
+
+function FishAndChips.crimsonseraphim.omega_next_fish(cent)
+    local av = {}
+    for i, v in pairs(G.P_CENTERS) do
+        local a 
+        if v.ppu_artist then
+            for i, v in pairs(v.ppu_artist) do
+                for _, j in pairs(cent.ppu_artist or {}) do
+                    if j == v then a = true; break end
+                end
+                if a then break end
+            end
+        end
+        if v.ppu_coder then
+            for i, v in pairs(v.ppu_coder) do
+                for _, j in pairs(cent.ppu_coder or {}) do
+                    if j == v then a = true; break end
+                end
+                if a then break end
+            end
+        end
+        if a then 
+            av[#av+1] = v.key
+        end
+    end
+    return pseudorandom_element(av, pseudoseed("omegabitchkill"))
+end
+
+FishAndChips.Fish {
+	key = "omega_crimsonfang",
+	atlas = "crimsonseraphim_aeonfish",
+	pos = { x = 2, y = 2 },
+	weight = 2, 
+	ppu_coder = { "crimsonseraphim" },
+	ppu_artist = { "crimsonseraphim" },
+	attributes = { "useable", },
+
+	environments = {
+        wormhole = 5,
+        garden = 5, 
+	},
+    stats = {
+		weight = {min = 0.1, max = 0.2},
+		length = {min = 0.15, max = 0.2}
+	},
+    select_flavor_text = function(self, card)
+        local num = pseudorandom("OMEGA_CRIMSONFANGERY", 1, 2)
+        local elem
+        if num == 2 then
+            elem = SMODS.create_sprite(0, 0, 5.5, 5.5 * 75/438, "fac_omega_crimsonfang_lore_alexi")
+        end
+        return num, elem
+    end,
+    flavour_vars = function(self, info_queue, card)
+        local s, e = self:select_flavor_text(card)
+        local st = localize("k_omega_crimsonfang_"..s)
+        local elem = e or DynaText({ string = st, colours = { G.C.JOKER_GREY }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0 })
+        return {
+            vars = {
+                elements = {
+                    elem
+                }
+            }
+        }
+    end,
+    use = function()
+        local c = G.fac_fish_area.cards[#G.fac_fish_area.cards]
+        G.GAME.fac_forced_fish = FishAndChips.crimsonseraphim.omega_next_fish(c.config.center)
+        SMODS.destroy_cards(c, nil, true)
+    end,
+    can_use = function()
+        return true
+    end,
+    keep_on_use = function()
+        return true
+    end,
+    add_to_deck = function()
+        if not G.PROFILES[G.SETTINGS.profile].omega_crimsonfang_obtained then
+            FishAndChips.crimsonseraphim.fake_game_over()
+            G.PROFILES[G.SETTINGS.profile].omega_crimsonfang_obtained = true
+        end
+    end
+}
+
+function create_UIBox_omega_game_over()
+  local show_lose_cta = false
+
+
+  local eased_red = copy_table(G.C.RED)
+  eased_red[4] = 0
+  ease_value(eased_red, 4, 0.8, nil, nil, true)
+  local t = create_UIBox_generic_options({ bg_colour = eased_red ,no_back = true, padding = 0, contents = {
+    {n=G.UIT.R, config={align = "cm"}, nodes={
+      {n=G.UIT.O, config={object = DynaText({string = {localize('ph_game_over')}, colours = {G.C.RED},shadow = true, float = true, scale = 1.5, pop_in = 0.4, maxw = 6.5})}},
+    }},
+    {n=G.UIT.R, config={align = "cm", padding = 0.15}, nodes={
+      {n=G.UIT.C, config={align = "cm"}, nodes={
+        {n=G.UIT.R, config={align = "cm", padding = 0.05, colour = G.C.BLACK, emboss = 0.05, r = 0.1}, nodes={
+          {n=G.UIT.R, config={align = "cm", padding = 0.08}, nodes={
+            create_UIBox_round_scores_row('hand'),
+            create_UIBox_round_scores_row('poker_hand'),
+          }},
+          {n=G.UIT.R, config={align = "cm"}, nodes={
+            {n=G.UIT.C, config={align = "cm", padding = 0.08}, nodes={
+              create_UIBox_round_scores_row('cards_played', G.C.BLUE),
+              create_UIBox_round_scores_row('cards_discarded', G.C.RED),
+              create_UIBox_round_scores_row('cards_purchased', G.C.MONEY),
+              create_UIBox_round_scores_row('times_rerolled', G.C.GREEN),
+              create_UIBox_round_scores_row('new_collection', G.C.WHITE),
+              create_UIBox_round_scores_row('seed', G.C.WHITE),
+              UIBox_button({button = 'copy_seed', label = {localize('b_copy')}, colour = G.C.BLUE, scale = 0.3, minw = 2.3, minh = 0.4, focus_args = {nav = 'wide'}}),
+            }},
+            {n=G.UIT.C, config={align = "tr", padding = 0.08}, nodes={
+              create_UIBox_round_scores_row('furthest_ante', G.C.FILTER),
+              create_UIBox_round_scores_row('furthest_round', G.C.FILTER),
+              create_UIBox_round_scores_row('defeated_by'),
+            }}
+          }}
+        }},
+        show_lose_cta and 
+        {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
+          {n=G.UIT.C, config={id = 'lose_cta', align = "cm", minw = 5, padding = 0.1, r = 0.1, hover = true, colour = G.C.GREEN, button = "show_main_cta", shadow = true}, nodes={
+            {n=G.UIT.R, config={align = "cm", padding = 0, no_fill = true}, nodes={
+              {n=G.UIT.T, config={text = localize('b_next'), scale = 0.5, colour = G.C.UI.TEXT_LIGHT, focus_args = {nav = 'wide', snap_to = true}}}
+            }}
+          }}
+        }} or
+        {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
+          {n=G.UIT.R, config={id = 'from_game_over', align = "cm", minw = 5, padding = 0.1, r = 0.1, hover = true, colour = G.C.RED, button = "omega_fake_new_run", shadow = true, focus_args = {nav = 'wide', snap_to = true}}, nodes={
+            {n=G.UIT.R, config={align = "cm", padding = 0, no_fill = true, maxw = 4.8}, nodes={
+              {n=G.UIT.T, config={text = localize('k_give_up'), scale = 0.5, colour = G.C.UI.TEXT_LIGHT}}
+            }}
+          }},
+        }},
+        {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
+          {n=G.UIT.R, config={id = 'from_game_over', align = "cm", minw = 5, padding = 0.1, r = 0.1, hover = true, colour = G.C.RED, button = "omega_fake_new_run", shadow = true, focus_args = {nav = 'wide', snap_to = true}}, nodes={
+            {n=G.UIT.R, config={align = "cm", padding = 0, no_fill = true, maxw = 4.8}, nodes={
+              {n=G.UIT.T, config={text = localize('k_lose_hope'), scale = 0.5, colour = G.C.UI.TEXT_LIGHT}}
+            }}
+          }},
+        }}
+      }},
+    }}
+}})
+  t.nodes[1] = {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
+    {n=G.UIT.C, config={align = "cm", padding = 2}, nodes={
+      {n=G.UIT.R, config={align = "cm"}, nodes={
+        {n=G.UIT.O, config={padding = 0, id = 'jimbo_spot', object = Moveable(0,0,G.CARD_W*1.1, G.CARD_H*1.1)}},
+      }},
+    }},
+    {n=G.UIT.C, config={align = "cm", padding = 0.1}, nodes={t.nodes[1]}}}
+}
+
+  --t.nodes[1].config.mid = true
+  return t
+end
+
+function FishAndChips.crimsonseraphim.fake_game_over()
+    G.SETTINGS.paused = true
+    G.GAME.omega_fake_death = true
+    G.FUNCS.overlay_menu{
+        definition = create_UIBox_omega_game_over(),
+        config = {no_esc = true}
+    }
+    G.E_MANAGER:add_event(Event{
+        delay = 2.5,
+        timer = "REAL",
+        trigger = "after",
+        func = function()
+            love.graphics.captureScreenshot( function ( data )
+                FishAndChips.crimsonseraphim.door_image = love.graphics.newImage( data )
+                FishAndChips.crimsonseraphim.door_timer = 4.3
+                play_sound("fac_crimsonseraphim_spacejumpscare")
+                G.OMEGA_CRIMSONFANG_FACE = 0
+            end )
+            return true
+        end
+    })
+end
+
+G.FUNCS.omega_fake_new_run = function()
+ 
+end

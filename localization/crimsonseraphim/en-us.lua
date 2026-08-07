@@ -474,6 +474,28 @@ return {
                     "Good thing im stuck",
                     "in this cutscene..."
                 }
+            },
+            fish_fac_omega_crimsonfang = {
+                name = {
+                    "shitty {C:red}mentally ill{} {E:fac_nameless}plural",
+                    "girl fish for {C:fac_transgender_gradient,E:2}transgenders",
+                    "and {C:green,E:2}furries{}"   
+                },
+                text = {
+                    {
+                        "Use this {C:attention}Fish{} to",
+                        "{C:red}destroy{} the rightmost {C:attention}Fish{}"
+                    },
+                    {
+                        "The next caught {C:attention}Fish{} will",
+                        "be a completely random {C:attention}Fish{}",
+                        "from the same {C:attention}Developer/Artist{}"
+                    }
+
+                },
+                flavor = {
+                    "{element:1}"
+                }
             }
         },
         Other = {
@@ -571,7 +593,14 @@ return {
             k_uncharged = "Uncharged",
             k_switch_ex = "Switch!",
             k_banish_cursefish = "BANISH",
-            k_obtain_cursefish = "OBTAIN"
+            k_obtain_cursefish = "OBTAIN",
+
+            k_omega_crimsonfang_1 = 'Did you mean: "40% of Potato Patch Modding Hub?"',
+            k_omega_crimsonfang_2 = '',
+            k_omega_crimsonfang_3 = '',
+
+            k_give_up = "GIVE UP",
+            k_lose_hope = "LOSE HOPE"
         }
     }
 }

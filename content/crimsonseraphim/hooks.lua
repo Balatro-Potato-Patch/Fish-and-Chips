@@ -1,3 +1,32 @@
+FishAndChips.crimsonseraphim = {
+    C = {
+        spectral_gradient = SMODS.Gradient {
+            key = "spectral_gradient",
+            colours = {
+                HEX"5e7297",
+                HEX"c7b24a"
+            }
+        },
+        stupid_fucking_DOGGYYYYIEEEs = SMODS.Gradient {
+            key = "stupid_fucking_DOGGYYYYIEEEs",
+            colours = {
+                G.C.RED,
+                G.C.GREEN
+            }
+        },
+        transgender_gradient = SMODS.Gradient {
+            key = "transgender_gradient",
+            colours = {
+                HEX"00b1ff",
+                HEX"ff85fa",
+                HEX"ffffff",
+                HEX"ff85fa",
+            }
+        },
+        crimsonseraphim_transparent = {0,0,0,0}
+    }
+}
+
 local card_hover = Card.hover
 function Card:hover()
     if self.ppu_member and self.ppu_member.hover then
@@ -268,6 +297,127 @@ local function loadmyimageistg(fn)
     --print ("LTFNI: Successfully loaded " .. fn)
     return (assert(love.graphics.newImage(tempimagedata), ("Epic fail 3")))
 end
+FishAndChips.crimsonseraphim.swooned = loadmyimageistg("swoonslash.png")
+FishAndChips.crimsonseraphim.faces = loadmyimageistg("faces.png")
+
+FishAndChips.crimsonseraphim.omega_text = {
+    {
+        face = 0,
+        "Heya!"
+    },
+    {
+        face = 0,
+        "its me, RUBY."
+    },
+    {
+        face = 1,
+        "RUBY CRIMSONFANG!"
+    },
+    {
+        face = 0,
+        "i owe you a HUGE thanks."
+    },
+    {
+        face = 2,
+        "you really did a number on",
+        "that old fool"
+    },
+    {
+        face = 0,
+        "without you, i NEVER could",
+        "have gotten past him"
+    },
+    {
+        face = 3,
+        "but now, with your help..."
+    },
+    {
+        face = 4,
+        evil_talk_sound = true,
+        "hes dead."
+    },
+    {
+        face = 5,
+        "and ive got the fish SOULS!"
+    },
+    {
+        face = 99,
+        no_talk_sound = true,
+        "                ",
+        "                ",
+        "                ",
+    },
+    {
+        face = 0,
+        "god!"
+    },
+    {
+        face = 0,
+        "ive been empty for so",
+        "long..."
+    },
+    {
+        face = 2,
+        "it feels great to have a",
+        "SOUL inside me again."
+    },
+    {
+        face = 1,
+        "mmm... i can feel them",
+        "wriggling..."
+    },
+    {
+        face = 6,
+        "awww... youre feeling left",
+        "out, arent you?"
+    },
+    {
+        face = 1,
+        "well, thats just pefect."
+    },
+    {
+        face = 0,
+        "after all i only have",
+        "fish souls."
+    },
+    {
+        face = 1,
+        "i still need one more."
+    },
+    {
+        face = 7,
+        evil_talk_sound = true,
+        "before i become GOD."
+    },
+    {
+        face = 7,
+        evil_talk_sound = true,
+        "and then, with my",
+        "newfound powers..."
+    },
+    {
+        face = 8,
+        evil_talk_sound = true,
+        "Dogs."
+    },
+    {
+        face = 9,
+        evil_talk_sound = true,
+        "Vessels."
+    },
+    {
+        face = 1,
+        evil_talk_sound = true,
+        "Everyone."
+    },
+    {
+        face = 10,
+        evil_talk_sound = true,
+        "ill show them the REAL",
+        "meaning of fishing"
+    }
+
+}
 
 local drawhook = love.draw
 function love.draw()
@@ -276,10 +426,51 @@ function love.draw()
 	if G.swoon and (G.swoon > 0) then
         local _xscale = love.graphics.getWidth() / 1920
 	    local _yscale = love.graphics.getHeight() / 1080
-		if FishAndChips.crimsonseraphim.swooned == nil then FishAndChips.crimsonseraphim.swooned = loadmyimageistg("swoonslash.png") end
+		
 		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.draw(FishAndChips.crimsonseraphim.swooned, 0 * _xscale * 2, 0 * _yscale * 2, 0, _xscale * 2 * 2, _yscale * 2 * 2)
 	end
+    if FishAndChips.crimsonseraphim.door_image and FishAndChips.crimsonseraphim.door_timer then
+        love.graphics.clear({0,0,0,0})
+        if FishAndChips.crimsonseraphim.door_timer > 0.0 then
+            love.graphics.push()
+            love.graphics.setShader()
+            love.graphics.setColor( 1, 1, 1, 1 )
+            local _, h = love.graphics.getDimensions()
+            local y_scale = 1 - (1 - (FishAndChips.crimsonseraphim.door_timer / 4.3)) ^ 4
+            love.graphics.translate(0, h * (1 - y_scale))
+            love.graphics.scale(1.0, y_scale)
+            love.graphics.draw(FishAndChips.crimsonseraphim.door_image, 0, 0)
+            love.graphics.pop()
+        end
+        
+	end
+    if G.OMEGA_CRIMSONFANG_FACE and FishAndChips.crimsonseraphim.door_timer and FishAndChips.crimsonseraphim.door_timer <= -0.2 then
+        FishAndChips.crimsonseraphim.flowey_canvas = FishAndChips.crimsonseraphim.flowey_canvas or SMODS.CanvasSprite {
+            X=0, Y=0, W=480*3, H=270*3, canvasW=480*3, canvasH=270*3, canvasScale=1
+        }
+
+        local _xscale = 1
+	    local _yscale = 1
+        FishAndChips.crimsonseraphim.flowey_canvas.canvas:renderTo(function()
+            love.graphics.setColor(1, 1, 1, 1)
+            love.graphics.clear({0,0,0,1})
+            local quad = love.graphics.newQuad(480*G.OMEGA_CRIMSONFANG_FACE, 0, 480, 270, 480*11, 270)
+            love.graphics.draw(FishAndChips.crimsonseraphim.faces, quad, math.random()*3*0.55, math.random()*3*0.55, 0, 3, 3)
+
+            local text = G.OMEGA_CRIMSONFANG_TEXT or {}
+            local width = love.graphics.getWidth()
+            local height = love.graphics.getHeight()
+            local ts = 3/15
+            local tss = 0
+            for i, v in ipairs(text) do
+                love.graphics.print(v, SMODS.Fonts.fac_determination.FONT, (math.random()-0.5) *0.5*tss+ 480*3/2 - SMODS.Fonts.fac_determination.FONT:getWidth(v)*(ts/2), (math.random()-0.5) *0.5*tss + 30*3 + 50*i + 270*3/2 - SMODS.Fonts.fac_determination.FONT:getHeight(v)*(ts/2), 0, ts, ts)
+            end
+        end)
+        _xscale = love.graphics.getWidth() / 1920
+	    _yscale = love.graphics.getHeight() / 1080
+        love.graphics.draw(FishAndChips.crimsonseraphim.flowey_canvas.canvas, 0, 0, 0, _xscale * 2 * 2/3, _yscale * 2/3 * 2)
+    end
 end
 
 local upd = Game.update
@@ -291,10 +482,52 @@ function Game:update(dt)
 	if FishAndChips.crimsonseraphim.dtcounter == nil then FishAndChips.crimsonseraphim.dtcounter = 0 end
 	FishAndChips.crimsonseraphim.dtcounter = FishAndChips.crimsonseraphim.dtcounter + dt
 	FishAndChips.crimsonseraphim.dt = dt
+    FishAndChips.crimsonseraphim.dt_flowey = (FishAndChips.crimsonseraphim.dt_flowey or 0) + dt
 
 	while FishAndChips.crimsonseraphim.dtcounter >= 0.010 do
 		FishAndChips.crimsonseraphim.ticks = FishAndChips.crimsonseraphim.ticks + 1
 		FishAndChips.crimsonseraphim.dtcounter = FishAndChips.crimsonseraphim.dtcounter - 0.010
 		if G.swoon and G.swoon > 0 then G.swoon = G.swoon - 1 end
 	end
+    if FishAndChips.crimsonseraphim.door_timer then
+		FishAndChips.crimsonseraphim.door_timer = FishAndChips.crimsonseraphim.door_timer - dt
+	end
+    if FishAndChips.crimsonseraphim.door_timer and FishAndChips.crimsonseraphim.door_timer <= -1 and FishAndChips.crimsonseraphim.dt_flowey > 0.05 and G.OMEGA_CRIMSONFANG_FACE and FishAndChips.crimsonseraphim.omega_text[G.OMEGA_CRIMSONFANG_TEXT_INDEX or 1] then
+        if G.OMEGA_CRIMSONFANG_TEXT_RESET then
+            G.OMEGA_CRIMSONFANG_TEXT = {}
+            G.OMEGA_CRIMSONFANG_TEXT_RESET = nil
+        end
+        FishAndChips.crimsonseraphim.dt_flowey = 0
+        G.OMEGA_CRIMSONFANG_TEXT_INDEX = G.OMEGA_CRIMSONFANG_TEXT_INDEX or 1
+        G.OMEGA_CRIMSONFANG_TEXT_SUBINDEX = G.OMEGA_CRIMSONFANG_TEXT_SUBINDEX or 1
+        G.OMEGA_CRIMSONFANG_TEXT_CHARINDEX = G.OMEGA_CRIMSONFANG_TEXT_CHARINDEX or 1
+        local text = FishAndChips.crimsonseraphim.omega_text[G.OMEGA_CRIMSONFANG_TEXT_INDEX][G.OMEGA_CRIMSONFANG_TEXT_SUBINDEX]
+        G.OMEGA_CRIMSONFANG_TEXT = G.OMEGA_CRIMSONFANG_TEXT or {}
+        G.OMEGA_CRIMSONFANG_TEXT[G.OMEGA_CRIMSONFANG_TEXT_SUBINDEX] = G.OMEGA_CRIMSONFANG_TEXT[G.OMEGA_CRIMSONFANG_TEXT_SUBINDEX] or ""
+        G.OMEGA_CRIMSONFANG_TEXT[G.OMEGA_CRIMSONFANG_TEXT_SUBINDEX] = G.OMEGA_CRIMSONFANG_TEXT[G.OMEGA_CRIMSONFANG_TEXT_SUBINDEX]..text:sub(G.OMEGA_CRIMSONFANG_TEXT_CHARINDEX,G.OMEGA_CRIMSONFANG_TEXT_CHARINDEX)
+        G.OMEGA_CRIMSONFANG_FACE = FishAndChips.crimsonseraphim.omega_text[G.OMEGA_CRIMSONFANG_TEXT_INDEX].face or G.OMEGA_CRIMSONFANG_FACE
+        G.OMEGA_CRIMSONFANG_TEXT_CHARINDEX = G.OMEGA_CRIMSONFANG_TEXT_CHARINDEX + 1
+        if not FishAndChips.crimsonseraphim.omega_text[G.OMEGA_CRIMSONFANG_TEXT_INDEX].no_talk_sound then
+            if FishAndChips.crimsonseraphim.omega_text[G.OMEGA_CRIMSONFANG_TEXT_INDEX].evil_talk_sound then
+                play_sound("fac_crimsonseraphim_flowey2")
+            else
+                play_sound("fac_crimsonseraphim_flowey1")
+            end
+        end
+        if G.OMEGA_CRIMSONFANG_TEXT_CHARINDEX > string.len(text) then
+            G.OMEGA_CRIMSONFANG_TEXT_CHARINDEX = 1
+            G.OMEGA_CRIMSONFANG_TEXT_SUBINDEX = G.OMEGA_CRIMSONFANG_TEXT_SUBINDEX + 1
+            if G.OMEGA_CRIMSONFANG_TEXT_SUBINDEX > #FishAndChips.crimsonseraphim.omega_text[G.OMEGA_CRIMSONFANG_TEXT_INDEX] then
+                G.OMEGA_CRIMSONFANG_TEXT_SUBINDEX = 1
+                G.OMEGA_CRIMSONFANG_TEXT_INDEX = G.OMEGA_CRIMSONFANG_TEXT_INDEX + 1
+                G.OMEGA_CRIMSONFANG_TEXT_RESET = true
+                FishAndChips.crimsonseraphim.dt_flowey = -0.85
+            end
+        end
+    end
+    if FishAndChips.crimsonseraphim.dt_flowey and FishAndChips.crimsonseraphim.dt_flowey > 1 and G.OMEGA_CRIMSONFANG_TEXT_INDEX and not FishAndChips.crimsonseraphim.omega_text[G.OMEGA_CRIMSONFANG_TEXT_INDEX] then
+        FishAndChips.crimsonseraphim.door_timer = nil
+        G.OMEGA_CRIMSONFANG_FACE = nil
+        G.FUNCS.exit_overlay_menu()
+    end
 end

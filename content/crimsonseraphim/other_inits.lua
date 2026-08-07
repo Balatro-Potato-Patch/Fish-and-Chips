@@ -20,6 +20,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+	key = "omega_crimsonfang_lore_alexi",
+	path = "crimsonseraphim/omega_crimsonfang_lore_alexi.png",
+	px = 438,
+	py = 75,
+})
+
+SMODS.Atlas({
 	key = "crimsonseraphim_fish_seals",
 	path = "crimsonseraphim/fish_seals.png",
 	px = 71,
@@ -384,7 +391,36 @@ SMODS.Sound {
 }
 
 SMODS.Sound {
+    key = "music_crimsonseraphim_omega_death",
+    path = "crimsonseraphim/music_omega_crimsonfang_death.ogg",
+    select_music_track = function()
+        return G.GAME.omega_fake_death
+    end
+}
+
+SMODS.Sound {
 	key = "crimsonseraphim_swoon",
 	path = "crimsonseraphim/swoon.ogg",
+	pitch = 1,
+}
+
+SMODS.Font {
+    path = "determination.ttf",
+    key = "determination"
+}
+
+SMODS.Sound {
+	key = "crimsonseraphim_flowey1",
+	path = "crimsonseraphim/snd_floweytalk1.ogg",
+	pitch = 1,
+}
+SMODS.Sound {
+	key = "crimsonseraphim_flowey2",
+	path = "crimsonseraphim/snd_floweytalk2.ogg",
+	pitch = 1,
+}
+SMODS.Sound {
+	key = "crimsonseraphim_spacejumpscare",
+	path = "crimsonseraphim/spacejumpscare.ogg",
 	pitch = 1,
 }
