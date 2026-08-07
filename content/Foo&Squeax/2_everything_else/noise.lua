@@ -4,6 +4,7 @@ SMODS.Atlas{
 	path = FishAndChips.FooSqueax.file_path .. "bo_noise.png",
 	px = 71,
 	py = 95,
+	atlas_table = "STATE_ATLAS"
 }
 
 FishAndChips.Fish {
@@ -12,6 +13,21 @@ FishAndChips.Fish {
 	environments = {
 		aquifer = 1,
 		wormhole = 0.5,
+	},
+	sprite_args = {
+		states = {
+			wait = {
+				start_pos = {x = 0, y = 0},
+				frames = 1,
+			},
+			spin = {
+				start_pos = {x = 1, y = 0},
+				frames = 13,
+				fps = 20,
+				exit_to = "wait"
+			}
+		},
+		default_state = "wait"
 	},
 	ppu_coder = {"Foo54"},
 	ppu_artist = {'squeax09'},
@@ -36,6 +52,14 @@ FishAndChips.Fish {
 			context.other_card.ability.perma_x_mult = (context.other_card.ability.perma_x_mult or 0) + card.ability.extra.xmult
 			return {
 				message = localize('k_upgrade_ex'),
+				func = function()
+					G.E_MANAGER:add_event(Event{
+						func = function()
+							card:set_sprite_state("spin")
+							return true
+						end
+					})
+				end,
 				colour = G.C.MULT
 			}
 		end
