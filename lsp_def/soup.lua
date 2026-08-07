@@ -34,6 +34,8 @@
 ---@field vel_limit? number base maximum speed along the catch track; lower values are easier (for fish)
 ---@field colour? number colour of sweet spot (I THINK NEED TO CHECK THIS)
 ---@field requires_hand? boolean makes the hand move back into view if this card is selected
+---@field requires_jokers? boolean makes the jokers area move back into view if this card is selected while in the fishing state
+---@field requires_consumables? boolean makes the comsumables area move back into view if this card is selected while in the fishing state
 ---@field ppu_coder string[] key(s) for the developer(s) who coded this fish
 ---@field ppu_artist? string[] key(s) for the artist(s) who drew this fish
 ---@field use? fun(self: FishAndChips.Fish, card: Card) Defines behaviour when this fish is used. 

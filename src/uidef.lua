@@ -106,9 +106,9 @@ function FishAndChips.fade_fishing_buttons()
 end
 
 function FishAndChips.safe_to_press_buttons()
-	local fish_expanded = G.GAME and G.GAME.fac_fish_expanded
+	-- local fish_expanded = G.GAME and G.GAME.fac_fish_expanded
 	local in_fishing_state = G.STATE == G.STATES.FAC_FISHING
-	return not (fish_expanded or (in_fishing_state and G.NOT_SAFE_TO_PRESS_BUTTONS)) or G.OVERLAY_MENU
+	return not ((in_fishing_state and G.NOT_SAFE_TO_PRESS_BUTTONS)) or G.OVERLAY_MENU
 end
 
 function FishAndChips.update_bait_counter(major)
@@ -577,6 +577,54 @@ function G.UIDEF.fac_newly_discovered()
 	}
 end
 
+function G.UIDEF.fac_catch_text()
+	return {
+		n = G.UIT.ROOT,
+		config = { padding = 0.2, colour = G.C.CLEAR },
+		nodes = {
+			{
+				n = G.UIT.R,
+				config = { align = "cm", no_fill = true },
+				nodes = {
+					{
+						n = G.UIT.T,
+						config = {
+							text = localize('k_fac_catch_meter'),
+							scale = 0.3,
+							colour = {0.97, 0.76, 0.82, 1},
+							text_outline = G.C.BLACK,
+						},
+					},
+				},
+			},
+		}
+	}
+end
+
+function G.UIDEF.fac_treasure_text()
+	return {
+		n = G.UIT.ROOT,
+		config = { padding = 0.2, colour = G.C.CLEAR },
+		nodes = {
+			{
+				n = G.UIT.R,
+				config = { align = "cm", no_fill = true },
+				nodes = {
+					{
+						n = G.UIT.T,
+						config = {
+							text = localize('k_fac_treasure_meter'),
+							scale = 0.3,
+							colour = {0.98, 0.90, 0.62, 1},
+							text_outline = G.C.BLACK,
+						},
+					},
+				},
+			},
+		}
+	}
+end
+
 function G.UIDEF.fac_perfect_catch()
 	return {
 		n = G.UIT.ROOT,
@@ -678,7 +726,7 @@ function G.UIDEF.fac_treasure_reward(amount, kind)
 end
 
 function G.FUNCS.fac_upgrade_bucket (e)
-	ease_sand_dollars(-G.GAME.fac_bucket_price)
+	ease_sand_dollars(-G.GAME.fac_bucket_price, true)
 	G.GAME.fac_bucket_price = G.GAME.fac_bucket_price + 10
 	G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base + 1
 	G.GAME.fac_upgrade_text = localize{type = "variable", key = "ph_fac_upgrade_increase", vars = {G.fac_fish_area.config.card_limits.base, G.fac_fish_area.config.card_limits.base + 1}}
