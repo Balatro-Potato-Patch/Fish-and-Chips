@@ -296,12 +296,13 @@ end
 function FishAndChips.Compendium.compendium_area(amount, dim)
     amount = amount or 1
     dim = dim or {(8*amount)/4 * 71/95, 2}
+    local adjust = amount > 1 and 2*G.CARD_W/G.CARD_H
     local area = CardArea(0, 0, dim[1], dim[2], {type = 'voucher', fac_compendium = true})
     area.align_cards = function(self)
         for k, card in ipairs(self.cards) do
             card.states.drag.can = false
             if not card.states.drag.is then
-                card.T.x = self.T.x + 0.5*(self.T.w - card.T.w) + (amount > 1 and ((k-2) * card.T.w * 1.2) or 0)
+                card.T.x = self.T.x + 0.5*(self.T.w - (adjust or card.T.w)) + (amount > 1 and ((k-2) * ((adjust and (card.T.w + adjust)/2 or card.T.w)) * 1.2) or 0)
                 card.T.y = self.T.y + 0.5*(self.T.h - card.T.h)
             end
         end
@@ -312,6 +313,11 @@ end
 function FishAndChips.Compendium.compendium_card(fish, area, scale)
     scale = scale or 2/G.CARD_H
     local compendium_card = SMODS.create_card({key = fish.key, area = area, scale = {w=scale, h=scale}})
+    if compendium_card.T.w > scale * G.CARD_W or compendium_card.T.h > scale * G.CARD_H then
+        local adjust = math.min(scale*G.CARD_W/compendium_card.T.w, scale*G.CARD_H/compendium_card.T.h)
+        compendium_card.T.h = compendium_card.T.h * adjust
+        compendium_card.T.w = compendium_card.T.w * adjust
+    end
     compendium_card.no_shadow = true
     local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {}
     local should_silhouette = fish.set == 'fac_Fish' and not (fish_data.times_caught and fish_data.times_caught > 0) or (fish.set == 'fac_Rod' or fish.set == 'fac_Bait') and not fish.discovered
@@ -841,7 +847,7 @@ function FishAndChips.Compendium.dev_card(dev)
 
     dev_card.align_h_popup = function(self, dir)
         local focused_ui = self.children.focused_ui and true or false
-        local popup_direction = dir or self.config.h_popup_dir or (self.T.y < G.CARD_H*0.8) and 'bm' or 'tm'
+        local popup_direction = dir or self.config.h_popup_dir or (self.T.x < G.ROOM.T.w*0.5) and 'cr' or 'cl'
         local sign = 1
         return {
             major = self.children.focused_ui or self,
