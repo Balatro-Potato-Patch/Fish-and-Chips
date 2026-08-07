@@ -890,7 +890,7 @@ FishAndChips.Fish({
 	attributes = { "xmult", "destroy_cards" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
-	config = { extra_slots_used = 1, extra = { xmult = 1, xmult_gain = 0.1, hungry = false } },
+	config = { extra_slots_used = 1, extra = { xmult = 1, xmult_gain = 0.25, hungry = false } },
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -951,7 +951,7 @@ FishAndChips.Fish({
 				}))
 			end
 		end
-		if context.individual and context.cardarea == G.play then
+		if context.joker_main then
 			return {
 				xmult = card.ability.extra.xmult,
 			}

@@ -164,7 +164,7 @@ return {
 				text = {
 					{
 						"At end of round, eats both adjacent {C:attention}Fish",
-						"Played cards give {X:mult,C:white}X#1#{} Mult per {C:attention}Fish{} eaten",
+						"Gains {X:mult,C:white}X#1#{} Mult per {C:attention}Fish{} eaten",
 						"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
 					},
 					{
