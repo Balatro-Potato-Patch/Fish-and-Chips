@@ -1,13 +1,13 @@
 function G.FUNCS.fac_open_fishing_menu (e)
-	if G.STATE == G.STATES.HAND_PLAYED then return end
+	if (G.STATE == G.STATES.HAND_PLAYED) or G.GAME.fac_booster_opening then return end
 	if G.STATE == G.STATES.FAC_FISHING and G.FISHING_STATE ~= G.FISHING_STATES.RESULTS and (G.FISHING_STATE ~= G.FISHING_STATES.LOBBY or (G.FAC_FISH_GAME and G.FAC_FISH_GAME.fishing_active)) then return end
 	if not G.GAME.fac_fish_expanded and not G.fac_fish_area.cards[1] then
-		return card_eval_status_text(G.fac_fishing_bucket_bottom, 'extra', nil, nil, nil, {message = localize('k_fac_empty')})
+		return card_eval_status_text(G.fac_fishing_bucket_bottom, 'extra', nil, nil, nil, {message = localize('k_fac_empty'), instant = true})
 	end
 	G.GAME.fac_fish_expanded = not G.GAME.fac_fish_expanded
 	G.fac_fish_area:unhighlight_all()
-	if G.GAME.fac_fish_expanded then ease_value(G.fac_fishing_bucket_bottom.T, "r", -math.pi / 2, nil, nil, true)
-	else ease_value(G.fac_fishing_bucket_bottom.T, "r", math.pi / 2, nil, nil, true) end
+	if G.GAME.fac_fish_expanded then G.fac_fishing_bucket_bottom.T.r = 0; ease_value(G.fac_fishing_bucket_bottom.T, "r", -math.pi / 2, nil, nil, true)
+	else G.fac_fishing_bucket_bottom.T.r = -math.pi / 2; ease_value(G.fac_fishing_bucket_bottom.T, "r", math.pi / 2, nil, nil, true) end
 	-- desired offset is 5, the extra 1 comes from moving the hand down (done in fish_shop.toml)
 	--[[if G.shop then
 		if G.GAME.fac_fish_expanded then G.shop.alignment.offset.y = G.shop.alignment.offset.y + 4
