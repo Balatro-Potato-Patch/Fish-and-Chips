@@ -11,8 +11,10 @@ PotatoPatchUtils.Developer({
 	local voice_sound = math.random(1, 7)
 
 	if voice_sound >= 4 then
+		self:juice_up()
 		play_sound('fac_credits_voices_' .. math.random(1, 7))
 	else
+		self:juice_up()
 		play_sound('fac_credits_audio_' .. math.random(1, 5))
 	end
   end
