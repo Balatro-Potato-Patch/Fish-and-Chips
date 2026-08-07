@@ -4,11 +4,26 @@ return {
             fac_sepa_Tarot_infovar ={
                 name = "Specific Tarots",
                 text = {
-                    "The Fool",
+                    "Talisman",
                     "The Emperor",
                     "The Hermit",
                     "The Hanged Man",
                     "Death",
+                }
+            },
+
+            fac_sepa_Spectral_infovar ={
+                name = "Specific Spectrals",
+                text = {
+                    "Talisman",
+                    "Ectoplasm",
+                    "Immolate",
+                    "Deja vu",
+                    "Hex",
+                    "Trance",
+                    "Medium",
+                    "Cryptid",
+                    "Aura",
                 }
             }
 
@@ -57,7 +72,7 @@ return {
                 name = "{f:fac_sepa_ultra}Bomb Fish{}",
                 text = {
                     {
-                        "Creates {C:attention}#5#{} specific {C:tarot}tarot{} cards when",
+                        "Creates {C:attention}#5#{} specific {C:tarot}Tarot{} cards when",
                         "defused. If {C:attention}attempt{} count hits 0,",
                         "sets money to {C:gold}$0{}. Play {C:attention}#4#{}",
                         "to advance the defuse count {C:green}[#1#/#2#]{}"
@@ -78,7 +93,18 @@ return {
 
             fish_fac_icbf = {
                 name = "{f:fac_sepa_ultra}ICBFish{}",
-                text = {"Does nothing"},
+                text = {{
+                        "Creates {C:attention}#5#{} specific {C:spectral}Spectral{} cards when",
+                        "defused. If {C:attention}attempt{} count hits 0,",
+                        "sets money to {C:red}-$15{}. Play {C:attention}#4#{}",
+                        "to advance the defuse count {C:green}[#1#/#2#]{}"
+                    },
+                    {
+                        "{C:attention}Attempts{} go down for every hand",
+                        "that the requested hand isnt",
+                        "played, {C:attention}then hand resets{}",
+                        "{C:green}Current attempts:{} #3#"
+                    }},
                 flavor = {
                     "{f:fac_sepa_ultra}Similar in nature to its{}",
                     "{f:fac_sepa_ultra}fish relative, only this time",
@@ -100,6 +126,17 @@ return {
                     "real or not, but for your bucket, it is",
                 }
             },
+
+            fish_fac_devicehands = {
+                name = "DEVICE_HANDS",
+                text = {
+                    "Does nothing"
+                },
+                flavor = {
+                    "Is this even a fish?",
+                    "I mean, it looks like one"
+                }
+            },
             
 
  
@@ -111,12 +148,15 @@ return {
                 text = { 
                     "Even if I'm not a biological cat", 
                     "I {u:white}WILL{} enjoy the fish you sell",
+                    "Voice: Left",
+                    "All of them are on spanish"
                 }
             },
             PotatoPatchDev_DoggFly = { 
                 name = "Dogg-Fly", 
                 text = { 
-                    "Fih & Chi" 
+                    "Fih & Chi",
+                    "Voice: Right"
                 } 
             },
         }
