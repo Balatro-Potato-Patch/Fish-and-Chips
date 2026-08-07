@@ -904,7 +904,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "still_life",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 3, y = 2 },
 	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
