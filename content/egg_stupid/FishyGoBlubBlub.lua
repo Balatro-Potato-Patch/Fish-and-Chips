@@ -2,7 +2,7 @@
 
 PotatoPatchUtils.Developer({
 	name = 'stupid',
-	atlas = 'fac_stupid_egg_credits',
+	atlas = 'fac_segg_credits',
 	pos = {x = 1, y = 0},
 	colour = G.C.BLUE,
 	fac_partner = 'egg_node'
@@ -10,21 +10,21 @@ PotatoPatchUtils.Developer({
 
 PotatoPatchUtils.Developer({
 	name = 'egg_node',
-	atlas = 'fac_stupid_egg_credits',
+	atlas = 'fac_segg_credits',
 	pos = {x = 0, y = 0},
 	colour = G.C.MONEY,
 	fac_partner = 'stupid'
 })
 
 SMODS.Atlas({
-	key = "stupid_egg_credits",
+	key = "segg_credits",
 	path = "egg_stupid/credits.png",
 	px = 71,
 	py = 95,
 })
 
 SMODS.Atlas({
-	key = "stupid_egg_fishies",
+	key = "segg_fishies",
 	path = "egg_stupid/fishies.png",
 	px = 71,
 	py = 95,
@@ -53,45 +53,64 @@ Bait Attributes
 
 ]]
 
+--#region utility
+
+
+
+
+
+--#endregion
+
+
+
 --#region fishies
 
 FishAndChips.Fish {
-	key = "stupid_egg_pale_oil",
-	atlas = "stupid_egg_fishies",
+	key = "segg_pale_oil",
+	atlas = "segg_fishies",
 	pos = { x = 0, y = 0 },
 	weight = 10,
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
-    -- TODO
-	attributes = { "chips" },
+
+	treasure = true, -- Our only treasure :)
+
+	attributes = { "usable", "function" },
 	config = {
-        -- TODO
-		extra = {
-			chips = 30
-		}
 	},
 	stats = {
 		weight = {min = 0.1, max = 0.4},
 		length = {min = 0.1, max = 0.4}
 	},
 	environments = {
-        -- TODO
-		pier = 10,
-		city_river = 2.5
+		pier = 1.5,
+		aquifer = 1.5,
+		swamp = 2,
+		city_river = 0.5
 	},
 	loc_vars = function(self, info_queue, card)
-        -- TODO
-		return { vars = { card.ability.extra.chips } }
 	end,
-	calculate = function(self, card, context)
-        -- TODO
-		if context.joker_main then return { chips = card.ability.extra.chips } end
+
+	use = function(self, card)
+		local editionless_jokers = SMODS.Edition:get_edition_cards(G.jokers, true)
+
+        local eligible_card = pseudorandom_element(editionless_jokers, 'egg_stupid_pale_oil')
+        local edition = SMODS.poll_edition {
+			key = "egg_stupid_pale_oil_e",
+			guaranteed = true,
+			no_negative = true,
+		}
+        eligible_card:set_edition(edition, true)
 	end,
+	can_use = function(self, card)
+		-- Apparently is a utility method huh
+        return next(SMODS.Edition:get_edition_cards(G.jokers, true))
+	end
 }
 
 FishAndChips.Fish {
-	key = "stupid_egg_void_fish",
-	atlas = "stupid_egg_fishies",
+	key = "segg_void_fish",
+	atlas = "segg_fishies",
 	pos = { x = 1, y = 0 },
 	weight = 10,
 	ppu_coder = { "stupid" },
@@ -124,8 +143,8 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "stupid_egg_root_fish",
-	atlas = "stupid_egg_fishies",
+	key = "segg_root_fish",
+	atlas = "segg_fishies",
 	pos = { x = 1, y = 0 },
 	weight = 10,
 	ppu_coder = { "stupid" },
