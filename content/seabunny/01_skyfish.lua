@@ -5,7 +5,7 @@ FishAndChips.Fish {
     pos = {x = 0, y = 0},
     config = {extra = {max = 1, shrink = 0.1}},
     blueprint_compat = true,
-    badge_key = "k_fac_uma",
+    badge_key = "k_fac_seabunny_uma",
     decision_min = 0,
     decision_max = 0.24,
     disable_visual_scaling = true,
@@ -17,7 +17,7 @@ FishAndChips.Fish {
             local prev_l = card.ability.stats.length
             card.ability.stats.length = math.min(2 * card.ability.stats.length, card.ability.extra.max)
             return {
-                message = localize{type = "variable", key = "a_cm", vars = {100 * (card.ability.stats.length - prev_l)}}
+                message = localize{type = "variable", key = "a_fac_seabunny_cm", vars = {100 * (card.ability.stats.length - prev_l)}}
             }
         end
     end,

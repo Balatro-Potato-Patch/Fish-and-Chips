@@ -5,7 +5,7 @@ FishAndChips.Fish {
     pos = {x = 5, y = 0},
     config = {extra = {num = 1, denom = 2, max = 5, max_ench = 25, destroys = 5, left = 5}},
     blueprint_compat = true,
-    badge_key = "k_fac_mineral_fish",
+    badge_key = "k_fac_seabunny_mineral_fish",
     loc_vars = function(self, info_queue, card)
         local num, denom = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom, "fac_golden_goldfish")
         if card.ability.extra.enchant then

@@ -5,7 +5,7 @@ FishAndChips.Fish {
     pos = {x = 0, y = 0},
     config = {extra = {times = 5, fish_left = 5}},
     blueprint_compat = true,
-    badge_key = "k_fac_mineral_fish",
+    badge_key = "k_fac_seabunny_mineral_fish",
     loc_vars = function(self, info_queue, card)
         if card.ability.extra.enchant then
             return {key = self.key .. "_enchant"}

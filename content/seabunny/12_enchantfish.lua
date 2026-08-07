@@ -24,7 +24,7 @@ FishAndChips.Fish {
             }
         elseif context.selling_self and card.ability.extra.count >= card.ability.extra.rounds then
             for k, v in ipairs(G.fac_fish_area.cards) do
-                if v.config.center.badge_key == "k_fac_mineral_fish" then
+                if v.config.center.badge_key == "k_fac_seabunny_mineral_fish" then
                     SEABUN.enchant(v)
                 elseif type(v.ability.extra) ~= "table" or not v.ability.extra.enchant then
                     v.ability.extra_value = (v.ability.extra_value or 0) + math.min(v.sell_cost, card.ability.extra.max)

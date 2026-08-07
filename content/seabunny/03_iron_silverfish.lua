@@ -5,7 +5,7 @@ FishAndChips.Fish {
     pos = {x = 0, y = 0},
     config = {extra = {chips = 50, req = 50, times = 10, left = 10}},
     blueprint_compat = true,
-    badge_key = "k_fac_mineral_fish",
+    badge_key = "k_fac_seabunny_mineral_fish",
     loc_vars = function(self, info_queue, card)
         if card.ability.extra.enchant then
             return {vars = {card.ability.extra.chips}, key = self.key .. "_enchant"}
@@ -44,6 +44,14 @@ FishAndChips.Fish {
                 end
             end
         end
+    end,
+    in_pool = function(self, args)
+        for k, v in ipairs(G.playing_cards) do
+            if SMODS.has_enhancement(v, "m_stone") then
+                return true
+            end
+        end
+        return false
     end,
     weight = SEABUN.weight,
     attributes = {"chips", "generation", "destroy_card"},

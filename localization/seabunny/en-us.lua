@@ -225,11 +225,58 @@ return {
                     "next? A silverfish made of iron?"
                 }
             },
+            fish_fac_aquamarine_anglerfish = {
+                name = "Aquamarine Anglerfish",
+                text = {
+                    {
+                        "When your deck runs out,",
+                        "this gains {X:mult,C:white}X#1#{} Mult",
+                        "per card held in hand",
+                        "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
+                    },
+                    {
+                        "{C:inactive}Enchanted: When your deck",
+                        "{C:inactive}runs out, cards held in hand",
+                        "{C:inactive}gain 1 retrigger this round"
+                    },
+                    {
+                        "To {C:dark_edition}Enchant{}: Discard exactly",
+                        "{C:attention}#3#{} cards #4# times in a row",
+                        "{C:inactive}(Currently {C:attention}#5#{C:inactive}/#4#)"
+                    }
+                },
+                flavor = {
+                    "This fish uses its gemstone",
+                    "as a light source to survive",
+                    "in the depths it calls home."
+                }
+            },
+            fish_fac_aquamarine_anglerfish_enchant = {
+                name = "Aquamarine Anglerfish",
+                text = {
+                    {
+                        "When your deck runs out,",
+                        "this gains {X:mult,C:white}X#1#{} Mult",
+                        "per card held in hand",
+                        "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
+                    },
+                    {
+                        "{C:dark_edition}Enchanted{}: When your deck",
+                        "runs out, cards held in hand",
+                        "gain {C:attention}1{} retrigger this round"
+                    }
+                },
+                flavor = {
+                    "This fish uses its gemstone",
+                    "as a light source to survive",
+                    "in the depths it calls home."
+                }
+            },
             fish_fac_enchantfish = {
                 name = "Enchantfish",
                 text = {
                     "After {C:attention}#1#{} rounds, sell this to",
-                    "{C:dark_edition}enchant{} your {C:attention}Mineral Fishes",
+                    "{C:dark_edition}enchant{} your {C:attention}Mineral Fishes{},",
                     "then double sell value of your",
                     "unenchanted {C:attention}Fishes{}, up to {C:money}+$#2#",
                     "{C:inactive}(Currently {C:attention}#3#{C:inactive}/#1#)"
@@ -244,14 +291,15 @@ return {
     },
     misc = {
         dictionary = {
-            k_fac_eroded = "Eroded!",
-            k_fac_mineral_fish = "Mineral Fish",
-            k_fac_uma = "UMA"
+            k_fac_seabunny_eroded = "Eroded!",
+            k_fac_seabunny_mineral_fish = "Mineral Fish",
+            k_fac_seabunny_retrigger = "+1 Retrigger",
+            k_fac_seabunny_uma = "UMA"
         },
         v_dictionary = {
-            a_cm = "+#1# cm",
-            a_percent = "#1#%",
-            a_percent_plus = "+#1#%"
+            a_fac_seabunny_cm = "+#1# cm",
+            a_fac_seabunny_percent = "#1#%",
+            a_fac_seabunny_percent_plus = "+#1#%"
         }
     }
 }

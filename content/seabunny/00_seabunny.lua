@@ -23,7 +23,7 @@ PotatoPatchUtils.Developer {
 
 -- Fish
 SEABUN = {
-    weight = 75 / 7,
+    weight = 75 / 8,
     enchant = function(card)
         card.ability.extra.enchant = true
         G.E_MANAGER:add_event(Event{func = function()
@@ -64,8 +64,14 @@ local Scmc_ref = SMODS.current_mod.calculate
 SMODS.current_mod.calculate = function(self, context)
     if context.selling_card and context.card.ability.set == "fac_Fish" then
         G.GAME.current_round.fish_sold = true
-    elseif context.end_of_round and context.main_eval then
+    elseif context.round_eval then
         G.GAME.current_round.fish_sold = false
+        for k, v in ipairs(G.deck.cards) do
+            if v.ability.temp_repetitions then
+                v.ability.perma_repetitions = v.ability.perma_repetitions - v.ability.temp_repetitions
+                v.ability.temp_repetitions = 0
+            end
+        end
     end
     Scmc_ref(self, context)
 end

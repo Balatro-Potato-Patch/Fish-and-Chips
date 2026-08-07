@@ -5,7 +5,7 @@ FishAndChips.Fish {
     pos = {x = 0, y = 0},
     config = {extra = {percent = 25, delta = 5, max = 100, num = 1, denom = 3}},
     blueprint_compat = true,
-    badge_key = "k_fac_mineral_fish",
+    badge_key = "k_fac_seabunny_mineral_fish",
     loc_vars = function(self, info_queue, card)
         if card.ability.extra.enchant then
             return {vars = {card.ability.extra.percent, card.ability.extra.delta, card.ability.extra.max}, key = self.key .. "_enchant"}
@@ -52,12 +52,12 @@ FishAndChips.Fish {
                 if card.ability.extra.percent <= 0 then
                     SMODS.destroy_cards(card, {pinch_anim = true})
                     return {
-                        message = localize("k_fac_eroded"),
+                        message = localize("k_fac_seabunny_eroded"),
                         colour = G.C.BLUE
                     }
                 end
                 return {
-                    message = localize{type = "variable", key = mod < 0 and "a_percent" or "a_percent_plus", vars = {mod}}
+                    message = localize{type = "variable", key = mod < 0 and "a_fac_seabunny_percent" or "a_fac_seabunny_percent_plus", vars = {mod}}
                 }
             elseif context.selling_card and context.card.ability.set == "fac_Fish" and G.GAME.blind.in_blind and not card.ability.extra.enchant and SMODS.pseudorandom_probability(card, "fac_lapis_catfish", card.ability.extra.num, card.ability.extra.denom) then
                 SEABUN.enchant(card)

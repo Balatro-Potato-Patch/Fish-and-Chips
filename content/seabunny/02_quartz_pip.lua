@@ -5,7 +5,7 @@ FishAndChips.Fish {
     pos = {x = 0, y = 0},
     config = {extra = {num = 1, denom = 2, num_ench = 3, denom_ench = 4, times = 50, uenh_left = 50}},
     blueprint_compat = true,
-    badge_key = "k_fac_mineral_fish",
+    badge_key = "k_fac_seabunny_mineral_fish",
     loc_vars = function(self, info_queue, card)
         local num, denom = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom, "fac_quartz_pip")
         local num_ench, denom_ench = SMODS.get_probability_vars(card, card.ability.extra.num_ench, card.ability.extra.denom_ench, "fac_quartz_pip_ench")
