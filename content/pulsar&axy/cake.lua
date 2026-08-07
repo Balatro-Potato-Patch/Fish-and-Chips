@@ -5,7 +5,7 @@ FishAndChips.Fish {
 	pos = { x = 3, y = 2 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Pulsar" },
-	attributes = { "mult", 'usable' },
+	attributes = { "mult", 'usable', 'food' },
 	environments = {
 		chocolate_river = 1
 	},
