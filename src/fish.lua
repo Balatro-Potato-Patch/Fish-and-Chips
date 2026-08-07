@@ -75,6 +75,11 @@ function FishAndChips.modify_fish_stats(card, stats)
 	card:set_cost()
 end
 
+function FishAndChips.update_fish_records(save_record, stats)
+	save_record.record_weight = math.max(stats.weight, save_record.record_weight or 0)
+	save_record.record_length = math.max(stats.length, save_record.record_length or 0)
+end
+
 function FishAndChips.format_measurement(value, measurement, units)
 	if not value then return ' ' end
 	if units and units[measurement] then
