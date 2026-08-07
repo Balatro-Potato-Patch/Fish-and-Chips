@@ -8,14 +8,14 @@ PotatoPatchUtils.Developer({
 	loc = true,
 
   click = function(self)
-	local voice_sound = math.random(1, 7)
+	local voice_sound = math.random(1, 15)
 
-	if voice_sound >= 4 then
+	if voice_sound >= 12 then
 		self:juice_up()
 		play_sound('fac_credits_voices_' .. math.random(1, 7))
 	else
 		self:juice_up()
-		play_sound('fac_credits_audio_' .. math.random(1, 5))
+		play_sound('fac_credits_audio_' .. math.random(1, 20))
 	end
   end
 

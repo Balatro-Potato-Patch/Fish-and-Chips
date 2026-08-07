@@ -71,9 +71,9 @@ for i = 1, 7 do
 end
 
 
-for i = 1, 5 do
+for i = 1, 20 do
     SMODS.Sound({
         key = 'credits_audio_' .. i,
-        path = 'sepa/audio' .. i .. '.ogg'
+        path = 'sepa/Omg so many fucking sounds/audio' .. i .. '.ogg'
    })
 end
