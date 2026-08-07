@@ -299,7 +299,6 @@ FishAndChips.Fish {
 			rounds_total = 5
 		}
 	},
-	mf_rotate_by = 3 * math.pi / 2,
 	environments = {
 		garden = 5,
 	},
@@ -333,25 +332,6 @@ FishAndChips.Fish {
 		end
 	end
 }
-
-local card_draw = Card.draw -- Thank you MoreFluff Rotarot
-function Card:draw(layer, ...)
-	if self.config and self.config.center and self.config.center.key == 'fish_fac_darwin' then
-		self.VT.r = self.VT.r + ( 3 * math.pi / 2 )
-		for k, v in pairs(self.children) do
-			v.VT.r = v.VT.r + ( 3 * math.pi / 2 )
-		end
-	end
-
-	card_draw(self, layer, ...)
-
-	if self.config and self.config.center and self.config.center.key == 'fish_fac_darwin' then
-		self.VT.r = self.VT.r - ( 3 * math.pi / 2 )
-		for k, v in pairs(self.children) do
-			v.VT.r = v.VT.r - ( 3 * math.pi / 2 )
-		end
-	end
-end
 
 -- Pear Fish
 
@@ -841,3 +821,94 @@ FishAndChips.Fish {
 		end
 	end
 }
+
+-- Topegore (Tope) (Togore)
+
+FishAndChips.Fish {
+	key = "togore",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 1, y = 3 },
+	weight = 1,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Jolyne" },
+	attributes = { "deltarune" },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		styx = 5,
+	},
+	stats = {
+		weight = {min = 43.91, max = 45.19},
+		length = {min = 1.21, max = 1.85}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+-- Notably Not Green Basster (Bass) (Gaster)
+
+FishAndChips.Fish {
+	key = "gaster",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 2, y = 3 },
+	weight = 1,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Jolyne" },
+	attributes = { "deltarune" },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		styx = 5,
+	},
+	stats = {
+		weight = {min = 88.39, max = 88.40},
+		length = {min = 66.00, max = 67.00}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+-- Rotate Degree
+
+local card_draw = Card.draw -- Thank you MoreFluff Rotarot
+function Card:draw(layer, ...)
+	if self.config and self.config.center then
+		if (self.config.center.key == 'fish_fac_darwin' or self.config.center.key == 'fish_fac_togore') then
+			self.VT.r = self.VT.r + ( 3 * math.pi / 2 )
+			for k, v in pairs(self.children) do
+				v.VT.r = v.VT.r + ( 3 * math.pi / 2 )
+			end
+		elseif (self.config.center.key == 'fish_fac_gaster') then
+			self.VT.r = self.VT.r + ( 1 * math.pi / 3 )
+			for k, v in pairs(self.children) do
+				v.VT.r = v.VT.r + ( 1 * math.pi / 3 )
+			end
+		end
+	end
+
+	card_draw(self, layer, ...)
+
+	if self.config and self.config.center then
+		if (self.config.center.key == 'fish_fac_darwin' or self.config.center.key == 'fish_fac_togore') then
+			self.VT.r = self.VT.r - ( 3 * math.pi / 2 )
+			for k, v in pairs(self.children) do
+				v.VT.r = v.VT.r - ( 3 * math.pi / 2 )
+			end
+		elseif (self.config.center.key == 'fish_fac_gaster') then
+			self.VT.r = self.VT.r - ( 1 * math.pi / 3 )
+			for k, v in pairs(self.children) do
+				v.VT.r = v.VT.r - ( 1 * math.pi / 3 )
+			end
+		end
+	end
+end

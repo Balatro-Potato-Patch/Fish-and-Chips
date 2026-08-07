@@ -206,6 +206,24 @@ return {
                     "Well, there is a fish here."
                 }
             },
+            fish_fac_togore = {
+                name = "Topegore",
+                text = {
+                    "",
+                },
+                flavour = {
+                    ""
+                }
+            },
+            fish_fac_gaster = {
+                name = "Basster",
+                text = {
+                    "",
+                },
+                flavour = {
+                    "Notably Not Green"
+                }
+            },
         },
         Other = {
             w_d_seuss_dismantle = {
