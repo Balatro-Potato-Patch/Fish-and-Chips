@@ -3,8 +3,6 @@ FishAndChips.Fish {
 	atlas = "fish",
 	pos = { x = 3, y = 0 },
 	weight = 10,
-	blueprint_compat = true,
-	disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
 	attributes = { "reset", "passive", "reroll", "economy" },

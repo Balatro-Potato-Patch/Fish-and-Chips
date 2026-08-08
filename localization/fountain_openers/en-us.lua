@@ -10,7 +10,7 @@ return {
                     "while reeling in a Fish",
                     "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
                 },
-                fac_flavor = {
+                fac_flavour = {
                     "Bird? Fish?",
                     "Something else entirely?",
                     "All of the above?",
@@ -24,7 +24,7 @@ return {
                     "Level up a random {C:attention}poker hand",
                     "for each card destroyed"
                 },
-                fac_flavor = {
+                fac_flavour = {
                     "the cards when i throw a dying",
                     "neutron starfish at them"
                 }
@@ -35,7 +35,7 @@ return {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} at end of round",
                     "{C:fac_sand_dollars,f:fac_sand_dollars}-${C:fac_sand_dollars}#2#{} when entering the shop"
                 },
-                fac_flavor = {
+                fac_flavour = {
                     "The snack that smiles back!"
                 }
             },
@@ -58,7 +58,7 @@ return {
                         "each give {X:mult,C:white}X#2#{} Mult"
                     }
                 },
-                fac_flavor = {
+                fac_flavour = {
                     "Heh, it's my Jarona!"
                 }
             },
@@ -76,7 +76,7 @@ return {
                         "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
                     }
                 },
-                fac_flavor = {
+                fac_flavour = {
                     "kill everything :3"
                 }
             },
@@ -87,13 +87,20 @@ return {
                     "each {C:attention}ante",
                     "{C:inactive}({C:attention}#2#{C:inactive} remaining)"
                 },
-                fac_flavor = {
+                fac_flavour = {
                     "Look, I could give you infinite rerolls",
                     "if the fish police weren't after me!"
                 }
             },
             fish_fac_fo_cij = {
-                name = "cij"
+                name = "cij",
+                text = {
+                    "A {C:attention}2{}, {C:attention}4{}, and a {C:attention}Jack{}",
+                    "can form a {C:attention}Straight{}"
+                },
+                fac_flavour = {
+                    "cij"
+                }
             }
         },
         PotatoPatch = {
@@ -119,6 +126,8 @@ return {
             fac_fo_fm = "%f fm",
             fac_fo_px = "%f px",
             fac_fo_flowery_unit = "99999",
+            fac_fo_cij_weight = "+5 attack, +0.5 attack multiplier",
+            fac_fo_cij_length = "3 letters",
 
             fac_fo_fucking_kill = "Fucking Kill",
             fac_fo_take = "Take"
