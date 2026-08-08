@@ -43,8 +43,19 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)"
                 },
                 flavor = {
-                    "The time... ,",
+                    "The time...",
                     "the time of birth approaches."
+                }
+            },
+            fish_fac_segg_plasmium_phial = {
+                name = "Plasmium Phial",
+                text = {
+                    "{C:blue}+#1#{} hands this round",
+                },
+                flavor = {
+                    "Injecting the liquid allows",
+                    "one to gain health beyond",
+                    "their natural limits."
                 }
             },
 
