@@ -595,9 +595,15 @@ return {
             k_banish_cursefish = "BANISH",
             k_obtain_cursefish = "OBTAIN",
 
-            k_omega_crimsonfang_1 = 'Did you mean: "40% of Potato Patch Modding Hub?"',
+            k_omega_crimsonfang_1 = {'Did you mean:', '"40% of Potato Patch Modding Hub?"'},
             k_omega_crimsonfang_2 = '',
-            k_omega_crimsonfang_3 = '',
+            k_omega_crimsonfang_3 = {'Cooking up bullshit', 'since 2005'},
+            k_omega_crimsonfang_4 = {'PERFECT HEAVEN', ">w<", "WONDERFUL NIGHTMARE"},
+            k_omega_crimsonfang_5 = {'Your eyes can\'t hide it', "Without play... The knife grows dull."},
+            k_omega_crimsonfang_6 = {'LAST JARONA!'},
+            k_omega_crimsonfang_7 = {'woof woof', 'meow meow'},
+            k_omega_crimsonfang_8 = {'we heard you like rubys', 'so we uhhhh uhhhhhhh uhhhhhh'},
+            k_omega_crimsonfang_9 = {},
 
             k_give_up = "GIVE UP",
             k_lose_hope = "LOSE HOPE"

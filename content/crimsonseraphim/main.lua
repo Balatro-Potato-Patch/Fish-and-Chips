@@ -1716,7 +1716,7 @@ end
 FishAndChips.Fish {
 	key = "omega_crimsonfang",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 2, y = 2 },
+	pos = { x = 0, y = 3 },
 	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
@@ -1731,7 +1731,7 @@ FishAndChips.Fish {
 		length = {min = 0.15, max = 0.2}
 	},
     select_flavor_text = function(self, card)
-        local num = pseudorandom("OMEGA_CRIMSONFANGERY", 1, 2)
+        local num = pseudorandom("OMEGA_CRIMSONFANGERY", 1, 8)
         local elem
         if num == 2 then
             elem = SMODS.create_sprite(0, 0, 5.5, 5.5 * 75/438, "fac_omega_crimsonfang_lore_alexi")
@@ -1740,8 +1740,15 @@ FishAndChips.Fish {
     end,
     flavour_vars = function(self, info_queue, card)
         local s, e = self:select_flavor_text(card)
-        local st = localize("k_omega_crimsonfang_"..s)
-        local elem = e or DynaText({ string = st, colours = { G.C.JOKER_GREY }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0 })
+        local st = type(localize("k_omega_crimsonfang_"..s)) == "table" and localize("k_omega_crimsonfang_"..s) or {localize("k_omega_crimsonfang_"..s)}
+        --
+        local n = {}
+        for i, v in pairs(st) do
+            n[#n+1] = {n=G.UIT.R, config={align = "cm"}, nodes={
+                {n=G.UIT.O, config={object = DynaText({ string = st[i], colours = { G.C.JOKER_GREY }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0 })}}
+            }}
+        end
+        local elem = e or {n=G.UIT.C, config={align = "cm"}, nodes=n}
         return {
             vars = {
                 elements = {

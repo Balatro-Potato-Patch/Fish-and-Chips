@@ -12,6 +12,13 @@ SMODS.Atlas {
     py = 95
 }
 
+SMODS.Atlas {
+    key = "crimsonseraphim_drawstep_faces",
+    path = "crimsonseraphim/drawstep_faces.png",
+    px = 71,
+    py = 95
+}
+
 SMODS.Atlas({
 	key = "mealy_lore",
 	path = "crimsonseraphim/mealy_lore.png",
@@ -181,6 +188,56 @@ SMODS.DrawStep({
         sprite.VT.y = math.floor(self.children.center.VT.y*3.5)/3.5
         sprite.VT.r = 0
         sprite:draw_shader("dissolve", nil, nil, true, nil, nil, 0)
+	end,
+	conditions = { vortex = false, facing = "front" },
+})
+
+SMODS.draw_ignore_keys.omega_crimsonfang_tv_face = true
+SMODS.DrawStep({
+	key = "omega_crimsonfang",
+	order = 25,
+	func = function(self)
+        if self.config.center.discovered and self.config.center.key == "fish_fac_omega_crimsonfang" then    
+            self.children.omega_crimsonfang_tv_face = self.children.omega_crimsonfang_tv_face or SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H, "fac_crimsonseraphim_drawstep_faces", {x=0,y=0})
+            self.children.omega_crimsonfang_tv_face.role.draw_major = self
+            if self.area == G.fac_fish_area then
+                if self.ability.face then
+                    self.ability.temp_face = self.ability.face
+                    self.ability.face = nil
+                    self.ability.face_dt = 0
+                end
+                if self.ability.face_dt then
+                    self.ability.face_dt = self.ability.face_dt + love.timer.getDelta()
+                end
+                if self.ability.temp_face and self.ability.face_dt > 0.05 then
+                    self.ability.face_dt = 0
+                    self.ability.static_face = (self.ability.static_face or 0) + 1
+                    if self.ability.static_face > 3 then
+                    self.ability.static_face = nil 
+                    self.ability.face_dt = nil
+                    self.ability.true_face = self.ability.temp_face
+                    self.ability.temp_face = nil
+                    self.ability.static_face = nil
+                    self.children.omega_crimsonfang_tv_face:set_sprite_pos({x=self.ability.true_face, y=0})
+                    self.ability.change_dt = math.random() * 3
+                    else
+                        self.children.omega_crimsonfang_tv_face:set_sprite_pos({x=self.ability.static_face, y=0})
+                    end
+                end
+                self.ability.change_dt = self.ability.change_dt or 1
+                self.ability.change_dt = self.ability.change_dt - love.timer.getDelta()
+                if self.ability.change_dt < 0 then
+                    self.ability.change_dt = 99999
+                    self.ability.face = pseudorandom_element({
+                        0, 4
+                    })
+                end
+            end
+            FishAndChips.crimsonseraphim.draw_sprite(self.children.omega_crimsonfang_tv_face, self, {
+                nil, nil, nil, self.children.center
+            })
+            FishAndChips.crimsonseraphim.draw_sprite(self.children.center, self)
+        end
 	end,
 	conditions = { vortex = false, facing = "front" },
 })
