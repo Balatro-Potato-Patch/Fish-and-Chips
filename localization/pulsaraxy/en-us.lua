@@ -14,7 +14,7 @@ local pa_fish = {
                 text = {
                     "Gains {X:mult,C:white}X#1#{} Mult if",
                     "fish is caught perfectly",
-                    "Currently {X:mult,C:white}X#2#{} Mult"
+                    "{C:inactive}Currently {X:mult,C:white}X#2#{C:inactive} Mult"
                 },
                 flavour = {
                     "Rated F for Fish"
@@ -23,15 +23,15 @@ local pa_fish = {
             fish_fac_pa_heatshield = {
                 name = "Heatshield Tile",
                 text = {
-                    "Gains {X:chips,C:white}+#1#{} free {C:attention}Location Reroll{}",
+                    "Gains {C:attention}+#1#{} {C:attention}Location Reroll{} refund",
                     "for each used {C:planet}Planet{} card",
-                    "{C:inactive}(Refunds left: #2#){}"
+                    "{C:inactive}(Refunds left: {C:attention}#2#{})"
                 },
                 flavour = {
                     "Fell off of a reusable",
                     "rocket's upper stage",
                     "during a test flight.",
-                    "It's still slightly warm"
+                    "It's still warm from reentry"
                 }
             },
             fish_fac_pa_onering = {
@@ -182,7 +182,8 @@ local pa_fish = {
                 name = "Mystery Fish",
                 text = {
                     "Gives {X:mult,C:white}X#1#{} Mult on",
-                    "one random hand each round"
+                    "one {C:attention}random hand{}",
+                    "each round"
                 },
                 flavour = {
                     'Quite a rare catch,',
@@ -193,13 +194,14 @@ local pa_fish = {
             fish_fac_pa_F = {
                 name = "F",
                 text = {
-                    "{C:mult}+#1#{} Mult for each {C:attention}unique character{} in",
+                    "{C:mult}+#1#{} Mult for each",
+                    "{C:attention}unique character{} in",
                     "names of {C:fac_fish}Fish{}",
                     "{C:inactive}(Currently{} {C:mult}+#2#{} {C:inactive}Mult){}"
                 },
                 flavour = {
                     'This alphabet soup',
-                    "Brought to you by",
+                    "brought to you by",
                     "the letter F"
                 }
             },
@@ -233,9 +235,10 @@ local pa_fish = {
             fish_fac_pa_fromg = {
                 name = "fromg",
                 text = {
-                    'Use this fish while',
-                    'an owned consumable is selected to eat it and gain',
-                    '{C:chips}+#1#{} chips',
+                    '{C:attention}Use{} this fish while',
+                    'an owned {C:attention}Consumable{} is',
+                    'selected to {C:attention}eat{} it',
+                    'and gain {C:chips}+#1#{} chips',
                     '{C:inactive}(Currently {C:chips}+#2#{}{C:inactive} chips){}'
                 },
                 flavour = {
@@ -245,10 +248,13 @@ local pa_fish = {
             fish_fac_pa_box_jellyfish = {
                 name = "Box Jellyfish",
                 text = {
-                    'Use #1# selected {C:attention}Booster Pack{}'
+                    'Use to store a selected ',
+                    '{C:attention}Booster Pack{} in shop,',
+                    'Use #1#',
+                    'stored {C:attention}Booster Pack{}',
                 },
                 flavour = {
-                    'Despite the name, it',
+                    'Despite the name, it is',
                     'not very good at boxing'
                 }
             },
@@ -270,8 +276,8 @@ local pa_fish = {
                 name = "Chocolate Gar",
                 text = {
                     'Gives {C:chips}+#1#{} Chips',
-                    'to all {C:attention}held{}',
-                    'cards permanently when used'
+                    'to all {C:attention}held{} cards',
+                    '{C:attention}permanently{} when used'
                 },
                 flavour = {
                     'Common fish made entirely',
@@ -284,8 +290,8 @@ local pa_fish = {
                 name = "Ocaketopus",
                 text = {
                     'Gives {C:mult}+#1#{} Mult',
-                    'to all {C:attention}held{}',
-                    'cards permanently when used'
+                    'to all {C:attention}held{} cards',
+                    '{C:attention}permanently{} when used'
                 },
                 flavour = {
                     'Mollusk made of plain',
@@ -303,9 +309,10 @@ local pa_fish = {
                     '{C:spectral}Spectral{} card'
                 },
                 flavour = {
-                    "It's me, Perch Goofball,",
+                    "Hey guys it's me!",
+                    "Perch Goofball",
                     'the main catch',
-                    'of ante number 4!'
+                    'of Ante number 4!'
                 }
             }
         },

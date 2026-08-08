@@ -1,7 +1,7 @@
 --#region Misc
 PotatoPatchUtils.Developer({
 	name = 'Pulsar',
-	atlas = 'pa_pulsarfish',
+	atlas = 'fac_pa_pulsarfish',
 	pos = {x = 2, y = 3},
 	colour = G.C.YELLOW,
 	fac_partner = 'fac_Axy' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
