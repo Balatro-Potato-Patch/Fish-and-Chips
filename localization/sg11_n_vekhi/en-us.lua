@@ -8,6 +8,11 @@ return {
 					"at the end of round",
 					"if any {C:attention}Consumable{} is held",
 				},
+				flavour = {
+					"Apparently if you get 8 of these you're",
+					"able to craft a 'conduit', whatever",
+					"that's meant to be",
+				},
 			},
 			fish_fac_sg11_n_vekhi_water_ghoul = {
 				name = "Water Ghoul",
@@ -23,6 +28,11 @@ return {
 					"Next caught {C:fac_fish}Fish{}",
 					"will be {C:dark_edition}Negative{}",
 					"{S:1.1,C:red,E:2}self destructs{}, afterwards",
+				},
+				flavour = {
+					"Known to bit off entire limbs at",
+					"once, sailors avoid the ghastly",
+					"glow of this creature...",
 				},
 			},
 			fish_fac_sg11_n_vekhi_quantum_fish_wild = {
@@ -80,16 +90,20 @@ return {
 				name = "Transcendent Fish",
 				text = {
 					"{E:1,C:mult}#1#{E:1} Mult for each",
-					"{C:attention,E:1}face down{} {E:1}card",
-					"{E:1,C:dark_edition}in visible existence",
+					"card that {E:1,C:dark_edition}exists{E:1} and is",
+					"{C:attention,E:1}face down{} {E:1}",
 					"{C:inactive,E:1}(Currently {C:mult,E:1}#2#{C:inactive,E:1} Mult)",
 				},
 			},
 			fish_fac_sg11_n_vekhi_diamond_fish = {
 				name = "Diamond Fish",
 				text = {
-					"Gain {C:money}$#1#{} if hand contains scoring",
-					"{C:attention}Glass Cards{} that do not break",
+					"Grants {C:money}$#1#{} if hand contains scoring",
+					"{C:attention}Glass Cards{} and none of them break",
+				},
+				flavour = {
+					"This one could sell for a fortune",
+					"just make sure not to drop it."
 				},
 			},
 			fish_fac_sg11_n_vekhi_sprat = {
@@ -114,6 +128,9 @@ return {
 				name = "Lemon Fish",
 				text = {
 					"{C:attention}Use{} to create {C:attention}#1#{} {C:attention}Skip Tags{}",
+				},
+				flavour = {
+					"When life gives you lemons, uhhh....",
 				},
 			},
 		},
