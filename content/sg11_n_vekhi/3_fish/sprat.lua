@@ -18,7 +18,7 @@ FishAndChips.Fish({
 			dollars = 1,
 		},
 	},
-	weight = 4,
+	weight = 3,
 	stats = {
 		weight = { min = 0.003, max = 0.012 },
 		length = { min = 0.06, max = 0.14 },
