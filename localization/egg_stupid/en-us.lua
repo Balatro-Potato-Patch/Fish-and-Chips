@@ -60,5 +60,10 @@ return {
             },
 
         },
-    }
+    },
+    misc = {
+        dictionary = {
+            b_fac_segg_void_fish = "Void",
+        },
+    },
 }

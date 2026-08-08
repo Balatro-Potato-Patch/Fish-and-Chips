@@ -178,12 +178,15 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.ending_shop and not context.blueprint then
+
 			-- Set muhnee to 0
 			local muhnee = G.GAME.dollars
 			ease_dollars(-muhnee)
 	
-			-- DEBUG
-			print("muhnee set to 0 ")
+			return {
+				message = localize('b_fac_segg_void_fish'),
+				colour = G.C.BLACK
+			}
 		end
 		if context.repetition and context.other_card.area == G.play then
 			return {
