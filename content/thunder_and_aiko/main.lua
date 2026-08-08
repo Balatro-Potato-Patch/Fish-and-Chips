@@ -976,6 +976,6 @@ FishAndChips.Fish({
 				return true
 			end,
 		}))
-		delay(7.6 * G.SETTINGS.GAMESPEED)
+		delay(7.2 * G.SETTINGS.GAMESPEED)
 	end,
 })
