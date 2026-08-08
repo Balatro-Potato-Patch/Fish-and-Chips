@@ -14,10 +14,17 @@ PotatoPatchUtils.Developer({
 })
 
 SMODS.Atlas({
-	key = "fish", -- Please include your name/team name in your atlas keys
-	path = "mack/fish.png",
+	key = "blanthos_hunter_fish", -- Please include your name/team name in your atlas keys
+	path = "blanthos/fish.png",
 	px = 71,
 	py = 95,
+})
+
+SMODS.Atlas({
+	key = "blanthos_hunter_gasterhat", -- Please include your name/team name in your atlas keys
+	path = "blanthos/gasterhat.png",
+	px = 710,
+	py = 950,
 })
 
 SMODS.Gradient {
@@ -36,9 +43,9 @@ SMODS.Gradient {
 
 FishAndChips.Fish {
 	key = "gneep_gnarp",
-	atlas = "fish",
-	pos = { x = 3, y = 0 },
-	weight = 10,
+	atlas = "blanthos_hunter_fish",
+	pos = { x = 0, y = 0 },
+	weight = 25,
 	ppu_coder = { "Blanthos" },
 	ppu_artist = { "Hunter" },
 	attributes = { "hand_level", "scaling", "hand_type", "space", "usable", "economy" },
@@ -54,9 +61,13 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		chocolate_river = 10,
-		wormhole = 10,
-		soup = 10
+		chocolate_river = 1,
+		wormhole = 1,
+		soup = 1
+	},
+	stats = {
+		weight = {min = 3.6, max = 5.4},
+		length = {min = 0.4, max = 0.46}
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.happiness, card.ability.extra.boredom, card.ability.extra.food_cost, card.ability.extra.food_happiness, math.floor (card.ability.extra.happiness / 15), localize(card.ability.immutable.hand, "poker_hands") } }
@@ -132,9 +143,9 @@ end,
 
 FishAndChips.Fish {
 	key = "spectre_fish",
-	atlas = "fish",
-	pos = { x = 3, y = 0 },
-	weight = 10,
+	atlas = "blanthos_hunter_fish",
+	pos = { x = 2, y = 0 },
+	weight = 14,
 	ppu_coder = { "Blanthos" },
 	ppu_artist = { "Hunter" },
 	attributes = { "mult", "scaling" },
@@ -148,8 +159,12 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		styx = 10,
-		aquifer = 10
+		styx = 1,
+		aquifer = 0.5
+	},
+	stats = {
+		weight = {min = 0, max = 0},
+		length = {min = 3, max = 8}
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult, card.ability.extra.scaling, card.ability.immutable.inactive and "Inactive" or "Active" } }
@@ -174,9 +189,9 @@ if (context.joker_type_destroyed and context.card == card and not card.ability.i
 
 FishAndChips.Fish {
 	key = "gaster_hat",
-	atlas = "fish",
-	pos = { x = 3, y = 0 },
-	weight = 10,
+	atlas = "blanthos_hunter_gasterhat",
+	pos = { x = 0, y = 0 },
+	weight = 6,
 	ppu_coder = { "Blanthos" },
 	ppu_artist = { "Hunter" },
 	attributes = { "mult", "scaling" },
@@ -186,9 +201,13 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		styx = 10,
-		pier = 10,
-		garden = 10
+		styx = 1,
+		pier = 0.5,
+		garden = 0.1
+	},
+	stats = {
+		weight = {min = 0.5, max = 0.5},
+		length = {min = 0.62, max = 0.62}
 	},
 	loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'fac_gaster_fish')
