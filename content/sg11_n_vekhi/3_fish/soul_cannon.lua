@@ -107,6 +107,18 @@ FishAndChips.Fish({
 			vars = { card.ability.extra.sacrifice },
 		}
 	end,
+	flavour_vars = function(self, info_queue, card)
+		if card.ability.extra.activated then
+			return {
+				key = self.key .. "_proceed",
+			}
+		end
+		if G.STAGE == G.STAGES.RUN and G.GAME.current_round.hands_left <= 1 then
+			return {
+				key = self.key .. "_desperate",
+			}
+		end
+	end,
 	calculate = function(self, card, context)
 		if
 			context.end_of_round

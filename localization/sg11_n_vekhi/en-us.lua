@@ -69,6 +69,31 @@ return {
 					"Must {C:red}destroy{} {C:attention}#1#{} random {C:fac_fish}Fish{}",
 					"and {C:attention}#1#{} Bucket Slots to trigger",
 				},
+				flavour = {
+					"Do you wish to use it?",
+				},
+			},
+			fish_fac_sg11_n_vekhi_soul_cannon_desperate = {
+				name = "Soul Cannonfish",
+				text = {
+					"Prevents death",
+					"Must {C:red}destroy{} {C:attention}#1#{} random {C:fac_fish}Fish{}",
+					"and {C:attention}#1#{} Bucket Slots to trigger",
+				},
+				flavour = {
+					"At this rate, you'll have to use the Soul Cannon...",
+				},
+			},
+			fish_fac_sg11_n_vekhi_soul_cannon_proceed = {
+				name = "Soul Cannonfish",
+				text = {
+					"Prevents death",
+					"Must {C:red}destroy{} {C:attention}#1#{} random {C:fac_fish}Fish{}",
+					"and {C:attention}#1#{} Bucket Slots to trigger",
+				},
+				flavour = {
+					"Proceeding with Soul Cannon firing sequence",
+				},
 			},
 			fish_fac_sg11_n_vekhi_yellowbin_tuna = {
 				name = "Yellowbin Tuna",
