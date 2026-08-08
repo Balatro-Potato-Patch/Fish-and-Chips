@@ -3,7 +3,7 @@ FishAndChips.Fish {
     weight = 5,
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
-    attributes = {  "chips", "passive" },
+    attributes = {  "chips" },
     stats = { weight = { min = 1, max = 1 }, length = { min = 1, max = 1 } },
     atlas = 'fac_vv_fish',
     pos = { x = 5, y = 0 },
@@ -68,7 +68,7 @@ FishAndChips.Fish {
     weight = 3,
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
-    attributes = { "passive", "chips", "xchips" },
+    attributes = { "chips", "xchips" },
     stats = { weight = { min = 63.5, max = 63.5 }, length = { min = 2.2, max = 2.2 } },
     environments = { pier = 3, garden = 1.2 },
     cost = 1,
@@ -99,7 +99,7 @@ FishAndChips.Fish {
     weight = 5,
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
-    attributes = { "x_mult" },
+    attributes = { "x_mult", 'editions' },
     environments = { pier = 5 },
     stats = { weight = { min = 0.67, max = 0.67 }, length = { min = 1, max = 1.05 } },
     cost = 5,
@@ -113,24 +113,6 @@ FishAndChips.Fish {
             x_mult = card.ability.extra.x_mult
         }
         end 
-    end
-}
-
-FishAndChips.Fish {
-    key = "vv_size2",
-    weight = 2,
-    ppu_coder = { "FireIce" },
-    ppu_artist = { "Willow" },
-    stats = { weight = { min = 2, max = 2 }, length = { min = 2, max = 2 } },
-    attributes = {  },
-    environments = { wormhole = 0.01, styx = 0.005 },
-    cost = 3,
-    config = { extra = {  } },
-    loc_vars = function(self, info_queue, card)
-        return { vars = {  } }
-    end,
-    calculate = function(self, card, context)
-
     end
 }
 
@@ -171,22 +153,30 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-    key = "vv_lilypad",
-    weight = 1,
+    key = "vv_jetfish",
+    weight = 3,
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
     stats = { weight = { min = 0.04, max = 0.1 }, length = { min = 1, max = 1 } },
     attributes = {  },
     atlas = 'fac_vv_fish',
-    pos = { x = 0, y = 0 },
-    environments = { swamp = 1, garden = 1, calm_pond = 1 },
-    cost = 1,
-    config = { extra = {  } },
+    pos = { x = 3, y = 0 },
+    environments = { pier = 3, aquifer = 2, city_river = 0.9 },
+    cost = 3,
+    config = { extra = { mult = 5 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = {  } }
+        return { vars = { card.ability.extra.mult } }
     end,
     calculate = function(self, card, context)
-
+        if context.individual and context.cardarea == G.play then
+            for _, playing_card in ipairs(context.scoring_hand) do
+                if #context.scoring_hand == 5 then
+                    return {
+                        mult = card.ability.extra.mult
+                    }
+                end
+            end
+        end
     end
 }
 
@@ -196,18 +186,46 @@ FishAndChips.Fish {
     stats = { weight = { min = 1, max = 3 }, length = { min = 1, max = 1 } },
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
-    attributes = {  },
+    attributes = { "xmult", "boss_blind" },
     atlas = 'fac_vv_fish',
     pos = { x = 4, y = 0 },
     environments = { calm_pond = 3, pier = 2.2, backroom = 1, wormhole = 1 },
     cost = 1,
-    config = { extra = {  } },
+    config = { extra = { xmult = 1, xmult_gain = 1 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = {  } }
+        return { vars = { card.ability.extra.xmult, card.ability.extra.xmult_gain } }
     end,
     calculate = function(self, card, context)
+        if context.setting_blind and not context.blueprint and context.blind.boss then
+            -- See note about SMODS Scaling Manipulation on the wiki
+            card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_gain
+            local destructable_jokers = {}
+            for i = 1, #G.fac_fish_area.cards do
+                if G.fac_fish_area.cards[i] ~= card and not SMODS.is_eternal(G.fac_fish_area.cards[i], card) and not G.fac_fish_area.cards[i].getting_sliced then
+                    destructable_jokers[#destructable_jokers + 1] =
+                        G.fac_fish_area.cards[i]
+                end
+            end
+            local joker_to_destroy = pseudorandom_element(destructable_jokers, 'vremade_madness')
 
-    end
+            if joker_to_destroy then
+                joker_to_destroy.getting_sliced = true
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        (context.blueprint_card or card):juice_up(0.8, 0.8)
+                        joker_to_destroy:start_dissolve({ G.C.RED }, nil, 1.6)
+                        return true
+                    end
+                }))
+            end
+            return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.xmult } } }
+        end
+        if context.joker_main then
+            return {
+                xmult = card.ability.extra.xmult
+            }
+        end
+    end,
 }
 
 FishAndChips.Fish {
@@ -216,7 +234,7 @@ FishAndChips.Fish {
     stats = { weight = { min = 1, max = 3 }, length = { min = 1, max = 1 } },
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
-    attributes = { 'suit' },
+    attributes = { 'suit', 'retrigger' },
     atlas = 'fac_vv_fish',
     pos = { x = 7, y = 0 },
     environments = { calm_pond = 3 },
@@ -256,6 +274,8 @@ FishAndChips.Fish {
     cost = 1,
     config = { extra = {  } },
     loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_foil
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_holo
         return { vars = {  } }
     end,
     use = function(self, card, area, copier)
@@ -269,6 +289,68 @@ FishAndChips.Fish {
     can_use = function(self, card)
         return next(SMODS.Edition:get_edition_cards(G.fac_fish_area, true))
     end
+}
+
+FishAndChips.Fish {
+    key = "vv_leviathan",
+    weight = 2,
+    ppu_coder = { "FireIce" },
+    ppu_artist = { "Willow" },
+    stats = { weight = { min = 5020, max = 5020 }, length = { min = 10.86, max = 10.86 } },
+    attributes = { 'destroy_card', 'economy' },
+    atlas = 'fac_vv_leviathan',
+    pos = { x = 0, y = 0 },
+    display_size = { w = 71, h = 198 },
+    environments = { pier = 2, city_river = 1 },
+    cost = 1,
+    config = { extra = { sand_dollar = 1 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.sand_dollar } }
+    end,
+    calculate = function(self, card, context)
+        if context.destroy_card and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
+            return {
+                sand_dollars = card.ability.extra.sand_dollar,
+                remove = true
+        }
+        end
+    end
+}
+
+FishAndChips.Fish {
+    key = "vv_fish",
+    weight = 1,
+    ppu_coder = { "FireIce" },
+    ppu_artist = { "Willow" },
+    stats = { weight = { min = 1, max = 1 }, length = { min = 1, max = 1 } },
+    attributes = { 'generation' },
+    atlas = 'fac_vv_fish',
+    pos = { x = 6, y = 0 },
+    environments = { calm_pond = 1, pier = 1, city_river = 1 },
+    cost = 4,
+    config = { extra = { sand_dollar = 1 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.sand_dollar } }
+    end,
+    add_to_deck = function(self, card, context)        
+                for i = 1, math.min(1, G.consumeables.config.card_limit - #G.consumeables.cards) do
+                    G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.4,
+                    func = function()
+                        local sets = {'Tarot', 'Planet', 'Spectral'}
+                        local random_set = pseudorandom_element(sets, 'random_consumable_set')
+                        SMODS.add_card({ set = random_set, })     
+                        play_sound('fac_vv_fish')
+                        SMODS.destroy_cards(card)
+                        card:juice_up(0.3, 0.5)
+                        return true
+                        end
+                    }))
+                end
+                delay(0.6)
+                return true
+                end
 }
 
 local oldcardsetsellvalue = Card.set_sell_value

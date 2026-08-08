@@ -37,19 +37,6 @@ return {
                         "Found in Sweden"
                     }
                 },
-                fish_fac_vv_size2 = {
-                    name = "Size 2 Fish",
-                    text = {
-                        {
-                            "Effect not implemented!"
-                        }
-                    },
-                    flavour = {
-                        "I HAVE TO SEE.",
-                        "I HAVE TO KNOW.",
-                        "{C:red,s:1.5}SIZE 2"
-                    }
-                },
                 fish_fac_vv_stinkyboot = {
                     name = "Stinky Ol' Boot",
                     text = {
@@ -78,24 +65,12 @@ return {
                         "That fish sure is a mystery, man."
                     }
                 },
-                fish_fac_vv_lilypad = {
-                    name = "Lily Pad",
-                    text = {
-                        {
-                            "Effect not implemented!"
-                        }
-                    },
-                    flavour = {
-                        "Lily Pad never complains.",
-                        "Lily Pad never wants to know what's going on."
-                    }
-                },
                 fish_fac_vv_immortalsnail = {
                     name = "The Immortal Snail",
                     text = {
                         {
-                            "Gives {C:money}+$2{} and {C:fac_sand_dollars,f:fac_sand_dollars}+${C:fac_sand_dollars}1{} when sold",
-                            "Gain {C:money}+$2{} and {C:fac_sand_dollars,f:fac_sand_dollars}+${C:fac_sand_dollars}1{} on next appearance"
+                            "On Boss Blind select, destroy a random {C:blue}Fish{} and gain {X:mult,C:white}X#2#{} Mult",
+                            "{C:inactive}Currently: {X:mult,C:white}X#1#{C:inactive} Mult"
                         }
                     },
                     flavour = {
@@ -126,6 +101,44 @@ return {
                     flavour = {
                         "It gained the reputation of being",
                         "the ugliest fish, but it doesn't care."
+                    }
+                },
+                fish_fac_vv_leviathan = {
+                    name = "The Leviathan",
+                    text = {
+                        {
+                            "{C:red}Destroy{} all playing cards on {C:attention}last scored hand{}",
+                            'Gain {C:fac_sand_dollars,f:fac_sand_dollars}+$1{} for each card destroyed'
+                        }
+                    },
+                    flavour = {
+                        "Be careful around its jaws, you don't want to",
+                        "lose, well... everything"
+                    }
+                },
+                fish_fac_vv_fish = {
+                    name = "The Fish",
+                    text = {
+                        {
+                            "Creates a random {C:tarot}Tarot{}, {C:planet}Planet{} or {C:spectral}Spectral{} card",
+                            "{C:red,E:1}Self-destructs{} when caught"
+                        }
+                    },
+                    flavour = {
+                        "You know what that means."
+                    }
+                },
+                fish_fac_vv_jetfish = {
+                    name = "Jetfish",
+                    text = {
+                        {
+                            "If all played cards score",
+                            "Each card gives {C:mult}+#1#{} Mult"
+                        }
+                    },
+                    flavour = {
+                        "This creature is dehydrated.",
+                        "You can carry it back to water."
                     }
                 },
         }
