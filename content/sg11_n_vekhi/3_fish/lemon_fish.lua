@@ -35,6 +35,7 @@ FishAndChips.Fish({
 	environments = {
 		soup = 2,
 		chocolate_river = 2,
+		garden = 1,
 	},
 	loc_vars = function(self, info_queue, card)
 		return {
