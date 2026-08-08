@@ -18,16 +18,21 @@ return {
 				name = "Water Ghoul",
 				text = {
 					"When {C:attention}primed{}, next caught {C:fac_fish}Fish{}",
-					"will be {C:dark_edition}Negative{},",
-					"{S:1.1,C:red,E:2}self destructs{} afterwards",
+					"will be {C:dark_edition}Negative{}, then",
+					"{S:1.1,C:red,E:2}self destructs{}",
+				},
+				flavour = {
+					"Apparently if you get 8 of these you're",
+					"able to craft a 'conduit', whatever",
+					"that's meant to be",
 				},
 			},
 			fish_fac_sg11_n_vekhi_water_ghoul_primed = {
 				name = "Water Ghoul",
 				text = {
 					"Next caught {C:fac_fish}Fish{}",
-					"will be {C:dark_edition}Negative{}",
-					"{S:1.1,C:red,E:2}self destructs{}, afterwards",
+					"will be {C:dark_edition}Negative{}, then",
+					"{S:1.1,C:red,E:2}self destructs{}",
 				},
 				flavour = {
 					"Known to bit off entire limbs at",
@@ -39,7 +44,7 @@ return {
 				name = "Quantum Fish",
 				text = {
 					"{C:attention}Random{} card on screen gives",
-					"{C:white,X:mult}X#1#{} Mult when scored",
+					"{C:white,X:mult}X#1#{} Mult when triggered",
 				},
 				flavour = {
 					"Exist in all places at the same time",
@@ -50,7 +55,7 @@ return {
 				name = "Quantum Fish (photo)",
 				text = {
 					"{C:attention}Random{} card on screen gives",
-					"{C:white,X:mult}X#1#{} Mult when scored",
+					"{C:white,X:mult}X#1#{} Mult when triggered",
 				},
 				flavour = {
 					"Exist in all places at the same time",
@@ -90,20 +95,20 @@ return {
 				name = "Transcendent Fish",
 				text = {
 					"{E:1,C:mult}#1#{E:1} Mult for each",
-					"card that {E:1,C:dark_edition}exists{E:1} and is",
-					"{C:attention,E:1}face down{} {E:1}",
+					"{C:attention,E:1}face down{} {E:1}card",
+					"{E:1,C:dark_edition}in visible existence",
 					"{C:inactive,E:1}(Currently {C:mult,E:1}#2#{C:inactive,E:1} Mult)",
 				},
 			},
 			fish_fac_sg11_n_vekhi_diamond_fish = {
 				name = "Diamond Fish",
 				text = {
-					"Grants {C:money}$#1#{} if hand contains scoring",
-					"{C:attention}Glass Cards{} and none of them break",
+					"Earn {C:money}$#1#{} if scoring hand contains",
+					"{C:attention}Glass Cards{} that do not break",
 				},
 				flavour = {
 					"This one could sell for a fortune",
-					"just make sure not to drop it."
+					"just make sure not to drop it.",
 				},
 			},
 			fish_fac_sg11_n_vekhi_sprat = {
@@ -159,7 +164,7 @@ return {
 			pac_quantum_fish_1 = "You again...",
 			pac_quantum_fish_2 = "I'll not let you go this time.",
 			pac_quantum_fish_3 = "Say 'Fish'!",
-			k_pac_soul_cannon_trigger = "Saved by Soul Cannonfish",
+			k_pac_soul_cannon_trigger = "Soul Cannon Activated",
 			k_fac_recycle_ex = "Recycle!",
 			k_fac_nom_ex = "Nom!",
 		},

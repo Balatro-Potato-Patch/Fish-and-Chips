@@ -66,4 +66,5 @@ FishAndChips.Fish({
 			SMODS.add_card({ key = "fish_fac_sg11_n_vekhi_sprat", area = G.fac_fish_area })
 		end
 	end,
+	button_key = "b_open",
 })
