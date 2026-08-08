@@ -45,12 +45,22 @@ return {
 				},
 				flavor = { 'This fish seems to', 'like drinking coco{element:1}.' },
 			},
+			fish_fac_bagels_captain_gills = {
+				name = 'Captain Gills',
+				text = {
+					'{C:attention}Release{} this fish in the',
+					'{C:attention}#1#{} to create',
+					'a {C:dark_edition}#2# {C:attention}#3#',
+				},
+				flavor = { 'This carniverous fish grows fast,', 'often outgrowing its habitat.' },
+			},
 		},
 	},
 	misc = {
 		dictionary = {
 			k_fac_bagels_plus_bait = '+1 Bait',
 			k_fac_bagels_a = 'A',
+			k_fac_bagels_release = 'Release',
 		},
 	},
 }

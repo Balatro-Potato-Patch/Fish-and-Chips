@@ -6,6 +6,20 @@ if Balatest then
 		FishAndChips.Balatest_exit_fishing()
 	end
 
+	-- Redefine this to support using fish
+	---@diagnostic disable-next-line: duplicate-set-field
+	function Balatest.use(card)
+		Balatest.wait_for_input()
+		card = Balatest.internal.ensure_not_nil(card)
+		Balatest.q(function()
+			local c = card();
+			(c.config.center.set == 'fac_Fish' and G.FUNCS.fac_use_fish or G.FUNCS.use_card) {
+				config = { ref_table = c },
+			}
+		end)
+		Balatest.wait_for_input()
+	end
+
 	--- Exits the shop and goes to the fishing minigame.
 	function FishAndChips.Balatest_go_fishing()
 		Balatest.wait_for_input(G.STATES.SHOP)

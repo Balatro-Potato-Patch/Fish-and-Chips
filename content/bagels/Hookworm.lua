@@ -71,6 +71,7 @@ FishAndChips.Fish {
 					G.fac_temp_bait_area.buffer = G.fac_temp_bait_area.buffer - 1
 					if G.fac_temp_bait_area.buffer < 1 then
 						G.fac_temp_bait_area:remove()
+						G.fac_temp_bait_area = nil
 					end
 					return true
 				end,
