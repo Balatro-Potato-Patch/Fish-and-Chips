@@ -237,12 +237,19 @@ local pa_fish = {
                     'an owned consumable is selected to eat it and gain',
                     '{C:chips}+#1#{} chips',
                     '{C:inactive}(Currently {C:chips}+#2#{}{C:inactive} chips){}'
+                },
+                flavour = {
+                    'ribbit'
                 }
             },
             fish_fac_pa_box_jellyfish = {
                 name = "Box Jellyfish",
                 text = {
                     'Use #1# selected {C:attention}Booster Pack{}'
+                },
+                flavour = {
+                    'Despite the name, it',
+                    'not very good at boxing'
                 }
             },
             fish_fac_pa_blackhole = {
