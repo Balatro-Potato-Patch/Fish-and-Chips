@@ -480,10 +480,33 @@ FishAndChips.Fish({
 	end,
 })
 
+SMODS.Atlas({
+	key = "thunder_and_aiko_killer",
+	path = "thunder_and_aiko/killer.png",
+	px = 71,
+	py = 95,
+	atlas_table = "STATE_ATLAS",
+})
+
 FishAndChips.Fish({
 	key = "killer",
-	atlas = "thunder_and_aiko",
-	pos = { x = 1, y = 1 },
+	atlas = "thunder_and_aiko_killer",
+	pos = { x = 0, y = 0 },
+	sprite_args = {
+		states = {
+			right = {
+				start_pos = { x = 0, y = 0 },
+				frames = 1,
+				frame_order = "linear",
+			},
+			left = {
+				start_pos = { x = 1, y = 0 },
+				frames = 1,
+				frame_order = "linear",
+			},
+		},
+		default_state = "right"
+	},
 	weight = 5,
 	environments = {
 		swamp = 1,
@@ -529,6 +552,7 @@ FishAndChips.Fish({
 				card.ability.extra.facing = "right"
 				index_to_check = index_to_check - 1
 			end
+			card:set_sprite_state(card.ability.extra.facing)
 			if
 				G.fac_fish_area.cards[index_to_check]
 				and not SMODS.is_eternal(G.fac_fish_area.cards[index_to_check], card)
