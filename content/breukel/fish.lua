@@ -34,11 +34,46 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
+	key = "plecoworker",
+	atlas = "fac_breukel_fish",
+	pos = {x = 1,y = 1},
+	weight = 8,
+	stats = {weight = {min = 0.2, max = 0.45}, length = {min = 0.075, max = 0.1}},
+	ppu_coder = {"Breuhh"},
+	ppu_artist = {"Comykel"},
+	attributes = {"chips"},
+
+	environments = {
+		city_river = 10,
+		styx = 5
+	},
+	config = {
+		extra = {
+			Overtime = 0.5,
+		}
+	},
+
+	loc_vars = function(self, info_queue, card)
+		return {vars = {
+			card.ability.extra.Overtime,
+			G.fac_Breukel.GetOverTime()
+		}}
+	end,
+
+	calculate = function(self, card, context)
+		if context.joker_main then
+			G.fac_Breukel.AddOverTime(card, card.ability.extra.Overtime)
+			return {chips = G.fac_Breukel.GetOverTime()*5}
+		end
+	end,
+}
+
+FishAndChips.Fish {
 	key = "ceo",
 	atlas = "fac_breukel_fish",
 	pos = {x = 2,y = 0},
 	weight = 4,
-	stats = {weight = {min = 0, max = 1}, length = {min = 0, max = 1}},
+	stats = {weight = {min = 35, max = 145}, length = {min = 2.5, max = 3}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
 	attributes = {"passive"},
@@ -84,7 +119,7 @@ FishAndChips.Fish {
 	atlas = "fac_breukel_markerel",
 	pos = {x = 0,y = 0},
 	weight = 6,
-	stats = {weight = {min = 0, max = 1}, length = {min = 0, max = 1}},
+	stats = {weight = {min = 0.009, max = 0.015}, length = {min = 0.13, max = 0.15}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
 	attributes = {"generation","usable"},
@@ -134,7 +169,7 @@ FishAndChips.Fish {
 	atlas = "fac_breukel_fish",
 	pos = {x = 0,y = 0},
 	weight = 6,
-	stats = {weight = {min = 0, max = 1}, length = {min = 0, max = 1}},
+	stats = {weight = {min = 0.3, max = 1.1}, length = {min = 0.3, max = 0.7}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
 	attributes = {"economy"},
@@ -179,7 +214,7 @@ FishAndChips.Fish {
 	atlas = "fac_breukel_fish",
 	pos = {x = 0,y = 1},
 	weight = 8,
-	stats = {weight = {min = 0, max = 1}, length = {min = 0, max = 1}},
+	stats = {weight = {min = 5, max = 12}, length = {min = 0.6, max = 1.2}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
 	attributes = {"mult"},
@@ -220,6 +255,117 @@ FishAndChips.Fish {
 					end
 				return true end
 			}))
+		end
+	end,
+}
+
+FishAndChips.Fish {
+	key = "pirinter",
+	atlas = "fac_breukel_fish",
+	pos = {x = 2,y = 1},
+	weight = 8,
+	stats = {weight = {min = 130, max = 150}, length = {min = 1, max = 1.2}},
+	ppu_coder = {"Breuhh"},
+	ppu_artist = {"Comykel"},
+	attributes = {"destroy_card", "generation"},
+
+	environments = {
+		city_river = 10,
+		wormhole = 5,
+		volcano = 1
+	},
+	config = {
+		extra = {
+			Overtime = 1,
+		}
+	},
+
+	loc_vars = function(self, info_queue, card)
+		return {vars = {
+			card.ability.extra.Overtime,
+			G.fac_Breukel.GetOverTime()
+		}}
+	end,
+
+	calculate = function(self, card, context)
+        if context.pre_discard and G.GAME.current_round.discards_used == 0 and #context.full_hand == 1 then
+			G.fac_Breukel.AddOverTime(card, card.ability.extra.Overtime)
+			local _card = context.full_hand[1]
+
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					local Overtime = G.fac_Breukel.GetOverTime()
+            		local card_copied = SMODS.copy_card(_card)
+            
+					if Overtime > 6 and pseudorandom("pirinterseal") < Overtime/10 then
+						card_copied:set_seal(SMODS.poll_seal({guaranteed = true}))
+					end
+
+					if Overtime > 4 and pseudorandom("pirinteredition") < Overtime/15 then
+						card_copied:set_edition(SMODS.poll_edition({guaranteed = true}))
+					end
+
+					if Overtime > 2 then
+						card_copied:set_ability(SMODS.poll_enhancement({guaranteed = true}))
+					end
+				return true end
+			}))
+
+		end
+	end,
+}
+
+FishAndChips.Fish {
+	key = "produck",
+	atlas = "fac_breukel_fish",
+	pos = {x = 0,y = 2},
+	weight = 8,
+	stats = {weight = {min = 0.009, max = 0.015}, length = {min = 0.13, max = 0.15}},
+	ppu_coder = {"Breuhh"},
+	ppu_artist = {"Comykel"},
+	attributes = {"destroy_card", "generation"},
+
+	environments = {
+		city_river = 10,
+		calm_pond = 6,
+		garden = 4
+	},
+	config = {
+		extra = {
+			Overtime = 0.5,
+			OvertimeAlso = 1.5,
+		}
+	},
+
+	loc_vars = function(self, info_queue, card)
+		return {vars = {
+			card.ability.extra.Overtime,
+			card.ability.extra.OvertimeAlso,
+			G.fac_Breukel.GetOverTime()
+		}}
+	end,
+
+	calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+			G.fac_Breukel.AddOverTime(card, card.ability.extra.Overtime)
+		end
+
+		if context.after then
+			local Overtime = G.fac_Breukel.GetOverTime()
+			G.fac_Breukel.AddOverTime(card, card.ability.extra.OvertimeAlso)
+
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					if Overtime > 9 then
+						for i,v in pairs(G.hand.cards) do
+							v:set_ability("m_gold")
+							v:juice_up()
+							card:juice_up()
+						end
+					end
+				return true end
+			}))
+
 		end
 	end,
 }

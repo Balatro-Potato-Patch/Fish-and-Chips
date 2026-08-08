@@ -1,9 +1,12 @@
+--Idk if y'all are gonna check files while playtesting but if you do, could you fix the G.fac_Breukel.AddOverTime bug where it visually adds Overtime after every event has happened. I (Breuhh) have a vacation soon and can't be bothered fixing the bug though I believe SMODS.calculate_individual_effect should work but last time I tried using that for another mod shit just didn't work so I cant be bothered with that then is this the worlds widest file ever for a balatro mod honestly now Im just adding stuff at the end so that this file becomes wide as hell. Whatever please fix the bug
+
 PotatoPatchUtils.Developer({
 	name = 'Breuhh',
 	atlas = 'fac_breukel_credit',
 	colour = HEX("ac4dff"),
 	pos = {x = 0, y = 0},
-	fac_partner = 'Comykel',
+	fac_partner = 'fac_Comykel',
+	joint_credits = true
 })
 
 PotatoPatchUtils.Developer({
@@ -11,13 +14,13 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_breukel_credit',
 	colour = HEX("3e9bb3"),
 	pos = {x = 1, y = 0},
-	fac_partner = 'Breuhh'
+	fac_partner = 'fac_Breuhh'
 })
 
 SMODS.Atlas({
 	key = "fac_breukel_credit",
-	path = "breukel/credit2.png",
-	px = 71,
+	path = "breukel/credit.png",
+	px = 142,
 	py = 95,
 })
 
@@ -62,7 +65,7 @@ function loc_colour(_c, _default)
 end
 
 G.fac_Breukel = {}
-G.fac_Breukel.AddOverTime = function(card, val, func) -- adds val to OverTime if func isn't given. else applies func to OverTime
+G.fac_Breukel.AddOverTime = function(card, val, func) -- adds val to OverTime if func isn't given. else applies func to OverTime. <- Blud aint even using func :skull:
     if func and func.operator then
         G.GAME.fac_Breukel.OverTime = func.operator(G.GAME.fac_Breukel.OverTime)
     else
