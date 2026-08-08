@@ -1,0 +1,15 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = "(self.params.run_select_selection_choice and self.params.stake) and 'bm' or"
+position = "after"
+payload = '''
+
+self.area == G.fac_fish_area and (G.STATE == G.STATES.FAC_FISHING and 'tm' or 'cl') or
+'''
+match_indent = true
