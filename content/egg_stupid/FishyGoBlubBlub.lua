@@ -224,7 +224,7 @@ FishAndChips.Fish {
 		backroom = 0.5
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.dollars,  } }
+		return { vars = { card.ability.extra.dollars, card.ability.extra.xmult_mod, card.ability.extra.xmult, } }
 	end,
 	calculate = function(self, card, context)
 		
@@ -292,6 +292,7 @@ FishAndChips.Fish {
 		city_river = 5.0
 	},
 	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.hands,  } }
 	end,
 
 	use = function(self, card)
