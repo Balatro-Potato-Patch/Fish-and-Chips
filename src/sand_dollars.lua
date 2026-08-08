@@ -137,7 +137,7 @@ function G.UIDEF.use_and_sell_buttons(card)
                 {n=G.UIT.B, config = {w=0.1,h=0.6}},
                 {n=G.UIT.C, config={align = "cm"}, nodes={
                     {n=G.UIT.R, config={align = "cm", maxw = 1.25}, nodes={
-                        {n=G.UIT.T, config={text = card.config.center.button_key and (type(card.config.center.button_key) == "function" and card.config.center:button_key() or localize(card.config.center.button_key)) or localize("b_use"), colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true}}
+                        {n=G.UIT.T, config={text = card.config.center.button_key and (type(card.config.center.button_key) == "function" and card.config.center:button_key(card) or localize(card.config.center.button_key)) or localize("b_use"), colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true}}
                     }},
                 }},
             }},
