@@ -26,7 +26,7 @@ FishAndChips.Fish {
 		if context.open_booster then
 			if G.fac_temp_bait_area then
 				G.fac_temp_bait_area.T.w = G.fac_temp_bait_area.T.w + G.CARD_W + 0.1
-				G.fac_temp_bait_area.buffer = G.fac_temp_bait_area.buffer + 1
+				G.fac_temp_bait_area.buffer = (G.fac_temp_bait_area.buffer or 0) + 1
 			else
 				local w = (G.CARD_W + 0.1) * card.ability.extra.bait * 2 - 0.1
 				local h = G.CARD_H

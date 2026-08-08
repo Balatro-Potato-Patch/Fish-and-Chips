@@ -55,6 +55,7 @@ FishAndChips.Fish {
 	environments = { city_river = 1, aquifer = 1, chocolate_river = 0.5 },
 	stats = { weight = { min = 0.09, max = 0.25 }, length = { min = 0.01, max = 0.14 } },
 	attributes = { 'rank', 'passive' },
+	blueprint_compat = false,
 	flavour_vars = function()
 		return {
 			vars = { elements = { SMODS.create_sprite(0, 0, 0.2, 0.2 * 156 / 145, 'fac_bagels_a_for_effish_extra') } },
