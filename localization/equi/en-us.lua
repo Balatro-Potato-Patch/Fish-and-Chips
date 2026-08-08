@@ -93,6 +93,16 @@ return {
                 flavour = {
                     "Got any #1#s?"
                 }
+            },
+
+            fish_fac_mutekimaruchannel = {
+                name = "Mutekimaru Channel",
+                text = {
+                    ""
+                },
+                flavour = {
+                    "{element:1}"
+                }
             }
         },
         PotatoPatch = {

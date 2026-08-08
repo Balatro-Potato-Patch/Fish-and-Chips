@@ -122,7 +122,7 @@ FishAndChips.Fish {
     pos = { x = 2, y = 0 },
     display_size = { w = 65, h = 72 },
     pixel_size = { w = 65, h = 72 },
-    weight = 15,
+    weight = 10,
     cost = 5,
     blueprint_compat = true,
     ppu_coder = { "Equi" },
@@ -303,7 +303,7 @@ fac_equi_get_longest_fish = function(fish)
     local max_length = 0
     local longest_fish = nil
     for k, v in pairs(fish) do
-        if v.ability.stats.length > max_length and v.config.center.key ~= "fish_fac_mawray" then
+        if v.ability.stats.length ~= nil and v.ability.stats.length > max_length and v.config.center.key ~= "fish_fac_mawray" then
             max_length = v.ability.stats.length
             longest_fish = v
         end
@@ -361,6 +361,7 @@ FishAndChips.Fish {
     end
 }
 
+--Go Fish
 FishAndChips.Fish {
     key = "gofish",
     atlas = "equi_fish",
@@ -428,6 +429,259 @@ FishAndChips.Fish {
             return {
                 xmult = card.ability.extra.xmult
             }
+        end
+    end
+}
+
+function fac_equi_update_mutekimaru_flavour(current_text)
+    local max_length = 6
+    local options = {
+        "Up",
+        "Down",
+        "Left",
+        "Right",
+        "B",
+        "A"
+    }
+
+    if #current_text >= max_length then
+        table.remove(current_text, 1)
+    end
+    current_text[#current_text + 1] = pseudorandom_element(options, "equi_mutekimaruchannel")
+    
+    return current_text
+end
+
+local leftright, target, reward, card_reward = ""
+
+--Mutekimaru Channel
+FishAndChips.Fish {
+    key = "mutekimaruchannel",
+    atlas = "equi_fish",
+    pos = { x = 7, y = 0 },
+    display_size = { w = 58, h = 47 },
+    pixel_size = { w = 58, h = 47 },
+    weight = 5,
+    cost = 5,
+    blueprint_compat = true,
+    ppu_coder = { "Equi" },
+    ppu_artist = { "Equi" },
+    attributes = { "xmult, mult, chips, generation, hand_level" },
+    stats = {
+        weight = { min = 0.007, max = 0.009 },
+        length = { min = 0.06, max = 0.08 }
+    },
+    config = { 
+        extra = { 
+            chips = 60,
+            mult = 15,
+            xmult = 2,
+            cards = 1,
+
+            flavour = {"Up"}
+        } 
+    },
+    environments = {
+        pier = 1,
+        city_river = 1
+    },
+    loc_vars = function(self, info_queue, card)
+        local target = pseudorandom_element({"leftmost", "rightmost"}, "equi_mutekimaruchannel")
+        local other_target = pseudorandom_element({"Joker", "Fish", "scored card"}, "equi_mutekimaruchannel")
+        local score = pseudorandom_element({
+            {"+" .. card.ability.extra.chips .. " Chips", G.C.CHIPS}, 
+            {"+" .. card.ability.extra.mult .. " Mult", G.C.MULT}, 
+            {"X" .. card.ability.extra.xmult .. " Mult", G.C.RED}, 
+        }, "equi_mutekimaruchannel")
+        local cards = pseudorandom_element({
+            {"Tarot", G.C.SECONDARY_SET.Tarot}, 
+            {"Planet", G.C.SECONDARY_SET.Planet}
+        }, "equi_mutekimaruchannel")
+
+        local main_start = {
+            { n = G.UIT.R, config = { align = "cm", padding = 0.02 }, nodes = {
+                { n = G.UIT.T, config = { text = "The ", colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
+                { n = G.UIT.O, config = { object = DynaText({
+                    string = target, 
+                    colours = { G.C.UI.TEXT_DARK },
+                    pop_in_rate = 9999999,
+                    silent = true,
+                    random_element = true,
+                    pop_delay = 0.2,
+                    scale = 0.32,
+                    min_cycle_time = 0 })} }, --doesn't update while hovering but trying to fix it makes me want to die
+                { n = G.UIT.O, config = { object = DynaText({
+                    string = " " .. other_target, 
+                    colours = { G.C.IMPORTANT },
+                    pop_in_rate = 9999999,
+                    silent = true,
+                    random_element = true,
+                    pop_delay = 0.2,
+                    scale = 0.32,
+                    min_cycle_time = 0 })} },
+                { n = G.UIT.T, config = { text = " gives ", colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
+            } },
+            { n = G.UIT.R, config = { align = "cm", padding = 0.02 }, nodes = {
+                { n = G.UIT.O, config = { object = DynaText({
+                    string = score[1], 
+                    colours = { score[2] },
+                    pop_in_rate = 9999999,
+                    silent = true,
+                    random_element = true,
+                    pop_delay = 0.2,
+                    scale = 0.32,
+                    min_cycle_time = 0 })} },
+                { n = G.UIT.T, config = { text = " and a ", colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
+                { n = G.UIT.O, config = { object = DynaText({
+                    string = cards[1], 
+                    colours = { cards[2] },
+                    pop_in_rate = 9999999,
+                    silent = true,
+                    random_element = true,
+                    pop_delay = 0.2,
+                    scale = 0.32,
+                    min_cycle_time = 0 })} },
+                { n = G.UIT.T, config = { text = " card when scored", colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
+            } },
+        }
+
+        return { 
+            vars = { card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.xmult, card.ability.extra.cards },
+            main_start = main_start
+        }
+    end,
+
+    flavour_vars = function(self, info_queue, card)
+        fac_equi_update_mutekimaru_flavour(card.ability.extra.flavour)
+        local flavour_text = table.concat(card.ability.extra.flavour, " ")
+        return {
+            vars = { card.ability.extra.flavour, elements = {
+                DynaText({
+                string = flavour_text,
+                colours = { G.C.JOKER_GREY },
+                pop_in_rate = 9999999,
+                silent = true,
+                random_element = true,
+                pop_delay = 0.2,
+                scale = 0.32,
+                min_cycle_time = 0 })
+            } }
+        }
+    end,
+
+    calculate = function(self, card, context)
+        if context.press_play then
+            leftright = pseudorandom_element({"left", "right"}, "equi_mutekimaruchannel")
+            target = pseudorandom_element({"joker", "fish", "card"}, "equi_mutekimaruchannel")
+            reward = pseudorandom_element({"chips", "mult", "xmult"}, "equi_mutekimaruchannel")
+            card_reward = pseudorandom_element({"Tarot", "Planet"}, "equi_mutekimaruchannel")
+            print(leftright, target, reward, card_reward)
+        end
+
+        if context.other_joker and target == "joker" then
+            if (context.other_joker == G.jokers.cards[1] and leftright == "left") or
+            (context.other_joker == G.jokers.cards[#G.jokers.cards] and leftright == "right") then
+                if reward == "chips" then
+                    SMODS.calculate_effect({chips = card.ability.extra.chips}, context.blueprint_card or card)
+                elseif reward == "mult" then
+                    SMODS.calculate_effect({mult = card.ability.extra.mult}, context.blueprint_card or card)
+                elseif reward == "xmult" then
+                    SMODS.calculate_effect({xmult = card.ability.extra.xmult}, context.blueprint_card or card)
+                end
+
+                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            SMODS.add_card {
+                                set = card_reward,
+                            }
+                            G.GAME.consumeable_buffer = 0
+                            return true
+                        end
+                    }))
+                    if card_reward == "Tarot" then
+                        return {
+                            message = localize("k_plus_tarot")
+                        }
+                    elseif card_reward == "Planet" then
+                        return {
+                            message = localize("k_plus_planet")
+                        }
+                    end
+                end
+            end
+        end
+
+        if context.other_main and context.other_main.ability.set == "fac_Fish" and target == "fish" then
+            if (context.other_main == G.fac_fish_area.cards[1] and leftright == "left") or
+            (context.other_main == G.fac_fish_area.cards[#G.fac_fish_area.cards] and leftright == "right") then
+                if reward == "chips" then
+                    SMODS.calculate_effect({chips = card.ability.extra.chips}, context.blueprint_card or card)
+                elseif reward == "mult" then
+                    SMODS.calculate_effect({mult = card.ability.extra.mult}, context.blueprint_card or card)
+                elseif reward == "xmult" then
+                    SMODS.calculate_effect({xmult = card.ability.extra.xmult}, context.blueprint_card or card)
+                end
+
+                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            SMODS.add_card {
+                                set = card_reward,
+                            }
+                            G.GAME.consumeable_buffer = 0
+                            return true
+                        end
+                    }))
+
+                    if card_reward == "Tarot" then
+                        return {
+                            message = localize("k_plus_tarot")
+                        }
+                    elseif card_reward == "Planet" then
+                        return {
+                            message = localize("k_plus_planet")
+                        }
+                    end
+                end
+            end
+        end
+
+        if context.individual and context.cardarea == G.play and target == "card" then
+            if (context.other_card == context.scoring_hand[1] and leftright == "left") or
+            (context.other_card == context.scoring_hand[#context.scoring_hand] and leftright == "right") then
+                if reward == "chips" then
+                    SMODS.calculate_effect({chips = card.ability.extra.chips}, context.blueprint_card or card)
+                elseif reward == "mult" then
+                    SMODS.calculate_effect({mult = card.ability.extra.mult}, context.blueprint_card or card)
+                elseif reward == "xmult" then
+                    SMODS.calculate_effect({xmult = card.ability.extra.xmult}, context.blueprint_card or card)
+                end
+
+                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            SMODS.add_card {
+                                set = card_reward,
+                            }
+                            G.GAME.consumeable_buffer = 0
+                            return true
+                        end
+                    }))
+                    if card_reward == "Tarot" then
+                        return {
+                            message = localize("k_plus_tarot")
+                        }
+                    elseif card_reward == "Planet" then
+                        return {
+                            message = localize("k_plus_planet")
+                        }
+                    end
+                end
+            end
         end
     end
 }
