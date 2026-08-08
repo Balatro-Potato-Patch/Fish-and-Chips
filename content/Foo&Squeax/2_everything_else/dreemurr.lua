@@ -1,7 +1,12 @@
 FishAndChips.Fish{
 	key = "fas_isreal", -- Asriel -> Ralsei -> Isreal
+	-- something something kreekcraft joke here [ - gabby]
 	weight = 5,
 	ppu_coder = {"Foo54"},
+	ppu_artist = {"squeax09"},
+	atlas = "fas_fish_general",
+	pos = {x=5,y=0},
+	--pixel_size = {w=63,h=90},
 	stats = {
 		weight = {min = 1, max = 1, units = {format = "k_fac_fas_infinity", scale = 1, precision = 0}},
 		length = {min = 1, max = 1, units = {format = "k_fac_fas_infinity", scale = 1, precision = 0}}

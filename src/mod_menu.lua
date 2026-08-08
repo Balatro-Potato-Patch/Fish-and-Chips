@@ -841,7 +841,7 @@ function FishAndChips.Compendium.dev_card(dev)
 
     dev_card.align_h_popup = function(self, dir)
         local focused_ui = self.children.focused_ui and true or false
-        local popup_direction = dir or self.config.h_popup_dir or (self.T.y < G.CARD_H*0.8) and 'bm' or 'tm'
+        local popup_direction = dir or self.config.h_popup_dir or (self.T.x < G.ROOM.T.w*0.5) and 'cr' or 'cl'
         local sign = 1
         return {
             major = self.children.focused_ui or self,
