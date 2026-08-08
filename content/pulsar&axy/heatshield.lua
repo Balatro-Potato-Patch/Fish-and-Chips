@@ -43,7 +43,7 @@ FishAndChips.Fish {
 				operation = '-'
             })
 			return {
-				sand_dollars = 5
+				dollars = 5
 			}
 		end
 	end,
