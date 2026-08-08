@@ -50,7 +50,7 @@ return {
             fish_fac_segg_plasmium_phial = {
                 name = "Plasmium Phial",
                 text = {
-                    "{C:blue}+#1#{} hands this round",
+                    "{C:blue}+#1#{} Hands",
                 },
                 flavor = {
                     "Injecting the liquid allows",

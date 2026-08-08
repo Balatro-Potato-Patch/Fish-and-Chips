@@ -139,9 +139,7 @@ FishAndChips.Fish {
 			guaranteed = true,
 			no_negative = true,
 		}
-		
-		-- DEBUG
-		print("picked edition: "..edition)
+
         eligible_card:set_edition(edition, true)
 	end,
 	can_use = function(self, card)
@@ -230,10 +228,8 @@ FishAndChips.Fish {
 		
         if context.setting_blind and not context.blueprint then
 			local xmult_gained = 0
-			for _, joker in pairs(G.jokers) do
+			for _, joker in pairs(G.jokers.cards) do
 				if joker.set_cost and joker.sell_cost > 1 then
-					-- DEBUG
-					print("sell cost: "..joker.sell_cost)
 					joker.ability.extra_value = (joker.ability.extra_value or 0) - card.ability.extra.dollars
                     joker:set_cost()
 
@@ -242,8 +238,6 @@ FishAndChips.Fish {
 			end
 
 			if xmult_gained > 0 then
-				-- DEBUG
-				print("Gained Xmult: "..xmult_gained)
 				card.ability.extra.xmult = card.ability.extra.xmult + xmult_gained
 
 				return {
@@ -253,7 +247,7 @@ FishAndChips.Fish {
 			end
 		end
 
-		if context.joker_main then
+		if context.final_scoring_step then
 			return { xmult = card.ability.extra.xmult }
 		end
 	end,
