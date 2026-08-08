@@ -79,6 +79,21 @@ return {
                 fac_flavor = {
                     "kill everything :3"
                 }
+            },
+            fish_fac_fo_crabkhon = {
+                name = "Crabkhon",
+                text = {
+                    "Gives {C:attention}#1#{} free rerolls",
+                    "each {C:attention}ante",
+                    "{C:inactive}({C:attention}#2#{C:inactive} remaining)"
+                },
+                fac_flavor = {
+                    "Look, I could give you infinite rerolls",
+                    "if the fish police weren't after me!"
+                }
+            },
+            fish_fac_fo_cij = {
+                name = "cij"
             }
         },
         PotatoPatch = {
