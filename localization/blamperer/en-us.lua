@@ -141,7 +141,8 @@ return {
     },
     misc = {
         dictionary = {
-            k_fac_blamperer_str_broke = "Streak Broken!"
+            k_fac_blamperer_str_broke = "Streak Broken!",
+            k_fac_blamperer_junk = "Junk"
         },
         v_dictionary = {
             a_fac_blamperer_str_gain = "#1#X Streak!"

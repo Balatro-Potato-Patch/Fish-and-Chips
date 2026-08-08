@@ -15,6 +15,7 @@ FishAndChips.Fish {
     environments = {},
     treasure = true,
     blueprint_compat = false,
+    badge_key = "k_fac_maybe_fish",
     in_pool = function (self, args)
         return G.fac_rod_area and G.fac_rod_area.cards[1] and G.fac_rod_area.cards[1].config.center.key ~= "rod_fac_harpoon"
     end

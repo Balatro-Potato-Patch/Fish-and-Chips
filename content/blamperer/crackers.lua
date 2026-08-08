@@ -25,6 +25,7 @@ FishAndChips.Fish {
     environments = {
         soup = 1
     },
+    badge_key = "k_fac_maybe_fish",
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             local mult = #context.full_hand

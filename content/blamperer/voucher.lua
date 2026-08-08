@@ -24,5 +24,6 @@ FishAndChips.Fish {
         G.GAME.pool_flags.fac_blamperer_vouched = true
         SMODS.destroy_cards(card, { pinch_anim = true })
     end,
-    no_pool_flag = "fac_blamperer_vouched"
+    no_pool_flag = "fac_blamperer_vouched",
+    badge_key = "k_fac_blamperer_junk"
 }

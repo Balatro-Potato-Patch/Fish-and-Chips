@@ -31,6 +31,7 @@ FishAndChips.Fish {
         backroom = 5,
         swamp = 2
     },
+    badge_key = "k_fac_blamperer_junk",
     calculate = function(self, card, context)
         if context.joker_main then
             return { chips = card.ability.extra.chips }

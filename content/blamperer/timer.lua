@@ -40,6 +40,7 @@ FishAndChips.Fish {
         city_river = 5
     },
     blueprint_compat = false,
+    badge_key = "k_fac_maybe_fish",
     calculate = function(self, card, context)
         if context.fac_end_fishing and not context.blueprint then
             local reward = math.floor(math.min(SECONDS_PER_MINUTE, G.GAME.blamperer_hook_time) / card.ability.extra.seconds)
