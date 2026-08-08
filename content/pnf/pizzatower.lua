@@ -745,7 +745,6 @@ FishAndChips.Fish {
         backroom = 3
     },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
         return { vars = { card.ability.extra.xchips, card.ability.extra.add, colours = { HEX("4db1f6") } } }
     end,
         can_use = function(self,card)
