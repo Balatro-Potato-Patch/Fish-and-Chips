@@ -3,6 +3,16 @@ FishAndChips.AstraMissingno = {
 	notif_stack = {}
 }
 
+function G.FUNCS.fac_am_notification_click(e)
+	local os = love.system.getOS()
+	if os == 'OS X' or os == "Windows" or os == 'Linux' then
+		love.system.openURL("steam://openurl/https://steamcommunity.com/id/theAstra_/")
+	else
+		love.system.openURL("https://steamcommunity.com/id/theAstra_/")
+	end
+	
+end
+
 PotatoPatchUtils.Developer({
 	name = 'theAstra',
 	atlas = 'fac_astra-missingno-credits',
@@ -17,7 +27,10 @@ PotatoPatchUtils.Developer({
 		local notif = UIBox {
 			definition = {
 				n = G.UIT.ROOT,
-				config = { colour = G.C.CLEAR, },
+				config = { 
+					colour = G.C.CLEAR,
+					button = 'fac_am_notification_click'
+				},
 				nodes = {
 					{
 						n = G.UIT.O,
