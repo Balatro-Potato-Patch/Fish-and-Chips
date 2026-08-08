@@ -192,6 +192,7 @@ FishAndChips.Fish {
             context.fac_fish_caught:set_fish_seal(pseudorandom_element(SMODS.Seals, pseudoseed("jadefish_seal")).key)
         end
 	end,
+    requires_consumables = true
 }
 
 FishAndChips.crimsonseraphim.fish_seals = {
@@ -376,6 +377,7 @@ FishAndChips.Fish {
             end
         end
 	end,
+    requires_jokers = true
 }
 
 FishAndChips.Fish {
@@ -1211,7 +1213,8 @@ FishAndChips.Fish {
     end,
     loc_vars = function(_, info_queue) 
         info_queue[#info_queue+1] = {set = "Other", key = "eternal"}
-    end
+    end,
+    requires_jokers = true
 }
 
 FishAndChips.Fish {
