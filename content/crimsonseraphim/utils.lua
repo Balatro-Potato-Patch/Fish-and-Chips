@@ -416,10 +416,10 @@ function _G.create_UIBox_crimsonseraphim_cursedfish()
                     {n=G.UIT.C, config={align = "cm", padding = 0.1, colour = G.C.BLACK, minw = 6}, nodes={
                         {n=G.UIT.O, config={object = G.your_cursefish_areas[1]}},
                     }},
-                    {n=G.UIT.C, config={ref_table = G.your_cursefish_areas[2].cards[1], func = "can_obtain_cursefish", button = "sell_card", align = "cm", padding = 0.1, colour = G.C.TRANPARENT}, nodes={
+                    {n=G.UIT.C, config={ref_table = G.your_cursefish_areas[1].cards[1], func = "can_obtain_cursefish", button = "sell_card", align = "cm", padding = 0.1, colour = G.C.TRANPARENT}, nodes={
                         {n=G.UIT.T, config={text = localize("k_obtain_cursefish"), scale = 0.4, colour = G.C.WHITE, shadow = true}},
                     }},
-                    {n=G.UIT.C, config={ref_table = G.your_cursefish_areas[2].cards[1], func = "can_banish_cursefish", button = "sell_card", align = "cm", padding = 0.1, colour = G.C.TRANPARENT}, nodes={
+                    {n=G.UIT.C, config={ref_table = G.your_cursefish_areas[1].cards[1], func = "can_banish_cursefish", button = "sell_card", align = "cm", padding = 0.1, colour = G.C.TRANPARENT}, nodes={
                         {n=G.UIT.T, config={text = localize("k_banish_cursefish"), scale = 0.4, colour = G.C.WHITE, shadow = true}},
                     }}
                 }},
