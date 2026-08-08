@@ -165,6 +165,7 @@ return {
             k_fac_minty_youagain_qex = "You again?!",
             k_fac_minty_ready_ex = "Ready!",
             k_fac_minty_charged_ex = "Charged!",
+            k_fac_minty_chum = "Chum",
             k_fac_minty_iamfoureels1 = "I'm sorry Ms. Jackson",
             k_fac_minty_iamfoureels2 = "I am four eels",
             k_fac_minty_iamfoureels3 = "Never meant to make your daughter cry",
