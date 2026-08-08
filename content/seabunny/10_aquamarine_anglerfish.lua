@@ -13,7 +13,11 @@ FishAndChips.Fish {
         return {vars = {card.ability.extra.gain, card.ability.extra.xmult, card.ability.extra.cards, card.ability.extra.times, card.ability.extra.count}}
     end,
     calculate = function(self, card, context)
-        if not context.blueprint then
+        if context.joker_main and card.ability.extra.xmult > 1 then
+            return {
+                xmult = card.ability.extra.xmult
+            }
+        elseif not context.blueprint then
             if (context.hand_drawn or context.other_drawn) and #G.deck.cards == 0 then
                 for k, v in ipairs(G.hand.cards) do
                     local reps = SMODS.calculate_repetitions(v, {repetition = true, cardarea = G.hand}, {})
@@ -40,10 +44,6 @@ FishAndChips.Fish {
                 end
                 SEABUN.enchant(card)
             end
-        elseif context.joker_main then
-            return {
-                xmult = card.ability.extra.xmult
-            }
         end
     end,
     weight = 4,

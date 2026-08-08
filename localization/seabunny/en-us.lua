@@ -34,7 +34,7 @@ return {
                 text = {
                     {
                         "{C:green}#1# in #2#{} chance to retrigger",
-                        "played unenhanced cards"
+                        "played Unenhanced cards"
                     },
                     {
                         "{C:inactive}Enchanted: #3# in #4# chance",
@@ -42,7 +42,7 @@ return {
                     },
                     {
                         "To {C:dark_edition}Enchant{}: Score",
-                        "unenhanced cards #5# times",
+                        "Unenhanced cards #5# times",
                         "{C:inactive}(Currently {C:attention}#6#{C:inactive}/#5#)"
                     }
                 },
@@ -56,7 +56,7 @@ return {
                 text = {
                     {
                         "{C:green}#1# in #2#{} chance to retrigger",
-                        "played unenhanced cards"
+                        "played Unenhanced cards"
                     },
                     {
                         "{C:dark_edition}Enchanted{}: {C:green}#3# in #4# chance",
@@ -73,7 +73,7 @@ return {
                 text = {
                     {
                         "When a {C:attention}Stone{} card is destroyed,",
-                        "add an unenhanced copy to",
+                        "add an Unenhanced copy to",
                         "deck with permanent {C:chips}+#1#{} Chips"
                     },
                     {
@@ -96,7 +96,7 @@ return {
                 text = {
                     {
                         "When a {C:attention}Stone{} card is destroyed,",
-                        "add an unenhanced copy to",
+                        "add an Unenhanced copy to",
                         "deck with permanent {C:chips}+#1#{} Chips"
                     },
                     {
@@ -225,6 +225,52 @@ return {
                     "next? A silverfish made of iron?"
                 }
             },
+            fish_fac_paradise_bismuth = {
+                name = "Paradise Bismuth",
+                text = {
+                    {
+                        "Unenhanced cards in",
+                        "your poker hand steal",
+                        "{C:attention}Enhancements{} from your deck"
+                    },
+                    {
+                        "{C:inactive}Enchanted: This gains",
+                        "{X:inactive,C:white}X#1#{C:inactive} Mult this hand per unique",
+                        "{C:inactive}Enhancement in poker hand",
+                        "{C:inactive}(Currently {X:inactive,C:white}X#2#{C:inactive} Mult)"
+                        
+                    },
+                    {
+                        "To {C:dark_edition}Enchant{}:",
+                        "Steal #3# {C:attention}Enhancements",
+                        "{C:inactive}(Currently {C:attention}#4#{C:inactive}/#3#)"
+                    }
+                },
+                flavor = {
+                    "Mix with copper and zinc",
+                    "for the perfect Poke bowl."
+                }
+            },
+            fish_fac_paradise_bismuth_enchant = {
+                name = "Paradise Bismuth",
+                text = {
+                    {
+                        "Unenhanced cards in",
+                        "your poker hand steal",
+                        "{C:attention}Enhancements{} from your deck"
+                    },
+                    {
+                        "{C:dark_edition}Enchanted{}: This gains",
+                        "{X:mult,C:white}X#1#{} Mult this hand per unique",
+                        "{C:attention}Enhancement{} in poker hand",
+                        "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
+                    }
+                },
+                flavor = {
+                    "Mix with copper and zinc",
+                    "for the perfect Poke bowl."
+                }
+            },
             fish_fac_aquamarine_anglerfish = {
                 name = "Aquamarine Anglerfish",
                 text = {
@@ -294,7 +340,7 @@ return {
                 },
                 flavor = {
                     "They say rabbits' feet bring you luck.",
-                    "Too bad this fish has no feet."
+                    "This time luck brought you a rabbit!"
                 }
             },
             fish_fac_prismond_bunnyfish_enchant = {
@@ -312,9 +358,8 @@ return {
                     }
                 },
                 flavor = {
-                    "They say rabbits' feet",
-                    "bring you luck. Too bad",
-                    "this fish has no feet."
+                    "They say rabbits' feet bring you luck.",
+                    "This time luck brought you a rabbit!"
                 }
             },
             fish_fac_enchantfish = {
@@ -337,6 +382,7 @@ return {
         dictionary = {
             k_fac_seabunny_eroded = "Eroded!",
             k_fac_seabunny_mineral_fish = "Mineral Fish",
+            k_fac_seabunny_polychrome = "Polychrome!",
             k_fac_seabunny_retrigger = "+1 Retrigger",
             k_fac_seabunny_uma = "UMA"
         },
