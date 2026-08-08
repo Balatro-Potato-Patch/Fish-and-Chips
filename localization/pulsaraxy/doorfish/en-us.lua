@@ -26,7 +26,7 @@ return {
         "{C:attention}Drafts{} three {C:fac_fish}fish{} from {C:attention}current area{} per {V:1}rank",
         "Chosen {C:fac_fish}fish{} will be {C:attention}guaranteed{} with the next catch",
         "{V:1}Rank{} increases upon catch",
-        "{s:1}{C:inactive}(Currently at {V:1}rank{} {C:fac_fish}#1#{}{C:inactive}){}",
+        "{s:1}{C:inactive}(Currently at rank {V:1}#1#{}{C:inactive}){}",
         "{C:inactive}(Currently {C:fac_fish}#2#{}{C:inactive})"
     },
 }
