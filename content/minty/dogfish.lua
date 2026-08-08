@@ -49,7 +49,7 @@ FishAndChips.Fish{
             context.other_card.nommed_by_dogfish = true
         end
 
-        if context.destroy_card and context.other_card.nommed_by_dogfish then
+        if context.destroy_card and context.destroy_card.nommed_by_dogfish then
             SMODS.scale_card(card, {
                 ref_table = card.ability.extra,
                 ref_value = "xmult",

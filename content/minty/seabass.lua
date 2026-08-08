@@ -19,7 +19,7 @@ FishAndChips.Fish{
         weight = {min = 2.5, max = 4},
         length = {min = 0.2, max = 0.65},
     },
-    cost = 1,
+    cost = 0,
     blueprint_compat = false,
     config = {
         extra = {
@@ -74,8 +74,8 @@ FishAndChips.Fish{
             FishAndChips.add_bait_to_inventory(bait, 1)
         end
         local caught_env = card.ability.extra.caught_at
-        if caught_env ~= "pier" then
-            G.GAME.minty_seabass_chummed[caught_env] = G.GAME.minty_seabass_chummed[caught_env] + 1
+        if caught_env and caught_env ~= "pier" then
+            G.GAME.minty_seabass_chummed[caught_env] = (G.GAME.minty_seabass_chummed[caught_env] or 0) + 1
 
             if G.GAME.minty_seabass_chummed[caught_env] > 7 then
                 if SMODS.pseudorandom_probability(card, "minty_seabass_eradication_"..caught_env, 1, 7, nil, true) then
@@ -84,11 +84,9 @@ FishAndChips.Fish{
             end
         end
     end,
+    button_key = "k_fac_minty_chum",
     can_use = function (self, card)
         return true
-    end,
-    can_sell_card = function (self)
-        return false
     end,
     on_catch = function (self, card)
         local env = (FishAndChips.get_environment() or {}).key or "unknown area"
@@ -108,5 +106,5 @@ FishAndChips.Fish{
         if not env then return false end
 
         return not G.GAME.minty_seabass_eradicated[env]
-    end
+    end,
 }
