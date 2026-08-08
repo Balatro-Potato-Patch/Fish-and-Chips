@@ -91,6 +91,7 @@ return {
 						"nearest {C:attention}Fish{} in the direction",
 						"that this {C:attention}Fish{} points towards",
 						"and this {C:attention}Fish{} gains {C:attention}1{} charge",
+						"Flips direction at end of round",
 					},
 					{
 						"Spend {C:attention}1{} charge to use this",

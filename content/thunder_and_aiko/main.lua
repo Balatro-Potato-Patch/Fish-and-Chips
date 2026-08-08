@@ -855,7 +855,6 @@ FishAndChips.Fish({
 	key = "snad",
 	weight = 5,
 	environments = {
-		volcano = 1,
 		pier = 1,
 		calm_pond = 1,
 	},
@@ -899,7 +898,6 @@ FishAndChips.Fish({
 	weight = 5,
 	environments = {
 		aquifer = 1,
-		backroom = 1,
 	},
 	stats = {
 		weight = {
