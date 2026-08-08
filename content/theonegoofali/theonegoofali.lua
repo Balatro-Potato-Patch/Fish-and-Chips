@@ -426,9 +426,6 @@ function FishAndChips.toga_oopsnothinguidef()
 						{n = G.UIT.R, config = { align = "cl", padding = -0.05 }, nodes = {
 							{n = G.UIT.T, config = { text = rtxt[2], scale = 0.5, colour = G.C.UI.TEXT_LIGHT }},
 						}},
-						{n = G.UIT.R, config = { align = "cl", padding = -0.05 }, nodes = {
-							{n = G.UIT.T, config = { text = rtxt[3], scale = 0.5, colour = G.C.UI.TEXT_LIGHT }},
-						}},
 					}},
 				}},
 			}},

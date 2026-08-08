@@ -111,7 +111,7 @@ return {
 			fac_toga_ok = "OK",
 		},
 		ui_strings = {
-			fac_toga_oopsnothing = { "Fish and Chips", "Sorry, nothing here this time around. :)", "The dedication is acknowledged, however." }
+			fac_toga_oopsnothing = { "Fish and Chips", "Sorry, nothing here this time around. :)" }
 		}
 	},
 }
