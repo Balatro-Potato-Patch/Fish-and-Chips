@@ -126,8 +126,6 @@ FishAndChips.Fish {
 	environments = {
 		pier = 1.5,
 		aquifer = 1.5,
-		swamp = 2,
-		city_river = 0.5
 	},
 	loc_vars = function(self, info_queue, card)
 	end,
@@ -222,8 +220,7 @@ FishAndChips.Fish {
 		length = {min = 0.5, max = 10}
 	},
 	environments = {
-		swamp = 5,
-		aquifer = 1.0,
+		swamp = 3,
 		backroom = 0.5
 	},
 	loc_vars = function(self, info_queue, card)
@@ -292,8 +289,6 @@ FishAndChips.Fish {
 	},
 	environments = {
 		pier = 2.,
-		aquifer = 0.5,
-		swamp = 1.5,
 		city_river = 5.0
 	},
 	loc_vars = function(self, info_queue, card)
