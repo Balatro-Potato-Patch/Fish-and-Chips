@@ -133,19 +133,19 @@ function Card:transmute(seed, center)
     }
     self.states.hover.can = false
     play_sound("fac_crimsonseraphim_shimmer")
-    -- G.E_MANAGER:add_event(Event{
-    --     blocking = false,
-    --     func = function()
-    --         if G.TIMERS.REAL - self.children.center.aeonfish_transmute.realtime_start > 0.6 then
-    --             self:set_ability(self.children.center.aeonfish_transmute.center)
-    --             self.children.center.aeonfish_transmute = nil
-    --             self.states.hover.can = true
-    --             self.T.w = self.T.w * s.w
-    --             self.T.h = self.T.h * s.h
-    --             return true
-    --         end
-    --     end
-    -- })
+    G.E_MANAGER:add_event(Event{
+        blocking = false,
+        func = function()
+            if G.TIMERS.REAL - self.children.center.aeonfish_transmute.realtime_start > 0.6 then
+                self:set_ability(self.children.center.aeonfish_transmute.center)
+                self.children.center.aeonfish_transmute = nil
+                self.states.hover.can = true
+                self.T.w = self.T.w * s.w
+                self.T.h = self.T.h * s.h
+                return true
+            end
+        end
+    })
     G.E_MANAGER:add_event(Event{
         blocking = false,
         func = function()
@@ -246,7 +246,7 @@ local forge_effects = {
     end,
     fac_crimsonseraphim_forged_money = function(c, context)
         if context.setting_blind then
-            return {dollars  = 4}
+            return {dollars = 3}
         end
     end,
     fac_crimsonseraphim_forged_sand = function(c, context)

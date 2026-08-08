@@ -98,7 +98,7 @@ SMODS.DrawStep({
 })
 
 SMODS.DrawStep({
-	key = "crimsonseraphim_aeonfish_transmute",
+	key = "aeonfish_transmute",
 	order = 25,
 	func = function(self)
         if not self.children.center.aeonfish_transmute then return end  
@@ -228,9 +228,11 @@ SMODS.DrawStep({
                 self.ability.change_dt = self.ability.change_dt - love.timer.getDelta()
                 if self.ability.change_dt < 0 then
                     self.ability.change_dt = 99999
-                    self.ability.face = pseudorandom_element({
-                        0, 4
-                    })
+                    local e = {0}
+                    for i = 4, 12 do
+                        e[#e+1] = i
+                    end
+                    self.ability.face = pseudorandom_element(e)
                 end
             end
             FishAndChips.crimsonseraphim.draw_sprite(self.children.omega_crimsonfang_tv_face, self, {

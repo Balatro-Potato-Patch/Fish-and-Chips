@@ -23,7 +23,7 @@ PotatoPatchUtils.Developer({
             G.CARD_W*0.75,
             G.CARD_H*0.75, 
             {card_limit = 1, type = 'play', highlight_limit = 0, negative_info = 'joker', collection = true})
-        local c = SMODS.create_card({key = "fish_fac_jade_crystalfish", area = area})
+        local c = SMODS.create_card({key = "fish_fac_crimsonseraphim_jade_crystalfish", area = area})
         area:emplace(c)
         FishAndChips.crimsonseraphim.desc_card = {
             center = G.P_CENTERS.fish_fac_crimsonseraphim_jade_crystalfish,
@@ -1836,16 +1836,6 @@ function create_UIBox_omega_game_over()
       }},
     }}
 }})
-  t.nodes[1] = {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
-    {n=G.UIT.C, config={align = "cm", padding = 2}, nodes={
-      {n=G.UIT.R, config={align = "cm"}, nodes={
-        {n=G.UIT.O, config={padding = 0, id = 'jimbo_spot', object = Moveable(0,0,G.CARD_W*1.1, G.CARD_H*1.1)}},
-      }},
-    }},
-    {n=G.UIT.C, config={align = "cm", padding = 0.1}, nodes={t.nodes[1]}}}
-}
-
-  --t.nodes[1].config.mid = true
   return t
 end
 

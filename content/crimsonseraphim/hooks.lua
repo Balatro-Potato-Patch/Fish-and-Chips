@@ -103,7 +103,7 @@ end
 
 local should_draw_base_ref = Card.should_draw_base_shader
 function Card:should_draw_base_shader(...)
-    if self.children.center.crimsonseraphim_aeonfish_transmute then return nil end
+    if self.children.center.aeonfish_transmute then return nil end
     return should_draw_base_ref(self, ...)
 end
 
@@ -529,5 +529,9 @@ function Game:update(dt)
         FishAndChips.crimsonseraphim.door_timer = nil
         G.OMEGA_CRIMSONFANG_FACE = nil
         G.FUNCS.exit_overlay_menu()
+        G.OVERLAY_MENU = nil
+        G.GAME.omega_fake_death = nil
+        FishAndChips.crimsonseraphim.dt_flowey = nil
+        G.OMEGA_CRIMSONFANG_TEXT_INDEX = nil
     end
 end
