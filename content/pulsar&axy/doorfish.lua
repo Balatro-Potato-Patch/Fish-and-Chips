@@ -52,7 +52,7 @@ FishAndChips.Fish {
 		end
 	end,
 	calculate = function(self, card, context)
-		if context.fac_end_fishing and context.fish == card.ability.extra.drawn_fish[card.ability.extra.toggle].key then
+		if context.fac_end_fishing and context.fish == (card.ability.extra.drawn_fish[card.ability.extra.toggle].key) then
 			card.ability.extra.times_used = card.ability.extra.times_used + 1
 			local is_blue = context.fish_obj.config.center.attributes and (context.fish_obj.config.center.attributes.chips or context.fish_obj.config.center.attributes.xchips)
 			card.ability.extra.blue_streak = is_blue and card.ability.extra.blue_streak + 1 or 0
@@ -136,6 +136,8 @@ FishAndChips.Fish {
 
 			table.insert(pool, chosen_fish)
 		end
+
+		pool[0] = {key = ''}
 		return pool
 	end,
 	button_key = function (self)
