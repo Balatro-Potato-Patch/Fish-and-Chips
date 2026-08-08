@@ -5,7 +5,7 @@ PotatoPatchUtils.Developer({
     colour = G.C.SECONDARY_SET.Spectral,
     display_size = { w = 71 * 20.7, h = 95 * 20.7 },
     fac_partner =
-    'Pixel',            -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+    'fac_Pixel',            -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
     click = function(self)
         play_sound("fac_pnf_fts",math.random(0.95,1.25),1)
         G.E_MANAGER:add_event(Event({
@@ -24,7 +24,7 @@ PotatoPatchUtils.Developer({
     loc = true,
     colour = G.C.SECONDARY_SET.Planet,
     fac_partner =
-    'FirstTry',            -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+    'fac_FirstTry',            -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
     click = function(self)
         play_sound("fac_pnf_pixelsounds")
         G.E_MANAGER:add_event(Event({
@@ -110,6 +110,13 @@ SMODS.Atlas({
 SMODS.Atlas({
     key = "pnf_star", -- Please include your name/team name in your atlas keys
     path = "pnf/OriginalStarfish.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_tag", -- Please include your name/team name in your atlas keys
+    path = "pnf/Tagfish.png",
     px = 71,
     py = 95,
 })
@@ -709,5 +716,52 @@ FishAndChips.Fish {
             card.ability.trigger = false
         end
     end
+end
+}
+
+
+FishAndChips.Fish {
+    key = "tagfish",
+    atlas = "pnf_tag",
+    pos = { x = 0, y = 0 },
+    weight = 10,
+    blueprint_compat = true,
+    ppu_coder = { "FirstTry" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "chips", "destroy_card" },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },	
+    config = {
+        extra = {
+            xchips = 1,
+            add = 0.2
+        },
+        immutable = {
+            revert = 0
+        }
+    },
+    environments = {
+        city_river = 5,
+        wormhole = 3,
+        backroom = 3
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
+        return { vars = { card.ability.extra.xchips, card.ability.extra.add, colours = { HEX("4db1f6") } } }
+    end,
+        can_use = function(self,card)
+        return true
+    end,
+    use = function(self, card, area, copier)
+        local tag_pool = get_current_pool('Tag')
+    local selected_tag = pseudorandom_element(tag_pool, 'pnf_tag')
+    local it = 1
+    while selected_tag == 'UNAVAILABLE' do
+    it = it + 1
+    selected_tag = pseudorandom_element(tag_pool, 'pnf_tag_re'..it)
+    end
+    add_tag(Tag(selected_tag, false, 'Small'))
+            play_sound("holo1",5)
+    end,
+        calculate = function(self, card, context)
 end
 }

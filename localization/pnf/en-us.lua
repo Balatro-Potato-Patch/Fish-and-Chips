@@ -117,6 +117,15 @@ return {
                     [[ERROR#4#ERROR#4#]]
                 }
             },
+            fish_fac_tagfish = {
+                name = "Fishy Coupon",
+                text = {
+                    {"Creates a random tag",},
+                },
+                flavor = {
+                    "It's surprisingly waterproof.",
+                }
+            },
         },
         PotatoPatch = {
             PotatoPatchDev_FirstTry = {
