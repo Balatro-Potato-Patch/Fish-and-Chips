@@ -5,7 +5,21 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_segg_credits',
 	pos = {x = 1, y = 0},
 	colour = G.C.BLUE,
-	fac_partner = 'egg_node'
+	fac_partner = 'fac_egg_node',
+
+	calculate = function (self, context)
+		if context.setting_blind and G.GAME.fac_plasmium_infection then
+			local mod = fac_get_plasmium_blind_mod()
+			if mod > 1e300 then
+				return {
+					blindsize = mod
+				}
+			end
+			return {
+				xblindsize = mod
+			}
+		end
+	end
 })
 
 PotatoPatchUtils.Developer({
@@ -13,7 +27,7 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_segg_credits',
 	pos = {x = 0, y = 0},
 	colour = G.C.MONEY,
-	fac_partner = 'stupid'
+	fac_partner = 'fac_stupid'
 })
 
 SMODS.Atlas({
@@ -55,7 +69,29 @@ Bait Attributes
 
 --#region utility
 
+function fac_get_plasmium_blind_mod(single)
+	if G.GAME.fac_plasmium_infection >= 10 then
+		-- blind size is now always inf
 
+		return 1e308
+	elseif G.GAME.fac_plasmium_infection > 1 then
+		if single then
+			return (0.9 + 0.1 * G.GAME.fac_plasmium_infection)
+		else
+			local total_mod = 1
+
+			for _ = 2, G.GAME.fac_plasmium_infection do
+				total_mod = total_mod * (0.9 + 0.1 * G.GAME.fac_plasmium_infection)
+			end
+
+			print(total_mod)
+
+			return total_mod
+		end
+	end
+
+	return 1
+end
 
 
 
@@ -65,6 +101,8 @@ Bait Attributes
 
 --#region fishies
 
+-- Pale oil flask
+-- Make random joker editioned
 FishAndChips.Fish {
 	key = "segg_pale_oil",
 	atlas = "segg_fishies",
@@ -103,6 +141,9 @@ FishAndChips.Fish {
 			guaranteed = true,
 			no_negative = true,
 		}
+		
+		-- DEBUG
+		print("picked edition: "..edition)
         eligible_card:set_edition(edition, true)
 	end,
 	can_use = function(self, card)
@@ -111,6 +152,8 @@ FishAndChips.Fish {
 	end
 }
 
+-- Void Fish 
+-- Retriggers all played cards but lose money
 FishAndChips.Fish {
 	key = "segg_void_fish",
 	atlas = "segg_fishies",
@@ -142,6 +185,9 @@ FishAndChips.Fish {
 			-- Set muhnee to 0
 			local muhnee = G.GAME.dollars
 			ease_dollars(-muhnee)
+	
+			-- DEBUG
+			print("muhnee set to 0 ")
 		end
 		if context.repetition and context.other_card.area == G.play then
 			return {
@@ -151,10 +197,12 @@ FishAndChips.Fish {
 	end,
 }
 
+-- Rootfish
+-- Saps sell value from other jokers, gains Xmult for it
 FishAndChips.Fish {
 	key = "segg_root_fish",
 	atlas = "segg_fishies",
-	pos = { x = 1, y = 0 },
+	pos = { x = 2, y = 0 },
 
 	weight = 5,
 
@@ -186,7 +234,9 @@ FishAndChips.Fish {
         if context.setting_blind and not context.blueprint then
 			local xmult_gained = 0
 			for _, joker in pairs(G.jokers) do
-				if joker.set_cost and joker.sell_cost > 0 then
+				if joker.set_cost and joker.sell_cost > 1 then
+					-- DEBUG
+					print("sell cost: "..joker.sell_cost)
 					joker.ability.extra_value = (joker.ability.extra_value or 0) - card.ability.extra.dollars
                     joker:set_cost()
 
@@ -195,6 +245,8 @@ FishAndChips.Fish {
 			end
 
 			if xmult_gained > 0 then
+				-- DEBUG
+				print("Gained Xmult: "..xmult_gained)
 				card.ability.extra.xmult = card.ability.extra.xmult + xmult_gained
 
 				return {
@@ -213,7 +265,64 @@ FishAndChips.Fish {
 
 -- Plasmium Phial
 -- Use to add +3 hands this round
+-- side-effect/infection: increase blind size (after first use).
+-- after using for 5+ times, blinds become unbeatable (?)
 
+FishAndChips.Fish {
+	key = "segg_plasmium_phial",
+	atlas = "segg_fishies",
+	pos = { x = 3, y = 0 },
+
+	weight = 10,
+
+	ppu_coder = { "stupid" },
+	ppu_artist = { "egg_node" },
+
+	blueprint_compat = false,
+
+	config = {
+		extra = {
+			hands = 3,
+			blind_mod = 0.1,
+		}
+	},
+	stats = {
+		weight = {min = 0.3, max = 1.},
+		length = {min = 0.2, max = 0.4}
+	},
+	environments = {
+		pier = 2.,
+		aquifer = 0.5,
+		swamp = 1.5,
+		city_river = 5.0
+	},
+	loc_vars = function(self, info_queue, card)
+	end,
+
+	use = function(self, card)
+		ease_hands_played(card.ability.extra.hands)
+
+		G.GAME.fac_plasmium_infection = (G.GAME.fac_plasmium_infection or 0) + 1
+
+		if G.GAME.fac_plasmium_infection > 1 then
+
+			local mod = fac_get_plasmium_blind_mod(true)
+			if mod > 1e300 then
+				-- set to near inf to avoid crashes with inf blind size
+				SMODS.calculate_effect({
+					blindsize = 1e308
+				}, card)
+			else
+				SMODS.calculate_effect({
+					xblindsize = mod
+				}, card)
+			end
+		end
+	end,
+	can_use = function(self, card)
+        return G.STATE == G.STATES.SELECTING_HAND
+	end
+}
 
 
 -- Fleash (Awoo!)
