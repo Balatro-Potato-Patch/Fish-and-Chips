@@ -20,7 +20,7 @@ PotatoPatchUtils.Developer {
 
 --[[
 ideas:
-mystic remora in ?
+mystic remora in pier
 ]]
 
 ----------
@@ -433,6 +433,7 @@ FishAndChips.Fish{ --Gummigoo
   vel_limit = 0.6,
   cost = 5,
   blueprint_compat = true,
+  eternal_compat = false,
   config = {extra = {rounds = 3}},
 
   loc_vars = function (self, info_queue, card)
@@ -494,8 +495,13 @@ FishAndChips.Fish{ --Frozen Chicken
           glasses = glasses + 1
         end
       end
+      card.ability.extra.chips = card.ability.extra.chips_mod * glasses
       return{
-        vars = {card.ability.extra.chips, card.ability.extra.chips_mod}
+        vars = {card.ability.extra.chips or 0, card.ability.extra.chips_mod or 30}
+      }
+    else
+      return{
+        vars = {card.ability.extra.chips or 0, card.ability.extra.chips_mod or 30}
       }
     end
   end,
@@ -509,8 +515,135 @@ FishAndChips.Fish{ --Frozen Chicken
         end
       end
       return{
-        chips = card.ability.extra.chips + card.ability.extra.chips_mod * glasses
+        chips = card.ability.extra.chips
       }
     end
   end
 }
+
+FishAndChips.Fish{ --Mystic Remora
+  key = 'plaggeromega_mysticremora',
+  atlas = 'plaggeromega_fish',
+  pos = {x=0,y=2},
+  weight = 4,
+  environments = {pier = 1},
+  attributes = {'draw'}, --i couldnt think of any fitting attributes from base FAC so i just made this one up, feel free to change
+  stats = {
+    weight = {min = 0.42, max = 0.87},
+    length = {min = 0.35, max = 0.58}
+  },
+  ppu_coder = {'PLagger'},
+  ppu_artist = {'Omegaflowey18'},
+  impulse_min = 0.18,
+  impulse_max = 0.42,
+  vel_limit = 0.59,
+  cost = 1,
+  blueprint_compat = true,
+  eternal_compat = false,
+  config = {extra = {upkeep = 0, cumulative_upkeep = 1}},
+
+  loc_vars = function (self, info_queue, card)
+    return{
+      vars = {card.ability.extra.upkeep, card.ability.extra.cumulative_upkeep}
+    }
+  end,
+
+  calculate = function (self, card, context)
+    if context.setting_blind and not context.blueprint then
+      card.ability.extra.upkeep = card.ability.extra.upkeep + card.ability.extra.cumulative_upkeep
+      --Create the cumulative upkeep choice menu 
+      G.E_MANAGER:add_event(Event({
+            func = function()
+                delay(0.4)
+                G.FUNCS.fac_plaggeromega_run_upkeep_cost_menu(card.ability.extra.upkeep)
+                return true
+            end
+        }))
+      delay(0.4)
+      --Destroy it if the cost wasn't paid
+      G.E_MANAGER:add_event(Event({
+            func = function()
+                if G.GAME.fac_plaggeromega_sac_the_fish then
+                  --reset the global
+                  G.GAME.fac_plaggeromega_sac_the_fish = false
+                  SMODS.destroy_cards(card, nil, true, false)
+                  play_sound('slice1', 0.96+math.random()*0.08)
+                end
+                return true
+            end
+        }))
+    end
+
+    if context.individual and context.cardarea == G.play then
+      SMODS.draw_cards(1)
+    end
+  end
+}
+
+----------
+---UI BULLSHIT
+----------
+
+G.FUNCS.fac_plaggeromega_run_upkeep_cost_menu = function(upkeep)
+  G.FUNCS.overlay_menu{
+    definition = fac_plaggeromega_create_upkeep_cost_menu(upkeep),
+    config = { no_esc = true }
+  }
+end
+
+function fac_plaggeromega_create_upkeep_cost_menu(upkeep)
+  G.SETTINGS.paused = true
+
+    --actually make the UI
+    local pay =
+      UIBox_button({
+        button = 'fac_plaggeromega_pay_upkeep',
+        func = 'fac_plaggeromega_can_pay_upkeep',
+        ref_table = {cost = upkeep},
+        minw = 5,
+        label = {localize('fac_plaggeromega_pay') .. ' ' .. localize('$') .. tostring(upkeep)},
+      })
+
+    local dont =
+      UIBox_button({
+        func = 'fac_plaggeromega_dont_pay',
+        button = 'fac_plaggeromega_sacrifice_fish',
+        minw = 5,
+        label = {localize('fac_plaggeromega_sac_it')},
+      })
+
+    local t = create_UIBox_generic_options({
+      contents = {pay, dont},
+      no_esc = true,
+      no_back = true
+    })
+
+  return t
+end
+
+function G.FUNCS.fac_plaggeromega_can_pay_upkeep(e)
+    if ((G.GAME.dollars - G.GAME.bankrupt_at) - e.config.ref_table.cost < 0) and G.GAME.current_round.reroll_cost ~= 0 then
+      e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+      e.config.button = nil
+    else
+      e.config.colour = G.C.GREEN
+      e.config.button = 'fac_plaggeromega_pay_fish'
+    end
+end
+
+function G.FUNCS.fac_plaggeromega_pay_fish(e)
+  ease_dollars(-e.config.ref_table.cost)
+  if type(G.OVERLAY_MENU) == "table" then G.FUNCS.exit_overlay_menu() end
+    G.SETTINGS.paused = false
+end
+
+function G.FUNCS.fac_plaggeromega_dont_pay(e)
+  e.config.colour = G.C.RED
+  e.config.button = 'fac_plaggeromega_sacrifice_fish'
+end
+
+function G.FUNCS.fac_plaggeromega_sacrifice_fish(e)
+  G.GAME.fac_plaggeromega_sac_the_fish = true
+  if type(G.OVERLAY_MENU) == "table" then G.FUNCS.exit_overlay_menu() end
+  G.SETTINGS.paused = false
+end

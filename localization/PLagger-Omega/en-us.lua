@@ -135,6 +135,25 @@ return {
                     'stronger if you use it',
                     'to its full potential...'
                 }
+            },
+            fish_fac_plaggeromega_mysticremora = {
+                name = 'Mystic Remora',
+                text = {
+                    {
+                    'When {C:attention}Blind{} is selected,',
+                    'increase the {C:attention}upkeep cost{} by {C:money}$#2#{},',
+                    '{C:red,E:2}sacrifice{} it unless you pay',
+                    'the {C:attention}upkeep cost {C:inactive}({C:money}$#1#{C:inactive})'
+                    },
+                    {
+                        'Draw a card whenever',
+                        'a played card is scored'
+                    }
+                },
+                flavour = {
+                    'Do you pay',
+                    'the 4?'
+                }
             }
         }
     },
@@ -143,7 +162,9 @@ return {
             fac_plaggeromega_active_ex = 'Active!',
             fac_plaggeromega_inactive = 'Inactive',
             fac_plaggeromega_giada = 'Shout out Giada',
-            fac_plaggeromega_stone = 'Stone'
+            fac_plaggeromega_stone = 'Stone',
+            fac_plaggeromega_pay = 'Pay',
+            fac_plaggeromega_sac_it = 'Sacrifice Mystic Remora'
         }
     }
 }
