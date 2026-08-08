@@ -325,8 +325,59 @@ FishAndChips.Fish {
 
 
 -- Lost Lay's
--- (+80 chips, -10 chips at end of round? u can never eat just one chip)
+-- (+80 chips, -20 chips at end of round. u can never eat just one chip)
+FishAndChips.Fish {
+	key = "segg_lost_lays",
+	atlas = "segg_fishies",
+	pos = { x = 1, y = 1 },
 
+	weight = 15,
+
+	ppu_coder = { "stupid" },
+	ppu_artist = { "egg_node" },
+
+	attributes = { "chips" },
+	config = {
+		extra = {
+			chips = 80,
+			chips_mod = 20,
+		}
+	},
+	stats = {
+		weight = {min = 0.05, max = 0.2},
+		length = {min = 0.2, max = 0.5}
+	},
+	environments = {
+		city_river = 3,
+		pier = 2
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.chips, card.ability.extra.chips_mod, } }
+	end,
+	calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+			card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chips_mod
+
+			if card.ability.extra.chips <= 0 then
+				-- bye bye
+				return {
+					message = localize('b_fac_segg_chips_gone'),
+                	colour = G.C.BLUE,
+				}
+			else
+				-- yum yum
+				return {
+					message = localize('b_fac_segg_chips_down'),
+                	colour = G.C.BLUE,
+				}
+			end
+		end
+
+		if context.joker_main then
+			return { chips = card.ability.extra.chips }
+		end
+	end,
+}
 
 
 -- Courier's Rasher

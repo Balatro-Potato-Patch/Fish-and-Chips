@@ -58,12 +58,28 @@ return {
                     "their natural limits."
                 }
             },
+            -- todo
+
+            fish_fac_segg_lost_lays = {
+                name = "Lost Lay's",
+                text = {
+                    "{C:blue}+#1#{} Chips",
+                    "{C:blue}-#2#{} Chips per",
+                    "round played",
+                },
+                flavor = {
+                    "You can never",
+                    "eat just one chip.",
+                }
+            },
 
         },
     },
     misc = {
         dictionary = {
             b_fac_segg_void_fish = "Void",
+            b_fac_segg_chips_down = "Yum Yum!",
+            b_fac_segg_chips_gone = "Bye Bye!",
         },
     },
 }
