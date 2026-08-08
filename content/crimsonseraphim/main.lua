@@ -1168,7 +1168,7 @@ FishAndChips.Fish {
 	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "passive" },
+	attributes = { "usable" },
 	environments = {
         volcano = 5,
         styx = 5,
@@ -1683,7 +1683,7 @@ FishAndChips.Fish {
 	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "useable", },
+	attributes = { "destroy_card", },
 
 	environments = {
         wormhole = 5,
