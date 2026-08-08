@@ -11,7 +11,7 @@ FishAndChips.Fish {
 	ppu_coder = { 'BakersDozenBagels' },
 	ppu_artist = { 'BakersDozenBagels' },
 	weight = 10,
-	environments = { wormhole = 1, backroom = 0.5, soup = 0.1 },
+	environments = { wormhole = 1, calm_pond = 0.5, soup = 0.1 },
 	stats = { weight = { min = 0.007, max = 0.03 }, length = { min = 0.05, max = 0.14 } },
 	attributes = { 'passive', 'generation' },
 	config = {
