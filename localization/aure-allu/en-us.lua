@@ -318,6 +318,20 @@ return {
                     ":3"
                 }
             },
+            fish_fac_firefly_squid = {
+                name = {"Firefly Squid"},
+                text = {
+                    "If {C:attention}score{} catches",
+                    "on {C:fac_allu_fire_g,E:1}fire{}, creates",
+                    "a {C:tarot}Tarot{} card, or",
+                    "a {C:spectral}Spectral{} card",
+                    "after {C:attention}Boss Blind"
+                },
+                flavor = {
+                    "You would not",
+                    "believe your eyes"
+                }
+            },
         },
     },
     misc = {

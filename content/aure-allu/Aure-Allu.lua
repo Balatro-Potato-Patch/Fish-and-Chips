@@ -41,6 +41,22 @@ SMODS.Gradient {
 	end
 }
 
+SMODS.Gradient {
+	key = "allu_fire_g",
+	colours = {
+		HEX("FF6F00"),
+		HEX("FF4400"),
+		HEX("FF6F00"),
+		HEX("FF684D"),
+		HEX("FFC2B8"),
+		HEX("FFE8E8"),
+		HEX("FAA97A"),
+		HEX("F5A536"),
+		HEX("F5C836"),
+		HEX("FF4400"),
+	},
+	cycle = 5,
+}
 
 zero_signed = function (value, infix)
 	local v = value ~= 0 and SMODS.signed(value) or "+0"
@@ -859,7 +875,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable", "spectral" },
+	attributes = { "usable", "spectral", "generation" },
 	stats = {weight = {min = 0.9, max = 1.4}, length = {min = 0.08, max = 0.25}},
 	blueprint_compat = false,
 	config = {
@@ -1884,6 +1900,66 @@ FishAndChips.Fish {
 	can_use = function (self, card)
 		return G.hand and #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.max_cards and card.ability.extra.remaining_uses > 0
 	end
+}
+
+-- Firefly Squid
+FishAndChips.Fish {
+	key = "firefly_squid",
+	atlas = "aure-allu_fish",
+	pos = { x = 0, y = 5 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "generation", },
+	stats = {weight = {min = 0.1, max = 0.7}, length = {min = 0.05, max = 0.1}},
+	blueprint_compat = true,
+	config = {
+		extra = {
+		},
+	},
+	environments = {
+		pier = 10,
+		styx = 6,
+		wormhole = 3,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function (self, card, context)
+		if context.after and SMODS.last_hand_oneshot and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+			G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+			if G.GAME.blind:is_type("Boss") then
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						SMODS.add_card {
+							set = 'Spectral',
+							key_append = 'fac_aure-allu_firefly'
+						}
+						G.GAME.consumeable_buffer = 0
+						return true
+					end
+				}))
+				return {
+					message = localize('k_plus_spectral'),
+					colour = G.C.SECONDARY_SET.Spectral,
+				}
+			else
+				G.E_MANAGER:add_event(Event({
+                    func = function()
+                        SMODS.add_card {
+                            set = 'Tarot',
+                            key_append = 'fac_aure-allu_firefly'
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end
+                }))
+                return {
+                    message = localize('k_plus_tarot'),
+                }
+			end
+		end
+	end,
 }
 
 -- #endregion
