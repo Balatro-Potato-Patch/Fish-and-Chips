@@ -405,7 +405,7 @@ FishAndChips.Fish {
 	blueprint_compat = true,
 	config = {
 		extra = {
-			mult_gain = 4,
+			mult_gain = 1,
 			total_mult = 0,
 		},
 		immutable = {
