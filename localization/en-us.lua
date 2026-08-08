@@ -386,6 +386,7 @@ return {
             b_fac_flavour_text = 'Disable Flavour Text',
             b_fac_flashing_lights = 'Disable Flashing Effects',
             b_fac_fish_scaling = 'Disable Visual Size of Fish',
+            b_fac_performance_mode = 'Low Performance Mode',
             ph_fac_go_fishing_ex = "Go Fishing!",
             k_fac_no_baits = "No Baits in inventory",
             k_fac_equip_bait = "Equip Bait",
@@ -459,7 +460,8 @@ return {
             ph_fac_bucket_upgrade_1 = "Upgrade",
             ph_fac_bucket_upgrade_2 = "Bucket",
             ph_fac_upgrade = "Increase Bucket Slots",
-            ph_fac_shop_title = "Snapper's Shop"
+            ph_fac_shop_title = "Snapper's Shop",
+            k_fac_treasure_catch = 'Treasure',
         },
         achievement_names = {
             ach_fac_catch_1 = 'Rookie Rodder',
