@@ -147,6 +147,9 @@ FishAndChips.Fish {
             end
         end
 	end,
+    set_card_type_badge = function(self, card, badges)
+		badges[1] = create_badge(localize("k_fac_crimsonseraephim_fruit"), get_type_colour(self or card.config, card), nil, 1.2)
+	end,
 }
 
 
@@ -545,7 +548,10 @@ FishAndChips.Fish {
                 end
             end
         end
-    end
+    end,
+    set_card_type_badge = function(self, card, badges)
+		badges[1] = create_badge(localize("k_fac_crimsonseraephim_heavenly_artefact"), get_type_colour(self or card.config, card), nil, 1.2)
+	end,
 }
 
 FishAndChips.Fish {
@@ -658,6 +664,9 @@ FishAndChips.Fish {
     keep_on_use = function()
         return true
     end,
+    set_card_type_badge = function(self, card, badges)
+		badges[1] = create_badge(localize("k_fac_crimsonseraephim_game_object"), get_type_colour(self or card.config, card), nil, 1.2)
+	end,
 }
 
 FishAndChips.Fish {
@@ -708,7 +717,10 @@ FishAndChips.Fish {
         if context.fac_modify_fishing_profile then  
             context.fishing_profile.vel_limit = context.fishing_profile.vel_limit * math.pow(1/2, card.ability.extra.primed or 0)
         end
-    end
+    end,
+    set_card_type_badge = function(self, card, badges)
+		badges[1] = create_badge(localize("k_fac_crimsonseraephim_weapon"), get_type_colour(self or card.config, card), nil, 1.2)
+	end,
 }
 
 FishAndChips.Fish {
@@ -966,6 +978,9 @@ FishAndChips.Fish {
         return G.GAME.crimsonseraphim_obtained_fish
     end,
     treasure = true,
+    set_card_type_badge = function(self, card, badges)
+		badges[1] = create_badge(localize("k_fac_crimsonseraephim_weapon"), get_type_colour(self or card.config, card), nil, 1.2)
+	end,
 }
 
 FishAndChips.Fish {
@@ -1012,7 +1027,10 @@ FishAndChips.Fish {
                 message = card.ability.extra.times_done .. "/" .. card.ability.extra.times
             }
         end
-    end
+    end,
+    set_card_type_badge = function(self, card, badges)
+		badges[1] = create_badge(localize("k_fac_crimsonseraephim_fruit"), get_type_colour(self or card.config, card), nil, 1.2)
+	end,
 }
 
 FishAndChips.Fish {
@@ -1144,7 +1162,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "crimsonseraphim_squalus_aeternus",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 2, y = 3 },
 	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
@@ -1273,7 +1291,10 @@ FishAndChips.Fish {
                 xmult = self_pos
             }
         end
-    end
+    end,
+    set_card_type_badge = function(self, card, badges)
+		badges[1] = create_badge(localize("k_fac_maybe_fish"), get_type_colour(self or card.config, card), nil, 1.2)
+	end,
 }
 
 FishAndChips.Fish {
@@ -1427,7 +1448,10 @@ FishAndChips.Fish {
     end,
     can_use = function()
         return true
-    end
+    end,
+    set_card_type_badge = function(self, card, badges)
+		badges[1] = create_badge(localize("k_planet"), get_type_colour(self or card.config, card), nil, 1.2)
+	end,
 }
 
 FishAndChips.crimsonseraphim.lotus_alts = {
@@ -1533,7 +1557,10 @@ FishAndChips.Fish {
                 xmult = card.ability.extra.mult * FishAndChips.crimsonseraphim.count_developers()
             }
         end
-    end
+    end,
+    set_card_type_badge = function(self, card, badges)
+		badges[1] = create_badge(localize("k_fac_crimsonseraephim_questionmarks"), get_type_colour(self or card.config, card), nil, 1.2)
+	end,
 }
 
 FishAndChips.Fish {
@@ -1600,7 +1627,10 @@ FishAndChips.Fish {
                 message = localize("k_reset_ex")
             }
         end
-    end
+    end,
+    set_card_type_badge = function(self, card, badges)
+		badges[1] = create_badge(localize("k_fac_crimsonseraephim_game_object"), get_type_colour(self or card.config, card), nil, 1.2)
+	end,
 }
 
 SMODS.draw_ignore_keys.crimsonseraphim_sans_door_canvas = true
@@ -1778,7 +1808,10 @@ FishAndChips.Fish {
             FishAndChips.crimsonseraphim.fake_game_over()
             G.PROFILES[G.SETTINGS.profile].omega_crimsonfang_obtained = true
         end
-    end
+    end,
+    set_card_type_badge = function(self, card, badges)
+		badges[1] = create_badge(localize("k_fac_crimsonseraephim_omega"), get_type_colour(self or card.config, card), nil, 1.2)
+	end,
 }
 
 function create_UIBox_omega_game_over()

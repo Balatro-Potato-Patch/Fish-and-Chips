@@ -236,7 +236,7 @@ SMODS.DrawStep({
                 if self.ability.change_dt < 0 then
                     self.ability.change_dt = 99999
                     local e = {0}
-                    for i = 4, 12 do
+                    for i = 4, 13 do
                         e[#e+1] = i
                     end
                     self.ability.face = pseudorandom_element(e)

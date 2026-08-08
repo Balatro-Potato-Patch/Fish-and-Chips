@@ -607,7 +607,14 @@ return {
             k_omega_crimsonfang_10 = {"stupid bullshit = kill", "everyone you know"},
 
             k_give_up = "GIVE UP",
-            k_lose_hope = "LOSE HOPE"
+            k_lose_hope = "LOSE HOPE",
+
+            k_fac_crimsonseraephim_fruit = "Fruit",
+            k_fac_crimsonseraephim_game_object = "Game Object",
+            k_fac_crimsonseraephim_heavenly_artefact = "Heavenly Artefact",
+            k_fac_crimsonseraephim_omega = "OMEGA CRIMSONFANG",
+            k_fac_crimsonseraephim_questionmarks = "????",
+            k_fac_crimsonseraephim_weapon = "Weapon"
         }
     }
 }
