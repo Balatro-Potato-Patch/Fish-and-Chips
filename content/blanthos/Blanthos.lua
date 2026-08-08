@@ -2,7 +2,7 @@ PotatoPatchUtils.Developer({
 	name = 'Blanthos',
 	atlas = 'fac_cards',
 	colour = G.C.YELLOW,
-	fac_partner = 'Hunter'
+	fac_partner = 'fac_Hunter'
 })
 
 PotatoPatchUtils.Developer({
@@ -10,7 +10,7 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_cards',
 	pos = {x = 1, y = 0},
 	colour = G.C.YELLOW,
-	fac_partner = 'Blanthos'
+	fac_partner = 'fac_Blanthos'
 })
 
 SMODS.Atlas({
@@ -144,7 +144,7 @@ end,
 FishAndChips.Fish {
 	key = "spectre_fish",
 	atlas = "blanthos_hunter_fish",
-	pos = { x = 2, y = 0 },
+	pos = { x = 1, y = 0 },
 	weight = 14,
 	ppu_coder = { "Blanthos" },
 	ppu_artist = { "Hunter" },
