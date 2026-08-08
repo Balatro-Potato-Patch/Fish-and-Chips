@@ -1279,7 +1279,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "crimsonseraphim_ronald_reagan_2",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 1, y = 3 },
 	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
@@ -1724,17 +1724,22 @@ FishAndChips.Fish {
 
 	environments = {
         wormhole = 5,
-        garden = 5, 
+        aquifer = 5, 
+        backroom = 5,
+        styx = 5
 	},
     stats = {
 		weight = {min = 0.1, max = 0.2},
 		length = {min = 0.15, max = 0.2}
 	},
     select_flavor_text = function(self, card)
-        local num = pseudorandom("OMEGA_CRIMSONFANGERY", 1, 8)
+        local num = pseudorandom("OMEGA_CRIMSONFANGERY", 1, 10)
         local elem
         if num == 2 then
             elem = SMODS.create_sprite(0, 0, 5.5, 5.5 * 75/438, "fac_omega_crimsonfang_lore_alexi")
+        end
+        if num == 9 then
+            elem = SMODS.create_sprite(0, 0, 3, 3 * 66/204, "fac_omega_crimsonfang_lore_mf")
         end
         return num, elem
     end,

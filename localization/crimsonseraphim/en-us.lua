@@ -603,7 +603,8 @@ return {
             k_omega_crimsonfang_6 = {'LAST JARONA!'},
             k_omega_crimsonfang_7 = {'woof woof', 'meow meow'},
             k_omega_crimsonfang_8 = {'we heard you like rubys', 'so we uhhhh uhhhhhhh uhhhhhh'},
-            k_omega_crimsonfang_9 = {},
+            k_omega_crimsonfang_9 = '',
+            k_omega_crimsonfang_10 = {"stupid bullshit = kill", "everyone you know"},
 
             k_give_up = "GIVE UP",
             k_lose_hope = "LOSE HOPE"

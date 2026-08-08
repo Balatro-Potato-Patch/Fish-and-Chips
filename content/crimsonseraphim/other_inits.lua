@@ -34,6 +34,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+	key = "omega_crimsonfang_lore_mf",
+	path = "crimsonseraphim/jollydogs.png",
+	px = 204,
+	py = 66,
+})
+
+SMODS.Atlas({
 	key = "crimsonseraphim_fish_seals",
 	path = "crimsonseraphim/fish_seals.png",
 	px = 71,
