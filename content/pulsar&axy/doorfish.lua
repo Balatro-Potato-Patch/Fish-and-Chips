@@ -57,6 +57,7 @@ FishAndChips.Fish {
 			local is_blue = context.fish_obj.config.center.attributes and (context.fish_obj.config.center.attributes.chips or context.fish_obj.config.center.attributes.xchips)
 			card.ability.extra.blue_streak = is_blue and card.ability.extra.blue_streak + 1 or 0
 			card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
+			card.ability.extra.toggle = 0
 		end
 	end,
     can_use = function(self, card)
