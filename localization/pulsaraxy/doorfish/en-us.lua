@@ -23,10 +23,10 @@ return {
             "{s:0.7}Herbert F. Finclair"
     },
     text = {
-        "{C:attention}Drafts{} three {C:fac_fish}fish{} from {C:attention}current area{} per {V:1}rank",
+        "{C:attention}Drafts{} three {C:fac_fish}fish{} from {C:attention}current area{} per {V:0}rank",
         "Chosen {C:fac_fish}fish{} will be {C:attention}guaranteed{} with the next catch",
-        "{V:1}Rank{} increases upon catch",
-        "{s:1}{C:inactive}(Currently at rank {V:1}#1#{}{C:inactive}){}",
-        "{C:inactive}(Currently {C:fac_fish}#2#{}{C:inactive})"
+        "{V:0}Rank{} increases upon catch",
+        "{s:1}{C:inactive}(Currently at rank {V:0}#0#{}{C:inactive}){}",
+        "{V:1}#1#{V:2}#2#{V:3}#3#"
     },
 }

@@ -25,12 +25,19 @@ FishAndChips.Fish {
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		local card_status = "Inactive"
 		local toggle = card.ability.extra.toggle or 0
-		if toggle and toggle > 0 then
-			card_status = "'" .. localize({ type = 'name_text', set = "fac_Fish", key = card.ability.extra.drawn_fish[toggle].key }) .. "'"
+		local card_status = {colours = {G.C.UI.TEXT_INACTIVE,G.C.UI.TEXT_INACTIVE,G.C.UI.TEXT_INACTIVE}}
+		card_status[0] = card.ability.extra.times_used + 1
+		card_status.colours[0] = HEX("c3222b")
+		if card.ability.extra.drawn_fish then
+			for i=1,3 do
+				card_status[#card_status+1] = "'" .. localize({ type = 'name_text', set = "fac_Fish", key = card.ability.extra.drawn_fish[i].key }) .. "' "
+			end
+			if toggle > 0 then
+				card_status.colours[toggle] = FishAndChips.C.FISH
+			end
 		end
-		return { vars = { card.ability.extra.times_used + 1, card_status, colours = {HEX("c3222b")} } }
+		return { vars = card_status }
 	end,
 	flavour_vars = function(self, info_queue, card)
 		return {vars = {colours = {HEX("c3222b")}}}
@@ -59,7 +66,7 @@ FishAndChips.Fish {
 			card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
 		end
 
-		if context.fac_modify_fishing_profile then
+		if context.fac_cast_rod then
 			G.GAME.fac_forced_fish = card.ability.extra.toggle > 0 and card.ability.extra.drawn_fish[card.ability.extra.toggle].key or G.GAME.fac_forced_fish
 		end
 
@@ -151,7 +158,7 @@ FishAndChips.Fish {
 		return pool
 	end,
 	button_key = function (self)
-		return "Toggle"
+		return "Cycle"
 	end,
 	show_seal_unlocked = function(self)
 		G.GAME.fac_pa_doorfish = 0
