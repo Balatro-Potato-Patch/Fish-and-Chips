@@ -61,7 +61,6 @@ FishAndChips.Fish {
 
 		if context.fac_modify_fishing_profile then
 			G.GAME.fac_forced_fish = card.ability.extra.toggle > 0 and card.ability.extra.drawn_fish[card.ability.extra.toggle].key or G.GAME.fac_forced_fish
-			card.ability.extra.toggle = 0
 		end
 
 		if context.fac_end_fishing and context.fish == (card.ability.extra.drawn_fish[card.ability.extra.toggle].key) then
