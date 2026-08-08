@@ -10,7 +10,7 @@ return {
                     "while reeling in a Fish",
                     "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
                 },
-                fac_flavour = {
+                flavor = {
                     "Bird? Fish?",
                     "Something else entirely?",
                     "All of the above?",
@@ -24,7 +24,7 @@ return {
                     "Level up a random {C:attention}poker hand",
                     "for each card destroyed"
                 },
-                fac_flavour = {
+                flavor = {
                     "the cards when i throw a dying",
                     "neutron starfish at them"
                 }
@@ -35,7 +35,7 @@ return {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} at end of round",
                     "{C:fac_sand_dollars,f:fac_sand_dollars}-${C:fac_sand_dollars}#2#{} when entering the shop"
                 },
-                fac_flavour = {
+                flavor = {
                     "The snack that smiles back!"
                 }
             },
@@ -58,7 +58,7 @@ return {
                         "each give {X:mult,C:white}X#2#{} Mult"
                     }
                 },
-                fac_flavour = {
+                flavor = {
                     "Heh, it's my Jarona!"
                 }
             },
@@ -76,7 +76,7 @@ return {
                         "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
                     }
                 },
-                fac_flavour = {
+                flavor = {
                     "kill everything :3"
                 }
             },
@@ -87,7 +87,7 @@ return {
                     "each {C:attention}ante",
                     "{C:inactive}({C:attention}#2#{C:inactive} remaining)"
                 },
-                fac_flavour = {
+                flavor = {
                     "Look, I could give you infinite rerolls",
                     "if the fish police weren't after me!"
                 }
@@ -98,8 +98,21 @@ return {
                     "A {C:attention}2{}, {C:attention}4{}, and a {C:attention}Jack{}",
                     "can form a {C:attention}Straight{}"
                 },
-                fac_flavour = {
+                flavor = {
                     "cij"
+                }
+            },
+            fish_fac_fo_thoracle = {
+                name = "Thassa's Oracle",
+                text = {
+                    "Once per {C:attention}round{}, use this Fish to reduce",
+                    "the {C:attention}Blind's{} requirement by {X:purple,C:white}X#2#{} if the {C:attention}sum{} of ranks",
+                    "of all {C:clubs}Clubs{} held in hand is greater than the",
+                    "number of remaining cards in your {C:attention}deck",
+                    "{C:inactive}(#1#)"
+                },
+                flavor = {
+                    "Looking for demons to consult with..."
                 }
             }
         },
@@ -130,7 +143,9 @@ return {
             fac_fo_cij_length = "3 letters",
 
             fac_fo_fucking_kill = "Fucking Kill",
-            fac_fo_take = "Take"
+            fac_fo_take = "Take",
+
+            k_fac_fo_inactive = "Inactive...",
         },
     }
 }
