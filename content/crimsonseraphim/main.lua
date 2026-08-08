@@ -1126,7 +1126,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "crimsonseraphim_falx_sulphurata",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 3, y = 3 },
 	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },

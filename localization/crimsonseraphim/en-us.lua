@@ -477,7 +477,7 @@ return {
             },
             fish_fac_omega_crimsonfang = {
                 name = {
-                    "shitty {C:red}mentally ill{} {E:fac_nameless}plural",
+                    "shitty {C:red}mentally ill {E:fac_nameless}plural",
                     "girl fish for {C:fac_transgender_gradient,E:2}transgenders",
                     "and {C:green,E:2}furries{}"   
                 },
