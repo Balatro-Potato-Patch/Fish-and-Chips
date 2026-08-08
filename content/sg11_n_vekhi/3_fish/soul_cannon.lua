@@ -15,7 +15,7 @@ local initialize_soul_cannon_sequence = function(cannon, cards_to_destroy)
 	area:remove_card(cannon)
 	G.play:emplace(cannon)
 
-	cannon.pac_cannon_rescaled = true
+	cannon.fac_cannon_rescaled = true
 
 	local explode_time = 1.3 * (math.sqrt(G.SETTINGS.GAMESPEED))
 
@@ -50,6 +50,7 @@ local initialize_soul_cannon_sequence = function(cannon, cards_to_destroy)
 			func = function()
 				cannon:juice_up()
 				cannon:hard_set_T(nil, nil, cannon.T.w * 1.125, cannon.T.h * 1.125)
+				cannon.ability.extra.activated = true
 				return true
 			end,
 		}))
@@ -89,6 +90,7 @@ FishAndChips.Fish({
 	config = {
 		extra = {
 			sacrifice = 2,
+			activated = false,
 		},
 	},
 	weight = 5,
@@ -122,9 +124,10 @@ FishAndChips.Fish({
 			if #potential_cards >= target_amount then
 				local cards_to_destory = {}
 				while #cards_to_destory < target_amount do
-					local loser = pseudorandom_element(potential_cards, "pac_soul_cannon_activation")
+					local loser, key = pseudorandom_element(potential_cards, "pac_soul_cannon_activation")
 					if loser then
 						table.insert(cards_to_destory, loser)
+						table.remove(potential_cards, key)
 					else
 						break
 					end
@@ -142,17 +145,24 @@ FishAndChips.Fish({
 				end
 			end
 		end
-		if context.starting_shop and card.pac_cannon_rescaled then
+		if context.starting_shop and card.fac_cannon_rescaled then
 			local scale_factor = math.pow(1.125, 7)
 			card:hard_set_T(nil, nil, card.T.w / scale_factor, card.T.h / scale_factor)
 			card:juice_up()
-			card.pac_cannon_rescaled = nil
+			card.fac_cannon_rescaled = nil
+		end
+		if context.starting_shop then
+			card.ability.extra.activated = false
 		end
 	end,
 	update = function(self, card, dt)
 		if G.GAME then
 			local atlas_x = card.children.center.sprite_pos.x
-			if G.GAME.current_round.hands_left <= 1 then
+			if card.ability and card.ability.extra.activated then
+				if atlas_x ~= 2 then
+					card.children.center:set_sprite_pos({ x = 2, y = 0 })
+				end
+			elseif G.GAME.current_round.hands_left <= 1 then
 				if atlas_x ~= 1 then
 					card.children.center:set_sprite_pos({ x = 1, y = 0 })
 				end
