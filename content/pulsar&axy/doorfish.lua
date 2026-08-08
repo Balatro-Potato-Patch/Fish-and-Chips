@@ -25,12 +25,15 @@ FishAndChips.Fish {
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		local card_status = "(Inactive)"
+		local card_status = "Inactive"
 		local toggle = card.ability.extra.toggle or 0
 		if toggle and toggle > 0 then
-			card_status = "(Currently '" .. localize({ type = 'name_text', set = "fac_Fish", key = card.ability.extra.drawn_fish[toggle].key }) .. "')"
+			card_status = "'" .. localize({ type = 'name_text', set = "fac_Fish", key = card.ability.extra.drawn_fish[toggle].key }) .. "'"
 		end
-		return { vars = { card.ability.extra.times_used + 1, card_status } }
+		return { vars = { card.ability.extra.times_used + 1, card_status, colours = {HEX("c3222b")} } }
+	end,
+	flavour_vars = function(self, info_queue, card)
+		return {vars = {colours = {HEX("c3222b")}}}
 	end,
 	-- draw fish based on rank 0
 	-- rotate through four effects: inactive, fish 1/2/3
@@ -39,7 +42,7 @@ FishAndChips.Fish {
 	add_to_deck = function(self, card, from_debuff)
 		--draw fish based on rank 0
 		card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
-		local seal_unlocked = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish.seal_unlocked
+		local seal_unlocked = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish and G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish.seal_unlocked
 		if seal_unlocked then
 			G.E_MANAGER:add_event(Event({
 				trigger = 'after',
@@ -58,6 +61,7 @@ FishAndChips.Fish {
 
 		if context.fac_modify_fishing_profile then
 			G.GAME.fac_forced_fish = card.ability.extra.toggle > 0 and card.ability.extra.drawn_fish[card.ability.extra.toggle].key or G.GAME.fac_forced_fish
+			card.ability.extra.toggle = 0
 		end
 
 		if context.fac_end_fishing and context.fish == (card.ability.extra.drawn_fish[card.ability.extra.toggle].key) then

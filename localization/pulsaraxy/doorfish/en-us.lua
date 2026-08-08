@@ -17,16 +17,16 @@ return {
             "{s:0.7}should have no trouble uncovering its whereabouts within a timely manner.",
             "{s:0.7}Should my grandnephew fail to uncover this {C:fac_fish}fish{}",
             "{s:0.7}or provide proof of his discovery to the executors of my will",
-            "{s:0.7}then this gift shall {C:red}lapse{}{s:0.7}.",
+            "{s:0.7}then this gift shall {V:1}lapse{}{s:0.7}.",
             "{s:0.7}In witness whereof, I have hereunto set my fin",
             "{s:0.7}this 18th day of March, 1993.",
             "{s:0.7}Herbert F. Finclair"
     },
     text = {
-        "{C:attention}Drafts{} three {C:fac_fish}fish{} per rank",
+        "{C:attention}Drafts{} three {C:fac_fish}fish{} from {C:attention}current area{} per {V:1}rank",
         "Chosen {C:fac_fish}fish{} will be {C:attention}guaranteed{} with the next catch",
-        "Rank increases upon catch",
-        "{s:1}{C:inactive}(Currently at rank {C:fac_fish}#1#{}{C:inactive}){}",
-        "{C:inactive}#2#"
+        "{V:1}Rank{} increases upon catch",
+        "{s:1}{C:inactive}(Currently at {V:1}rank{} {C:fac_fish}#1#{}{C:inactive}){}",
+        "{C:inactive}(Currently {C:fac_fish}#2#{}{C:inactive})"
     },
 }
