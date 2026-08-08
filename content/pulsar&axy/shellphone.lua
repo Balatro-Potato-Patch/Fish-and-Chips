@@ -26,14 +26,14 @@ FishAndChips.Fish {
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		local ranks = {colours = {}}
+		local ranks = {colours = {}, #card.ability.extra.sequence}
 		for i=1,card.ability.extra.sequence_max do
 			ranks.colours[#ranks.colours+1] = (card.ability.extra.current_position > i and G.C.UI.TEXT_INACTIVE or G.C.UI.TEXT_DARK)
-			ranks[#ranks+1] = card.ability.extra.sequence[i] or {card_key = ''}
+			ranks[#ranks+1] = card.ability.extra.sequence[i] or {card_key = '', key = ''}
 
-			local display_value = ranks[#ranks].config.card.value
-			for i in {'King', 'Queen', 'Jack'} do
-				if ranks[#ranks].config.card.value == i then
+			local display_value = ranks[#ranks].key
+			for k,i in pairs({'Ace', 'King', 'Queen', 'Jack'}) do
+				if display_value == i then
 					display_value = ranks[#ranks].card_key
 					break
 				end
