@@ -1,7 +1,7 @@
 return {
     descriptions = {
         fac_Fish = {
-            fish_fac_the_original___starfish = {
+            fish_fac_aureallu_the_original___starfish = {
                 name = {"2 Original    ", "    2 Starfish"},
                 text = {
                     "Use this {V:1}Star{C:fac_fish}fish{}",
@@ -13,7 +13,7 @@ return {
                     "These fish are pissing me off",
                 }
             },
-            fish_fac_cheap_cheep = {
+            fish_fac_aureallu_cheap_cheep = {
                 name = {"Cheap Cheep"},
                 text = {
                     "{C:green}#1# in #2#{} chance",
@@ -25,7 +25,7 @@ return {
                     "not a sheep.."
                 }
             },
-            fish_fac_blooper = {
+            fish_fac_aureallu_blooper = {
                 name = {"Blooper"},
                 text = {
                     {
@@ -44,7 +44,7 @@ return {
                     "eight cards flipped!"
                 }
             },
-            fish_fac_goldfish = {
+            fish_fac_aureallu_goldfish = {
                 name = {"Goldfish"},
                 text = {
                     "Gains {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} of",
@@ -55,7 +55,7 @@ return {
                     "I'm gold!"
                 }
             },
-            fish_fac_moldfish = {
+            fish_fac_aureallu_moldfish = {
                 name = {"Moldfish"},
                 text = {
                     "Blubs {C:mult}#1#{} Mult times the",
@@ -67,7 +67,7 @@ return {
                     "I'm mold!"
                 }
             },
-            fish_fac_shrimp = {
+            fish_fac_aureallu_shrimp = {
                 name = {"Shrimp"},
                 text = {
                     "Gains {C:mult}#1#{} Mult if",
@@ -81,7 +81,7 @@ return {
                     "It's as shrimple as that!"
                 }
             },
-            fish_fac_mult_mola = {
+            fish_fac_aureallu_mult_mola = {
                 name = {"Mult Mola"},
                 text = {
                     "Blubs {C:mult}#1#{} Mult for",
@@ -92,7 +92,7 @@ return {
                     "Too red to fail"
                 }
             },
-            fish_fac_eel_of_fortune = {
+            fish_fac_aureallu_eel_of_fortune = {
                 name = {"Eel of Fortune"},
                 text = {
                     "Use for {C:green}#1# in #2#{} chance to",
@@ -103,7 +103,7 @@ return {
                     "Big money no swamp-eels"
                 }
             },
-            fish_fac_gouramichel = {
+            fish_fac_aureallu_gouramichel = {
                 name = {"Gouramichel"},
                 text = {
                     "{C:chips}#1#{} Chips", 
@@ -115,7 +115,7 @@ return {
                     ""
                 }
             },
-            fish_fac_cavenfish = {
+            fish_fac_aureallu_cavenfish = {
                 name = {"Cavenfish"},
                 text = {
                     "{X:chips,C:white}X#1#{} Chips", 
@@ -127,7 +127,7 @@ return {
                     ""
                 }
             },
-            fish_fac_hammerjaw = {
+            fish_fac_aureallu_hammerjaw = {
                 name = {"Hammerjaw"},
                 text = {
                     "Use this {C:fac_fish}Fish{} to",
@@ -139,7 +139,7 @@ return {
                     "Stop! Hammer time."
                 }
             },
-            fish_fac_blue_garden_gnome = {
+            fish_fac_aureallu_blue_garden_gnome = {
                 name = {"Blue Garden Gnome"},
                 text = {
                     "{C:white,X:money}X#1#{C:money} Treasure{} rewards",
@@ -149,7 +149,7 @@ return {
                     "Hooh!"
                 }
             },
-            fish_fac_bat_ray = {
+            fish_fac_aureallu_bat_ray = {
                 name = {"Bat Ray"},
                 text = {
                     "Use this {C:fac_fish}Ray{} to",
@@ -163,7 +163,7 @@ return {
                     "To the batmobile!"
                 }
             },
-            fish_fac_cowfish = {
+            fish_fac_aureallu_cowfish = {
                 name = {"Cowfish"},
                 text = {
                     "Every {C:attention}#1#{C:inactive}/#2#{} rounds,",
@@ -174,7 +174,7 @@ return {
                     "Moo."
                 }
             },
-            fish_fac_soldierfish = {
+            fish_fac_aureallu_soldierfish = {
                 name = {"Soldierfish"},
                 text = {
                     "Use this {C:fac_fish}Fish{} to {C:attention}redraw",
@@ -189,7 +189,7 @@ return {
                     "now served with oil"
                 }
             },
-            fish_fac_unicorn_fish = {
+            fish_fac_aureallu_unicorn_fish = {
                 name = {"Unicorn Fish"},
                 text = {
                     "Use this {C:fac_fish}Fish{} for",
@@ -200,7 +200,7 @@ return {
                     "Neigh! (Sparkly)"
                 }
             },
-            fish_fac_clownfish = {
+            fish_fac_aureallu_clownfish = {
                 name = {"Clownfish"},
                 text = {
                     "{C:attention,E:1}Copies ability{} of {C:attention}Joker",
@@ -210,7 +210,7 @@ return {
                     "Honk Blub"
                 }
             },
-            fish_fac_pirate_perch = {
+            fish_fac_aureallu_pirate_perch = {
                 name = {"Pirate Perch"},
                 text = {
                     "Blubs {C:chips}#1#{} Chips per",
@@ -222,7 +222,7 @@ return {
                     "Yarr Fishee 're mine!"
                 }
             },
-            fish_fac_cookiecutter_shark = {
+            fish_fac_aureallu_cookiecutter_shark = {
                 name = {"Cookiecutter Shark"},
                 text = {
                     "{C:green}#1# in #2#{} chance for held",
@@ -235,7 +235,7 @@ return {
                     "reach of small Jimbos"
                 }
             },
-            fish_fac_chimaera = {
+            fish_fac_aureallu_chimaera = {
                 name = {"Chimaera"},
                 text = {
                     "After any {C:attention}played hand",
@@ -248,7 +248,7 @@ return {
                     "This Chimaera ain't arced."
                 }
             },
-            fish_fac_guppies = {
+            fish_fac_aureallu_guppies = {
                 name = {"Guppies"},
                 text = {
                     "All {C:attention}held {C:fac_fish}Fish{} have",
@@ -260,7 +260,7 @@ return {
                     "from a tank"
                 }
             },
-            fish_fac_neunauge = {
+            fish_fac_aureallu_neunauge = {
                 name = {"Neunauge"},
                 text = {
                     "Retrigger {C:attention}all 9s{}",
@@ -275,7 +275,7 @@ return {
                     "ninewise"
                 }
             },
-            fish_fac_old_world_knifefish = {
+            fish_fac_aureallu_old_world_knifefish = {
                 name = {"Old World", "Knifefish"},
                 text = {
                     "Use this {C:fac_fish}Fish{} to",
@@ -289,7 +289,7 @@ return {
                     "28 stab wounds"
                 }
             },
-            fish_fac_thrasher_shark = {
+            fish_fac_aureallu_thrasher_shark = {
                 name = {"Thrasher Shark"},
                 text = {
                     "When scored, {C:attention}first",
@@ -303,7 +303,7 @@ return {
                     "Grrr >:C (<- Angery)"
                 }
             },
-            fish_fac_blahaj = {
+            fish_fac_aureallu_blahaj = {
                 name = {"Balåhaj"},
                 text = {
                     "Use this {C:fac_fish}Fish{} to",
@@ -318,7 +318,7 @@ return {
                     ":3"
                 }
             },
-            fish_fac_firefly_squid = {
+            fish_fac_aureallu_firefly_squid = {
                 name = {"Firefly Squid"},
                 text = {
                     "If {C:attention}score{} catches",
@@ -336,17 +336,17 @@ return {
     },
     misc = {
         dictionary = {
-            k_aure_allu_blooper = "Ink'd!",
-            k_aure_allu_milk_button = "Milk",
-            k_aure_allu_unicorn = "Nyaeigh!",
-            k_aure_allu_cookiecutter = "Cookie'd",
-            k_aure_allu_trasher = "#&%@",
-            -- k_aure_allu_chimaera_confoozed = "...",
-            k_aure_allu_chimaera_active = "Active",
-            k_aure_allu_chimaera_inactive = "Inactive",
-            k_aure_allu_starfish_1 = "I",
-            k_aure_allu_starfish_2 = "will also",
-            k_aure_allu_starfish_3 = "join.",
+            k_aureallu_blooper = "Ink'd!",
+            k_aureallu_milk_button = "Milk",
+            k_aureallu_unicorn = "Nyaeigh!",
+            k_aureallu_cookiecutter = "Cookie'd",
+            k_aureallu_trasher = "#&%@",
+            -- k_aureallu_chimaera_confoozed = "...",
+            k_aureallu_chimaera_active = "Active",
+            k_aureallu_chimaera_inactive = "Inactive",
+            k_aureallu_starfish_1 = "I",
+            k_aureallu_tarfish_2 = "will also",
+            k_aureallu_starfish_3 = "join.",
         }
     }
 }

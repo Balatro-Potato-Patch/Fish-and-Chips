@@ -1,27 +1,27 @@
 PotatoPatchUtils.Developer({
 	name = 'Aure',
-	atlas = 'fac_aure-allu_cards',
+	atlas = 'fac_aureallu_cards',
 	colour = G.C.ORANGE,
 	fac_partner = 'fac_AllUniversal',
 })
 
 PotatoPatchUtils.Developer({
 	name = 'AllUniversal',
-	atlas = 'fac_aure-allu_cards',
+	atlas = 'fac_aureallu_cards',
 	pos = {x = 1, y = 0},
 	colour = G.C.GREY,
 	fac_partner = 'fac_Aure',
 })
 
 SMODS.Atlas({
-	key = "aure-allu_cards",
+	key = "aureallu_cards",
 	path = "aure-allu/cards.png",
 	px = 71,
 	py = 95,
 })
 
 SMODS.Atlas({
-	key = "aure-allu_fish",
+	key = "aureallu_fish",
 	path = "aure-allu/fishee.png",
 	px = 71,
 	py = 95,
@@ -116,8 +116,8 @@ end
 
 local starwalker_col = HEX("fef200")
 FishAndChips.Fish {
-	key = "the_original___starfish",
-	atlas = "aure-allu_fish",
+	key = "aureallu_the_original___starfish",
+	atlas = "aureallu_fish",
 	pos = { x = 0, y = 0 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -157,7 +157,7 @@ FishAndChips.Fish {
 		G.E_MANAGER:add_event(Event({
 			func = function ()
 				attention_text({
-					text = localize('k_aure_allu_starfish_1'),
+					text = localize('k_aureallu_starfish_1'),
 					scale = 1.1,
 					hold = 0.7 * G.SETTINGS.GAMESPEED,
 					major = card,
@@ -174,7 +174,7 @@ FishAndChips.Fish {
 		G.E_MANAGER:add_event(Event({
 			func = function ()
 				attention_text({
-					text = localize('k_aure_allu_starfish_2'),
+					text = localize('k_aureallu_starfish_2'),
 					scale = 1.1,
 					hold = 0.7 * G.SETTINGS.GAMESPEED,
 					major = card,
@@ -191,7 +191,7 @@ FishAndChips.Fish {
 		G.E_MANAGER:add_event(Event({
 			func = function ()
 				attention_text({
-					text = localize('k_aure_allu_starfish_3'),
+					text = localize('k_aureallu_starfish_3'),
 					scale = 1.1,
 					hold = 0.7 * G.SETTINGS.GAMESPEED, 
 					major = card,
@@ -210,8 +210,8 @@ FishAndChips.Fish {
 
 -- Cheap Cheep
 FishAndChips.Fish {
-	key = "cheap_cheep",
-	atlas = "aure-allu_fish",
+	key = "aureallu_cheap_cheep",
+	atlas = "aureallu_fish",
 	pos = { x = 1, y = 0 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -232,11 +232,11 @@ FishAndChips.Fish {
 		garden = 7,
 	},
 	loc_vars = function(self, info_queue, card)
-		local numerator_cheap, denominator_cheap = SMODS.get_probability_vars(card, 1, card.ability.extra.refund_odds, "fac_aure-allu_cheap_cheep")
+		local numerator_cheap, denominator_cheap = SMODS.get_probability_vars(card, 1, card.ability.extra.refund_odds, "fac_aureallu_cheap_cheep")
 		return { vars = { numerator_cheap, denominator_cheap, card.ability.extra.refund_sand_dollars } }
 	end,
 	calculate = function(self, card, context)
-		if context.fac_buy_bait and not context.blueprint_card and SMODS.pseudorandom_probability(card, "fac_aure-allu_cheap_cheep", 1, card.ability.extra.refund_odds) then
+		if context.fac_buy_bait and not context.blueprint_card and SMODS.pseudorandom_probability(card, "fac_aureallu_cheap_cheep", 1, card.ability.extra.refund_odds) then
 			return {
 				sand_dollars = card.ability.extra.refund_sand_dollars
 			}
@@ -247,8 +247,8 @@ FishAndChips.Fish {
 
 -- Blooper
 FishAndChips.Fish {
-	key = "blooper",
-	atlas = "aure-allu_fish",
+	key = "aureallu_blooper",
+	atlas = "aureallu_fish",
 	pos = { x = 2, y = 0 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -285,7 +285,7 @@ FishAndChips.Fish {
             }
 		elseif context.first_hand_drawn and not context.blueprint_card then
 			return {
-				message = localize("k_aure_allu_blooper"),
+				message = localize("k_aurall_blooper"),
 				colour = G.C.BLACK
 			}
         elseif context.joker_main then 
@@ -304,8 +304,8 @@ FishAndChips.Fish {
 
 -- Goldfish
 FishAndChips.Fish {
-	key = "goldfish",
-	atlas = "aure-allu_fish",
+	key = "aureallu_goldfish",
+	atlas = "aureallu_fish",
 	pos = { x = 3, y = 0 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -359,8 +359,8 @@ function end_round(...)
 end
 
 FishAndChips.Fish {
-	key = "moldfish",
-	atlas = "aure-allu_fish",
+	key = "aureallu_moldfish",
+	atlas = "aureallu_fish",
 	pos = { x = 4, y = 0 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -394,8 +394,8 @@ FishAndChips.Fish {
 
 -- Shrimp
 FishAndChips.Fish {
-	key = "shrimp",
-	atlas = "aure-allu_fish",
+	key = "aureallu_shrimp",
+	atlas = "aureallu_fish",
 	pos = { x = 0, y = 1 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -456,8 +456,8 @@ FishAndChips.Fish {
 
 -- Mult Mola
 FishAndChips.Fish {
-	key = "mult_mola",
-	atlas = "aure-allu_fish",
+	key = "aureallu_mult_mola",
+	atlas = "aureallu_fish",
 	pos = { x = 1, y = 1 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -493,8 +493,8 @@ FishAndChips.Fish {
 
 -- Eel of Fortune
 FishAndChips.Fish {
-	key = "eel_of_fortune",
-	atlas = "aure-allu_fish",
+	key = "aureallu_eel_of_fortune",
+	atlas = "aureallu_fish",
 	pos = { x = 2, y = 1 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -518,15 +518,15 @@ FishAndChips.Fish {
 		info_queue[#info_queue+1] = G.P_CENTERS.e_foil
 		info_queue[#info_queue+1] = G.P_CENTERS.e_holo
 		info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
-		local numerator_eel, denominator_eel = SMODS.get_probability_vars(card, 1, card.ability.extra.eel_odds, "fac_aure-allu_eel_of_fortune")
+		local numerator_eel, denominator_eel = SMODS.get_probability_vars(card, 1, card.ability.extra.eel_odds, "fac_aureallu_eel_of_fortune")
 		return { vars = { numerator_eel, denominator_eel } }
 	end,
 	use = function (self, card)
 		-- Thanks https://github.com/nh6574/VanillaRemade/blob/main/src/tarots.lua Wheel of Fortune
-		if SMODS.pseudorandom_probability(card, 'fac_aure-allu_eel_of_fortune', 1, card.ability.extra.eel_odds) then
+		if SMODS.pseudorandom_probability(card, 'fac_aureallu_eel_of_fortune', 1, card.ability.extra.eel_odds) then
             local editionless_fishee = SMODS.Edition:get_edition_cards({cards = filter_list(G.fac_fish_area.cards, {[card] = true})}, true)
-            local eligible_card = pseudorandom_element(editionless_fishee, 'fac_aure-allu_eel_of_fortune')
-            local edition = SMODS.poll_edition { key = "fac_aure-allu_eel_of_fortune", guaranteed = true, no_negative = true, options = { 'e_polychrome', 'e_holo', 'e_foil' } }
+            local eligible_card = pseudorandom_element(editionless_fishee, 'fac_aureallu_eel_of_fortune')
+            local edition = SMODS.poll_edition { key = "fac_aureallu_eel_of_fortune", guaranteed = true, no_negative = true, options = { 'e_polychrome', 'e_holo', 'e_foil' } }
             eligible_card:set_edition(edition, true)
             check_for_unlock({ type = 'have_edition' })
         else
@@ -569,8 +569,8 @@ FishAndChips.Fish {
 
 -- Gouramichel
 FishAndChips.Fish {
-	key = "gouramichel",
-	atlas = "aure-allu_fish",
+	key = "aureallu_gouramichel",
+	atlas = "aureallu_fish",
 	pos = { x = 3, y = 1 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -590,15 +590,15 @@ FishAndChips.Fish {
 		soup = 10,
 	},
 	loc_vars = function(self, info_queue, card)
-		local numerator_michel, denominator_michel = SMODS.get_probability_vars(card, 1, card.ability.extra.michel_odds, "fac_aure-allu_gouramichel")
+		local numerator_michel, denominator_michel = SMODS.get_probability_vars(card, 1, card.ability.extra.michel_odds, "fac_aureallu_gouramichel")
 		return { vars = { zero_signed(card.ability.extra.chips), numerator_michel, denominator_michel } }
 	end,
 	calculate = function(self, card, context)
 		-- Thanks once more, Vanillaremade !!
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint_card then
-            if SMODS.pseudorandom_probability(card, 'fac_aure-allu_gouramichel', 1, card.ability.extra.michel_odds) then
+            if SMODS.pseudorandom_probability(card, 'fac_aureallu_gouramichel', 1, card.ability.extra.michel_odds) then
                 SMODS.destroy_cards(card, nil, nil, true)
-                G.GAME.pool_flags.fac_aure_allu_gouramichel = true
+                G.GAME.pool_flags.fac_aureallu_gouramichel = true
                 return {
                     message = localize('k_extinct_ex')
                 }
@@ -614,14 +614,14 @@ FishAndChips.Fish {
 		end
 	end,
 	in_pool = function(self, args)
-        return not G.GAME.pool_flags.fac_aure_allu_gouramichel
+        return not G.GAME.pool_flags.fac_aureallu_gouramichel
     end
 }
 
 -- Cavenfish
 FishAndChips.Fish {
-	key = "cavenfish",
-	atlas = "aure-allu_fish",
+	key = "aureallu_cavenfish",
+	atlas = "aureallu_fish",
 	pos = { x = 4, y = 1 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -642,13 +642,13 @@ FishAndChips.Fish {
 		wormhole = 4,
 	},
 	loc_vars = function(self, info_queue, card)
-		local numerator_cavenfish, denominator_cavenfish = SMODS.get_probability_vars(card, 1, card.ability.extra.cavenfish_odds, "fac_aure-allu_cavenfish")
+		local numerator_cavenfish, denominator_cavenfish = SMODS.get_probability_vars(card, 1, card.ability.extra.cavenfish_odds, "fac_aureallu_cavenfish")
 		return { vars = { card.ability.extra.x_chips, numerator_cavenfish, denominator_cavenfish } }
 	end,
 	calculate = function(self, card, context)
 		-- Thanks once more, Vanillaremade !!
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint_card then
-            if SMODS.pseudorandom_probability(card, 'fac_aure-allu_cavenfish', 1, card.ability.extra.cavenfish_odds) then
+            if SMODS.pseudorandom_probability(card, 'fac_aureallu_cavenfish', 1, card.ability.extra.cavenfish_odds) then
                 SMODS.destroy_cards(card, nil, nil, true)
                 return {
                     message = localize('k_extinct_ex')
@@ -665,14 +665,14 @@ FishAndChips.Fish {
 		end
 	end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fac_aure_allu_gouramichel
+        return G.GAME.pool_flags.fac_aureallu_gouramichel
     end
 }
 
 -- Hammerjaw
 FishAndChips.Fish {
-	key = "hammerjaw",
-	atlas = "aure-allu_fish",
+	key = "aureallu_hammerjaw",
+	atlas = "aureallu_fish",
 	pos = { x = 0, y = 2 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -745,8 +745,8 @@ FishAndChips.Fish {
 
 -- Blue Garden Gnome
 FishAndChips.Fish {
-	key = "blue_garden_gnome",
-	atlas = "aure-allu_fish",
+	key = "aureallu_blue_garden_gnome",
+	atlas = "aureallu_fish",
 	pos = { x = 1, y = 2 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -778,8 +778,8 @@ FishAndChips.Fish {
 
 -- Bat Ray
 FishAndChips.Fish {
-	key = "bat_ray",
-	atlas = "aure-allu_fish",
+	key = "aureallu_bat_ray",
+	atlas = "aureallu_fish",
 	pos = { x = 2, y = 2 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -869,8 +869,8 @@ function localize(args, ...)
 end
 
 FishAndChips.Fish {
-	key = "cowfish",
-	atlas = "aure-allu_fish",
+	key = "aureallu_cowfish",
+	atlas = "aureallu_fish",
 	pos = { x = 3, y = 2 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -890,7 +890,7 @@ FishAndChips.Fish {
 		wormhole = 2,
 		soup = 8,
 	},
-	use_button_loc_key = "k_aure_allu_milk_button",
+	use_button_loc_key = "k_aureallu_milk_button",
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.rounds_total, card.ability.extra.rounds_needed } }
 	end,
@@ -938,8 +938,8 @@ FishAndChips.Fish {
 
 -- Soldierfish
 FishAndChips.Fish {
-	key = "soldierfish",
-	atlas = "aure-allu_fish",
+	key = "aureallu_soldierfish",
+	atlas = "aureallu_fish",
 	pos = { x = 4, y = 2 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -1017,8 +1017,8 @@ FishAndChips.Fish {
 
 -- Unicorn Fish
 FishAndChips.Fish {
-	key = "unicorn_fish",
-	atlas = "aure-allu_fish",
+	key = "aureallu_unicorn_fish",
+	atlas = "aureallu_fish",
 	pos = { x = 0, y = 3 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -1041,11 +1041,11 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_TAGS.tag_rare
-		local numerator_unicorn, denominator_unicorn = SMODS.get_probability_vars(card, 1, card.ability.extra.tag_odds, "fac_aure-allu_unicorn_fish")
+		local numerator_unicorn, denominator_unicorn = SMODS.get_probability_vars(card, 1, card.ability.extra.tag_odds, "fac_aureallu_unicorn_fish")
 		return { vars = { numerator_unicorn, denominator_unicorn } }
 	end,
 	use = function (self, card)
-		if SMODS.pseudorandom_probability(card, "fac_aure-allu_unicorn_fish", 1, card.ability.extra.tag_odds) then
+		if SMODS.pseudorandom_probability(card, "fac_aureallu_unicorn_fish", 1, card.ability.extra.tag_odds) then
 			G.E_MANAGER:add_event(Event({
 				trigger = "after", 
 				delay = 0.1, 
@@ -1056,7 +1056,7 @@ FishAndChips.Fish {
 					play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
 					play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
 					attention_text({
-						text = localize('k_aure_allu_unicorn'),
+						text = localize('k_aureallu_unicorn'),
 						scale = 1.3,
 						hold = 1.4,
 						major = card,
@@ -1109,8 +1109,8 @@ FishAndChips.Fish {
 
 -- Clownfish
 FishAndChips.Fish {
-	key = "clownfish",
-	atlas = "aure-allu_fish",
+	key = "aureallu_clownfish",
+	atlas = "aureallu_fish",
 	pos = { x = 1, y = 3 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -1169,8 +1169,8 @@ FishAndChips.Fish {
 
 -- Pirate Perch
 FishAndChips.Fish {
-	key = "pirate_perch",
-	atlas = "aure-allu_fish",
+	key = "aureallu_pirate_perch",
+	atlas = "aureallu_fish",
 	pos = { x = 2, y = 3 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -1218,8 +1218,8 @@ FishAndChips.Fish {
 
 -- Cookiecutter Shark
 FishAndChips.Fish {
-	key = "cookiecutter_shark",
-	atlas = "aure-allu_fish",
+	key = "aureallu_cookiecutter_shark",
+	atlas = "aureallu_fish",
 	pos = { x = 3, y = 3 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -1239,12 +1239,12 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_TAGS.tag_d_six
-		local numerator_cookie, denominator_cookie = SMODS.get_probability_vars(card, 1, card.ability.extra.lucky_d6_odds, "fac_aure-allu_cookiecutter_shark")
+		local numerator_cookie, denominator_cookie = SMODS.get_probability_vars(card, 1, card.ability.extra.lucky_d6_odds, "fac_aureallu_cookiecutter_shark")
 		return { vars = { numerator_cookie, denominator_cookie } }
 	end,
 	calculate = function(self, card, context)
 		if context.individual and context.end_of_round and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_lucky") then
-			if SMODS.pseudorandom_probability(card, "fac_aure-allu_cookiecutter_shark", 1, card.ability.extra.lucky_d6_odds) then
+			if SMODS.pseudorandom_probability(card, "fac_aureallu_cookiecutter_shark", 1, card.ability.extra.lucky_d6_odds) then
 				local pcard = context.other_card
 				G.E_MANAGER:add_event(Event({
 					trigger = 'before',
@@ -1259,7 +1259,7 @@ FishAndChips.Fish {
 					end
 				}))
 				return {
-					message = localize('k_aure_allu_cookiecutter'),
+					message = localize('k_aureallu_cookiecutter'),
 					colour = G.C.GREEN,
 				}
 			end
@@ -1299,7 +1299,7 @@ end
 
 local pixel_distance_store_factor = 50
 function set_chimaera_morph_data(card, old_center, new_center, morph_time)
-	card.fac_aure_allu_chimaera_morph_data = {}
+	card.fac_aureallu_chimaera_morph_data = {}
 	local scale = G.SETTINGS.GRAPHICS.texture_scaling
 	
 	local old_atlas = SMODS.get_atlas(old_center.atlas)
@@ -1371,15 +1371,15 @@ function set_chimaera_morph_data(card, old_center, new_center, morph_time)
 		return r, g, b, a
 	end)
 	-- shader_data:encode("png", "chimaera_morph_3.png")
-	card.fac_aure_allu_chimaera_morph_data.mask = love.graphics.newImage(shader_data)
-	card.fac_aure_allu_chimaera_morph_data.start_time = G.TIMERS.REAL
-	card.fac_aure_allu_chimaera_morph_data.morph_time = morph_time or 2.0
-	card.fac_aure_allu_chimaera_morph_data.texture_sizes = {old_px, old_py, new_px, new_py}
+	card.fac_aureallu_chimaera_morph_data.mask = love.graphics.newImage(shader_data)
+	card.fac_aureallu_chimaera_morph_data.start_time = G.TIMERS.REAL
+	card.fac_aureallu_chimaera_morph_data.morph_time = morph_time or 2.0
+	card.fac_aureallu_chimaera_morph_data.texture_sizes = {old_px, old_py, new_px, new_py}
 	card.ignore_shadow.chimaera_morph = true
 end
 
 function remove_chimaera_morph_data(card)
-	card.fac_aure_allu_chimaera_morph_data = nil
+	card.fac_aureallu_chimaera_morph_data = nil
 	if card.children.chimaera_old_center then
 		card.children.chimaera_old_center:remove()
 		card.children.chimaera_old_center = nil
@@ -1412,19 +1412,19 @@ function morph_fish_into(card, new_center, time)
 end
 
 SMODS.Sound {
-	key = "aure-allu_chimaera_morph",
+	key = "aureallu_chimaera_morph",
 	path = "aure-allu/chimaera-morph.ogg",
 }
 
 SMODS.Shader {
-	key = "aure-allu_chimaera",
+	key = "aureallu_chimaera",
     path = "aure-allu/chimaera.fs",
     send_vars = function (sprite, card)
-        if not card.fac_aure_allu_chimaera_morph_data then return end
-		local morph_time = (G.TIMERS.REAL - card.fac_aure_allu_chimaera_morph_data.start_time) / (card.fac_aure_allu_chimaera_morph_data.morph_time)
+        if not card.fac_aureallu_chimaera_morph_data then return end
+		local morph_time = (G.TIMERS.REAL - card.fac_aureallu_chimaera_morph_data.start_time) / (card.fac_aureallu_chimaera_morph_data.morph_time)
         return {
-			texture_sizes = card.fac_aure_allu_chimaera_morph_data.texture_sizes, -- old, new
-            morph_mask = card.fac_aure_allu_chimaera_morph_data.mask,
+			texture_sizes = card.fac_aureallu_chimaera_morph_data.texture_sizes, -- old, new
+            morph_mask = card.fac_aureallu_chimaera_morph_data.mask,
 			morph_progress = morph_time,
 			green = sprite.green or false,
         }
@@ -1432,11 +1432,11 @@ SMODS.Shader {
 }
 
 SMODS.DrawStep {
-	key = "aure-allu_chimaera",
+	key = "aureallu_chimaera",
 	order = -11,
 	func = function(self, layer)
-		if self.fac_aure_allu_chimaera_morph_data then
-			local morph_time = (G.TIMERS.REAL - self.fac_aure_allu_chimaera_morph_data.start_time) / (self.fac_aure_allu_chimaera_morph_data.morph_time)
+		if self.fac_aureallu_chimaera_morph_data then
+			local morph_time = (G.TIMERS.REAL - self.fac_aureallu_chimaera_morph_data.start_time) / (self.fac_aureallu_chimaera_morph_data.morph_time)
 			if morph_time > 1.1 then
 				remove_chimaera_morph_data(self)
 				return
@@ -1445,14 +1445,14 @@ SMODS.DrawStep {
 			self.ignore_shadow.chimaera_morph = nil
 			if not self.no_shadow and G.SETTINGS.GRAPHICS.shadows == 'On' and((self.ability.effect ~= 'Glass Card' and not self.greyed and self:should_draw_shadow() ) and ((self.area and self.area ~= G.discard and self.area.config.type ~= 'deck') or not self.area or self.states.drag.is)) then
 				self.shadow_height = 0*(0.08 + 0.4*math.sqrt(self.velocity.x^2)) + ((((self.highlighted and self.area == G.play) or self.states.drag.is) and 0.35) or (self.area and self.area.config.type == 'title_2') and 0.04 or 0.1)
-				self.children.center:draw_shader('fac_aure-allu_chimaera', self.shadow_height)
-				self.children.chimaera_old_center:draw_shader('fac_aure-allu_chimaera', self.shadow_height)
+				self.children.center:draw_shader('fac_aureallu_chimaera', self.shadow_height)
+				self.children.chimaera_old_center:draw_shader('fac_aureallu_chimaera', self.shadow_height)
 				
 			end
 			self.ignore_shadow.chimaera_morph = true
 
-			self.children.center:draw_shader("fac_aure-allu_chimaera")
-			self.children.chimaera_old_center:draw_shader("fac_aure-allu_chimaera")
+			self.children.center:draw_shader("fac_aureallu_chimaera")
+			self.children.chimaera_old_center:draw_shader("fac_aureallu_chimaera")
 		end
     end,
     conditions = { vortex = false, facing = 'front' },
@@ -1460,20 +1460,20 @@ SMODS.DrawStep {
 
 local draw_step_edition_func_ref = SMODS.DrawSteps.edition.func 
 function SMODS.DrawSteps.edition.func(self, layer)
-	if not self.fac_aure_allu_chimaera_morph_data then
+	if not self.fac_aureallu_chimaera_morph_data then
 		return draw_step_edition_func_ref(self, layer)
 	end
 end
 local draw_step_center_func_ref = SMODS.DrawSteps.center.func
 function SMODS.DrawSteps.center.func(self, layer)
-	if not self.fac_aure_allu_chimaera_morph_data then
+	if not self.fac_aureallu_chimaera_morph_data then
 		return draw_step_center_func_ref(self, layer)
 	end
 end
 
 FishAndChips.Fish {
-	key = "chimaera",
-	atlas = "aure-allu_fish",
+	key = "aureallu_chimaera",
+	atlas = "aureallu_fish",
 	pos = { x = 4, y = 3 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -1501,7 +1501,7 @@ FishAndChips.Fish {
 					n = G.UIT.C,
 					config = { ref_table = card, align = "m", colour = card.ability.extra.active and mix_colours(G.C.GREEN, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.RED, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
 					nodes = {
-						{ n = G.UIT.T, config = { text = card.ability.extra.active and localize("k_aure_allu_chimaera_active") or localize('k_aure_allu_chimaera_inactive'), colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
+						{ n = G.UIT.T, config = { text = card.ability.extra.active and localize("k_aureallu_chimaera_active") or localize('k_aureallu_chimaera_inactive'), colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
 					}
 				}
 			}
@@ -1553,7 +1553,7 @@ FishAndChips.Fish {
 				trigger = "after",
 				delay = 0.3,
 				func = function ()
-					play_sound("fac_aure-allu_chimaera_morph", 1.0, 1.75)
+					play_sound("fac_aureallu_chimaera_morph", 1.0, 1.75)
 					morph_fish_into(card, new_center, 1.7)
 					return true
 				end
@@ -1561,7 +1561,7 @@ FishAndChips.Fish {
 			delay(1.6*G.SETTINGS.GAMESPEED)
 		-- else 
 		-- 	SMODS.calculate_effect({
-		-- 		message = localize("k_aure_allu_chimaera_confoozed"),
+		-- 		message = localize("k_aureallu_chimaera_confoozed"),
 		-- 		colour = G.C.BLACK,
 		-- 	}, card)
 		end
@@ -1576,8 +1576,8 @@ FishAndChips.Fish {
 
 -- Guppies
 FishAndChips.Fish {
-	key = "guppies",
-	atlas = "aure-allu_fish",
+	key = "aureallu_guppies",
+	atlas = "aureallu_fish",
 	pos = { x = 0, y = 4 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -1596,12 +1596,12 @@ FishAndChips.Fish {
 		wormhole = 10,
 	},
 	loc_vars = function(self, info_queue, card)
-		local numerator_guppies, denominator_guppies = SMODS.get_probability_vars(card, 1, card.ability.extra.chips_odds, "fac_aure-allu_guppies")
+		local numerator_guppies, denominator_guppies = SMODS.get_probability_vars(card, 1, card.ability.extra.chips_odds, "fac_aureallu_guppies")
 		return { vars = { numerator_guppies, denominator_guppies, zero_signed(card.ability.extra.chips_per_fish) } }
 	end,
 	calculate = function(self, card, context)
 		if context.other_unknown and context.other_unknown.ability.set == "fac_Fish" then
-			if SMODS.pseudorandom_probability(card, "fac_aure-allu_guppies", 1, card.ability.extra.chips_odds) then
+			if SMODS.pseudorandom_probability(card, "fac_aureallu_guppies", 1, card.ability.extra.chips_odds) then
 				return {
 					chips = card.ability.extra.chips_per_fish
 				}
@@ -1613,8 +1613,8 @@ FishAndChips.Fish {
 
 -- Neunauge
 FishAndChips.Fish {
-	key = "neunauge",
-	atlas = "aure-allu_fish",
+	key = "aureallu_neunauge",
+	atlas = "aureallu_fish",
 	pos = { x = 1, y = 4 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -1664,8 +1664,8 @@ FishAndChips.Fish {
 
 -- Old World Knifefish
 FishAndChips.Fish {
-	key = "old_world_knifefish",
-	atlas = "aure-allu_fish",
+	key = "aureallu_old_world_knifefish",
+	atlas = "aureallu_fish",
 	pos = { x = 2, y = 4 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -1739,13 +1739,13 @@ FishAndChips.Fish {
 
 -- Thrasher Shark
 SMODS.Sound {
-	key = "aure-allu_trasher",
-	path = "aure-allu/thrasher.ogg"
+	key = "aureallu_trasher",
+	path = "aureallu/thrasher.ogg"
 }
 
 FishAndChips.Fish {
-	key = "thrasher_shark",
-	atlas = "aure-allu_fish",
+	key = "aureallu_thrasher_shark",
+	atlas = "aureallu_fish",
 	pos = { x = 3, y = 4 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -1773,7 +1773,7 @@ FishAndChips.Fish {
 			G.E_MANAGER:add_event(Event({
 				func = function ()
 					SMODS.modify_rank(other_card, -card.ability.extra.reduce_rank)
-					-- play_sound("fac_aure_allu_trasher")
+					-- play_sound("fac_aureallu_trasher")
 					-- ease_dollars(-card.ability.extra.dollar_cost, true)
 					-- ease_sand_dollars(-card.ability.extra.sand_dollar_cost, true)
 					card.ability.extra_value = card.ability.extra_value + card.ability.extra.sand_dollar_cost
@@ -1784,7 +1784,7 @@ FishAndChips.Fish {
 			return {
 				dollars = -card.ability.extra.dollar_cost,
 				sand_dollars = -card.ability.extra.sand_dollar_cost,
-				message = localize("k_aure_allu_trasher"),
+				message = localize("k_aureallu_trasher"),
 				colour = G.C.GREY
 			}
 		end
@@ -1799,8 +1799,8 @@ local blahaj_suits_map = {
 	Spades = "Diamonds"
 }
 FishAndChips.Fish {
-	key = "blahaj",
-	atlas = "aure-allu_fish",
+	key = "aureallu_blahaj",
+	atlas = "aureallu_fish",
 	pos = { x = 4, y = 4 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -1904,8 +1904,8 @@ FishAndChips.Fish {
 
 -- Firefly Squid
 FishAndChips.Fish {
-	key = "firefly_squid",
-	atlas = "aure-allu_fish",
+	key = "aureallu_firefly_squid",
+	atlas = "aureallu_fish",
 	pos = { x = 0, y = 5 },
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
@@ -1933,7 +1933,7 @@ FishAndChips.Fish {
 					func = function()
 						SMODS.add_card {
 							set = 'Spectral',
-							key_append = 'fac_aure-allu_firefly'
+							key_append = 'fac_aureallu_firefly'
 						}
 						G.GAME.consumeable_buffer = 0
 						return true
@@ -1948,7 +1948,7 @@ FishAndChips.Fish {
                     func = function()
                         SMODS.add_card {
                             set = 'Tarot',
-                            key_append = 'fac_aure-allu_firefly'
+                            key_append = 'fac_aureallu_firefly'
                         }
                         G.GAME.consumeable_buffer = 0
                         return true
