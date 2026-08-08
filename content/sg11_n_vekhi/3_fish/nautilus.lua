@@ -13,7 +13,7 @@ FishAndChips.Fish({
 	ppu_artist = { "vevekhi" },
 	attributes = { "generation", "tarot" },
 	config = {},
-	weight = 13,
+	weight = 12,
 	stats = {
 		weight = { min = 1, max = 1.8 },
 		length = { min = 0.2, max = 0.45 },
