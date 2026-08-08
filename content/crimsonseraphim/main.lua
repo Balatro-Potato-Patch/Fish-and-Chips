@@ -26,7 +26,7 @@ PotatoPatchUtils.Developer({
         local c = SMODS.create_card({key = "fish_fac_jade_crystalfish", area = area})
         area:emplace(c)
         FishAndChips.crimsonseraphim.desc_card = {
-            center = G.P_CENTERS.fish_fac_jade_crystalfish,
+            center = G.P_CENTERS.fish_fac_crimsonseraphim_jade_crystalfish,
             dt = 0,
             card = c,
             area = area
@@ -70,7 +70,7 @@ PotatoPatchUtils.Developer({
 })
 
 FishAndChips.Fish {
-	key = "aeonfish",
+	key = "crimsonseraphim_aeonfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
 	weight = 2,
@@ -110,7 +110,7 @@ FishAndChips.Fish {
 
 --When a fish is obtained sell it and this fish for 3x the sell price
 FishAndChips.Fish {
-	key = "mealy_apple",
+	key = "crimsonseraphim_mealy_apple",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 1 },
 	weight = 2,
@@ -151,7 +151,7 @@ FishAndChips.Fish {
 
 
 FishAndChips.Fish {
-	key = "jade_crystalfish",
+	key = "crimsonseraphim_jade_crystalfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 5, y = 0 },
 	weight = 2,
@@ -175,13 +175,13 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds_seal, "fac_crimsonseraphim_jade_crystalfish_seal")
         local num2, dem2 = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_crimsonseraphim_jade_crystalfish")
-		return { vars = { num, dem, num2, dem2, localize{type = "name_text", set = "fac_Fish", key = "fish_fac_ruby_crystalfish"} } }
+		return { vars = { num, dem, num2, dem2, localize{type = "name_text", set = "fac_Fish", key = "fish_fac_crimsonseraphim_ruby_crystalfish"} } }
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(
             card, "fac_crimsonseraphim_jade_crystalfish", 1, card.ability.extra.odds
         ) then
-            card:transmute(nil, G.P_CENTERS.fish_fac_ruby_crystalfish)
+            card:transmute(nil, G.P_CENTERS.fish_fac_crimsonseraphim_ruby_crystalfish)
         end
         if context.fac_fish_caught and SMODS.pseudorandom_probability(
             card, "fac_crimsonseraphim_jade_crystalfish_seal", 1, card.ability.extra.odds_seal
@@ -280,7 +280,7 @@ FishAndChips.crimsonseraphim.fish_seals = {
 }
 
 FishAndChips.Fish {
-	key = "ruby_crystalfish",
+	key = "crimsonseraphim_ruby_crystalfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 6, y = 0 },
 	weight = 2,
@@ -302,13 +302,13 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_crimsonseraphim_ruby_crystalfish")
-        return {vars = {num, dem, localize{type = "name_text", set = "fac_Fish", key = "fish_fac_jade_crystalfish"}}}
+        return {vars = {num, dem, localize{type = "name_text", set = "fac_Fish", key = "fish_fac_crimsonseraphim_jade_crystalfish"}}}
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(
             card, "fac_crimsonseraphim_ruby_crystalfish", 1, card.ability.extra.odds
         ) then
-            card:transmute(nil, G.P_CENTERS.fish_fac_jade_crystalfish)
+            card:transmute(nil, G.P_CENTERS.fish_fac_crimsonseraphim_jade_crystalfish)
         end
         if context.fac_fish_caught then
             SMODS.change_base(context.fac_fish_caught, 
@@ -332,7 +332,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "hammerhead_shark",
+	key = "crimsonseraphim_hammerhead_shark",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 4, y = 2 },
 	weight = 2, 
@@ -376,7 +376,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "ghost_chaosfish",
+	key = "crimsonseraphim_ghost_chaosfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 1, y = 0 },
 	weight = 2, 
@@ -398,8 +398,8 @@ FishAndChips.Fish {
 	},
     target = "",
     force_environment = function(card)
-        if pseudorandom("fac_ghost_chaosfish") < 0.2 then
-			return pseudorandom_element(FishAndChips.Environments, "fac_ghost_chaosfish_poll", {
+        if pseudorandom("fac_crimsonseraphim_ghost_chaosfish") < 0.2 then
+			return pseudorandom_element(FishAndChips.Environments, "fac_crimsonseraphim_ghost_chaosfish_poll", {
 				in_pool = function(v, _args)
 					return v ~= FishAndChips.CurrentFishingPool
 				end
@@ -429,7 +429,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "laplaces_angelfish",
+	key = "crimsonseraphim_laplaces_angelfish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 2, y = 0 },
 	weight = 2, 
@@ -475,7 +475,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "gungir",
+	key = "crimsonseraphim_gungir",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 3, y = 0 },
 	weight = 2, 
@@ -549,7 +549,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "trout_population",
+	key = "crimsonseraphim_trout_population",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 5, y = 1 },
 	weight = 2, 
@@ -582,7 +582,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         if context.joker_main then
             for i = 1, 10 do
-                if pseudorandom("crimsonseraphim_trout_population") < 0.5 then
+                if pseudorandom("crimsonseraphim_crimsonseraphim_trout_population") < 0.5 then
                     SMODS.calculate_effect({mult = card.ability.extra.mult}, context.blueprint_card or card)
                 else
                     SMODS.calculate_effect({chips = card.ability.extra.chips}, context.blueprint_card or card)
@@ -594,7 +594,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "another_bucket",
+	key = "crimsonseraphim_another_bucket",
 	atlas = "bucket",
 	pos = { x = 1, y = 1 },
 	weight = 2, 
@@ -661,7 +661,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "rusty_revolver",
+	key = "crimsonseraphim_rusty_revolver",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 4, y = 0 },
 	weight = 2, 
@@ -712,7 +712,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "larp",
+	key = "crimsonseraphim_larp",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 5, y = 2 },
 	weight = 2, 
@@ -807,102 +807,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "larp",
-	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
-	weight = 2, 
-	ppu_coder = { "crimsonseraphim" },
-	ppu_artist = { "crimsonseraphim" },
-	attributes = { "useable", "passive" },
-	environments = {
-        city_river = 5,
-        calm_pond = 5,
-        garden = 5
-	},
-    config = {
-        extra = {
-            joker = "fish_fac_cod"
-        }
-    },
-    stats = {
-		weight = {min = 2.6, max = 20},
-		length = {min = 0.4, max = 1.2}
-	},
-    loc_vars = function(self, q, card)
-        return {
-            vars = {
-                localize{type = "name_text", key = card.ability.extra.joker, set = "fac_Fish"}
-            },
-        }
-    end,
-    use = function(self, card)
-        if G.P_CENTERS[card.ability.extra.joker].use then
-            G.P_CENTERS[card.ability.extra.joker]:use(card.dummy)
-        end
-	end,
-	can_use = function(self, card)
-		return G.P_CENTERS[card.ability.extra.joker].can_use and G.P_CENTERS[card.ability.extra.joker]:can_use(card.dummy) or nil
-	end,
-    keep_on_use = function(self, card)
-        return G.P_CENTERS[card.ability.extra.joker].keep_on_use and G.P_CENTERS[card.ability.extra.joker]:keep_on_use(card.dummy) or nil
-    end,
-    calculate = function(self, card, context)
-        if context.starting_shop then
-            G.E_MANAGER:add_event(Event{
-                trigger = "after",
-                func = function()
-                    card.ability.extra.joker = SMODS.poll_object{type = "fac_Fish"}
-                    Card.remove_from_deck(card.dummy)
-                    card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
-                    card.dummy.added_to_deck = nil
-                    Card.add_to_deck(card.dummy)
-                    card.dummy.added_to_deck = true
-                    card.ability.extra.dummy_abil = card.dummy.ability
-                    FishAndChips.modify_fish_stats(card, FishAndChips.create_fish_stats(card.dummy.config.center))
-                    card_eval_status_text(
-                        card,
-                        "extra",
-                        nil,
-                        nil,
-                        nil,
-                        { message = localize("k_switch_ex") }
-                    )
-                    return true
-                end
-            })
-        end
-        if not card.dummy then
-            card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
-            card.dummy.added_to_deck = true
-            if card.ability.extra.dummy_abil then card.dummy.ability = card.ability.extra.dummy_abil end
-        end
-        if card.ability.extra.joker == "fish_fac_steelhead" then
-            local other_fish = nil
-            for i = 2, #G.fac_fish_area.cards do
-                if G.fac_fish_area.cards[i] == card then other_fish = G.fac_fish_area.cards[i - 1] end
-            end
-            return SMODS.blueprint_effect(card, other_fish, context)
-        elseif card.ability.extra.joker == "fish_fac_flounder" then
-            if G.fac_fish_area.cards[#G.fac_fish_area.cards] ~= card then
-                return SMODS.blueprint_effect(card, G.fac_fish_area.cards[#G.fac_fish_area.cards], context)
-            end
-        else
-            local ret = Card.calculate_joker(card.dummy, context)
-            card.ability.extra.dummy_abil = card.dummy.ability
-            return ret
-        end
-    end,
-    calc_dollar_bonus = function(self, card)
-        if card.dummy then
-            local ret = Card.calculate_dollar_bonus(card.dummy)
-            card.ability.extra.dummy_abil = card.dummy.ability
-            return ret
-        end
-    end,
-}
-
-FishAndChips.Fish {
-	key = "still_life",
+	key = "crimsonseraphim_still_life",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 3, y = 2 },
 	weight = 2, 
@@ -957,7 +862,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "starblight_eel",
+	key = "crimsonseraphim_starblight_eel",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 1, y = 1 },
 	weight = 2, 
@@ -994,7 +899,7 @@ FishAndChips.Fish {
             end
             for i = 1, card.ability.extra.copies do
                 if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
-                    local c = copy_card(pseudorandom_element(cards, pseudoseed("starblight_eel")), nil)
+                    local c = copy_card(pseudorandom_element(cards, pseudoseed("crimsonseraphim_starblight_eel")), nil)
                     G.fac_fish_area:emplace(c)
                     c:add_to_deck()
                     c:start_materialize()
@@ -1007,7 +912,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "ultimate_weapon",
+	key = "crimsonseraphim_ultimate_weapon",
 	atlas = "crimsonseraphim_ultimate_weapon",
 	pos = { x = 0, y = 0 },
 	weight = 2, 
@@ -1064,7 +969,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "jack_o_lantern",
+	key = "crimsonseraphim_jack_o_lantern",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
 	weight = 2, 
@@ -1111,7 +1016,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "piranha_cruenta",
+	key = "crimsonseraphim_piranha_cruenta",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 6, y = 2 },
 	weight = 2, 
@@ -1149,7 +1054,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "delphinus_dormiens",
+	key = "crimsonseraphim_delphinus_dormiens",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 4, y = 1 },
 	weight = 2, 
@@ -1182,7 +1087,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "anima",
+	key = "crimsonseraphim_anima",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 2 },
 	weight = 2, 
@@ -1201,7 +1106,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "falx_sulphurata",
+	key = "crimsonseraphim_falx_sulphurata",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
 	weight = 2, 
@@ -1219,7 +1124,7 @@ FishAndChips.Fish {
 	},
     calculate = function(self, card, context)
         if context.crimsonseraphim_before_hightlighted_moved and #G.hand.highlighted > 1 then
-            local c = pseudorandom_element(G.hand.highlighted, pseudoseed("falx_sulphurata_card"))
+            local c = pseudorandom_element(G.hand.highlighted, pseudoseed("crimsonseraphim_falx_sulphurata_card"))
             if c then
                 c.area:remove_card(c)
                 SMODS.destroy_cards(c, nil, true)
@@ -1237,7 +1142,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "squalus_aeternus",
+	key = "crimsonseraphim_squalus_aeternus",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
 	weight = 2, 
@@ -1271,7 +1176,7 @@ FishAndChips.Fish {
         for i, v in pairs(G.fac_fish_area.highlighted) do
             if v.ability.eternal and v ~= card then h[#h+1] = v end
         end
-        local c = pseudorandom_element(h, pseudoseed("squalus_aeternus"))
+        local c = pseudorandom_element(h, pseudoseed("crimsonseraphim_squalus_aeternus"))
         c.ability.eternal = false
         card.ability.eternal = true
     end,
@@ -1282,7 +1187,7 @@ FishAndChips.Fish {
         G.fac_fish_area.config.highlighted_limit = 2
     end,
     remove_from_deck = function()
-        if #SMODS.find_card("fish_fac_squalus_aeternus") <= 0 then
+        if #SMODS.find_card("fish_fac_crimsonseraphim_squalus_aeternus") <= 0 then
             G.fac_fish_area.config.highlighted_limit = 1
         end
     end,
@@ -1292,7 +1197,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "vanitas",
+	key = "crimsonseraphim_vanitas",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 2, y = 1 },
 	weight = 2, 
@@ -1328,7 +1233,7 @@ for i, v in pairs(FishAndChips.crimsonseraphim.C) do
 end
 
 FishAndChips.Fish {
-	key = "silly_bunny",
+	key = "crimsonseraphim_silly_bunny",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 6, y = 1 },
 	weight = 2, 
@@ -1351,7 +1256,7 @@ FishAndChips.Fish {
                 for i, v in pairs(G.fac_fish_area.cards) do
                     if v == card then self_pos = i end
                 end
-                local position = pseudorandom("crimsonseraphim_silly_bunny", 1, #G.fac_fish_area.cards)
+                local position = pseudorandom("crimsonseraphim_crimsonseraphim_silly_bunny", 1, #G.fac_fish_area.cards)
                 local other = G.fac_fish_area.cards[position]
                 G.fac_fish_area.cards[position] = card
                 G.fac_fish_area.cards[self_pos] = other
@@ -1372,7 +1277,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "ronald_reagan_2",
+	key = "crimsonseraphim_ronald_reagan_2",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 0, y = 0 },
 	weight = 2, 
@@ -1405,7 +1310,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "picayune_cursedfish",
+	key = "crimsonseraphim_picayune_cursedfish",
 	atlas = "crimsonseraphim_picayune",
 	pos = { x = 0, y = 0 },
 	weight = 2, 
@@ -1431,7 +1336,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "miniaturized_exoplanet",
+	key = "crimsonseraphim_miniaturized_exoplanet",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 1, y = 2 },
 	weight = 2, 
@@ -1543,13 +1448,13 @@ end
 local load_profile = Game.load_profile
 function Game:load_profile(p, ...)
     local ret = load_profile(self, p, ...)
-    if G.P_CENTERS.fish_fac_nameless_lotus then
+    if G.P_CENTERS.fish_fac_crimsonseraphim_nameless_lotus then
         if not G.PROFILES[p] then p = 1 end
         local prof = G.PROFILES[p]
-        G.P_CENTERS.fish_fac_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_default"
+        G.P_CENTERS.fish_fac_crimsonseraphim_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_default"
         for i, v in pairs(FishAndChips.crimsonseraphim.lotus_alts) do
             if string.lower(prof.name) == v then
-                G.P_CENTERS.fish_fac_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_"..v
+                G.P_CENTERS.fish_fac_crimsonseraphim_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_"..v
             end
         end
     end
@@ -1558,19 +1463,19 @@ end
 local save_settings = G.save_settings
 function G:save_settings(...)
     save_settings(self, ...)
-    if G.P_CENTERS.fish_fac_nameless_lotus then
+    if G.P_CENTERS.fish_fac_crimsonseraphim_nameless_lotus then
         local prof = G.PROFILES[G.SETTINGS.profile]
-        G.P_CENTERS.fish_fac_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_default"
+        G.P_CENTERS.fish_fac_crimsonseraphim_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_default"
         for i, v in pairs(FishAndChips.crimsonseraphim.lotus_alts) do
             if string.lower(prof.name) == v then
-                G.P_CENTERS.fish_fac_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_"..v
+                G.P_CENTERS.fish_fac_crimsonseraphim_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_"..v
             end
         end
     end
 end
 
 FishAndChips.Fish {
-	key = "nameless_lotus",
+	key = "crimsonseraphim_nameless_lotus",
 	atlas = "crimsonseraphim_lotus_default",
 	pos = { x = 0, y = 0 },
 	weight = 2, 
@@ -1619,7 +1524,7 @@ FishAndChips.Fish {
                 card.ability.extra.mult,
                 card.ability.extra.mult * FishAndChips.crimsonseraphim.count_developers(),
             },
-            name_key = heart and "fish_fac_nameless_lotus_heart" or nil
+            name_key = heart and "fish_fac_crimsonseraphim_nameless_lotus_heart" or nil
         }
     end,
     calculate = function(self, card, context)
@@ -1632,9 +1537,9 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "sans_door",
-	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 999 },
+	key = "crimsonseraphim_sans_door",
+	atlas = "crimsonseraphim_door",
+	pos = { x = 1, y = 0 },
 	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
@@ -1698,21 +1603,21 @@ FishAndChips.Fish {
     end
 }
 
-SMODS.draw_ignore_keys.sans_door_canvas = true
+SMODS.draw_ignore_keys.crimsonseraphim_sans_door_canvas = true
 SMODS.DrawStep({
-	key = "sans_door",
+	key = "crimsonseraphim_sans_door",
 	order = 25,
 	func = function(self)
         local card = self.config.center_key
-        if (card ~= "fish_fac_sans_door")  then return end
-        if not self.children.sans_door_canvas then 
-            self.children.sans_door_canvas = SMODS.CanvasSprite(
+        if (card ~= "fish_fac_crimsonseraphim_sans_door") or not self.config.center.discovered  then return end
+        if not self.children.crimsonseraphim_sans_door_canvas then 
+            self.children.crimsonseraphim_sans_door_canvas = SMODS.CanvasSprite(
                 {X=0, Y=0, W=71, H=95, canvasW=71, canvasH=95, canvasScale=1}
             )
         end
         love.graphics.push()
         love.graphics.origin()
-        self.children.sans_door_canvas.canvas:renderTo(function() 
+        self.children.crimsonseraphim_sans_door_canvas.canvas:renderTo(function() 
             local scale = G.T_CANV_SCALE or 1.25
             love.graphics.clear({0,0,0,1})
             local environment = FishAndChips.Environments[self.ability.extra.environment]
@@ -1729,8 +1634,8 @@ SMODS.DrawStep({
             love.graphics.draw(di, quad, 0,0, 0, 1,1, 0, 0) 
         end)
         love.graphics.pop()
-        self.children.sans_door_canvas.role.draw_major = self
-        FishAndChips.crimsonseraphim.draw_sprite(self.children.sans_door_canvas, self, {
+        self.children.crimsonseraphim_sans_door_canvas.role.draw_major = self
+        FishAndChips.crimsonseraphim.draw_sprite(self.children.crimsonseraphim_sans_door_canvas, self, {
             nil, nil, nil, self.children.center
         })
 	end,
@@ -1739,7 +1644,7 @@ SMODS.DrawStep({
 
 
 FishAndChips.Fish {
-	key = "roaring_fish",
+	key = "crimsonseraphim_roaring_fish",
 	atlas = "crimsonseraphim_aeonfish",
 	pos = { x = 2, y = 2 },
 	weight = 2, 
@@ -1769,9 +1674,9 @@ FishAndChips.Fish {
             FishAndChips.crimsonseraphim.swoon()
             G.E_MANAGER:add_event(Event{
                 func = function()
-                    pseudoshuffle(cards, pseudoseed("fac_fish_roaring_fish"))
+                    pseudoshuffle(cards, pseudoseed("fac_fish_crimsonseraphim_roaring_fish"))
                     cards[1]:start_dissolve()
-                    pseudoshuffle(cards, pseudoseed("fac_fish_roaring_fish"))
+                    pseudoshuffle(cards, pseudoseed("fac_fish_crimsonseraphim_roaring_fish"))
                     cards[1]:set_edition("e_negative")
                     return true
                 end

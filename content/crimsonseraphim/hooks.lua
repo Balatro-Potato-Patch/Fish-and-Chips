@@ -103,7 +103,7 @@ end
 
 local should_draw_base_ref = Card.should_draw_base_shader
 function Card:should_draw_base_shader(...)
-    if self.children.center.aeonfish_transmute then return nil end
+    if self.children.center.crimsonseraphim_aeonfish_transmute then return nil end
     return should_draw_base_ref(self, ...)
 end
 
@@ -118,7 +118,7 @@ function G.FUNCS.get_poker_hand_info(_cards)
     for i, v in pairs(_cards) do
         cards[#cards+1] = v
     end
-    if next(SMODS.find_card("fish_fac_ruby_crystalfish")) then
+    if next(SMODS.find_card("fish_fac_crimsonseraphim_ruby_crystalfish")) then
         for i, v in pairs(G.I.CARD) do
             if v.config and v.config.center and v.config.center.set == "fac_Fish" and not SMODS.in_scoring(_cards, v) and v.base.suit then
                 cards[#cards+1] = v
@@ -130,7 +130,7 @@ end
 
 local poll_fish_ref = FishAndChips.poll_fish
 function FishAndChips.poll_fish(_fevn)
-    for i, v in pairs(SMODS.find_card("fish_fac_ghost_chaosfish")) do
+    for i, v in pairs(SMODS.find_card("fish_fac_crimsonseraphim_ghost_chaosfish")) do
         _fenv = _fenv or v.config.center:force_environment(v)
     end
     return poll_fish_ref(_fevn)
@@ -177,14 +177,14 @@ end
 local go_fish = G.FUNCS.fac_go_fish
 function G.FUNCS.fac_go_fish(e)
     go_fish(e)
-    if next(SMODS.find_card("fish_fac_rusty_revolver")) then
+    if next(SMODS.find_card("fish_fac_crimsonseraphim_rusty_revolver")) then
         G.E_MANAGER:add_event(Event{
             trigger = "after",
             blocking = false,
             func = function()
                 if G.FISHING_STATE == G.FISHING_STATES.HOOKING then
                     local p
-                    for i, v in pairs(SMODS.find_card("fish_fac_rusty_revolver")) do
+                    for i, v in pairs(SMODS.find_card("fish_fac_crimsonseraphim_rusty_revolver")) do
                         if v.ability.extra.primed then
                             p = true
                             for i = 1, v.ability.extra.primed do
@@ -224,7 +224,7 @@ end
 local card_add_to_deck = Card.add_to_deck
 function Card:add_to_deck(...)
     card_add_to_deck(self, ...)
-    if self.ability.set == "fac_Fish" and self.config.center_key ~= "fish_fac_ultimate_weapon" then
+    if self.ability.set == "fac_Fish" and self.config.center_key ~= "fish_fac_crimsonseraphim_ultimate_weapon" then
         G.GAME.crimsonseraphim_obtained_fish = G.GAME.crimsonseraphim_obtained_fish or {}
         G.GAME.crimsonseraphim_obtained_fish[#G.GAME.crimsonseraphim_obtained_fish+1] = {card = self, savetable = self:save()}
     end
@@ -240,7 +240,7 @@ function Card:remove(...)
             end
         end
     end
-    if self.config.center_key == "fish_fac_another_bucket" and self.ability.saved_card then
+    if self.config.center_key == "fish_fac_crimsonseraphim_another_bucket" and self.ability.saved_card then
         self.ability.saved_card.card:remove()
     end
     return card_remove(self, ...)

@@ -9,8 +9,8 @@ target = '''=[SMODS FishAndChips "/src/fishminigamemechanics.lua"]'''
 pattern = '''state.treasure_type = fac_weighted_pick(FAC_TREASURE_TYPE_WEIGHTS, "fac_treasure_type")'''
 position = "after"
 payload = '''
-if next(SMODS.find_card("fish_fac_anima")) then
-    SMODS.destroy_cards(SMODS.find_card("fish_fac_anima")[1], nil, true)
+if next(SMODS.find_card("fish_fac_crimsonseraphim_anima")) then
+    SMODS.destroy_cards(SMODS.find_card("fish_fac_crimsonseraphim_anima")[1], nil, true)
     state.treasure_type = "fish"
 end
 '''

@@ -9,9 +9,9 @@ target = '''=[SMODS FishAndChips "/src/fishminigamemechanics.lua"]'''
 pattern = '''fac_draw_fish(track_x + track_w * 0.5 + 6, fish_y, FAC_FISH_DRAW_SIZE, state.profile.colour)'''
 position = "after"
 payload = '''
-if next(SMODS.find_card("fish_fac_rusty_revolver")) or G.GAME.REVOLVER_RETICLE_ALPHA then
+if next(SMODS.find_card("fish_fac_crimsonseraphim_rusty_revolver")) or G.GAME.REVOLVER_RETICLE_ALPHA then
     local reticle = G.GAME.REVOLVER_RETICLE_ALPHA
-    for i, v in pairs(SMODS.find_card("fish_fac_rusty_revolver")) do
+    for i, v in pairs(SMODS.find_card("fish_fac_crimsonseraphim_rusty_revolver")) do
         if v.ability.extra.primed then
             reticle = true
         end

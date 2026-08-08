@@ -15,7 +15,7 @@ return {
             },
         },
         fac_Fish = {
-            fish_fac_aeonfish = {
+            fish_fac_crimsonseraphim_aeonfish = {
                 name = "Aeonfish",
                 text = {
                     "Once per round you may",
@@ -29,7 +29,7 @@ return {
                     "too close."
                 }
             },
-            fish_fac_hammerhead_shark = {
+            fish_fac_crimsonseraphim_hammerhead_shark = {
                 name = "Hammerhead Shark",
                 text = {
                     "When a {C:attention}Fish{} is caught",
@@ -42,7 +42,7 @@ return {
                 }
             },
 
-            fish_fac_mealy_apple = {
+            fish_fac_crimsonseraphim_mealy_apple = {
                 name = "Mealy Apple",
                 text = {
                     "When a {C:attention}Fish{} is caught",
@@ -55,7 +55,7 @@ return {
                 }
             },
 
-            fish_fac_ruby_crystalfish = {
+            fish_fac_crimsonseraphim_ruby_crystalfish = {
                 name = {"Crystalfish", "(Al{s:0.5}2{}O{s:0.5}3{}:Cr)"},
                 text = {
                     {
@@ -74,7 +74,7 @@ return {
                     "under the light..."
                 }
             },
-            fish_fac_jade_crystalfish = {
+            fish_fac_crimsonseraphim_jade_crystalfish = {
                 name = {"Crystalfish", "(Ca{s:0.5}2{}[Mg,Fe]{s:0.5}5{}Si{s:0.5}8{}O{s:0.5}22{}[OH]{s:0.5}2{})"},
                 text = {
                     {
@@ -94,7 +94,7 @@ return {
                 }
             },
 
-            fish_fac_ghost_chaosfish = {
+            fish_fac_crimsonseraphim_ghost_chaosfish = {
                 name = "Phantom Chaosfish",
                 text = {
                     {
@@ -116,7 +116,7 @@ return {
                 }
             },
 
-            fish_fac_laplaces_angelfish = {
+            fish_fac_crimsonseraphim_laplaces_angelfish = {
                 name = {"Laplace's Angelfish (Hurt Fish? Hurt Fish!)", "feat. A {C:red}Red{} and A {C:green}Green{} Dog", "(2026 F&C Edit)"},
                 text = {
                     {
@@ -135,7 +135,7 @@ return {
                 }
             },
 
-            fish_fac_gungir = {
+            fish_fac_crimsonseraphim_gungir = {
                 name = "Gungir",
                 text = {
                     {
@@ -155,7 +155,7 @@ return {
                 }
             },
 
-            fish_fac_trout_population = {
+            fish_fac_crimsonseraphim_trout_population = {
                 name = "Trout Population",
                 text = {
                     {
@@ -168,7 +168,7 @@ return {
                 }
             },
 
-            fish_fac_another_bucket = {
+            fish_fac_crimsonseraphim_another_bucket = {
                 name = "Another Bucket",
                 text = {
                     {
@@ -185,7 +185,7 @@ return {
                 }
             },
 
-            fish_fac_rusty_revolver = {
+            fish_fac_crimsonseraphim_rusty_revolver = {
                 name = "Rusty Revolver",
                 text = {
                     {
@@ -204,7 +204,7 @@ return {
                     "have become unsalvageable."
                 }
             },
-            fish_fac_larp = {
+            fish_fac_crimsonseraphim_larp = {
                 name = "Larp",
                 text = {
                     "Larps the ability of a",
@@ -216,7 +216,7 @@ return {
                     "to the carp."
                 }
             },
-            fish_fac_still_life = {
+            fish_fac_crimsonseraphim_still_life = {
                 name = "BaaaS͚icc baasS",
                 text = {
                     "{C:red}+#1#{} MMulT",
@@ -231,7 +231,7 @@ return {
                     "No, wwroNG̊͒ bass..."
                 }
             },
-            fish_fac_starblight_eel = {
+            fish_fac_crimsonseraphim_starblight_eel = {
                 name = "Starblight Eel",
                 text = {
                     "When caught create a",
@@ -247,7 +247,7 @@ return {
                 }
             },
 
-            fish_fac_ultimate_weapon = {
+            fish_fac_crimsonseraphim_ultimate_weapon = {
                 name = "The Ultimate Weapon",
                 text = {
                     "Use this {C:attention}Fish{} to",
@@ -265,7 +265,7 @@ return {
                 }
             },
 
-            fish_fac_jack_o_lantern = {
+            fish_fac_crimsonseraphim_jack_o_lantern = {
                 name = "Jack O' Lantern",
                 text = {
                     {
@@ -283,7 +283,7 @@ return {
                 }
             },
 
-            fish_fac_piranha_cruenta = {
+            fish_fac_crimsonseraphim_piranha_cruenta = {
                 name = "Piranha cruenta",
                 text = {
                     "{C:hearts}Hearts{} held in hand",
@@ -297,7 +297,7 @@ return {
                     "pride and deceit."
                 }
             },
-            fish_fac_delphinus_dormiens = {
+            fish_fac_crimsonseraphim_delphinus_dormiens = {
                 name = "Delphinus dormiens",
                 text = {
                     "When a non-{C:attention}Perishable Fish{}",
@@ -314,7 +314,7 @@ return {
                     "into you",
                 }
             },
-            fish_fac_anima = {
+            fish_fac_crimsonseraphim_anima = {
                 name = "Anima",
                 text = {
                     "The next caught {C:attention}Treasure{}",
@@ -329,7 +329,7 @@ return {
                     "rest, O soul, for they were long",
                 }
             },
-            fish_fac_falx_sulphurata = {
+            fish_fac_crimsonseraphim_falx_sulphurata = {
                 name = "Falx sulphurata",
                 text = {
                     "Before a hand is played",
@@ -345,7 +345,7 @@ return {
                     "and how few there are that are saved.",
                 }
             },
-            fish_fac_squalus_aeternus = {
+            fish_fac_crimsonseraphim_squalus_aeternus = {
                 name = "Squalus aeternus",
                 text = {
                     "Use this {C:attention}Fish{} to remove",
@@ -358,7 +358,7 @@ return {
                     "of eternity will have passed"
                 }
             },
-            fish_fac_vanitas = {
+            fish_fac_crimsonseraphim_vanitas = {
                 name = "{X:white,C:crimsonseraphim_transparent}Vanitas{}",
                 text = {
                     "When blind is selected",
@@ -370,7 +370,7 @@ return {
                     "question is asked."
                 }
             },
-            fish_fac_silly_bunny = {
+            fish_fac_crimsonseraphim_silly_bunny = {
                 name = "Silly Bunny",
                 text = {
                     "Moves to a random slot",
@@ -383,7 +383,7 @@ return {
                 }
             },
 
-            fish_fac_ronald_reagan_2 = {
+            fish_fac_crimsonseraphim_ronald_reagan_2 = {
                 name = "Ronald Reagan II",
                 text = {
                     "At the end of round the listed",
@@ -397,7 +397,7 @@ return {
                     "rises and converges from the opposite direction"
                 }
             },
-            fish_fac_picayune_cursedfish = {
+            fish_fac_crimsonseraphim_picayune_cursedfish = {
                 name = "Tier 1 Fish (Cursed)",
                 text = {
                     "Use this {C:attention}Fish{} to select",
@@ -411,7 +411,7 @@ return {
                     "movement speed is relatively slow otherwise."
                 }
             },
-            fish_fac_miniaturized_exoplanet = {
+            fish_fac_crimsonseraphim_miniaturized_exoplanet = {
                 name = "Miniaturized Exoplanet",
                 text = {
                     "Use this {C:attention}Fish{} to",
@@ -423,7 +423,7 @@ return {
                     "became so light."
                 }
             },
-            fish_fac_nameless_lotus = {
+            fish_fac_crimsonseraphim_nameless_lotus = {
                 name = "{E:fac_nameless}Erilucyxwyn{}",
                 text = {
                     "{E:fac_nameless}Gives {X:mult,C:white,E:fac_nameless}X#1# {E:fac_nameless} Mult for",
@@ -436,10 +436,10 @@ return {
                     "{element:5} {element:6} {element:7} {element:8}"
                 }
             },
-            fish_fac_nameless_lotus_heart = {
+            fish_fac_crimsonseraphim_nameless_lotus_heart = {
                 name = "{E:fac_nameless}Erilucyxwyn <3{}",
             },
-            fish_fac_sans_door = {
+            fish_fac_crimsonseraphim_sans_door = {
                 name = "Mysterious Door.",
                 text = {
                     {
@@ -459,7 +459,7 @@ return {
                     "I've never seen it before."
                 }
             },
-            fish_fac_roaring_fish = {
+            fish_fac_crimsonseraphim_roaring_fish = {
                 name = "Roaring Fish",
                 text = {
                     {

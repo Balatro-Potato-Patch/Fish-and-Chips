@@ -78,12 +78,12 @@ SMODS.Atlas({
 })
 
 SMODS.DrawStep({
-	key = "aeonfish",
+	key = "crimsonseraphim_aeonfish",
 	order = 25,
 	func = function(self)
         local card = self.config.center_key
-        if (card ~= "fish_fac_aeonfish" and card ~= "fish_fac_gungir")  then return end
-        if card == "fish_fac_gungir" and not self.ability.extra.charged then return end
+        if (card ~= "fish_fac_crimsonseraphim_aeonfish" and card ~= "fish_fac_crimsonseraphim_gungir")  then return end
+        if card == "fish_fac_crimsonseraphim_gungir" and not self.ability.extra.charged then return end
         if self.children.center.aeonfish_transmute then return end
         self.children.center:draw_shader('fac_aeonfish_caustics', nil, self.ARGS.send_to_shader)
 	end,
@@ -91,7 +91,7 @@ SMODS.DrawStep({
 })
 
 SMODS.DrawStep({
-	key = "aeonfish_transmute",
+	key = "crimsonseraphim_aeonfish_transmute",
 	order = 25,
 	func = function(self)
         if not self.children.center.aeonfish_transmute then return end  
@@ -133,7 +133,7 @@ SMODS.DrawStep({
 	order = 25,
 	func = function(self)
         local card = self.config.center_key
-        if (card ~= "fish_fac_another_bucket")  then return end
+        if (card ~= "fish_fac_crimsonseraphim_another_bucket")  then return end
         local shader = self.edition and G.P_CENTERS[self.edition.key].shader or "dissolve"
         self.children.center:set_sprite_pos({x=2,y=1})
         FishAndChips.crimsonseraphim.draw_sprite(self.children.center, self)
@@ -157,24 +157,24 @@ SMODS.DrawStep({
 	order = 25,
 	func = function(self)
         local card = self.config.center_key
-        if (card ~= "fish_fac_ultimate_weapon")  then return end
+        if (card ~= "fish_fac_crimsonseraphim_ultimate_weapon")  then return end
         FishAndChips.crimsonseraphim.draw_sprite(self.children.center, self)
         self.children.center:draw_shader('fac_crimsonseraphim_ultimate_weapon', nil, self.ARGS.send_to_shader)
 	end,
 	conditions = { vortex = false, facing = "front" },
 })
 
-SMODS.draw_ignore_keys.vanitas_censor = true
+SMODS.draw_ignore_keys.crimsonseraphim_vanitas_censor = true
 SMODS.DrawStep({
-	key = "vanitas",
+	key = "crimsonseraphim_vanitas",
 	order = 9e10,
 	func = function(self)
         local card = self.config.center_key
-        if (card ~= "fish_fac_vanitas") or not G.P_CENTERS[card].discovered or not G.P_CENTERS[card].unlocked then return end
-        if not self.children.vanitas_censor then 
-            self.children.vanitas_censor = SMODS.create_sprite(0, 0, self.T.w, self.T.h, "fac_crimsonseraphim_aeonfish", {x = 3, y = 1})
+        if (card ~= "fish_fac_crimsonseraphim_vanitas") or not G.P_CENTERS[card].discovered or not G.P_CENTERS[card].unlocked then return end
+        if not self.children.crimsonseraphim_vanitas_censor then 
+            self.children.crimsonseraphim_vanitas_censor = SMODS.create_sprite(0, 0, self.T.w, self.T.h, "fac_crimsonseraphim_aeonfish", {x = 3, y = 1})
         end
-        local sprite = self.children.vanitas_censor
+        local sprite = self.children.crimsonseraphim_vanitas_censor
         sprite.T.w = self.T.w
         sprite.T.h = self.T.h
         sprite.VT.x = math.floor(self.children.center.VT.x*3.5)/3.5
@@ -342,7 +342,7 @@ SMODS.ScreenShader {
         }
     end,
     should_apply = function(self)
-        return next(SMODS.find_card("fish_fac_jack_o_lantern"))
+        return next(SMODS.find_card("fish_fac_crimsonseraphim_jack_o_lantern"))
     end,
 }
 
@@ -355,7 +355,7 @@ SMODS.ScreenShader {
         }
     end,
     should_apply = function(self)
-        return next(SMODS.find_card("fish_fac_nameless_lotus"))
+        return next(SMODS.find_card("fish_fac_crimsonseraphim_nameless_lotus"))
     end,
 }
 
@@ -386,7 +386,7 @@ SMODS.Sound {
     key = "music_crimsonseraphim_edenic_whispers",
     path = "crimsonseraphim/edenic_whispers.ogg",
     select_music_track = function()
-        return next(SMODS.find_card("fish_fac_nameless_lotus")) and 1e307
+        return next(SMODS.find_card("fish_fac_crimsonseraphim_nameless_lotus")) and 1e307
     end
 }
 
