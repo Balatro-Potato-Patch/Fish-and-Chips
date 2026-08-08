@@ -19,10 +19,10 @@ FishAndChips.Fish({
 			mult = 0.5,
 		},
 	},
-	weight = 4,
+	weight = 3,
 	stats = {
-		weight = { min = 1, max = 1 },
-		length = { min = 1, max = 1 },
+		weight = { min = 0, max = 0 },
+		length = { min = 0, max = 0 },
 	},
 	environments = {
 		backroom = 1,
