@@ -3,8 +3,8 @@ FishAndChips.Fish{
 	weight = 5,
 	ppu_coder = {"Foo54"},
 	stats = {
-		weight = {min = 5, max = 5},
-		length = {min = 5, max = 5}
+		weight = {min = 1, max = 1, units = {format = "k_fac_fas_infinity", scale = 1, precision = 0}},
+		length = {min = 1, max = 1, units = {format = "k_fac_fas_infinity", scale = 1, precision = 0}}
 	},
 	environments = {
 		aquifer = 1,

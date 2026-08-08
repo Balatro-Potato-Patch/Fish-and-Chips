@@ -287,6 +287,7 @@ return {
 			k_fac_fas_temmie = "%.0f Temmie",
 			k_fac_fas_left = "left",
 			k_fac_fas_right = "right",
+			k_fac_fas_infinity = "Infinity",
 
 			k_fac_fas_flirt = "Flirt",
 			k_fac_fas_approach = "Approach",
