@@ -2,7 +2,7 @@ FishAndChips.Fish {
 	key = "fo_crabkhon",
 	atlas = "fish",
 	pos = { x = 3, y = 0 },
-	weight = 8,
+	weight = 10,
 	blueprint_compat = true,
 	disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },
