@@ -29,7 +29,7 @@ FishAndChips.Fish {
 		local card_status = {colours = {G.C.UI.TEXT_INACTIVE,G.C.UI.TEXT_INACTIVE,G.C.UI.TEXT_INACTIVE}}
 		card_status[0] = card.ability.extra.times_used + 1
 		card_status.colours[0] = HEX("c3222b")
-		if card.ability.extra.drawn_fish then
+		if #card.ability.extra.drawn_fish > 0 then
 			for i=1,3 do
 				card_status[#card_status+1] = "'" .. localize({ type = 'name_text', set = "fac_Fish", key = card.ability.extra.drawn_fish[i].key }) .. "' "
 			end
