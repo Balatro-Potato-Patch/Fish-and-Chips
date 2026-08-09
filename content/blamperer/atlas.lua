@@ -9,9 +9,9 @@ FishAndChips.Fish {
     },
     config = {
         extra = {
-            -- BALANCE: Adjust this. I think 15 chips per 5 dollars and possibly 1 bait is reasonable,
-            -- but with the right economy this can scale ridiculously fast. Could add a limit per round?
-            chip_gain = 15,
+            -- BALANCE: Adjust this. I think 10 chips per 5 dollars and possibly 1 bait is reasonable,
+            -- but with the right economy and skill this can scale ridiculously fast. Could add a limit per round?
+            chip_gain = 10,
             chips = 0,
             last_catch_environment = ""
         }
