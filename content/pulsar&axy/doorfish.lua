@@ -10,6 +10,11 @@ FishAndChips.Fish {
 		city_river = 1,
 		backroom = 0.5
 	},
+	impulse_min = .23,
+	impulse_max = .23, -- distance per impulse
+	decision_min = 0.24,
+	decision_max = 0.55, -- time in seconds
+	vel_limit = 0.42, -- speed limit
 	stats = {
 		length = { min = 2.032, max = 2.438},
 		weight = { min = 40, max = 45}

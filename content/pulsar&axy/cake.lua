@@ -9,6 +9,11 @@ FishAndChips.Fish {
 	environments = {
 		chocolate_river = 1
 	},
+	impulse_min = 0.25,
+	impulse_max = 0.5, -- distance per impulse
+	decision_min = 1,
+	decision_max = 1.55, -- time in seconds
+	vel_limit = 0.5, -- speed limit
 	stats = {
 		length = { min = 0.50, max = 1},  --vibes based
 		weight = { min = 5, max = 15}

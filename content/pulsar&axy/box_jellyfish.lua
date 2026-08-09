@@ -10,6 +10,11 @@ FishAndChips.Fish {
 	environments = {
 		pier = 1,
 	},
+	impulse_min = 0.75,
+	impulse_max = 0.85, -- distance per impulse
+	decision_min = 0.75,
+	decision_max = 1.6, -- time in seconds
+	vel_limit = 0.42, -- speed limit
 	stats = {
 		length = {min = 1.75, max = 2},
 		weight = { min = .75, max = 1.25}

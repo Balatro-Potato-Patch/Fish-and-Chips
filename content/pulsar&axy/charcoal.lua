@@ -9,9 +9,14 @@ FishAndChips.Fish {
 	environments = {
 		chocolate_river = 1,
 	},
+	impulse_min = 0.12,
+	impulse_max = 0.3, -- distance per impulse
+	decision_min = 1,
+	decision_max = 2, -- time in seconds
+	vel_limit = 0.86, -- speed limit
 	stats = {
-		length = {min = 0.01, max = 0.01},  --vibes
-		weight = {min = 0.0003, max = 0.0003}
+		length = {min = .057, max = 0.10},
+		weight = {min = .120, max = .170}
 	},
 	blueprint_compat = true,
 	config = {
