@@ -1,7 +1,15 @@
 return {
     descriptions = {
+        PotatoPatch = {
+			PotatoPatchDev_Sophie = {
+				name = "Sophie",
+			},
+			PotatoPatchDev_gfs = {
+				name = "gfs",
+			},
+        },
         fac_Fish = {
-            fish_fac_human_fish = {
+            fish_fac_sophie_human_fish = {
                 name = "Human Fish",
                 text = {
                     "When a played {C:attention}face{} card is scored,",
@@ -13,12 +21,12 @@ return {
                     "You must be soooo proud of yourself."
                 }
             },
-            fish_fac_fishing_fear_hat = {
+            fish_fac_sophie_fishing_fear_hat = {
                 name = "Fishing Cap",
                 text = {
                     "{C:green}#1# in #2#{} chance to",
                     "create a {C:spectral}Spectral{} card",
-                    "after catching a fish {C:attention}fails{}",
+                    "when catching a fish {C:attention}fails{}",
                     "{C:inactive}(Must have room)"
                 },
                 flavour = {
@@ -28,178 +36,110 @@ return {
                     "I guess.)",
                 }
             },
-            fish_fac_earthfish = {
-                name = "Ocean Earthfish",
+            fish_fac_sophie_main_plug = {
+                name = "Plug",
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for every",
-                    "{C:money}$#2#{} that you have",
-                    "at end of round"
+                    "During the boss blind,",
+                    "all cards are {C:attention}scored{} as",
+                    "all suits",
+                    "{C:inactive}(Must have room)"
                 },
                 flavour = {
-                    "{element:1}"
+                    "Ummmm...",
+                    "Hope this wasn't important.",
                 }
             },
-            fish_fac_steelhead = {
-                name = "Sticky Steelhead",
+            fish_fac_sophie_poisson_davril = {
+                name = "Poisson d'avril",
                 text = {
-                    "Copies the ability of",
-                    "the {C:attention}Fish{} to the left",
+                    "{C:attention}Lucky Cards{} have their listed",
+                    "{C:green,E:1,S:1.1}probabilties{} increased by {C:attention}#1#{},",
+                    "decreases by {C:attention}#2#{} after {C:attention}Boss Blind",
                 },
                 flavour = {
-                    "Typically an ocean fish,",
-                    "these gummy fish return to",
-                    "rivers to lay Easter eggs."
+                    "got you :)",
                 }
             },
-            fish_fac_swordine = {
-                name = "Swordine",
+            fish_fac_sophie_fish_of_theseus = {
+                name = "Fish of Theseus",
                 text = {
-                    "On the {C:attention}first hand{} of",
-                    "the round, {C:red}destroys{} the",
-                    "{C:attention}rightmost{} scoring card"
+                    "At end of round,",
+                    "completely {C:attention}randomize",
+                    "one card held in hand",
                 },
                 flavour = {
-                    "In medieval times, chefs are",
-                    "believed to have used this",
-                    "fish to cut their fillets."
+                    "Inspired by a ship",
+                    "of a similar name,",
+                    "this fish has been sewn",
+                    "from bits of other fish."
                 }
             },
-            fish_fac_flailnder = {
-                name = "Flailnder",
+            fish_fac_sophie_message_in_a_bottle = {
+                name = "Message in a Bottle",
                 text = {
-                    "Disables the next",
-                    "selected {C:attention}Boss Blind{}",
-                    "and {S:1.1,C:red,E:2}self destructs{}"
+                    "When {C:attention}leaving{} the fishing area,",
+                    "create a {C:attention}random{} Consumable",
+                    "{C:inactive}(Must have room)",
                 },
                 flavour = {
-                    "A weapon once held",
-                    "in the flippers of",
-                    "the Cod of War."
+                    "If you are reading this, I am on an island,",
+                    "lost at sea, looking for a way back to my home.",
+                    "I miss my family dearly and I... don't know what to write really,",
+                    "it's my first time on a deserted island."
                 }
             },
-            fish_fac_piranha = {
-                name = "Prehistoric Piranha",
+            fish_fac_sophie_meridias_beacon = {
+                name = "Meridia's Beacon",
                 text = {
-                    "Retrigger all played",
-                    "cards that were played",
-                    "previously this {C:attention}Ante{}"
+                    "All Jokers are considered",
+                    "{C:attention}Quest Items{} {C:inactive}({C:purple}Eternal{C:inactive})",
                 },
                 flavour = {
-                    "A remnant of ancient times.",
-                    "It's a miracle it's still alive."
+                    "A NEW HAND TOUCHES THE BEACON.",
                 }
             },
-            fish_fac_dogfish = {
-                name = "Dirty Dogfish",
+            fish_fac_sophie_hermit_crab = {
+                name = "Hermit Crab",
                 text = {
-                    "Use this fish to",
-                    "create {C:attention}#1#{} Baits",
+                    "Doubles {C:fac_sand_dollars}Sand Dollars",
+                    "{C:inactive}(Max of {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{}{C:inactive})",
                 },
                 flavour = {
-                    "Despite its name, it's not a dog.",
-                    "You can still pet it, though!"
+                    "This crustacean stores",
+                    "saltwater inside its shell.",
+                    "(and sand dollars)",
                 }
             },
-            fish_fac_minnow = {
-                name = "Giant Minnow",
+            fish_fac_sophie_fish_jenga = {
+                name = "Fish Jenga",
                 text = {
-                    "Played and unscored cards",
-                    "each have a {C:green}#1# in #2#{} chance",
-                    "to increase rank by {C:attention}#3#{}"
+                    "Other {C:attention}Fish{} scale at {C:attention}X#1#{}",
+                    "the normal rate",
                 },
                 flavour = {
-                    "Despite the similarities,",
-                    "giant minnows are completely",
-                    "unrelated to giant blinnows."
+                    "IS THAT {C:attention}FUCKING{} FISH JENGA",
                 }
             },
-            fish_fac_poolfish = {
-                name = "Liminal Poolfish",
+            fish_fac_sophie_the_fish = {
+                name = "The Fish",
                 text = {
-                    "All hands are",
-                    "{C:planet}#1#{} levels higher",
-                    "{C:red}-#2#{} level per",
-                    "round played"
+                    "Cards played this {C:attention}ante",
+                    "are drawn {C:attention}face down",
+                    "and earn {C:money}$#1#{} when scored,",
+                    "{C:attention}The Fish (Blind){} cannot appear"
                 },
                 flavour = {
-                    "Side effects may include:",
-                    "Nausea, Water Breathing, Wall Climbing"
+                    "Fish? Like the blind?",
                 }
             },
-            fish_fac_flounder = {
-                name = "Flatbread Flounder",
-                text = {
-                    "Copies the ability of",
-                    "the rightmost {C:attention}Fish{}",
-                },
-                flavour = {
-                    "Quite bland on its own,",
-                    "but makes a great base",
-                    "for other foods!"
-                }
-            },
-            fish_fac_clothesfish = {
-                name = "Clothesfish",
-                text = {
-                    "{X:mult,C:white}X#1#{} Mult if played",
-                    "hand contains",
-                    "a {C:attention}#2#{}"
-                },
-                flavour = {
-                    "WHAT STORE ARE YOU IN",
-                    "I'M AT THE SOUP STORE",
-                    "WHY ARE YOU BUYING",
-                    "CLOTHES AT THE SOUP STORE",
-                }
-            },
-            fish_fac_deathfish = {
-                name = "Deathfish",
-                text = {
-                    "Select {C:attention}#1#{} cards,",
-                    "convert the {C:attention}left{} card",
-                    "into the {C:attention}right{} card",
-                    "{C:inactive}(Drag to rearrange){}"
-                },
-                flavour = {
-                    "The name should hopefully give",
-                    "you an idea of what happens",
-                    "when you eat this fish."
-                }
-            },
-            fish_fac_bonefish = {
-                name = "Bonefish",
-                text = {
-                    "Prevents Death",
-                    "if chips scored",
-                    "are at least {C:attention}25%",
-                    "of required chips",
-                    "{C:red,E:2}self destructs"
-                },
-                flavour = {
-                    "Treating these fish to a",
-                    "banana is a sure way to",
-                    "tame their fiesty nature!"
-                }
-                --[[ possible other flavor text suggestion [gabby]
-                "Bound together with",
-                "the last remnants of",
-                "a poor sinner's soul..."
-                ]]
-            },
-            fish_fac_milkfin = {
-                name = "Milkfin",
-                text = {
-                    "Cards with {V:1}#1#{} suit",
-                    "give {C:mult}+#2#{} Mult when",
-                    "held in hand,",
-                    "{C:inactive,s:0.8}suit changes at end of round{}"
-                },
-                flavour = {
-                    "WARNING: Do NOT eat",
-                    "milkfin roe! It is",
-                    "incredibly toxic!"
-                }
-            }
         },
+    },
+    misc = {
+        dictionary = {
+            fish_sophie_plus_consumable = "+1 Consumable"
+        },
+        v_dictionary = {
+            k_fish_sophie_odds_m = "-#1# Odds",
+        }
     }
 }
