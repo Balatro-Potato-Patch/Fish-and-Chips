@@ -338,6 +338,21 @@ local pa_fish = {
                 flavour = {
                     "Are you sure you didn't just burn this cookie?"
                 }
+            },
+            fish_fac_pa_sushi = {
+                name = "Sushi Roll",
+                text = {
+                    "Each {C:fac_fish}fish{} catchable",
+                    "in {C:attention}The Soup{}",
+                    "gives {X:mult,C:white}X#1#{} mult"
+                }
+            },
+            fish_fac_pa_photon = {
+                name = "Photon Fish",
+                text = {
+                    "Gives {C:attention}#1#{} random tags when",
+                    "a blind is {C:attention}skipped"
+                }
             }
         },
     },
@@ -345,6 +360,7 @@ local pa_fish = {
         dictionary = {
             au_format = '%.4f AU', --Astronomical Units, or the mean distance between Earth and the Sun
             yg_format = '%.3f Yg', --Yottagrams, or septillions of grams
+            nm_format = '%.f nm', --nanometers, 10^-9
             k_fac_pa_fromg = "fromg"
         }
     }
