@@ -1,10 +1,5 @@
-local row = nil
+local row = 5
 local atlas, pos = PotatoPatchUtils.Developers.fac_minty:get_lineboil_atlas_info(row)
---[[
-    update = function (self, card, dt)
-        PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
-    end,
-]]
 
 FishAndChips.Fish{
     key = "minty_fission",
@@ -12,7 +7,7 @@ FishAndChips.Fish{
     pos = pos,
     weight = 1,
     ppu_coder = {"minty"},
-    ppu_artist = {"?"},
+    ppu_artist = {"minty"},
     environments = { --Maximum 6
         aquifer = 5,
         backroom = 10,
@@ -52,6 +47,9 @@ FishAndChips.Fish{
                 card.ability.extra.retriggers, card.ability.extra.retriggers ~= 1 and "s" or ""
             }
         }
+    end,
+    update = function (self, card, dt)
+        PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
     end,
     calculate = function (self, card, context)
         if context.retrigger_joker and context.other_card ~= card and context.other_card.config.center.set == "fac_Fish" and SMODS.pseudorandom_probability(card, "minty_fac_fission_retrigger", card.ability.extra.luck, card.ability.extra.odds) then
