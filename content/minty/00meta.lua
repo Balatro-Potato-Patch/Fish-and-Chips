@@ -40,6 +40,7 @@ PotatoPatchUtils.Developer({
         end
     end,
     get_lineboil_atlas_info = function (self, row)
+        if not row then return nil end --placeholder escape hatch, should be able to remove this once all the fish have art
         if G.SETTINGS.reduced_motion then
             return "minty_nolineboilfish", {x=0, y=row}
         else

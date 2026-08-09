@@ -1,9 +1,15 @@
+local row = nil
+local atlas, pos = PotatoPatchUtils.Developers.fac_minty:get_lineboil_atlas_info(row)
+--[[
+    update = function (self, card, dt)
+        PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
+    end,
+]]
+
 FishAndChips.Fish{
     key = "minty_dogfish",
-    --[[
-    atlas = "minty_fish",
-    pos = {x=20, y=0},
-    --]]
+    atlas = atlas,
+    pos = pos,
     weight = 1,
     ppu_coder = {"minty"},
     ppu_artist = {"?"},
