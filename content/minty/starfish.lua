@@ -7,7 +7,7 @@ FishAndChips.Fish{
     pos = pos,
     weight = 1,
     ppu_coder = {"minty"},
-    ppu_artist = {"?"},
+    ppu_artist = {"minty"},
     environments = { --Maximum 6
         pier = 10,
         backroom = 3,
