@@ -27,6 +27,8 @@ FishAndChips.Fish {
         }
     },
 
+    blueprint_compat = true,
+
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chip_gain, card.ability.extra.chips } }
     end,
@@ -36,12 +38,13 @@ FishAndChips.Fish {
             return { chips = card.ability.extra.chips }
         end
 
-        if context.post_trigger and context.other_card.area == G.fac_fish_area then
+        if ((context.post_trigger and context.other_card.area == G.fac_fish_area) or context.fac_use_fish) and not context.blueprint then
+            local fish = context.fac_use_fish or context.other_card
             local me_index = 0
             local you_index = 0
             for i, v in ipairs(G.fac_fish_area.cards) do
                 if v == card then me_index = i end
-                if v == context.other_card then you_index = i end
+                if v == fish then you_index = i end
             end
             if me_index > 0 and you_index > 0 and math.abs(me_index - you_index) == 1 then
                 return { func = function()
@@ -55,8 +58,6 @@ FishAndChips.Fish {
                 end }
             end
         end
-
-        -- add trigger to scale when a fish is used here
     end
 }
 
