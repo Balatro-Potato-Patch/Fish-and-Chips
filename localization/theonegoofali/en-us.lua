@@ -13,9 +13,11 @@ return {
 			fish_fac_theonegoofali_thefish = {
 				name = "Sebastes Norvegicus..?",
 				text = {
-					"{C:green}#1# in #2#{} chance to apply",
-					"a random {C:dark_edition}Edition{} to",
-					"a random held {C:attention}Fish{}"
+					"After playing {C:attention}#2#{} hands,",
+					"all cards in hand",
+					"become one {C:attention}random{} rank,",
+					"then {C:red,E:2}self-destructs{}",
+					"{C:inactive}(Currently {C:attention}#1#{C:inactive}/#2#){}",
 				},
 				flavor = {
 					"Otherwise known as {element:1}"

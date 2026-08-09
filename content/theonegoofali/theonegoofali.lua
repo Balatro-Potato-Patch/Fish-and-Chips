@@ -77,62 +77,85 @@ table.insert(fishregistry, {
 	weight = 11,
 	ppu_coder = { "theonegoofali" },
 	ppu_artist = { "theonegoofali" },
-	config = { extra = { odds = 4 } },
+	config = { extra = { cr = 0, tr = 7 } },
 	loc_vars = function(self, info_queue, card)
-		local num, den = SMODS.get_probability_vars(card or self, 1, (card.ability.extra or self.config.extra).odds)
-		return {
-			vars = {
-				num, den,
-				elements = { SMODS.create_sprite(0, 0, 0.5, 0.5, 'fac_theonegoofali_thefish', { x = 0, y = 0 } ) }
-			}
-		}
+		return { vars = { card.ability.extra.cr, card.ability.extra.tr } }
 	end,
-	attributes = { "usable", "editions", "chance" },
+	flavour_vars = function(self, info_queue, card)
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 0.5, 0.5, 'fac_theonegoofali_thefish', { x = 0, y = 0 } ) } } }
+	end,
+	attributes = { "rank" },
 	environments = {
 		wormhole = 5,
 		soup = 5,
 		calm_pond = 1
 	},
-	blueprint_compat = false,
-	can_use = function(self, card)
-		for k, v in pairs((G.fac_fish_area or {}).cards) do
-			if v and not v.edition then return true end
-		end
-		return false
-	end,
-	use = function(self, card, area)
-		if SMODS.pseudorandom_probability(card, "fac_toga_thefish", 1, card.ability.extra.odds, 'fac_toga_thefish') then
-			local ef = {}
-			for k, v in ipairs((G.fac_fish_area or {}).cards) do
-				if v and not v.edition then table.insert(ef, v) end
-			end
-			if next(ef) then
-				local sf = pseudorandom_element(ef, pseudoseed('fac_sebastesnorvegicus'))
-				if sf then
-					sf:set_edition(SMODS.poll_edition({ guaranteed = true }))
-					play_sound("fac_toga_fish")
+	blueprint_compat = true,
+	calculate = function(self, card, context)
+		if context.retrigger_joker then return end
+		
+		if context.after then
+			if not context.blueprint then card.ability.extra.cr = card.ability.extra.cr + 1 end
+			if card.ability.extra.cr < card.ability.extra.tr then
+				if not context.blueprint then SMODS.calculate_effect({ message = card.ability.extra.cr.."/"..card.ability.extra.tr }, card) end
+			else
+				local fishrank = pseudorandom_element(SMODS.Ranks, pseudoseed('fac_toga_thefish'))
+				local ccard = context.blueprint_card or card
+				G.E_MANAGER:add_event(Event({
+					trigger = 'after',
+					delay = 0.4,
+					func = function()
+						play_sound('tarot1')
+						ccard:juice_up(0.3, 0.5)
+						return true
+					end
+				}))
+				for i = 1, #G.hand.cards do
+					local percent = 1.15 - (i - 0.999) / (#G.hand.cards - 0.998) * 0.3
+					G.E_MANAGER:add_event(Event({
+						trigger = 'after',
+						delay = 0.15,
+						func = function()
+							G.hand.cards[i]:flip()
+							play_sound('card1', percent)
+							G.hand.cards[i]:juice_up(0.3, 0.3)
+							return true
+						end
+					}))
 				end
+				for i = 1, #G.hand.cards do
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							assert(SMODS.change_base(G.hand.cards[i], nil, fishrank.key))
+							return true
+						end
+					}))
+				end
+				for i = 1, #G.hand.cards do
+					local percent = 0.85 + (i - 0.999) / (#G.hand.cards - 0.998) * 0.3
+					G.E_MANAGER:add_event(Event({
+						trigger = 'after',
+						delay = 0.15,
+						func = function()
+							G.hand.cards[i]:flip()
+							play_sound('tarot2', percent, 0.6)
+							G.hand.cards[i]:juice_up(0.3, 0.3)
+							return true
+						end
+					}))
+				end
+				G.E_MANAGER:add_event(Event({
+					trigger = 'after',
+					delay = 0.4,
+					func = function()
+						play_sound('tarot1')
+						ccard:juice_up(0.3, 0.5)
+						if ccard == card then SMODS.destroy_cards(card, { bypass_eternal = true, pinch_anim = true }) end
+						return true
+					end
+				}))
 			end
-		else
-			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-				attention_text({
-					text = localize('k_nope_ex'),
-					scale = 1.3, 
-					hold = 1.4,
-					major = card,
-					backdrop_colour = G.C.SECONDARY_SET.Tarot,
-					align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and 'tm' or 'cm',
-					offset = {x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and -0.2 or 0},
-					silent = true
-				})
-				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.06*G.SETTINGS.GAMESPEED, blockable = false, blocking = false, func = function()
-					play_sound('tarot2', 0.76, 0.4);return true end}))
-				play_sound('tarot2', 1, 0.4)
-				card:juice_up(0.3, 0.5)
-			return true end }))
-			delay(0.2)
 		end
-		card.ability.extra.used = true
 	end,
 	add_to_deck = function(self, card, from_debuff)
 		if not from_debuff and not G.screenwipe then
@@ -140,11 +163,10 @@ table.insert(fishregistry, {
 		end
 	end,
 	remove_from_deck = function(self, card, from_debuff)
-		if not from_debuff and not G.screenwipe and not card.ability.extra.used then
+		if not from_debuff and not G.screenwipe then
 			play_sound("fac_toga_fishreverse")
 		end
 	end,
-	blueprint_compat = false,
 	display_size = { w = 52, h = 95 },
 	stats = { weight = { min = 3.6, max = 15 }, length = { min = 0.38, max = 1 } }
 })
