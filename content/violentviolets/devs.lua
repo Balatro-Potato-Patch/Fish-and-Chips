@@ -16,8 +16,9 @@ PotatoPatchUtils.Developer({
 })
 PotatoPatchUtils.Developer({
 	name = 'Willow',
-	atlas = 'fac_cards',
-	pos = {x = 1, y = 0},
+	atlas = 'fac_vv_willowcredit',
+	pos = {x = 0, y = 0},
+	soul_pos = {x = 1, y = 0},
 	colour = G.C.GREEN,
 	fac_partner = 'FireIce',
     team = 'ViolentViolets'

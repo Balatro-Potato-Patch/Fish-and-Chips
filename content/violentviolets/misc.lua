@@ -19,6 +19,13 @@ SMODS.Atlas {
     path = 'violentviolets/fireiceshadows1x.png'
 }
 
+SMODS.Atlas {
+    key = 'vv_willowcredit',
+    px = 71,
+    py = 95,
+    path = 'violentviolets/willowcredit.png'
+}
+
 SMODS.Sound {
     key = 'vv_mysterygo',
     path = 'violentviolets/snd_mysterygo.wav',
