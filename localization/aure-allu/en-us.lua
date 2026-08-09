@@ -346,6 +346,28 @@ return {
                     "Cod Dracmola"
                 }
             },
+            fish_fac_aureallu_mine_sweepers = {
+                name = {"Mine Sweepers"},
+                text = {
+                    {
+                        "Use these {C:fac_fish}Fish{} for",
+                        "a {C:green}#1# in #2#{} chance to",
+                        "{C:attention}disable{} the {C:attention}Boss Blind",
+                        "{C:inactive,s:0.8}(Currently {C:attention,s:0.8}#5#{C:inactive,s:0.8}/#6#{C:inactive,s:0.8} uses)",
+                        "{C:inactive,s:0.8}(Resets at {C:attention,s:0.8}end of round{C:inactive,s:0.8})"
+                    },
+                    {
+                        "{C:green}#3# in #4#{} chance to",
+                        "{C:mult,E:1}explode{} instead,",
+                        "{C:attention}destroying{} these and",
+                        "any {C:attention}adjacent {C:fac_fish}Fish{}",
+                    }
+                },
+                flavor = {
+                    "That's at least",
+                    "six Big Booms"
+                }
+            },
         },
     },
     misc = {
@@ -355,6 +377,8 @@ return {
             k_aureallu_unicorn = "Nyaeigh!",
             k_aureallu_cookiecutter = "Cookie'd",
             k_aureallu_trasher = "#&%@",
+            k_aureallu_mine_disabled = "Defused!",
+            k_aureallu_mine_nothing = "Confused?",
             -- k_aureallu_chimaera_confoozed = "...",
             k_aureallu_chimaera_active = "Active",
             k_aureallu_chimaera_inactive = "Inactive",

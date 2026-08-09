@@ -2003,4 +2003,126 @@ FishAndChips.Fish {
 	end,
 }
 
+-- Mine Sweeper
+SMODS.Sound {
+	key = "aureallu_mine_boom",
+	path = "aure-allu/mine-boom.ogg"
+}
+
+SMODS.Atlas {
+	key = "aureallu_mine_boom",
+	path = "aure-allu/mine-boom.png",
+	px = 71,
+	py = 95,
+	atlas_table = "ANIMATION_ATLAS",
+	frames = 9,
+	fps = 14
+}
+
+SMODS.SpriteParticle {
+	key = "aureallu_mine_boom",
+	atlas = "aureallu_mine_boom",
+	sound = {key = "fac_aureallu_mine_boom", vol = 1.3, per = 1.0},
+	should_remove = function (self, sprite, card, args)
+        return sprite.current_animation.current == sprite.current_animation.frames - 1
+    end
+}
+
+FishAndChips.Fish {
+	key = "aureallu_mine_sweepers",
+	atlas = "aureallu_fish",
+	pos = { x = 2, y = 5 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "usable", "chance", "boss_blind", "destroy_card" },
+	stats = {weight = {min = 0.001, max = 0.005}, length = {min = 0.02, max = 0.045}},
+	blueprint_compat = false,
+	config = {
+		extra = {
+			disable_odds = 2,
+			boom_odds = 5,
+			max_uses = 2,
+			remaining_uses = 2,
+		},
+	},
+	environments = {
+		pier = 7,
+		volcano = 10,
+		backroom = 3,
+	},
+	loc_vars = function(self, info_queue, card)
+		local numerator_disable, denominator_disable = SMODS.get_probability_vars(card, 1, card.ability.extra.disable_odds, "fac_aureallu_mine_disable")
+		local numerator_boom, denominator_boom = SMODS.get_probability_vars(card, 1, card.ability.extra.boom_odds, "fac_aureallu_mine_boom")
+		return { vars = { numerator_disable, denominator_disable, numerator_boom, denominator_boom, card.ability.extra.remaining_uses, card.ability.extra.max_uses } }
+	end,
+	calculate = function (self, card, context)
+		if context.end_of_round and not context.game_over and context.main_eval then
+			local before = card.ability.extra.remaining_uses
+			card.ability.extra.remaining_uses = card.ability.extra.max_uses
+			if before < card.ability.extra.max_uses then
+				return {
+					message = localize("k_reset"),
+					colour = G.C.IMPORTANT
+				}
+			end
+		end
+	end,
+	use = function (self, card)
+		card.ability.extra.remaining_uses = card.ability.extra.remaining_uses - 1
+		local success
+		if SMODS.pseudorandom_probability(card, "fac_aureallu_mine_disable", 1, card.ability.extra.disable_odds) then
+			success = true
+		end
+		if SMODS.pseudorandom_probability(card, "fac_aureallu_mine_boom", 1, card.ability.extra.boom_odds) then
+			success = false
+		end
+		if success then
+			G.E_MANAGER:add_event(Event({
+				func = function()
+                	G.GAME.blind:disable()
+                	return true
+            	end
+			}))
+			SMODS.calculate_effect({
+				message_card = card,
+				message = localize("k_aureallu_mine_disabled"),
+				colour = FishAndChips.C.FISH
+			})
+			return
+		elseif success == false then
+			local own_i
+			for i, fishee in ipairs(G.fac_fish_area.cards) do
+				if fishee == card then own_i = i; break end
+			end
+			if own_i then
+				local destroyees, left, right = {}, G.fac_fish_area.cards[own_i - 1], G.fac_fish_area.cards[own_i + 1]
+				table.insert(destroyees, card)
+				if left then table.insert(destroyees, left) end
+				if right then table.insert(destroyees, right) end
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						SMODS.spawn_sprite_particle("fac_aureallu_mine_boom", {card = card})
+						delay(0.3 * G.SETTINGS.GAMESPEED)
+						SMODS.destroy_cards(destroyees, {silent = true})
+						return true
+					end
+				}))
+			end
+			return 
+		end
+		SMODS.calculate_effect({
+			message_card = card,
+			message = localize("k_aureallu_mine_nothing"),
+			colour = G.C.GREY,
+		})
+	end,
+	keep_on_use = function (self, card)
+		return true
+	end,
+	can_use = function (self, card)
+		return G.GAME.facing_blind and not G.GAME.blind.disabled and G.GAME.blind:is_type("Boss") and card.ability.extra.remaining_uses > 0
+	end
+}
+
 -- #endregion
