@@ -11,7 +11,7 @@ FishAndChips.Fish {
         weight = { min = 0.0018, max = 0.0018 },
         length = { min = 0.0889, max = 0.0889 },
     },
-    weight = 4,
+    weight = 5,
     environments = {
         city_river = 10,
         pier = 3

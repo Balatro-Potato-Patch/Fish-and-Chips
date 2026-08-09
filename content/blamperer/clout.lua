@@ -28,8 +28,8 @@ FishAndChips.Fish {
     },
     weight = 5,
     environments = {
-        city_river = 10,
-        wormhole = 5
+        city_river = 5,
+        wormhole = 10
     },
     blueprint_compat = false,
     calculate = function(self, card, context)

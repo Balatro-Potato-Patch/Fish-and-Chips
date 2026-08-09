@@ -21,7 +21,7 @@ FishAndChips.Fish {
         weight = { min = 0.003, max = 0.0155 },
         length = { min = 0.045, max = .127 },
     },
-    weight = 8,
+    weight = 10,
     environments = {
         soup = 1
     },

@@ -82,7 +82,7 @@ FishAndChips.Fish {
         weight = { min = 0.2, max = 1.5 },
         length = { min = 0.15, max = 0.4 },
     },
-    weight = 7,
+    weight = 10,
     environments = {
         pier = 10,
         calm_pond = 4

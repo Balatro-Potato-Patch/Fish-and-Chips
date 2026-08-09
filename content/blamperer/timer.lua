@@ -33,7 +33,7 @@ FishAndChips.Fish {
         weight = { min = 0.018, max = 30.4 },
         length = { min = 0.1, max = 0.66 },
     },
-    weight = 6,
+    weight = 7,
     environments = {
         backroom = 11,
         aquifer = 7,
