@@ -70,10 +70,15 @@ FishAndChips.Fish {
 			G.GAME.fac_forced_fish = card.ability.extra.toggle > 0 and card.ability.extra.drawn_fish[card.ability.extra.toggle].key or G.GAME.fac_forced_fish
 		end
 
+		-- successful catch, doorfish active
 		if context.fac_end_fishing and context.fish == (card.ability.extra.drawn_fish[card.ability.extra.toggle].key) then
 			card.ability.extra.times_used = card.ability.extra.times_used + 1
 			local is_blue = context.fish_obj.config.center.attributes and (context.fish_obj.config.center.attributes.chips or context.fish_obj.config.center.attributes.xchips)
 			card.ability.extra.blue_streak = is_blue and card.ability.extra.blue_streak + 1 or 0
+		end
+		
+		-- otherwise just change drawn fish
+		if context.fac_end_fishing then
 			card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
 			card.ability.extra.toggle = 0
 		end
