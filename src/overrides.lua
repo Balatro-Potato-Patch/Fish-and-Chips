@@ -181,10 +181,7 @@ function CardArea:align_cards(...)
 					card.states.drag.can = true
 					card.T.w = card.T.w / 0.7
 					card.T.h = card.T.h / 0.7
-					if card.children.floating_sprite then
-						card.children.floating_sprite.T.w = card.children.floating_sprite.T.w / 0.7
-						card.children.floating_sprite.T.h = card.children.floating_sprite.T.h / 0.7
-					end
+					card:set_sprites(card.config.center)
           card._fac_bucketed = false
 				end
 			elseif not card._fac_bucketed then
@@ -193,10 +190,7 @@ function CardArea:align_cards(...)
 				card.states.drag.can = false
 				card.T.w = card.T.w * 0.7
 				card.T.h = card.T.h * 0.7
-				if card.children.floating_sprite then
-					card.children.floating_sprite.T.w = card.children.floating_sprite.T.w * 0.7
-					card.children.floating_sprite.T.h = card.children.floating_sprite.T.h * 0.7
-				end
+				card:set_sprites(card.config.center)
         card._fac_bucketed = true
 			end
 			if not card.states.drag.is and not card.disable_align then
