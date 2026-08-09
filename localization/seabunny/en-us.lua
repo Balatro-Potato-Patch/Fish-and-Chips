@@ -225,8 +225,8 @@ return {
                     "next? A silverfish made of iron?"
                 }
             },
-            fish_fac_paradise_bismuth = {
-                name = "Paradise Bismuth",
+            fish_fac_bismuth_totemfish = {
+                name = "Bismuth Totemfish",
                 text = {
                     {
                         "Unenhanced cards in",
@@ -238,7 +238,6 @@ return {
                         "{X:inactive,C:white}X#1#{C:inactive} Mult this hand per unique",
                         "{C:inactive}Enhancement in poker hand",
                         "{C:inactive}(Currently {X:inactive,C:white}X#2#{C:inactive} Mult)"
-                        
                     },
                     {
                         "To {C:dark_edition}Enchant{}:",
@@ -251,8 +250,8 @@ return {
                     "for the perfect Poke bowl."
                 }
             },
-            fish_fac_paradise_bismuth_enchant = {
-                name = "Paradise Bismuth",
+            fish_fac_bismuth_totemfish_enchant = {
+                name = "Bismuth Totemfish",
                 text = {
                     {
                         "Unenhanced cards in",
@@ -269,6 +268,50 @@ return {
                 flavor = {
                     "Mix with copper and zinc",
                     "for the perfect Poke bowl."
+                }
+            },
+            fish_fac_betta_onyx = {
+                name = "Betta Onyx",
+                text = {
+                    {
+                        "When {C:attention}Blind{} is selected,",
+                        "create a {C:attention}consumable{} of",
+                        "each type you're missing",
+                        "{C:inactive}(Must have room)"
+                    },
+                    {
+                        "{C:inactive}Enchanted:",
+                        "{C:inactive}+1 consumable slot for each",
+                        "{C:inactive}consumable type you have",
+                        "{C:inactive}(Currently +#1#)"
+                    },
+                    {
+                        "To {C:dark_edition}Enchant{}: Use #2# {C:attention}consumables{}",
+                        "{C:inactive}(Currently {C:attention}#3#{C:inactive}/#2#)"
+                    }
+                },
+                flavor = {
+                    "It looks like some cool black crystal..."
+                }
+            },
+            fish_fac_betta_onyx_enchant = {
+                name = "Betta Onyx",
+                text = {
+                    {
+                        "When {C:attention}Blind{} is selected,",
+                        "create a {C:attention}consumable{} of",
+                        "each type you're missing",
+                        "{C:inactive}(Must have room)"
+                    },
+                    {
+                        "{C:dark_edition}Enchanted{}:",
+                        "{C:attention}+1{} consumable slot for each",
+                        "{C:attention}consumable{} type you have",
+                        "{C:inactive}(Currently {C:attention}+#1#{C:inactive})"
+                    }
+                },
+                flavor = {
+                    "It looks like some cool black crystal..."
                 }
             },
             fish_fac_aquamarine_anglerfish = {
@@ -380,6 +423,7 @@ return {
     },
     misc = {
         dictionary = {
+            k_fac_seabunny_created = "Created!",
             k_fac_seabunny_eroded = "Eroded!",
             k_fac_seabunny_mineral_fish = "Mineral Fish",
             k_fac_seabunny_polychrome = "Polychrome!",

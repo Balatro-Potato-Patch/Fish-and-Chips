@@ -60,9 +60,7 @@ FishAndChips.Fish {
     attributes = {"economy", "usable", "generation"},
     environments = {
         calm_pond = 20,
-        pier = 20,
         swamp = 50,
-        city_river = 10,
         backroom = 10,
     },
     ppu_coder = {"ouiiskey"},

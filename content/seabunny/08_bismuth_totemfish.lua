@@ -1,8 +1,8 @@
--- Paradise Bismuth
+-- Bismuth Totemfish
 FishAndChips.Fish {
-    key = "paradise_bismuth",
+    key = "bismuth_totemfish",
     atlas = "seabunny",
-    pos = {x = 0, y = 0},
+    pos = {x = 7, y = 0},
     config = {extra = {gain = 0.4, xmult = 1, times = 8, count = 0, base = 1}, seen = {}},
     blueprint_compat = true,
     badge_key = "k_fac_seabunny_mineral_fish",
@@ -31,7 +31,7 @@ FishAndChips.Fish {
                         break
                     end
                     if v.ability.set == "Default" then
-                        local hit, i = pseudorandom_element(targets, "fac_paradise_bismuth")
+                        local hit, i = pseudorandom_element(targets, "fac_bismuth_totemfish")
                         v:set_ability(G.P_CENTERS[next(SMODS.get_enhancements(hit))])
                         hit:set_ability(G.P_CENTERS.c_base)
                         table.remove(targets, i)
@@ -62,12 +62,13 @@ FishAndChips.Fish {
     weight = 4,
     attributes = {"xmult"},
     environments = {
-        -- TODO
+        pier = 20,
+        aquifer = 80
     },
     ppu_coder = {"ouiiskey"},
     ppu_artist = {"Lusha"},
     stats = {
-        weight = {min = 0, max = 0}, -- TODO
-        length = {min = 0, max = 0} -- TODO
+        weight = {min = 1.5, max = 2},
+        length = {min = 0.7, max = 0.8}
     }
 }
