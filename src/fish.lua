@@ -320,25 +320,36 @@ function Card:highlight(is_higlighted)
 		if self.children.select_button and not (self.highlighted and self.area and self.area.config.type ~= "shop") then
 			self.children.select_button:remove(); self.children.select_button = nil
 		end
-		if G.STATE == G.STATES.FAC_FISHING then
-			if self.config.center.requires_jokers then
-				if self.highlighted then
-					G.jokers.T.y = G.jokers.T.y + 15.25
-					G.jokers.T.x = G.jokers.T.x + 1.5 - (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
-				else
-					G.jokers.T.y = G.jokers.T.y - 15.25
-					G.jokers.T.x = G.jokers.T.x - 1.5 + (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
+		if G.STATE == G.STATES.FAC_FISHING and self.area then
+			local req_jokers, req_consumables = false, false
+			for _, card in ipairs(self.area.highlighted) do
+				if card.config.center.requires_jokers then
+					req_jokers = true
+				end
+				if card.config.center.requires_consumables then
+					req_consumables = true
 				end
 			end
-			if self.config.center.requires_consumables then
-				if self.highlighted then
-					G.consumeables.T.y = G.consumeables.T.y + 15.25
-					G.consumeables.T.x = G.consumeables.T.x - 3.5
-				else
-					G.consumeables.T.y = G.consumeables.T.y - 15.25
-					G.consumeables.T.x = G.consumeables.T.x + 3.5
+			if req_jokers and not G.GAME.fac_fish_requires_jokers then
+				G.GAME.fac_fish_requires_jokers = true
+				G.jokers.T.y = G.jokers.T.y + 15.25
+				G.jokers.T.x = G.jokers.T.x + 1.5 - (req_consumables and G.consumeables.T.w + 0.5 or 0)
+			elseif not req_jokers and G.GAME.fac_fish_requires_jokers then
+				G.GAME.fac_fish_requires_jokers = nil
+				G.jokers.T.y = G.jokers.T.y - 15.25
+				G.jokers.T.x = G.jokers.T.x - 1.5 + (req_consumables and G.consumeables.T.w + 0.5 or 0)
+			end
+			if req_consumables and not G.GAME.fac_fish_requires_consumables then
+				G.GAME.fac_fish_requires_consumables = true
+				G.consumeables.T.y = G.consumeables.T.y + 15.25
+				G.consumeables.T.x = G.consumeables.T.x - 3.5
+			elseif not req_consumables and G.GAME.fac_fish_requires_consumables then
+				G.GAME.fac_fish_requires_consumables = nil
+				G.consumeables.T.y = G.consumeables.T.y - 15.25
+				G.consumeables.T.x = G.consumeables.T.x + 3.5
+				if G.GAME.fac_fish_requires_jokers then
+					G.jokers.T.x = G.jokers.T.x + G.consumeables.T.w + 0.5
 				end
-		
 			end
 		end
 	else
