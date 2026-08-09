@@ -32,6 +32,17 @@ FishAndChips.Fish {
 				end
 			end
 		end
+
+		if card.config and card.config.center and card.config.center.set == "fac_Fish" and card.area and (card.area.config.collection or card.area.config.fac_compendium) then
+			for _, fish in ipairs(G.FAC_ENVIRONMENT_POOL) do
+				for letter in string.gmatch(localize{type = "name_text", set = "fac_Env", key = fish.key}, '.') do
+					if not charmap[letter] then
+						charmap[letter] = true
+						letter_count = letter_count + 1
+					end
+				end
+			end
+		end
 			
 		return { vars = { card.ability.extra.mult, letter_count * card.ability.extra.mult } }
 	end,
