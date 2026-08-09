@@ -15,7 +15,7 @@ FishAndChips.Fish{
 			dem = 3
 		}
 	},
-	attributes = {"generation", "chance", "rank", "8"},
+	attributes = {"generation", "chance", "rank", "8", "vocaloid"},
 	disable_visual_scaling = true,
 	loc_vars = function(self, info_queue, card)
 		local num, dem = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.dem, "fac_fas_luka")
