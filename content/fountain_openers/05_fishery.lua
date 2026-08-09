@@ -149,4 +149,8 @@ FishAndChips.Fish {
             }))
         end
     end,
+
+    update = function(self, card, dt)
+        card.fac_fas_do_shader = card.edition.key == "e_polychrome"
+    end
 }
