@@ -1,10 +1,5 @@
-local row = nil
+local row = 3
 local atlas, pos = PotatoPatchUtils.Developers.fac_minty:get_lineboil_atlas_info(row)
---[[
-    update = function (self, card, dt)
-        PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
-    end,
-]]
 
 FishAndChips.Fish{
     key = "minty_starfish",
@@ -50,6 +45,9 @@ FishAndChips.Fish{
                 luck, odds
             }
         }
+    end,
+    update = function (self, card, dt)
+        PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
     end,
     calculate = function (self, card, context)
         if context.poker_hand_changed and context.card.config.center_key ~= card.config.center_key and context.new_level > context.old_level then
