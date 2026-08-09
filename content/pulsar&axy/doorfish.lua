@@ -25,6 +25,12 @@ FishAndChips.Fish {
 		}
 	},
 	loc_vars = function(self, info_queue, card)
+		if card.config and card.config.center and card.config.center.set == "fac_Fish" and card.area and (card.area.config.collection or card.area.config.fac_compendium) then
+			for i=1,self.choose do
+				table.insert(card.ability.extra.drawn_fish, G.P_CENTERS["fish_fac_test"])
+			end
+		end
+		
 		local toggle = card.ability.extra.toggle or 0
 		local card_status = {colours = {G.C.UI.TEXT_INACTIVE,G.C.UI.TEXT_INACTIVE,G.C.UI.TEXT_INACTIVE}}
 		card_status[0] = card.ability.extra.times_used + 1
