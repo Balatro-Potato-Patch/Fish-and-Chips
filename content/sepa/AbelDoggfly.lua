@@ -13,10 +13,10 @@ PotatoPatchUtils.Developer({
 	local voice = pseudorandom('bwa',1, 7)
 
 	if voice_sound >= 17 then
-		self:juice_up(0.1 , 0.1)
+		self:juice_up()
 		play_sound('fac_credits_voices_' .. voice)
 	else
-		self:juice_up(0.1 , 0.1)
+		self:juice_up()
 		play_sound('fac_credits_audio_' .. audio)
 	end
   end
