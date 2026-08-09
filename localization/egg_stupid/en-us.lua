@@ -73,6 +73,22 @@ return {
                 }
             },
 
+            -- todo
+
+            fish_fac_segg_yumama = {
+                name = "Yumama",
+                text = {
+                    "Add {C:attention}#1#{} randomly {C:attention}Enhanced cards{}",
+                    "with the rank of {C:attention}#2#{} selected card",
+                    "to your hand",
+                },
+                flavor = {
+                    "Large, gelatinous drifter.",
+                    "Chases away threats by",
+                    "hurling its bulk around.",
+                }
+            },
+
         },
     },
     misc = {
