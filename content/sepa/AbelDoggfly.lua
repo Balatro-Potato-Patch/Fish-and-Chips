@@ -8,11 +8,11 @@ PotatoPatchUtils.Developer({
 	loc = true,
 
   click = function(self)
-	local voice_sound = math.random(1, 15)
-	local audio = math.random(1, 20)
-	local voice = math.random(1, 7)
+	local voice_sound = pseudorandom('bwa', 1, 20)
+	local audio = pseudorandom('bwa',1, 20)
+	local voice = pseudorandom('bwa',1, 7)
 
-	if voice_sound >= 12 then
+	if voice_sound >= 17 then
 		self:juice_up(0.1 , 0.1)
 		play_sound('fac_credits_voices_' .. voice)
 	else
@@ -46,7 +46,7 @@ FishAndChips.Fish {
 	key = "clownfish",
 	atlas = pez,
 	pos = { x = 0, y = 0 },
-	weight = 10, --testestest
+	weight = 10,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "DoggFly" },
 	attributes = { "mult", "hands" },
@@ -60,7 +60,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		pier = 1
+		pier = 10
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
@@ -78,7 +78,7 @@ FishAndChips.Fish {
 	key = "blinky",
 	atlas = pez,
 	pos = { x = 1, y = 0 },
-	weight = 9,
+	weight = 10,
 	ppu_coder = { "DoggFly" },
 	ppu_artist = { "DoggFly" },
 	attributes = { "retrigger", "destroy_card" },
@@ -93,8 +93,8 @@ FishAndChips.Fish {
 	},
 
 	environments = {
-		wormhole = 3,
-		city_river = 1
+		wormhole = 10,
+		city_river = 0.1
 	},
 	loc_vars = function(self, info_queue, card)
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_blinky_shatter")
@@ -152,7 +152,7 @@ FishAndChips.Fish {
 		length = {min = 0.20 , max = 0.20}
 	},
 	environments = {
-		city_river = 1
+		city_river = 6
 	},
 	loc_vars = function(self, info_queue, card)
 		return {}
@@ -206,9 +206,9 @@ FishAndChips.Fish {
 		length = {min = 0.25 , max = 0.25}
 	},
 	environments = {
-		city_river = 1,
-		styx = 0.5,
-		chocolate_river = 0.1
+		city_river = 4,
+		styx = 2,
+		chocolate_river = 0.4
 	},
 	loc_vars = function(self, info_queue, card)
 	        info_queue[#info_queue+1] = {key = "fac_sepa_Tarot_infovar", set = "Other"}
@@ -341,9 +341,9 @@ FishAndChips.Fish {
 		length = {min = 0.45 , max = 0.45}
 	},
 	environments = {
-		city_river = 1,
-		styx = 0.5,
-		chocolate_river = 0.1
+		city_river = 2,
+		styx = 1,
+		chocolate_river = 0.2
 	},
 	treasure = true,
 	loc_vars = function(self, info_queue, card)
@@ -451,8 +451,8 @@ FishAndChips.Fish {
 		length = {min = 0.10 , max = 0.20}
 	},
 	environments = {
-		pier = 1,
-		styx = 0.5,
+		pier = 8,
+		styx = 4,
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.dollars } }
@@ -505,26 +505,50 @@ FishAndChips.Fish {
 	weight = 6,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
-	attributes = { "hands" },
+	attributes = { "xmult" },
 	config = {
 		extra = {
-			
+        	xmult = 1, 
+        	gain = 0.05,
+			h_plays = -1
 		}
 	},
 	stats = {
-		weight = {min = 0.50, max = 0.65},
-		length = {min = 0.10 , max = 0.20}
+		weight = {min = 10, max = 12},
+		length = {min = 1.2 , max = 1.4}
 	},
 	environments = {
-		styx = 1,
-		wormhole = 0.5,
+		styx = 6,
+		wormhole = 3,
 	},
+
 	loc_vars = function(self, info_queue, card)
-		return { vars = {  } }
+		return { vars = { card.ability.extra.xmult, card.ability.extra.gain, -card.ability.extra.h_plays  } }
 	end,
+
 	calculate = function(self, card, context)
+		if context.before then
+            SMODS.scale_card(card, {
+		    ref_table = card.ability.extra, 
+		    ref_value = "xmult",
+		    scalar_value = "gain", 
+		    })
+		end
+
+        if context.joker_main then
+            return {
+                xmult = card.ability.extra.xmult
+            } 
+        end
 	end,
- 
+
+    add_to_deck = function(self, card, from_debuff)
+        G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.h_plays
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.h_plays
+    end,
+
  	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge("Darkner", G.C.BLACK, G.C.WHITE, 1 )
  	end,
@@ -532,7 +556,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "catfish",
+	key = "bagrehumo",
 	atlas = 'fac_sepa_bagremove',
 	pos = { x = 0, y = 0 },
 	weight = 6,
@@ -541,7 +565,7 @@ FishAndChips.Fish {
 	attributes = { "hands" },
 	config = {
 		extra = {
-			
+            odds = 2,
 		}
 	},
 	stats = {
@@ -549,13 +573,32 @@ FishAndChips.Fish {
 		length = {min = 0.12 , max = 0.22}
 	},
 	environments = {
-		styx = 1,
-		wormhole = 0.5,
+		styx = 6,
+		wormhole = 3,
 	},
-	loc_vars = function(self, info_queue, card)
-		return { vars = {  } }
-	end,
+
+    loc_vars = function(self, info_queue, card)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'j_rom_cosmonautjester') 
+        return {vars = {new_numerator, new_denominator}}
+    end,
+
 	calculate = function(self, card, context)
+		if context.end_of_round and context.game_over == false and context.main_eval then
+            if true then
+                if SMODS.pseudorandom_probability(card, 'randoseed', 1, card.ability.extra.odds, 'j_rom_cosmonautjester') then --Im to lazy to change the og name :p 
+                    local hand, tally = nil, 0
+                        for _, handname in ipairs(G.handlist) do
+                            if SMODS.is_poker_hand_visible(handname) and G.GAME.hands[handname].played > tally then
+                                hand = handname
+                                tally = G.GAME.hands[handname].played
+                        end
+                    end
+                    return {
+                        level_up_hand(card, hand, false, 1),
+                    }
+                end
+            end
+        end
 	end,
  
  	set_badges = function(self, card, badges)
