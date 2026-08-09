@@ -24,6 +24,11 @@ FishAndChips.C.FooSqueax = {
 	YELLOW = HEX("ffff40")
 }
 
+SMODS.Attribute{key = "undertale"}
+SMODS.Attribute{key = "deltarune"}
+SMODS.Attribute{key = "utdr"}
+SMODS.Attribute{key = "vocaloid"}
+
 SMODS.Atlas{
 	key = "fas_credits_foo",
 	path = FishAndChips.FooSqueax.file_path .. "credits/foo.png",
