@@ -130,11 +130,31 @@ return {
             fish_fac_devicehands = {
                 name = "DEVICE_HANDS",
                 text = {
-                    "Does nothing"
+                    "Gains {X:mult,C:white}X#2#{} Mult for",
+                    "every {C:attention}hand{} played",
+                    "{C:blue}-#3#{} Hand per round",
+                    "{C:inactive}(Currently {}{X:mult,C:white}X#1#{}{C:inactive} Mult){}",
                 },
                 flavor = {
                     "Is this even a fish?",
                     "I mean, it looks like one"
+                }
+            },
+
+            fish_fac_bagrehumo = {
+                name = "Catfish...?",
+                text = {
+                    "{C:green}#1# in #2#{} chance",
+                    "to upgrade most",
+                    "played {C:attention}poker hand{}",
+                    "after end of round"
+
+                },
+                flavor = {
+                    "Im tecnically the Crawling Chaos...",
+                    "Although, not sure to what porcentage..",
+                    "Probably on the 20% or 30%",
+                    "- Sketch"
                 }
             },
             
@@ -149,13 +169,13 @@ return {
                     "Even if I'm not a biological cat", 
                     "I {u:white}WILL{} enjoy the fish you sell",
                     "Voice: Left",
-                    "All of them are on spanish"
                 }
             },
             PotatoPatchDev_DoggFly = { 
                 name = "Dogg-Fly", 
                 text = { 
                     "Fih & Chi",
+                    "Click on us {u:white}multiple{} times --AbelS.",
                     "Voice: Right"
                 } 
             },
