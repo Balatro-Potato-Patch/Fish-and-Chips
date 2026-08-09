@@ -2,7 +2,10 @@ return {
     descriptions = {
 		PotatoPatch = {
 			PotatoPatchDev_ivy = {
-				name = "Ivy {s:0.8,C:inactive}(& May)",
+				name = "Ivy (and May)",
+                text = {
+                    "life is ruff, be a dog if you've gotta :)"
+                }
 			},
         },
         fac_Fish = {
@@ -27,7 +30,43 @@ return {
                     "It's just a piece of paper, but",
                     "someone cut out a fish-like shape."
                 }
+            },
+            fish_fac_tsnefish = {
+                name = "This is not a fish.",
+                text = {
+                    "Use this {C:blue}Fish{} to transform another",
+                    "{C:blue}Fish{} into a random {C:attention}Joker{}",
+                    "{C:inactive}(May be used once per round)"
+                },
+                flavor = {
+                    "The famous fish. How people reproached me for it!",
+                    "And yet, could you fish up my fish?",
+                    "No, it's just a representation, is it not?",
+                    "So if I had written on my picture \"This is a fish\",",
+                    "I'd have been lying!"
+                }
             }
         },
-    }
+    },
+    misc = {
+        achievement_descriptions = {},
+        achievement_names = {},
+        blind_states = {},
+        challenge_names = {},
+        collabs = {},
+        dictionary = {
+            k_ivy_not_a_fish = "Not a Fish"
+        },
+        high_scores = {},
+        labels = {},
+        poker_hand_descriptions = {},
+        poker_hands = {},
+        quips = {},
+        ranks = {},
+        suits_plural = {},
+        suits_singular = {},
+        tutorial = {},
+        v_dictionary = {},
+        v_text = {},
+    },
 }
