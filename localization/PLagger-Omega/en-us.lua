@@ -75,7 +75,7 @@ return {
                     'when scored'
                 },
                 flavour = {
-                    'Aces have no weaknesses'
+                    'Aces have no weaknesses!'
                 }
             },
             fish_fac_plaggeromega_baa = {
@@ -89,7 +89,7 @@ return {
                 flavour = {
                     'B E    N O T',
                     'A F R A I D'
-                }
+                },
             },
             fish_fac_plaggeromega_relicanth = {
                 name = 'Relicanth',
@@ -146,13 +146,28 @@ return {
                     'the {C:attention}upkeep cost {C:inactive}({C:money}$#1#{C:inactive})'
                     },
                     {
-                        'Draw a card whenever',
+                        '{C:attention}Draw{} a card whenever',
                         'a played card is scored'
                     }
                 },
                 flavour = {
                     'Do you pay',
                     'the 4?'
+                }
+            },
+            fish_fac_plaggeromega_chiyu = {
+                name = 'Chi-Yu',
+                text = {
+                    'Upgrade the level',
+                    'of the last {C:attention}discarded',
+                    'poker hand each round'
+                },
+                flavour = {
+                    'It controls flames burning at',
+                    'over 5,400 degrees Fahrenheit.',
+                    'It casually swims through the',
+                    'sea of lava it creates by',
+                    'melting rock and sand.'
                 }
             }
         }
@@ -163,7 +178,7 @@ return {
             fac_plaggeromega_inactive = 'Inactive',
             fac_plaggeromega_giada = 'Shout out Giada',
             fac_plaggeromega_stone = 'Stone',
-            fac_plaggeromega_pay = 'Pay',
+            fac_plaggeromega_pay = 'Pay Upkeep Cost',
             fac_plaggeromega_sac_it = 'Sacrifice Mystic Remora'
         }
     }

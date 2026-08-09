@@ -265,7 +265,7 @@ FishAndChips.Fish{ --Stewfish
   vel_limit = 0.189,
   cost = 6,
   blueprint_compat = true,
-  config = {extra = {mult = 0, mult_mod = 1}},
+  config = {extra = {mult = 0, mult_mod = 3}},
 
   loc_vars = function (self, info_queue, card)
     return{
@@ -537,7 +537,7 @@ FishAndChips.Fish{ --Mystic Remora
   impulse_min = 0.18,
   impulse_max = 0.42,
   vel_limit = 0.59,
-  cost = 1,
+  cost = 0,
   blueprint_compat = true,
   eternal_compat = false,
   config = {extra = {upkeep = 0, cumulative_upkeep = 1}},
@@ -548,6 +548,10 @@ FishAndChips.Fish{ --Mystic Remora
     }
   end,
 
+  can_sell = function (self, card, context)
+    return false
+  end,
+
   calculate = function (self, card, context)
     if context.setting_blind and not context.blueprint then
       card.ability.extra.upkeep = card.ability.extra.upkeep + card.ability.extra.cumulative_upkeep
@@ -555,7 +559,7 @@ FishAndChips.Fish{ --Mystic Remora
       G.E_MANAGER:add_event(Event({
             func = function()
                 delay(0.4)
-                G.FUNCS.fac_plaggeromega_run_upkeep_cost_menu(card.ability.extra.upkeep)
+                G.FUNCS.fac_plaggeromega_run_upkeep_cost_menu(card.ability.extra.upkeep, card)
                 return true
             end
         }))
@@ -580,20 +584,65 @@ FishAndChips.Fish{ --Mystic Remora
   end
 }
 
+FishAndChips.Fish{  --Chi-Yu
+  key = 'plaggeromega_chiyu',
+  atlas = 'plaggeromega_fish',
+  pos = {x=1,y=2},
+  weight = 3,
+  environments = {volcano = 3, aquifer = 0.2},
+  attributes = {'hand_level'},
+  stats = {
+    weight = {min = 3.8, max = 4.9},
+    length = {min = 0.29, max = 0.4},
+  },
+  ppu_coder = {'PLagger'},
+  ppu_artist = {'Omegaflowey18'},
+  impulse_min = 0.184,
+  impulse_max = 0.328,
+  vel_limit = 0.4,
+  blueprint_compat = true,
+  cost = 5,
+
+  calculate = function (self, card, context)
+    if G.GAME.current_round.discards_left == 2 and not context.blueprint then --stole this from TOGA
+			local eval = function() return G.GAME.current_round.discards_left == 1 and not G.RESET_JIGGLES end
+			juice_card_until(card, eval, true)
+		end
+    if context.pre_discard and G.GAME.current_round.discards_left == 1 and not context.hook then
+        local text, _ = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+        return {
+            level_up = true,
+            level_up_hand = text
+        }
+    end
+  end
+}
+
 ----------
 ---UI BULLSHIT
 ----------
 
-G.FUNCS.fac_plaggeromega_run_upkeep_cost_menu = function(upkeep)
+G.FUNCS.fac_plaggeromega_run_upkeep_cost_menu = function(upkeep, object)
   G.FUNCS.overlay_menu{
-    definition = fac_plaggeromega_create_upkeep_cost_menu(upkeep),
+    definition = fac_plaggeromega_create_upkeep_cost_menu(upkeep, object),
     config = { no_esc = true }
   }
 end
 
-function fac_plaggeromega_create_upkeep_cost_menu(upkeep)
+function fac_plaggeromega_create_upkeep_cost_menu(upkeep, object)
   G.SETTINGS.paused = true
+  local temp_area = CardArea(
+    G.hand.T.x + 0,
+    G.hand.T.y + G.ROOM.T.y + 9,
+    1.05 * G.CARD_W,
+    1.05 * G.CARD_H,
+    { card_limit = 0, type = 'joker', highlight_limit = 0, negative_info = true, no_card_count = true})
+  local card_copy = SMODS.copy_card(object)
+  card_copy.states.hover.can = true
+  temp_area:emplace(card_copy)
 
+
+  local ui_node = {n=G.UIT.R, config = {align = 'cm'}, nodes = {{n=G.UIT.O, config={object=temp_area}}}}
     --actually make the UI
     local pay =
       UIBox_button({
@@ -601,7 +650,9 @@ function fac_plaggeromega_create_upkeep_cost_menu(upkeep)
         func = 'fac_plaggeromega_can_pay_upkeep',
         ref_table = {cost = upkeep},
         minw = 5,
-        label = {localize('fac_plaggeromega_pay') .. ' ' .. localize('$') .. tostring(upkeep)},
+        minh = 3,
+        shadow = true,
+        label = {localize('fac_plaggeromega_pay'), localize('$') .. tostring(upkeep)},
       })
 
     local dont =
@@ -609,16 +660,35 @@ function fac_plaggeromega_create_upkeep_cost_menu(upkeep)
         func = 'fac_plaggeromega_dont_pay',
         button = 'fac_plaggeromega_sacrifice_fish',
         minw = 5,
+        minh = 3,
         label = {localize('fac_plaggeromega_sac_it')},
       })
 
-    local t = create_UIBox_generic_options({
-      contents = {pay, dont},
-      no_esc = true,
-      no_back = true
-    })
-
-  return t
+    local t =
+      { n = G.UIT.R, config = {
+        align = 'cm',
+        minw = 8,
+        minh = 8,
+        padding = 0.1,
+        r = 0.2,
+        colour = G.C.GREY,
+        outline = 0.8,
+        outline_colour = G.C.WHITE,
+        instance_type = POPUP,
+        no_esc = true,
+        no_back = true
+      },
+        nodes = {
+          ui_node,
+          pay,
+          dont,
+        },
+      }
+      --thanks eremel and notmario for helping me sort out this crap
+      --go my gigantic UI node to block clicking
+  return {n=G.UIT.ROOT, config = {align = "cm", minw = G.ROOM.T.w*5, minh = G.ROOM.T.h*5,padding = 0.1, r = 0.1, colour = {G.C.GREY[1], G.C.GREY[2], G.C.GREY[3],0.7}}, nodes={
+        t
+    }}
 end
 
 function G.FUNCS.fac_plaggeromega_can_pay_upkeep(e)
