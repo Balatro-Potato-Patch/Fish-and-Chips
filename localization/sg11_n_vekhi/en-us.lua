@@ -22,9 +22,9 @@ return {
 					"{S:1.1,C:red,E:2}self destructs{}",
 				},
 				flavour = {
-					"Apparently if you get 8 of these you're",
-					"able to craft a 'conduit', whatever",
-					"that's meant to be",
+					"Known to bit off entire limbs at",
+					"once, sailors avoid the ghastly",
+					"glow of this creature...",
 				},
 			},
 			fish_fac_sg11_n_vekhi_water_ghoul_primed = {
