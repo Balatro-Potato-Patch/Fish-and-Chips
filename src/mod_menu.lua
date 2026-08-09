@@ -297,7 +297,6 @@ function FishAndChips.Compendium.compendium_area(amount, dim)
     amount = amount or 1
     dim = dim or {(8*amount)/4 * 71/95, 2}
     local adjust = amount > 1 and 2*G.CARD_W/G.CARD_H
-    print(adjust)
     local area = CardArea(0, 0, dim[1], dim[2], {type = 'voucher', fac_compendium = true})
     area.align_cards = function(self)
         for k, card in ipairs(self.cards) do
@@ -848,7 +847,7 @@ function FishAndChips.Compendium.dev_card(dev)
 
     dev_card.align_h_popup = function(self, dir)
         local focused_ui = self.children.focused_ui and true or false
-        local popup_direction = dir or self.config.h_popup_dir or (self.T.y < G.CARD_H*0.8) and 'bm' or 'tm'
+        local popup_direction = dir or self.config.h_popup_dir or (self.T.x < G.ROOM.T.w*0.5) and 'cr' or 'cl'
         local sign = 1
         return {
             major = self.children.focused_ui or self,
