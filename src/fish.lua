@@ -75,6 +75,11 @@ function FishAndChips.modify_fish_stats(card, stats)
 	card:set_cost()
 end
 
+function FishAndChips.update_fish_records(save_record, stats)
+	save_record.record_weight = math.max(stats.weight, save_record.record_weight or 0)
+	save_record.record_length = math.max(stats.length, save_record.record_length or 0)
+end
+
 function FishAndChips.format_measurement(value, measurement, units)
 	if not value then return ' ' end
 	if units and units[measurement] then
@@ -175,7 +180,7 @@ function FishAndChips.verify_submissions()
 	if fac_count == 2 then
 		local first, second = contributors[1], contributors[2]
 		assert(
-			first.fac_partner == second.name and second.fac_partner == first.name,
+			first.fac_partner == second.key and second.fac_partner == first.key,
 			'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
  	)
 	end
