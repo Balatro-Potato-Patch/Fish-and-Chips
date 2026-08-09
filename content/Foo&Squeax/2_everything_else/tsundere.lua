@@ -27,7 +27,7 @@ FishAndChips.Fish{
 		length = {min = 25, max = 26},
 		weight = {min = 25, max = 26}
 	},
-	attributes = {"usable", "passive"},
+	attributes = {"usable", "passive", "undertale", "utdr"},
 	loc_vars = function(self, info_queue, card)
 		return {vars = {card.ability.extra.selection}, key = card.ability.immutable.active and "fish_fac_fas_tsundere_active" or nil}
 	end,

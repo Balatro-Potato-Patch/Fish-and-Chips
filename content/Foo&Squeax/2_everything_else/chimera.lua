@@ -33,7 +33,7 @@ FishAndChips.Fish{
 		wormhole = 1,
 		backroom = 1,
 	},
-	attributes = {"scaling", "food", "xmult", "destroy_card"},
+	attributes = {"scaling", "food", "xmult", "destroy_card", "vocaloid"},
 	load = function (self, card, card_table, other_card)
 		card.T.w = card.T.w * card_table.ability.extra.xmult
 	end,

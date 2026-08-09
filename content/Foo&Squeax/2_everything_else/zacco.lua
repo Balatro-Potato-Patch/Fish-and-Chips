@@ -18,7 +18,7 @@ FishAndChips.Fish{
 			chips = 25
 		}
 	},
-	attributes = {"chips"},
+	attributes = {"chips", "vocaloid"},
 	loc_vars = function(self, info_queue, card)
 ---@diagnostic disable-next-line: undefined-global
 		if SynthB then SynthB.song_info(info_queue, card, "fac_zaako") end
