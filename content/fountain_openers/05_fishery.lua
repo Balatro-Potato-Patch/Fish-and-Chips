@@ -22,11 +22,11 @@ end
 
 FishAndChips.Fish {
 	key = "fo_fishery",
-	atlas = "fish",
+	atlas = "fo_fish",
 	pos = { x = 3, y = 0 },
 	weight = 5,
 	ppu_coder = { "fo_alexi" },
-	ppu_artist = { "fo_grahkon" },
+	ppu_artist = { "fo_alexi" },
 	attributes = { "rank", "jack", "king", "queen", "mult", "xmult" },
     disable_visual_scaling = true,
 	config = {
@@ -122,7 +122,7 @@ FishAndChips.Fish {
             G.E_MANAGER:add_event(Event({
                 func = function()
                     FountainOpeners.random_flowery_sound(
-                    card.edition.key == "e_polychrome" and {
+                    (card.edition and card.edition.key == "e_polychrome") and {
                         "omega_flowery"
                     } or {
                         "hereicomesanfrandisco",
@@ -151,6 +151,13 @@ FishAndChips.Fish {
     end,
 
     update = function(self, card, dt)
-        card.fac_fas_do_shader = card.edition.key == "e_polychrome"
+        card.ability.extra.prev_ed = card.ability.extra.prev_ed or (card.edition and card.edition.key)
+        card.fac_fas_do_shader = card.edition and card.edition.key == "e_polychrome"
+
+        if (card.edition and card.edition.key == "e_polychrome") and card.ability.extra.prev_ed ~= "e_polychrome" then
+            FountainOpeners.flowery_sound("omega_flowery")
+        end
+
+        card.ability.extra.prev_ed = card.edition and card.edition.key
     end
 }

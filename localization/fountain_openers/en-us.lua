@@ -95,7 +95,7 @@ return {
             fish_fac_fo_cij = {
                 name = "cij",
                 text = {
-                    "A {C:attention}2{}, {C:attention}4{}, and a {C:attention}Jack{}",
+                    "A {C:attention}2{}, a {C:attention}4{}, and a {C:attention}Jack{}",
                     "can form a {C:attention}Straight{}"
                 },
                 flavor = {

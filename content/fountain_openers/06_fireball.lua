@@ -1,7 +1,7 @@
 FishAndChips.Fish {
 	key = "fo_fireball",
-	atlas = "fish",
-	pos = { x = 3, y = 0 },
+	atlas = "fo_fish",
+	pos = { x = 5, y = 0 },
 	weight = 5,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },

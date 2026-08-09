@@ -1,5 +1,5 @@
 local anvil_sprite = love.graphics.newImage(love.image.newImageData(SMODS.NFS.newFileData(FishAndChips.mod.path ..
-	'/assets/1x/fountain_openers/boid_1x.png')))
+	'/assets/1x/fountain_openers/anvil.png')))
 local ax, ay = anvil_sprite:getDimensions()
 local anvil_quad = love.graphics.newQuad(0, 0, 1, 1, 1, 1)
 
@@ -147,15 +147,17 @@ function love.draw()
         love.graphics.setColor(1, 1, 1, 1)
 
         anvil_quad:setViewport(0, 0, ax, ay, ax, ay) -- Reposition quad to use the correct frame
-		love.graphics.draw(anvil_sprite, anvil_quad, anim.pos.x, anim.pos.y, 0, 4, 4, ax, ay)
+		love.graphics.draw(anvil_sprite, anvil_quad, anim.pos.x, anim.pos.y, 0, 4, 4, ax/2, ay/2)
         love.graphics.setColor(unpack(color))
     end
 end
 
 FishAndChips.Fish {
 	key = "fo_anvil",
-	atlas = "fish",
-	pos = { x = 3, y = 0 },
+	atlas = "fo_anvil",
+	pos = { x = 0, y = 0 },
+    display_size = { w = 95, h = 71 },
+    pixel_size = { w = 95, h = 71 },
 	weight = 8,
 	blueprint_compat = true,
 	disable_visual_scaling = true,

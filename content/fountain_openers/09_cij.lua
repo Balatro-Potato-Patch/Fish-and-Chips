@@ -1,11 +1,12 @@
 FishAndChips.Fish {
 	key = "fo_cij",
-	atlas = "fish",
-	pos = { x = 3, y = 0 },
+	atlas = "fo_fish",
+	pos = { x = 7, y = 0 },
+    pixel_size = { w = 48, h = 32 },
 	weight = 10,
 	disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },
-	ppu_artist = { "fo_grahkon" },
+	ppu_artist = { "fo_alexi" },
 	attributes = { "passive", "hand_type" },
 	config = {
 		extra = {

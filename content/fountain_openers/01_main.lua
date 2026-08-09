@@ -18,6 +18,22 @@ SMODS.Atlas {
 }
 
 SMODS.Atlas {
+    key = "fo_fish",
+    path = "fountain_openers/fish.png",
+    px = 71,
+    py = 95,
+    atlas_table = "ASSET_ATLAS"
+}
+
+SMODS.Atlas {
+    key = "fo_anvil",
+    path = "fountain_openers/anvil.png",
+    px = 95,
+    py = 71,
+    atlas_table = "ASSET_ATLAS"
+}
+
+SMODS.Atlas {
     key = "fo_fucking_kill",
     path = "fountain_openers/fucking_kill.png",
     px = 377,
