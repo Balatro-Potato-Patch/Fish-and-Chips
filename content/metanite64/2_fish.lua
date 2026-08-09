@@ -1,5 +1,5 @@
 -- TOTAL WEIGHT USED
--- 10 + 10 + 7 + 5 + 5 + 10 + 8 + 5 = 60
+-- 10 + 10 + 7 + 5 + 5 + 10 + 8 + 10 + 5 = 70
 
 FishAndChips.Fish {
     key = "yellow_pikman",
@@ -16,7 +16,7 @@ FishAndChips.Fish {
         weight = { min = 0.0005, max = 0.0015 },
         length = { min = 0.008, max = 0.016 }
     },
-    attributes = { "chips" },
+    attributes = { "chips", "scaling" },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
 
@@ -87,6 +87,8 @@ FishAndChips.Fish {
         }
     },
 
+    blueprint_compat = true,
+
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult } }
     end,
@@ -96,7 +98,7 @@ FishAndChips.Fish {
             return { xmult = card.ability.extra.xmult }
         end
 
-        if context.end_of_round and context.main_eval then
+        if context.end_of_round and context.main_eval and not context.blueprint then
             if SMODS.pseudorandom_probability(card, "froggy_wander", card.ability.extra.xmult - 1, 9, "fac_froggy_wander") then
                 SMODS.destroy_cards(card, { skip_anim = true })
                 return {
@@ -134,6 +136,8 @@ FishAndChips.Fish {
     attributes = { "generation" },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
+
+    blueprint_compat = true,
 
     calculate = function(self, card, context)
         if context.before and context.scoring_name == "Three of a Kind" then
@@ -198,6 +202,8 @@ FishAndChips.Fish {
             xmult = 0.2
         }
     },
+
+    blueprint_compat = true,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xmult } }
@@ -303,6 +309,8 @@ FishAndChips.Fish {
         info_queue[#info_queue + 1] = G.P_CENTERS.m_wild
     end,
 
+    blueprint_compat = false,
+
     calculate = function(self, card, context)
         if context.before then
             local queens = {}
@@ -365,6 +373,8 @@ FishAndChips.Fish {
     attributes = { "passive" },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
+
+    blueprint_compat = false,
 
     calculate = function(self, card, context)
         if context.fishing_profile then
