@@ -27,6 +27,16 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+	key = "vman2002_blackbody",
+	path = "vman2002/blackbody.png",
+	px = 71,
+	py = 95,
+	atlas_table = "ANIMATION_ATLAS",
+	frames = 5,
+	fps = 6
+})
+
+SMODS.Atlas({
 	key = "vman2002_manohands",
 	path = "vman2002/allitthoughtabout.png", --casually ripped
 	px = 131,
@@ -178,7 +188,7 @@ FishAndChips.Fish { --Trust
 	config = {extra = {odds_add = 2}},
 	stats = { weight = { min = 0.01, max = 0.02 }, length = {min = 0.01, max = 0.02}}, --TODO: Stats
 	environments = {
-		city_river = 0.4, pier = 0.6
+		calm_pond = 0.7, pier = 0.6
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.odds_add } }
@@ -225,11 +235,11 @@ FishAndChips.Fish { --Manos
 	_manohands_sprites = manohands_sprites,
 	stats = { length = { min = 3.8, max = 4.5 }, weight = {min = 600, max = 1100}},
 	environments = {styx = 1},
-	loc_vars = function(self, info_queue, card)
+	flavour_vars = function(self, info_queue, card)
 		local manoline = 1
 		local ex = card.ability.extra
 		if ex.active then
-			local rip = (os.clock() * 9)
+			local rip = (os.clock() * 9) --no big deal
 			manoline = (rip % 2 >= 1) and 2 or 3
 			if rip % 9 > 7 then
 				manoline = manoline + 2
@@ -237,9 +247,13 @@ FishAndChips.Fish { --Manos
 		else
 			info_queue[#info_queue+1] = {set = "Other", key = "eternal"}
 		end
+		return {vars = {localize("fac_vman2002_manos" .. manoline)}}
+	end,
+	loc_vars = function(self, info_queue, card)
+		local ex = card.ability.extra
 		return {
 			vars = {
-				localize("fac_vman2002_manos" .. manoline),
+				69, --unused
 				ex.straights_current,
 				ex.straights_goal,
 				ex.flushes_current,
@@ -375,7 +389,8 @@ FishAndChips.Fish { --Necklace
 			card:set_edition(poll_edition("fac_vman2002_necklace", 1, false, true))
 		end
 	end,
-	treasure = true
+	treasure = true,
+	blueprint_compat = false
 }
 
 FishAndChips.Fish { --Coupon
@@ -386,7 +401,7 @@ FishAndChips.Fish { --Coupon
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "tag", "usable" },
-	stats = { weight = { min = 0.02, max = 0.02 }, length = {min = 0.015, max = 0.021}},
+	stats = { weight = { min = 0.02, max = 0.02 }, length = {min = 0.015*2, max = 0.021*2}},
 	environments = {
 		wormhole = 1, pier = 0.9
 	},
@@ -411,7 +426,8 @@ FishAndChips.Fish { --Coupon
 	impulse_min = 0.2,
 	impulse_max = 0.6,
 	decision_min = 0.3,
-	decision_max = 0.7
+	decision_max = 0.7,
+	blueprint_compat = false
 }
 
 local tim = "fish_fac_vman2002_timothy"
@@ -474,6 +490,58 @@ FishAndChips.Fish { --Timothy
 	impulse_max = 0.8,
 	decision_min = 0.3,
 	decision_max = 0.7
+}
+
+local blackbody_targets = function()
+	local ret = {}
+	for k,v in pairs(G.jokers.cards) do
+		if not v.edition then
+			table.insert(ret, v)
+		end
+	end
+	return ret
+end
+FishAndChips.vman2002.blackbody_targets = blackbody_targets
+FishAndChips.Fish { --Blackbody
+	key = "vman2002_blackbody",
+	atlas = "vman2002_blackbody",
+	pos = { x = 0, y = 0 },
+	weight = 3,
+	ppu_coder = { "VMan_2002" },
+	ppu_artist = { "VMan_2002" },
+	attributes = { "usable", "editions", "xblindsize" },
+	stats = { weight = { min = 0.4*5, max = 0.6618*5 }, length = {min = 0.015*12, max = 0.0234*12}},
+	environments = {
+		wormhole = 0.5, styx = 1, backroom = 0.4
+	},
+	config = {
+		extra = {
+			rounds = 0,
+			rounds_goal = 8
+		}
+	},
+	loc_vars = function(self, info_queue, card)
+		local ex = card.ability.extra
+		info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+		return {vars = {ex.rounds, ex.rounds_goal}}
+	end,
+	use = function(self, card)
+		local t = FishAndChips.vman2002.blackbody_targets()
+		if not next(t) then return end
+		pseudorandom_element(t, "fac_vman2002_blackbody"):set_edition("e_negative")
+	end,
+	can_use = function(self, card)
+		return card.ability.extra.rounds >= card.ability.extra.rounds_goal and next(FishAndChips.vman2002.blackbody_targets())
+	end,
+	calculate = function(self, card, context)
+		local ex = card.ability.extra
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+			ex.rounds = ex.rounds + 1
+			return {message = ex.rounds .. "/" .. ex.rounds_goal}
+		end
+	end,
+	usable = true,
+	blueprint_compat = true
 }
 
 --#endregion

@@ -109,7 +109,16 @@ return {
 						q("{~I}(Currently {~x}X#1#{~I} Mult)")
 					}
 				}
-			}
+			},
+			fish_fac_vman2002_blackbody = {
+				name = "Blackbody",
+				flavor = {"The darkness emits","a darkness"},
+				text = {
+					q("After {~A}#1#/#2#{} rounds,"),
+					q("{~A}USE{} to add {C:dark_edition}Negative"),
+					q("to a random {~A}Joker")
+				}
+			},
 		},
 		PotatoPatch = {
 			fac_dev_vman2002 = {
