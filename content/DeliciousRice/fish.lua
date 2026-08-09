@@ -27,15 +27,38 @@ FishAndChips.Fish {
 		if context.joker_main then
             return {xmult = card.ability.extra.xmult}
         elseif context.after and G.GAME.current_round.hands_played == 0 then
-            sendDebugMessage("instakill")
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    card:juice_up()
-                    play_sound("fac_delrice_instakill")
-                    SMODS.destroy_cards(card, nil, true)
-                    return true
-                end
-            }))
-        end
+			local gap = 0.2
+			local length = 3
+			local loops = math.ceil(length / gap)
+			
+			-- shoutout GhostSalt for helping me with this <3
+
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					play_sound("fac_delrice_instakill")
+					return true
+				end
+			}))
+
+			for i = 1, loops do
+				G.E_MANAGER:add_event(Event({
+					trigger = "after",
+					timer = "REAL",
+					delay = gap,
+					func = function()
+						card:juice_up()
+						return true
+					end
+				}))
+			end
+
+			G.E_MANAGER:add_event(Event({
+
+				func = function()
+					SMODS.destroy_cards(card, {destroy_func = Card.shatter})
+					return true
+				end
+			}))
+	end
 	end,
 }
