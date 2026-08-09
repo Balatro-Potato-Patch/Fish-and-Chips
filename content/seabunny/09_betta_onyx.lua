@@ -21,7 +21,7 @@ end
 FishAndChips.Fish {
     key = "betta_onyx",
     atlas = "seabunny",
-    pos = {x = 0, y = 0},
+    pos = {x = 8, y = 0},
     config = {extra = {size = 0, times = 9, count = 0}},
     blueprint_compat = true,
     badge_key = "k_fac_seabunny_mineral_fish",
@@ -45,7 +45,7 @@ FishAndChips.Fish {
             end
             local created = false
             for k, v in ipairs(SMODS.ConsumableType.obj_buffer) do
-                if not seen[v] and (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit or not context.blueprint and card.ability.extra.enchant) then
+                if not seen[v] and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
                     created = true
                     G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
                     G.E_MANAGER:add_event(Event{trigger = "before", func = function()

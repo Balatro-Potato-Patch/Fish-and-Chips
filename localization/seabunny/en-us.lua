@@ -225,6 +225,48 @@ return {
                     "next? A silverfish made of iron?"
                 }
             },
+            fish_fac_opal_moonfish = {
+                name = "Opal Moonfish",
+                text = {
+                    {
+                        "When you beat a {C:attention}Blind,",
+                        "create a {C:planet}Planet{} card for a",
+                        "random played {C:attention}poker hand"
+                    },
+                    {
+                        "{C:inactive}Enchanted:",
+                        "{C:inactive}When you select a Boss Blind,",
+                        "{C:inactive}disable it and Unenchant this"
+                    },
+                    {
+                        "To {C:dark_edition}Enchant: Skip #1# {C:attention}Blinds",
+                        "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#)"
+                    }
+                },
+                flavor = {
+                    "Normally resting in undersea caves,",
+                    "this fish surfaces with the full moon."
+                }
+            },
+            fish_fac_opal_moonfish_enchant = {
+                name = "Opal Moonfish",
+                text = {
+                    {
+                        "When you beat a {C:attention}Blind,",
+                        "create a {C:planet}Planet{} card for a",
+                        "random played {C:attention}poker hand"
+                    },
+                    {
+                        "{C:dark_edition}Enchanted{}:",
+                        "When you select a {C:attention}Boss Blind{},",
+                        "disable it and Unenchant this"
+                    }
+                },
+                flavor = {
+                    "Normally resting in undersea caves,",
+                    "this fish surfaces with the full moon."
+                }
+            },
             fish_fac_bismuth_totemfish = {
                 name = "Bismuth Totemfish",
                 text = {
@@ -411,7 +453,7 @@ return {
                     "After {C:attention}#1#{} rounds, sell this to",
                     "{C:dark_edition}enchant{} your {C:attention}Mineral Fishes{},",
                     "then double sell value of your",
-                    "unenchanted {C:attention}Fishes{}, up to {C:money}+$#2#",
+                    "Unenchanted {C:attention}Fishes{}, up to {C:money}+$#2#",
                     "{C:inactive}(Currently {C:attention}#3#{C:inactive}/#1#)"
                 },
                 flavor = {

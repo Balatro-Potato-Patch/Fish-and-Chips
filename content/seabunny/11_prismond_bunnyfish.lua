@@ -73,7 +73,7 @@ FishAndChips.Fish {
     attributes = {"xmult"},
     treasure = true,
     environments = {
-        pier = 20,
+        volcano = 20,
         aquifer = 80
     },
     ppu_coder = {"ouiiskey"},
