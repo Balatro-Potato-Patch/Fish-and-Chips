@@ -1962,4 +1962,45 @@ FishAndChips.Fish {
 	end,
 }
 
+-- Vampire Squid
+FishAndChips.Fish {
+	key = "aureallu_vampire_squid",
+	atlas = "aureallu_fish",
+	pos = { x = 1, y = 5 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "x_mult", },
+	stats = {weight = {min = 0.1, max = 0.8}, length = {min = 0.07, max = 0.19}},
+	blueprint_compat = true,
+	config = {
+		extra = {
+			x_mult_gain = 0.5,
+			x_mult_total = 1.0,
+		},
+	},
+	environments = {
+		city_river = 3,
+		volcano = 5,
+		aquifer = 10,
+		styx = 7,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.x_mult_gain, card.ability.extra.x_mult_total } }
+	end,
+	calculate = function (self, card, context)
+		if context.joker_type_destroyed and context.card ~= card and context.card.ability.set == "fac_Fish" and not context.blueprint_card then
+			card.ability.extra.x_mult_total = card.ability.extra.x_mult_total + card.ability.extra.x_mult_gain
+			return {
+				message = localize("k_upgrade_ex"),
+				colour = G.C.MULT
+			}
+		elseif context.joker_main then
+			return {
+				x_mult = card.ability.extra.x_mult_total
+			}
+		end
+	end,
+}
+
 -- #endregion

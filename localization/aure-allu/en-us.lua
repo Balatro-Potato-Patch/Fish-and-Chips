@@ -332,6 +332,20 @@ return {
                     "believe your eyes"
                 }
             },
+            fish_fac_aureallu_vampire_squid = {
+                name = {"Vampire Squid"},
+                text = {
+                    "This {C:fac_fish}Squid{} gains",
+                    "{X:mult,C:white}X#1#{} Mult when a",
+                    "{C:fac_fish}Fish{} is {C:mult}destroyed",
+                    "{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult)"
+                },
+                flavor = {
+                    "A distant relative",
+                    "of the more famous",
+                    "Cod Dracmola"
+                }
+            },
         },
     },
     misc = {
