@@ -1,8 +1,11 @@
+local row = 2
+local atlas, pos = PotatoPatchUtils.Developers.fac_minty:get_lineboil_atlas_info(row)
+
 FishAndChips.Fish{
     key = "minty_electric_eel",
     --[[
-    atlas = "minty_fish",
-    pos = {x=20, y=0},
+    atlas = atlas,
+    pos = pos,
     --]]
     weight = 1,
     ppu_coder = {"minty"},
@@ -73,6 +76,14 @@ FishAndChips.Fish{
         card.ability.extra.stored = card.ability.extra.stored - 1
         card.ability.extra.ready = card.ability.extra.ready + 1
         SMODS.calculate_effect{message = localize("k_fac_minty_ready_ex"), card = card}
+    end,
+    update = function (self, card, dt)
+        local force
+        if card.ability.extra.stored + card.ability.extra.ready == 0 then
+            force = false
+        end
+
+        PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row, force)
     end,
     calculate = function (self, card, context)
         if card.ability.extra.ready > 0 and (context.repetition or context.retrigger_joker and context.other_card ~= card) then
