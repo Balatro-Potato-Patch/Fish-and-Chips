@@ -15,7 +15,7 @@ return {
 			PotatoPatchDev_MissingNo = {
 				name = "MissingNo",
                 text = {
-                    "{C:inactive,s:0.8}Breaking News: Kokichi Oma found dead in Tennessee",
+                    "{C:inactive,s:0.8}#1#",
                     "Artist for {C:red}0 ERROR{} and {C:purple}Finity",
                     "unhinged internet idiot",
                     "Listen to {C:blue,u:blue}my music{} to die instantly"
