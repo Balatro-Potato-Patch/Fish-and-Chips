@@ -120,10 +120,16 @@ FishAndChips.Fish {
                 localize(card.ability.extra.rank, 'ranks'),
                 card.ability.extra.chips,
                 card.ability.extra.mult,
-                G.PROFILES[G.SETTINGS.profile].name or "Jimbo"
             }
         }
     end,
+    flavour_vars = function(self, info_queue, card)
+		return { 
+            vars = { 
+                G.PROFILES[G.SETTINGS.profile].name or "Jimbo"
+            }
+        }
+	end,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and
             (context.other_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id) then
@@ -762,6 +768,12 @@ FishAndChips.Fish {
         return {
             vars = {
                 localize({ type = 'name_text', set = "Enhanced", key = card.ability.extra.enhancement }) or "Mult Card",
+            }
+        }
+    end,
+    flavour_vars = function(self, info_queue, card)
+		return { 
+            vars = {
                 localize({
                     type = 'name_text',
                     set = card.ability.extra.flavor_card.set,
@@ -774,7 +786,7 @@ FishAndChips.Fish {
                 }
             }
         }
-    end,
+	end,
     calculate = function(self, card, context)
         if context.repetition and context.cardarea == G.play then
             if SMODS.has_enhancement(context.other_card, card.ability.extra.enhancement) then
@@ -902,6 +914,21 @@ FishAndChips.Fish {
             }
         end
     end,
+    flavour_vars = function(self, info_queue, card)
+        if card.ability.extra.gender_presentation == "masc" then
+            return {
+                key = "fish_fac_J8-Bit_hot_gamer_shark_boyfriend",
+            }
+        elseif card.ability.extra.gender_presentation == "femme" then
+            return {
+                key = "fish_fac_J8-Bit_hot_gamer_shark_girlfriend",
+            }
+        else
+            return {
+                key = "fish_fac_J8-Bit_hot_gamer_shark_partner",
+            }
+        end
+    end,
     calculate = function(self, card, context)
         if context.fac_environment_changed then
             return {
@@ -1006,13 +1033,24 @@ FishAndChips.Fish {
         "economy",
     },
     loc_vars = function(self, info_queue, card)
+        local poppup_sprite = AnimatedSprite(0.0, 0.0, 1.0, 1.0 * 112 / 88, G.ANIMATION_ATLAS['fac_j8bit_poppup'])
+        return {
+            vars = {
+                card.ability.extra.fish_cocaine,
+                card.ability.extra.treasure_reward,
+                elements = {
+                    poppup_sprite
+                }
+            }
+        }
+    end,
+    flavour_vars = function(self, info_queue, card)
         local possible_popups = {}
         table.insert(possible_popups, SMODS.create_sprite(0, 0, 1.5, 1.5 * 332 / 460, "fac_j8bit_trustmeimadolphin"))
         local popup_quotes = {}
         for i = 1, 6 do
             table.insert(popup_quotes, localize("k_J8-Bit_poppup_quote_" .. tostring(i)))
         end
-        local poppup_sprite = AnimatedSprite(0.0, 0.0, 1.0, 1.0 * 88 / 112, G.ANIMATION_ATLAS['fac_j8bit_poppup'])
         table.insert(possible_popups, {
             n = G.UIT.O,
             config = {
@@ -1030,11 +1068,8 @@ FishAndChips.Fish {
         })
         return {
             vars = {
-                card.ability.extra.fish_cocaine,
-                card.ability.extra.treasure_reward,
                 elements = {
                     possible_popups[math.random(#possible_popups)],
-                    poppup_sprite
                 }
             }
         }
@@ -1400,6 +1435,12 @@ FishAndChips.Fish {
         return {
             vars = {
                 localize(card.ability.extra.rank, 'ranks'),
+            }
+        }
+    end,
+    flavour_vars = function(self, info_queue, card)
+        return {
+            vars = {
                 localize({ type = 'name_text', key = card.config.center.key, set = card.config.center.set })[1] or
                 "Primarina"
             }
@@ -1602,6 +1643,12 @@ FishAndChips.Fish {
             vars = {
                 card.ability.extra.money,
                 card.ability.extra.sand_dollars,
+            }
+        }
+    end,
+    flavour_vars = function(self, info_queue, card)
+        return {
+            vars = {
                 "#leftshark"
             }
         }

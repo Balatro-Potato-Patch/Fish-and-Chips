@@ -29,7 +29,7 @@ return {
                     "a {C:green}#2# in #3#{} chance",
                     "to give {C:money}$#4#{}",
                 },
-                flavor = {
+                flavour = {
                     "\"Moolah Moolah\" was too",
                     "obvious as a pun."
                 }
@@ -45,9 +45,9 @@ return {
                     "{C:chips}+#2#{} Chips and {C:mult}+#3#{} Mult",
                     "when scored"
                 },
-                flavor = {
+                flavour = {
                     "\"An eight-armed Avalanche",
-                    "for you then, #4#!\""
+                    "for you then, #1#!\""
                 }
             },
             ["fish_fac_J8-Bit_boops_boops_all_6s"] = {
@@ -57,7 +57,7 @@ return {
                     "every {C:attention}#1#{} {C:inactive}[#2#]{} hands played",
                     "{C:inactive}(ex: {C:green}1 in 3{C:inactive} -> {C:green}3 in 3{C:inactive})",
                 },
-                flavor = {
+                flavour = {
                     "Closely related to the Loyalty Carp."
                 }
             },
@@ -68,7 +68,7 @@ return {
                     "double {C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}$ Sand Dollars{}",
                     "{C:inactive}(Max of {C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}$#1#{}{C:inactive})"
                 },
-                flavor = {
+                flavour = {
                     "If it's under the shell,",
                     "is it insider trading?"
                 }
@@ -83,7 +83,7 @@ return {
                     "when a {C:fac_fish}Fish {C:red}gets away{}",
                     "{C:inactive}(Must have room)"
                 },
-                flavor = {
+                flavour = {
                     "Migrated from the Astral Orrery.",
                     "Prefers mice and/or Hollowers as bait."
                 }
@@ -98,7 +98,7 @@ return {
                     "round gain a",
                     "permanent {C:mult}+#1#{} Mult"
                 },
-                flavor = {
+                flavour = {
                     "It's called that because",
                     "that's what it feels like",
                     "when you touch it."
@@ -113,7 +113,7 @@ return {
                     "the {C:attention}latter played rank{} as",
                     "{C:mult}+Mult{} instead of {C:chips}+Chips{}"
                 },
-                flavor = {
+                flavour = {
                     "Not actually an octopus.",
                     "- scruby"
                 }
@@ -127,7 +127,7 @@ return {
                     "slots in shop",
                     "{C:attention}+#1#{} cards in Booster Packs",
                 },
-                flavor = {
+                flavour = {
                     "Everybody could use a little boost."
                 }
             },
@@ -142,7 +142,7 @@ return {
                     "{C:attention}#2#{} {C:inactive}[#1#]{} rounds,",
                     "{C:red}self-destructs"
                 },
-                flavor = {
+                flavour = {
                     "In a while,",
                     "crocodile!"
                 }
@@ -154,9 +154,9 @@ return {
                 text = {
                     "{C:attention}Retrigger{} all {C:attention}#1#s{}"
                 },
-                flavor = {
+                flavour = {
                     "Esteemed delicacies",
-                    "for {V:1}#2#."
+                    "for {V:1}#1#."
                 }
             },
             ["fish_fac_J8-Bit_underhand"] = {
@@ -168,7 +168,7 @@ return {
                     "{C:blue}+#1#{} hand",
                     "{C:attention}-#1#{} hand size",
                 },
-                flavor = {
+                flavour = {
                     "These creepy hands try",
                     "to drag the dead deeper",
                     "into oblivion..."
@@ -184,7 +184,7 @@ return {
                     "random {C:fac_bait}Baits{} when",
                     "{C:fac_environment}Environment{} changes"
                 },
-                flavor = {
+                flavour = {
                     "They're interested in your hobbies!",
                     "That's the greatest treasure of them all."
                 }
@@ -199,7 +199,7 @@ return {
                     "random {C:fac_bait}Baits{} when",
                     "{C:fac_environment}Environment{} changes"
                 },
-                flavor = {
+                flavour = {
                     "He's interested in your hobbies!",
                     "That's the greatest treasure of them all."
                 }
@@ -214,14 +214,14 @@ return {
                     "random {C:fac_bait}Baits{} when",
                     "{C:fac_environment}Environment{} changes"
                 },
-                flavor = {
+                flavour = {
                     "She's interested in your hobbies!",
                     "That's the greatest treasure of them all."
                 }
             },
             ["fish_fac_J8-Bit_poppup"] = {
                 name = {
-                    "{element:2} Poppup",
+                    "{element:1} Poppup",
                     "{C:inactive,s:0.8}(Deltarune)"
                 },
                 text = {
@@ -242,7 +242,7 @@ return {
                     "{V:1}#1#{} card",
                     "{C:inactive}(Must have room)"
                 },
-                flavor = {
+                flavour = {
                     "Only fools succumb to",
                     "the abyss in search",
                     "for another soul."
@@ -263,7 +263,7 @@ return {
                         "played {C:attention}debuffed{} card",
                     },
                 },
-                flavor = {
+                flavour = {
                     "It lurks in the depths,",
                     "waiting to have you for lunch."
                 }
@@ -278,7 +278,7 @@ return {
                     "across all owned {C:fac_fish}Fish",
                     "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)"
                 },
-                flavor = {
+                flavour = {
                     "Its external gills shimmer brighter",
                     "in the presence of variety."
                 }
@@ -294,8 +294,8 @@ return {
                     "can't be debuffed,",
                     "and {C:attention}always score"
                 },
-                flavor = {
-                    "For #2#, every battle's a stage.",
+                flavour = {
+                    "For #1#, every battle's a stage.",
                     "Its singing and the dancing of,",
                     "its balloons will mesmerize the audience."
                 }
@@ -319,7 +319,7 @@ return {
                         "create its respective {C:attention}Tag"
                     }
                 },
-                flavor = {
+                flavour = {
                     "President of the Water Dragons"
                 }
             },
@@ -333,8 +333,8 @@ return {
                     "if {C:fac_fish}Fish{} is caught",
                     "with unrelated {C:fac_bait}Bait{}"
                 },
-                flavor = {
-                    "{E:fac_j8_rainbow}#3#"
+                flavour = {
+                    "{E:fac_j8_rainbow}#1#"
                 }
             },
             ["fish_fac_J8-Bit_sdmg"] = {
@@ -347,7 +347,7 @@ return {
                     "{C:attention}retrigger{} all played cards if",
                     "played {C:attention}poker hand{} is their specified {C:attention}poker hand"
                 },
-                flavor = {
+                flavour = {
                     "It came from the edge of space"
                 }
             },
@@ -360,7 +360,7 @@ return {
                     "a {C:fac_fish}Fish{} you own when reeled,",
                     "{C:red}self-destructs"
                 },
-                flavor = {
+                flavour = {
                     "Not too important",
                     "not too unimportant."
                 }
