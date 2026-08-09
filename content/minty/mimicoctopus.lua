@@ -1,10 +1,5 @@
-local row = nil
+local row = 4
 local atlas, pos = PotatoPatchUtils.Developers.fac_minty:get_lineboil_atlas_info(row)
---[[
-    update = function (self, card, dt)
-        PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
-    end,
-]]
 
 FishAndChips.Fish{
     key = "minty_mimic_octopus",
@@ -12,7 +7,7 @@ FishAndChips.Fish{
     pos = pos,
     weight = 1,
     ppu_coder = {"minty"},
-    ppu_artist = {"?"},
+    ppu_artist = {"minty"},
     environments = { --Maximum 6
         pier = 10,
         backroom = 10,
@@ -43,6 +38,9 @@ FishAndChips.Fish{
         weight = { min = 1, max = 1}, --In kilograms
         length = { min = 1, max = 2}, --In meters
     },
+    update = function (self, card, dt)
+        PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
+    end,
     can_use = function (self, card)
         if card.ability.extra.copying then return false end
         local mypos
