@@ -7,6 +7,10 @@ FishAndChips.Fish{
 	},
 	button_key = "b_fac_fas_act",
 	ppu_coder = {"Foo54"},
+	ppu_artist = {"squeax09"},
+	atlas = "fas_fish_general",
+	pos = {x=0,y=1},
+	pixel_size = {w=69,h=88},
 	config = {
 		extra = {
 			selection = 1
