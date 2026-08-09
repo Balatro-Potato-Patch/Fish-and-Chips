@@ -314,6 +314,17 @@ local pa_fish = {
                     'the main catch',
                     'of Ante number 4!'
                 }
+            },
+            fish_fac_pa_lavalamp = {
+                name = "Lava Lamp",
+                text = {
+                    'If previous blind was beaten in one hand,',
+                    'give #1# selected playing card a random edition'
+                },
+                flavour = {
+                    'delicious, nutritious',
+                    '...but only once'
+                }
             }
         },
     },
