@@ -320,7 +320,8 @@ local pa_fish = {
     misc = {
         dictionary = {
             au_format = '%.4f AU', --Astronomical Units, or the mean distance between Earth and the Sun
-            yg_format = '%.3f Yg' --Yottagrams, or septillions of grams
+            yg_format = '%.3f Yg', --Yottagrams, or septillions of grams
+            k_fac_pa_fromg = "fromg"
         }
     }
 }

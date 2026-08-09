@@ -2,6 +2,7 @@ FishAndChips.Fish {
 	key = "pa_fromg",
 	weight = 6,
 	atlas = "pa_pulsarfish",
+	badge_key = 'k_fac_pa_fromg',
 	pos = { x = 3, y = 0 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
