@@ -121,7 +121,10 @@ FishAndChips.Fish {
         if not from_debuff then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    FountainOpeners.random_flowery_sound({
+                    FountainOpeners.random_flowery_sound(
+                    card.edition.key == "e_polychrome" and {
+                        "omega_flowery"
+                    } or {
                         "hereicomesanfrandisco",
                         "hey_boys",
                         "hey",
