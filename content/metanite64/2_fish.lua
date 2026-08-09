@@ -378,6 +378,141 @@ FishAndChips.Fish {
     end
 }
 
+local vanilla_suits_1 = {
+    "Diamonds",
+    "Clubs",
+    "Hearts",
+    "Spades"
+}
+
+local vanilla_suits_2 = SMODS.shallow_copy(vanilla_suits_1)
+table.insert(vanilla_suits_2, false)
+
+local vanilla_suits_pos = {
+    Diamonds = 0,
+    Clubs = 1,
+    Hearts = 2,
+    Spades = 3
+}
+
+FishAndChips.Fish {
+    key = "vibrill",
+    atlas = "meta_fish",
+    pos = { x = 4, y = 0 },
+    weight = 10,
+    environments = {
+        styx = 5,
+        backroom = 5,
+        wormhole = 10
+    },
+    stats = {
+        weight = { min = 1.5, max = 3 },
+        length = { min = 0.36, max = 0.38 }
+    },
+    attributes = {
+        "score",
+        "suit",
+        "scaling",
+        "reset"
+    },
+    ppu_coder = { "metanite64" },
+    ppu_artist = { "metanite64" },
+
+    config = { extra = {
+        score = 1,
+        score_scale = 5,
+        suit_1 = "Spades",
+        suit_2 = false,
+        high_score = 1
+    } },
+
+    blueprint_compat = true,
+
+    on_catch = function(self, card)
+        card.ability.extra.suit_1 = pseudorandom_element(vanilla_suits_1, "vibrill_suit_1")
+        repeat
+            card.ability.extra.suit_2 = pseudorandom_element(vanilla_suits_2, "vibrill_suit_2")
+        until card.ability.extra.suit_2 ~= card.ability.extra.suit_1
+    end,
+
+    loc_vars = function(self, info_queue, card)
+        local var_and = ""
+        local suit2 = ""
+        if card.ability.extra.suit_2 then
+            var_and = " and "
+            suit2 = card.ability.extra.suit_2
+        end
+        local pos = {
+            y = vanilla_suits_pos[card.ability.extra.suit_1],
+            x = card.ability.extra.suit_2 and (vanilla_suits_pos[card.ability.extra.suit_2] + 1) or 0
+        }
+        return { vars = {
+            card.ability.extra.suit_1,
+            var_and,
+            suit2,
+            card.ability.extra.score,
+            colours = {
+                G.C.SUITS[card.ability.extra.suit_1],
+                card.ability.extra.suit_2 and G.C.SUITS[card.ability.extra.suit_2] or G.C.UI.TEXT_DARK
+            },
+            elements = {
+                { n = G.UIT.O, config = {
+                    object = SMODS.create_sprite(0, 0, 0.5, 0.5, "fac_meta_obstacles", pos)
+                } }
+            }
+        } }
+    end,
+
+    flavour_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.high_score } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.before and not context.blueprint then
+            local suit_1_success = false
+            local suit_2_success = not card.ability.extra.suit_2
+            for i, v in ipairs(context.scoring_hand) do
+                suit_1_success = suit_1_success or v:is_suit(card.ability.extra.suit_1)
+                suit_2_success = suit_2_success or v:is_suit(card.ability.extra.suit_2)
+                if suit_1_success and suit_2_success then break end
+            end
+            if suit_1_success and suit_2_success then
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "score",
+                    scalar_value = "score_scale",
+                    operation = "X",
+                    no_message = true
+                })
+                card.ability.extra.high_score = math.max(card.ability.extra.high_score, card.ability.extra.score)
+                return {
+                    message = "Yippee!",
+                    colour = G.C.BLACK
+                }
+            else
+                card.ability.extra.score = 2
+                return {
+                    message = "Ouch!",
+                    colour = G.C.BLACK
+                }
+            end
+        end
+
+        if context.joker_main then
+            if not context.blueprint then
+                card.ability.extra.suit_1 = pseudorandom_element(vanilla_suits_1, "vibrill_suit_1")
+                repeat
+                    card.ability.extra.suit_2 = pseudorandom_element(vanilla_suits_2, "vibrill_suit_2")
+                until card.ability.extra.suit_2 ~= card.ability.extra.suit_1
+            end
+            return {
+                score = card.ability.extra.score
+            }
+        end
+    end
+}
+--]]
+
 FishAndChips.Fish {
     key = "tsuchinoko",
     atlas = "meta_fish",

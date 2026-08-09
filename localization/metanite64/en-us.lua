@@ -97,6 +97,27 @@ return {
                     "TSUCHINOKO REAL!!!1!!1"
                 }
             },
+            fish_fac_vibrill = {
+                name = "Vibrill",
+                text = {
+                    "Upcoming obstacle: {element:1},",
+                    "requires {C:1}#1#{}#2#{C:2}#3#{} in the next {C:attention}scoring hand{}",
+                    "This {C:fac_fish}Fish{} gains {X:purple,C:white}X5{} {C:purple}+Score{}",
+                    "for every {C:attention}consecutive{} obstacle navigated",
+                    "{C:inactive}(Currently {C:purple}+#4#{C:inactive} Score)"
+                },
+                flavour = {
+                    "{f:5}ヤッタネ、ヤッタネ",
+                    "{f:5}ヨカッタネ、オメデトウ",
+                    "{f:5}ヤッタネ、ヤッタネ",
+                    "{f:5}ヨカッタネ、オメデトウ",
+                    "{f:5}マツコース　ノトクテンハ",
+                    "{f:5}#1# テンダッタヨ",
+                    "{f:5}シカモハイスコア！",
+                    "{f:5}ヨカッタネ、オメデトウ！",
+                    "{f:5}イエイ！"
+                }
+            },
             fish_fac_yellow_pikman = {
                 name = "Yellow Pikman",
                 text = {

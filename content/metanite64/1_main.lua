@@ -17,6 +17,12 @@ SMODS.Atlas {
     px = 71, py = 95
 }
 
+SMODS.Atlas {
+    key = "meta_obstacles",
+    path = "metanite64/obstacles.png",
+    px = 32, py = 32
+}
+
 SMODS.current_mod.optional_features = SMODS.current_mod.optional_features or {}
 SMODS.current_mod.optional_features.post_trigger = true
 
