@@ -61,7 +61,7 @@ Bait Attributes
 "passive"
 "rank"
 "copy"
-"generation"
+
 "boss"
 "destroy"
 
@@ -273,6 +273,7 @@ FishAndChips.Fish {
 	ppu_artist = { "egg_node" },
 
 	blueprint_compat = false,
+	attributes = { "usable", "function" },
 
 	config = {
 		extra = {
@@ -387,7 +388,73 @@ FishAndChips.Fish {
 
 -- Yumama
 -- Use to add 3 randomly enhanced cards with the rank of 1 selected card to your hand
+FishAndChips.Fish {
+	key = "segg_yumama",
+	atlas = "segg_fishies",
+	pos = { x = 4, y = 1 },
 
+	weight = 15,
+
+	ppu_coder = { "stupid" },
+	ppu_artist = { "egg_node" },
+
+	requires_hand = true,
+	blueprint_compat = false,
+	attributes = { "usable", "function", "generation" },
+
+    config = { max_highlighted = 1, extra = { cards = 3 } },
+	stats = {
+		weight = {min = 0.5, max = 10.},
+		length = {min = 0.2, max = 4.}
+	},
+	environments = {
+		pier = 2.,
+		city_river = 5.0
+	},
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.cards, card.ability.max_highlighted } }
+    end,
+
+	use = function(self, card)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.7,
+            func = function()
+
+				local enh_pool = {}
+                for _, enhancement_center in pairs(G.P_CENTER_POOLS["Enhanced"]) do
+                    if enhancement_center.key ~= 'm_stone' and not enhancement_center.overrides_base_rank then
+                        enh_pool[#enh_pool + 1] = enhancement_center.key
+                    end
+                end
+
+				local cards = {}
+
+				-- Support multiple highlighted for crossmod nonsense
+				for _, target in ipairs(G.hand.highlighted) do
+					
+					local rank_name = target.config.card.value
+					if rank_name then
+						print("adding cards: "..card.ability.extra.cards)
+						for _ = 1, card.ability.extra.cards do
+							local enhancement = SMODS.poll_enhancement { guaranteed = true, options = enh_pool, key = "segg_yumama_enh" }
+							cards[#cards + 1] = SMODS.add_card { set = "Base", rank = rank_name, enhancement = enhancement, key_append = "segg_yumama_card" }
+						end
+
+					end
+				end
+
+				SMODS.calculate_context({ playing_card_added = true, cards = cards })
+                return true
+            end
+        }))
+        delay(0.3)
+	end,
+
+    can_use = function(self, card)
+        return G.hand and #G.hand.highlighted <= card.ability.max_highlighted and #G.hand.highlighted > 0
+    end
+}
 
 
 
