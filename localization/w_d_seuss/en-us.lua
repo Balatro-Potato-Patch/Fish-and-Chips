@@ -132,7 +132,7 @@ return {
                     "{C:attention}ability{} when used",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
-                    "{C:inactive}(Currently: #3#)"
+                    "{C:inactive}(Currently: #3#){}"
                 },
                 flavour = {
                     "King of Sturgeons"
@@ -141,10 +141,14 @@ return {
             fish_fac_gojo = {
                 name = "Troutoru GoFish",
                 text = {
-                    ""
+                    "{C:green}Fixed #1#% chance{} to balance",
+                    "{C:chips}Chips{} and {C:mult}Mult{}, switch {C:attention}current{}",
+                    "{C:attention}ability{} at the end of round",
+                    "{C:inactive,s:0.8}Percentage depends on current ability{}",
+                    "{C:inactive}(Currently: #2#){}"
                 },
                 flavour = {
-                    ""
+                    "Nah, I'd Fish"
                 }
             },
             fish_fac_lordx = {
@@ -231,7 +235,7 @@ return {
                 text= {
                     "Destroy a random Fish",
                     "and add {C:attention}double{} its",
-                    "sell value to this {C:mult}Mult",
+                    "sell value to this {C:mult}Mult{}",
                 },
             },
             w_d_seuss_cleave = {
@@ -239,7 +243,23 @@ return {
                 text= {
                     "Destroy selected card",
                     "and add {C:attention}triple{} its rank",
-                    "value to this {C:chips}Chips",
+                    "value to this {C:chips}Chips{}",
+                },
+            },
+            w_d_seuss_amplified = {
+                name = "Amplified",
+                text= {
+                    "Total {C:dark_edition}Negative{} playing",
+                    "cards / {C:attention}Full deck{} =",
+                    "{C:green}Fixed #1#% chance{}"
+                },
+            },
+            w_d_seuss_reversal = {
+                name = "Reversal",
+                text= {
+                    "Total {C:dark_edition}Polychrome{} playing",
+                    "cards / {C:attention}Full deck{} =",
+                    "{C:green}Fixed #1#% chance{}"
                 },
             },
         },
@@ -250,6 +270,8 @@ return {
             k_lost = "I'm lost :(",
             k_dismantle = "Dismantle",
             k_cleave = "Cleave",
+            k_amplified = "Amplified",
+            k_reversal = "Reversal",
             k_bigtrout = "[[BIG TROUT]]",
             k_hokimama = "[HOKI MAMA]",
         },

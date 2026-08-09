@@ -442,7 +442,6 @@ FishAndChips.Fish {
 		length = {min = 2.08, max = 2.18}
 	},
 	requires_hand = true,
-	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue + 1] = { key = 'w_d_seuss_dismantle', set = "Other" }
 		info_queue[#info_queue + 1] = { key = 'w_d_seuss_cleave', set = "Other" }
@@ -481,7 +480,7 @@ FishAndChips.Fish {
                 }))
             end
 			card.ability.extra.attack = "Cleave"
-			SMODS.calculate_effect({message = localize('k_dismantle'), colour = G.C.MULT}, card)
+			SMODS.calculate_effect({message = localize('k_cleave'), colour = G.C.CHIPS}, card)
 		elseif card.ability.extra.attack == "Cleave" then
 			G.E_MANAGER:add_event(Event({
 				func = function()
@@ -493,7 +492,7 @@ FishAndChips.Fish {
 				end
 			}))
 			card.ability.extra.attack = "Dismantle"
-			SMODS.calculate_effect({message = localize('k_cleave'), colour = G.C.CHIPS}, card)
+			SMODS.calculate_effect({message = localize('k_dismantle'), colour = G.C.MULT}, card)
 		end
 	end,
 	can_use = function(self, card)
@@ -517,9 +516,10 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { },
+	attributes = { "full_deck", "editions", "balance", "chance"},
 	config = {
 		extra = {
+			attack = "Amplified"
 		}
 	},
 	environments = {
@@ -529,11 +529,68 @@ FishAndChips.Fish {
 		weight = {min = 79.00, max = 84.00},
 		length = {min = 1.80, max = 2.10}
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { } }
+		local full_deck = 0
+		local negative = 0
+		local polychrome = 0
+		local amplified = 0
+		local reversal = 0
+        if G.playing_cards then
+            for _, playing_card in ipairs(G.playing_cards) do
+                if playing_card.edition and playing_card.edition.negative == true then negative = negative + 1 end
+            end
+			 for _, playing_card in ipairs(G.playing_cards) do
+                if playing_card.edition and playing_card.edition.polychrome == true then polychrome = polychrome + 1 end
+            end
+			full_deck = #G.playing_cards
+			amplified = negative / full_deck
+			reversal = polychrome / full_deck
+		end
+		info_queue[#info_queue + 1] = { key = 'w_d_seuss_amplified', set = "Other", vars = { G.playing_cards and math.floor(amplified * 100) or 0 } }
+		info_queue[#info_queue + 1] = { key = 'w_d_seuss_reversal', set = "Other", vars = { G.playing_cards and math.floor(reversal * 100) or 0} }
+		return {
+			vars = { 
+				card.ability.extra.attack == "Amplified" and math.floor(amplified * 100) or card.ability.extra.attack == "Reversal" and math.floor(reversal * 100),
+				card.ability.extra.attack 
+			} 
+		}
 	end,
 	calculate = function(self, card, context)
-	end
+        if context.final_scoring_step then
+			local amplified = 0
+			for _, playing_card in ipairs(G.playing_cards) do
+                if playing_card.edition and playing_card.edition.negative == true then amplified = amplified + 1 end
+            end
+			local reversal = 0
+			for _, playing_card in ipairs(G.playing_cards) do
+                if playing_card.edition and playing_card.edition.polychrome == true then reversal = reversal + 1 end
+            end
+			local full_deck = #G.playing_cards
+			if card.ability.extra.attack == "Amplified" then
+				if SMODS.pseudorandom_probability(card, "amplified", amplified, full_deck, "amplified", true) then
+					return { balance = true }
+				else
+					return { message = localize('k_nope_ex'), colour = G.C.CHIPS }
+				end
+			elseif card.ability.extra.attack == "Reversal" then
+				if SMODS.pseudorandom_probability(card, "reversal", reversal, full_deck, "reversal", true) then
+					return { balance = true }
+				else
+					return { message = localize('k_nope_ex'), colour = G.C.MULT }
+				end
+			end
+        end
+		if context.end_of_round and context.game_over == false and context.main_eval then
+			if card.ability.extra.attack == "Amplified" then
+				card.ability.extra.attack = "Reversal"
+				SMODS.calculate_effect({message = localize('k_reversal'), colour = G.C.MULT}, card)
+			elseif card.ability.extra.attack == "Reversal" then
+				card.ability.extra.attack = "Amplified"
+				SMODS.calculate_effect({message = localize('k_amplified'), colour = G.C.CHIPS}, card)
+			end
+		end
+    end,
 }
 
 -- Lord X-ray (Lord X)
