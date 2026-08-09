@@ -49,11 +49,11 @@ FishAndChips.Fish{
         PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
     end,
     calculate = function (self, card, context)
-        if context.individual and SMODS.has_enhancement(context.other_card, "m_lucky") then
+        if context.individual and SMODS.has_enhancement(context.other_card, "m_lucky") and not context.blueprint then
             context.other_card.nommed_by_dogfish = true
         end
 
-        if context.destroy_card and context.destroy_card.nommed_by_dogfish then
+        if context.destroy_card and context.destroy_card.nommed_by_dogfish and not context.blueprint then
             SMODS.scale_card(card, {
                 ref_table = card.ability.extra,
                 ref_value = "xmult",
@@ -61,6 +61,12 @@ FishAndChips.Fish{
             })
             return {
                 remove = true
+            }
+        end
+
+        if context.joker_main then
+            return {
+                xmult = card.ability.extra.xmult
             }
         end
     end,

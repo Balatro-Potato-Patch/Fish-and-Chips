@@ -8,6 +8,7 @@ FishAndChips.Fish{
     weight = 1,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
+    blueprint_compat = false,
     environments = { --Maximum 6
         calm_pond = 10,
         city_river = 10,

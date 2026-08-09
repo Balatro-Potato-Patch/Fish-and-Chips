@@ -55,6 +55,29 @@ FishAndChips.Fish{
         if G.fac_fish_area.cards[mypos+1].config.center.blueprint_compat == false then return false end
         return true
     end,
+    load = function (self, card, card_table, other_card)
+        G.E_MANAGER:add_event(Event{
+            func = function ()
+                if not (card.ability and card.ability.extra) or not card.area then return false end
+
+                if card.ability.extra.copying then
+                    G.E_MANAGER:add_event(Event{
+                        func = function ()
+                            local target_card
+                            for i,v in ipairs(G.fac_fish_area.cards) do
+                                if v.unique_val == card.ability.extra.target_val then target_card = v break end
+                            end
+                            if target_card then
+                                local target_center = target_card.config.center
+                                card:set_sprites(target_center)
+                            end
+                        end, blocking = false, blockable = false
+                    })
+                    return true
+                end
+            end, blocking = false, blockable = false
+        })
+    end,
     use = function (self, card)
         local mypos
         for i,v in ipairs(G.fac_fish_area.cards) do
@@ -71,12 +94,43 @@ FishAndChips.Fish{
         end
 
         card.ability.extra.copying = true
-        card.ability.extra.target_val = target.unique_val
-        local target_key = target.config.center.key
-        local target_vars = G.P_CENTERS[target_key].loc_vars and (G.P_CENTERS[target_key]:loc_vars({}, target_card) or {}).vars or {}
-        card.ability.extra.target_name = localize{type = "name_text", key = target.config.center.key, vars = target_vars}
+        card.ability.extra.target_val = target_card.unique_val
+        local target_key = target_card.config.center.key
+        local target_center = G.P_CENTERS[target_key]
+        local target_vars = target_center.loc_vars and (target_center:loc_vars({}, target_card) or {}).vars or {}
+        card.ability.extra.target_name = localize{type = "name_text", key = target_key, vars = target_vars}
+
+        card:set_sprites(target_center)
 
         SMODS.calculate_effect{message = localize("k_copied_ex"), card = card}
+    end,
+    keep_on_use = function (self, card)
+        return true
+    end,
+    loc_vars = function (self, info_queue, card)
+        local target_name = localize("k_none")
+
+        if card.ability.extra.copying then
+            local target_card
+            for i,v in ipairs(G.fac_fish_area.cards) do
+                if v.unique_val == card.ability.extra.target_val then target_card = v break end
+            end
+            if target_card then
+                local target_center = target_card.config.center
+                local target_key = target_center.key
+                local target_set = target_center.set
+                local target_vars = target_center.loc_vars and (target_center:loc_vars({}, target_card) or {})
+                target_name = localize{type= "name_text", key = target_key, set = target_set, vars = target_vars.vars or {}}
+                --info_queue[#info_queue+1] = {key = target_key, set = target_set}
+                info_queue[#info_queue+1] = G.P_CENTERS[target_key]
+            end
+        end
+
+        return {
+            vars = {
+                target_name
+            }
+        }
     end,
     calculate = function (self, card, context)
         if not card.ability.extra.target_val then return nil end
@@ -89,7 +143,9 @@ FishAndChips.Fish{
             end
         end
 
-        local ret = SMODS.blueprint_effect(card, target_card, context) or {}
+        if not target_card then return end
+
+        local ret = SMODS.blueprint_effect(card, target_card, context)
 
         if context.end_of_round and context.main_eval and not context.blueprint then
             local reset = {
@@ -99,6 +155,7 @@ FishAndChips.Fish{
                             card.ability.extra.copying = false
                             card.ability.extra.target_val = false
                             card.ability.extra.target_name = "None"
+                            card:set_sprites(self)
                             return true
                         end
                     })
@@ -106,9 +163,9 @@ FishAndChips.Fish{
                 message = localize("k_reset")
             }
 
-            ret = SMODS.merge_effects(ret, reset)
+            ret = ret and SMODS.merge_effects(ret, reset) or reset
         end
 
-        return next(ret) and ret or nil
+        return ret
     end,
 }

@@ -105,7 +105,8 @@ return {
                 },
                 text = {
                     "{C:attention}Use{} to copy fish to",
-                    "the right until end of round"
+                    "the right until end of round",
+                    "{C:inactive}(Currently copying: {C:attention}#1#{C:inactive})"
                 }
             },
             fish_fac_minty_electric_eel = {
@@ -136,6 +137,21 @@ return {
                     "retrigger every Joker and",
                     "fish next hand"
                     
+                }
+            },
+            fish_fac_minty_kyriaki = {
+                name = "Kyriaki",
+                flavour = {
+                    "Sunday, the first sin",
+                    "Death is denied those who seek",
+                    "it, though it be their destiny",
+                    "They search for it like treasure,",
+                    "but the modern age conceals it"
+                },
+                text = {
+                    "{X:purple,C:white}X#1#{} Blind size when",
+                    "entering blind and after",
+                    "each hand played"
                 }
             },
             fish_fac_minty_template = {

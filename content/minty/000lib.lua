@@ -3,6 +3,26 @@ SMODS.Sound{
     path = "minty/meow.wav"
 }
 
+SMODS.Sound{
+    key = "minty_good",
+    path = "minty/tc good.wav"
+}
+
+SMODS.Sound{
+    key = "minty_cool",
+    path = "minty/tc cool.wav"
+}
+
+SMODS.Sound{
+    key = "minty_slash",
+    path = "minty/tc slash.wav"
+}
+
+SMODS.Sound{
+    key = "minty_defeat",
+    path = "minty/tc defeat.wav"
+}
+
 SMODS.Atlas{
     key = "minty_fish",
     path = "minty/fish.png",

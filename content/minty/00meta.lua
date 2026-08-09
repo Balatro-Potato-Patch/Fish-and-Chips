@@ -19,6 +19,14 @@ PotatoPatchUtils.Developer({
             G.GAME.minty_seabass_eradicated = {}
         end
 
+        if context.fac_fish_caught and context.fish == "fish_fac_minty_kyriaki" then
+            if context.perfect then
+                play_sound("fac_minty_cool")
+            else
+                play_sound("fac_minty_good")
+            end
+        end
+
         if context.check_eternal and context.other_card.config.center.key == "fish_fac_minty_seabass" and context.trigger.from_sell then
             return {
                 no_destroy = true
