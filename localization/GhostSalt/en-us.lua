@@ -19,7 +19,7 @@ return {
                 name = "Gleebleglub",
                 text = {
                     "Creates a {C:blue}Planet{} card when",
-                    "selling or using {C:attention}Fish{}",
+                    "selling or using a {C:attention}Fish{}",
                     "{C:inactive}(Must have room, max{}",
                     "{C:inactive}#1# triggers per round){}"
                 },
@@ -88,8 +88,8 @@ return {
             fish_fac_ghostsalt_whitewhale = {
                 name = "White Whale",
                 text = {
-                    "{C:red}Rare{} Jokers",
-                    "each give {X:mult,C:white}X#1#{} Mult",
+                    "{C:red}Rare{} Jokers each",
+                    "give {X:mult,C:white}X#1#{} Mult",
                 },
                 flavor = {
                     "They said it could never be",
@@ -163,6 +163,21 @@ return {
                 },
                 flavor = {
                     "Kowalski, analysis!"
+                }
+            },
+            fish_fac_ghostsalt_mezepheles = {
+                name = "Mezepheles",
+                text = {
+                    "Other {C:attention}Fish{} with abilities",
+                    "containing the word",
+                    "\"{C:attention}#1#{}\" give {C:white,X:mult}X#2#{} Mult",
+                    "{C:inactive}(Word must match exactly){}",
+                    "{C:inactive}(Ignores other Mezepheles){}"
+                },
+                flavor = {
+                    "That which issues from the",
+                    "heart alone, will bend the",
+                    "hearts of others to your own."
                 }
             },
         },

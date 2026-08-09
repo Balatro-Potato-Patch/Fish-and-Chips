@@ -1,4 +1,4 @@
-local fac_ghostsalt_common_weight = 6
+local fac_ghostsalt_common_weight = 5
 
 SMODS.Sound({
 	key = "ghostfish_1",
@@ -188,6 +188,7 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.max_triggers } }
 	end,
+	requires_consumables = true,
 	blueprint_compat = true,
 	calculate = function(self, card, context)
 		if ((context.fac_use_fish and context.fac_use_fish ~= card) or
@@ -1165,3 +1166,128 @@ FishAndChips.Fish {
 	end,
 	pronouns = "he_him"
 }
+
+FishAndChips.Fish {
+	key = "ghostsalt_mezepheles",
+	atlas = "GhostSaltMyFish",
+	pos = { x = 1, y = 3 },
+	config = { extra = { word = "blah", xmult = 2 } },
+	weight = fac_ghostsalt_common_weight,
+	stats = { weight = { min = 0.03, max = 0.05 }, length = { min = 0.20, max = 1.00 } },
+	ppu_coder = { "GhostSalt" },
+	ppu_artist = { "GhostSalt" },
+	attributes = { "generation" },
+	environments = {
+		styx = 10,
+		swamp = 8,
+		backroom = 5,
+		city_river = 2,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.word, card.ability.extra.xmult } }
+	end,
+	blueprint_compat = true,
+	calculate = function(self, card, context)
+		if context.other_main and context.other_main.ability.set == "fac_Fish" and context.other_main.config.center.key ~= "fish_fac_ghostsalt_mezepheles" then
+			local words = fac_ghostsalt_mezepheles_wordify_fish(context.other_main.config.center.key)
+			for _, word in ipairs(words) do
+				if word == card.ability.extra.word then
+					return { xmult = card.ability.extra.xmult }
+				end
+			end
+		end
+	end,
+	set_ability = function(self, card, initial, delay_sprites)
+		card.ability.extra.word = pseudorandom_element(G.fac_ghostsalt_mezepheles_words, "fac_ghostsalt_mezepheles_word")
+	end,
+	pronouns = "it_its"
+}
+
+function fac_ghostsalt_mezepheles_wordify_fish(key)
+	if key == "fish_fac_ghostsalt_mezepheles" then return {} end
+	local loc_target = G.localization.descriptions["fac_Fish"][key]
+	local final_line = ""
+	local multibox = not loc_target.text_parsed[1][1].strings
+	if loc_target then
+		for _, total in ipairs(multibox and loc_target.text_parsed or { [1] = loc_target.text_parsed }) do
+			for _, lines in ipairs(total) do
+				local assembled_string = ""
+				for _, part in ipairs(lines) do
+					for _, subpart in ipairs(part.strings) do
+						if type(subpart) == "string" then
+							assembled_string = assembled_string .. subpart
+						end
+					end
+				end
+				if final_line ~= "" then
+					final_line = final_line .. " " .. assembled_string
+				else
+					final_line = assembled_string
+				end
+			end
+		end
+	end
+
+	local words = {}
+	local current_word = ""
+	local alphabet = "abcdefdghijklmnopqrstuvwxyz"
+	for i = 1, #final_line do
+		local c = string.gsub(string.lower(final_line:sub(i, i)), "%p", "%%%1")
+		if c == " " and current_word ~= "" then
+			words[#words + 1] = current_word
+			current_word = ""
+		elseif c ~= " " then
+			if string.find(alphabet, c) then
+				current_word = current_word .. c
+			end
+		end
+	end
+	if current_word ~= "" then
+		words[#words + 1] = current_word
+	end
+	return words
+end
+
+function fac_ghostsalt_mezepheles_find_doable_words(min_fish, max_fish)
+	local word_counts = {}
+	local no_of_fish = 0
+	for k, v in pairs(G.P_CENTERS) do
+		if v.set == "fac_Fish" then
+			no_of_fish = no_of_fish + 1
+			local individual_counted = {}
+			local words = fac_ghostsalt_mezepheles_wordify_fish(k)
+			for _, word in ipairs(words) do
+				-- Eliminate anything shorter than 3 letters, to make things interesting (and also to eliminate the X in X2 Mult).
+				-- Also eliminate words appearing twice in the same ability text.
+				if #word >= 3 and not individual_counted[word] then
+					word_counts[word] = (word_counts[word] or 0) + 1
+					individual_counted[word] = true
+				end
+			end
+		end
+	end
+
+	local doable_words = {}
+	for word, count in pairs(word_counts) do
+		if (not min_fish or count >= (min_fish * no_of_fish)) and (not max_fish or count <= (max_fish * no_of_fish)) then
+			doable_words[#doable_words + 1] = word
+		end
+	end
+	return doable_words
+end
+
+G.fac_ghostsalt_mezepheles_min = 0.1
+G.fac_ghostsalt_mezepheles_max = 0.2
+
+local main_menu_ref = Game.main_menu
+Game.main_menu = function(change_context)
+	local ret = main_menu_ref(change_context)
+
+	fac_ghostsalt_mezepheles_recalc_wordlist()
+
+	return ret
+end
+
+function fac_ghostsalt_mezepheles_recalc_wordlist()
+	G.fac_ghostsalt_mezepheles_words = fac_ghostsalt_mezepheles_find_doable_words(G.fac_ghostsalt_mezepheles_min, G.fac_ghostsalt_mezepheles_max)
+end
