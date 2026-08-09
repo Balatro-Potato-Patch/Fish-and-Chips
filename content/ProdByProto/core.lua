@@ -46,14 +46,25 @@ SMODS.Sound{
 }
 
 
+SMODS.ScreenShader{
+    key = "proto_noir",
+    path = "ProdByProto/noir.fs",
+    should_apply = function(self)
+        return G.GAME and G.GAME.proto_noirshade
+    end
+}
+
+
 FishAndChips.ProdByProto = {}
 
 FishAndChips.ProdByProto.q_music = false
+
+
 function FishAndChips.ProdByProto.addEnvs()
 	local envWeights = {}
-	for _,env in pairs(FishAndChips.Environment.obj_buffer) do
-		-- PATCH TARGET: proto fish in all environments
-		if not envWeights[env] then envWeights[env] = 1 end 
+	local envBuffer = FishAndChips.Environment.obj_buffer
+	for i = 1, 6 do
+		envWeights[envBuffer[(i < 4 and i) or (i > 3 and (#envBuffer - (i - 4)))]] = 1
 	end
 	return envWeights
 end
