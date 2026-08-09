@@ -27,6 +27,7 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
 		if card.config and card.config.center and card.config.center.set == "fac_Fish" and card.area and (card.area.config.collection or card.area.config.fac_compendium) then
+			card.ability.extra.sequence = {}
 			card.ability.extra.sell_value_increase = pseudorandom(pseudoseed(self.key), card.ability.extra.sequence_min, card.ability.extra.sequence_max)
 			card.ability.extra.current_position = 1
 			for i=1,card.ability.extra.sell_value_increase do

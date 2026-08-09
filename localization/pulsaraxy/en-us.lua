@@ -13,7 +13,7 @@ local pa_fish = {
                 name = "Fishing Simulator 2007",
                 text = {
                     "Gains {X:mult,C:white}X#1#{} Mult if",
-                    "fish is caught perfectly",
+                    "{C:fac_fish}fish{} is caught {C:attention}perfectly",
                     "{C:inactive}Currently {X:mult,C:white}X#2#{C:inactive} Mult"
                 },
                 flavour = {
@@ -208,7 +208,8 @@ local pa_fish = {
             fish_fac_pa_fishingfish = {
                 name = 'The "Fish"ing Rod',
                 text = {
-                    "Max fish {C:attention}#2#{} is #3# by {X:mult,C:white}X#4#{}"
+                    "Max fish {C:attention}#2#{} is #3# by {X:mult,C:white}X#4#{}",
+                    "{C:attention}Toggle{} to change effects"
                 },
                 flavour = {
                     'Some traditional fishers prefer',
@@ -235,7 +236,7 @@ local pa_fish = {
             fish_fac_pa_fromg = {
                 name = "fromg",
                 text = {
-                    '{C:attention}Use{} this fish while',
+                    '{C:attention}Use{} this fromg while',
                     'an owned {C:attention}Consumable{} is',
                     'selected to {C:attention}eat{} it',
                     'and gain {C:chips}+#1#{} chips',
@@ -318,12 +319,24 @@ local pa_fish = {
             fish_fac_pa_lavalamp = {
                 name = "Lava Lamp",
                 text = {
-                    'If previous blind was beaten in one hand,',
-                    'give #1# selected playing card a random edition'
+                    'If {C:attention}previous{} blind was',
+                    'beaten in {C:attention}one{} hand,',
+                    'give {C:attention}#1#{} selected playing',
+                    'card a random {C:dark_edition}Edition'
                 },
                 flavour = {
                     'delicious, nutritious',
                     '...but only once'
+                }
+            },
+            fish_fac_pa_charcoal_biscuit = {
+                name = "Charcoal Biscfin",
+                text = {
+                    "Retriggers all played",
+                    "{C:spades}Spades{} cards {C:attention}#1#{} times"
+                },
+                flavour = {
+                    "Are you sure you didn't just burn this cookie?"
                 }
             }
         },
