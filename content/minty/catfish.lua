@@ -1,9 +1,10 @@
+local row = 1
+local atlas, pos = PotatoPatchUtils.Developers.fac_minty:get_lineboil_atlas_info(row)
+
 FishAndChips.Fish{
     key = "minty_catfish",
-    --[[
-    atlas = "minty_fish",
-    pos = {x=20, y=0},
-    --]]
+    atlas = atlas,
+    pos = pos,
     weight = 1,
     ppu_coder = {"minty"},
     ppu_artist = {"?"},
@@ -42,6 +43,9 @@ FishAndChips.Fish{
                 math.max(5 - card.ability.extra.oddshelp, 1)
             }
         }
+    end,
+    update = function (self, card, dt)
+        PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
     end,
     calculate = function (self, card, context)
         if context.mod_probability then

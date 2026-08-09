@@ -25,4 +25,25 @@ PotatoPatchUtils.Developer({
             }
         end
     end,
+    set_line_boil = function (self, center, card, row)
+        if G.SETTINGS.reduced_motion and not card.nomotion then
+            card.nomotion = true
+            center.atlas = "fac_minty_nolineboilfish"
+            center.pos = {x=0,y=row}
+            card:set_sprites(center)
+        end
+        if not G.SETTINGS.reduced_motion and (card.nomotion ~= false) then
+            card.nomotion = false
+            center.atlas = "fac_minty_lineboilfish"
+            center.pos = {y=row}
+            card:set_sprites(center)
+        end
+    end,
+    get_lineboil_atlas_info = function (self, row)
+        if G.SETTINGS.reduced_motion then
+            return "minty_nolineboilfish", {x=0, y=row}
+        else
+            return "minty_lineboilfish", {y=row}
+        end
+    end
 })
