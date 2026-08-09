@@ -11,8 +11,8 @@ FishAndChips.Fish {
 		backroom = 0.5
 	},
 	stats = {
-		length = { min = 0.0120, max = 0.0120},  --based on ordinary cd
-		weight = { min = 0.02, max = 0.02}
+		length = { min = 2.032, max = 2.438},
+		weight = { min = 40, max = 45}
 	},
 	choose = 3,
 	blueprint_compat = true,

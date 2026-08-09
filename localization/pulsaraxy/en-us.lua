@@ -250,7 +250,7 @@ local pa_fish = {
                 text = {
                     'Use to store a selected ',
                     '{C:attention}Booster Pack{} in shop,',
-                    'Use #1#',
+                    'Use during fishing to open',
                     'stored {C:attention}Booster Pack{}',
                 },
                 flavour = {

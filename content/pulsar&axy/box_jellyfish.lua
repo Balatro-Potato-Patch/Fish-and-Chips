@@ -12,7 +12,7 @@ FishAndChips.Fish {
 	},
 	stats = {
 		length = {min = 1.75, max = 2},
-		weight = { min = 90, max = 100}
+		weight = { min = .75, max = 1.25}
 	},
 	blueprint_compat = true,
 	config = {
@@ -22,10 +22,6 @@ FishAndChips.Fish {
 		max_highlighted = 1,
 		immutable = {}
 	},
-	loc_vars = function(self, info_queue, card)
-		local description = card.ability.extra.has_booster and "to store" or "during fishing to open"
-		return { vars = { description } }
-	end,
 	load = function(self, card, card_table, other_card)
 		G.E_MANAGER:add_event(Event{
 			func = function ()
