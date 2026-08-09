@@ -9,13 +9,15 @@ PotatoPatchUtils.Developer({
 
   click = function(self)
 	local voice_sound = math.random(1, 15)
+	local audio = math.random(1, 20)
+	local voice = math.random(1, 7)
 
 	if voice_sound >= 12 then
-		self:juice_up()
-		play_sound('fac_credits_voices_' .. math.random(1, 7))
+		self:juice_up(0.1 , 0.1)
+		play_sound('fac_credits_voices_' .. voice)
 	else
-		self:juice_up()
-		play_sound('fac_credits_audio_' .. math.random(1, 20))
+		self:juice_up(0.1 , 0.1)
+		play_sound('fac_credits_audio_' .. audio)
 	end
   end
 
@@ -498,8 +500,8 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = "devicehands",
-	atlas = pez,
-	pos = { x = 3, y = 1 },
+	atlas = 'fac_sepa_darkner',
+	pos = { x = 0, y = 0 },
 	weight = 6,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
@@ -525,6 +527,39 @@ FishAndChips.Fish {
  
  	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge("Darkner", G.C.BLACK, G.C.WHITE, 1 )
+ 	end,
+
+}
+
+FishAndChips.Fish {
+	key = "catfish",
+	atlas = 'fac_sepa_bagremove',
+	pos = { x = 0, y = 0 },
+	weight = 6,
+	ppu_coder = { "AbelSketch" },
+	ppu_artist = { "AbelSketch" },
+	attributes = { "hands" },
+	config = {
+		extra = {
+			
+		}
+	},
+	stats = {
+		weight = {min = 0, max = 0},
+		length = {min = 0.12 , max = 0.22}
+	},
+	environments = {
+		styx = 1,
+		wormhole = 0.5,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = {  } }
+	end,
+	calculate = function(self, card, context)
+	end,
+ 
+ 	set_badges = function(self, card, badges)
+ 		badges[#badges+1] = create_badge("Smoke", G.C.BLACK, G.C.WHITE, 1 )
  	end,
 
 }

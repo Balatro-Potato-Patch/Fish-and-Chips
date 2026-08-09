@@ -5,6 +5,26 @@ SMODS.Atlas({
 	py = 95,
 })
 
+SMODS.Atlas({
+	key = "fac_sepa_bagremove",
+	path = "sepa/bagreselfsmoke.png",
+	px = 71,
+	py = 133,
+	atlas_table = 'ANIMATION_ATLAS',
+	frames = 10, 
+	fps = 5
+})
+
+SMODS.Atlas({
+	key = "fac_sepa_darkner",
+	path = "sepa/devicehands.png",
+	px = 81,
+	py = 95,
+	atlas_table = 'ANIMATION_ATLAS',
+	frames = 4, 
+	fps = 2
+})
+
 SMODS.Font{
     key = "sepa_ultra",
     path = "sepa/VCR_OSD_MONO_1.001.ttf",
