@@ -353,6 +353,14 @@ local pa_fish = {
                     "Gives {C:attention}#1#{} random tags when",
                     "a blind is {C:attention}skipped"
                 }
+            },
+            fish_fac_pa_pulsar = {
+                name = "Pulsar",
+                text = {
+                    "Each {C:clubs}Club{}",
+                    "held in hand",
+                    "gives {X:chips,C:white}X#1#{} Chips"
+                }
             }
         },
     },
