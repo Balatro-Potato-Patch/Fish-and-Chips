@@ -44,7 +44,11 @@ SMODS.Atlas({
 	py = 95,
 })
 
-
+-- Credits: Team Cherry
+SMODS.Sound {
+	key = 'segg_void',
+	path = 'egg_stupid/void_tick_damage.ogg',
+}
 
 --[[
 
@@ -93,7 +97,48 @@ function fac_get_plasmium_blind_mod(single)
 	return 1
 end
 
-
+-- ease_dollars with custom colour and sfx
+function fac_ease_dollars_void(mod)
+    local function _mod(mod)
+        local dollar_UI = G.HUD:get_UIE_by_ID('dollar_text_UI')
+        mod = mod or 0
+        local text = '+'..localize('$')
+        local col = G.C.BLACK
+        if mod < 0 then
+            text = '-'..localize('$')
+        else
+          inc_career_stat('c_dollars_earned', mod)
+        end
+        --Ease from current chips to the new number of chips
+        G.GAME.dollars = G.GAME.dollars + mod
+        check_and_set_high_score('most_money', G.GAME.dollars)
+        check_for_unlock({type = 'money'})
+        dollar_UI.config.object:update()
+        G.HUD:recalculate()
+        --Popup text next to the chips in UI showing number of chips gained/lost
+        attention_text({
+          text = text..tostring(math.abs(mod)),
+          scale = 0.8, 
+          hold = 0.7,
+          cover = dollar_UI.parent,
+          cover_colour = col,
+          align = 'cm',
+          })
+        --Play a chip sound
+        play_sound('fac_segg_void')
+    end
+    if instant then
+        _mod(mod)
+    else
+        G.E_MANAGER:add_event(Event({
+        trigger = 'immediate',
+        func = function()
+            _mod(mod)
+            return true
+        end
+        }))
+    end
+end
 
 --#endregion
 
@@ -181,7 +226,11 @@ FishAndChips.Fish {
 
 			-- Set muhnee to 0
 			local muhnee = G.GAME.dollars
-			ease_dollars(-muhnee)
+
+			G.custom_ed_colour = G.C.BLACK
+			fac_ease_dollars_void(-muhnee)
+
+			card:juice_up()
 	
 			return {
 				message = localize('b_fac_segg_void_fish'),
