@@ -14,3 +14,9 @@ PotatoPatchUtils.Developer({
 	colour = HEX('FF7C0A'),
 	fac_partner = 'fac_eremel'
 })
+
+SMODS.Atlas({
+    key = 'r_e_fish',
+    path = 'radiation_eremel/fish.png',
+    px = 71, py = 95
+})
