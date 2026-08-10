@@ -356,7 +356,7 @@ local pa_fish = {
                 }
             },
             fish_fac_pa_photon = {
-                name = "Photonfin",
+                name = "{V:1}Photonfin",
                 text = {
                     "Gives {C:attention}#1#{} random tags when",
                     "a blind is {C:attention}skipped"
