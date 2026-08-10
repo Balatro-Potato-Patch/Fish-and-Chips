@@ -2208,7 +2208,7 @@ FishAndChips.Fish {
 		calm_pond = 2,
 	},
 	attributes = { 'xmult', 'scaling', 'destroy_card' },
-	on_catch = function(self, card)
+	add_to_deck = function(self, card)
 		card.ability.stats.weight = 100
 	end,
 	loc_vars = function(self, info_queue, card)
