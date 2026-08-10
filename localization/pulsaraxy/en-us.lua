@@ -251,8 +251,8 @@ local pa_fish = {
                 text = {
                     'Use to copy selected ',
                     '{C:attention}Booster Pack{} in shop,',
-                    'Use again to open',
-                    'stored {C:attention}Booster Pack{}',
+                    'Use again in shop to',
+                    'open stored {C:attention}Booster Pack{}',
                     '{s:0.8}{C:inactive}(Usable {C:attention}once{}{s:0.8}{C:inactive} per shop)'
                 },
                 flavour = {
