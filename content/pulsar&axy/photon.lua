@@ -32,7 +32,25 @@ FishAndChips.Fish {
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.tags } }
+		local color = HEX('ffffff')
+		local fish_length = card and card.ability and card.ability.stats and card.ability.stats.length / card.ability.stats.units.length.scale or 500
+		fish_length = tonumber(string.format('%.0f', fish_length))
+		if fish_length > 625 then
+			color = HEX('ff0000')
+		elseif fish_length > 590 then
+			color = HEX('ff6600')
+		elseif fish_length > 565 then
+			color = HEX('ffff00')
+		elseif fish_length > 520 then
+			color = HEX('009900')
+		elseif fish_length > 500 then
+			color = HEX('00ffff')
+		elseif fish_length > 435 then
+			color = HEX('0000ff')
+		elseif fish_length >= 380 then
+			color = HEX('660066')
+		end
+		return { vars = { card.ability.extra.tags, colours = { color } } }
 	end,
 	calculate = function(self, card, context)
         -- give two random tags when a blind is skipped_rank
