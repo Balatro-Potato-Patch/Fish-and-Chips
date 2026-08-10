@@ -16,7 +16,7 @@ PotatoPatchUtils.Developer({
 		y = 0,
 	},
 	colour = HEX("189bcc"),
-	fac_partner = "lexi",
+	fac_partner = "fac_lexi",
 	loc = true,
 	click = function(self)
 		love.system.openURL("https://ko-fi.com/inkystanderson")
@@ -31,7 +31,7 @@ PotatoPatchUtils.Developer({
 		y = 0,
 	},
 	colour = SMODS.Gradients["fac_l_i_lexi"],
-	fac_partner = "inky",
+	fac_partner = "fac_inky",
 	loc = true,
 	click = function(self)
 		love.system.openURL("https://triple6lexi.carrd.co/")

@@ -35,7 +35,7 @@ return {
 			fish_fac_l_i_id = {
 				name = "Accountant's ID",
 				text = {
-					"Gives {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for each fish",
+					"Gives {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for each {C:fac_fish}Fish",
 					"with the {C:money}Economy{} attribute",
 					"at the end of the round",
 				},
@@ -192,10 +192,9 @@ return {
 			fish_fac_l_i_fishsocks = {
 				name = "Fishsocks",
 				text = {
-					"NCS music btw",
-					"{X:mult,C:white}X#1#{} Mult",
-					"{C:money}$#2#",
-					"{C:inactive}it sounds like shit on purpose",
+					"If played hand is a {C:attention}#1#",
+					"Create an editioned {C:fac_fish}Fish",
+					"{C:inactive}(Negative excluded)",
 				},
 				flavour = {
 					"{s:1.1}(Reamainds mioherr)",

@@ -357,7 +357,7 @@ FishAndChips.Fish({
 	key = "l_i_phish_bait",
 	atlas = "l_i_fish",
 	pos = { x = 2, y = 1 },
-	weight = 10,
+	weight = 7,
 	ppu_coder = {
 		"lexi",
 	},
@@ -589,11 +589,13 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if G.GAME.blind and G.GAME.blind.in_blind then
-			if G.GAME.chips <= G.GAME.blind.chips / 4 then
-				return {
-					xmult = card.ability.extra.xmult,
-				}
+		if context.joker_main then
+			if G.GAME.blind and G.GAME.blind.in_blind then
+				if G.GAME.chips <= G.GAME.blind.chips / 4 then
+					return {
+						xmult = card.ability.extra.xmult,
+					}
+				end
 			end
 		end
 	end,
@@ -726,4 +728,57 @@ FishAndChips.Fish({
 	badge_key = "k_fac_l_i_music",
 })
 
--- fishsocks
+FishAndChips.Fish({
+	key = "l_i_fishsocks",
+	atlas = "l_i_fish",
+	pos = { x = 4, y = 1 },
+	weight = 2,
+	ppu_coder = {
+		"lexi",
+	},
+	ppu_artist = {
+		"inky",
+	},
+	attributes = {
+		"economy",
+	},
+	environments = {
+		backroom = 1,
+		volcano = 1,
+	},
+	cost = 4,
+	config = {
+		extra = {
+			type = "Pair",
+		},
+	},
+	stats = {
+		weight = { min = 0.04, max = 0.06 },
+		length = { min = 0.018, max = 0.026 },
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				localize(card.ability.extra.type, "poker_hands"),
+			},
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main and context.scoring_name == "Pair" then
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					SMODS.add_card({
+						set = "fac_Fish",
+						edition = SMODS.poll_edition({
+							key = "fac_l_i_fishsocks",
+							guaranteed = true,
+							no_negative = true,
+						}),
+					})
+					return true
+				end,
+			}))
+		end
+	end,
+	disable_fish_scaling = true,
+})
