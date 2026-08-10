@@ -2,10 +2,29 @@ return {
     descriptions = {
         PotatoPatch = {
 			PotatoPatchDev_ouiiskey = {
-				name = "ouiiskey"
+				name = "ouiiskey",
+                text = {
+                    "Teammate with {element:1}"
+                }
 			},
 			PotatoPatchDev_Lusha = {
-				name = "Lusha"
+				name = "Lusha",
+                text = {
+                    {
+                        "{C:attention}queergirlbunnydollthing with very normal thoughts :3",
+                        "{C:inactive,s:0.8}i'm a drawer, we made the mineral fishes glugluglu",
+                        "teammate with {V:1}ouiiskey"
+                    },
+                    {
+                        "play Ghost trick, Peglin, Mother 3",
+                        'and my balatro mod "LushedUp"!',
+                        "except you can't because",
+                        "it's not finished!! (idk how to code)"
+                    },
+                    {
+                        "{element:1}"
+                    }
+                }
 			}
         },
         fac_Fish = {

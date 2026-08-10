@@ -1,26 +1,3 @@
--- Potato Patch Utils
-PotatoPatchUtils.Developer {
-    name = "ouiiskey",
-    colour = HEX("f96932"),
-    atlas = "fac_seabunny",
-    pos = {x = 0, y = 0},
-    fac_partner = "fac_Lusha"
-}
-
-SMODS.Shader {
-    key = "lusha",
-    path = "seabunny/lusha.fs"
-}
-
-PotatoPatchUtils.Developer {
-    name = "Lusha",
-    colour = HEX("f35555"),
-    shaders = {"fac_lusha"},
-    atlas = "fac_seabunny",
-    pos = {x = 0, y = 0},
-    fac_partner = "fac_ouiiskey"
-}
-
 -- Fish
 SEABUN = {
     enchant = function(card)
@@ -75,3 +52,79 @@ SMODS.current_mod.calculate = function(self, context)
     end
     Scmc_ref(self, context)
 end
+
+-- Potato Patch Utils
+PotatoPatchUtils.Developer {
+    name = "ouiiskey",
+    colour = HEX("f96932"),
+    atlas = "fac_seabunny",
+    pos = {x = 0, y = 0},
+    fac_partner = "fac_Lusha",
+    loc = "PotatoPatchDev_ouiiskey",
+    loc_vars = function(self, info_queue, card)
+        return {vars = {elements = {DynaText{
+            string = localize{type = "name_text", key = "PotatoPatchDev_Lusha", set = "PotatoPatch"},
+            colours = {HEX("f35555")}, scale = 0.3,
+            shaders = {"fac_lusha"},
+            silent = true,
+            font = SMODS.Fonts.fac_collection
+            }
+        }}}
+    end
+}
+
+SMODS.Shader {
+    key = "lusha",
+    path = "seabunny/lusha.fs"
+}
+
+SMODS.Atlas {
+    key = "rabbit1",
+    path = "seabunny/rabbit1.png",
+    px = 144,
+    py = 144,
+    atlas_table = "ANIMATION_ATLAS",
+    frames = 14
+}
+
+SMODS.Atlas {
+    key = "rabbit2",
+    path = "seabunny/rabbit2.png",
+    px = 144,
+    py = 144,
+    atlas_table = "ANIMATION_ATLAS",
+    frames = 29
+}
+
+SMODS.Atlas {
+    key = "rabbit3",
+    path = "seabunny/rabbit3.png",
+    px = 144,
+    py = 144,
+    atlas_table = "ANIMATION_ATLAS",
+    frames = 17
+}
+
+SMODS.Atlas {
+    key = "rabbit4",
+    path = "seabunny/rabbit4.png",
+    px = 144,
+    py = 144,
+    atlas_table = "ANIMATION_ATLAS",
+    frames = 35
+}
+
+PotatoPatchUtils.Developer {
+    name = "Lusha",
+    colour = HEX("f35555"),
+    shaders = {"fac_lusha"},
+    atlas = "fac_seabunny",
+    pos = {x = 0, y = 0},
+    fac_partner = "fac_ouiiskey",
+    loc = "PotatoPatchDev_Lusha",
+    loc_vars = function(self, info_queue, card)
+        return {vars = {colours = {HEX("f96932")}, elements = {
+            SMODS.create_sprite(0, 0, G.CARD_H * 2 / 3, G.CARD_H * 2 / 3, "fac_rabbit" .. pseudorandom("fac_rabbit", 1, 4), {y = 0})
+        }}}
+    end
+}
