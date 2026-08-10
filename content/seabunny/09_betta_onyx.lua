@@ -1,11 +1,13 @@
 -- Betta Onyx
-local recalc_size = function(card, set, add)
-    if not card.ability.extra.enchant then return end
+local recalc_size = function(card, set, add, first)
     local tally = {}
     if set then
         tally[set] = add and 1 or -1
     end
-    local limit = G.consumeables.config.card_limit - card.ability.extra.size
+    local limit = G.consumeables.config.card_limit
+    if not first then
+        limit = limit - card.ability.extra.size
+    end
     card.ability.extra.size = 0
     for k, v in ipairs(G.consumeables.cards) do
         tally[v.ability.set] = (tally[v.ability.set] or 0) + 1
@@ -15,7 +17,9 @@ local recalc_size = function(card, set, add)
             card.ability.extra.size = card.ability.extra.size + 1
         end
     end
-    G.consumeables.config.card_limit = limit + card.ability.extra.size
+    if card.ability.extra.enchant then
+        G.consumeables.config.card_limit = limit + card.ability.extra.size
+    end
 end
 
 FishAndChips.Fish {
@@ -32,7 +36,7 @@ FishAndChips.Fish {
         return {vars = {card.ability.extra.size, card.ability.extra.times, card.ability.extra.count}}
     end,
     add_to_deck = function(self, card, from_debuff)
-        recalc_size(card)
+        recalc_size(card, nil, nil, true)
     end,
     remove_from_deck = function(self, card, from_debuff)
         G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.size
@@ -67,9 +71,8 @@ FishAndChips.Fish {
             elseif context.selling_card and context.card.config.center.name == "fish_fac_enchantfish" then
                 recalc_size(card)
             elseif context.using_consumeable then
-                if card.ability.extra.enchant then
-                    recalc_size(card, context.consumeable.ability.set)
-                else
+                recalc_size(card)
+                if not card.ability.extra.enchant then
                     card.ability.extra.count = card.ability.extra.count + 1
                     if card.ability.extra.count < card.ability.extra.times then
                         return {
@@ -77,7 +80,7 @@ FishAndChips.Fish {
                         }
                     end
                     SEABUN.enchant(card)
-                    recalc_size(card)
+                    recalc_size(card, nil, nil, true)
                 end
             end
         end
