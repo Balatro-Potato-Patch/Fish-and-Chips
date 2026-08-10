@@ -23,6 +23,13 @@ FishAndChips.Fish {
 	attributes = { "copying" },
     disable_visual_scaling = true,
     blueprint_compat = true,
+
+    impulse_max = 0.45,
+    impulse_min = 0.25,
+    decision_max = 0.45,
+    decision_min = 0.15,
+    vel_limit = 0.65,
+
 	environments = {
 		backroom = 1,
         swamp = 1,

@@ -42,6 +42,13 @@ FishAndChips.Fish {
         weight = {min = 80, max = 80.000001, units = {format = "fac_fo_flowery_unit", scale = 99999, precision = 3}},
 		length = {min = 2.2, max = 2.2000001, units = {format = "fac_fo_flowery_unit", scale = 99999, precision = 3}},
 	},
+
+    impulse_max = 0.9,
+    impulse_min = 0.5,
+    decision_max = 0.75,
+    decision_min = 0.45,
+    vel_limit = 1.5,
+
     loc_vars = function(self, info_queue, card)
 		return { vars = {
             card.ability.extra.mult,

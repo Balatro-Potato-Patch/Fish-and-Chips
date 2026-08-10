@@ -24,6 +24,8 @@ FishAndChips.Fish {
 		weight = {min = 1.87, max = 1.87 + 0.00001},
 		length = {min = 0.276225, max = 0.276225 + 0.00001}
 	},
+    decision_max = 0.75,
+    decision_min = 0.35,
     loc_vars = function(self, info_queue, card)
 		return { vars = {
             card.ability.extra.amt,
