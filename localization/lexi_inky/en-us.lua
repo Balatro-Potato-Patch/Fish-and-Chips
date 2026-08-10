@@ -195,6 +195,7 @@ return {
 					"If played hand is a {C:attention}#1#",
 					"Create an editioned {C:fac_fish}Fish",
 					"{C:inactive}(Negative excluded)",
+					"{C:inactive}(Must have room)",
 				},
 				flavour = {
 					"{s:1.1}(Reamainds mioherr)",

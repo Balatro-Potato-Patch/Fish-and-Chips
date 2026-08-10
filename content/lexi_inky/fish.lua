@@ -765,19 +765,16 @@ FishAndChips.Fish({
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main and context.scoring_name == "Pair" then
-			G.E_MANAGER:add_event(Event({
-				func = function()
-					SMODS.add_card({
-						set = "fac_Fish",
-						edition = SMODS.poll_edition({
-							key = "fac_l_i_fishsocks",
-							guaranteed = true,
-							no_negative = true,
-						}),
-					})
-					return true
-				end,
-			}))
+			if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limits.total_slots then
+				SMODS.add_card({
+					set = "fac_Fish",
+					edition = SMODS.poll_edition({
+						key = "fac_l_i_fishsocks",
+						guaranteed = true,
+						no_negative = true,
+					}),
+				})
+			end
 		end
 	end,
 	disable_fish_scaling = true,
