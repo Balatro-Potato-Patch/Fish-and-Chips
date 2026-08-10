@@ -12,6 +12,14 @@ SMODS.Atlas({
 	py = 95,
 })
 
+-- FALLBACK FISH FOR EMPTY POOLS
+local function all_env()
+	local ret = {}
+	for _, k in ipairs(FishAndChips.Environment.obj_buffer) do
+		ret[k] = 10
+	end
+	return ret
+end
 
 FishAndChips.Fish {
 	key = "otter",
@@ -19,12 +27,9 @@ FishAndChips.Fish {
 	atlas = "stoatskifish",
 	pos = { x = 0, y = 0 },
 	ppu_coder = { "stoatski" },
-	in_pool = function() return false end,
-	discovered = true,
+	--discovered = true,
     environments = {
-		pier = 1000,
-		city_river = 1000,
-		wormhole = 100,
-		calm_pond = 1000
-	}
+		calm_pond = 10,
+		city_river = 5
+	},
 }
