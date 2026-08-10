@@ -23,7 +23,7 @@ return {
                 flavour = {
                     'This will severely',
                     'impact the trout',
-                    'population'
+                    'population.'
                 }
             },
             fish_fac_plaggeromega_xanaxsargo = {
@@ -143,12 +143,14 @@ return {
                     'When {C:attention}Blind{} is selected,',
                     'increase the {C:attention}upkeep cost{} by {C:money}$#2#{},',
                     '{C:red,E:2}sacrifice{} it unless you pay',
-                    'the {C:attention}upkeep cost {C:inactive}({C:money}$#1#{C:inactive})'
+                    'the {C:attention}upkeep cost {C:inactive}({C:money}$#1#{C:inactive})',
+                    '{s:0.8,C:inactive}(This Fish can\'t be sold)'
                     },
                     {
                         '{C:attention}Draw{} a card whenever',
                         'a played card is scored'
                     }
+
                 },
                 flavour = {
                     'Do you pay',

@@ -251,7 +251,7 @@ FishAndChips.Fish{ --Stewfish
   key = 'plaggeromega_stewfish',
   atlas = 'plaggeromega_fish',
   pos = {x=4,y=0},
-  weight = 10,
+  weight = 9,
   environments = {soup = 0.6, chocolate_river = 0.1},
   attributes = {'mult'},
   stats = {
@@ -300,7 +300,7 @@ FishAndChips.Fish{ --Docfish
   key = 'plaggeromega_docfish',
   atlas = 'plaggeromega_fish',
   pos = {x=0,y=1},
-  weight = 7,
+  weight = 6,
   environments = {pier = 0.6, city_river = 0.8},
   attributes = {'mult', 'chips'},
   stats = {
@@ -636,20 +636,20 @@ function fac_plaggeromega_create_upkeep_cost_menu(upkeep, object)
     G.hand.T.y + G.ROOM.T.y + 9,
     1.05 * G.CARD_W,
     1.05 * G.CARD_H,
-    { card_limit = 0, type = 'joker', highlight_limit = 0, negative_info = true, no_card_count = true})
-  local card_copy = SMODS.copy_card(object)
+    { card_limit = 1, type = 'joker', highlight_limit = 0, negative_info = true, no_card_count = true})
+  local card_copy = copy_card(object, nil, 1)
   card_copy.states.hover.can = true
   temp_area:emplace(card_copy)
 
-
-  local ui_node = {n=G.UIT.R, config = {align = 'cm'}, nodes = {{n=G.UIT.O, config={object=temp_area}}}}
+  --create the fake fish area
+    local ui_node = {n=G.UIT.R, config = {align = 'cm'}, nodes = {{n=G.UIT.O, config={object=temp_area}}}}
     --actually make the UI
     local pay =
       UIBox_button({
         button = 'fac_plaggeromega_pay_upkeep',
         func = 'fac_plaggeromega_can_pay_upkeep',
         ref_table = {cost = upkeep},
-        minw = 5,
+        minw = 4,
         minh = 3,
         shadow = true,
         label = {localize('fac_plaggeromega_pay'), localize('$') .. tostring(upkeep)},
@@ -659,7 +659,7 @@ function fac_plaggeromega_create_upkeep_cost_menu(upkeep, object)
       UIBox_button({
         func = 'fac_plaggeromega_dont_pay',
         button = 'fac_plaggeromega_sacrifice_fish',
-        minw = 5,
+        minw = 4,
         minh = 3,
         label = {localize('fac_plaggeromega_sac_it')},
       })
@@ -667,7 +667,7 @@ function fac_plaggeromega_create_upkeep_cost_menu(upkeep, object)
     local t =
       { n = G.UIT.R, config = {
         align = 'cm',
-        minw = 8,
+        minw = 6,
         minh = 8,
         padding = 0.1,
         r = 0.2,
