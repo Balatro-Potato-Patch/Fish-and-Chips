@@ -32,4 +32,14 @@ FishAndChips.Fish {
             end
         end
 	end,
+	draw = function(self, card, layer)
+		if self.discovered or card.params.bypass_discovery_center then
+			card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+		end
+	end,
+}
+
+SMODS.Shader{
+	key = 'photon',
+	path = "pa_photon.fs"
 }
