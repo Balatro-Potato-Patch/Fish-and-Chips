@@ -49,7 +49,7 @@ FishAndChips.Fish {
                     created = true
                     G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
                     G.E_MANAGER:add_event(Event{trigger = "before", func = function()
-                        SMODS.add_card({set = v})
+                        SMODS.add_card{set = v}
                         G.GAME.consumeable_buffer = 0
                         return true end})
                 end
@@ -83,12 +83,13 @@ FishAndChips.Fish {
     weight = 4,
     attributes = {"economy", "passive", "generation"},
     environments = {
-        -- TODO
+        pier = 20,
+        aquifer = 80
     },
     ppu_coder = {"ouiiskey"},
     ppu_artist = {"Lusha"},
     stats = {
-        weight = {min = 0, max = 0}, -- TODO
-        length = {min = 0, max = 0} -- TODO
+        weight = {min = 4, max = 7},
+        length = {min = 1.5, max = 2.5}
     }
 }

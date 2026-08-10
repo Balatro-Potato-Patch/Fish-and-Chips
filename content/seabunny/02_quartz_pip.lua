@@ -45,12 +45,13 @@ FishAndChips.Fish {
     weight = 4,
     attributes = {"retrigger"},
     environments = {
-        -- TODO
+        pier = 20,
+        aquifer = 80
     },
     ppu_coder = {"ouiiskey"},
     ppu_artist = {"Lusha"},
     stats = {
-        weight = {min = 0, max = 0}, -- TODO
-        length = {min = 0, max = 0} -- TODO
+        weight = {min = 0.2, max = 0.4},
+        length = {min = 0.25, max = 0.5}
     }
 }

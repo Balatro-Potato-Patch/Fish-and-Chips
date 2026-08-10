@@ -67,12 +67,13 @@ FishAndChips.Fish {
     weight = 4,
     attributes = {"mult", "chips"},
     environments = {
-        -- TODO
+        pier = 20,
+        aquifer = 80
     },
     ppu_coder = {"ouiiskey"},
     ppu_artist = {"Lusha"},
     stats = {
-        weight = {min = 0, max = 0}, -- TODO
-        length = {min = 0, max = 0} -- TODO
+        weight = {min = 3, max = 5},
+        length = {min = 0.7, max = 0.95}
     }
 }

@@ -229,9 +229,9 @@ return {
                 name = "Opal Moonfish",
                 text = {
                     {
-                        "When you beat a {C:attention}Blind,",
-                        "create a {C:planet}Planet{} card for a",
-                        "random played {C:attention}poker hand"
+                        "Create a {C:planet}Planet{} card for",
+                        "a random played {C:attention}poker hand",
+                        "at end of round"
                     },
                     {
                         "{C:inactive}Enchanted:",
@@ -239,7 +239,7 @@ return {
                         "{C:inactive}disable it and Unenchant this"
                     },
                     {
-                        "To {C:dark_edition}Enchant: Skip #1# {C:attention}Blinds",
+                        "To {C:dark_edition}Enchant{}: Skip #1# {C:attention}Blinds",
                         "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#)"
                     }
                 },
@@ -252,9 +252,9 @@ return {
                 name = "Opal Moonfish",
                 text = {
                     {
-                        "When you beat a {C:attention}Blind,",
-                        "create a {C:planet}Planet{} card for a",
-                        "random played {C:attention}poker hand"
+                        "Create a {C:planet}Planet{} card for",
+                        "a random played {C:attention}poker hand",
+                        "at end of round"
                     },
                     {
                         "{C:dark_edition}Enchanted{}:",
