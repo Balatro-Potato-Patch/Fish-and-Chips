@@ -1,0 +1,3 @@
+- Sea Bass can never be sold; a way to remove its sell button would be desirable
+- I'm not sure what the weights and lengths are like, for, so I forgot to set a bunch of them, set them to whatever value makes sense if you care
+- Switch the info queue in mimic octopus if my arbitrary sets PR for smods doesn't get merged before release

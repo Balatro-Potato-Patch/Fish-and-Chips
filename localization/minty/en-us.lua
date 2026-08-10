@@ -182,6 +182,17 @@ return {
                     "for some reason"
                 }
             },
+            fish_fac_minty_gem = {
+                name = "Fishgem",
+                flavour = {
+                    "It's peak!",
+                    "... wait, this is a fishing",
+                    "mod. It's pike!"
+                },
+                text = {
+                    "Worth a lot of {C:fac_sand_dollars,f:fac_sand_dollars}${}"
+                }
+            },
             fish_fac_minty_template = {
                 name = "fish",
                 flavour = {

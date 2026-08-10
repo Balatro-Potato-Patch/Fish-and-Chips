@@ -1,19 +1,20 @@
-local base_weight = 50 --should be 75-(all other minty fish weights) but can't think of a way to get this number procedurally so i'm just gonna have to set it manually once i've designed all my other fish
+local all_other_minty_fish_weights = 12
+local invasive_weight = 75 - all_other_minty_fish_weights
 
 FishAndChips.Fish{
     key = "minty_seabass",
     atlas = "minty_fish",
     pos = {x=0, y=0},
-    weight = base_weight,
+    weight = invasive_weight,
     ppu_coder = {"minty"},
     ppu_artist = {"Animal Crossing devteam"},
     environments = {
-        pier = (5/base_weight),
-        soup = base_weight,
-        chocolate_river = base_weight,
-        volcano = base_weight,
-        backroom = base_weight,
-        wormhole = base_weight,
+        pier = (5/invasive_weight),
+        soup = invasive_weight,
+        chocolate_river = invasive_weight,
+        volcano = invasive_weight,
+        backroom = invasive_weight,
+        wormhole = invasive_weight,
     },
     stats = {
         weight = {min = 2.5, max = 4},
