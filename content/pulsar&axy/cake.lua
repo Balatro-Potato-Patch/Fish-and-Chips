@@ -19,7 +19,7 @@ FishAndChips.Fish {
 		weight = { min = 5, max = 15}
 	},
     requires_hand = true,
-	blueprint_compat = true,
+	blueprint_compat = false,
 	config = {
 		extra = {
 			mult = 2,

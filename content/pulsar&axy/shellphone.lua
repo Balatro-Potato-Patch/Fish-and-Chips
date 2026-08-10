@@ -15,7 +15,7 @@ FishAndChips.Fish {
 		length = {min = 0.12, max = 0.12},  --vaugely based on actual phone + measurements of a shell i have
 		weight = {min = 0.125, max = 0.125}
 	},
-	blueprint_compat = true,
+	blueprint_compat = false,
 	config = {
 		extra = {
 			sequence = {},
