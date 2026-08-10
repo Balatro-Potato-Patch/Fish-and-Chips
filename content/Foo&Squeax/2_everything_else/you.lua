@@ -7,6 +7,10 @@ FishAndChips.Fish{
 		swamp = 0.5
 	},
 	ppu_coder = {"Foo54"},
+	ppu_artist = {"squeax09"},
+	atlas = "fas_fish_general",
+	pos = {x=2,y=1},
+	pixel_size = {w=56,h=94},
 	stats = {
 		weight = {min = 5, max = 5},
 		length = {min = 5, max = 5}

@@ -2,6 +2,9 @@ FishAndChips.Fish{
 	key = "fas_luka",
 	weight = 5,
 	ppu_coder = {"Foo54"},
+	ppu_artist = {"squeax09"},
+	atlas = "fas_fish_general",
+	pos = {x=3,y=1},
 	stats = {
 		length = {min = 2.54 * 12 / 100, max = 2.54 * 14 / 100},
 		weight = {min = 0.001, max = 50}
