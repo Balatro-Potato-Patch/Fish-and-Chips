@@ -69,7 +69,7 @@ FishAndChips.Fish {
             elseif context.using_consumeable then
                 if card.ability.extra.enchant then
                     recalc_size(card, context.consumeable.ability.set)
-                elseif not card.ability.extra.enchant then
+                else
                     card.ability.extra.count = card.ability.extra.count + 1
                     if card.ability.extra.count < card.ability.extra.times then
                         return {
