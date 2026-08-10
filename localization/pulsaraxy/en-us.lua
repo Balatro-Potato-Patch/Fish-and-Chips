@@ -375,6 +375,12 @@ local pa_fish = {
                     "Each {C:clubs}Club{}",
                     "held in hand",
                     "gives {X:chips,C:white}X#1#{} Chips"
+                },
+                flavour = {
+                    "I give {X:chips,C:white}XChips{}",
+                    "bceause i'm {X:chips,C:white}Blue{}",
+                    "...I told you not",
+                    "to catch me :C",
                 }
             }
         },
