@@ -88,20 +88,22 @@ FishAndChips.Fish {
 		city_river = 3
 	},
 	calculate = function(self, card, context)
-		if context.fac_fish_hooked and not FishAndChips.TheShitSquad.guppy_ui then
-			FishAndChips.TheShitSquad.guppy_ui = create_guppy_uibox(context.fac_fish_hooked)
-		end
-		if context.fac_end_fishing and FishAndChips.TheShitSquad.guppy_ui then
-			FishAndChips.TheShitSquad.guppy_fish:juice_up()
-			local a = FishAndChips.TheShitSquad.guppy_fish.config.center_key
-			FishAndChips.TheShitSquad.guppy_fish:start_dissolve()
-			G.E_MANAGER:add_event(Event({func = function()
-				if FishAndChips.TheShitSquad.guppy_ui then
-					FishAndChips.TheShitSquad.guppy_ui:remove()
-					FishAndChips.TheShitSquad.guppy_ui = nil
-					G.GAME.used_jokers[a] = G.GAME.used_jokers[a] or not context.failed
-				end
-			return true end}))
+		if not context.retrigger_joker and not context.blueprint then
+			if context.fac_fish_hooked and not FishAndChips.TheShitSquad.guppy_ui then
+				FishAndChips.TheShitSquad.guppy_ui = create_guppy_uibox(context.fac_fish_hooked)
+			end
+			if context.fac_end_fishing and FishAndChips.TheShitSquad.guppy_ui then
+				FishAndChips.TheShitSquad.guppy_fish:juice_up()
+				local a = FishAndChips.TheShitSquad.guppy_fish.config.center_key
+				FishAndChips.TheShitSquad.guppy_fish:start_dissolve()
+				G.E_MANAGER:add_event(Event({func = function()
+					if FishAndChips.TheShitSquad.guppy_ui then
+						FishAndChips.TheShitSquad.guppy_ui:remove()
+						FishAndChips.TheShitSquad.guppy_ui = nil
+						G.GAME.used_jokers[a] = G.GAME.used_jokers[a] or not context.failed
+					end
+				return true end}))
+			end
 		end
 	end
 }
@@ -288,7 +290,7 @@ FishAndChips.Fish {
 	key = "tss_uranium",
 	atlas = "tss_ellefish",
 	pos = { x = 3, y = 0 },
-	weight = 4,
+	weight = 7,
 	stats = {weight = {min = 5.6, max = 5.6}, length = {min = .15, max = .15}}, -- assuming, based off the sprite, that it's 3x longer than it's wide, these would be the correct dimensions
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
@@ -350,12 +352,12 @@ FishAndChips.Fish {
 	key = "tss_slop",
 	atlas = "tss_ellefish",
 	pos = { x = 3, y = 1 },
-	weight = 5,
+	weight = 2,
 	stats = {weight = {min = 15, max = 25}, length = {min = .3, max = .5}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "passive" },
-	config = { immutable = { odds = 2 } },
+	config = { immutable = { num = 2, den = 3 } },
 	environments = {
 		wormhole = 2,
 		soup = 3,
@@ -364,13 +366,13 @@ FishAndChips.Fish {
 		chocolate_river = 2
 	},
 	loc_vars = function(self, info_queue, card)
-		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.immutable.odds, "fac_tss_slop", nil, true)
-		return { vars = { num, dem } }
+		local num, den = SMODS.get_probability_vars(card, card.ability.immutable.num, card.ability.immutable.den, "fac_tss_slop", nil, true)
+		return { vars = { num, den } }
 	end,
 	calculate = function(self, card, context)
 		if context.retrigger_joker_check and context.other_card.area == G.fac_fish_area and context.other_card.config.center_key ~= "fish_fac_tss_slop" then
 			local count = 0
-			while SMODS.pseudorandom_probability(card,"fac_tss_slop", 1,card.ability.immutable.odds, nil, true) do
+			while SMODS.pseudorandom_probability(card,"fac_tss_slop", card.ability.immutable.num, card.ability.immutable.den, nil, true) do
 				count = count + 1
 			end
 			if count>0 then

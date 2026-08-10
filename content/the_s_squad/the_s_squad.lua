@@ -166,17 +166,21 @@ end
 local swoon_img = love.graphics.newImage(love.image.newImageData(SMODS.NFS.newFileData(SMODS.current_mod.path ..
 	"assets/the_s_squad/swoon.png")))
 
-if not love.draw then function love.draw() end end
-local draw_hook = love.draw
-function love.draw()
-	if FishAndChips.TheShitSquad.swoon_timer>0 then
-		love.graphics.clear(0,0,0)
+SMODS.ScreenShader {
+	key = "fac_tss_swoon",
+	shader = "fac_tss_uranium",
+	should_apply = function(self)
+		return FishAndChips.TheShitSquad.swoon_timer>0
+	end,
+	order = -1,
+	draw = function(self,shader,canvas)
 		local w,h = love.graphics.getDimensions()
 		local iw,ih = swoon_img:getDimensions()
+		love.graphics.clear(0,0,0)
 		love.graphics.setColor(1,1,1)
 		love.graphics.draw(swoon_img,w/2,h/2,0,3,3,iw/2,ih/2)
-	else draw_hook() end
-end
+	end
+}
 
 -- Credits shader stuff :3
 SMODS.Shader {
@@ -243,7 +247,7 @@ SMODS.ScreenShader {
 	should_apply = function(self)
 		return not FishAndChips.mod.config.disable_flashing and #SMODS.find_card("fish_fac_tss_uranium")>0
 	end,
-	order = 0
+	order = 9
 }
 
 SMODS.Shader {
@@ -270,15 +274,14 @@ function FishAndChips.TheShitSquad.get_slop_count()
 			count = count + ((v.children.h_popup or v.area == G.fac_fish_area) and 1 or 0)
 		end
 	end
-	return math.min(count,8)
+	return math.min(count,12)
 end
 
 SMODS.ScreenShader {
 	key = "fac_tss_jpeg",
 	shader = "fac_tss_jpeg_decode",
 	should_apply = function(self)
-		local ret = FishAndChips.TheShitSquad.get_slop_count()>0
-		return ret and not FishAndChips.mod.config.performance_mode
+		return (FishAndChips.TheShitSquad.get_slop_count()>0 or next(SMODS.find_card("fish_fac_tss_uranium"))) and not FishAndChips.mod.config.performance_mode
 	end,
 	order = 10,
 
@@ -295,8 +298,8 @@ SMODS.ScreenShader {
 		local encode = G.SHADERS.fac_tss_jpeg_encode
 
 		local slop = FishAndChips.TheShitSquad.get_slop_count()
-		local q = slop and .85-slop*.05 or .9
-		local s = slop and 7+slop or 4
+		local q = slop>0 and .85-slop*.05 or .9
+		local s = slop>0 and 7+slop or 4
 
 		encode:send("quality", q)
 		encode:send("dims", {w,h})

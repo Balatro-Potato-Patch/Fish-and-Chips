@@ -27,8 +27,10 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = "tss_medic",
-	atlas = "tss_ellefish",
-	pos = { x = 0, y = 0 },
+	atlas = "tss_azfish",
+	pos = { x = 0, y = 1 },
+	pixel_size = { w = 92, h = 101 },
+	display_size = { w = 92*.8, h = 101*.8 },
 	weight = 5,
 	stats = {weight = {min = 200, max = 250}, length = {min = 2, max = 3}},
 	ppu_coder = { "slimestuff" },
@@ -41,7 +43,7 @@ FishAndChips.Fish {
 		aquifer = 2
 	},
 	calculate = function(self, card, context)
-		if context.after and not context.blueprint and G.GAME.current_round.hands_left <= 0 and G.GAME.chips < G.GAME.blind.chips then
+		if context.after and not context.blueprint and not context.retrigger_joker and G.GAME.current_round.hands_left <= 0 and G.GAME.chips < G.GAME.blind.chips and SMODS.find_card(card.config.center_key)[1]==card then
 			ease_hands_played(G.GAME.round_resets.hands)
 			G.E_MANAGER:add_event(Event{func = function()
 				SMODS.destroy_cards(card)	
@@ -55,10 +57,10 @@ FishAndChips.Fish {
 	end,
 	set_ability = function(self, card, initial, delay_sprites)
 		card.ability.extra.blu = pseudorandom("fac_tss_medic",0,1) == 0
-		card.children.center:set_sprite_pos({x=0, y=card.ability.extra.blu and 1 or 0})
+		card.children.center:set_sprite_pos({x=card.ability.extra.blu and 1 or 0, y=1})
 	end,
 	update = function(self, card, dt)
-		card.children.center:set_sprite_pos({x=0, y=card.ability.extra.blu and 1 or 0})
+		card.children.center:set_sprite_pos({x=card.ability.extra.blu and 1 or 0, y=1})
 	end
 }
 

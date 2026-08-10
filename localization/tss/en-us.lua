@@ -217,7 +217,7 @@ return {
 			fish_fac_tss_slop = {
 				name = "fishingslop",
 				text = {
-					"{C:fac_fish}Fish{} have a fixed {C:green}#1# in #2#",
+					"All {C:fac_fish}Fish{} have a fixed {C:green}#1# in #2#",
 					"chance to retrigger {C:attention}repeatedly",
 					"until the probability fails",
 					"{C:inactive,s:.7}Toggle Low Performance Mode in Mod Settings",
@@ -243,7 +243,13 @@ return {
 			PotatoPatchDev_azazel = {
 				name = 'That Azazel Fire',
 				text = {
-					"woa"
+					"Hi, It's me Azazel, you probably know me.",
+					" ",
+					"I like making mods for games I like",
+					"and this game TECHNICALLY counts as a game I like.",
+					"So I worked with elle to add some fishies to this jam.",
+					" ",
+					"There are no friends inside me."
 				}
 			},
 		}
