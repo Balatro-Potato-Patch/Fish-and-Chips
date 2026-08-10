@@ -49,7 +49,7 @@ FishAndChips.Fish{
 		length = {min = 1, max = 1, units = {format = "k_fac_fas_temmie", scale = 1, precision = 0}},
 		weight = {min = 1, max = 1, units = {format = "k_fac_fas_toby", scale = 1, precision = 0}}
 	},
-	loc_vars = function(self, info_queue, card)
+	flavour_vars = function(self, info_queue, card)
 		return {vars = {elements = {SMODS.create_sprite(0, 0, 2, 2 / 62 * 52, "fac_fas_toby")}}}
 	end,
 	config = {
