@@ -1,10 +1,5 @@
-local row = nil
+local row = 7
 local atlas, pos = PotatoPatchUtils.Developers.fac_minty:get_lineboil_atlas_info(row)
---[[
-    update = function (self, card, dt)
-        PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
-    end,
-]]
 
 FishAndChips.Fish{
     key = "minty_elder_tuna",
@@ -36,6 +31,9 @@ FishAndChips.Fish{
         weight = { min = 1, max = 1}, --In kilograms
         length = { min = 1, max = 2}, --In meters
     },
+    update = function (self, card, dt)
+        PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
+    end,
     add_to_deck = function (self, card, from_debuff)
         print"added"
         local res = pseudorandom("fac_minty_elder_tuna", 1, 9)
