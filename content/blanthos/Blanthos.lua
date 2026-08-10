@@ -60,6 +60,8 @@ FishAndChips.Fish {
 			hand = "HighCard"
 		}
 	},
+	decision_min = 0,
+	decision_max = 0,
 	environments = {
 		chocolate_river = 1,
 		wormhole = 1,
@@ -158,6 +160,8 @@ FishAndChips.Fish {
 			inactive = false
 		}
 	},
+	decision_min = 1,
+	decision_max = 3,
 	environments = {
 		styx = 1,
 		aquifer = 0.5
@@ -193,13 +197,15 @@ FishAndChips.Fish {
 	pos = { x = 0, y = 0 },
 	weight = 6,
 	ppu_coder = { "Blanthos" },
-	ppu_artist = { "Hunter" },
-	attributes = { "mult", "scaling" },
+	ppu_artist = { "Blanthos" },
+	attributes = { "economy", "chance" },
 	config = {
 		extra = {
 			odds = 4
 		}
 	},
+	decision_min = 3,
+	decision_max = 5,
 	environments = {
 		styx = 1,
 		pier = 0.5,
@@ -221,4 +227,5 @@ sand_dollars = math.random(5)
 end
 end,
 }
+
 --#endregion

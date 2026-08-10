@@ -51,6 +51,15 @@ return {
                     "{C:green}CHIPS AHOY, LANDMAGGOTS{}"
                 }
 	},
+            fish_fac_shadowfish = {
+                name = "{C:dark_edition}Green Pirate Hat{}",
+                text = {
+		"#1# #2# #3#"
+},
+                flavor = {
+                    "{C:green}CHIPS AHOY, LANDMAGGOTS{}"
+                }
+	},
         },
    misc = {
         dictionary = {
