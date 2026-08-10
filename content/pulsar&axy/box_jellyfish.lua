@@ -67,6 +67,7 @@ FishAndChips.Fish {
 	end,
 	use = function(self, card)
 		local can_use_booster
+		-- if not G.STATE == 
 		for _, _card in ipairs(G.fac_pa_box_jellyfish_area.cards) do
 			if _card.ability.fac_pa_box_jellyfish == card.ability.immutable.id then
 				can_use_booster = true

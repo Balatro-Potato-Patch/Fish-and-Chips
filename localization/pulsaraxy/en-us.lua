@@ -253,7 +253,7 @@ local pa_fish = {
                     '{C:attention}Booster Pack{} in shop,',
                     'Use again to open',
                     'stored {C:attention}Booster Pack{}',
-                    'Usable {C:attention}once{} per shop'
+                    '{s:0.8}{C:inactive}(Usable {C:attention}once{}{s:0.8}{C:inactive} per shop)'
                 },
                 flavour = {
                     'Despite the name, it is',

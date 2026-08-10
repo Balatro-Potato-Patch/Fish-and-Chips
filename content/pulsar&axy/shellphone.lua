@@ -54,7 +54,7 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play then
 			for k,v in ipairs(context.scoring_hand) do
-				local target = card.ability.extra.sequence and card.ability.extra.sequence[card.ability.extra.current_position].sort_id + 1
+				local target = card.ability.extra.sequence and #card.ability.extra.sequence >= card.ability.extra.current_position and card.ability.extra.sequence[card.ability.extra.current_position].sort_id + 1 or nil
 				local matched_position =  v:get_id() == target
 				if matched_position then
 					card.ability.extra.current_position = card.ability.extra.current_position + 1

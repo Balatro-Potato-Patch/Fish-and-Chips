@@ -20,7 +20,7 @@ FishAndChips.Fish {
 		weight = { min = 40, max = 45}
 	},
 	choose = 3,
-	blueprint_compat = true,
+	blueprint_compat = false,
 	config = {
 		extra = {
 			times_used = 0, -- 0 at rank 1, 7 at rank 8
@@ -53,6 +53,32 @@ FishAndChips.Fish {
 	flavour_vars = function(self, info_queue, card)
 		return {vars = {colours = {HEX("c3222b")}}}
 	end,
+	load = function (self, card, card_table, other_card)
+		-- G.E_MANAGER:add_event(Event{
+		-- 	func = function ()
+		-- 		for _,_card in ipairs(G.fac_pa_box_jellyfish_area.cards) do
+		-- 			if _card.ability.fac_pa_box_jellyfish == card.ability.immutable.id then
+		-- 				_card.states.hover.can = false
+		-- 				local card_remove_ref = card.remove
+		-- 				function card:remove()
+		-- 					card_remove_ref(self)
+		-- 					if _card then
+		-- 						_card:remove()
+		-- 						_card = nil
+		-- 					end
+		-- 				end
+		-- 			end
+		-- 		end
+		-- 		return true
+		-- 	end
+		-- })
+		G.E_MANAGER:add_event(Event{
+			func = function ()
+				card.drawn_fish = G.fac_pa_doorfish_fish or {}
+				return true
+			end,
+		})
+	end,
 	-- draw fish based on rank 0
 	-- rotate through four effects: inactive, fish 1/2/3
 	-- after successful catch of chosen fish, increase rank and redraw fish based on rank, stop at rank 9
@@ -60,6 +86,7 @@ FishAndChips.Fish {
 	add_to_deck = function(self, card, from_debuff)
 		--draw fish based on rank 0
 		card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
+		G.fac_pa_doorfish_fish = card.ability.extra.drawn_fish
 		local seal_unlocked = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish and G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish.seal_unlocked
 		if seal_unlocked then
 			G.E_MANAGER:add_event(Event({
@@ -91,6 +118,7 @@ FishAndChips.Fish {
 		-- otherwise just change drawn fish
 		if context.fac_end_fishing then
 			card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
+			G.fac_pa_doorfish_fish = card.ability.extra.drawn_fish
 			card.ability.extra.toggle = 0
 		end
 	end,
