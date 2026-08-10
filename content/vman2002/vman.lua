@@ -167,9 +167,9 @@ FishAndChips.Fish { --Chips
 	end,
 	in_pool = function()
 		--because +score is so powerful in early antes
-		local a = (G.GAME.fac_chips_attempts or 0) + 1
+		local a = (G.GAME.fac_chips_attempts or 0) + 0.6
 		G.GAME.fac_chips_attempts = a
-		return a >= 3 - G.GAME.round_resets.ante
+		return a >= 4 - G.GAME.round_resets.ante
 	end,
 	impulse_min = 0.1,
 	impulse_max = 0.2,
@@ -191,7 +191,8 @@ FishAndChips.Fish { --Trust
 		calm_pond = 0.7, pier = 0.6
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.odds_add } }
+		local ex = card.ability.extra
+		return { vars = { ex.odds_add, ex.odds_add + 1 } }
 	end,
     calculate = function(self, card, context)
 		if context.mod_probability and G.GAME.fac_trust_active and G.GAME.current_round.hands_played == 0 then
@@ -386,7 +387,14 @@ FishAndChips.Fish { --Necklace
 	},
 	set_ability = function(self, card)
 		if not card.edition then
-			card:set_edition(poll_edition("fac_vman2002_necklace", 1, false, true))
+			G.E_MANAGER:add_event(Event({
+				blockable = false,
+				func = function()
+					local c = card.area and (card.area.config.collection or card.area.config.fac_compendium)
+					card:set_edition(poll_edition("fac_vman2002_necklace", 1, false, true), c, c)
+					return true
+				end
+			}))
 		end
 	end,
 	treasure = true,
@@ -453,7 +461,10 @@ FishAndChips.Fish { --Timothy
 	},
 	loc_vars = function(self, info_queue, card)
 		local ex = card.ability.extra
-		return {vars = {ex.xmult, ex.xmult_gain, localize(G.GAME.fac_last_used_fish == tim and "fac_vman2002_timothy_active" or "fac_vman2002_timothy_inactive")}}
+		return {vars = {ex.xmult, ex.xmult_gain}}
+	end,
+	flavour_vars = function(self, info_queue, card)
+		return {vars = {localize(G.GAME.fac_last_used_fish == tim and "fac_vman2002_timothy_active" or "fac_vman2002_timothy_inactive")}}
 	end,
 	use = function(self, card)
 		card.ability.extra.ante_used = true
@@ -542,6 +553,45 @@ FishAndChips.Fish { --Blackbody
 	end,
 	usable = true,
 	blueprint_compat = true
+}
+
+FishAndChips.Fish { --Navy Blade
+	key = "vman2002_navyblade",
+	atlas = "vman2002_fish",
+	pos = { x = 1, y = 0 },
+	weight = 7,
+	ppu_coder = { "VMan_2002" },
+	ppu_artist = { "VMan_2002" },
+	attributes = { "xblindsize", "usable", "economy", "reset" }, 
+	config = {extra = {uses = 0, uses_max = 6, xblindsize = 1.2, dollars = 5}},
+	stats = { weight = { min = 0.6*10, max = 0.6618*10.5 }, length = {min = 0.015*15, max = 0.0234*15.5}},
+	environments = {
+		aquifer = 0.9, swamp = 0.5
+	},
+	loc_vars = function(self, info_queue, card)
+		local ex = card.ability.extra
+		return { vars = { ex.uses, ex.uses_max, ex.xblindsize, ex.dollars } }
+	end,
+	can_use = function(self, card)
+		return card.ability.extra.uses < card.ability.extra.uses_max and G.STATE == G.STATES.SELECTING_HAND
+	end,
+	use = function(self, card)
+		local ex = card.ability.extra
+		ex.uses = ex.uses + 1
+		SMODS.calculate_effect({ message_card = card,
+			xblindsize = ex.xblindsize,
+			dollars = ex.dollars
+		}, card)
+	end,
+	calculate = function(self, card, context)
+		if context.ante_change and context.ante_end and card.ability.extra.uses ~= 0 then
+			card.ability.extra.uses = 0
+			return {message = localize("k_reset")}
+		end
+	end,
+	keep_on_use = returnTrue,
+	usable = true,
+	blueprint_compat = false
 }
 
 --#endregion

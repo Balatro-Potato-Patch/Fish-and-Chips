@@ -1,5 +1,5 @@
 local function q(s)
-	local a = {I = "C:inactive", G = "C:green", A = "C:attention", S = "s:0.7,C:inactive", x = "X:mult,C:white"}
+	local a = {I = "C:inactive", G = "C:green", A = "C:attention", S = "s:0.7,C:inactive", x = "X:mult,C:white", f = "C:fac_fish"}
 	return (s:gsub("~[%l%u]", function(n) return a[n:sub(2)] end))
 end
 
@@ -41,7 +41,7 @@ return {
 				text = {
 					q("Raises {~G,E:1}probabilities{} by {~G}+#1#"),
 					q("while scoring {~A}first hand"),
-					q("{~I}(ex: {~G}1 in 3{~I} -> {~G}3 in 3{~I})")
+					q("{~I}(ex: {~G}1 in 3{~I} -> {~G}#2# in 3{~I})")
 				},
 				flavor = {"I'm cooking trust"}
 			},
@@ -83,8 +83,7 @@ return {
 				name = "Jewel Necklace",
 				flavor = {"Makes you feel like","Deltarune OST - Hip Shop"},
 				text = {
-					"Always has",
-					"an {C:dark_edition}Edition"
+					"Always has an {C:dark_edition}Edition"
 				}
 			},
 			fish_fac_vman2002_coupon = {
@@ -97,15 +96,15 @@ return {
 			},
 			fish_fac_vman2002_timothy = {
 				name = "Timothy",
-				flavor = {"Hi, I'm Timothy!","#3#"},
+				flavor = {"Hi, I'm Timothy!","#1#"},
 				text = {
 					{
 						q("{~A}USE{} once per {~A}Ante{} to"),
-						q("pay {~A}attention{} to Timothy")
+						q("pay {~A}attention{} to {~f}Timothy")
 					}, {
 						q("Gains {~x}X#2#{} Mult at {~A}end of round"),
-						q("Resets instead if {~A}Timothy{} is not"),
-						q("the most {~A}recently used{} {C:fac_fish}Fish"),
+						q("Resets instead if {~f}Timothy{} is not"),
+						q("the most {~A}recently used{} {~f}Fish"),
 						q("{~I}(Currently {~x}X#1#{~I} Mult)")
 					}
 				}
@@ -117,6 +116,17 @@ return {
 					q("After {~A}#1#/#2#{} rounds,"),
 					q("{~A}USE{} to add {C:dark_edition}Negative"),
 					q("to a random {~A}Joker")
+				}
+			},
+			fish_fac_vman2002_navyblade = {
+				name = "Navy Blade",
+				flavor = {"todo flavor text"},
+				text = {
+					q("{~A}USE{} up to {~A}#1#/#2#{}"),
+					q("times per {~A}Ante{}"),
+					"On each use:",
+					"{X:blind,C:white}X#3#{} Blind Size",
+					"and earn {C:money}$#4#"
 				}
 			},
 		},
