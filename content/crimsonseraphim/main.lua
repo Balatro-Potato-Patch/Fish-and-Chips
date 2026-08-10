@@ -1766,7 +1766,7 @@ FishAndChips.Fish {
 		length = {min = 0.15, max = 0.2}
 	},
     select_flavor_text = function(self, card)
-        local num = pseudorandom("OMEGA_CRIMSONFANGERY", 1, 10)
+        local num = pseudorandom("OMEGA_CRIMSONFANGERY", 1, 22)
         local elem
         if num == 2 then
             elem = SMODS.create_sprite(0, 0, 5.5, 5.5 * 75/438, "fac_omega_crimsonfang_lore_alexi")

@@ -605,6 +605,28 @@ return {
             k_omega_crimsonfang_8 = {'we heard you like rubys', 'so we uhhhh uhhhhhhh uhhhhhh'},
             k_omega_crimsonfang_9 = '',
             k_omega_crimsonfang_10 = {"stupid bullshit = kill", "everyone you know"},
+            k_omega_crimsonfang_11 = {"DIDN'T YOU KNOW [Omega Crimsonfang]", "IS FAMOUS FOR ITS HIGH DEFENSE!?"},
+            k_omega_crimsonfang_12 = {
+                "There cannot be any other living beings in zone 0", 
+                "so I must assume that you are only a mere figment",
+                "of my imagination. Nevertheless, I will introduce",
+                "myself. I am Ruby Crimsonfang, and I am aching to",
+                "know your name, dear elusory interlocutor"
+            },
+            k_omega_crimsonfang_13 = "Prepare yourselves to suffer my judgement.",
+            k_omega_crimsonfang_14 = "TL;DR eat shit fa-",
+            k_omega_crimsonfang_15 = "How queer and peculiar",
+            k_omega_crimsonfang_16 = {"7000 people in the earth and", "i will protect them all"},
+            k_omega_crimsonfang_17 = {"I DID YOu A FAVOR. ANOTHER POINTLESS", "ACTION STRICKEN FROM THE TIMELINE."},
+            k_omega_crimsonfang_18 = {
+                "world is a fuck",
+                "i am god dog",
+                "168,518,993,170 dead"
+            },
+            k_omega_crimsonfang_19 = "This really Penumbras my Phantasm",
+            k_omega_crimsonfang_20 = "I WAIT!",
+            k_omega_crimsonfang_21 = {"ANYWAY LIKE I WAS SAYING.", "ONE BIG TEAM, OVER WHICH", "I HAVE ASSUMED TOTAL LEADERSHIP."},
+            k_omega_crimsonfang_22 = "THE EYES THEY SEE"
 
             k_give_up = "GIVE UP",
             k_lose_hope = "LOSE HOPE",
