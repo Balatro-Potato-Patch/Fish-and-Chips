@@ -296,12 +296,13 @@ end
 function FishAndChips.Compendium.compendium_area(amount, dim)
     amount = amount or 1
     dim = dim or {(8*amount)/4 * 71/95, 2}
+    local adjust = amount > 1 and 2*G.CARD_W/G.CARD_H
     local area = CardArea(0, 0, dim[1], dim[2], {type = 'voucher', fac_compendium = true})
     area.align_cards = function(self)
         for k, card in ipairs(self.cards) do
             card.states.drag.can = false
             if not card.states.drag.is then
-                card.T.x = self.T.x + 0.5*(self.T.w - card.T.w) + (amount > 1 and ((k-2) * card.T.w * 1.2) or 0)
+                card.T.x = self.T.x + 0.5*(self.T.w - (adjust or card.T.w)) + (amount > 1 and ((k-2) * ((adjust and (card.T.w + adjust)/2 or card.T.w)) * 1.2) or 0)
                 card.T.y = self.T.y + 0.5*(self.T.h - card.T.h)
             end
         end
@@ -312,6 +313,11 @@ end
 function FishAndChips.Compendium.compendium_card(fish, area, scale)
     scale = scale or 2/G.CARD_H
     local compendium_card = SMODS.create_card({key = fish.key, area = area, scale = {w=scale, h=scale}})
+    if compendium_card.T.w > scale * G.CARD_W or compendium_card.T.h > scale * G.CARD_H then
+        local adjust = math.min(scale*G.CARD_W/compendium_card.T.w, scale*G.CARD_H/compendium_card.T.h)
+        compendium_card.T.h = compendium_card.T.h * adjust
+        compendium_card.T.w = compendium_card.T.w * adjust
+    end
     compendium_card.no_shadow = true
     local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {}
     local should_silhouette = fish.set == 'fac_Fish' and not (fish_data.times_caught and fish_data.times_caught > 0) or (fish.set == 'fac_Rod' or fish.set == 'fac_Bait') and not fish.discovered
@@ -841,7 +847,7 @@ function FishAndChips.Compendium.dev_card(dev)
 
     dev_card.align_h_popup = function(self, dir)
         local focused_ui = self.children.focused_ui and true or false
-        local popup_direction = dir or self.config.h_popup_dir or (self.T.y < G.CARD_H*0.8) and 'bm' or 'tm'
+        local popup_direction = dir or self.config.h_popup_dir or (self.T.x < G.ROOM.T.w*0.5) and 'cr' or 'cl'
         local sign = 1
         return {
             major = self.children.focused_ui or self,
@@ -1066,13 +1072,15 @@ function FishAndChips.Compendium.credits_page(page_number, left)
     return page
 end
 
+FishAndChips.mod.config_tab = true
+
 function FishAndChips.Compendium.config_page(page_number, left)
     if page_number > 1 then return end -- TODO: add artwork to page 2
     FishAndChips.Compendium.reset_warning = G.STAGE ~= G.STAGES.RUN and localize('ph_fac_reset_all') or localize('ph_fac_cannot_reset')
     
     local page = {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {
         FishAndChips.Compendium.page_title('config_page', page_number),
-        {n=G.UIT.R, config = {minh = 1}},
+        {n=G.UIT.R, config = {minh = 0.4}},
         {n=G.UIT.R, config = {align = 'tm', minh = 3, minw = 5}, nodes = {
             FishAndChips.Compendium.toggle {text_key = 'b_fac_ambience_toggle', ref_value = "ambience", callback = G.FUNCS.fac_toggle_ambience},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_menu_toggle', ref_value = "menu"},
@@ -1080,6 +1088,7 @@ function FishAndChips.Compendium.config_page(page_number, left)
             FishAndChips.Compendium.toggle {text_key = 'b_fac_flavour_text', ref_value = "disable_flavour"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_flashing_lights', ref_value = "disable_flashing"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_fish_scaling', ref_value = "disable_fish_scaling"},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_performance_mode', ref_value = "performance_mode"},
         }},
         {n=G.UIT.R, config = {align = 'cm', minh = 2}, nodes = {
             {n=G.UIT.R, config = {align = 'cm', colour = FishAndChips.C.COMPENDIUM_COLOUR, r = 0.1, hover = true, button = 'fac_reset_all_progress', func = 'fac_can_reset_progress', minw = 3.2, minh = 0.8, padding = 0.05}, nodes = {
