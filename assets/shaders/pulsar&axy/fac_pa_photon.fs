@@ -13,8 +13,7 @@ extern bool shadow;
 extern MY_HIGHP_OR_MEDIUMP vec4 burn_colour_1;
 extern MY_HIGHP_OR_MEDIUMP vec4 burn_colour_2;
 
-extern MY_HIGHP_OR_MEDIUMP number fish_length;
-extern MY_HIGHP_OR_MEDIUMP number fish_weight;
+extern MY_HIGHP_OR_MEDIUMP float fish_length; // 400-700 nm
 
 vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv)
 {
@@ -59,7 +58,24 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     vec4 tex = Texel(texture, texture_coords);
     vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
 
-    vec3 fish_color = vec3(0,0,0 + (photon.x * 0.000001)); // Make this a function of fish_length, fish_weight
+    // From https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Map%3A_Organic_Chemistry_(Bruice)/13%3A_Mass_Spectrometry_Infrared_Spectroscopy_and_Ultraviolet_Visible_Spectroscopy/13.20%3A_The_Visible_Spectrum_and_Color
+    vec3 fish_color = vec3(0,0,0 + (photon.x * 0.000001));
+    if (fish_length > 625) {
+        fish_color = vec3(1.0, 0.0, 0.0);
+    } else if (fish_length > 590) {
+        fish_color = vec3(1.0, 0.40, 0.0);
+    } else if (fish_length > 565){
+        fish_color = vec3(1.0, 1.0, 0.0);
+    } else if (fish_length > 565){
+        fish_color = vec3(0.0, 0.60, 0.0);
+    } else if (fish_length > 565){
+        fish_color = vec3(0.0, 1.0, 1.0);
+    } else if (fish_length > 565){
+        fish_color = vec3(0.0, 0.0, 1.0);
+    } else {
+        fish_color = vec3(0.40, 0.0, 0.40);
+    }
+
     tex.rgb = tex.rgb * 0.6 + fish_color;
 
     return dissolve_mask(tex * colour, texture_coords, uv);

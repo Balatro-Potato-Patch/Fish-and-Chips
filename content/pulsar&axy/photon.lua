@@ -10,7 +10,7 @@ FishAndChips.Fish {
 		wormhole = 1,
 	},
 	stats = {
-		length = {min = 3e-7, max = 4e-7, units = { format = "nm_format", scale = 1e-9, precision = 4}},
+		length = {min = 38e-8, max = 74e-8, units = { format = "nm_format", scale = 1e-9, precision = 4}},
 		weight = {min = 0, max = 0}
 	},
 	blueprint_compat = true,
@@ -37,9 +37,17 @@ FishAndChips.Fish {
 			card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
 		end
 	end,
+	shader = 'pa_photon',
 }
 
 SMODS.Shader{
 	key = 'pa_photon',
-	path = "pulsar&axy/fac_pa_photon.fs"
+	path = "pulsar&axy/fac_pa_photon.fs",
+	send_vars = function(sprite, card)
+		local display_value = card and card.ability and card.ability.stats and card.ability.stats.length / card.ability.stats.units.length.scale or 0
+		display_value = tonumber(string.format('%.0f', display_value))
+		return {
+			fish_length = display_value
+		}
+	end,
 }
