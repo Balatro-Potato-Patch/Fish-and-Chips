@@ -45,6 +45,20 @@ return {
                     "So if I had written on my picture \"This is a fish\",",
                     "I'd have been lying!"
                 }
+            },
+            fish_fac_thefuckingabstractone = {
+                name = "The Abstract One",
+                text = {
+                    "After {C:blue}Fishing{}, this {C:blue}Fish{}",
+                    "gains {C:mult}+#1#{} Mult if you succeeded",
+                    "and loses {C:mult}#2#{} Mult otherwise",
+                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
+                },
+                flavor = {
+                    "It's not a fish, it's not!",
+                    "but it *captures* the *essence* of",
+                    "what a \"Fish\" truly is!"
+                }
             }
         },
     },
