@@ -103,9 +103,22 @@ end
 
 local g_uidef_card_h_popup_ref = G.UIDEF.card_h_popup
 function G.UIDEF.card_h_popup(card)
+	local ret
+	if card.config and card.config.center and card.config.center.key == "fish_fac_fas_isreal" then
+		ret = g_uidef_card_h_popup_ref(card)
+		local search = SMODS.deepfind(ret.nodes[1].nodes, localize("ph_fac_weight"), nil, true)[1]
+		if search then
+			search.table.text = localize("ph_fac_fas_atk")
+		end
+		
+		local search2 = SMODS.deepfind(ret.nodes[1].nodes, "  " .. localize("ph_fac_length"), nil, true)[1]
+		if search2 then
+			search2.table.text = "  " .. localize("ph_fac_fas_def")
+		end
+	end
 	if card.config and card.config.center and card.config.center.key == "fish_fac_fas_toby_fish" then
 		FishAndChips.FooSqueax.toby_fish.no_desc = true
-		local ret = g_uidef_card_h_popup_ref(card)
+		ret = g_uidef_card_h_popup_ref(card)
 		
 		local search = SMODS.deepfind(ret.nodes[1].nodes, "Foo54", nil, true)[1]
 		if search then
@@ -123,7 +136,7 @@ function G.UIDEF.card_h_popup(card)
 
 		return ret
 	end
-	local ret = g_uidef_card_h_popup_ref(card)
+	ret = ret or g_uidef_card_h_popup_ref(card)
 	if not G.GAME.fac_FooSqueax or not G.GAME.fac_FooSqueax.tobies then return ret end
 	for i = 1, G.GAME.fac_FooSqueax.tobies do
 		G.fac_fas_toby_fish = G.fac_fas_toby_fish or {}

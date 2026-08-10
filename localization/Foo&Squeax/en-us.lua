@@ -288,6 +288,8 @@ return {
 			k_fac_fas_left = "left",
 			k_fac_fas_right = "right",
 			k_fac_fas_infinity = "Infinity",
+			ph_fac_fas_atk = "ATK: ",
+			ph_fac_fas_def = "DEF: ",
 
 			k_fac_fas_flirt = "Flirt",
 			k_fac_fas_approach = "Approach",
