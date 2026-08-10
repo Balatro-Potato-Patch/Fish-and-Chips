@@ -25,7 +25,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
         -- gives xchips for each club held in hand
-        if context.individual and context.cardarea == G.hand and context.other_card:is_suit('Clubs') then
+        if context.individual and context.cardarea == G.hand and context.other_card:is_suit('Clubs') and not context.end_of_round then
             return {
                 xchips = card.ability.extra.xchips
             }
