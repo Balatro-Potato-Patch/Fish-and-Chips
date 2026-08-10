@@ -67,7 +67,9 @@ FishAndChips.Fish {
             elseif context.selling_card and context.card.config.center.name == "fish_fac_enchantfish" then
                 recalc_size(card)
             elseif context.using_consumeable then
-                if not card.ability.extra.enchant then
+                if card.ability.extra.enchant then
+                    recalc_size(card, context.consumeable.ability.set)
+                elseif not card.ability.extra.enchant then
                     card.ability.extra.count = card.ability.extra.count + 1
                     if card.ability.extra.count < card.ability.extra.times then
                         return {
@@ -75,8 +77,8 @@ FishAndChips.Fish {
                         }
                     end
                     SEABUN.enchant(card)
+                    recalc_size(card)
                 end
-                recalc_size(card, context.consumeable.ability.set)
             end
         end
     end,

@@ -49,7 +49,7 @@ FishAndChips.Fish {
                 end
             elseif context.individual and card.ability.extra.enchant and context.cardarea == G.play then
                 local enhance = next(SMODS.get_enhancements(context.other_card))
-                if not card.ability.seen[enhance] then
+                if enhance and not card.ability.seen[enhance] then
                     card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.gain
                     card.ability.seen[enhance] = true
                 end
