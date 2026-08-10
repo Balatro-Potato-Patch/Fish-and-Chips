@@ -330,28 +330,41 @@ local pa_fish = {
                 }
             },
             fish_fac_pa_charcoal_biscuit = {
-                name = "Charcoal Biscfin",
+                name = "Cookie Cod (Burnt)",
                 text = {
                     "Retriggers all played",
                     "{C:spades}Spades{} cards {C:attention}#1#{} times"
                 },
                 flavour = {
-                    "Are you sure you didn't just burn this cookie?"
+                    "Axy, how sure are you that",
+                    "you didn't burn this cookie?"
                 }
             },
             fish_fac_pa_sushi = {
-                name = "Sushi Roll",
+                name = "Temaki-Mahi",
                 text = {
                     "Each {C:fac_fish}fish{} catchable",
                     "in {C:attention}The Soup{}",
                     "gives {X:mult,C:white}X#1#{} mult"
+                },
+                flavour = {
+                    "This Fish has an ingenous",
+                    "disguise: it looks like a",
+                    "sushi roll, meaning nobody",
+                    "will try putting it in sushi"
                 }
             },
             fish_fac_pa_photon = {
-                name = "Photon Fish",
+                name = "Photonfin",
                 text = {
                     "Gives {C:attention}#1#{} random tags when",
                     "a blind is {C:attention}skipped"
+                },
+                flavour = {
+                    'Unique type of fish that has',
+                    'evolved to become so small',
+                    'that is has become massless',
+                    'and acts like a wave of light'
                 }
             },
             fish_fac_pa_pulsar = {

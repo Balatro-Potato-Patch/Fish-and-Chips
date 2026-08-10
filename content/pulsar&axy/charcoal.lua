@@ -2,7 +2,7 @@ FishAndChips.Fish {
 	key = "pa_charcoal_biscuit",
 	weight = 8,
 	atlas = "pa_pulsarfish",
-	pos = { x = 2, y = 1 },
+	pos = { x = 5, y = 3 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
 	attributes = { "suit", "spades", "retrigger", "food" },

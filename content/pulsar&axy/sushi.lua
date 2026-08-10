@@ -2,7 +2,7 @@ FishAndChips.Fish {
 	key = "pa_sushi",
 	weight = 8,
 	atlas = "pa_pulsarfish",
-	pos = { x = 2, y = 1 },
+	pos = { x = 5, y = 2 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
 	attributes = { "xmult", "food" },
@@ -10,8 +10,8 @@ FishAndChips.Fish {
 		soup = 1,
 	},
 	stats = {
-		length = {min = 0.01, max = 0.01},  --vibes
-		weight = {min = 0.0003, max = 0.0003}
+		length = {min = 0.14, max = 0.25},  --vibes
+		weight = {min = 0.075, max = 140}
 	},
 	blueprint_compat = true,
 	config = {
