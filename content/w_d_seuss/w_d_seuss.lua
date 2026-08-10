@@ -523,7 +523,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		styx = 5,
+		calm_pond = 5,
 	},
 	stats = {
 		weight = {min = 79.00, max = 84.00},
@@ -858,6 +858,7 @@ FishAndChips.Fish {
 	},
 	environments = {
 		wormhole = 5,
+		styx = 5,
 	},
 	stats = {
 		weight = {min = 0.89, max = 1.12},
@@ -894,7 +895,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		styx = 5,
+		calm_pond = 5,
 	},
 	stats = {
 		weight = {min = 43.91, max = 45.19},
@@ -922,11 +923,151 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		styx = 5,
+		calm_pond = 5,
 	},
 	stats = {
 		weight = {min = 88.39, max = 88.40},
 		length = {min = 66.00, max = 67.00}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+--  'Kai (Koi) ('Kay)
+
+FishAndChips.Fish {
+	key = "kay",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 3, y = 3 },
+	weight = 1,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Jolyne" },
+	attributes = { "deltarune" },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		calm_pond = 5,
+	},
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+-- Macktually (Mackerel) (Actually)
+
+FishAndChips.Fish {
+	key = "actually",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 4, y = 3 },
+	weight = 1,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Jolyne" },
+	attributes = { "deltarune" },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		calm_pond = 5,
+	},
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+-- Minknow (Minnow) (Know)
+
+FishAndChips.Fish {
+	key = "know",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 0, y = 4 },
+	weight = 1,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Jolyne" },
+	attributes = { "deltarune" },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		calm_pond = 5,
+	},
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+-- Jack (Jack) (Jack)
+
+FishAndChips.Fish {
+	key = "jack",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 1, y = 4 },
+	weight = 1,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Jolyne" },
+	attributes = { "deltarune" },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		calm_pond = 5,
+	},
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+	calculate = function(self, card, context)
+	end
+}
+
+-- Great (White) (Great White) (Great)
+
+FishAndChips.Fish {
+	key = "great",
+	atlas = "w_d_seuss_fish",
+	pos = { x = 2, y = 4 },
+	weight = 1,
+	ppu_coder = { "Nick" },
+	ppu_artist = { "Jolyne" },
+	attributes = { "deltarune" },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+		calm_pond = 5,
+	},
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
@@ -940,7 +1081,7 @@ FishAndChips.Fish {
 local card_draw = Card.draw -- Thank you MoreFluff Rotarot
 function Card:draw(layer, ...)
 	if self.config and self.config.center then
-		if (self.config.center.key == 'fish_fac_darwin' or self.config.center.key == 'fish_fac_togore') then
+		if self.config.center.key == 'fish_fac_darwin' or self.config.center.key == 'fish_fac_togore' or self.config.center.key == 'fish_fac_kay' or self.config.center.key == 'fish_fac_great' then
 			self.VT.r = self.VT.r + ( 3 * math.pi / 2 )
 			for k, v in pairs(self.children) do
 				v.VT.r = v.VT.r + ( 3 * math.pi / 2 )
@@ -956,7 +1097,7 @@ function Card:draw(layer, ...)
 	card_draw(self, layer, ...)
 
 	if self.config and self.config.center then
-		if (self.config.center.key == 'fish_fac_darwin' or self.config.center.key == 'fish_fac_togore') then
+		if self.config.center.key == 'fish_fac_darwin' or self.config.center.key == 'fish_fac_togore' or self.config.center.key == 'fish_fac_kay' or self.config.center.key == 'fish_fac_great' then
 			self.VT.r = self.VT.r - ( 3 * math.pi / 2 )
 			for k, v in pairs(self.children) do
 				v.VT.r = v.VT.r - ( 3 * math.pi / 2 )

@@ -228,6 +228,51 @@ return {
                     "Notably Not Green"
                 }
             },
+            fish_fac_kay = {
+                name = "'Kai",
+                text = {
+                    "",
+                },
+                flavour = {
+                    ""
+                }
+            },
+            fish_fac_actually = {
+                name = "Macktually",
+                text = {
+                    "",
+                },
+                flavour = {
+                    ""
+                }
+            },
+            fish_fac_know = {
+                name = "Minknow",
+                text = {
+                    "",
+                },
+                flavour = {
+                    ""
+                }
+            },
+            fish_fac_jack = {
+                name = "Jack",
+                text = {
+                    "",
+                },
+                flavour = {
+                    ""
+                }
+            },
+            fish_fac_great = {
+                name = "Great White",
+                text = {
+                    "",
+                },
+                flavour = {
+                    ""
+                }
+            },
         },
         Other = {
             w_d_seuss_dismantle = {
