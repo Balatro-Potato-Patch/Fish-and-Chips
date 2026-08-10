@@ -5,7 +5,7 @@ FishAndChips.Fish {
 	pos = { x = 1, y = 1 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "passive"},
+	attributes = { "passive" },
 	environments = {
 		pier = 0.5,
 		backroom = 1,

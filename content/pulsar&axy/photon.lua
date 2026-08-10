@@ -1,3 +1,15 @@
+SMODS.Shader{
+	key = 'pa_photon',
+	path = "pulsar&axy/pa_photon.fs",
+	send_vars = function(sprite, card)
+		local display_value = card and card.ability and card.ability.stats and card.ability.stats.length / card.ability.stats.units.length.scale or 0
+		display_value = tonumber(string.format('%.0f', display_value))
+		return {
+			fish_length = display_value
+		}
+	end,
+}
+
 FishAndChips.Fish {
 	key = "pa_photon",
 	weight = 1,
@@ -34,21 +46,8 @@ FishAndChips.Fish {
 	end,
 	-- draw = function(self, card, layer)
 	-- 	if self.discovered or card.params.bypass_discovery_center then
-	-- 		card.children.center:draw_shader(self.config.center.shader, nil, card.ARGS.send_to_shader)
+	-- 		card.children.center:draw_shader('fac_pa_photon', nil, card.ARGS.send_to_shader)
 	-- 	end
 	-- end,
-	shader = 'pa_photon',
-}
-
-SMODS.Shader{
-	key = 'pa_photon',
-	path = "pulsar&axy/pa_photon.fs",
-	send_vars = function(sprite, card)
-		local display_value = card and card.ability and card.ability.stats and card.ability.stats.length / card.ability.stats.units.length.scale or 0
-		display_value = tonumber(string.format('%.0f', display_value))
-		return {
-			fish_length = display_value,
-			pa_photon = {card.ability.stats.units.length, 0}
-		}
-	end,
+	-- shader = 'pa_photon',
 }
