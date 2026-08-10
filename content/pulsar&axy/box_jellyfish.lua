@@ -51,6 +51,14 @@ FishAndChips.Fish {
 		card.ability.immutable.id = random_string(20, pseudoseed(self.key))
 	end,
     can_use = function(self, card)
+		local in_booster = G.STATES and (
+			G.STATE == G.STATES.SMODS_BOOSTER_OPENED or
+			G.STATE == G.STATES.TAROT_PACK or
+			G.STATE == G.STATES.SPECTRAL_PACK or
+			G.STATE == G.STATES.STANDARD_PACK or
+			G.STATE == G.STATES.BUFFOON_PACK or
+			G.STATE == G.STATES.PLANET_PACK
+		)
 		local can_pick_booster = G.shop_booster and #G.shop_booster.highlighted > 0 and #G.shop_booster.highlighted <= card.ability.max_highlighted
 		local in_fishing_environment = G.GAME.fishing and not FishAndChips.in_tutorial
 		local can_use_booster
@@ -60,7 +68,7 @@ FishAndChips.Fish {
 				break
 			end
 		end
-        return ((can_pick_booster and not can_use_booster) or (can_use_booster)) and not card.ability.extra.ate_booster
+        return not in_booster and ((can_pick_booster and not can_use_booster) or (can_use_booster)) and not card.ability.extra.ate_booster
     end,
 	keep_on_use = function(self, card)
 		return true
