@@ -626,7 +626,13 @@ return {
             k_omega_crimsonfang_19 = "This really Penumbras my Phantasm",
             k_omega_crimsonfang_20 = "I WAIT!",
             k_omega_crimsonfang_21 = {"ANYWAY LIKE I WAS SAYING.", "ONE BIG TEAM, OVER WHICH", "I HAVE ASSUMED TOTAL LEADERSHIP."},
-            k_omega_crimsonfang_22 = "THE EYES THEY SEE"
+            k_omega_crimsonfang_22 = "THE EYES THEY SEE",
+            k_omega_crimsonfang_23 = {
+                "You're HOPELESS. Hopeless and alone...",
+                "Golly, that's right! Your WORTHLESS friends...",
+                "... can't save you now.",
+            },
+            k_omega_crimsonfang_24 = {"you really like twisting the", "perspectives don't you :3"},
 
             k_give_up = "GIVE UP",
             k_lose_hope = "LOSE HOPE",
