@@ -389,6 +389,25 @@ return {
                     "Shnork mimimi..",
                 }
             },
+            fish_fac_aureallu_tiger_shark = {
+                name = {"{C:attention}T{}i{C:attention}g{}e{C:attention{}r {C:attention}S{}h{C:attention}a{}r{C:attention}k"},
+                text = {
+                    {
+                        "When {C:attention}Blind{} is selected,",
+                        "{E:1,C:red}eats{} {C:fac_fish}fish{} to the right",
+                        "and gains its {C:attention}weight",
+                        "{s:0.8,C:inactive}(maximum of #4#kg)"
+                    },
+                    {
+                        "This Shark gives {X:mult,C:white}X#1#{} Mult",
+                        "per {C:tarot}#2#kg{} it {C:attention}weighs",
+                        "(currently {X:mult,C:white}X#3#{})"
+                    }
+                },
+                flavor = {
+                    "Grrr >:B (<- Hungery)"
+                }
+            }
         },
     },
     misc = {

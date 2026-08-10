@@ -459,7 +459,7 @@ FishAndChips.Fish {
 	key = "aureallu_mult_mola",
 	atlas = "aureallu_fish",
 	pos = { x = 1, y = 1 },
-	weight = 3,
+	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "mult" },
@@ -674,7 +674,7 @@ FishAndChips.Fish {
 	key = "aureallu_hammerjaw",
 	atlas = "aureallu_fish",
 	pos = { x = 0, y = 2 },
-	weight = 3,
+	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "usable", "destroy_card" },
@@ -1021,7 +1021,7 @@ FishAndChips.Fish {
 	key = "aureallu_unicorn_fish",
 	atlas = "aureallu_fish",
 	pos = { x = 0, y = 3 },
-	weight = 3,
+	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "usable", "tag", "chance" },
@@ -1668,7 +1668,7 @@ FishAndChips.Fish {
 	key = "aureallu_old_world_knifefish",
 	atlas = "aureallu_fish",
 	pos = { x = 2, y = 4 },
-	weight = 3,
+	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "destroy_card", "economy", "usable", "position", },
@@ -2185,4 +2185,68 @@ FishAndChips.Fish {
 	end,
 }
 
+-- Tiger Shark :tiger2:
+FishAndChips.Fish {
+	key = 'aureallu_tiger_shark',
+	atlas = 'aureallu_fish',
+	pos = {x = 4, y = 5},
+	weight = 4,
+	ppu_coder = {'Aure'},
+	ppu_artist = {'Aure'},
+	stats = {weight = {min = 0, max = 3000}, length = {min = 2.3, max = 5.2}},
+	blueprint_compat = true,
+	config = {
+		mult_per_weight = 0.1,
+		weight_step = 50,
+	},
+	environments = {
+		swamp = 10,
+		pier = 10,
+		city_river = 7,
+		chocolate_river = 5,
+		wormhole = 5,
+		calm_pond = 2,
+	},
+	on_catch = function(self, card)
+		card.ability.stats.weight = 100
+	end,
+	loc_vars = function(self, info_queue, card)
+		return {vars = { card.ability.mult_per_weight, card.ability.weight_step, 1+math.floor((card.ability.stats or { weight = 100}).weight/card.ability.weight_step)*card.ability.mult_per_weight, self.stats.weight.max}}
+	end,
+	calculate = function(self, card, context)
+		if context.setting_blind and not context.blueprint then
+			local my_pos = nil
+            for i = 1, #G.fac_fish_area.cards do
+                if G.fac_fish_area.cards[i] == card then
+                    my_pos = i
+                    break
+                end
+            end
+			if my_pos and G.fac_fish_area.cards[my_pos + 1] and not SMODS.is_eternal(G.fac_fish_area.cards[my_pos + 1]) then
+				local sliced_card = G.fac_fish_area.cards[my_pos + 1]
+				local weight = sliced_card.ability.stats.weight or 0
+				SMODS.scale_card(card, {
+					ref_table = card.ability.stats,
+					ref_value = 'weight',
+					scalar_table = { weight = weight },
+					scalar_value = 'weight',
+					operation = function(ref_table, ref_value, initial_value, change)
+						ref_table[ref_value] = math.min(self.stats.weight.max, initial_value + change)
+					end,
+					no_message = true,
+				})
+				SMODS.destroy_cards(sliced_card)
+				return {
+					colour = G.C.FILTER,
+					message = localize('k_eaten_ex')
+				}
+			end
+		end
+		if context.joker_main then
+			return {
+				xmult = 1 + math.floor(card.ability.stats.weight/card.ability.weight_step)*card.ability.mult_per_weight,
+			}
+		end
+	end,
+}
 -- #endregion
