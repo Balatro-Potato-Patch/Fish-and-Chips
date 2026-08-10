@@ -988,7 +988,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "crimsonseraphim_jack_o_lantern",
 	atlas = "crimsonseraphim_aeonfish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 4, y = 3 },
 	weight = 2, 
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
@@ -1905,4 +1905,23 @@ end
 
 G.FUNCS.omega_fake_new_run = function()
  
+end
+
+function _G.create_UIBox_text_popup(txt)
+    local nodes = {}
+    for _, str in ipairs(_G.str_sepr(txt,"\n")) do 
+        nodes[#nodes+1] = {n=G.UIT.R, config={}, nodes = {{n=G.UIT.T, config={text = str, scale = 0.5, colour = G.C.UI.TEXT_LIGHT}}}}       
+    end
+    return create_UIBox_generic_options { --this function is vanilla its generic boilerplate stuff, its the thing that creates the "menu" and the back button
+        contents = {{n=G.UIT.C, config={}, nodes = nodes}}
+    }
+end
+
+function _G.str_sepr(inputstr, sep)
+        if sep == nil then sep = "%s" end
+    local t = {}
+    for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
+        table.insert(t, str)
+    end
+    return t
 end
