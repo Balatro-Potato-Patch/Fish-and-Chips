@@ -7,7 +7,7 @@ return {
             PotatoPatchDev_waffle = {
                 name = "waffle",
                 text = {
-                    "nondescript agender fisherthey",
+                    "nondescript agender angler",
                     "{C:edition}My Nautical Roemance{} enjoyer",
                     "{s:0.8, C:inactive}also play wafflemod{}"
                 }
@@ -265,6 +265,16 @@ return {
                     }
                 }
             },
+
+            fish_fac_waffle_self_finsert = {
+                name = "Self-Finsert",
+                text = {
+                    "Creates a random {C:fac_fish}Fish",
+                    "made by {V:1}waffle{} with",
+                    "a random {C:dark_edition}Edition",
+                    "{C:inactive}({C:dark_edition}Negative{C:inactive} excluded)"
+                }
+            }
 
         },
 

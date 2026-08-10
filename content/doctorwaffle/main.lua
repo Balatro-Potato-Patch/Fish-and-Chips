@@ -21,15 +21,19 @@ PPU.Developer({
         
             for _, fish in pairs(G.fac_fish_area.cards) do
                 
-                if fish.ability and fish.ability.extra and fish.ability.extra.fac_waffle_finclair_copy then
+                if fish.ability and fish.ability.extra and fish.ability.extra.fac_waffle_finclair then
                     G.E_MANAGER:add_event(Event({
                         func = function ()
-                            local originalStats = fish.ability.extra.fac_waffle_finclair_stats
-                            fish:set_ability(fish.ability.extra.fac_waffle_finclair_copy)
-                            fish.ability.stats = originalStats
+                            local originalStats = fish.ability.extra.fac_waffle_finclair.stats
+                            local originalEdition = fish.ability.extra.fac_waffle_finclair.edition
+                            local originalSeal = fish.ability.extra.fac_waffle_finclair.seal
+                            fish:set_ability(fish.ability.extra.fac_waffle_finclair.key)
                             if not G.GAME.fac_fish_expanded then
                                 fish.T.scale = 0.7
                             end
+                            fish.ability.stats = originalStats
+                            fish:set_edition(originalEdition, true, true) -- True, true. I agree with your statement.
+                            fish:set_seal(originalSeal, true, true)
                             return true
                         end
                     }))
@@ -43,16 +47,19 @@ PPU.Developer({
         -- Finclair reverting when used
         if context.fac_use_fish then
             local fish = context.fac_use_fish
-            if fish.ability.extra.fac_waffle_finclair_copy then
+            if fish.ability.extra and fish.ability.extra.fac_waffle_finclair then
                 --print("used finclair copy")
-                local originalStats = fish.ability.extra.fac_waffle_finclair_stats
+                local originalStats = fish.ability.extra.fac_waffle_finclair.stats
                 if not context.kept_on_use then
                     --print("do not keep")
                     G.E_MANAGER:add_event(Event({
                         func = function ()
                             local card = SMODS.add_card({
-                                key = "fish_fac_waffle_finclair",
-                                area = G.fac_fish_area
+                                key = fish.ability.extra.fac_waffle_finclair.key,
+                                area = G.fac_fish_area,
+                                edition = fish.ability.extra.fac_waffle_finclair.edition,
+                                seal = fish.ability.extra.fac_waffle_finclair.seal,
+                                silent = true
                             })
                             card.ability.stats = originalStats
                             return true
@@ -62,7 +69,7 @@ PPU.Developer({
             end
         end
 
-        -- Clear snail marker at end of round
+        -- Clear Scaly-Foot Snail flag at end of round (having multiple Scaly-Foot Snails only activates and consumes one)
         if context.end_of_round and context.main_eval and not context.game_over then
             G.GAME.fac_waffle_snail_activated = nil
         end

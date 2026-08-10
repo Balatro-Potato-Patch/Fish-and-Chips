@@ -9,7 +9,7 @@ pattern = "for _, v in ipairs(info_queue) do"
 position = 'before'
 target = 'functions/common_events.lua'
 payload = '''
-    if card and card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.fac_waffle_finclair_copy then
+    if card and card.ability and card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.fac_waffle_finclair then
 
         info_queue[#info_queue + 1] = {key = "fac_waffle_finclair_tooltip", set = "Other"}
 

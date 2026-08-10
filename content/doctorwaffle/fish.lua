@@ -28,6 +28,28 @@ SMODS.Sound {
     path = "doctorwaffle/conch_nothing.ogg"
 }
 
+SMODS.ObjectType({
+    key = "fac_waffle_self_finsert_spawns",
+    default = "fish_fac_waffle_magic_conch",
+    cards = {
+        fish_fac_waffle_magic_conch = true,
+        fish_fac_waffle_percheo = true,
+        fish_fac_waffle_dead_fish = true,
+        fish_fac_waffle_squid_ink_cookie = true,
+        fish_fac_waffle_mudskipper = true,
+        fish_fac_waffle_double_dicefin = true,
+        fish_fac_waffle_gossamer_worm = true,
+        fish_fac_waffle_bonus_duck = true,
+        fish_fac_waffle_onion_fish = true,
+        fish_fac_waffle_finclair = true,
+        fish_fac_waffle_worn_book = true,
+        fish_fac_waffle_handchovies = true,
+        fish_fac_waffle_unemployster = true,
+        fish_fac_waffle_scaly_foot_snail = true,
+        fish_fac_waffle_pyukumuku = true,
+    }
+})
+
 -- Functions
 local waffleFunctions = {}
 do
@@ -103,6 +125,37 @@ do
             end
         end
     end
+
+    function waffleFunctions.addDucksToDeck(deck)
+            local allCards = {}                                                  -- Initialize list of cards in deck
+
+        for i = 1, #deck.cards do                                            -- Add cards in deck to allCards and reset their duck value
+            deck.cards[i].ability.fac_extra = deck.cards[i].ability.fac_extra or {}
+            deck.cards[i].ability.fac_extra.fac_waffle_duck = false
+            allCards[#allCards + 1] = deck.cards[i]
+        end
+
+        local bonusDuckCards = {} -- Initialize list of cards to add ducks do
+
+        local duckRatio = 0.3
+        for _, fish in pairs(G.fac_fish_area.cards) do
+            if fish.ability and fish.ability.extra and fish.ability.extra.duck_ratio then
+                duckRatio = math.max(duckRatio, fish.ability.extra.duck_ratio)
+            end
+        end
+
+        for i = 1, math.ceil(#allCards * duckRatio) do -- Remove cards from deck list as they are added to duck list (this ensures the same card doesn't get ducked twice)
+            local chosenCardIndex = pseudorandom("fac_waffle_bonus_duck_choose", 1, #allCards)
+            bonusDuckCards[#bonusDuckCards + 1] = allCards[chosenCardIndex]
+            table.remove(allCards, chosenCardIndex)
+        end
+
+        for i = 1, #bonusDuckCards do -- Set duck variable to all cards
+            bonusDuckCards[i].ability.fac_extra = bonusDuckCards[i].ability.fac_extra or {}
+            bonusDuckCards[i].ability.fac_extra.fac_waffle_duck = true
+        end
+end
+
 end
 
 -- Bonus Duck sounds
@@ -119,7 +172,7 @@ end
 FishAndChips.Fish {
     key = "waffle_magic_conch",
     atlas = "waffle_fish",
-    weight = 5,
+    weight = 4,
     environments = {
         pier = 1,
         calm_pond = 0.6
@@ -128,7 +181,6 @@ FishAndChips.Fish {
     blueprint_compat = false,
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    cost = 3,
     requires_jokers = true,
     stats = {
         weight = { min = 0.1, max = 0.11 },
@@ -355,7 +407,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
     key = "waffle_percheo",
     atlas = "waffle_fish",
-    weight = 2,
+    weight = 1,
     environments = {
         garden = 1,
     },
@@ -403,7 +455,7 @@ FishAndChips.Fish {
         styx = 1,
         wormhole = 0.5
     },
-    weight = 5,
+    weight = 4,
     cost = 4,
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -438,9 +490,9 @@ FishAndChips.Fish {
     pos = { x = 3, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 5,
+    weight = 4,
     pixel_size = { h = 83, w = 71 },
-    cost = 4,
+    cost = 5,
     environments = {
         chocolate_river = 1,
         pier = 0.75,
@@ -526,8 +578,8 @@ FishAndChips.Fish {
     pos = { x = 4, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 5,
-    cost = 5,
+    weight = 4,
+    cost = 4,
     environments = {
         swamp = 1,
         calm_pond = 0.65,
@@ -572,8 +624,8 @@ FishAndChips.Fish {
     pixel_size = { h = 60, w = 71 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 5,
-    cost = 6,
+    weight = 4,
+    cost = 5,
     blueprint_compat = false,
     environments = {
         backroom = 1,
@@ -634,7 +686,7 @@ FishAndChips.Fish {
     pos = { x = 6, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 5,
+    weight = 4,
     environments = {
         city_river = 1,
         garden = 0.8,
@@ -703,7 +755,7 @@ FishAndChips.Fish {
     key = "waffle_gossamer_worm",
     atlas = "waffle_fish",
     pos = { x = 7, y = 0 },
-    weight = 5,
+    weight = 4,
     environments = {
         aquifer = 1,
         pier = 0.4
@@ -747,7 +799,6 @@ FishAndChips.Fish {
 -- Bonus Duck
 -- Notes: duck value is stored in card.ability.fac_extra as card.ability.extra is wiped when changing card enhancement
 -- I don't *think* this causes any issues? fingers crossed Lmao
-local bonusDuckRatio = 0.3
 FishAndChips.Fish {
     key = "waffle_bonus_duck",
     ppu_coder = { "waffle" },
@@ -764,16 +815,13 @@ FishAndChips.Fish {
     pixel_size = { h = 88, w = 71 },
     atlas = "waffle_fish",
     pos = { x = 8, y = 0 },
-    weight = 5,
+    weight = 4,
     cost = 6,
     config = { extra = {
         chips = 0,
         chips_per = 4,
-        duck_ratio = bonusDuckRatio
-    },
-        immutable = {
-            duck_ratio = bonusDuckRatio
-        } },
+        duck_ratio = 0.3
+    },},
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -805,6 +853,9 @@ FishAndChips.Fish {
                 chips = card.ability.extra.chips
             }
         end
+        if context.setting_blind then
+            --waffleFunctions.addDucksToDeck(G.deck) -- Seems redundant, but needed for Finclair copies to properly add to 60% of deck
+        end
     end,
     attributes = { "chips", "scaling" },
     set_card_type_badge = function(self, card, badges)
@@ -818,33 +869,7 @@ function CardArea:shuffle(_seed)
     shuffle_ref(self, _seed)
 
     if self == G.deck and SMODS.find_card("fish_fac_waffle_bonus_duck") then -- idr if shuffle gets called on non-deck cardareas but better safe than sorry
-        local allCards = {}                                                  -- Initialize list of cards in deck
-
-        for i = 1, #self.cards do                                            -- Add cards in deck to allCards and reset their duck value
-            self.cards[i].ability.fac_extra = self.cards[i].ability.fac_extra or {}
-            self.cards[i].ability.fac_extra.fac_waffle_duck = false
-            allCards[#allCards + 1] = self.cards[i]
-        end
-
-        local bonusDuckCards = {} -- Initialize list of cards to add ducks do
-
-        local duckRatio = bonusDuckRatio
-        for _, fish in pairs(G.fac_fish_area.cards) do
-            if fish.ability and fish.ability.extra and fish.ability.extra.duck_ratio then
-                duckRatio = math.max(duckRatio, fish.ability.extra.duck_ratio)
-            end
-        end
-
-        for i = 1, math.ceil(#allCards * bonusDuckRatio) do -- Remove cards from deck list as they are added to duck list (this ensures the same card doesn't get ducked twice)
-            local chosenCardIndex = pseudorandom("fac_waffle_bonus_duck_choose", 1, #allCards)
-            bonusDuckCards[#bonusDuckCards + 1] = allCards[chosenCardIndex]
-            table.remove(allCards, chosenCardIndex)
-        end
-
-        for i = 1, #bonusDuckCards do -- Set duck variable to all cards
-            bonusDuckCards[i].ability.fac_extra = bonusDuckCards[i].ability.fac_extra or {}
-            bonusDuckCards[i].ability.fac_extra.fac_waffle_duck = true
-        end
+        waffleFunctions.addDucksToDeck(self)
     end
 end
 
@@ -885,7 +910,7 @@ FishAndChips.Fish {
     ppu_artist = { "waffle" },
     atlas = "waffle_fish",
     pos = { x = 9, y = 0 },
-    weight = 5,
+    weight = 4,
     cost = 5,
     environments = {
         soup = 1,
@@ -955,8 +980,8 @@ FishAndChips.Fish {
     pos = { x = 0, y = 1 },
     atlas = "waffle_fish",
     blueprint_compat = false,
-    cost = 8,
-    weight = 2,
+    cost = 10,
+    weight = 1,
     stats = {
         weight = { min = 1.30, max = 4.50 },
         length = { min = 0.20, max = 0.45 }
@@ -976,6 +1001,8 @@ FishAndChips.Fish {
                 local boost = card.ability.extra.scale
                 local cardKey = card.config.center.key
                 local stats = card.ability.stats
+                local edition = card.edition
+                local seal = card:get_seal()
                 SMODS.copy_card(fishToRight, {
                     new_card = card
                 })
@@ -985,8 +1012,11 @@ FishAndChips.Fish {
                         card.ability.extra[i] = v * boost
                     end
                 end
-                card.ability.extra.fac_waffle_finclair_copy = cardKey
-                card.ability.extra.fac_waffle_finclair_stats = stats
+                card.ability.extra.fac_waffle_finclair = {}
+                card.ability.extra.fac_waffle_finclair.key = cardKey
+                card.ability.extra.fac_waffle_finclair.stats = stats
+                card.ability.extra.fac_waffle_finclair.edition = edition
+                card.ability.extra.fac_waffle_finclair.seal = seal
                 if not G.GAME.fac_fish_expanded then
                     card.T.scale = 0.7
                 end
@@ -1014,7 +1044,7 @@ SMODS.DrawStep {
     key = "fac_waffle_finclair_drawstep",
     order = 21,
     func = function(card, layer)
-        if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.fac_waffle_finclair_copy then
+        if card.ability.extra and type(card.ability.extra) == "table" and card.ability.extra.fac_waffle_finclair then
             card.children.center:draw_shader('fac_finclair', nil, card.ARGS.send_to_shader)
         end
     end,
@@ -1034,7 +1064,7 @@ FishAndChips.Fish {
         pier = 0.6
     },
     pixel_size = { h = 58, w = 71 },
-    weight = 5,
+    weight = 4,
     stats = {
         weight = { min = 0.3, max = 0.6 },
         length = { min = 0.2, max = 0.25 },
@@ -1112,9 +1142,10 @@ FishAndChips.Fish {
     key = "waffle_handchovies",
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 5,
+    weight = 4,
     atlas = "waffle_fish",
     pos = { x = 2, y = 1 },
+    cost = 5,
     environments = {
         pier = 1,
         soup = 0.8,
@@ -1161,7 +1192,8 @@ FishAndChips.Fish {
     key = "waffle_unemployster",
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 5,
+    weight = 4,
+    cost = 7,
     atlas = "waffle_fish",
     pos = { x = 3, y = 1 },
     pixel_size = { h = 72, w = 71 },
@@ -1221,7 +1253,8 @@ FishAndChips.Fish {
     key = "waffle_scaly_foot_snail",
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 5,
+    weight = 4,
+    cost = 6,
     stats = {
         weight = { min = 0.05, max = 0.15 },
         length = { min = 0.04, max = 0.06 }
@@ -1275,7 +1308,7 @@ FishAndChips.Fish {
     key = "waffle_pyukumuku",
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    weight = 5,
+    weight = 4,
     atlas = "waffle_fish",
     pos = { x = 5, y = 1 },
     stats = {
@@ -1334,4 +1367,43 @@ FishAndChips.Fish {
             G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
             1.2)
     end,
+}
+
+-- Self-Finsert
+FishAndChips.Fish {
+    key = "waffle_self_finsert",
+    atlas = "waffle_fish",
+    environments = {
+        chocolate_river = 1,
+        garden = 0.6
+    },
+    pos = {x = 7, y = 1},
+    weight = 4,
+    pixel_size = {h = 69, w = 67},
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    stats = {
+        weight = {min = 61.0, max = 68.0},
+        length = {min = 1.75, max = 1.82},
+    },
+    loc_vars = function (self, info_queue, card)
+        return {vars = {colours = {HEX('7A2E2E')}}}
+    end,
+    use = function (self, card)
+        local edition = SMODS.poll_edition({guaranteed = true, no_negative = true})
+        G.E_MANAGER:add_event(Event({
+            trigger = "after",
+            delay = 0.4,
+            func = function ()
+                play_sound('timpani')
+                card:juice_up(0.3, 0.5)
+                SMODS.add_card({set = "fac_waffle_self_finsert_spawns", area = G.fac_fish_area, edition = edition})
+                return true
+            end
+        }))
+        delay(0.6)
+    end,
+    can_use = function () 
+        return true
+    end
 }
