@@ -121,7 +121,8 @@ return {
                     text = {
                         {
                             "Creates a random {C:tarot}Tarot{}, {C:planet}Planet{} or {C:spectral}Spectral{} card",
-                            "{C:red,E:1}Self-destructs{} when caught"
+                            "{C:red,E:1}Self-destructs{} when caught",
+                            "{C:inactive,s:0.8}(Must have room)"
                         }
                     },
                     flavour = {

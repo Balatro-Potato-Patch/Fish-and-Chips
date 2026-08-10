@@ -344,7 +344,7 @@ FishAndChips.Fish {
                     func = function()
                         local sets = {'Tarot', 'Planet', 'Spectral'}
                         local random_set = pseudorandom_element(sets, 'random_consumable_set')
-                        SMODS.add_card({ set = random_set, })     
+                        SMODS.add_card({ set = random_set })     
                         SMODS.destroy_cards(card)
                         card:juice_up(0.3, 0.5)
                         return true
