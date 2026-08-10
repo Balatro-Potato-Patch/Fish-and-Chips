@@ -8,6 +8,7 @@ FishAndChips.Fish {
 	attributes = { "suit", "spades", "retrigger", "food" },
 	environments = {
 		chocolate_river = 1,
+		volcano = 1
 	},
 	impulse_min = 0.12,
 	impulse_max = 0.3, -- distance per impulse
