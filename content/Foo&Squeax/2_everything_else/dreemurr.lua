@@ -8,8 +8,8 @@ FishAndChips.Fish{
 	pos = {x=5,y=0},
 	--pixel_size = {w=63,h=90},
 	stats = {
-		weight = {min = 1, max = 1, units = {format = "k_fac_fas_infinity", scale = 1, precision = 0}},
-		length = {min = 1, max = 1, units = {format = "k_fac_fas_infinity", scale = 1, precision = 0}}
+		weight = {min = 1e308, max = 1e308, units = {format = "k_fac_fas_infinity", scale = 1, precision = 0}},
+		length = {min = 1e308, max = 1e308, units = {format = "k_fac_fas_infinity", scale = 1, precision = 0}}
 	},
 	environments = {
 		aquifer = 1,
@@ -19,7 +19,7 @@ FishAndChips.Fish{
 	disable_visual_scaling = true,
 	config = {
 		extra = {
-			mult = 1
+			mult = 2
 		}
 	},
 	update = function(self, card, dt)
