@@ -27,11 +27,12 @@ FishAndChips.Fish {
 	key = "mf_john_fishlatro",
 	atlas = "notmario_fish",
 	pos = { x = 0, y = 0 },
-	weight = 1,
+	weight = 3,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "economy", "usable", },
 	pixel_size = {w = 62, h = 69},
+	badge_key = "k_fac_mf_john",
 	config = {
 		extra = {
 			max = 7,
@@ -68,35 +69,16 @@ FishAndChips.Fish {
     end
 }
 
-local smods_get_attribute_pool = SMODS.get_attribute_pool
-local ghurt_yo = nil
-function SMODS.get_attribute_pool(attribute, seen, ...)
-    if not ghurt_yo and not G.FAC_ENVIRONMENTS[attribute] then
-		ghurt_yo = true
-		local res = smods_get_attribute_pool(attribute, seen, ...)
-		ghurt_yo = nil
-		res[#res + 1] = "fish_fac_mf_red_herring"
-		return res
-	else
-		return smods_get_attribute_pool(attribute, seen, ...)
-	end
-end
-
-local smods_has_attribute = SMODS.has_attribute
-function SMODS.has_attribute(obj, attribute, ...)
-    if obj.key == "fish_fac_mf_red_herring" and not G.FAC_ENVIRONMENTS[attribute] then return true end
-	return smods_has_attribute(obj, attribute, ...)
-end
-
 FishAndChips.Fish {
 	key = "mf_broken_mirror",
 	atlas = "notmario_fish",
 	pos = { x = 2, y = 0 },
-	weight = 1,
+	weight = 3,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "copying", "joker", "position", "rarity", "destroy_card", "chance" },
 	blueprint_compat = false,
+	badge_key = "k_fac_mf_relic",
 	config = {
 		extra = { odds = 5, },
 	},
@@ -210,21 +192,21 @@ local should_talisman_key = function (key)
 	return has_calc_key(key) and not not (SMODS.Mods.Talisman or SMODS.Mods.cdataman or {}).can_load
 end
 
-SMODS.Sound({
-	key = "notmario_emult",
-	path = "notmario/emult.ogg",
-	pitch = 1.0,
-})
+-- SMODS.Sound({
+-- 	key = "notmario_emult",
+-- 	path = "notmario/emult.ogg",
+-- 	pitch = 1.0,
+-- })
 
-local emult_gradient = SMODS.Gradient({
-	key = "fac_mf_emult",
-	colours = {
-		HEX("ff73ad"),
-		HEX("db005f"),
-	},
-	cycle = 4,
-	update = update_exp_colour,
-})
+-- local emult_gradient = SMODS.Gradient({
+-- 	key = "fac_mf_emult",
+-- 	colours = {
+-- 		HEX("ff73ad"),
+-- 		HEX("db005f"),
+-- 	},
+-- 	cycle = 4,
+-- 	update = update_exp_colour,
+-- })
 
 -- Scrapped because too niche
 
@@ -370,7 +352,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	-- attributes = { },
+	attributes = SMODS.Attribute.obj_buffer,
 	config = {
 		extra = { fish_slot = 1, },
 	},
@@ -405,6 +387,26 @@ FishAndChips.Fish {
 	end,
 }
 
+-- local smods_get_attribute_pool = SMODS.get_attribute_pool
+-- local ghurt_yo = nil
+-- function SMODS.get_attribute_pool(attribute, seen, ...)
+--     if not ghurt_yo and not G.FAC_ENVIRONMENTS[attribute] then
+-- 		ghurt_yo = true
+-- 		local res = smods_get_attribute_pool(attribute, seen, ...)
+-- 		ghurt_yo = nil
+-- 		res[#res + 1] = "fish_fac_mf_red_herring"
+-- 		return res
+-- 	else
+-- 		return smods_get_attribute_pool(attribute, seen, ...)
+-- 	end
+-- end
+
+-- local smods_has_attribute = SMODS.has_attribute
+-- function SMODS.has_attribute(obj, attribute, ...)
+--     if obj.key == "fish_fac_mf_red_herring" and not G.FAC_ENVIRONMENTS[attribute] then return true end
+-- 	return smods_has_attribute(obj, attribute, ...)
+-- end
+
 FishAndChips.Fish {
 	key = "mf_prismatic_shard",
 	atlas = "notmario_fish",
@@ -413,6 +415,7 @@ FishAndChips.Fish {
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "passive" },
+	badge_key = "k_fac_mf_relic",
 	config = {
 		extra = { },
 	},
@@ -468,7 +471,6 @@ local get_weight_of_object = SMODS.get_weight_of_object
 function SMODS.get_weight_of_object(obj, opt_weight, args)
 	local w, w2 = get_weight_of_object(obj, opt_weight, args)
 	if obj and obj.set == 'fac_Fish' and next(SMODS.find_card("fish_fac_mf_prismatic_shard")) then
-		print("asdf")
 		return sign(w), sign(w2)
 	end
 	return w, w2
@@ -485,7 +487,7 @@ FishAndChips.Fish {
 	key = "mf_wa",
 	atlas = "notmario_wa",
 	pos = { x = 0, y = 0 },
-	weight = 1,
+	weight = 3,
 	ppu_coder = { "notmario" },
 	-- ppu_artist = { "notmario" },
 	attributes = { "retrigger", "position", },
@@ -639,12 +641,13 @@ FishAndChips.Fish {
 	key = "mf_junk_carp",
 	atlas = "notmario_fish",
 	pos = { x = 3, y = 1 },
-	weight = 1,
+	weight = 2,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "passive" },
+	badge_key = "k_fac_maybe_fish",
 	config = {
-		extra = { xhand_amounts = 1.5 }
+		extra = { xhand_amounts = 1.25 }
 	},
 	pixel_size = { w = 65, h = 95 },
 	stats = {
@@ -732,62 +735,62 @@ local function choose_a_few(items, seed, count)
 	return chosen_hands
 end
 
-local function choose_a_few_hands(include_hidden, seed, count)
-    local hands = {}
-    for _,name in ipairs(G.handlist) do
-        if include_hidden or SMODS.is_poker_hand_visible(name) then
-            hands[#hands+1] = name
-        end
-    end
-	
-    return choose_a_few(hands, seed, count)
-end
+-- local function choose_a_few_hands(include_hidden, seed, count)
+--     local hands = {}
+--     for _,name in ipairs(G.handlist) do
+--         if include_hidden or SMODS.is_poker_hand_visible(name) then
+--             hands[#hands+1] = name
+--         end
+--     end
 
-FishAndChips.Fish {
-	key = "mf_saturn_fish",
-	atlas = "notmario_fish",
-	pos = { x = 4, y = 1 },
-	weight = 1,
-	ppu_coder = { "notmario" },
-	ppu_artist = { "notmario" },
-	attributes = { "hand_level", "on_sell", "space", },
-	config = {
-		extra = { levels = 3 }
-	},
-	pixel_size = { w = 61, h = 88 },
-	environments = {
-		wormhole = 1.0,
-		backroom = 0.2,
-	},
-	stats = {
-		weight = {min = 0.2, max = 1.0}, -- gas
-		length = {min = 0.50, max = 0.75}
-	},
-	blueprint_compat = true,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.levels } }
-	end,
-	calculate = function(self, card, context)
-		if context.selling_self then
-			local hands = choose_a_few_hands(false, "saturn_fish", card.ability.extra.levels)
-			SMODS.upgrade_poker_hands{
-				hands = hands,
-				level_up = 1,
-				from = card,
-			}
-			return nil, true
-		end
-		if context.joker_type_destroyed and context.card == card then
-			local hands = choose_a_few_hands(false, "saturn_fish", card.ability.extra.levels)
-			SMODS.upgrade_poker_hands{
-				hands = hands,
-				level_up = 1,
-				from = card,
-			}
-			return nil, true
-		end
-	end,
-}
+--     return choose_a_few(hands, seed, count)
+-- end
+
+-- FishAndChips.Fish {
+-- 	key = "mf_saturn_fish",
+-- 	atlas = "notmario_fish",
+-- 	pos = { x = 4, y = 1 },
+-- 	weight = 1,
+-- 	ppu_coder = { "notmario" },
+-- 	ppu_artist = { "notmario" },
+-- 	attributes = { "hand_level", "on_sell", "space", },
+-- 	config = {
+-- 		extra = { levels = 3 }
+-- 	},
+-- 	pixel_size = { w = 61, h = 88 },
+-- 	environments = {
+-- 		wormhole = 1.0,
+-- 		backroom = 0.2,
+-- 	},
+-- 	stats = {
+-- 		weight = {min = 0.2, max = 1.0}, -- gas
+-- 		length = {min = 0.50, max = 0.75}
+-- 	},
+-- 	blueprint_compat = true,
+-- 	loc_vars = function(self, info_queue, card)
+-- 		return { vars = { card.ability.extra.levels } }
+-- 	end,
+-- 	calculate = function(self, card, context)
+-- 		if context.selling_self then
+-- 			local hands = choose_a_few_hands(false, "saturn_fish", card.ability.extra.levels)
+-- 			SMODS.upgrade_poker_hands{
+-- 				hands = hands,
+-- 				level_up = 1,
+-- 				from = card,
+-- 			}
+-- 			return nil, true
+-- 		end
+-- 		if context.joker_type_destroyed and context.card == card then
+-- 			local hands = choose_a_few_hands(false, "saturn_fish", card.ability.extra.levels)
+-- 			SMODS.upgrade_poker_hands{
+-- 				hands = hands,
+-- 				level_up = 1,
+-- 				from = card,
+-- 			}
+-- 			return nil, true
+-- 		end
+-- 	end,
+-- }
 
 FishAndChips.Fish {
 	key = "mf_minifish",
@@ -885,7 +888,7 @@ FishAndChips.Fish {
 	key = "mf_sap_fish",
 	atlas = "notmario_fish",
 	pos = { x = 1, y = 2 },
-	weight = 1,
+	weight = 2,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "hand_level", "chips", "mult", "modify_card", },
@@ -938,10 +941,11 @@ FishAndChips.Fish {
 	key = "mf_car_battery",
 	atlas = "notmario_fish",
 	pos = { x = 3, y = 2 },
-	weight = 1,
+	weight = 4,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "retrigger", "modify_card", "chance", },
+	badge_key = "k_fac_mf_relic_qu",
 	config = {
 		extra = { odds = 7, }
 	},
@@ -951,9 +955,10 @@ FishAndChips.Fish {
 		city_river = 0.1,
 	},
 	stats = {
-		weight = {min = 18, max = 20},
-		length = {min = 0.30, max = 0.40}
+		weight = {min = 19, max = 20},
+		length = {min = 0.40, max = 0.40}
 	},
+	disable_visual_scaling = true,
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		local new_numerator, new_denominator =
@@ -1053,7 +1058,7 @@ local abort_mission_amt = 0.
 FishAndChips.Fish {
 	key = "mf_inquisitive_fish",
 	atlas = "notmario_fish",
-	pos = { x = 4, y = 2 },
+	pos = { x = 3, y = 7 },
 	weight = 1,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
@@ -1061,11 +1066,13 @@ FishAndChips.Fish {
 	config = {
 		extra = { chips = 10, }
 	},
+	impulse_min = 0.01,
+	impulse_max = 0.02,
 	environments = {
 		pier = 1.0,
 		wormhole = 0.2,
 	},
-	pixel_size = {w = 68, h = 85},
+	pixel_size = {w = 65, h = 92},
 	stats = {
 		weight = {min = 3, max = 4},
 		length = {min = 0.25, max = 0.35}
@@ -1126,7 +1133,7 @@ FishAndChips.Fish {
 	key = "mf_nerd_shark",
 	atlas = "notmario_fish",
 	pos = { x = 0, y = 6 },
-	weight = 1,
+	weight = 3,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "xchips", "mult", "scaling", },
@@ -1161,7 +1168,6 @@ ease_dollars = function(mod, instant, ...)
 	ed(mod, instant, ...)
 end
 
--- second hook. lmao even
 local scalcieff = SMODS.calculate_individual_effect
 SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, from_edition)
     if next(SMODS.find_card("fish_fac_mf_nerd_shark")) then
@@ -1185,7 +1191,7 @@ FishAndChips.Fish {
 	key = "mf_dandan",
 	atlas = "notmario_fish",
 	pos = { x = 1, y = 3 },
-	weight = 1,
+	weight = 4,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "xblindsize", "destroy_card", },
@@ -1278,10 +1284,11 @@ FishAndChips.Fish {
 	key = "mf_fish_fear_me",
 	atlas = "notmario_fish",
 	pos = { x = 3, y = 3 },
-	weight = 1,
+	weight = 9,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "passive", "editions", },
+	badge_key = "k_fac_mf_relic_qu",
 	config = {
 		extra = {
 		}
@@ -1340,7 +1347,9 @@ FishAndChips.Fish {
 		weight = {min = 8500, max = 10000},
 		length = {min = 2.20, max = 2.20}
 	},
+	disable_visual_scaling = true,
 	blueprint_compat = false,
+	badge_key = "k_fac_mf_relic_qu",
 	loc_vars = function(self, info_queue, card)
 		local new_numerator, new_denominator =
 			SMODS.get_probability_vars(card, 1, card.ability.extra.destroy_odds, "fac_mf_fishion_reactor")
@@ -1371,15 +1380,17 @@ FishAndChips.Fish {
                 	play_sound('timpani', 0.3)
                 	play_sound('fac_notmario_cardshock', 0.3)
 					local scale_add = 0.8 + pseudorandom("fac_mf_fishion_rescale") * 0.4
-					copied_joker.T.scale = copied_joker.T.scale * scale_add
 					local round_ts = function(value)
 						return tonumber(string.format(value < 100 and "%.2f" or "%.d", value))
 					end
 					copied_joker.ability.stats.weight = round_ts(copied_joker.ability.stats.weight * scale_add) -- ts cubic and such
 					copied_joker.ability.stats.length = round_ts(copied_joker.ability.stats.length * scale_add)
-					sliced_card.T.scale = sliced_card.T.scale / scale_add
 					sliced_card.ability.stats.weight = round_ts(sliced_card.ability.stats.weight / scale_add)
 					sliced_card.ability.stats.length = round_ts(sliced_card.ability.stats.length / scale_add)
+					if not FishAndChips.mod.config.disable_fish_scaling and not G.P_CENTERS[sliced_card.config.center.key].disable_visual_scaling then
+					    copied_joker.T.scale = copied_joker.T.scale * scale_add
+						sliced_card.T.scale = sliced_card.T.scale / scale_add
+					end
 					copied_joker:juice_up(1.0, 1.0)
 					sliced_card:juice_up(1.0, 1.0)
 					copied_joker:start_materialize()
@@ -1413,7 +1424,7 @@ FishAndChips.Fish {
 	key = "mf_baneslayer_angelfish",
 	atlas = "notmario_fish",
 	pos = { x = 2, y = 4 },
-	weight = 1,
+	weight = 5,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "chips", "mult", },
@@ -1424,6 +1435,7 @@ FishAndChips.Fish {
 		garden = 1.0,
 		aquifer = 0.1,
 	},
+	badge_key = "k_fac_mf_angelfish",
 	pixel_size = {w = 67, h = 70},
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
@@ -1478,7 +1490,7 @@ FishAndChips.Fish {
 	key = "mf_perchance",
 	atlas = "notmario_fish",
 	pos = { x = 0, y = 4 },
-	weight = 1,
+	weight = 4,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "mod_chance", "passive", "reset", "scaling", },
@@ -1536,7 +1548,7 @@ FishAndChips.Fish {
 	key = "mf_narwall",
 	atlas = "notmario_fish",
 	pos = { x = 1, y = 4 },
-	weight = 1,
+	weight = 3,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "passive", "economy", "boss_blind", },
@@ -1630,7 +1642,7 @@ FishAndChips.Fish {
 	key = "mf_frying_fish",
 	atlas = "notmario_fish",
 	pos = { x = 1, y = 5 },
-	weight = 1,
+	weight = 4,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "generation", "modify_card", "joker" },
@@ -1647,6 +1659,7 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = false,
 	pixel_size = {w = 71, h = 72},
+	requires_jokers = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
 	end,
@@ -1665,7 +1678,7 @@ FishAndChips.Fish {
         delay(0.6)
     end,
     can_use = function(self, card)
-        return G.jokers and #G.jokers.cards < G.jokers.config.card_limit and G.jokers.T.y >= 0.
+        return G.jokers and #G.jokers.cards < G.jokers.config.card_limit
     end
 }
 
@@ -1673,7 +1686,7 @@ FishAndChips.Fish {
 	key = "mf_dominnows",
 	atlas = "notmario_fish",
 	pos = { x = 2, y = 5 },
-	weight = 1,
+	weight = 2,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
 	attributes = { "balance", "rank", "reset", },
@@ -1776,7 +1789,7 @@ FishAndChips.Fish {
 								}))
 								return true
 							end)
-						}))     
+						}))
 					end
 				}
 			end
@@ -1788,13 +1801,16 @@ FishAndChips.Fish {
 	key = "mf_really_long_name_copper_stairs",
 	atlas = "notmario_fish",
 	pos = { x = 3, y = 5 },
-	weight = 1,
+	weight = 5,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { },
+	attributes = { "passive", "reset", },
 	config = {
-		extra = {}
+		extra = {
+			scaling_mod = 3,
+		}
 	},
+	badge_key = "k_fac_mf_block",
 	environments = {
 		aquifer = 1.0,
 		wormhole = 0.1,
@@ -1806,11 +1822,56 @@ FishAndChips.Fish {
 	blueprint_compat = false,
 	pixel_size = {w = 71, h = 79},
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		return { vars = { card.ability.extra.scaling_mod, localize(card.ability.extra.preventing_scaling and "k_preventing" or "k_not_preventing") } }
 	end,
 	calculate = function(self, card, context)
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+			card.ability.extra.preventing_scaling = false
+			return {
+				message = localize('k_reset'),
+				colour = mix_colours(G.C.GREEN, G.C.FILTER, 0.7),
+			}
+		end
+		if context.scaling_card then
+		    card.ability.extra.preventing_scaling = true
+    		if context.operation == "X" then
+    			return {
+    				override_scalar_value = { value = context.scalar ^ card.ability.extra.scaling_mod },
+    			}
+    		else
+    			return {
+    				override_scalar_value = { value = context.scalar * card.ability.extra.scaling_mod },
+    			}
+    		end
+		end
 	end,
+	-- calc_scaling = function(self, _self, card, initial, scalar_value, args)
+		-- if args.operation == "X" then
+		-- 	_self.ability.extra.preventing_scaling = true
+		-- 	return {
+		-- 		override_scalar_value = { value = scalar_value ^ _self.ability.extra.scaling_mod },
+		-- 	}
+		-- else
+		-- 	_self.ability.extra.preventing_scaling = true
+		-- 	return {
+		-- 		override_scalar_value = { value = scalar_value * _self.ability.extra.scaling_mod },
+		-- 	}
+		-- end
+	-- end,
 }
+
+local ssc = SMODS.scale_card
+function SMODS.scale_card(card, ...)
+	local should_prevent = false
+	-- Im probably like really stupid but whatever
+	for _, card in ipairs(SMODS.find_card("fish_fac_mf_really_long_name_copper_stairs")) do
+		if card.ability.extra.preventing_scaling then
+			should_prevent = true
+		end
+	end
+	if should_prevent then return nil end
+    return ssc(card, ...)
+end
 
 FishAndChips.Fish {
 	key = "mf_the_sole",
@@ -1819,81 +1880,530 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { },
+	attributes = { "usable", "generation", "rarity", "chance", },
 	config = {
-		extra = {}
+		extra = {
+			odds = 6,
+		}
 	},
+	badge_key = "k_fac_mf_relic_qu",
 	environments = {
 		city_river = 1.0,
 		pier = 0.1,
 	},
 	stats = {
-		weight = {min = 0.2, max = 0.3},
-		length = {min = 0.15, max = 0.25}
+		weight = {min = 0.21, max = 0.30},
+		length = {min = 0.21, max = 0.30}
 	},
 	blueprint_compat = false,
 	pixel_size = {w = 60, h = 78},
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		local new_numerator, new_denominator =
+			SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_mf_the_sole")
+		return { vars = { new_numerator, new_denominator } }
 	end,
-	calculate = function(self, card, context)
-	end,
+    use = function(self, card, area, copier)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                play_sound('timpani')
+                local food = SMODS.add_card({ set = 'Joker', rarity = "Legendary", key_append = "the_sole" })
+				food.ability.fac_mf_the_sole = { card.ability.extra.odds }
+                card:juice_up(0.3, 0.5)
+                return true
+            end
+        }))
+        delay(0.6)
+    end,
+    can_use = function(self, card)
+        return G.jokers and #G.jokers.cards < G.jokers.config.card_limit
+    end
 }
 
+-- FishAndChips.Fish {
+-- 	key = "mf_glistening_oilfish",
+-- 	atlas = "notmario_fish",
+-- 	pos = { x = 0, y = 0 },
+-- 	weight = 1,
+-- 	ppu_coder = { "notmario" },
+-- 	ppu_artist = { "notmario" },
+-- 	attributes = { },
+-- 	config = {
+-- 		extra = {
+-- 			toxic_val = 10,
+-- 		}
+-- 	},
+-- 	environments = {
+-- 		swamp = 1.0,
+-- 	},
+-- 	stats = {
+-- 		weight = {min = 10.0, max = 15.0},
+-- 		length = {min = 0.9, max = 1.4}
+-- 	},
+-- 	blueprint_compat = false,
+-- 	pixel_size = {w = 62, h = 69},
+-- 	loc_vars = function(self, info_queue, card)
+-- 		return { vars = { card.ability.extra.toxic_val, colours = {
+-- 			darken(G.C.GREEN, 0.2)
+-- 		} } }
+-- 	end,
+-- 	calculate = function(self, card, context)
+-- 	end,
+-- 	fac_mf_add_multibox = function(_c, info_queue, other_card, desc_nodes, specific_vars, full_UI_table, ability, card, ...)
+-- 		-- find actual card with evil evil evil eeeevil hack
+-- 		local _other_card = nil
+-- 		for _, _card in ipairs(G.fac_fish_area.cards) do
+-- 			if ability == _card.ability then
+-- 				_other_card = _card
+-- 			end
+-- 		end
+-- 		if _other_card and _other_card.area == G.fac_fish_area then
+-- 			local other_joker = nil
+-- 			for i = 1, #G.fac_fish_area.cards do
+-- 				if G.fac_fish_area.cards[i] == card then other_joker = G.fac_fish_area.cards[i + 1] end
+-- 			end
+-- 			if other_joker == _other_card then
+-- 				local desc_text = G.localization.descriptions.Other.fac_mf_toxic.text
+-- 				PotatoPatchUtils.Developers.fac_notmario.generate_ui_multiboxes({
+-- 					{
+-- 						localized_text = desc_text,
+-- 						loc_vars = function(self, card, center)
+-- 							return { vars = { card.ability.extra.toxic_val, colours = {
+-- 								darken(G.C.GREEN, 0.2)
+-- 							} } }
+-- 						end
+-- 					}
+-- 				})(_c, info_queue, other_card, desc_nodes, specific_vars, full_UI_table)
+-- 			end
+-- 		end
+-- 	end,
+-- 	fac_mf_add_extra_effect = function(other_card, context, jokers, triggered, card)
+-- 		return jokers, triggered
+-- 	end
+-- }
+
 FishAndChips.Fish {
-	key = "mf_glistening_oilfish",
+	key = "mf_number_gem",
 	atlas = "notmario_fish",
-	pos = { x = 0, y = 0 },
+	pos = { x = 4, y = 7 },
 	weight = 1,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { },
+	attributes = { "economy", "usable", },
 	config = {
-		extra = {}
+		extra = {
+		    per_digit = 2,
+			cap = 67,
+		}
 	},
+	badge_key = "k_fac_mf_relic",
 	environments = {
-		swamp = 1.0,
+	    wormhole = 1.0,
+		city_river = 0.3,
 	},
 	stats = {
 		weight = {min = 10.0, max = 15.0},
-		length = {min = 0.9, max = 1.4}
+		length = {min = 0.5, max = 0.6}
 	},
 	blueprint_compat = false,
-	pixel_size = {w = 62, h = 69},
+	pixel_size = {w = 53, h = 61},
+	display_size = { w = 53 * 1.25, h = 61 * 1.25 },
 	loc_vars = function(self, info_queue, card)
-		return { vars = { colours = {
-			darken(G.C.GREEN, 0.2)
-		} } }
+	    return { vars = { card.ability.extra.per_digit, card.ability.extra.cap } }
+	end,
+	use = function(self, card, area, copier)
+        local round = (G.GAME.round or 0)
+        local times = 10^(math.floor(math.log10(round)) + 1)
+        if concat == 0 then times = 10 end
+
+        local dollars = (math.floor(math.log10(round)) + 1) * 2
+        if round == 0 then dollars = 1 end
+        if round == inf or dollars > 308 then dollars = 308 end
+
+        ease_round(round * times)
+        ease_dollars(math.min(dollars * card.ability.extra.per_digit, card.ability.extra.cap))
+    end,
+    can_use = function(self, card)
+        return true
+    end
+}
+
+FishAndChips.Fish {
+	key = "mf_treasure_chest",
+	atlas = "notmario_fish",
+	pos = { x = 0, y = 8 },
+	weight = 5,
+	ppu_coder = { "notmario" },
+	ppu_artist = { "notmario" },
+	attributes = { "economy", "generation", "usable", },
+	config = {
+		extra = {
+		    money = 4,
+			available = true,
+		}
+	},
+	badge_key = "k_fac_mf_relic",
+	environments = {
+	    pier = 1.0,
+		swamp = 0.1,
+		volcano = 0.1,
+	},
+	stats = {
+		weight = {min = 250.0, max = 300.0},
+		length = {min = 0.8, max = 0.9}
+	},
+	treasure = true,
+	blueprint_compat = false,
+	pixel_size = {w = 71, h = 78},
+	loc_vars = function(self, info_queue, card)
+	    return { vars = { card.ability.extra.money, localize(card.ability.extra.available and "k_active" or "k_inactive") } }
 	end,
 	calculate = function(self, card, context)
-	end,
-	fac_mf_add_multibox = function(_c, info_queue, other_card, desc_nodes, specific_vars, full_UI_table, ability, card, ...)
-		if G.jokers and _c.set == "Joker" and _c.rarity == 2 then
-			local desc_text = G.localization.descriptions.Other.fac_mf_toxic.text
-			PotatoPatchUtils.Developers.fac_notmario.generate_ui_multiboxes({
-                {
-                    localized_text = desc_text,
-                    loc_vars = function(self, card, center)
-						return { vars = { colours = {
-							darken(G.C.GREEN, 0.2)
-						} } }
-                    end
-                }
-            })(_c, info_queue, other_card, desc_nodes, specific_vars, full_UI_table)
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and G.GAME.blind.boss then
+			card.ability.extra.available = true
+			return {
+				message = localize('k_reset'),
+			}
 		end
 	end,
-	fac_mf_add_extra_effect = function(other_card, context, jokers, triggered, card)
-		return jokers, triggered
-	end
+	use = function(self, card, area, copier)
+	    card.ability.extra.available = false
+	    if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
+    		G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.4,
+                func = function()
+                    play_sound('timpani')
+                    local food = SMODS.add_card({ set = 'fac_Fish', attributes = {'fac_mf_pearl'}, key_append = "chest" })
+                    card:juice_up(0.3, 0.5)
+                    return true
+                end
+            }))
+            delay(0.6)
+        else
+            ease_dollars(card.ability.extra.money)
+		end
+    end,
+    can_use = function(self, card)
+        return card.ability.extra.available
+    end,
+    keep_on_use = function(card) return true end
+}
+
+SMODS.Attribute {
+    key = "fac_mf_pearl",
+    -- todo : add a loc thing :p
+}
+
+FishAndChips.Fish {
+	key = "mf_red_pearl",
+	atlas = "notmario_fish",
+	pos = { x = 3, y = 6 },
+	weight = 1,
+	ppu_coder = { "notmario" },
+	ppu_artist = { "notmario" },
+	attributes = { "usable", "mult", "modify_card", "fac_mf_pearl" },
+	config = { extra = { base_highlighted = 0, mult_bonus = 5, money_earned = 0, money_per = 8 } },
+	badge_key = "k_fac_mf_pearl",
+	environments = {
+	    pier = 1.0,
+	},
+	stats = {
+		weight = {min = 0.02, max = 0.06},
+		length = {min = 0.0012, max = 0.021}
+	},
+	requires_hand = true,
+	blueprint_compat = false,
+	pixel_size = {w = 39, h = 39},
+	loc_vars = function(self, info_queue, card)
+	    return { vars = { card.ability.extra.base_highlighted, card.ability.extra.mult_bonus, card.ability.extra.money_per, card.ability.extra.money_earned,
+			card.ability.extra.base_highlighted + math.floor( card.ability.extra.money_earned / card.ability.extra.money_per ) } }
+	end,
+	calculate = function(self, card, context)
+        if context.money_altered and context.amount > 0 then
+            card.ability.extra.money_earned = card.ability.extra.money_earned + context.amount
+        end
+    end,
+    use = function(self, card, area, copier)
+        for i = 1, #G.hand.highlighted do
+            o_card = G.hand.highlighted[i]
+            o_card.ability.perma_mult = (o_card.ability.perma_mult or 0) + card.ability.extra.mult_bonus
+            local percent = 0.85 + (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.25
+            G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.15,
+            func = function()
+                play_sound('multhit1', percent, 0.6); G.hand.highlighted[i]
+                :juice_up(
+                    0.3, 0.3); return true
+            end
+            }))
+        end
+    end,
+    can_use = function(self, card)
+        return #G.hand.highlighted ~= 0 and #G.hand.highlighted <= card.ability.extra.base_highlighted + math.floor( card.ability.extra.money_earned / card.ability.extra.money_per )
+    end
+}
+
+FishAndChips.Fish {
+	key = "mf_blue_pearl",
+	atlas = "notmario_fish",
+	pos = { x = 4, y = 6 },
+	weight = 1,
+	ppu_coder = { "notmario" },
+	ppu_artist = { "notmario" },
+	attributes = { "usable", "modify_card", "enhancements", "fac_mf_pearl" },
+	config = { extra = { base_highlighted = 0, money_earned = 0, money_per = 10 } },
+	badge_key = "k_fac_mf_pearl",
+	environments = {
+	    pier = 1.0,
+	},
+	stats = {
+		weight = {min = 0.02, max = 0.06},
+		length = {min = 0.0012, max = 0.021}
+	},
+	requires_hand = true,
+	blueprint_compat = false,
+	pixel_size = {w = 39, h = 39},
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.base_highlighted, card.ability.extra.money_per, card.ability.extra.money_earned,
+            card.ability.extra.base_highlighted + math.floor( card.ability.extra.money_earned / card.ability.extra.money_per ) } }
+    end,
+    calculate = function(self, card, context)
+        if context.money_altered and context.amount < 0 then
+            card.ability.extra.money_earned = card.ability.extra.money_earned - context.amount
+
+            if math.floor(card.ability.extra.money_earned / card.ability.extra.money_per) > math.floor((card.ability.extra.money_earned - context.amount) / card.ability.extra.money_per) then
+                return {
+                    message = localize("k_upgrade_ex")
+                }
+            end
+        end
+    end,
+    use = function(self, card, area, copier)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                play_sound('tarot1')
+                card:juice_up(0.3, 0.5)
+                return true
+            end
+        }))
+        for i = 1, #G.hand.highlighted do
+            local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    G.hand.highlighted[i]:flip()
+                    play_sound('card1', percent)
+                    G.hand.highlighted[i]:juice_up(0.3, 0.3)
+                    return true
+                end
+            }))
+        end
+        delay(0.2)
+        for i = 1, #G.hand.highlighted do
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.1,
+                func = function()
+                    G.hand.highlighted[i]:set_ability("m_wild")
+                    return true
+                end
+            }))
+        end
+        for i = 1, #G.hand.highlighted do
+            local percent = 0.85 + (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    G.hand.highlighted[i]:flip()
+                    play_sound('tarot2', percent, 0.6)
+                    G.hand.highlighted[i]:juice_up(0.3, 0.3)
+                    return true
+                end
+            }))
+        end
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.2,
+            func = function()
+                G.hand:unhighlight_all()
+                return true
+            end
+        }))
+        delay(0.5)
+    end,
+    can_use = function(self, card)
+        return #G.hand.highlighted ~= 0 and #G.hand.highlighted <= card.ability.extra.base_highlighted + math.floor( card.ability.extra.money_earned / card.ability.extra.money_per )
+    end
+}
+
+FishAndChips.Fish {
+	key = "mf_green_pearl",
+	atlas = "notmario_fish",
+	pos = { x = 0, y = 7 },
+	weight = 1,
+	ppu_coder = { "notmario" },
+	ppu_artist = { "notmario" },
+	attributes = { "usable", "reroll", "on_sell", "fac_mf_pearl" },
+	config = { extra = { base_rerolls = 0, sells_per = 2, my_sells = 0, } },
+	badge_key = "k_fac_mf_pearl",
+	environments = {
+	    pier = 1.0,
+	},
+	stats = {
+		weight = {min = 0.02, max = 0.06},
+		length = {min = 0.0012, max = 0.021}
+	},
+	blueprint_compat = false,
+	pixel_size = {w = 39, h = 39},
+	loc_vars = function(self, info_queue, card)
+	    return { vars = { card.ability.extra.base_rerolls, card.ability.extra.sells_per, card.ability.extra.my_sells, math.floor(card.ability.extra.my_sells / card.ability.extra.sells_per), } }
+	end,
+	calculate = function(self, card, context)
+	    if context.selling_card and context.card ~= card then
+            card.ability.extra.my_sells = card.ability.extra.my_sells + 1
+            if math.floor(card.ability.extra.my_sells / card.ability.extra.sells_per) > math.floor((card.ability.extra.my_sells - 1) / card.ability.extra.sells_per) then
+                return {
+                    message = localize("k_upgrade_ex")
+                }
+            end
+        end
+    end,
+    use = function(self, card, area, copier)
+        if card.ability.extra.base_rerolls + math.floor(card.ability.extra.my_sells / card.ability.extra.sells_per) > 0 then
+            G.GAME.current_round.free_rerolls = math.max(G.GAME.current_round.free_rerolls +
+                card.ability.extra.base_rerolls + math.floor(card.ability.extra.my_sells / card.ability.extra.sells_per), 0)
+            calculate_reroll_cost(true)
+        end
+    end,
+    can_use = function(self, card)
+        return G.shop and (card.ability.extra.base_rerolls + math.floor(card.ability.extra.my_sells / card.ability.extra.sells_per)) > 0
+    end
+}
+
+FishAndChips.Fish {
+	key = "mf_gold_pearl",
+	atlas = "notmario_fish",
+	pos = { x = 1, y = 7 },
+	weight = 1,
+	ppu_coder = { "notmario" },
+	ppu_artist = { "notmario" },
+	attributes = { "usable", "chance", "modify_card", "joker", "fac_mf_pearl" },
+	config = { extra = { numerator = 17, denominator = 1, increase_denominator = 1, } },
+	badge_key = "k_fac_mf_pearl",
+	environments = {
+	    pier = 1.0,
+	},
+	stats = {
+		weight = {min = 0.02, max = 0.06},
+		length = {min = 0.0012, max = 0.021}
+	},
+	blueprint_compat = false,
+	pixel_size = {w = 39, h = 39},
+	loc_vars = function(self, info_queue, card)
+    	local new_numerator, new_denominator =
+    		SMODS.get_probability_vars(card, card.ability.extra.numerator, card.ability.extra.denominator, "fac_mf_gold_pearl")
+	    return { vars = { new_numerator, new_denominator, card.ability.extra.increase_denominator, } }
+	end,
+	calculate = function(self, card, context)
+	    if context.before then
+			if #context.scoring_hand < #context.full_hand then
+                card.ability.extra.denominator = card.ability.extra.denominator + card.ability.extra.increase_denominator * (#context.full_hand - #context.scoring_hand)
+			    return {
+					message = localize "k_upgrade_ex"
+				}
+			end
+		end
+    end,
+    use = function(self, card, area, copier)
+        for _, other_card in ipairs(G.jokers.cards) do
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.2,
+                func = function()
+                    play_sound('timpani')
+         			other_card.ability.fac_mf_gold_pearl = other_card.ability.fac_mf_gold_pearl or {}
+         			other_card.ability.fac_mf_gold_pearl[#other_card.ability.fac_mf_gold_pearl + 1] = {
+                        card.ability.extra.numerator, card.ability.extra.denominator
+                    }
+         			other_card:juice_up(0.3, 0.5)
+                    return true
+                end
+            }))
+  		end
+    end,
+    can_use = function(self, card)
+        return #G.jokers.cards >= 1
+    end
+}
+
+FishAndChips.Fish {
+	key = "mf_black_pearl",
+	atlas = "notmario_fish",
+	pos = { x = 2, y = 7 },
+	weight = 1,
+	ppu_coder = { "notmario" },
+	ppu_artist = { "notmario" },
+	attributes = { "usable", "destroy_card", "discard", "fac_mf_pearl" },
+	config = { extra = { base_highlighted = 0, discards_per = 17, my_discards = 0, } },
+	badge_key = "k_fac_mf_pearl",
+	environments = {
+	    pier = 1.0,
+	},
+	stats = {
+		weight = {min = 0.02, max = 0.06},
+		length = {min = 0.0012, max = 0.021}
+	},
+	blueprint_compat = false,
+	pixel_size = {w = 39, h = 39},
+	loc_vars = function(self, info_queue, card)
+	    return { vars = { card.ability.extra.base_highlighted, card.ability.extra.discards_per, card.ability.extra.my_discards, math.floor(card.ability.extra.my_discards / card.ability.extra.discards_per), } }
+	end,
+	calculate = function(self, card, context)
+	    if context.discard then
+            card.ability.extra.my_discards = card.ability.extra.my_discards + 1
+            if math.floor(card.ability.extra.my_discards / card.ability.extra.discards_per) > math.floor((card.ability.extra.my_discards - 1) / card.ability.extra.discards_per) then
+                return {
+                    message = localize("k_upgrade_ex")
+                }
+            end
+        end
+    end,
+    use = function(self, card, area, copier)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                play_sound('tarot1')
+                card:juice_up(0.3, 0.5)
+                return true
+            end
+        }))
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.2,
+            func = function()
+                SMODS.destroy_cards(G.hand.highlighted)
+                return true
+            end
+        }))
+        delay(0.3)
+    end,
+    can_use = function(self, card)
+        return #G.hand.highlighted ~= 0 and #G.hand.highlighted <= card.ability.extra.base_highlighted + math.floor( card.ability.extra.discards_per / card.ability.extra.my_discards )
+    end
 }
 
 -- Krilliant
 -- Wheel of Fortuna
 -- Epic Callback
 -- Reaver Shark
-
--- numbergem ..round
--- numbergem colouresque x5
 
 -- self insert ?
 -- Cranky ?

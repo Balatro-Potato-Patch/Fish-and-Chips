@@ -335,6 +335,10 @@ return {
                     "Weathered Cut Copper Stairs"
                 },
                 text = {
+                    "The first time a card would {C:spectral,E:1}scale{}",
+                    "each round, it scales {X:spectral,C:white}X#1#{} faster",
+                    "{C:red}Prevent{} all other {C:spectral,E:1}scaling{}",
+                    "{C:inactive}(Currently #2# scaling)"
                 },
                 flavour = {
                     "\"it should be Expo-\" SHUT UP"
@@ -343,6 +347,11 @@ return {
             fish_fac_mf_the_sole = {
                 name = "The Sole",
                 text = {
+                    "{C:attention}Use{} this to create a",
+                    "{C:purple}Legendary{} {C:attention}Joker{}",
+                    "It gains a {C:green}#1# in #2#{} chance to",
+                    "{C:red}self destruct{} at end of round",
+                    "then this {C:red}self destructs{}"
                 },
                 flavour = {
                     "of a Boot"
@@ -352,12 +361,120 @@ return {
                 name = "Phyrexicarp",
                 text = {
                     "The {C:fac_fish}Fish{} to the right",
-                    "of this has {V:1}toxic{}",
-                    "{C:inactive,s:0.8}(If it would add or multiply",
-                    "{C:inactive,s:0.8}Chips or Mult, it modifies",
-                    "{C:inactive,s:0.8}Score by that much instead)",
+                    "of this has {V:1}toxic #1#{}",
+                    "{C:inactive,s:0.8}(If it would add Chips or Mult,",
+                    "{C:inactive,s:0.8}it adds X#1# as much Score instead",
+                    "{C:inactive,s:0.8}If it would multiply Chips or Mult,",
+                    "{C:inactive,s:0.8}it modifies Score instead)",
                 },
             },
+            fish_fac_mf_number_gem = {
+                name = "Number Gem",
+                text = {
+                    "{C:attention}Use{} this for {X:attention,C:white}..Round{} Round,",
+                    "then earn {C:gold}$#1#{} for every",
+                    "digit in {C:attention}Round{} {C:inactive}(max of $#2#)",
+                    "{C:red}self destructs{}",
+                    "{C:inactive,s:0.8}(ex. round 12 -> round 1212,",
+                    "{C:inactive,s:0.8}round 1284 -> round 12841284,",
+                    "{C:inactive,s:0.8}67676155 -> 6767615567676155)",
+                },
+                flavour = {
+                    "A prized artifact"
+                }
+            },
+            fish_fac_mf_treasure_chest = {
+                name = "Treasure Chest",
+                text = {
+                    "Once per Ante, {C:attention}Use{} this to",
+                    "create a {C:fac_fish}Pearl{}, or if",
+                    "{C:fac_fish}Fish{} slots are full, earn {C:gold}$#1#{}",
+                    "{C:inactive}(Currently #2#)"
+                },
+            },
+            fish_fac_mf_red_pearl = {
+                name = "Red Pearl",
+                text = {
+                    {
+                        "{C:attention}Use{} to give up to {C:attention}#1#{}",
+                        "selected cards {C:mult}+#2#{} Mult",
+                        "{C:red}self destructs{}"
+                    },
+                    {
+                        "Select an additional",
+                        "card for every {C:money}$#3#",
+                        "earned while this is held",
+                        "{C:inactive}(Currently {C:money}$#4#{C:inactive} ({C:attention}#5#{C:inactive}))"
+                    }
+                }
+            },
+            fish_fac_mf_blue_pearl = {
+                name = "Blue Pearl",
+                text = {
+                    {
+                        "{C:attention}Use{} this to",
+                        "convert up to {C:attention}#1#{}",
+                        "selected cards",
+                        "to {C:attention}Wild Cards",
+                        "{C:red}self destructs{}"
+                    },
+                    {
+                        "Select an additional",
+                        "card for every {C:money}$#2#",
+                        "spent while this is held",
+                        "{C:inactive}(Currently {C:money}$#3#{C:inactive} ({C:attention}#4#{C:inactive}))"
+                    }
+                }
+            },
+            fish_fac_mf_green_pearl = {
+                name = "Green Pearl",
+                text = {
+                    {
+                        "{C:attention}Use{} this to give",
+                        "{C:green}#1#{} free rerolls",
+                        "{C:red}self destructs{}"
+                    },
+                    {
+                        "Gives an additional {C:green}reroll",
+                        "for every {C:attention}#2#{} cards",
+                        "sold while this is held",
+                        "{C:inactive}(Currently {C:attention}#3#{C:inactive} ({C:green}#4#{C:inactive} rerolls))"
+                    }
+                }
+            },
+            fish_fac_mf_gold_pearl = {
+                name = "Gold Pearl",
+                text = {
+                    {
+                        "{C:attention}Use{} to give each {C:attention}Joker",
+                        "a {C:attention}retrigger{} and a",
+                        "{C:green}#1# in #2#{} chance to {C:red}self{}",
+                        "{C:red}destruct{} each round",
+                        "then {C:red}self destructs"
+                    },
+                    {
+                        "Increase {C:green}denominator{} by {C:green}#3#{}",
+                        "for each {C:attention}unscored{} card",
+                        "played while this is held"
+                    }
+                }
+            },
+            fish_fac_mf_black_pearl = {
+                name = "Black Pearl",
+                text = {
+                    {
+                        "{C:attention}Use{} this to destroy",
+                        "up to {C:attention}#1#{} selected cards",
+                        "{C:red}self destructs{}"
+                    },
+                    {
+                        "Select an additional",
+                        "card for every {C:red}#2#{} cards",
+                        "discarded while this is held",
+                        "{C:inactive}(Currently {C:red}#3#{C:inactive} ({C:attention}#4#{C:inactive}))"
+                    }
+                }
+            }
         },
         Other = {
             fac_mf_broken_mirror = {
@@ -440,7 +557,7 @@ return {
             fac_mf_toxic = {
                 name = "glop",
                 text = {
-                    "{V:1}Toxic"
+                    "{V:1}Toxic #1#"
                 }
             }
         },
@@ -448,7 +565,7 @@ return {
             PotatoPatchDev_notmario = {
                 name = 'notmario',
                 text = {
-                    "number 2 fish and chips Hater"
+                    "number 2 fish and chips {C:red,E:1}Hater{}"
                 }
             },
         }
@@ -462,6 +579,16 @@ return {
             k_zapped_ex = "Zapped!",
             k_exploded_ex = "Exploded!",
             k_balanced_qu = "Balanced?",
+            k_preventing = "preventing",
+            k_not_preventing = "not preventing",
+
+            -- ts badges me
+            k_fac_mf_john = "John Fishlatro",
+            k_fac_mf_relic = "Relic",
+            k_fac_mf_relic_qu = "Relic?",
+            k_fac_mf_angelfish = "Angel Fish",
+            k_fac_mf_block = "Block",
+            k_fac_mf_pearl = "Pearl",
         },
     }
 }

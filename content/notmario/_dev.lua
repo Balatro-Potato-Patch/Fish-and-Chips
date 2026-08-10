@@ -6,9 +6,9 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_notmario_fish',
 	pos = { x = 2, y = 2 },
     colour = SMODS.Gradient {
-        key = "colon_three_notmario_gradient",
+        key = "fac_notmario_gradient",
         colours = {
-            HEX("c34242"),
+            HEX("d64ef4"),
             HEX("ff6868")
         }
     },

@@ -157,6 +157,34 @@ function PotatoPatchUtils.Developers.fac_notmario.add_extra_multiboxes(_c, info_
         end
     end
 
+    if ability and ability.fac_mf_the_sole then
+        local desc_text = G.localization.descriptions.Other["fac_mf_fishion_reactor"].text -- Its the same thing lol
+        local desc_text_multiple = G.localization.descriptions.Other["fac_mf_fishion_reactor_multiple"].text
+        -- collate them so we dont go off screen
+        local counts = {}
+        local order = {} -- :p
+        for _, odds in ipairs(ability.fac_mf_the_sole) do
+            if not counts[odds] then
+                counts[odds] = 0
+                order[#order + 1] = odds
+            end
+            counts[odds] = counts[odds] + 1
+        end
+
+        for _, odds in ipairs(order) do
+            PotatoPatchUtils.Developers.fac_notmario.generate_ui_multiboxes({
+                {
+                    localized_text = counts[odds] <= 1 and desc_text or desc_text_multiple,
+                    loc_vars = function(self, card, center)
+                        local new_numerator, new_denominator =
+                            SMODS.get_probability_vars(card, 1, odds, "fac_mf_the_sole")
+                        return { vars = { new_numerator, new_denominator, counts[odds] } }
+                    end
+                }
+            })(_c, info_queue, other_card, desc_nodes, specific_vars, full_UI_table)
+        end
+    end
+
 	for _, other_card in ipairs(G.fac_fish_area.cards) do
         if other_card.config.center.fac_mf_add_multibox then
             other_card.config.center.fac_mf_add_multibox(_c, info_queue, card, desc_nodes, specific_vars, full_UI_table, ability, other_card)
@@ -199,6 +227,18 @@ function PotatoPatchUtils.Developers.fac_notmario.calculate_extra_effects(card, 
                 if SMODS.pseudorandom_probability(card, 'fac_mf_fishion_reactor', 1, odds) then
                     SMODS.destroy_cards(card, nil, nil, true)
                     card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_exploded_ex'), colour = G.C.RED})
+                    break
+                end
+            end
+        end
+    end
+
+    if card.ability and card.ability.fac_mf_the_sole then
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker_check and not context.blueprint then
+            for _, odds in ipairs(card.ability.fac_mf_the_sole) do
+                if SMODS.pseudorandom_probability(card, 'fac_mf_the_sole', 1, odds) then
+                    SMODS.destroy_cards(card, nil, nil, true)
+                    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_lost_ex'), colour = darken(G.C.GREEN, 0.2)})
                     break
                 end
             end
