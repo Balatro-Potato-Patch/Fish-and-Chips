@@ -58,7 +58,7 @@ FishAndChips.Fish {
                 return {
                     xmult = card.ability.extra.xmult
                 }
-            elseif context.pre_discard and not card.ability.extra.enchant and (next(get_flush(context.full_hand)) or next(get_straight(context.full_hand))) then
+            elseif context.pre_discard and not card.ability.extra.enchant and (next(get_flush(context.full_hand)) or next(get_straight(hand, SMODS.four_fingers("straight"), SMODS.shortcut(), SMODS.wrap_around_straight()))) then
                 card.ability.extra.count = card.ability.extra.count + 1
                 if card.ability.extra.count < card.ability.extra.times then
                     return {
