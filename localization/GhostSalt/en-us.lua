@@ -180,6 +180,30 @@ return {
                     "hearts of others to your own."
                 }
             },
+            fish_fac_ghostsalt_fishwav = {
+                name = "fish.wav",
+                text = {
+                    "Most sound effects",
+                    "are {C:attention}randomised{}"
+                },
+                flavor = {
+                    "blah"
+                }
+            },
+            fish_fac_ghostsalt_eelongtea = {
+                name = "Eelong Tea",
+                text = {
+                    "Select exactly {C:attention}3{} cards and",
+                    "use this {C:attention}Fish{}: one gains a",
+                    "{C:attention}Gold{} seal, one becomes {C:attention}Lucky{}",
+                    "and one is {C:red}destroyed{}"
+                },
+                flavor = {
+                    "I certainly have to tip my hat to",
+                    "this tea's drinkability. I imagine",
+                    "it would be delicious iced, as well."
+                }
+            }
         },
         Other = {
             fac_ghostsalt_tap_code = {

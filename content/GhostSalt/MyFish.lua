@@ -40,6 +40,16 @@ SMODS.Sound({
 	path = "GhostSalt/fac_finvestor.ogg"
 })
 
+SMODS.Sound({
+	key = "fishwav_fish",
+	path = "GhostSalt/fac_fishwav_fish.ogg"
+})
+
+SMODS.Sound({
+	key = "eelongtea",
+	path = "GhostSalt/fac_eelongtea.ogg"
+})
+
 SMODS.Font({
 	key = "speakerbox",
 	path = "speakerbox.ttf",
@@ -67,10 +77,20 @@ SMODS.Atlas({
 	py = 67,
 })
 
+SMODS.Shader {
+	key = "fac_mez",
+	path = "GhostSalt/fac_mez.fs"
+}
+
 FishAndChips.Fish {
 	key = "ghostsalt_ghostfish",
 	atlas = "GhostSaltMyFish",
 	pos = { x = 0, y = 0 },
+	draw = function(self, card, layer)
+		if self.discovered or card.params.bypass_discovery_center then
+			card.children.center:draw_shader("booster", nil, card.ARGS.send_to_shader)
+		end
+	end,
 	weight = fac_ghostsalt_common_weight,
 	stats = { weight = { min = 0, max = 0 }, length = { min = 0.50, max = 1.00 } },
 	ppu_coder = { "GhostSalt" },
@@ -981,18 +1001,16 @@ FishAndChips.Fish {
 				return true
 			end
 		}))
-		for i = 1, #G.hand.highlighted do
-			G.E_MANAGER:add_event(Event({
-				trigger = "after",
-				delay = 0.15,
-				func = function()
-					_card:flip()
-					play_sound("tarot2", 1, 0.6)
-					_card:juice_up(0.3, 0.3)
-					return true
-				end
-			}))
-		end
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.15,
+			func = function()
+				_card:flip()
+				play_sound("tarot2", 1, 0.6)
+				_card:juice_up(0.3, 0.3)
+				return true
+			end
+		}))
 		G.E_MANAGER:add_event(Event({
 			trigger = "after",
 			delay = 0.2,
@@ -1094,7 +1112,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 30.00, max = 40.00 }, length = { min = 0.80, max = 1.20 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "generation" },
+	attributes = { "passive" },
 	environments = {
 		pier = 10,
 		city_river = 10,
@@ -1102,7 +1120,7 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = false,
 	calculate = function(self, card, context)
-		if context.skip_blind and not G.fac_skipper_skipping then
+		if context.skip_blind and not G.fac_skipper_skipping and not context.blueprint then
 			G.fac_skipper_skipping = true
 			stop_use()
 
@@ -1171,12 +1189,17 @@ FishAndChips.Fish {
 	key = "ghostsalt_mezepheles",
 	atlas = "GhostSaltMyFish",
 	pos = { x = 1, y = 3 },
+	draw = function(self, card, layer)
+		if self.discovered or card.params.bypass_discovery_center then
+			card.children.center:draw_shader("fac_mez", nil, card.ARGS.send_to_shader)
+		end
+	end,
 	config = { extra = { word = "blah", xmult = 2 } },
 	weight = fac_ghostsalt_common_weight,
 	stats = { weight = { min = 0.03, max = 0.05 }, length = { min = 0.20, max = 1.00 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "generation" },
+	attributes = { "xmult" },
 	environments = {
 		styx = 10,
 		swamp = 8,
@@ -1291,3 +1314,218 @@ end
 function fac_ghostsalt_mezepheles_recalc_wordlist()
 	G.fac_ghostsalt_mezepheles_words = fac_ghostsalt_mezepheles_find_doable_words(G.fac_ghostsalt_mezepheles_min, G.fac_ghostsalt_mezepheles_max)
 end
+
+FishAndChips.Fish {
+	key = "ghostsalt_fishwav",
+	atlas = "GhostSaltMyFish",
+	pos = { x = 2, y = 3 },
+	config = { extra = {} },
+	weight = fac_ghostsalt_common_weight,
+	stats = { weight = { min = 0, max = 0 }, length = { min = 0.01, max = 0.05 } },
+	ppu_coder = { "GhostSalt" },
+	ppu_artist = { "GhostSalt" },
+	attributes = { "generation" },
+	environments = {
+		wormhole = 10
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.word, card.ability.extra.xmult } }
+	end,
+	blueprint_compat = true,
+	calculate = function(self, card, context)
+
+	end,
+	pronouns = "it_its"
+}
+
+local play_sound_ref = play_sound
+function play_sound(sound_code, per, vol)
+	local new_sound_code = sound_code
+	local new_per = per or 1
+	local new_vol = vol or 1
+	if next(SMODS.find_card("fish_fac_ghostsalt_fishwav")) then
+		local appropriate_sounds = {
+			"button",
+			"cancel",
+			"card1",
+			"card3",
+			"cardFan2",
+			"cardSlide1",
+			"cardSlide2",
+			"chips1",
+			"chips2",
+			"coin1",
+			"coin2",
+			"coin3",
+			"coin4",
+			"coin5",
+			"coin6",
+			"coin7",
+			"crumple1",
+			"crumple2",
+			"crumple3",
+			"crumple4",
+			"crumple5",
+			"explosion_buildup1",
+			"explosion_release1",
+			"foil1",
+			"foil2",
+			"generic1",
+			"glass1",
+			"glass2",
+			"glass3",
+			"glass4",
+			"glass5",
+			"glass6",
+			"gold_seal",
+			"gong",
+			"highlight1",
+			"highlight2",
+			"holo1",
+			"multhit1",
+			"multhit2",
+			"negative",
+			"other1",
+			"paper1",
+			"polychrome1",
+			"slice1",
+			"tarot1",
+			"tarot2",
+			"timpani",
+			"whoosh",
+			"whoosh1",
+			"whoosh2",
+			"win",
+			"fac_fishwav_fish"
+		}
+		for _, sound in ipairs(appropriate_sounds) do
+			if sound == new_sound_code then
+				local times = 0
+				while sound == new_sound_code and times < 10 do
+					new_sound_code = appropriate_sounds[math.random(#appropriate_sounds)]
+					times = times + 1
+					if times == 10 then new_sound_code = "fac_fishwav_fish" end
+				end
+				if sound_code == "paper1" and per and not vol then -- Fixes one specific instance of this sound (Cash Out screen) being too loud.
+					new_vol = new_vol * 0.4
+				end
+				if new_sound_code ~= "fac_fishwav_fish" then
+					new_per = new_per * ((math.random() / 2) + 0.75)
+					new_vol = new_vol * 0.5
+				else
+					new_per = 1
+					new_vol = 0.4
+				end
+				break
+			end
+		end
+	end
+	return play_sound_ref(new_sound_code, new_per, new_vol)
+end
+
+FishAndChips.Fish {
+	key = "ghostsalt_eelongtea",
+	atlas = "GhostSaltMyFish",
+	pos = { x = 3, y = 3 },
+	weight = fac_ghostsalt_common_weight,
+	stats = { weight = { min = 0.50, max = 0.70 }, length = { min = 0.40, max = 0.60 } },
+	ppu_coder = { "GhostSalt" },
+	ppu_artist = { "GhostSalt" },
+	attributes = { "modify_card", "destroy_card" },
+	environments = {
+		chocolate_river = 10,
+		soup = 10,
+		styx = 5
+	},
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_SEALS.Gold
+		info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
+		return { }
+	end,
+	blueprint_compat = false,
+	requires_hand = true,
+	use = function(self, card)
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.4,
+			func = function()
+				play_sound("tarot1")
+				card:juice_up(0.3, 0.5)
+				return true
+			end
+		}))
+		for i = 1, #G.hand.highlighted do
+			local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
+			G.E_MANAGER:add_event(Event({
+				trigger = "after",
+				delay = 0.15,
+				func = function()
+					G.hand.highlighted[i]:flip()
+					play_sound("card1", percent)
+					G.hand.highlighted[i]:juice_up(0.3, 0.3)
+					return true
+				end
+			}))
+		end
+		delay(0.2)
+		local gc_card = math.ceil(pseudorandom(pseudoseed("ghostsalt_eelong_gc")) * 3)
+		local lu_card
+		local de_card
+		if pseudorandom(pseudoseed("ghostsalt_eelong_lu")) > 0.5 then
+			lu_card = (gc_card % 3) + 1
+			de_card = ((gc_card + 1) % 3) + 1
+		else
+			lu_card = ((gc_card + 1) % 3) + 1
+			de_card = (gc_card % 3) + 1
+		end
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.3,
+			func = function()
+				G.hand.highlighted[gc_card]:set_seal("Gold", nil, true)
+				return true
+			end
+		}))
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.3,
+			func = function()
+				G.hand.highlighted[lu_card]:set_ability("m_lucky", nil, true)
+				G.hand.highlighted[lu_card]:juice_up()
+				play_sound("fac_eelongtea", 1, 0.75)
+				return true
+			end
+		}))
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.3,
+			func = function()
+				G.hand.highlighted[de_card]:start_dissolve()
+				return true
+			end
+		}))
+		local flip_cards = { G.hand.highlighted[gc_card], G.hand.highlighted[lu_card] }
+		for i = 1, #flip_cards do
+			local percent = 0.85 + (i - 0.999) / (#flip_cards - 0.998) * 0.3
+			G.E_MANAGER:add_event(Event({
+				trigger = "after",
+				delay = 0.15,
+				func = function()
+					flip_cards[i]:flip(); play_sound("tarot2", percent, 0.6); flip_cards[i]:juice_up(0.3, 0.3); return true
+				end
+			}))
+		end
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.2,
+			func = function()
+				G.hand:unhighlight_all(); return true
+			end
+		}))
+		delay(0.5)
+	end,
+	can_use = function(self, card)
+		return #G.hand.highlighted == 3
+	end,
+	pronouns = "she_her"
+}
