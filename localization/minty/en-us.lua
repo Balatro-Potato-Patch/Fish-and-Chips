@@ -177,9 +177,9 @@ return {
                     "made the Outkast joke."
                 },
                 text = {
-                    "ngl idk what to",
-                    "make this guy do.",
-                    "any suggestions?"
+                    "{C:purple}Balances{} #1#% of",
+                    "Chips and Mult,",
+                    "for some reason"
                 }
             },
             fish_fac_minty_template = {

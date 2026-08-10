@@ -19,15 +19,11 @@ PotatoPatchUtils.Developer({
             G.GAME.minty_seabass_eradicated = {}
         end
 
-        if context.fac_fish_caught then
-            if context.perfect and context.fish == "fish_fac_minty_kyriaki" then
+        if context.fac_fish_caught and context.fish == "fish_fac_minty_kyriaki" then
+            if context.perfect then
                 play_sound("fac_minty_cool")
             else
                 play_sound("fac_minty_good")
-            end
-
-            if context.fish == "fish_fac_minty_tundra_eel" then
-                play_sound("fac_minty_ice")
             end
         end
 
