@@ -54,7 +54,7 @@ PotatoPatchUtils.Developer{
 	name = "Foo54",
 	atlas = "fac_fas_credits_foo",
 	colour = HEX("ED5B5B"),
-	fac_partner = "squeax09",
+	fac_partner = "fac_squeax09",
 	loc = true,
 	calculate = function(self, context)
 		if context.fac_end_fishing and context.fish then
@@ -75,7 +75,7 @@ PotatoPatchUtils.Developer{
 	atlas = "fac_fas_credits_sqx",
 	pixel_size = {w = 66, h = 80},
 	colour = HEX("c551bd"),
-	fac_partner = "Foo54",
+	fac_partner = "fac_Foo54",
 	loc = true,
 	loc_vars = function(self, info_queue, card)
 		return {vars = {elements = {FishAndChips.FooSqueax.sqx_credit_ui_baits(), FishAndChips.FooSqueax.sqx_credit_ui_fish()}}}
