@@ -1766,32 +1766,13 @@ FishAndChips.Fish {
 		length = {min = 0.15, max = 0.2}
 	},
     select_flavor_text = function(self, card)
-        local num = pseudorandom("OMEGA_CRIMSONFANGERY", 1, 25)
+        local num = pseudorandom("OMEGA_CRIMSONFANGERY", 1, 24)
         local elem
         if num == 2 then
             elem = SMODS.create_sprite(0, 0, 5.5, 5.5 * 75/438, "fac_omega_crimsonfang_lore_alexi")
         end
         if num == 9 then
             elem = SMODS.create_sprite(0, 0, 3, 3 * 66/204, "fac_omega_crimsonfang_lore_mf")
-        end
-        if num == 25 then
-            local _, i = pseudorandom_element(FishAndChips.crimsonseraphim.tumblr_images, pseudoseed("omega_crimsonfang_tumblr"))
-            G.OMEGA_CANVAS_IMAGE = i
-            local i = FishAndChips.crimsonseraphim.tumblr_images[G.OMEGA_CANVAS_IMAGE]
-            G.OMEGA_CANVAS = SMODS.CanvasSprite(
-                {X=0, Y=0, W=2*i:getWidth()/i:getHeight(), H=2, canvasW=800, canvasH=800, canvasScale=1}
-            )
-            local t = (FishAndChips.crimsonseraphim.posts[G.OMEGA_CANVAS_IMAGE].trail 
-                and FishAndChips.crimsonseraphim.posts[G.OMEGA_CANVAS_IMAGE].trail[1] 
-                or FishAndChips.crimsonseraphim.posts[G.OMEGA_CANVAS_IMAGE]).blog.name or ""
-            elem = {n=G.UIT.C, config={align = "cm"}, nodes={
-                {n=G.UIT.R, config={align = "cm"}, nodes={
-                    {n=G.UIT.O, config={align = "cm", object = G.OMEGA_CANVAS}}
-                }},
-                {n=G.UIT.R, config={align = "cm"}, nodes={
-                    {n=G.UIT.O, config={object = DynaText({ string = "Tumblr: @"..t, colours = { G.C.JOKER_GREY }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0 })}}
-                }}
-            }}
         end
         return num, elem
     end,

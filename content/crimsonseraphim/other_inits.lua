@@ -205,18 +205,6 @@ SMODS.DrawStep({
 	order = 25,
 	func = function(self)
         if self.config.center.discovered and self.config.center.key == "fish_fac_omega_crimsonfang" then    
-            if G.OMEGA_CANVAS then
-                love.graphics.push()
-                love.graphics.origin()
-                G.OMEGA_CANVAS.canvas:renderTo(function()
-                    local image = FishAndChips.crimsonseraphim.tumblr_images[G.OMEGA_CANVAS_IMAGE]
-                    if image then
-                        local height = 200 / image:getHeight()
-                        love.graphics.draw(image, 0, 0, 0, height*4*image:getHeight()/image:getWidth(), height*4)
-                    end
-                end)
-                love.graphics.pop()
-            end
             self.children.omega_crimsonfang_tv_face = self.children.omega_crimsonfang_tv_face or SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H, "fac_crimsonseraphim_drawstep_faces", {x=0,y=0})
             self.children.omega_crimsonfang_tv_face.role.draw_major = self
             if self.area == G.fac_fish_area then
