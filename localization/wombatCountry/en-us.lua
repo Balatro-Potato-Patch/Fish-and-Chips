@@ -70,18 +70,18 @@ return {
                 name = "Spunched Bob",
                 text = {
                     "Randomizes the",
-                    "suit of all cards",
+                    "{C:attention}suit{} of all cards",
                     "in full deck"
                 },
                 flavor = {
-                    "Deypuhspunjbabindufijimah"
+                    "Deypuhspunjbabindufihumah"
                 }
             },
             fish_fac_wombatCountry_sardine = {
                 name = "Sardine Boys",
                 text = {
                     "Randomizes the",
-                    "rank of all cards",
+                    "{C:attention}rank{} of all cards",
                     "in full deck"
                 },
                 flavor = {

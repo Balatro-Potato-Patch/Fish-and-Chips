@@ -266,7 +266,7 @@ FishAndChips.Fish({
 	},
 	stats = {
 		weight = {min = 0.014, max = 0.028},
-		length = {min = 1.05, max = 1.2}
+		length = {min = 0.105, max = 0.12}
 	},
 	config = {
 		extra = {
@@ -305,7 +305,7 @@ FishAndChips.Fish({
 	},
 	stats = {
 		weight = {min = 0.106, max = 0.125},
-		length = {min = 10.16, max = 11.43}
+		length = {min = 0.1016, max = 0.1143}
 	},
 	config = {
 		extra = {
@@ -318,7 +318,6 @@ FishAndChips.Fish({
 		local rank
         for _, playing_card in ipairs(G.deck.cards) do
 			rank = pseudorandom_element(SMODS.Ranks)
-			print(rank.key)
 
 			SMODS.change_base(playing_card, nil, rank.key)
 		end
