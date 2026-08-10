@@ -128,7 +128,7 @@ FishAndChips.Fish {
                         "hereicomesanfrandisco",
                         "hey_boys",
                         "hey",
-                        "hey_guys",
+                        "heyguys",
                         "heyguysithinkifoundaglue",
                         "itsme",
                         "itsmeflowery",

@@ -8,9 +8,9 @@ FishAndChips.Fish {
 	attributes = { "reset", "passive", "reroll", "economy" },
 	config = {
 		extra = {
-			rerolls = 4,
-            remaining = 4,
-            old_remaining = 4,
+			rerolls = 5,
+            remaining = 5,
+            old_remaining = 5,
 		},
 	},
 	environments = {

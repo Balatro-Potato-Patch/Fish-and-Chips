@@ -1,7 +1,7 @@
 FishAndChips.Fish {
 	key = "fo_neutron_starfish",
-	atlas = "fish",
-	pos = { x = 3, y = 0 },
+	atlas = "fo_fish",
+	pos = { x = 1, y = 0 },
     eternal_compat = false,
 	disable_visual_scaling = true,
 	weight = 3,

@@ -34,6 +34,14 @@ SMODS.Atlas {
 }
 
 SMODS.Atlas {
+    key = "fo_alexi",
+    path = "fountain_openers/alexi.png",
+    px = 234,
+    py = 240,
+    atlas_table = "ASSET_ATLAS"
+}
+
+SMODS.Atlas {
     key = "fo_fucking_kill",
     path = "fountain_openers/fucking_kill.png",
     px = 377,
@@ -128,7 +136,7 @@ PotatoPatchUtils.Developer {
                             "minipeppers",
                             "hey_boys",
                             "hey",
-                            "hey_guys",
+                            "heyguys",
                         })
                     end
                 else
@@ -186,7 +194,7 @@ PotatoPatchUtils.Developer {
                     "minipeppers",
                     "hey_boys",
                     "hey",
-                    "hey_guys",
+                    "heyguys",
                 })
 
             elseif context.after then

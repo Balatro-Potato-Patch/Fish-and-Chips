@@ -5,6 +5,7 @@ FishAndChips.Fish {
     pixel_size = { w = 48, h = 32 },
 	weight = 10,
 	disable_visual_scaling = true,
+    blueprint_compat = false,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_alexi" },
 	attributes = { "passive", "hand_type" },

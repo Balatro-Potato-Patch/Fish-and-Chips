@@ -29,7 +29,13 @@ FishAndChips.Fish {
         if context.final_scoring_step and card.ability.extra.active then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    SMODS.destroy_cards(card)
+                    SMODS.calculate_effect({
+                        message = localize("k_drank_ex")
+                    }, card)
+                    SMODS.destroy_cards(card, {
+                        bypass_eternal = true,
+                        pinch_anim = true
+                    })
                     return true
                 end
             }))
@@ -46,6 +52,8 @@ FishAndChips.Fish {
             func = function()
                 play_sound('tarot1')
                 card:juice_up(0.3, 0.5)
+                local eval = function(card) return not card.ability.extra.active and not G.RESET_JIGGLES end
+                juice_card_until(card, eval, true)
                 return true
             end
         }))

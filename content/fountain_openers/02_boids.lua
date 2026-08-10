@@ -309,7 +309,7 @@ FishAndChips.Fish {
 	blueprint_compat = true,
 	disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },
-	ppu_artist = { "fo_grahkon" },
+	ppu_artist = { "fo_alexi", "fo_grahkon" },
 	attributes = { "chips" },
 	config = {
 		extra = {

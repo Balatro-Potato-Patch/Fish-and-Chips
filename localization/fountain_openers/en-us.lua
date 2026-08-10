@@ -114,7 +114,50 @@ return {
                 flavor = {
                     "Looking for demons to consult with..."
                 }
-            }
+            },
+            fish_fac_fo_alexi = {
+                name = "{E:fac_alexi_text}Alexi!",
+                text = {
+                    {
+                        "Copies the ability of the leftmost",
+                        "or rightmost {C:fac_fish}Fish{} at random",
+                        "{element:1}"
+                    },
+                    {
+                        "Copies the ability of the leftmost",
+                        "or rightmost {C:attention}Joker{} at random",
+                        "{element:2}"
+                    },
+                    {
+                        "Copies the ability of the third {C:attention}Joker",
+                        "or {C:fac_fish}Fish{} from the left at random",
+                        "{element:3}"
+                    },
+                },
+                flavor = {
+                    "haiiiiii"
+                }
+            },
+            fish_fac_fo_alexi_alt = {
+                name = "{E:fac_alexi_text}Alexi!",
+                text = {
+                    {
+                        "Copies the ability of the leftmost",
+                        "or rightmost {C:fac_fish}Fish{} at random",
+                    },
+                    {
+                        "Copies the ability of the leftmost",
+                        "or rightmost {C:attention}Joker{} at random",
+                    },
+                    {
+                        "Copies the ability of the third {C:attention}Joker",
+                        "or {C:fac_fish}Fish{} from the left at random",
+                    },
+                },
+                flavor = {
+                    "you loooove seeing me, don't you~"
+                }
+            },
         },
         PotatoPatch = {
             PotatoPatchDev_fo_alexi = {
