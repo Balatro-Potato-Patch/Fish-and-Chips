@@ -38,17 +38,27 @@ FishAndChips.Fish {
 	on_catch = function(self, card)
 		local is_perfect_catch = G.FAC_FISH_GAME.perfect    --it'd be nice if this could be delayed until around when the fish actually materializes
 		if is_perfect_catch then                            --because the normal sound is rather short
-			SMODS.calculate_effect{
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				blockable = false,
+				blocking = false,
+				delay = 4,
 				func = function()
 					play_sound('fac_pa_wiibonus')
-				end
-			}
+					return true
+				end,
+			}))
 		else
-			SMODS.calculate_effect{
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				blockable = false,
+				blocking = false,
+				delay = 4,
 				func = function()
 					play_sound('fac_pa_wiinormal')
-				end
-			}
+					return true
+				end,
+			}))
 		end
 	end,
 }
