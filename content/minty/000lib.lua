@@ -23,6 +23,11 @@ SMODS.Sound{
     path = "minty/tc defeat.wav"
 }
 
+SMODS.Sound{
+    key = "minty_ice",
+    path = "minty/snd_icespell.ogg"
+}
+
 SMODS.Atlas{
     key = "minty_fish",
     path = "minty/fish.png",

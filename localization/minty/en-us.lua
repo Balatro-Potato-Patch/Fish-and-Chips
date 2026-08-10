@@ -170,6 +170,18 @@ return {
                     --]]
                 }
             },
+            fish_fac_minty_tundra_eel = {
+                name = "Tundra Eel",
+                flavour = {
+                    "... damn it, I already",
+                    "made the Outkast joke."
+                },
+                text = {
+                    "ngl idk what to",
+                    "make this guy do.",
+                    "any suggestions?"
+                }
+            },
             fish_fac_minty_template = {
                 name = "fish",
                 flavour = {

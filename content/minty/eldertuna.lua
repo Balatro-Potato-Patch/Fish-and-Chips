@@ -7,7 +7,7 @@ FishAndChips.Fish{
     pos = pos,
     weight = 1,
     ppu_coder = {"minty"},
-    ppu_artist = {"whomstever"},
+    ppu_artist = {"minty"},
     environments = { --Maximum 6
         pier = 10,
         soup = 10,
@@ -25,7 +25,7 @@ FishAndChips.Fish{
         --]]
     },
     attributes = {
-        "level_up"
+        "level_up", "chance"
     },
     stats = {
         weight = { min = 1, max = 1}, --In kilograms
