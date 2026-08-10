@@ -3,10 +3,16 @@ SMODS.Shader{
   path = "core/ui_image.fs",
   send_vars = function(element, extra)
     local atlas = SMODS.Atlases[element.config.atlas]
+    local pixel_size = element.config.pixel_size
+    local pos = element.config.pos and {element.config.pos.x, element.config.pos.y} or {0, 0}
+    if pixel_size then
+        pos[1] = pos[1] * (atlas.px / pixel_size.w)
+        pos[2] = pos[2] * (atlas.py / pixel_size.h)
+    end
     return {
       mask = atlas.image,
-      atlas_dim = {atlas.px/atlas.image:getWidth(), atlas.py/atlas.image:getHeight()},
-      atlas_pos = element.config.pos and {element.config.pos.x, element.config.pos.y} or {0, 0}
+      atlas_dim = {(pixel_size and pixel_size.w or atlas.px)/atlas.image:getWidth(), (pixel_size and pixel_size.h or atlas.py)/atlas.image:getHeight()},
+      atlas_pos = pos
     }
   end
 }
@@ -290,12 +296,13 @@ end
 function FishAndChips.Compendium.compendium_area(amount, dim)
     amount = amount or 1
     dim = dim or {(8*amount)/4 * 71/95, 2}
+    local adjust = amount > 1 and 2*G.CARD_W/G.CARD_H
     local area = CardArea(0, 0, dim[1], dim[2], {type = 'voucher', fac_compendium = true})
     area.align_cards = function(self)
         for k, card in ipairs(self.cards) do
             card.states.drag.can = false
             if not card.states.drag.is then
-                card.T.x = self.T.x + 0.5*(self.T.w - card.T.w) + (amount > 1 and ((k-2) * card.T.w * 1.2) or 0)
+                card.T.x = self.T.x + 0.5*(self.T.w - (adjust or card.T.w)) + (amount > 1 and ((k-2) * ((adjust and (card.T.w + adjust)/2 or card.T.w)) * 1.2) or 0)
                 card.T.y = self.T.y + 0.5*(self.T.h - card.T.h)
             end
         end
@@ -306,6 +313,11 @@ end
 function FishAndChips.Compendium.compendium_card(fish, area, scale)
     scale = scale or 2/G.CARD_H
     local compendium_card = SMODS.create_card({key = fish.key, area = area, scale = {w=scale, h=scale}})
+    if compendium_card.T.w > scale * G.CARD_W or compendium_card.T.h > scale * G.CARD_H then
+        local adjust = math.min(scale*G.CARD_W/compendium_card.T.w, scale*G.CARD_H/compendium_card.T.h)
+        compendium_card.T.h = compendium_card.T.h * adjust
+        compendium_card.T.w = compendium_card.T.w * adjust
+    end
     compendium_card.no_shadow = true
     local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {}
     local should_silhouette = fish.set == 'fac_Fish' and not (fish_data.times_caught and fish_data.times_caught > 0) or (fish.set == 'fac_Rod' or fish.set == 'fac_Bait') and not fish.discovered
@@ -341,8 +353,8 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
     local caught = localize('ph_fac_first_caught')..(fish_caught and fish_data.first_catch or '')
     local rod = fish_caught and localize('ph_fac_with_rod')..localize({key = fish_data.rod, set = 'fac_Rod', type = 'name_text'}) or ' '
     local count = localize('ph_fac_times_caught')..(fish_caught and fish_data.times_caught or '')
-    local record_weight = fish_caught and localize('ph_fac_record_weight')..FishAndChips.format_measurement(fish_data.record_weight or nil, 'weight') or ' '
-    local record_length = fish_caught and localize('ph_fac_record_length')..FishAndChips.format_measurement(fish_data.record_length or nil, 'length') or ' '
+    local record_weight = fish_caught and localize('ph_fac_record_weight')..FishAndChips.format_measurement(fish_data.record_weight or nil, 'weight', fish.stats.units) or ' '
+    local record_length = fish_caught and localize('ph_fac_record_length')..FishAndChips.format_measurement(fish_data.record_length or nil, 'length', fish.stats.units) or ' '
 
     local text = {n=G.UIT.R, config = {align = left and 'cl' or 'cr', padding = 0.1}, nodes = {
         {n = G.UIT.C, config = {align = 'cl', padding = 0.03, minw = 3.2}, nodes = {
@@ -379,7 +391,7 @@ function FishAndChips.Compendium.extended_fish_page(page_number, left)
         }}
     }}
 
-    local last_page = false
+    local last_page = start_index >= #pool
     for i = 1, fish_per_page do
         table.insert(page.nodes[2].nodes, FishAndChips.Compendium.extended_fish_entry(pool[start_index + i], i%2 == 1))
         if start_index + i >= #pool then last_page = true; break end
@@ -405,7 +417,7 @@ function FishAndChips.Compendium.condensed_fish_page(page_number, left)
         }}
     }}
 
-    local last_page = false
+    local last_page = start_index >= #pool
     for i=1, rows do
         local temp_area = FishAndChips.Compendium.compendium_area(fish_per_row)
 
@@ -486,7 +498,9 @@ function FishAndChips.Compendium.environment_page(page_number, left)
             local fish = fish_pool[index]
             local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {}
             local fish_caught = fish_data.times_caught and fish_data.times_caught > 0
-            table.insert(row.nodes, {n=G.UIT.C, config = {shader = 'fac_ui_image', atlas = fish.atlas, pos = fish.pos, colour = fish_caught and G.C.WHITE or FishAndChips.C.COMPENDIUM_COLOUR, minh = 0.45 * 91/75, minw = 0.45}})
+            local atlas = SMODS.get_atlas(fish.atlas)
+            
+            table.insert(row.nodes, {n=G.UIT.C, config = {align = 'cm'}, nodes = {{n=G.UIT.R, config = {align = 'cm', shader = 'fac_ui_image', atlas = fish.atlas, pos = fish.pos, pixel_size = fish.pixel_size, colour = fish_caught and G.C.WHITE or FishAndChips.C.COMPENDIUM_COLOUR, minh = 0.45 * (fish.pixel_size and fish.pixel_size.h/fish.pixel_size.w or atlas.py/atlas.px), minw = 0.45}}}})
             if index >= #fish_pool then last_page = true end
         end
         table.insert(page.nodes[3].nodes[1].nodes, row)
@@ -586,7 +600,7 @@ function FishAndChips.Compendium.bait_page(page_number, left)
     local bait_per_row = bait_per_page/rows
     local start_index = (page_number - 1) * bait_per_page
 
-    local last_page = false
+    local last_page = start_index >= #G.P_CENTER_POOLS.fac_Bait
     for i=1, rows do
         local row = {n=G.UIT.R, config = {align = 'tm', minh = 7.8/3, minw = 5, padding = 0.1}, nodes = {}}
         for j=1, bait_per_row do
@@ -663,7 +677,7 @@ function FishAndChips.Compendium.rod_page(page_number, left)
 
     local rods_per_page = 4
     local start_index = (page_number - 1) * rods_per_page
-    local last_page = false
+    local last_page = start_index >= #G.P_CENTER_POOLS.fac_Rod
     for i=1, rods_per_page do
         table.insert(page.nodes[2].nodes, FishAndChips.Compendium.rod_entry(G.P_CENTER_POOLS.fac_Rod[i + start_index], i%2 == 1))
         if i + start_index >= #G.P_CENTER_POOLS.fac_Rod then last_page = true; break end
@@ -745,7 +759,7 @@ function FishAndChips.Compendium.achievement_page(page_number, left)
     local start_index = (page_number - 1) * achievements_per_page
     local achi_pool = FishAndChips.Compendium.get_achievements()
 
-    local last_page = false
+    local last_page = start_index >= #achi_pool
     for i = 1, achievements_per_page do
         table.insert(page.nodes[2].nodes, FishAndChips.Compendium.achievement(achi_pool[start_index + i], i%2 == (left and 0 or 1)))
         if start_index + i >= #achi_pool then last_page = true; break end
@@ -796,7 +810,7 @@ SMODS.draw_ignore_keys.h_popup_2 = true
 
 function FishAndChips.Compendium.dev_card(dev)
     if not dev then return nil end
-    local partner = PotatoPatchUtils.Developers[dev.fac_partner]
+    local partner = dev.joint_credits and PotatoPatchUtils.Developers[dev.fac_partner]
     
     local temp_area = FishAndChips.Compendium.compendium_area(1, dev.joint_credits and {0.2 + 4 * 71/95, 2})
     local dev_card = Card(0, 0, (dev.joint_credits and 2 or 1) * G.CARD_W / 1.25, G.CARD_H / 1.25, nil, G.P_CENTERS.c_base)
@@ -826,14 +840,14 @@ function FishAndChips.Compendium.dev_card(dev)
         if dev.click then
             dev.click(dev_card)
         end
-        if partner.click then
+        if partner and partner.click then
             partner.click(dev_card)
         end
     end
 
     dev_card.align_h_popup = function(self, dir)
         local focused_ui = self.children.focused_ui and true or false
-        local popup_direction = dir or self.config.h_popup_dir or (self.T.y < G.CARD_H*0.8) and 'bm' or 'tm'
+        local popup_direction = dir or self.config.h_popup_dir or (self.T.x < G.ROOM.T.w*0.5) and 'cr' or 'cl'
         local sign = 1
         return {
             major = self.children.focused_ui or self,
@@ -886,9 +900,9 @@ function FishAndChips.Compendium.dev_card(dev)
         self:juice_up(0.05, 0.03)
         play_sound('paper1', math.random() * 0.2 + 0.9, 0.35)
         dev_card.config.h_popup = create_tooltip(dev)
-        dev_card.config.h_popup_dir = dev.joint_credits and 'cl'
+        dev_card.config.h_popup_dir = partner and 'cl'
         dev_card.config.h_popup_config = dev_card:align_h_popup()
-        if dev.joint_credits then
+        if partner then
             dev_card.config.h_popup_2 = create_tooltip(partner)
             dev_card.config.h_popup_2_dir = 'cr'
             dev_card.config.h_popup_2_config = dev_card:align_h_popup('cr')
@@ -910,7 +924,7 @@ function FishAndChips.Compendium.dev_card(dev)
         name[1].config.align = 'bm'
     end
 
-    if dev.joint_credits then
+    if partner then
         name[2] = {n=G.UIT.O, config = {align = 'bm', object = DynaText({
                 string = ' & ',
                 colours = {FishAndChips.C.COMPENDIUM_TEXT}, scale = 0.7,
@@ -1058,13 +1072,15 @@ function FishAndChips.Compendium.credits_page(page_number, left)
     return page
 end
 
+FishAndChips.mod.config_tab = true
+
 function FishAndChips.Compendium.config_page(page_number, left)
     if page_number > 1 then return end -- TODO: add artwork to page 2
     FishAndChips.Compendium.reset_warning = G.STAGE ~= G.STAGES.RUN and localize('ph_fac_reset_all') or localize('ph_fac_cannot_reset')
     
     local page = {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {
         FishAndChips.Compendium.page_title('config_page', page_number),
-        {n=G.UIT.R, config = {minh = 1}},
+        {n=G.UIT.R, config = {minh = 0.4}},
         {n=G.UIT.R, config = {align = 'tm', minh = 3, minw = 5}, nodes = {
             FishAndChips.Compendium.toggle {text_key = 'b_fac_ambience_toggle', ref_value = "ambience", callback = G.FUNCS.fac_toggle_ambience},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_menu_toggle', ref_value = "menu"},
@@ -1072,6 +1088,7 @@ function FishAndChips.Compendium.config_page(page_number, left)
             FishAndChips.Compendium.toggle {text_key = 'b_fac_flavour_text', ref_value = "disable_flavour"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_flashing_lights', ref_value = "disable_flashing"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_fish_scaling', ref_value = "disable_fish_scaling"},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_performance_mode', ref_value = "performance_mode"},
         }},
         {n=G.UIT.R, config = {align = 'cm', minh = 2}, nodes = {
             {n=G.UIT.R, config = {align = 'cm', colour = FishAndChips.C.COMPENDIUM_COLOUR, r = 0.1, hover = true, button = 'fac_reset_all_progress', func = 'fac_can_reset_progress', minw = 3.2, minh = 0.8, padding = 0.05}, nodes = {
