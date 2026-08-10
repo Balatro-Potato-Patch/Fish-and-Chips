@@ -119,7 +119,7 @@ FishAndChips.Fish {
 	key = "aureallu_the_original___starfish",
 	atlas = "aureallu_fish",
 	pos = { x = 0, y = 0 },
-	weight = 4,
+	weight = 3,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "usable", "space", "hand_level" },
@@ -1173,7 +1173,7 @@ FishAndChips.Fish {
 	key = "aureallu_pirate_perch",
 	atlas = "aureallu_fish",
 	pos = { x = 2, y = 3 },
-	weight = 3,
+	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
 	attributes = { "chips" },
@@ -2190,7 +2190,7 @@ FishAndChips.Fish {
 	key = 'aureallu_tiger_shark',
 	atlas = 'aureallu_fish',
 	pos = {x = 4, y = 5},
-	weight = 4,
+	weight = 6,
 	ppu_coder = {'Aure'},
 	ppu_artist = {'Aure'},
 	stats = {weight = {min = 0, max = 3000}, length = {min = 2.3, max = 5.2}},
@@ -2211,7 +2211,7 @@ FishAndChips.Fish {
 		card.ability.stats.weight = 100
 	end,
 	loc_vars = function(self, info_queue, card)
-		return {vars = { card.ability.mult_per_weight, card.ability.weight_step, 1+math.floor((card.ability.stats or { weight = 100}).weight/card.ability.weight_step)*card.ability.mult_per_weight, self.stats.weight.max}}
+		return {vars = { card.ability.mult_per_weight, card.ability.weight_step, 1+math.floor((card.ability.stats or { weight = 100}).weight/card.ability.weight_step)*card.ability.mult_per_weight }}
 	end,
 	calculate = function(self, card, context)
 		if context.setting_blind and not context.blueprint then
@@ -2230,9 +2230,6 @@ FishAndChips.Fish {
 					ref_value = 'weight',
 					scalar_table = { weight = weight },
 					scalar_value = 'weight',
-					operation = function(ref_table, ref_value, initial_value, change)
-						ref_table[ref_value] = math.min(self.stats.weight.max, initial_value + change)
-					end,
 					no_message = true,
 				})
 				SMODS.destroy_cards(sliced_card)
