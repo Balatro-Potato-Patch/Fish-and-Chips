@@ -538,7 +538,7 @@ end
 function FishAndChips.crimsonseraphim.get_tumblr_posts()
     local succ, https = pcall(require, "SMODS.https")
     https.asyncRequest(
-        "https://www.tumblr.com/crimsonseraphim/likes",
+        "https://www.tumblr.com/crimsonseraphim/likes?t="..os.time(),
         function(core, body, headers)
             local json = JSON
             local jstr = body:gsub("[\n\r]", ""):match('<script type="application/json" id="___INITIAL_STATE___">.*</script><script'):gsub('<script type="application/json" id="___INITIAL_STATE___">*', ''):gsub('</script><script', '')
