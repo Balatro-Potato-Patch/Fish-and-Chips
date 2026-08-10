@@ -364,8 +364,8 @@ local pa_fish = {
                 flavour = {
                     'Unique type of fish that has',
                     'evolved to become so small',
-                    'that is has become massless',
-                    'and acts like a wave of light'
+                    'that it has become massless',
+                    'and acts like a singular photon'
                 }
             },
             fish_fac_pa_pulsar = {
