@@ -20,7 +20,9 @@ return {
             fish_fac_flying_fih = {
                 name = "Flying Fish",
                 text = {
-                    "Does nothing"
+                    "Gives {C:attention}#1#{} divided by",
+                    "current {C:chips}Chips{} as {X:mult,C:white}XMult{}",
+                    "{C:inactive}(Capped at {X:mult,C:white}X#2#{C:inactive} Mult)"
                 },
                 flavour = {
                     "I'm pretty sure this",
@@ -31,7 +33,11 @@ return {
             fish_fac_argel_blowfish = {
                 name = "Blowfish",
                 text = {
-                    "Does nothing"
+                    "{C:attention}Blows{} the fish to the",
+                    "left to the {C:attention}other side",
+                    "of the area, and gives",
+                    "{C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} for each fish",
+                    "passed on the way"
                 },
                 flavour = {
                     "Why people throw these in the ocean?",
@@ -42,7 +48,7 @@ return {
             fish_fac_argel_findows = {
                 name = "Findows",
                 text = {
-                    "Does nothing"
+                    "{C:inactive}(Music made by {C:purple}Lizzie{C:inactive})"
                 },
                 flavour = {
                     "Is this even a physical object?",
@@ -75,17 +81,25 @@ return {
             PotatoPatchDev_lanedarushpy = {
                 name = "Lizzie",
                 text = {
-                    "I am the lanedarushpy",
+                    "A simple purple creature",
                     "I made the balacats",
-                    "banana fih"
+                    "banana fih",
                 }
             },
             PotatoPatchDev_pangaea47 = {
-                name = "pangaea47",
+                name = "Argel",
                 text = {
                     "im a spider i think"
                 }
             }
+        }
+    },
+
+    misc = {
+        dictionary = {
+            k_fac_sand_dollars = "Sand Dollars",
+            k_fac_lizie_dollars = "Dollars",
+            k_fac_lizie_chips = "Chips"
         }
     }
 }

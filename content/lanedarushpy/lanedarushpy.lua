@@ -1,43 +1,32 @@
+
+
+SMODS.Atlas {
+    key = "fac_lizie_credits",
+    path = "lanedarushpy/credits.png",
+    px = 71,
+    py = 95
+}
+
 PotatoPatchUtils.Developer({
 	name = 'lanedarushpy',
 	-- atlas = 'fac_cards', -- TODO: add card for it
+	atlas = 'fac_lizie_credits', -- TODO: add atlas
+	pos = {x = 1, y = 0},
 	colour = HEX("713a91"),
     loc = true,
 	ignore_limits = false,
-	fac_partner = 'pangaea47' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+	fac_partner = 'fac_pangaea47' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
 })
 
 PotatoPatchUtils.Developer({
 	name = 'pangaea47',
-	-- atlas = 'fac_cards', -- TODO: add atlas
-	-- pos = {x = 1, y = 0}, TODO: add card
+	atlas = 'fac_lizie_credits', -- TODO: add atlas
+	pos = {x = 0, y = 0},
 	colour = G.C.YELLOW,
     loc = true,
 	ignore_limits = false,
-	fac_partner = 'lanedarushpy'
+	fac_partner = 'fac_lanedarushpy'
 })
-
---- The Angler [ todo ]
--- SMODS.Atlas({
--- 	key = "lanedarushpy_angler_asleep", -- Please include your name/team name in your atlas keys
--- 	path = "lanedarushpy/angler_asleep.png",
--- 	px = 25,
--- 	py = 24,
--- })
-
--- SMODS.Atlas({
--- 	key = "lanedarushpy_angler_awake", -- Please include your name/team name in your atlas keys
--- 	path = "lanedarushpy/angler_awake.png",
--- 	px = 25,
--- 	py = 24,
--- })
-
--- SMODS.Atlas({
--- 	key = "lanedarushpy_angler_house", -- Please include your name/team name in your atlas keys
--- 	path = "lanedarushpy/angler_house.png",
--- 	px = 71,
--- 	py = 95,
--- })
 
 SMODS.Atlas {
     key = "lanedarushpy_floppy_fih",
@@ -53,6 +42,11 @@ SMODS.Sound {
 SMODS.Sound {
 	key = 'laneda_escape',
 	path = 'lanedarushpy/escape.ogg',
+	volume = 1
+}
+SMODS.Sound {
+	key = 'laneda_blowfish',
+	path = 'lanedarushpy/blowfish.ogg',
 	volume = 1
 }
 
@@ -94,6 +88,11 @@ FishAndChips.Fish {
         calm_pond = 4
 	},
     pixel_size = { h = 71, w = 71 },
+    stats = {
+        weight = { min = 1, max = 15 },
+        length = { min = 0.2, max = 1.2}
+    },
+
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult } }
 	end,
@@ -259,29 +258,40 @@ FishAndChips.Fish {
 	key = "flying_fih",
 	atlas = "lanedarushpy_flying",
 	pos = { x = 0, y = 0 },
-	weight = 25,
+	weight = 5,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "chips" },
 	config = {
 		extra = {
-			chips = 30
+			divide = 250,
+            cap = 3
 		}
 	},
 	environments = {
-		pier = 25,
-		city_river = 25,
-        calm_pond = 25,
+		garden = 5,
+		city_river = 15,
+        calm_pond = 5,
 	},
 
+    stats = {
+        weight = { min = 550000, max = 600000 },
+        length = { min = 45, max = 55}
+    },
+
     display_size = { w = 142, h = 285 },
-    -- pixel_size = { w = 142, h = 285 },
+    pixel_size = { w = 142, h = 285 },
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips } }
+		return { vars = { card.ability.extra.divide, card.ability.extra.cap } }
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main then return { chips = card.ability.extra.chips } end
-	end,
+		if context.joker_main then 
+            local xmult = math.min(card.ability.extra.divide / hand_chips, 4)
+            if xmult > 1 then
+                return { Xmult = xmult };
+            end
+        end
+    end,
 }
 
 SMODS.Atlas {
@@ -372,26 +382,135 @@ FishAndChips.Fish {
 	key = "argel_findows",
 	atlas = "pangaea47_main",
 	pos = { x = 0, y = 0 },
-	weight = 6,
+	weight = 10,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "chips" },
 	config = {
 		extra = {
-			chips = 30
-		}
+			min_sand_dollars = -1,
+            max_sand_dollars =  2,
+            min_dollars = -1,
+            max_dollars =  4,
+            min_chips = -10,
+            max_chips =  30,
+            min_mult = -2,
+            max_mult = 10
+		},
+        immutable = {}
 	},
 	environments = {
-		pier = 50,
-		city_river = 50,
-        calm_pond = 50,
+		city_river = 10,
+        backroom = 30,
+        wormhole = 10,
+        soup = 1
 	},
 
+    stats = {
+        weight = { min = 0, max = 0 },
+        length = { min = 0.267, max = 0.67}
+    },
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips } }
+        local loc_choices = {
+        }
+
+        local loc_colors = {
+            fish = FishAndChips.C.SAND_DOLLAR,
+            jokers = G.C.MULT,
+            playing_cards = G.C.CHIPS,
+            consumables = G.C.PURPLE
+        }
+
+        for count = card.ability.extra.min_sand_dollars, card.ability.extra.max_sand_dollars do
+            loc_choices[#loc_choices+1] = { string = (count < 0 and "" or "+") .. tostring(count) .. " ", colour = loc_colors.fish }
+        end
+
+        for count = card.ability.extra.min_mult, card.ability.extra.max_mult do
+            loc_choices[#loc_choices+1] = { string = (count < 0 and "" or "+") .. tostring(count) .. " ", colour = loc_colors.jokers }
+        end
+
+        for count = card.ability.extra.min_chips, card.ability.extra.max_chips do
+            loc_choices[#loc_choices+1] = { string = (count < 0 and "" or "+") .. tostring(count) .. " ", colour = loc_colors.playing_cards }
+        end
+
+        for count = card.ability.extra.min_dollars, card.ability.extra.max_dollars do
+            loc_choices[#loc_choices+1] = { string = (count < 0 and "" or "+") .. tostring(count) .. " ", colour = loc_colors.consumables }
+        end
+
+        -- print(loc_choices)
+
+        local main_start = {
+            { n = G.UIT.O, config = { object = DynaText({ string = { 
+                { string = "All Jokers ", colour = loc_colors["jokers"] },
+                { string = "All Fish ", colour = loc_colors["fish"] },
+                { string = "Consumables ", colour = loc_colors["consumables"] },
+                { string = "Scored cards ", colour = loc_colors["playing_cards"] }
+            }, colours = { G.C.RED }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.75, scale = 0.32, min_cycle_time = 0 }) } },
+            { n = G.UIT.T, config = { text = 'give ', colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
+            { n = G.UIT.O, config = { object = DynaText({ string = loc_choices, colours = { G.C.RED }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0 }) } },
+            {
+                n = G.UIT.O,
+                config = {
+                    object = DynaText({
+                        string = {
+                            { string = localize("k_mult"), colour = loc_colors["jokers"] },
+                            { string = localize("k_fac_lizie_chips"), colour = loc_colors["playing_cards"] },
+                            { string = localize("k_fac_sand_dollars"), colour = loc_colors["fish"] },
+                            { string = localize("k_fac_lizie_dollars"), colour = loc_colors["consumables"] },
+                        },
+                        colours = { G.C.UI.TEXT_DARK },
+                        pop_in_rate = 9999999,
+                        silent = true,
+                        random_element = true,
+                        pop_delay = 0.75,
+                        scale = 0.32,
+                        min_cycle_time = 0
+                    })
+                }
+            },
+        }
+
+        return { main_start = main_start }
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main then return { chips = card.ability.extra.chips } end
+		if context.other_joker then 
+            local rand_mult = pseudorandom("fac_findows_mult", card.ability.extra.min_mult, card.ability.extra.max_mult)
+            if rand_mult ~= 0 then
+                return {
+                    mult = rand_mult,
+                    message_card = context.other_joker
+                }
+            end
+        end
+
+        if context.individual and context.cardarea == G.play then
+            local rand_chips = pseudorandom("fac_findows_chips", card.ability.extra.min_chips, card.ability.extra.max_chips)
+            if rand_chips ~= 0 then
+                return {
+                    chips = rand_chips
+                }
+            end
+        end
+
+        if context.other_consumeable then
+            local rand_dollars = pseudorandom("fac_findows_dollars", card.ability.extra.min_dollars, card.ability.extra.max_dollars)
+            if rand_dollars ~= 0 then
+                return {
+                    dollars = rand_dollars,
+                    message_card = context.other_consumeable
+                }
+            end
+        end
+
+        if context.other_main and context.cardarea == G.fac_fish_area then
+            local rand_sand =  pseudorandom("fac_findows_sands", card.ability.extra.min_sand_dollars, card.ability.extra.max_sand_dollars)
+            if rand_sand ~= 0 then
+                return {
+                    sand_dollars = rand_sand,
+                    message_card = context.other_main
+                }
+            end
+        end
 	end,
 }
 
@@ -399,6 +518,59 @@ FishAndChips.Fish {
 	key = "argel_blowfish",
 	atlas = "pangaea47_main",
 	pos = { x = 1, y = 0 },
+	weight = 10,
+	ppu_coder = { "lanedarushpy" },
+	ppu_artist = { "pangaea47" },
+	attributes = { "chips" },
+	config = {
+		extra = {
+			sands = 1
+		}
+	},
+	environments = {
+		pier = 20,
+		city_river = 50,
+        calm_pond = 10,
+	},
+
+    stats = {
+        weight = { min = 5, max = 20 },
+        length = { min = 0.9, max = 1.1}
+    },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.sands } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then 
+            local current_pos = 0
+            for index, value in ipairs(G.fac_fish_area.cards) do
+                if value == card then current_pos = index end
+            end
+
+            if current_pos > 2 then
+                return { 
+                    sand_dollars = current_pos - 2, 
+                    pre_func = function()
+                        G.E_MANAGER.add_event(Event({
+                            func = function(e)
+                                play_sound("fac_laneda_blowfish", 1.0)
+                                local left = G.fac_fish_area.cards[current_pos - 1]
+                                G.fac_fish_area.cards[current_pos-1] = G.fac_fish_area.cards[1]
+                                G.fac_fish_area.cards[1] = left
+                                return true
+                            end
+                        }))
+                    end
+                } 
+            end
+        end
+	end,
+}
+
+FishAndChips.Fish {
+	key = "argel_thing",
+	atlas = "pangaea47_main",
+	pos = { x = 2, y = 0 },
 	weight = 5,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
@@ -409,38 +581,15 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		pier = 50,
-		city_river = 50,
-        calm_pond = 50,
+		volcano = 40,
+		backroom = 10,
+        wormhole = 25,
 	},
 
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips } }
-	end,
-	calculate = function(self, card, context)
-		if context.joker_main then return { chips = card.ability.extra.chips } end
-	end,
-}
-
-FishAndChips.Fish {
-	key = "argel_thing",
-	atlas = "pangaea47_main",
-	pos = { x = 2, y = 0 },
-	weight = 3,
-	ppu_coder = { "lanedarushpy" },
-	ppu_artist = { "pangaea47" },
-	attributes = { "chips" },
-	config = {
-		extra = {
-			chips = 30
-		}
-	},
-	environments = {
-		pier = 50,
-		city_river = 50,
-        calm_pond = 50,
-	},
-
+    stats = {
+        weight = { min = -100, max = -5 },
+        length = { min = -10, max = 10}
+    },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips } }
 	end,
@@ -453,7 +602,7 @@ FishAndChips.Fish {
 	key = "still_fish",
 	atlas = "pangaea47_main",
 	pos = { x = 3, y = 0 },
-	weight = 25,
+	weight = 10,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "chips" },
@@ -462,6 +611,11 @@ FishAndChips.Fish {
 			chips = 30
 		}
 	},
+    
+    stats = {
+        weight = { min = 1, max = 15 },
+        length = { min = 0.8, max = 2.4}
+    },
 	environments = {
 		backroom = 25,
 		wormhole = 25,
