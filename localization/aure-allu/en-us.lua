@@ -368,6 +368,27 @@ return {
                     "six Big Booms"
                 }
             },
+            fish_fac_aureallu_sleeper_shark = {
+                name = {"Sleeper Shark"},
+                text = {
+                    {
+                        "At {C:attention}end of {C:fac_fish}Fishing{},",
+                        "dreams {C:attention}half{} of owned",
+                        "{C:fac_sand_dollars,f:fac_sand_dollars}${} to own {C:money}sell value",
+                        "{C:inactive}(Max. {C:fac_sand_dollars,f:fac_sand_dollars}+$#1#{C:inactive})"
+                    },
+                    {
+                        "{X:fac_sand_dollars,C:white}X#2#{C:money} sell value",
+                        "after {C:attention}Boss Blind",
+                        "{C:inactive}(Max. {C:fac_sand_dollars,f:fac_sand_dollars}+$#3#{C:inactive})"
+                    }
+                },
+                flavor = {
+                    "Shnark mimimi..", 
+                    "{s:0.8}samd dolars..{}", 
+                    "Shnork mimimi..",
+                }
+            },
         },
     },
     misc = {

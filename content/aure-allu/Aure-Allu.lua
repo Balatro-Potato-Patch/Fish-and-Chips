@@ -2125,4 +2125,63 @@ FishAndChips.Fish {
 	end
 }
 
+-- Sleeper Shark
+FishAndChips.Fish {
+	key = "aureallu_sleeper_shark",
+	atlas = "aureallu_fish",
+	pos = { x = 3, y = 5 },
+	weight = 1,
+	ppu_coder = { "AllUniversal" },
+	ppu_artist = { "AllUniversal" },
+	attributes = { "passive", "economy" },
+	stats = {weight = {min = 250, max = 888}, length = {min = 1.8, max = 4.4}},
+	blueprint_compat = false,
+	config = {
+		extra = {
+			sand_dollars_gain_cap = 5,
+			x_sand_dollars = 1.5,
+			x_sand_dollars_gain_cap = 25,
+		},
+	},
+	environments = {
+		calm_pond = 10,
+		aquifer = 6,
+		garden = 4,
+		wormhole = 2,
+		soup = 1,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.sand_dollars_gain_cap, card.ability.extra.x_sand_dollars, card.ability.extra.x_sand_dollars_gain_cap } }
+	end,
+	calculate = function(self, card, context)
+		if context.ending_fishing and not context.blueprint_card then
+			local s_dollars = math.floor(math.min(G.GAME.fac_sand_dollars + (G.GAME.fac_sand_dollar_buffer or 0), card.ability.extra.sand_dollars_gain_cap * 2) / 2)
+			G.GAME.fac_sand_dollar_buffer = G.GAME.fac_sand_dollar_buffer or 0 
+			G.GAME.fac_sand_dollar_buffer = G.GAME.fac_sand_dollar_buffer - s_dollars
+			G.E_MANAGER:add_event(Event{
+				func = function ()
+					ease_sand_dollars(-s_dollars, true)
+					G.GAME.fac_sand_dollar_buffer = 0
+					return true
+				end
+			})
+			card.ability.extra_value = card.ability.extra_value + s_dollars
+			card:set_cost()
+			return {
+				message = localize('k_val_up'),
+				colour = FishAndChips.C.SAND_DOLLAR
+			}
+		elseif context.after and G.GAME.blind:is_type("Boss") then
+			local diff = card.sell_cost - card.ability.extra_value
+			local new_val = math.floor(math.min(card.sell_cost * card.ability.extra.x_sand_dollars, card.sell_cost + card.ability.extra.x_sand_dollars_gain_cap))
+			card.ability.extra_value = new_val - diff
+			card:set_cost()
+			return {
+				message = localize('k_val_up'),
+				colour = FishAndChips.C.SAND_DOLLAR
+			}
+		end
+	end,
+}
+
 -- #endregion
