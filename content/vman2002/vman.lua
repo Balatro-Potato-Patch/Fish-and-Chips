@@ -558,7 +558,7 @@ FishAndChips.Fish { --Blackbody
 FishAndChips.Fish { --Navy Blade
 	key = "vman2002_navyblade",
 	atlas = "vman2002_fish",
-	pos = { x = 1, y = 0 },
+	pos = { x = 2, y = 1 },
 	weight = 7,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
@@ -594,6 +594,8 @@ FishAndChips.Fish { --Navy Blade
 	blueprint_compat = false
 }
 
+--i odnt have much time left i cba to finish this
+--[[FishAndChips.fac_fuck_set = "fac_Fish"
 local fuck = FishAndChips.Fish { --fuck
 	key = "vman2002_fuck",
 	atlas = "vman2002_fish",
@@ -613,17 +615,17 @@ local fuck = FishAndChips.Fish { --fuck
 	use = function(self, card)
 		card.ability.set = "Booster"
 		card.cost = 0
-		card:open()
+		G.FUNCS.use_card({ config = { ref_table = card } })
 	end,
 	usable = true,
 	blueprint_compat = false,
 	create_card = function(self, card)
-		return {set = "fac_Fish", area = G.pack_cards, skip_materialize = true, soulable = true, key_append = "unique_string_for_rng", edition = "e_foil"}
+		return {set = FishAndChips.fac_fuck_set, area = G.pack_cards, skip_materialize = true, soulable = true, key_append = "unique_string_for_rng", edition = "e_foil"}
 	end
 }
 
-for k,v in pairs({"update_pack", --[["loc_vars", "process_loc_text", "generate_ui",]] "ease_background_colour", "create_UIBox"}) do
+for k,v in pairs({"update_pack", "ease_background_colour", "create_UIBox"}) do
 	fuck[v] = SMODS.Booster[v]
-end
+end]]
 
 --#endregion
