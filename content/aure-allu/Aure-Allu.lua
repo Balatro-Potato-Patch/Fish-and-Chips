@@ -58,13 +58,13 @@ SMODS.Gradient {
 	cycle = 5,
 }
 
-zero_signed = function (value, infix)
+local zero_signed = function (value, infix)
 	local v = value ~= 0 and SMODS.signed(value) or "+0"
 	return string.sub(v, 1, 1) .. (infix or "") .. string.sub(v, 2)
 end
 
 
-filter_list = function (t, exclude_map)
+local filter_list = function (t, exclude_map)
 	local out = {}
 	exclude_map = exclude_map or {}
 	for i, elem in ipairs(t) do
@@ -73,7 +73,7 @@ filter_list = function (t, exclude_map)
 	return out
 end
 
-function table_find(t, value)
+local function table_find(t, value)
 	if not type(t) == "table" then return end
 	for k, v in pairs(t) do
 		if v == value then return k end
@@ -81,7 +81,7 @@ function table_find(t, value)
 	return nil
 end
 
-function table_get_subfield(_table, key_string_or_keys)
+local function table_get_subfield(_table, key_string_or_keys)
     if type(_table) ~= "table" then sendWarnMessage("table_get_subfield called with invalid table argument", "utils"); return end 
     if type(key_string_or_keys) ~= "string" and type(key_string_or_keys) ~= "table" then sendWarnMessage(string.format("table_get_subfield called with invalid key_string '%s'.", key_string_or_keys), "utils"); return end
     local _t = _table
