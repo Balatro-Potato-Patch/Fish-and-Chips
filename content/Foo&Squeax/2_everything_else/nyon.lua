@@ -121,6 +121,7 @@ FishAndChips.Fish{
 			if card.ability.extra.rounds == 0 then
 				card.ability.extra.rounds = 3
 				card.ability.immutable.slow = false
+				FishAndChips.FooSqueax.nyon.unsticky()
 				card_eval_status_text(card, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_nyon")})
 				play_sound("fac_fas_nyon")
 				card.children.center:set_sprite_pos{x = 1, y = 0}
@@ -135,7 +136,49 @@ FishAndChips.Fish{
 			end
 		end
 	end,
+	load = function (self, card, card_table, other_card)
+		if card_table.ability.immutable.slow then
+			FishAndChips.FooSqueax.nyon.sticky()
+		end
+	end
 }
+
+SMODS.Atlas{
+	key = "fas_sticky",
+	path = FishAndChips.FooSqueax.file_path .. "sticky.png",
+	px = 50,
+	py = 74
+}
+
+function FishAndChips.FooSqueax.nyon.sticky()
+	if not G.fac_fas_nyon then
+		G.fac_fas_nyon = UIBox{
+			definition = {n = G.UIT.ROOT, config = {colour = G.C.CLEAR}, nodes = {
+				{n = G.UIT.O, config = {object = SMODS.create_sprite(0, 0, 1, 1 / 50 * 74, "fac_fas_sticky")}}
+			}},
+			config = {
+				major = G.CURSOR,
+				align = "cmi",
+				offset = {
+					x = -G.ROOM.T.x,
+					y = -G.ROOM.T.y
+				},
+				instance_type = "DROPDOWN"
+			}
+		}
+	end
+end
+
+function FishAndChips.FooSqueax.nyon.unsticky()
+	G.GAME.fac_FooSqueax.nyon = G.GAME.fac_FooSqueax.nyon - 1
+	if G.GAME.fac_FooSqueax.nyon <= 0 then
+		G.GAME.fac_FooSqueax.nyon = 0
+		if G.fac_fas_nyon then
+			G.fac_fas_nyon:remove()
+			G.fac_fas_nyon = nil
+		end
+	end
+end
 
 local card_click_ref = Card.click
 ---@diagnostic disable-next-line: duplicate-set-field
@@ -143,6 +186,10 @@ function Card:click()
 	card_click_ref(self)
 	if self.config.center.key == "fish_fac_fas_kawkaw" then
 		if self.ability.immutable.timer >= 100 then
+			if not self.area.config.collection and not self.ability.immutable.slow then
+				G.GAME.fac_FooSqueax.nyon = G.GAME.fac_FooSqueax.nyon + 1
+				FishAndChips.FooSqueax.nyon.sticky()
+			end
 			self.ability.immutable.slow = true
 			card_eval_status_text(self, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_ule")})
 			play_sound("fac_fas_ule")

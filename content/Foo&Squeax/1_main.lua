@@ -15,7 +15,8 @@ FishAndChips.FooSqueax = {
 	toby_fish = {
 		no_desc = nil
 	},
-	undertale = {}
+	undertale = {},
+	nyon = {},
 }
 
 FishAndChips.C.FooSqueax = {
@@ -147,6 +148,16 @@ end
 FishAndChips.mod.optional_features = FishAndChips.mod.optional_features or {}
 FishAndChips.mod.optional_features.retrigger_joker = true
 
+
+local mainmenuref = Game.main_menu
+---@diagnostic disable-next-line: duplicate-set-field
+function Game:main_menu(change_context)
+	if G.fac_fas_nyon then
+		G.fac_fas_nyon:remove()
+		G.fac_fas_nyon = nil
+	end
+end
+
 local fishandchips_mod_reset_game_globals_ref = FishAndChips.mod.reset_game_globals
 ---@diagnostic disable-next-line: duplicate-set-field
 function FishAndChips.mod.reset_game_globals (run_start)
@@ -160,7 +171,8 @@ function FishAndChips.mod.reset_game_globals (run_start)
 			},
 			wormholes = {},
 			tobies = 0,
-			fish_caught = {}
+			fish_caught = {},
+			nyon = 0,
 		}
 	end
 	G.GAME.fac_FooSqueax.wormholes.target = pseudorandom_element(PotatoPatchUtils.Developers).name
