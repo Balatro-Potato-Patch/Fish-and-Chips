@@ -3,7 +3,7 @@ FishAndChips.Fish {
 	atlas = "fo_fish",
 	pos = { x = 2, y = 0 },
     pixel_size = { w = 59, h = 95 },
-	weight = 3,
+	weight = 5,
     blueprint_compat = false,
     eternal_compat = false,
     disable_visual_scaling = true,
@@ -16,6 +16,7 @@ FishAndChips.Fish {
             dec = 1,
         }
 	},
+    cost = 5,
 	environments = {
 		wormhole = 1,
 	},

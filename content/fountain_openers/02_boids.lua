@@ -305,18 +305,19 @@ FishAndChips.Fish {
 	key = "fo_boids",
 	atlas = "fish",
 	pos = { x = 3, y = 0 },
-	weight = 11,
+	weight = 12,
 	blueprint_compat = true,
 	disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_alexi", "fo_grahkon" },
-	attributes = { "chips" },
+	attributes = { "chips", "scaling" },
 	config = {
 		extra = {
 			chips = 0,
 			chips_mod = 1,
 		}
 	},
+    cost = 2,
 	environments = {
 		wormhole = 1,
 		pier = 1,

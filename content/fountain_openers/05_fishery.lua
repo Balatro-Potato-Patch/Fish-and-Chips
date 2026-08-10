@@ -24,7 +24,7 @@ FishAndChips.Fish {
 	key = "fo_fishery",
 	atlas = "fo_fish",
 	pos = { x = 3, y = 0 },
-	weight = 5,
+	weight = 6,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_alexi" },
 	attributes = { "rank", "jack", "king", "queen", "mult", "xmult" },
@@ -42,6 +42,7 @@ FishAndChips.Fish {
         weight = {min = 80, max = 80.000001, units = {format = "fac_fo_flowery_unit", scale = 99999, precision = 3}},
 		length = {min = 2.2, max = 2.2000001, units = {format = "fac_fo_flowery_unit", scale = 99999, precision = 3}},
 	},
+    cost = 4,
 
     impulse_max = 0.9,
     impulse_min = 0.5,

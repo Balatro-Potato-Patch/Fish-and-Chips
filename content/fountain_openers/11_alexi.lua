@@ -39,6 +39,7 @@ FishAndChips.Fish {
         weight = {min = 220, max = 220.000001},
 		length = {min = 5.35, max = 5.35000001},
 	},
+    cost = 8,
     loc_vars = function(self, info_queue, card)
         if card.area and card.area == G.jokers or card.area == G.fac_fish_area then
             local lfish = G.fac_fish_area.cards[1]

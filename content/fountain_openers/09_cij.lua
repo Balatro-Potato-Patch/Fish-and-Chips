@@ -3,7 +3,7 @@ FishAndChips.Fish {
 	atlas = "fo_fish",
 	pos = { x = 7, y = 0 },
     pixel_size = { w = 48, h = 32 },
-	weight = 10,
+	weight = 8,
 	disable_visual_scaling = true,
     blueprint_compat = false,
 	ppu_coder = { "fo_alexi" },
@@ -16,6 +16,7 @@ FishAndChips.Fish {
             old_remaining = 4,
 		},
 	},
+    cost = 5,
 	environments = {
 		backroom = 1,
 		city_river = 1,

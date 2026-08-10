@@ -13,7 +13,7 @@ FishAndChips.Fish {
 	key = "fo_thoracle",
 	atlas = "fish",
 	pos = { x = 3, y = 0 },
-	weight = 10,
+	weight = 8,
 	disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
@@ -24,6 +24,7 @@ FishAndChips.Fish {
             xblindsize = 0.5
 		},
 	},
+    cost = 5,
 	environments = {
 		pier = 1,
         swamp = 1

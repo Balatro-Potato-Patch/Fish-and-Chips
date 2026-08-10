@@ -4,13 +4,14 @@ FishAndChips.Fish {
 	pos = { x = 1, y = 0 },
     eternal_compat = false,
 	disable_visual_scaling = true,
-	weight = 3,
+	weight = 2,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
 	attributes = { "destroy_card", "hand_level", "usable" },
 	config = {
         levels = 1,
 	},
+    cost = 3,
 	environments = {
 		wormhole = 1,
 	},

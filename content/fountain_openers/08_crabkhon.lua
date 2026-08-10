@@ -2,7 +2,7 @@ FishAndChips.Fish {
 	key = "fo_crabkhon",
 	atlas = "fish",
 	pos = { x = 3, y = 0 },
-	weight = 10,
+	weight = 12,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
 	attributes = { "reset", "passive", "reroll", "economy" },
@@ -13,6 +13,7 @@ FishAndChips.Fish {
             old_remaining = 5,
 		},
 	},
+    cost = 2,
 	environments = {
 		pier = 1,
 		wormhole = 1,

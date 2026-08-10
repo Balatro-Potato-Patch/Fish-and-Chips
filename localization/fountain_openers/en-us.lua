@@ -155,9 +155,23 @@ return {
                     },
                 },
                 flavor = {
-                    "you loooove seeing me, don't you~"
+                    "You loooove seeing me, don't you~"
                 }
             },
+            fish_fac_fo_lake = {
+                name = {
+                    "Lake",
+                    "{s:0.75}Wave, Morgan, and Saph"
+                },
+                text = {
+                    "This Fish gains {X:mult,C:white}X#2#{} Mult when",
+                    "a {C:rare}Rare{} Joker is sold or destroyed",
+                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
+                },
+                flavor = {
+                    "Three people, one body, all the world's rage."
+                }
+            }
         },
         PotatoPatch = {
             PotatoPatchDev_fo_alexi = {
