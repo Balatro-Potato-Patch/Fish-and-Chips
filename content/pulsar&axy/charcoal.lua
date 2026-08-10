@@ -34,9 +34,12 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
         return {vars = {
-			card.ability.extra.repetitions,
-			-- elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 552 / 555, "fac_pa_axywoo") }
-			elements = { SMODS.create_sprite(0, 0, 552, 555, "fac_pa_axywoo") }
+			card.ability.extra.repetitions
+		}}
+	end,
+	flavour_vars = function(self, info_queue, card)
+		return {vars = {
+			elements = { SMODS.create_sprite(0, 0, 0.5, 0.5 * 552 / 555, "fac_pa_axywoo") }
 		}}
 	end,
 	calculate = function(self, card, context)

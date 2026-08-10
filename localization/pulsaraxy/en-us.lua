@@ -208,8 +208,7 @@ local pa_fish = {
             fish_fac_pa_fishingfish = {
                 name = 'The "Fish"ing Rod',
                 text = {
-                    "Max fish {C:attention}#2#{} is #3# by {X:mult,C:white}X#4#{}",
-                    "{C:attention}Toggle{} to change effects"
+                    "Max fish {C:attention}speed{} is slower by {X:fac_fish,C:white}X#1#{}"
                 },
                 flavour = {
                     'Some traditional fishers prefer',
@@ -339,7 +338,7 @@ local pa_fish = {
                 flavour = {
                     "Axy, how sure are you that",
                     "you didn't burn this cookie?",
-                    "munyah {element:1} wah"
+                    "{element:1}"
                 }
             },
             fish_fac_pa_sushi = {
