@@ -55,48 +55,80 @@ FishAndChips.Fish({
 	end
 })
 
---dylan fishmin
+--spunched bob
 FishAndChips.Fish({
-    key = "wombatCountry_dylan",
+    key = "wombatCountry_spunch",
 	weight = 10,
 	atlas = "wombatCountry_fish",
-	pos = { x = 1, y = 0 },
+	pos = { x = 2, y = 0 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "mult", "destroy_card", "scaling" },
+	attributes = { "usable", "suit" },
 	environments = {
-		garden = 1,
-        soup = 0.5,
+		calm_pond = 1,
+		city_river = 0.25,
 	},
 	stats = {
-		weight = {min = 0.3, max = 0.7},
-		length = {min = 0.2, max = 3.0}
+		weight = {min = 0.014, max = 0.028},
+		length = {min = 0.105, max = 0.12}
 	},
 	config = {
 		extra = {
-			mult = 0.0
+			dollar_min = 1,
+            dollar_max = 10
 		}
 	},
-	blueprint_compat = true,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult} }
-	end,
-	calculate = function(self, card, context)
-		if context.setting_blind and not context.blueprint and #G.fac_fish_area.cards >= 2 and not (G.fac_fish_area.cards[1] == card) then
-			--adds the weight of the leftmost fish to dylan's mult AND weight stat
-			card.ability.extra.mult = card.ability.extra.mult + G.fac_fish_area.cards[1].ability.stats.weight
-			card.ability.stats.weight = card.ability.stats.weight + G.fac_fish_area.cards[1].ability.stats.weight
+	blueprint_compat = false,
+	use = function(self, card)
+		local suit
+        for _, playing_card in ipairs(G.deck.cards) do
+			suit = pseudorandom_element(SMODS.Suits)
 
-			SMODS.destroy_cards(G.fac_fish_area.cards[1], nil, nil, true)
-			return {
-				message = localize('fac_wombatCountry_dylan')
-			}
+			SMODS.change_base(playing_card, suit.key)
 		end
-		if context.joker_main then
-            return {
-                mult = card.ability.extra.mult,
-            }
-        end
+		play_sound('timpani')
+	end,
+	can_use = function(self, card)
+		return true
+	end
+})
+
+--sardine boys
+FishAndChips.Fish({
+    key = "wombatCountry_sardine",
+	weight = 10,
+	atlas = "wombatCountry_fish",
+	pos = { x = 3, y = 0 },
+	ppu_artist = { "wombatCountry" },
+	ppu_coder = { "wombatCountry" },
+	attributes = { "usable", "rank" },
+	environments = {
+		pier = 1,
+		city_river = 0.5,
+        soup = 0.5,
+	},
+	stats = {
+		weight = {min = 0.106, max = 0.125},
+		length = {min = 0.1016, max = 0.1143}
+	},
+	config = {
+		extra = {
+			dollar_min = 1,
+            dollar_max = 10
+		}
+	},
+	blueprint_compat = false,
+	use = function(self, card)
+		local rank
+        for _, playing_card in ipairs(G.deck.cards) do
+			rank = pseudorandom_element(SMODS.Ranks)
+
+			SMODS.change_base(playing_card, nil, rank.key)
+		end
+		play_sound('timpani')
+	end,
+	can_use = function(self, card)
+		return true
 	end
 })
 
@@ -172,7 +204,7 @@ FishAndChips.Fish({
 --two fish sticks
 FishAndChips.Fish({
     key = "wombatCountry_fishstick_2",
-	weight = 10,
+	weight = 4,
 	atlas = "wombatCountry_fish",
 	pos = { x = 1, y = 1 },
 	ppu_artist = { "wombatCountry" },
@@ -218,7 +250,7 @@ FishAndChips.Fish({
 --three fish sticks
 FishAndChips.Fish({
     key = "wombatCountry_fishstick_3",
-	weight = 10,
+	weight = 1,
 	atlas = "wombatCountry_fish",
 	pos = { x = 2, y = 1 },
 	ppu_artist = { "wombatCountry" },
@@ -251,79 +283,47 @@ FishAndChips.Fish({
 	end
 })
 
---spunched bob
+--dylan fishmin
 FishAndChips.Fish({
-    key = "wombatCountry_spunch",
+    key = "wombatCountry_dylan",
 	weight = 10,
 	atlas = "wombatCountry_fish",
-	pos = { x = 2, y = 0 },
+	pos = { x = 1, y = 0 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "usable", "suit" },
+	attributes = { "mult", "destroy_card", "scaling" },
 	environments = {
-		calm_pond = 1,
-		city_river = 0.25,
-	},
-	stats = {
-		weight = {min = 0.014, max = 0.028},
-		length = {min = 0.105, max = 0.12}
-	},
-	config = {
-		extra = {
-			dollar_min = 1,
-            dollar_max = 10
-		}
-	},
-	blueprint_compat = false,
-	use = function(self, card)
-		local suit
-        for _, playing_card in ipairs(G.deck.cards) do
-			suit = pseudorandom_element(SMODS.Suits)
-
-			SMODS.change_base(playing_card, suit.key)
-		end
-		play_sound('timpani')
-	end,
-	can_use = function(self, card)
-		return true
-	end
-})
-
---sardine boys
-FishAndChips.Fish({
-    key = "wombatCountry_sardine",
-	weight = 10,
-	atlas = "wombatCountry_fish",
-	pos = { x = 3, y = 0 },
-	ppu_artist = { "wombatCountry" },
-	ppu_coder = { "wombatCountry" },
-	attributes = { "usable", "rank" },
-	environments = {
-		pier = 1,
-		city_river = 0.5,
+		garden = 1,
         soup = 0.5,
 	},
 	stats = {
-		weight = {min = 0.106, max = 0.125},
-		length = {min = 0.1016, max = 0.1143}
+		weight = {min = 0.3, max = 0.7},
+		length = {min = 0.2, max = 3.0}
 	},
 	config = {
 		extra = {
-			dollar_min = 1,
-            dollar_max = 10
+			mult = 0.0
 		}
 	},
-	blueprint_compat = false,
-	use = function(self, card)
-		local rank
-        for _, playing_card in ipairs(G.deck.cards) do
-			rank = pseudorandom_element(SMODS.Ranks)
-
-			SMODS.change_base(playing_card, nil, rank.key)
-		end
-		play_sound('timpani')
+	blueprint_compat = true,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.mult} }
 	end,
-	can_use = function(self, card)
-		return true
+	calculate = function(self, card, context)
+		if context.setting_blind and not context.blueprint and #G.fac_fish_area.cards >= 2 and not (G.fac_fish_area.cards[1] == card) then
+			--adds the weight of the leftmost fish to dylan's mult AND weight stat
+			card.ability.extra.mult = card.ability.extra.mult + G.fac_fish_area.cards[1].ability.stats.weight
+			card.ability.stats.weight = card.ability.stats.weight + G.fac_fish_area.cards[1].ability.stats.weight
+
+			SMODS.destroy_cards(G.fac_fish_area.cards[1], nil, nil, true)
+			return {
+				message = localize('fac_wombatCountry_dylan')
+			}
+		end
+		if context.joker_main then
+            return {
+                mult = card.ability.extra.mult,
+            }
+        end
 	end
 })
