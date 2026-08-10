@@ -2207,6 +2207,7 @@ FishAndChips.Fish {
 		wormhole = 5,
 		calm_pond = 2,
 	},
+	attributes = { 'xmult', 'scaling', 'destroy_card' },
 	on_catch = function(self, card)
 		card.ability.stats.weight = 100
 	end,
