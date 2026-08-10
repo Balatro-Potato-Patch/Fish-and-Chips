@@ -46,6 +46,7 @@
 ---@field on_catch? fun(self: FishAndChips.Fish, card: Card) If defined, this function will be called when this fish is called.
 ---@field badge_key? string replace the text on the fish badge with whatever is in misc.dictionary[badge_key]
 ---@field button_key? string|fun(self: FishAndChips.Fish, card: Card): string Replace the use button text key with the provided key. Providing a function replaces the text without localizing
+---@field flavour_vars? fun(self: FishAndChips.Fish|table, info_queue: table, card: Card|table): table? loc_vars but for flavour text. See [`loc_vars`](https://docs.smods.dev/API%20Documentation/Localization#loc_vars) documentation for return value details. 
 ---@overload fun(self: FishAndChips.Fish): FishAndChips.Fish
 FishAndChips.Fish = setmetatable({}, {
 	__call = function(self)
