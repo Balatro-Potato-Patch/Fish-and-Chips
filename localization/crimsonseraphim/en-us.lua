@@ -101,7 +101,6 @@ return {
                         "When this {C:attention}Fish{} is caught",
                         "forcibly start fishing again",
                         "regardless of current bait",
-                        "{C:inactive}(Must have Room)"
                     },
                     {
                         "You have a chance to",
@@ -633,6 +632,12 @@ return {
                 "... can't save you now.",
             },
             k_omega_crimsonfang_24 = {"you really like twisting the", "perspectives don't you :3"},
+            k_omega_crimsonfang_25 = "I CAN TANK ANY ATTACK",
+            k_omega_crimsonfang_26 = "Grill.",
+            k_omega_crimsonfang_27 = {" WE ARE CALLED RUBY AND JADE.", "WE ARE TRANS DOGGIRLTHINGS,", "ARTISTS, AND PROGRAMMERS.", "WE CAN TANK ANY ATTACK.", "WE WILL GO TO HEAVEN."},
+            k_omega_crimsonfang_28 = "TECHNICOLOUR DREAMS",
+            k_omega_crimsonfang_29 = "",
+            k_omega_crimsonfang_30 = "<3"
 
             k_give_up = "GIVE UP",
             k_lose_hope = "LOSE HOPE",
