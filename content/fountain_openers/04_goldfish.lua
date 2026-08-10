@@ -20,8 +20,8 @@ FishAndChips.Fish {
 	},
     -- placeholder values
     stats = {
-		weight = {min = 1, max = 1 + 0.00001},
-		length = {min = 0.02, max = 0.02 + 0.00001}
+		weight = {min = 1.87, max = 1.87 + 0.00001},
+		length = {min = 0.276225, max = 0.276225 + 0.00001}
 	},
     loc_vars = function(self, info_queue, card)
 		return { vars = {
