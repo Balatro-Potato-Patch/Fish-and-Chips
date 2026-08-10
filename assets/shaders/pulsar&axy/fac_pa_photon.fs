@@ -13,8 +13,7 @@ extern bool shadow;
 extern MY_HIGHP_OR_MEDIUMP vec4 burn_colour_1;
 extern MY_HIGHP_OR_MEDIUMP vec4 burn_colour_2;
 
-extern MY_HIGHP_OR_MEDIUMP number fish_length;
-extern MY_HIGHP_OR_MEDIUMP number fish_weight;
+extern MY_HIGHP_OR_MEDIUMP number fish_length; // 300-400 nm
 
 vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv)
 {
@@ -59,7 +58,7 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     vec4 tex = Texel(texture, texture_coords);
     vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
 
-    vec3 fish_color = vec3(0,0,0 + (photon.x * 0.000001)); // Make this a function of fish_length, fish_weight
+    vec3 fish_color = vec3(0,0,0 + (photon.x * 0.000001)); // Make this a function of fish_length
     tex.rgb = tex.rgb * 0.6 + fish_color;
 
     return dissolve_mask(tex * colour, texture_coords, uv);
