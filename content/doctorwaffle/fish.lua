@@ -124,7 +124,7 @@ FishAndChips.Fish {
         pier = 1,
         calm_pond = 0.6
     },
-    pixel_size = { h = 77 },
+    pixel_size = { h = 77, w = 71 },
     blueprint_compat = false,
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -439,7 +439,7 @@ FishAndChips.Fish {
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     weight = 5,
-    pixel_size = { h = 83 },
+    pixel_size = { h = 83, w = 71 },
     cost = 4,
     environments = {
         chocolate_river = 1,
@@ -537,10 +537,10 @@ FishAndChips.Fish {
         weight = { min = 0.05, max = 0.09 },
         length = { min = 0.10, max = 0.30 }
     },
-    config = {extra = {
+    config = { extra = {
         tag_created = false
-    }},
-    attributes = { "generation" }, -- Doesn't really generate cards, but this is really the only fitting bait attribute I can think of
+    } },
+    attributes = { "generation" },                                                                    -- Doesn't really generate cards, but this is really the only fitting bait attribute I can think of
     calculate = function(self, card, context)
         if context.fac_end_fishing and not context.failed and not card.ability.extra.tag_created then -- thanks eremel
             local tag_pool = get_current_pool('Tag')
@@ -569,7 +569,7 @@ FishAndChips.Fish {
     key = "fac_waffle_reginald",
     atlas = "waffle_fish",
     pos = { x = 5, y = 0 },
-    pixel_size = { h = 60 },
+    pixel_size = { h = 60, w = 71 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     weight = 5,
@@ -712,7 +712,7 @@ FishAndChips.Fish {
         weight = { min = 0.005, max = 0.01 },
         length = { min = 0.10, max = 0.40 }
     },
-    pixel_size = { h = 76 },
+    pixel_size = { h = 76, w = 71 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     blueprint_compat = true,
@@ -761,7 +761,7 @@ FishAndChips.Fish {
         weight = { min = 0.2, max = 0.6 },
         length = { min = 0.16, max = 0.32 }
     },
-    pixel_size = { h = 88 },
+    pixel_size = { h = 88, w = 71 },
     atlas = "waffle_fish",
     pos = { x = 8, y = 0 },
     weight = 5,
@@ -891,7 +891,7 @@ FishAndChips.Fish {
         soup = 1,
         swamp = 1
     },
-    pixel_size = { h = 77 },
+    pixel_size = { h = 77, w = 71 },
     config = { extra = {
         cards_remaining = 8
     } },
@@ -1033,7 +1033,7 @@ FishAndChips.Fish {
         calm_pond = 0.6,
         pier = 0.6
     },
-    pixel_size = { h = 58 },
+    pixel_size = { h = 58, w = 71 },
     weight = 5,
     stats = {
         weight = { min = 0.3, max = 0.6 },
@@ -1072,7 +1072,7 @@ FishAndChips.Fish {
     on_catch = function(self, card) -- Determine rank when caught
         card.ability.immutable.rank = pseudorandom_element(SMODS.Ranks, 'fac_waffle_worn_book_rank').key
     end,
-    add_to_deck = function(self, card, from_debuff)  -- For adding via debug or other non-caught means
+    add_to_deck = function(self, card, from_debuff) -- For adding via debug or other non-caught means
         if not card.ability.immutable.rank then
             card.ability.immutable.rank = pseudorandom_element(SMODS.Ranks, 'fac_waffle_worn_book_rank').key
         end
@@ -1164,7 +1164,7 @@ FishAndChips.Fish {
     weight = 5,
     atlas = "waffle_fish",
     pos = { x = 3, y = 1 },
-    pixel_size = { h = 72 },
+    pixel_size = { h = 72, w = 71 },
     environments = {
         city_river = 1,
         pier = 1
@@ -1252,6 +1252,8 @@ FishAndChips.Fish {
                         delay = 1,
                         func = function()
                             SMODS.destroy_cards(card, { pinch_anim = true })
+                            SMODS.calculate_effect({ message = localize('k_fac_waffle_steel_ex'), colour = G.C.RED },
+                                card)
                             return true
                         end
                     })
@@ -1263,6 +1265,72 @@ FishAndChips.Fish {
     attributes = { "boss_blind" },
     set_card_type_badge = function(self, card, badges)
         badges[#badges + 1] = create_badge(localize('k_fac_waffle_gastropod'),
+            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
+            1.2)
+    end,
+}
+
+-- Pyukumuku
+FishAndChips.Fish {
+    key = "waffle_pyukumuku",
+    ppu_coder = { "waffle" },
+    ppu_artist = { "waffle" },
+    weight = 5,
+    atlas = "waffle_fish",
+    pos = { x = 5, y = 1 },
+    stats = {
+        weight = { min = 0.9, max = 1.8 },
+        length = { min = 0.25, max = 0.4 }
+    },
+    pixel_size = { w = 67, h = 86 },
+    environments = {
+        pier = 1
+    },
+    blueprint_compat = false,
+    config = {
+        extra = {
+            chips_stored = 0,
+            chips_per = 3
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = { card.ability.extra.chips_per, card.ability.extra.chips_stored }
+        }
+    end,
+    calculate = function(self, card, context)
+        if context.before and #context.full_hand == 1 then
+            context.full_hand[1].ability.perma_bonus = (context.full_hand[1].ability.perma_bonus or 0) +
+            card.ability.extra.chips_stored
+            card.ability.extra.chips_stored = 0
+            return {
+                message = localize('k_upgrade_ex'),
+                colour = G.C.CHIPS
+            }
+        end
+        if context.individual and context.cardarea == G.play then
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "chips_stored",
+                scalar_value = "chips_per",
+                no_message = true
+            })
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    card:juice_up()
+                    return true
+                end
+            }))
+        end
+    end,
+    on_catch = function(self, card)
+        if SMODS.pseudorandom_probability(card, "fac_waffle_pyukumuku_shiny", 1, 4096) or (G.GAME and G.GAME.fac_waffle_forced_shiny) then
+            card.children.center:set_sprite_pos({ x = 6, y = 1 })
+        end
+    end,
+    attributes = { "chips" },
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_fac_waffle_pokemon'),
             G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
             1.2)
     end,

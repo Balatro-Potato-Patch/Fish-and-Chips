@@ -247,7 +247,24 @@ return {
                     "these creatures live in hydrothermal",
                     "vents that reach temperatures of 400°C"
                 }
-            }
+            },
+
+            fish_fac_waffle_pyukumuku = {
+                name = "Pyukumuku",
+                text = {
+                    {
+                        "This {C:fac_fish}Fish{} stores {C:chips}+#1#{} Chips",
+                        "whenever a playing card is {C:attention}scored{}",
+                        "{C:inactive}(Currently {C:chips}#2#{C:inactive} Chips)"
+                    },
+                    {
+                        "If played hand contains",
+                        "{C:attention}exactly 1{} card, permanently",
+                        "add stored {C:chips}Chips{} to played card",
+                        "and reset stored {C:chips}Chips{}"
+                    }
+                }
+            },
 
         },
 
@@ -280,12 +297,10 @@ return {
             k_fac_waffle_book = "Book",
             k_fac_waffle_plus_hand = "+1 Hand",
             k_fac_waffle_mollusc = "Mollusc",
-            k_fac_waffle_gastropod = "Gastropod"
+            k_fac_waffle_gastropod = "Gastropod",
+            k_fac_waffle_steel_ex = "Steel!",
+            k_fac_waffle_pokemon = "Pokémon",
         },
-
-        v_dictionary = {
-            a_fac_waffle_hand
-        }
 
     }
 
