@@ -132,7 +132,7 @@ return {
                     name = "Jetfish",
                     text = {
                         {
-                            "If all played cards score",
+                            "If all played cards score on {C:attention}last played hand",
                             "Each card gives {C:mult}+#1#{} Mult"
                         }
                     },

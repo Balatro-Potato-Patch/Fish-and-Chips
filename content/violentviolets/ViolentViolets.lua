@@ -345,7 +345,6 @@ FishAndChips.Fish {
                         local sets = {'Tarot', 'Planet', 'Spectral'}
                         local random_set = pseudorandom_element(sets, 'random_consumable_set')
                         SMODS.add_card({ set = random_set, })     
-                        play_sound('fac_vv_fish')
                         SMODS.destroy_cards(card)
                         card:juice_up(0.3, 0.5)
                         return true
@@ -353,6 +352,7 @@ FishAndChips.Fish {
                     }))
                 end
                 delay(0.6)
+                play_sound('fac_vv_fish')
                 return true
                 end
 }
