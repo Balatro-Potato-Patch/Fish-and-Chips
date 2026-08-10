@@ -52,6 +52,13 @@ SMODS.Atlas{
     py = 95,
 }
 
+SMODS.Atlas{
+    key = "minty_credit",
+    path = "minty/minty.png",
+    px = 71,
+    py = 95,
+}
+
 SMODS.Attribute{ --Cards which do nothing
     key = "nothing",
     alias = {

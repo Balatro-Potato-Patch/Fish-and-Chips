@@ -1,7 +1,8 @@
 local once = true
 PotatoPatchUtils.Developer({
 	name = 'minty',
-	--atlas = 'fac_cards',
+	atlas = 'fac_minty_credit',
+    pos = {x=0, y=0},
 	colour = HEX("CA7CA7"),
     loc = true,
     click = function (self)
