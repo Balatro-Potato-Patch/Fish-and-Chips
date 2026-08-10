@@ -22,10 +22,10 @@ return {
                 name = "Dylan Fishmin",
                 text = {
                     "At the start of the",
-                    "round, this fish {C:attention}eats{}",
-                    "the {C:attention}leftmost{} fish and",
-                    "stores its weight as {C:mult}mult{}",
-                    "{C:inactive}(currently {C:mult}+#1#{}{C:inactive}){}"
+                    "round, {C:attention}eat{} the {C:attention}leftmost{}",
+                    "fish and stores its",
+                    "weight as {C:mult}mult{}",
+                    "{C:inactive}(currently {C:mult}+#1#{}{C:inactive} mult){}"
                 },
                 flavor = {
                     "\"I eat fishmin, like fishmin eat algae!\""
@@ -87,6 +87,18 @@ return {
                 flavor = {
                     "Everybody's gone fishin'",
                     "Fishin' U.S.A."
+                }
+            },
+            fish_fac_wombatCountry_yellow = {
+                name = "Yellowfish",
+                text = {
+                    "{X:mult,C:white,}x#1#{} mult.",
+                    "{C:red}self destructs{} when a",
+                    "{C:attention}playing card{} is destroyed"
+                },
+                flavor = {
+                    "A Vessel of Justice for the",
+                    "Depths of the UnderWater"
                 }
             },
         }

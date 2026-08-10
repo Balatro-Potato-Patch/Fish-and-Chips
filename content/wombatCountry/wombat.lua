@@ -298,7 +298,7 @@ FishAndChips.Fish({
 	},
 	stats = {
 		weight = {min = 0.3, max = 0.7},
-		length = {min = 0.2, max = 3.0}
+		length = {min = 0.025, max = 0.035}
 	},
 	config = {
 		extra = {
@@ -323,6 +323,44 @@ FishAndChips.Fish({
 		if context.joker_main then
             return {
                 mult = card.ability.extra.mult,
+            }
+        end
+	end
+})
+
+--yellowfish
+FishAndChips.Fish({
+    key = "wombatCountry_yellow",
+	weight = 10,
+	atlas = "wombatCountry_fish",
+	pos = { x = 3, y = 1 },
+	ppu_artist = { "wombatCountry" },
+	ppu_coder = { "wombatCountry" },
+	attributes = { "xmult", "destroy_card"},
+	environments = {
+		wormhole = 1,
+        pier = 0.25,
+	},
+	stats = {
+		weight = {min = 0.8, max = 22.2},
+		length = {min = 0.07, max = 0.825}
+	},
+	config = {
+		extra = {
+			xmult = 2
+		}
+	},
+	blueprint_compat = true,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.xmult} }
+	end,
+	calculate = function(self, card, context)
+		if context.remove_playing_cards then
+			SMODS.destroy_cards(card)
+		end
+		if context.joker_main then
+            return {
+                xmult = card.ability.extra.xmult,
             }
         end
 	end
