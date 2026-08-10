@@ -85,7 +85,7 @@ FishAndChips.Fish{
 			}
 		end
 	end,
-	on_catch = function (self, card)
+	add_to_deck = function (self, card, from_debuff)
 		G.GAME.fac_FooSqueax.tobies = G.GAME.fac_FooSqueax.tobies + 3
 	end
 }
