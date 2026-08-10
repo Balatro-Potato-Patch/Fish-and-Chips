@@ -162,10 +162,12 @@ return {
                 text = {
                     "When acquired, level up",
                     "a semi-random poker hand",
+                    --[[
                     "{C:inactive}(33% highest level,",
                     "{C:inactive}33% most played,",
                     "{C:inactive}22% lowest level,",
                     "{C:inactive}11% random visible)"
+                    --]]
                 }
             },
             fish_fac_minty_template = {
