@@ -59,7 +59,7 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     vec4 tex = Texel(texture, texture_coords);
     vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
 
-    vec3 fish_color = vec3(0,0,0 + (photon.x * 0.000001)) // Make this a function of fish_length, fish_weight
+    vec3 fish_color = vec3(0,0,0 + (photon.x * 0.000001)); // Make this a function of fish_length, fish_weight
     tex.rgb = tex.rgb * 0.6 + fish_color;
 
     return dissolve_mask(tex * colour, texture_coords, uv);

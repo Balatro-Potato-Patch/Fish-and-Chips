@@ -40,6 +40,6 @@ FishAndChips.Fish {
 }
 
 SMODS.Shader{
-	key = 'photon',
-	path = "pa_photon.fs"
+	key = 'pa_photon',
+	path = "pulsar&axy/fac_pa_photon.fs"
 }
