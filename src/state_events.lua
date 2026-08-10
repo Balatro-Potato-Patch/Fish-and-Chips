@@ -68,6 +68,8 @@ function Game:update(dt)
 	else
 		FishAndChips.stop_reel_sound()
 	end
+
+	FishAndChips.update_sound_volume()
 end
 
 function G:update_fac_fishing_moving(dt)

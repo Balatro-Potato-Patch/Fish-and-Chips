@@ -9,9 +9,9 @@ PotatoPatchUtils.Developer({
 
 PotatoPatchUtils.Developer({
 	name = 'Axy',
-	atlas = 'fac_cards',
-	pos = {x = 1, y = 0},
-	colour = G.C.YELLOW,
+	atlas = 'fac_pa_pulsarfish',
+	pos = {x = 4, y = 3},
+	colour = HEX('418A83'),
 	fac_partner = 'fac_Pulsar'
 })
 
