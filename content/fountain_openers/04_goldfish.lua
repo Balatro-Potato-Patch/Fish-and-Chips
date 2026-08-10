@@ -2,6 +2,7 @@ FishAndChips.Fish {
 	key = "fo_goldfish",
 	atlas = "fo_fish",
 	pos = { x = 2, y = 0 },
+    pixel_size = { w = 59, h = 95 },
 	weight = 3,
     blueprint_compat = false,
     eternal_compat = false,
