@@ -1,3 +1,10 @@
+SMODS.Atlas({
+	key = 'pa_axywoo',
+	path = 'pulsar&axy/axywoo.png',
+	px = 555,
+	py = 552
+})
+
 FishAndChips.Fish {
 	key = "pa_charcoal_biscuit",
 	weight = 8,
@@ -8,6 +15,7 @@ FishAndChips.Fish {
 	attributes = { "suit", "spades", "retrigger", "food" },
 	environments = {
 		chocolate_river = 1,
+		volcano = 1
 	},
 	impulse_min = 0.12,
 	impulse_max = 0.3, -- distance per impulse
@@ -25,7 +33,11 @@ FishAndChips.Fish {
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.repetitions}}
+        return {vars = {
+			card.ability.extra.repetitions,
+			-- elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 552 / 555, "fac_pa_axywoo") }
+			elements = { SMODS.create_sprite(0, 0, 552, 555, "fac_pa_axywoo") }
+		}}
 	end,
 	calculate = function(self, card, context)
         if context.repetition and context.cardarea == G.play and context.other_card:is_suit('Spades') then

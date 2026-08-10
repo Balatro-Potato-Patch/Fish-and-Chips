@@ -1,19 +1,60 @@
 #if defined(VERTEX) || __VERSION__ > 100 || defined(GL_FRAGMENT_PRECISION_HIGH)
-	#define MY_HIGHP_OR_MEDIUMP highp
+	#define PRECISION highp
 #else
-	#define MY_HIGHP_OR_MEDIUMP mediump
+	#define PRECISION mediump
 #endif
 
-extern MY_HIGHP_OR_MEDIUMP vec2 photon;
-extern MY_HIGHP_OR_MEDIUMP number dissolve;
-extern MY_HIGHP_OR_MEDIUMP number time;
-extern MY_HIGHP_OR_MEDIUMP vec4 texture_details;
-extern MY_HIGHP_OR_MEDIUMP vec2 image_details;
-extern bool shadow;
-extern MY_HIGHP_OR_MEDIUMP vec4 burn_colour_1;
-extern MY_HIGHP_OR_MEDIUMP vec4 burn_colour_2;
+extern PRECISION vec2 pa_photon;
+// extern uniform vec3 pa_photon;
 
-extern MY_HIGHP_OR_MEDIUMP float fish_length; // 400-700 nm
+extern PRECISION number dissolve;
+extern PRECISION number time;
+
+extern PRECISION vec4 texture_details;
+extern PRECISION vec2 image_details;
+
+extern bool shadow;
+extern PRECISION vec4 burn_colour_1;
+extern PRECISION vec4 burn_colour_2;
+
+vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv);
+
+extern PRECISION float fish_length; // 400-700 nm
+
+vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords )
+{
+    vec4 tex = Texel(texture, texture_coords);
+    vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
+
+    if (pa_photon.x == pa_photon.x * 2) {
+        colour.a = 0;
+    }
+    // From https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Map%3A_Organic_Chemistry_(Bruice)/13%3A_Mass_Spectrometry_Infrared_Spectroscopy_and_Ultraviolet_Visible_Spectroscopy/13.20%3A_The_Visible_Spectrum_and_Color
+    // vec3 fish_color = vec3(0,0,0 + (pa_photon.y * pa_photon.x * 0.000001));
+    vec3 fish_color = vec3(0,0,0 + (pa_photon.x * 0.000001));
+    if (fish_length > 625) {
+        fish_color = vec3(1.0, 0.0, 0.0);
+    } else if (fish_length > 590) {
+        fish_color = vec3(1.0, 0.40, 0.0);
+    } else if (fish_length > 565){
+        fish_color = vec3(1.0, 1.0, 0.0);
+    } else if (fish_length > 565){
+        fish_color = vec3(0.0, 0.60, 0.0);
+    } else if (fish_length > 565){
+        fish_color = vec3(0.0, 1.0, 1.0);
+    } else if (fish_length > 565){
+        fish_color = vec3(0.0, 0.0, 1.0);
+    } else {
+        fish_color = vec3(0.40, 0.0, 0.40);
+    }
+
+    tex.rgb = tex.rgb * 0.6 + fish_color;
+    // tex.rgb = fish_color;
+    // tex.rgba = vec4(1.0);
+
+    // return dissolve_mask(tex * colour, texture_coords, uv);
+    return dissolve_mask(tex, texture_coords, uv);
+}
 
 vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv)
 {
@@ -53,37 +94,9 @@ vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv)
     return vec4(shadow ? vec3(0.,0.,0.) : tex.xyz, res > adjusted_dissolve ? (shadow ? tex.a*0.3: tex.a) : .0);
 }
 
-vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords )
-{
-    vec4 tex = Texel(texture, texture_coords);
-    vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
-
-    // From https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Map%3A_Organic_Chemistry_(Bruice)/13%3A_Mass_Spectrometry_Infrared_Spectroscopy_and_Ultraviolet_Visible_Spectroscopy/13.20%3A_The_Visible_Spectrum_and_Color
-    vec3 fish_color = vec3(0,0,0 + (photon.x * 0.000001));
-    if (fish_length > 625) {
-        fish_color = vec3(1.0, 0.0, 0.0);
-    } else if (fish_length > 590) {
-        fish_color = vec3(1.0, 0.40, 0.0);
-    } else if (fish_length > 565){
-        fish_color = vec3(1.0, 1.0, 0.0);
-    } else if (fish_length > 565){
-        fish_color = vec3(0.0, 0.60, 0.0);
-    } else if (fish_length > 565){
-        fish_color = vec3(0.0, 1.0, 1.0);
-    } else if (fish_length > 565){
-        fish_color = vec3(0.0, 0.0, 1.0);
-    } else {
-        fish_color = vec3(0.40, 0.0, 0.40);
-    }
-
-    tex.rgb = tex.rgb * 0.6 + fish_color;
-
-    return dissolve_mask(tex * colour, texture_coords, uv);
-}
-
-extern MY_HIGHP_OR_MEDIUMP vec2 mouse_screen_pos;
-extern MY_HIGHP_OR_MEDIUMP float hovering;
-extern MY_HIGHP_OR_MEDIUMP float screen_scale;
+extern PRECISION vec2 mouse_screen_pos;
+extern PRECISION float hovering;
+extern PRECISION float screen_scale;
 
 #ifdef VERTEX
 vec4 position( mat4 transform_projection, vec4 vertex_position )

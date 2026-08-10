@@ -249,10 +249,11 @@ local pa_fish = {
             fish_fac_pa_box_jellyfish = {
                 name = "Box Jellyfish",
                 text = {
-                    'Use to store a selected ',
+                    'Use to copy selected ',
                     '{C:attention}Booster Pack{} in shop,',
-                    'Use during fishing to open',
+                    'Use again to open',
                     'stored {C:attention}Booster Pack{}',
+                    'Usable {C:attention}once{} per shop'
                 },
                 flavour = {
                     'Despite the name, it is',
@@ -337,7 +338,8 @@ local pa_fish = {
                 },
                 flavour = {
                     "Axy, how sure are you that",
-                    "you didn't burn this cookie?"
+                    "you didn't burn this cookie?",
+                    "munyah {element:1} wah"
                 }
             },
             fish_fac_pa_sushi = {
@@ -382,7 +384,9 @@ local pa_fish = {
             au_format = '%.4f AU', --Astronomical Units, or the mean distance between Earth and the Sun
             yg_format = '%.3f Yg', --Yottagrams, or septillions of grams
             nm_format = '%.f nm', --nanometers, 10^-9
-            k_fac_pa_fromg = "fromg"
+            k_fac_pa_fromg = "fromg",
+            k_fac_pa_box_jellyfish_open = "Open",
+            k_fac_pa_box_jellyfish_consume = "Consume",
         }
     }
 }

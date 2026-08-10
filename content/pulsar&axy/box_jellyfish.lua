@@ -22,7 +22,7 @@ FishAndChips.Fish {
 	blueprint_compat = true,
 	config = {
 		extra = {
-			has_booster = false
+			ate_booster = false
 		},
 		max_highlighted = 1,
 		immutable = {}
@@ -60,7 +60,7 @@ FishAndChips.Fish {
 				break
 			end
 		end
-        return (can_pick_booster and not can_use_booster) or (in_fishing_environment and can_use_booster)
+        return ((can_pick_booster and not can_use_booster) or (can_use_booster)) and not card.ability.extra.ate_booster
     end,
 	keep_on_use = function(self, card)
 		return true
@@ -87,9 +87,10 @@ FishAndChips.Fish {
 						func = function ()
 							_card:juice_up(0.3, 0.5)
 							play_sound('tarot1')
-							_card:open()
+							G.FUNCS.use_card({ config = { ref_table = _card } })
 							return true
 						end}))
+					card.ability.extra.ate_booster = true
 					break
 				end
 			end
@@ -107,11 +108,11 @@ FishAndChips.Fish {
             trigger = 'after',
             delay = 0.2,
             func = function()
-				local target_pack =	G.shop_booster.highlighted[1]
-                G.shop_booster:remove_card(G.shop_booster.highlighted[1])
+				local target_pack =	copy_card(G.shop_booster.highlighted[1])
 				G.fac_pa_box_jellyfish_area:emplace(target_pack)
 				target_pack.states.hover.can = false
 				target_pack.ability.fac_pa_box_jellyfish = card.ability.immutable.id
+				target_pack.cost = 0
 				local card_remove_ref = card.remove
 				function card:remove()
 					card_remove_ref(self)
@@ -120,8 +121,6 @@ FishAndChips.Fish {
 						target_pack = nil
 					end
 				end
-				target_pack.children.price:remove()
-				target_pack.children.price = nil
                 return true
             end
         }))
@@ -135,13 +134,18 @@ FishAndChips.Fish {
 			end}))
 		end
 	end,
+	calculate = function(self, card, context)
+		if context.starting_shop and card.ability.extra.ate_booster then
+			card.ability.extra.ate_booster = false
+		end
+	end,
 	button_key = function(self, card)
 		for _, _card in ipairs(G.fac_pa_box_jellyfish_area.cards) do
 			if _card.ability.fac_pa_box_jellyfish == card.ability.immutable.id then
-				return "Open"
+				return localize('k_fac_pa_box_jellyfish_open')
 			end
 		end
-		return "Consume"
+		return localize('k_fac_pa_box_jellyfish_consume')
 	end,
 }
 
