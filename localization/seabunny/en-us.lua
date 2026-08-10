@@ -229,9 +229,9 @@ return {
                 name = "Opal Moonfish",
                 text = {
                     {
-                        "Create a {C:planet}Planet{} card for",
+                        "At end of round,",
+                        "create a {C:planet}Planet{} card for",
                         "a random played {C:attention}poker hand",
-                        "at end of round"
                     },
                     {
                         "{C:inactive}Enchanted:",
@@ -252,9 +252,9 @@ return {
                 name = "Opal Moonfish",
                 text = {
                     {
-                        "Create a {C:planet}Planet{} card for",
+                        "At end of round,",
+                        "create a {C:planet}Planet{} card for",
                         "a random played {C:attention}poker hand",
-                        "at end of round"
                     },
                     {
                         "{C:dark_edition}Enchanted{}:",
