@@ -1,7 +1,7 @@
 FishAndChips.Fish {
 	key = "fo_fireball",
 	atlas = "fo_fish",
-	pos = { x = 5, y = 0 },
+	pos = { x = 4, y = 0 },
 	weight = 5,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
@@ -52,6 +52,14 @@ FishAndChips.Fish {
     end,
     can_use = function(self, card)
         return not card.ability.extra.active
+    end,
+    update = function(self, card, dt)
+        card.prev_active = card.prev_active or false
+        if card.ability.extra.active ~= card.prev_active then
+            card.children.center:set_sprite_pos{ x = card.ability.extra.active and 5 or 4, y = 0 }
+        end
+
+        card.prev_active = card.ability.extra.active
     end,
     keep_on_use = function(self, card)
         return true
