@@ -325,7 +325,7 @@ end
 
 fac_equi_get_mawray_xmult = function()
     local max_length, _ = fac_equi_get_longest_fish(G.fac_fish_area.cards)
-    local xmult = (3 * math.log10((2 * max_length) + 1) + 1)
+    local xmult = (3 * (math.log10(max_length + 0.5) + math.log10(2)) + 1)
     --note: would maybe be good if the player can know this formula in some way, but seems like too much to put into the description
     return xmult
 end
