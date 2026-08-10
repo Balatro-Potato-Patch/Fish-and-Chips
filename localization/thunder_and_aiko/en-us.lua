@@ -157,7 +157,7 @@ return {
 					"{C:inactive}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{C:inactive})",
 				},
 				flavor = {
-					"something funny here",
+					"fast sugarcane growth real!!!!",
 				},
 			},
 			fish_fac_reaper_leviathan = {

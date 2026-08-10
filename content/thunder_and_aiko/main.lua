@@ -688,8 +688,8 @@ FishAndChips.Fish({
 
 FishAndChips.Fish({
 	key = "phish",
-	-- atlas = "thunder_and_aiko",
-	-- pos = { x = 0, y = 1 },
+	atlas = "thunder_and_aiko",
+	pos = { x = 1, y = 1 },
 	weight = 5,
 	environments = {
 		wormhole = 1,
@@ -776,6 +776,8 @@ FishAndChips.Fish({
 	key = "message",
 	weight = 5,
 	treasure = true,
+	atlas = "thunder_and_aiko",
+	pos = { x = 2, y = 1 },
 	environments = {
 		garden = 1,
 		pier = 2,
@@ -858,6 +860,8 @@ FishAndChips.Fish({
 		pier = 1,
 		calm_pond = 1,
 	},
+	atlas = "thunder_and_aiko",
+	pos = { x = 3, y = 1 },
 	stats = {
 		weight = {
 			min = 1,
@@ -899,6 +903,8 @@ FishAndChips.Fish({
 	environments = {
 		aquifer = 1,
 	},
+	atlas = "thunder_and_aiko",
+	pos = { x = 4, y = 1 },
 	stats = {
 		weight = {
 			min = 25000,
