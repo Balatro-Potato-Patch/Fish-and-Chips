@@ -181,6 +181,7 @@ function CardArea:align_cards(...)
 					card.states.drag.can = true
 					card.T.w = card.T.w / 0.7
 					card.T.h = card.T.h / 0.7
+					card:set_sprites(card.config.center)
           card._fac_bucketed = false
 				end
 			elseif not card._fac_bucketed then
@@ -189,6 +190,7 @@ function CardArea:align_cards(...)
 				card.states.drag.can = false
 				card.T.w = card.T.w * 0.7
 				card.T.h = card.T.h * 0.7
+				card:set_sprites(card.config.center)
         card._fac_bucketed = true
 			end
 			if not card.states.drag.is and not card.disable_align then
@@ -479,6 +481,7 @@ G.FUNCS.fac_use_fish = function(e)
 			G.E_MANAGER:add_event(Event({
 				delay = 0.1,
 				func = function()
+					if G.GAME.fac_fish_expanded and not next(G.fac_fish_area.cards) then G.FUNCS.fac_open_fishing_menu() end
 					G.TAROT_INTERRUPT = prev_state
 					G.CONTROLLER.locks.use = false
 					return true;
