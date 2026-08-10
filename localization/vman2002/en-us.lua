@@ -129,6 +129,22 @@ return {
 					"and earn {C:money}$#4#"
 				}
 			},
+			fish_fac_vman2002_fuck = {
+				name = "todo name",
+				flavor = {"todo flavor text"},
+				text = {
+					"todo description"
+				}
+			},
+		},
+		Booster = {
+			fish_fac_vman2002_fuck = {
+				name = "todo name",
+				flavor = {"todo flavor text"},
+				text = {
+					"todo description"
+				}
+			},
 		},
 		PotatoPatch = {
 			fac_dev_vman2002 = {

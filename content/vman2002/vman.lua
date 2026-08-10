@@ -594,4 +594,36 @@ FishAndChips.Fish { --Navy Blade
 	blueprint_compat = false
 }
 
+local fuck = FishAndChips.Fish { --fuck
+	key = "vman2002_fuck",
+	atlas = "vman2002_fish",
+	pos = { x = 1, y = 0 },
+	weight = 7,
+	ppu_coder = { "VMan_2002" },
+	ppu_artist = { "VMan_2002" },
+	attributes = { "usable" }, 
+	config = {extra = 3, choose = 1},
+	stats = { weight = { min = 0.6*10, max = 0.6618*10.5 }, length = {min = 0.015*15, max = 0.0234*15.5}},
+	environments = {
+		aquifer = 0.9, swamp = 0.5
+	},
+	can_use = function(self, card)
+		return true
+	end,
+	use = function(self, card)
+		card.ability.set = "Booster"
+		card.cost = 0
+		card:open()
+	end,
+	usable = true,
+	blueprint_compat = false,
+	create_card = function(self, card)
+		return {set = "fac_Fish", area = G.pack_cards, skip_materialize = true, soulable = true, key_append = "unique_string_for_rng", edition = "e_foil"}
+	end
+}
+
+for k,v in pairs({"update_pack", --[["loc_vars", "process_loc_text", "generate_ui",]] "ease_background_colour", "create_UIBox"}) do
+	fuck[v] = SMODS.Booster[v]
+end
+
 --#endregion
