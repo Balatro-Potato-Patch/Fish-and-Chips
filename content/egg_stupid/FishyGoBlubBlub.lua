@@ -380,7 +380,7 @@ FishAndChips.Fish {
 	attributes = { "chips" },
 	config = {
 		extra = {
-			chips = 80,
+			chips = 100,
 			chips_mod = 20,
 		}
 	},
