@@ -65,6 +65,11 @@ return {
                         "{C:inactive,s:0.8}(if they could appear at",
                         "{C:inactive,s:0.8}that location.)"
                     }
+                },
+                flavour = {
+                    "Looking through the shard,",
+                    "you are able to see",
+                    "entirely new perspectives.",
                 }
             },
             fish_fac_mf_wa = {
@@ -105,6 +110,9 @@ return {
                 text = {
                     "Hands have {B:1,C:white}X#1#{} more",
                     "{C:chips}Chips{} and {C:mult}Mult"
+                },
+                flavour = {
+                    "Is that a Wormhole Reference ????",
                 }
             },
             fish_fac_mf_saturn_fish = {
