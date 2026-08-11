@@ -38,7 +38,7 @@ FishAndChips.Fish {
 		local ranks = {colours = {}, #card.ability.extra.sequence}
 		for i=1,card.ability.extra.sequence_max do
 			ranks.colours[#ranks.colours+1] = (card.ability.extra.current_position > i and FishAndChips.C.SAND_DOLLAR or G.C.UI.TEXT_DARK)
-			ranks[#ranks+1] = card.ability.extra.sequence[i] or {card_key = '', key = ''}
+			ranks[#ranks+1] = SMODS.Ranks[card.ability.extra.sequence[i]] or {card_key = '', key = ''}
 
 			local display_value = ranks[#ranks].key
 			for k,i in pairs({'Ace', 'King', 'Queen', 'Jack'}) do
@@ -54,7 +54,7 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play then
 			for k,v in ipairs(context.scoring_hand) do
-				local target = card.ability.extra.sequence and #card.ability.extra.sequence >= card.ability.extra.current_position and card.ability.extra.sequence[card.ability.extra.current_position].sort_id + 1 or nil
+				local target = card.ability.extra.sequence and #card.ability.extra.sequence >= card.ability.extra.current_position and SMODS.Ranks[card.ability.extra.sequence[card.ability.extra.current_position]].sort_id + 1 or nil
 				local matched_position =  v:get_id() == target
 				if matched_position then
 					card.ability.extra.current_position = card.ability.extra.current_position + 1
@@ -77,7 +77,7 @@ FishAndChips.Fish {
 
 				card.ability.extra.sell_value_increase = pseudorandom(pseudoseed(self.key), card.ability.extra.sequence_min, card.ability.extra.sequence_max)
 				for i=1,card.ability.extra.sell_value_increase do
-					table.insert(card.ability.extra.sequence, (pseudorandom_element(SMODS.Ranks, pseudoseed(self.key))))
+					table.insert(card.ability.extra.sequence, (pseudorandom_element(SMODS.Ranks, pseudoseed(self.key)).key))
 				end
 				return {message = localize('k_val_up'), colour = G.C.MONEY}
 			end
@@ -87,7 +87,7 @@ FishAndChips.Fish {
 		card.ability.extra.sell_value_increase = pseudorandom(pseudoseed(self.key), card.ability.extra.sequence_min, card.ability.extra.sequence_max)
 		card.ability.extra.current_position = 1
 		for i=1,card.ability.extra.sell_value_increase do
-			table.insert(card.ability.extra.sequence, (pseudorandom_element(SMODS.Ranks, pseudoseed(self.key))))
+			table.insert(card.ability.extra.sequence, (pseudorandom_element(SMODS.Ranks, pseudoseed(self.key)).key))
 		end
 	end,
 }
