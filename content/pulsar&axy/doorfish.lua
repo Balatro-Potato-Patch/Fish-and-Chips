@@ -32,7 +32,7 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		if card.config and card.config.center and card.config.center.set == "fac_Fish" and card.area and (card.area.config.collection or card.area.config.fac_compendium) then
 			for i=1,self.choose do
-				table.insert(card.ability.extra.drawn_fish, G.P_CENTERS["fish_fac_test"])
+				table.insert(card.ability.extra.drawn_fish, "fish_fac_test")
 			end
 		end
 		
@@ -42,7 +42,7 @@ FishAndChips.Fish {
 		card_status.colours[0] = HEX("c3222b")
 		if #card.ability.extra.drawn_fish > 0 then
 			for i=1,3 do
-				card_status[#card_status+1] = "'" .. localize({ type = 'name_text', set = "fac_Fish", key = card.ability.extra.drawn_fish[i].key }) .. "' "
+				card_status[#card_status+1] = "'" .. localize({ type = 'name_text', set = "fac_Fish", key = card.ability.extra.drawn_fish[i] }) .. "' "
 			end
 			if toggle > 0 then
 				card_status.colours[toggle] = FishAndChips.C.FISH
@@ -53,21 +53,6 @@ FishAndChips.Fish {
 	flavour_vars = function(self, info_queue, card)
 		return {vars = {colours = {HEX("c3222b")}}}
 	end,
-	load = function (self, card, card_table, other_card)
-		G.E_MANAGER:add_event(Event{
-			func = function ()
-				if G.GAME.fac_pa_doorfish_fish then
-					card.ability.extra.times_used = G.GAME.fac_pa_doorfish_fish[1]
-					card.ability.extra.blue_streak = G.GAME.fac_pa_doorfish_fish[2]
-					card.ability.extra.toggle = G.GAME.fac_pa_doorfish_fish[3]
-					for k,v in ipairs(G.GAME.fac_pa_doorfish_fish[4]) do
-						card.ability.extra.drawn_fish[k] = G.P_CENTERS[v]
-					end
-				end
-				return true
-			end,
-		})
-	end,
 	-- draw fish based on rank 0
 	-- rotate through four effects: inactive, fish 1/2/3
 	-- after successful catch of chosen fish, increase rank and redraw fish based on rank, stop at rank 9
@@ -75,11 +60,6 @@ FishAndChips.Fish {
 	add_to_deck = function(self, card, from_debuff)
 		--draw fish based on rank 0
 		card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
-		-- TARGET
-		G.GAME.fac_pa_doorfish_fish = {card.ability.extra.times_used, card.ability.extra.blue_streak, card.ability.extra.toggle, {}}
-		for k,v in ipairs(card.ability.extra.drawn_fish) do
-			G.GAME.fac_pa_doorfish_fish[4][k] = v.key
-		end
 		local seal_unlocked = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish and G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish.seal_unlocked
 		if seal_unlocked then
 			G.E_MANAGER:add_event(Event({
@@ -95,19 +75,14 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.fac_environment_changed then
 			card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
-			-- TARGET
-			G.GAME.fac_pa_doorfish_fish = {card.ability.extra.times_used, card.ability.extra.blue_streak, card.ability.extra.toggle, {}}
-			for k,v in ipairs(card.ability.extra.drawn_fish) do
-				G.GAME.fac_pa_doorfish_fish[4][k] = v.key
-			end
 		end
 
 		if context.fac_cast_rod then
-			G.GAME.fac_forced_fish = card.ability.extra.toggle > 0 and card.ability.extra.drawn_fish[card.ability.extra.toggle].key or G.GAME.fac_forced_fish
+			G.GAME.fac_forced_fish = card.ability.extra.toggle > 0 and card.ability.extra.drawn_fish[card.ability.extra.toggle] or G.GAME.fac_forced_fish
 		end
 
 		-- successful catch, doorfish active
-		if context.fac_end_fishing and context.fish == (card.ability.extra.drawn_fish[card.ability.extra.toggle].key) then
+		if context.fac_end_fishing and context.fish == (card.ability.extra.drawn_fish[card.ability.extra.toggle]) then
 			card.ability.extra.times_used = card.ability.extra.times_used + 1
 			local is_blue = context.fish_obj.config.center.attributes and (context.fish_obj.config.center.attributes.chips or context.fish_obj.config.center.attributes.xchips)
 			card.ability.extra.blue_streak = is_blue and card.ability.extra.blue_streak + 1 or 0
@@ -116,11 +91,6 @@ FishAndChips.Fish {
 		-- otherwise just change drawn fish
 		if context.fac_end_fishing then
 			card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
-			-- TARGET
-			G.GAME.fac_pa_doorfish_fish = {card.ability.extra.times_used, card.ability.extra.blue_streak, card.ability.extra.toggle, {}}
-			for k,v in ipairs(card.ability.extra.drawn_fish) do
-				G.GAME.fac_pa_doorfish_fish[4][k] = v.key
-			end
 			card.ability.extra.toggle = 0
 		end
 	end,
@@ -174,23 +144,23 @@ FishAndChips.Fish {
 		local seal_unlocked = fish_data and fish_data.fish_fac_pa_doorfish and fish_data.fish_fac_pa_doorfish.seal_unlocked
 		local only_treasure = seal_unlocked and card.ability.extra.blue_streak >= 8 and true or nil
 		for i=1,3 do
-			local chosen_fish = G.P_CENTERS[SMODS.poll_object({
+			local chosen_fish = SMODS.poll_object({
 				pool = fish_pool,
 				use_bait = fishing_active,
 				current_env = _force_env or G.GAME.fac_fishing_environment,
 				guaranteed = true,
-			})]
+			})
 			local timeout = 0
 			if only_treasure then
 				local out_of_time = false
 				local fish_is_treasure = (chosen_fish and chosen_fish.treasure)
 				while not out_of_time and not fish_is_treasure do
-					chosen_fish = G.P_CENTERS[SMODS.poll_object({
+					chosen_fish = SMODS.poll_object({
 						pool = fish_pool,
 						use_bait = fishing_active,
 						current_env = _force_env or G.GAME.fac_fishing_environment,
 						guaranteed = true,
-					})]
+					})
 					timeout = timeout + 1
 					out_of_time = timeout >= 15
 					fish_is_treasure = (chosen_fish and chosen_fish.treasure)
