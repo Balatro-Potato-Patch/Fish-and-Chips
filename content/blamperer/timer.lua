@@ -1,7 +1,7 @@
 local SECONDS_PER_MINUTE = 60
 FishAndChips.Fish {
     key = "blamperer_timer",
-    atlas = "fitch",
+    atlas = "blamperer_fitch",
     pos = { x = 2, y = 0 },
     ppu_coder = { "blamperer" },
     ppu_artist = { "blamperer" },

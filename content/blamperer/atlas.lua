@@ -1,6 +1,6 @@
 FishAndChips.Fish {
     key = "blamperer_atlas",
-    atlas = "fitch",
+    atlas = "blamperer_fitch",
     pos = { x = 6, y = 0 },
     ppu_coder = { "blamperer" },
     ppu_artist = { "blamperer" },

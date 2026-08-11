@@ -55,7 +55,7 @@ end
 
 FishAndChips.Fish {
     key = "blamperer_multisquid",
-    atlas = "fitch",
+    atlas = "blamperer_fitch",
     pos = { x = 9, y = 0 },
     ppu_coder = { "blamperer" },
     ppu_artist = { "blamperer" },

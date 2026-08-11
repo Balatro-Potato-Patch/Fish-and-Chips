@@ -6,7 +6,7 @@ SMODS.Atlas {
 }
 
 SMODS.Atlas {
-    key = "fitch",
+    key = "blamperer_fitch",
     path = "blamperer/fitch.png",
     px = 71,
     py = 95
