@@ -165,6 +165,15 @@ return {
 					"When life gives you lemons, uhhh....",
 				},
 			},
+			fish_fac_sg11_n_vekhi_ifoh = {
+				name = "Inverted Fish of Heaven",
+				text = {
+					"If scored hand contains {C:attention}#1#{} or more",
+					"{C:attention}Enhanced{} cards, remove their",
+					"{C:attention}Enhancement{} and add random ",
+					"{C:attention}Enhancement{} to all cards held in hand",
+				},
+			},
 		},
 		PotatoPatch = {
 			fac_sleepyg11 = {
