@@ -7,7 +7,7 @@ SMODS.Atlas({
 
 FishAndChips.Fish {
 	key = "pa_charcoal_biscuit",
-	weight = 8,
+	weight = 2,
 	atlas = "pa_pulsarfish",
 	pos = { x = 5, y = 3 },
 	ppu_artist = { "Pulsar" },

@@ -1,7 +1,7 @@
 -- lots of this code is from @foo54 on Discord, if we need help debugging, contact them
 FishAndChips.Fish {
 	key = "pa_box_jellyfish",
-	weight = 7,
+	weight = 4,
 	atlas = "pa_pulsarfish",
 	pos = { x = 2, y = 0 },
 	ppu_artist = { "Pulsar" },

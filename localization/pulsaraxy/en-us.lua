@@ -17,13 +17,13 @@ local pa_fish = {
                     "please don't fish me... :C"}, --replace :C with :pleading_face: if possible, including the corrisponding one in my fish
 
                     {"I'm currently working on my own mod",
-                    "{C:legendary}Nebula{}, that adds about 60 jokers",
+                    "{C:legendary}Nebula{} that adds about 60 jokers",
                     "and a new Consumable set",
-                    "there's a good chance it'll be out when this is!",
+                    "there's a good chance it'll be finished when this is!",
                     "{C:blue}https://github.com/PSRPulsar/Nebula"
                     },
 
-                    {"RANDOM QUOTE GOES HERE"}
+                    {"#1#"}
                 }
 			},
         },
@@ -56,8 +56,9 @@ local pa_fish = {
             fish_fac_pa_onering = {
                 name = "The One Fish",
                 text = {{
-                    "Disable all {B:blind,C:white}boss blinds{}",
-                    "Blind Size increases by {X:mult,C:white}X#1#{} each round while held",
+                    "Disable all {C:attention}Boss Blinds{}",
+                    "Blind Size temporarily increases by",
+                    "{B:blind,C:white}X#1#{} each round while held",
                     "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
                 },{
                     "If {C:attention}sold or destroyed{}:",
@@ -65,17 +66,18 @@ local pa_fish = {
                     "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
                 }},
                 flavour = {
-                    "Null fish to rule them all,",
-                    "null fish to find them,",
-                    "Null fish to bring them all",
+                    "One fish to rule them all,",
+                    "one fish to find them,",
+                    "One fish to bring them all",
                     "and in the darkness bind them."
                 }
             },
             fish_fac_pa_onering_1 = {
                 name = "The One Fish",
                 text = {{
-                    "Disable all {B:blind,C:white}boss blinds{}",
-                    "Blind Size increases by {X:mult,C:white}X#1#{} each round while held",
+                    "Disable all {C:attention}Boss Blinds{}",
+                    "Blind Size temporarily increases by",
+                    "{B:blind,C:white}X#1#{} each round while held",
                     "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
                 },{
                     "If {C:attention}sold or destroyed{}:",
@@ -92,8 +94,9 @@ local pa_fish = {
             fish_fac_pa_onering_2 = {
                 name = "The Two Fish",
                 text = {{
-                    "Disable all {B:blind,C:white}boss blinds{}",
-                    "Blind Size increases by {X:mult,C:white}X#1#{} each round while held",
+                    "Disable all {C:attention}Boss Blinds{}",
+                    "Blind Size temporarily increases by",
+                    "{B:blind,C:white}X#1#{} each round while held",
                     "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
                 },{
                     "If {C:attention}sold or destroyed{}:",
@@ -110,8 +113,9 @@ local pa_fish = {
             fish_fac_pa_onering_3 = {
                 name = "The Three Fish",
                 text = {{
-                    "Disable all {B:blind,C:white}boss blinds{}",
-                    "Blind Size increases by {X:mult,C:white}X#1#{} each round while held",
+                    "Disable all {C:attention}Boss Blinds{}",
+                    "Blind Size temporarily increases by",
+                    "{B:blind,C:white}X#1#{} each round while held",
                     "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
                 },{
                     "If {C:attention}sold or destroyed{}:",
@@ -128,8 +132,9 @@ local pa_fish = {
             fish_fac_pa_onering_4 = {
                 name = "The Four Fish",
                 text = {{
-                    "Disable all {B:blind,C:white}boss blinds{}",
-                    "Blind Size increases by {X:mult,C:white}X#1#{} each round while held",
+                    "Disable all {C:attention}Boss Blinds{}",
+                    "Blind Size temporarily increases by",
+                    "{B:blind,C:white}X#1#{} each round while held",
                     "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
                 },{
                     "If {C:attention}sold or destroyed{}:",
@@ -146,8 +151,9 @@ local pa_fish = {
             fish_fac_pa_onering_5 = {
                 name = "The Five Fish",
                 text = {{
-                    "Disable all {B:blind,C:white}boss blinds{}",
-                    "Blind Size increases by {X:mult,C:white}X#1#{} each round while held",
+                    "Disable all {C:attention}Boss Blinds{}",
+                    "Blind Size temporarily increases by",
+                    "{B:blind,C:white}X#1#{} each round while held",
                     "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
                 },{
                     "If {C:attention}sold or destroyed{}:",
@@ -164,8 +170,9 @@ local pa_fish = {
             fish_fac_pa_onering_6 = {
                 name = "The Six Fish",
                 text = {{
-                    "Disable all {B:blind,C:white}boss blinds{}",
-                    "Blind Size increases by {X:mult,C:white}X#1#{} each round while held",
+                    "Disable all {C:attention}Boss Blinds{}",
+                    "Blind Size temporarily increases by",
+                    "{B:blind,C:white}X#1#{} each round while held",
                     "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
                 },{
                     "If {C:attention}sold or destroyed{}:",
@@ -182,8 +189,9 @@ local pa_fish = {
             fish_fac_pa_onering_7 = {
                 name = "The Seven Fish",
                 text = {{
-                    "Disable all {B:blind,C:white}boss blinds{}",
-                    "Blind Size increases by {X:mult,C:white}X#1#{} each round while held",
+                    "Disable all {C:attention}Boss Blinds{}",
+                    "Blind Size temporarily increases by",
+                    "{B:blind,C:white}X#1#{} each round while held",
                     "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
                 },{
                     "If {C:attention}sold or destroyed{}:",
@@ -274,8 +282,9 @@ local pa_fish = {
                     '{s:0.8}{C:inactive}(Usable {C:attention}once{}{s:0.8}{C:inactive} per shop)'
                 },
                 flavour = {
-                    'Despite the name, it is',
-                    'not very good at boxing'
+                    'I wonder why nobody has',
+                    'tried doing an unboxing',
+                    "on one of these"
                 }
             },
             fish_fac_pa_blackhole = {

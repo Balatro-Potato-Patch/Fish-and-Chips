@@ -1,6 +1,6 @@
 FishAndChips.Fish {
 	key = "pa_shellphone",
-	weight = 5,
+	weight = 4,
 	atlas = "pa_pulsarfish",
 	pos = { x = 5, y = 1 },
 	ppu_artist = { "Pulsar" },
