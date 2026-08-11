@@ -203,7 +203,6 @@ return {
             fac_fo_cij_weight = "+5 attack, +0.5 attack multiplier",
             fac_fo_cij_length = "3 letters",
 
-            fac_fo_fucking_kill = "Fucking Kill",
             fac_fo_take = "Take",
 
             k_fac_fo_inactive = "Inactive...",
