@@ -11,7 +11,9 @@ return {
 			PotatoPatchDev_egg_node = {
 				name = "egg_node",
                 text = {
-                    "fart (fish art)",
+                    "my name egg_node",
+                    "i made the mimic",
+                    "and the fart (fish art)"
                 }
 			},
         },
