@@ -20,7 +20,13 @@ local function change_dimensionality(
 
     print("Starting transformation checks")
     -- local trigger_add = nil
-    local old_ability = card.ability
+    local old_fish_ability = {}
+    if card.ability and type(card.ability) == "table" then
+        for key, value in pairs(card.ability) do
+            old_fish_ability[key] = value
+        end
+    end
+
     local new_fish = G.P_CENTERS["fish_fac_" .. target_dimensions .. "dgreenfish"]
     card:set_ability(new_fish)
     -- if card.ability.perishable then
@@ -42,8 +48,8 @@ local function change_dimensionality(
     --     card:add_to_deck()
     -- end
 
-    if on_transforming then
-        on_transforming(card, old_ability, new_fish)
+    if on_transforming and type(on_transforming) == "function" then
+        on_transforming(card, old_fish_ability)
     end
 end
 
@@ -96,12 +102,7 @@ FishAndChips.Fish {
         ) then
             card.ability.extra.counter = card.ability.extra.counter + 1
             if card.ability.extra.counter >= card.ability.immutable.target_counter then
-                change_dimensionality(card, 1, function(card, old_ability, new_fish)
-                    print("Transforming from")
-                    print(old_ability)
-                    print("to")
-                    print(new_fish)
-                end)
+                change_dimensionality(card, 1)
             end
         end
 		if context.joker_main then return { chips = card.ability.extra.chips } end
@@ -155,12 +156,7 @@ FishAndChips.Fish {
         ) then
             card.ability.extra.counter = card.ability.extra.counter + 1
             if card.ability.extra.counter >= card.ability.immutable.target_counter then
-                change_dimensionality(card, 2, function(card, old_ability, new_fish)
-                    print("Transforming from")
-                    print(old_ability)
-                    print("to")
-                    print(new_fish)
-                end)
+                change_dimensionality(card, 2)
             end
         end
 		if context.joker_main then return { mult = card.ability.extra.mult } end
@@ -214,12 +210,19 @@ FishAndChips.Fish {
         ) then
             card.ability.extra.counter = card.ability.extra.counter + 1
             if card.ability.extra.counter >= card.ability.immutable.target_counter then
-                change_dimensionality(card, 3, function(card, old_ability, new_fish)
-                    print("Transforming from")
-                    print(old_ability)
-                    print("to")
-                    print(new_fish)
-                    new_fish.config.extra.xmult = old_ability.extra.xmult -- not working
+                change_dimensionality(card, 3, function(card, old_fish_ability)
+                    print("Transforming...")
+                    print("Old ability:")
+                    print(old_fish_ability)
+                    print("New ability")
+                    print(card.ability)
+                    print("Xmult to be transferred:")
+                    print(old_fish_ability.extra.xmult)
+                    print("Current Xmult of new fish:")
+                    print(card.ability.extra.xmult)
+                    card.ability.extra.xmult = old_fish_ability.extra.xmult
+                    print("New Xmult of new fish:")
+                    print(card.ability.extra.xmult)
                 end)
             end
         end
@@ -283,12 +286,19 @@ FishAndChips.Fish {
             })
             card.ability.extra.counter = card.ability.extra.counter + 1
             if card.ability.extra.counter >= card.ability.immutable.target_counter then
-                change_dimensionality(card, 4, function(card, old_ability, new_fish)
-                    print("Transforming from")
-                    print(old_ability)
-                    print("to")
-                    print(new_fish)
-                    new_fish.config.extra.xmult = old_ability.extra.xmult -- not working
+                change_dimensionality(card, 4, function(card, old_fish_ability)
+                    print("Transforming...")
+                    print("Old ability:")
+                    print(old_fish_ability)
+                    print("New ability")
+                    print(card.ability)
+                    print("Xmult to be transferred:")
+                    print(old_fish_ability.extra.xmult)
+                    print("Current Xmult of new fish:")
+                    print(card.ability.extra.xmult)
+                    card.ability.extra.xmult = old_fish_ability.extra.xmult
+                    print("New Xmult of new fish:")
+                    print(card.ability.extra.xmult)
                 end)
             end
         end
