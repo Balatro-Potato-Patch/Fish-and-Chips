@@ -183,11 +183,17 @@ return {
             fish_fac_ghostsalt_fishwav = {
                 name = "fish.wav",
                 text = {
-                    "Most sound effects",
-                    "are {C:attention}randomised{}"
+                    {
+                        "Discard exactly {C:attention}#1#{}",
+                        "cards to earn {C:money}$#2#{}"
+                    },
+                    {
+                        "Most sound effects",
+                        "are {C:attention}randomised{}"
+                    }
                 },
                 flavor = {
-                    "blah"
+                    "Fish!"
                 }
             },
             fish_fac_ghostsalt_eelongtea = {
@@ -229,10 +235,8 @@ return {
             PotatoPatchDev_GhostSalt = {
                 name = "GhostSalt",
                 text = {
-                    "Also check out my",
-                    "other mods, such as",
-                    "{C:tarot}Phanta{}, {C:blue}BFDI{}, {C:attention}Catan{}, {C:red}Ghost{}",
-                    "{C:red}Cards{} and {C:tarot}Ghostposting!{}",
+                    "Also check out my other mods, such as",
+                    "{C:tarot}Phanta{}, {C:blue}BFDI{}, {C:attention}Catan{}, {C:red}Ghost Cards{} and {C:tarot}Ghostposting!{}",
                     "{element:1}",
                     "{C:red,E:2,S:0.8}(Don't click me!){}"
                 }

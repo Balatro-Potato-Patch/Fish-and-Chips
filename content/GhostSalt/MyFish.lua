@@ -1319,7 +1319,7 @@ FishAndChips.Fish {
 	key = "ghostsalt_fishwav",
 	atlas = "GhostSaltMyFish",
 	pos = { x = 2, y = 3 },
-	config = { extra = {} },
+	config = { extra = { discards = 2, money = 3 } },
 	weight = fac_ghostsalt_common_weight,
 	stats = { weight = { min = 0, max = 0 }, length = { min = 0.01, max = 0.05 } },
 	ppu_coder = { "GhostSalt" },
@@ -1329,11 +1329,13 @@ FishAndChips.Fish {
 		wormhole = 10
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.word, card.ability.extra.xmult } }
+		return { vars = { card.ability.extra.discards, card.ability.extra.money } }
 	end,
 	blueprint_compat = true,
 	calculate = function(self, card, context)
-
+		if context.pre_discard and #context.full_hand == card.ability.extra.discards then
+			return { dollars = card.ability.extra.money }
+		end
 	end,
 	pronouns = "it_its"
 }

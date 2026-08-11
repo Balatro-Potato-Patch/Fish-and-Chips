@@ -210,7 +210,6 @@ function FishAndChips.verify_submissions()
 			local in_envs = SMODS.table_size(fish.environments)
 			assert(in_envs <= FishAndChips.fish_environment_limit or dev_obj.ignore_limits, "Fish " .. fish.key .. " is in " .. in_envs .. " environments when the limit is " .. FishAndChips.fish_environment_limit)
 		end
-		totw = total_weight
 		local scalar = math.min(1, FishAndChips.submission_weight_limit / total_weight)
 			assert(not (scalar < 1) or dev_obj.ignore_limits, "Incorrect weight submission from " .. dev .. ": " .. total_weight)
 			assert(treasure_fish_count <= 1 or dev_obj.ignore_limits, "More than one fish marked treasure = true from " .. dev .. "...only one per dev team is allowed")

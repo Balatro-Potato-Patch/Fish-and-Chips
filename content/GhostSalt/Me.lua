@@ -104,7 +104,7 @@ PotatoPatchUtils.Developer({
 		end
 		G.fac_ghostsalt_random_fish = SMODS.add_card {
 			area = G.fac_ghostsalt_random_fish_area,
-			key = pseudorandom_element(next(candidates) and candidates or { "fish_fac_ghostsalt_ghostfish" }, "fac_ghostsalt_random_credit_fish"),
+			key = not next(candidates) and "fish_fac_ghostsalt_ghostfish" or candidates[math.random(#candidates)],
 			skip_materialize = true
 		}
 
