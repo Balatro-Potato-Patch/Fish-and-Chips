@@ -20,11 +20,16 @@ return {
             },
             fish_fac_Parsa_facfile = {
         name = 'N/A.fac',
+        text = {
+            "{C:attention}#1#/2{}",
+            "{ppu_bubble:1}"
+    
+        },
         flavor = {
             "Wait...",
             "where did you find that?",
                 }
-            },
+        },
     }
 }
 }
