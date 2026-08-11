@@ -35,16 +35,19 @@ FishAndChips.Fish {
             })
         end
 
-		if card.ability.extra.rerolls > 0 and context.fac_environment_changed then
-            SMODS.scale_card(card, {
-                ref_table = card.ability.extra,
-                ref_value = "rerolls",
-                scalar_value = "reroll_gain",
-				operation = '-'
-            })
-			return {
-				dollars = 5
-			}
+		if card.ability.extra.rerolls > 0 and (G.GAME.fishing and not FishAndChips.in_tutorial) then
+			G.GAME.fac_environment_reroll_cost = 0
+			if context.fac_environment_changed then
+				SMODS.scale_card(card, {
+					ref_table = card.ability.extra,
+					ref_value = "rerolls",
+					scalar_value = "reroll_gain",
+					operation = '-'
+				})
+			end
+			-- return {
+			-- 	dollars = 5
+			-- }
 		end
 	end,
 }
