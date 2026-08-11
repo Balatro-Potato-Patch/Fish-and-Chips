@@ -7,9 +7,16 @@ return {
                     "Sea Otter"
                 },
                 flavor = {
-                    "Eats fish."
+                    "At the start of a round, Eats the rightmost fish.",
+                    "If there are no fish, runs away."
                 }
             }
         },
+    },
+    misc = {
+        dictionary = {
+            ph_otter_eat = "chomp!",
+            ph_otter_run = "weaseled away!"
+        }
     }
 }
