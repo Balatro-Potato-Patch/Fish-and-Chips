@@ -127,3 +127,44 @@ FishAndChips.Fish({
         end
     end,
 })
+
+-- TODO: visual scaling
+FishAndChips.Fish({
+    key = 'r_e_ominous_whale',
+    atlas = 'r_e_fish',
+    pos = {x = 0, y = 2},
+    ppu_coder = {'eremel'},
+    ppu_artist = {'radiation'},
+    weight = 7,
+    environments = {
+        styx = 5,
+        volcano = 3,
+        backroom = 1
+    },
+    attributes = {'spades', 'discard', 'mult', 'suit'},
+    stats = {
+        weight = {min = 1, max = 2},
+        length = {min = 90000, max = 180000},
+    },
+    config = {extra = {mult = 4, target_suit = 'Spades'}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {localize(card.ability.extra.target_suit, 'suits_singular'), card.ability.extra.mult, card.ability.extra.mult * self:count_spades()}}
+    end,
+    count_spades = function(self)
+        if not G.discard then return 0 end
+        local spades = 0
+        for _, card in ipairs(G.discard.cards) do
+            if card:is_suit(self.config.extra.target_suit) then spades = spades + 1 end
+        end
+        return spades
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local spades = self:count_spades()
+            return {
+                mult = card.ability.extra.mult * spades
+            }
+        end
+    end,
+})
+

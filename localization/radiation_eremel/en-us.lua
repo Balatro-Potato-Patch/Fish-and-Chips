@@ -32,7 +32,19 @@ return {
                 flavour = {
                     'A true miracle of {E:1,C:fac_suits}adaptability'
                 }
-            },            
+            },
+            fish_fac_r_e_ominous_whale = {
+                name = 'Ominous Whale',
+                text = {
+                    '{C:mult}+#2#{} Mult for each {C:spades}#1#{} card',
+                    'in your discard pile this round',
+                    '{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)'
+                },
+                flavour = {
+                    'Grows larger with each soul it consumes.',
+                    'Thrives near sacrificial sites.'
+                }
+            },
         },
     },
     misc = {
