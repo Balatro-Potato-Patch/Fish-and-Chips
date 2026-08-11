@@ -3,6 +3,23 @@ local pa_fish = {
 		PotatoPatch = {
 			PotatoPatchDev_Axy = {
 				name = "Axy",
+                text = {
+                    {
+                        "Am {V:1}Axy{}, did most of the coding and",
+                        "one shader for Axy's and {C:fac_fish}Pulsar's{} fish",
+                    },
+                    {
+                        "Am a {V:1}wob{} {element:1}",
+                        "that likes plushies and cookies",
+                        "and is most certainly not a {C:fac_fish}fish{}, but am {C:dark_edition}witch{}!"
+                    },
+                    {
+                        "Made a mod called Berry's Legendaries",
+                        "around mid-2025 as our first ever mod!",
+                        "It adds a few {C:legendary}legendaries{} based on some friends",
+                        "Can be found at {C:blue}https://github.com/TonyKrZa/BerryLegendaries"
+                    }
+                }
 			},
 			PotatoPatchDev_Pulsar = {
 				name = "Pulsar",

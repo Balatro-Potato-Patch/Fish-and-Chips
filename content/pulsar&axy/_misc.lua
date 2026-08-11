@@ -24,7 +24,11 @@ PotatoPatchUtils.Developer({
 			elements = { SMODS.create_sprite(0, 0, 0.35, 0.35, "fac_pa_pulsarplead") }
         }}
     end,
-
+	click = function(self)
+		play_sound('button',1,0.3)
+		love.system.openURL("https://github.com/PSRPulsar")
+		self:juice_up()
+	end,
 })
 
 PotatoPatchUtils.Developer({
@@ -33,7 +37,21 @@ PotatoPatchUtils.Developer({
 	pos = {x = 4, y = 3},
 	colour = HEX('418A83'),
 	fac_partner = 'fac_Pulsar',
-	pronouns = 'they_them'
+	pronouns = 'they_them',
+	loc = true,
+	loc_vars = function(self, info_queue, card)
+		return {vars = {
+			colours = {
+				HEX('418A83FF')
+			},
+			elements = { SMODS.create_sprite(0, 0, 0.35, 0.35, "fac_pa_axywob") }
+		}}
+	end,
+	click = function(self)
+		play_sound('button',1,0.3)
+		love.system.openURL("https://github.com/TonyKrZa/BerryLegendaries/tree/release")
+		self:juice_up()
+	end,
 })
 
 SMODS.Atlas({
@@ -64,6 +82,13 @@ SMODS.Atlas({
 	path = 'pulsar&axy/pulsarplead.png',
 	px = 113,
 	py = 113
+})
+
+SMODS.Atlas({
+	key = 'pa_axywob',
+	path = 'pulsar&axy/axywob.png',
+	px = 800,
+	py = 800
 })
 
 --#endregion
