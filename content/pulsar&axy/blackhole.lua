@@ -1,6 +1,6 @@
 FishAndChips.Fish {
 	key = "pa_blackhole",
-	weight = 4,
+	weight = 3,
 	atlas = "pa_pulsarfish",
 	pos = { x = 1, y = 2 },
 	ppu_artist = { "Pulsar" },
