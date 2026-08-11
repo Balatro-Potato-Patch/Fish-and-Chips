@@ -618,6 +618,90 @@ FishAndChips.Fish{  --Chi-Yu
   end
 }
 
+FishAndChips.Fish{  --Fish in a Birdcage
+  key = 'plaggeromega_fishcage',
+  atlas = 'plaggeromega_fish',
+  pos = {x=2,y=2},
+  weight = 2,
+  treasure = true,
+  environments = {},
+  attributes = {'xmult'},
+  stats = {
+    weight = {min = 0.4, max = 0.4},
+    length = {min = 0.44, max = 0.44}
+  },
+  ppu_coder = {'PLagger'},
+  ppu_artist = {'Omegaflowey18'},
+  blueprint_compat = true,
+  cost = 4,
+  config = {extra = {xmult = 4}, freed = false},
+
+  loc_vars = function (self, info_queue, card)
+    info_queue[#info_queue + 1] = G.P_CENTERS.m_steel
+    info_queue[#info_queue + 1] = G.P_SEALS.Blue
+
+    info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
+    info_queue[#info_queue + 1] = G.P_SEALS.Red
+
+    info_queue[#info_queue + 1] = G.P_CENTERS.m_gold
+    info_queue[#info_queue + 1] = G.P_SEALS.Purple
+
+    info_queue[#info_queue + 1] = G.P_CENTERS.m_bonus
+    info_queue[#info_queue + 1] = G.P_SEALS.Gold
+
+    if G.playing_cards then
+      local blue_steel_club_4 = false
+      local red_lucky_heart_4 = false
+      local purple_gold__diamond_4 = false
+      local gold_bonus_spade_4 = false
+      for _, playing_card in ipairs(G.playing_cards) do
+        if playing_card:get_id() == 4 then
+          if playing_card.seal == 'Blue' and SMODS.has_enhancement(playing_card, 'm_steel') and playing_card:is_suit('Clubs') then
+            blue_steel_club_4 = true
+          elseif playing_card.seal == 'Red' and SMODS.has_enhancement(playing_card, 'm_lucky') and playing_card:is_suit('Hearts') then
+            red_lucky_heart_4 = true
+          elseif playing_card.seal == 'Purple' and SMODS.has_enhancement(playing_card, 'm_gold') and playing_card:is_suit('Diamonds') then
+            purple_gold__diamond_4 = true
+          elseif playing_card.seal == 'Gold' and SMODS.has_enhancement(playing_card, 'm_bonus') and playing_card:is_suit('Spades') then
+            gold_bonus_spade_4 = true
+          end
+        end
+      end
+
+      if blue_steel_club_4 and red_lucky_heart_4 and purple_gold__diamond_4 and gold_bonus_spade_4 and not card.ability.freed then
+        card:juice_up()
+        card.ability.freed = true
+      end
+    end
+    return{
+      vars = {card.ability.extra.xmult},
+      key = card.ability.freed and 'fish_fac_plaggeromega_freedfish' or nil
+    }
+  end,
+
+  calculate = function (self,card,context)
+    if card.ability.freed and context.individual and context.cardarea == G.play and context.other_card:get_id() == 4 then
+      return{
+        xmult = card.ability.extra.xmult
+      }
+    end
+  end,
+
+  draw = function (self, card, layer)
+      if (layer == 'card' or layer == 'both') and (card.config.center.discovered or card.bypass_discovery_center) then
+          if card.ability.freed then
+            if G.GAME.fac_fish_expanded then
+              card.children.center:set_sprite_pos({x=4, y=2})
+            else
+              card.children.center:set_sprite_pos({x=3, y=2})
+            end
+          else
+              card.children.center:set_sprite_pos({x=2, y=2})
+          end
+      end
+  end
+}
+
 ----------
 ---UI BULLSHIT
 ----------
@@ -637,7 +721,7 @@ function fac_plaggeromega_create_upkeep_cost_menu(upkeep, object)
     1.05 * G.CARD_W,
     1.05 * G.CARD_H,
     { card_limit = 1, type = 'joker', highlight_limit = 0, negative_info = true, no_card_count = true})
-  local card_copy = copy_card(object, nil, 1)
+  local card_copy = SMODS.copy_card(object, {no_add = true})
   card_copy.states.hover.can = true
   temp_area:emplace(card_copy)
 

@@ -171,6 +171,37 @@ return {
                     'sea of lava it creates by',
                     'melting rock and sand.'
                 }
+            },
+            fish_fac_plaggeromega_fishcage = {
+                name = 'Fish in a Birdcage',
+                text = {
+                    'Have a {C:blue}Blue Seal {C:attention}Steel 4{} of {C:clubs}Clubs,',
+                    'a {C:red}Red Seal {C:attention}Lucky 4{} of {C:hearts}Hearts',
+                    'a {C:purple}Purple Seal {C:attention}Gold 4{} of {C:diamonds}Diamonds',
+                    'and a {C:attention}Gold Seal Bonus 4{} of {C:spades}Spades',
+                    'in your {C:attention}Full Deck{} to free this {C:fac_fish}Fish'
+                },
+                flavour = {
+                    'I\'m a fish inside a birdcage',
+                    'My brother always sings me songs',
+                    'With his beak, he tries to soothe me',
+                    'He makes me feel that I belong'
+                }
+            },
+            fish_fac_plaggeromega_freedfish = {
+                name = 'Freed Fish',
+                text = {
+                    'Each played {C:attention}4{} gives',
+                    '{X:mult,C:white}X#1#{} Mult when scored'
+                },
+                flavour = {
+                    'So carry me from these walls',
+                    'Brother of mine',
+                    'Show me the world outside',
+                    'It has to be true',
+                    'I\'m counting on you',
+                    'To be my wings and my eyes'
+                }
             }
         }
     },
