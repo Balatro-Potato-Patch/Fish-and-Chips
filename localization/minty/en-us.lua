@@ -266,7 +266,20 @@ return {
             PotatoPatchDev_minty = {
                 name = "mys. minty",
                 text = {
-                    {"Hi again! Mrrp mrew :3"}
+                    {
+                        "Hi again! Mrrp mrew :3"
+                    },
+                    {
+                        "I went solo this time cause",
+                        "it seemed like fun :3 :3"
+                    },
+                    {
+                        "Hope you like scribbles",
+                        "and line boil! :3 :3 :3",
+                        "{s:0.8}(If you don't like line boil,",
+                        "{s:0.8}turn on Reduced Motion",
+                        "{s:0.8}in the vanilla config.)"
+                    }
                 }
             }
         }
