@@ -20,7 +20,7 @@ FishAndChips.Fish {
 		}
 	},
 	stats = {
-		length = { min = 0.278, max = 0.278},  --0.0278m , 277.77g based on starship heat tile measurements, not sure where density was from?
+		length = { min = 0.278, max = 0.278},
 		weight = { min = 0.2777, max = 0.2777}
 	},
 	loc_vars = function(self, info_queue, card)
@@ -63,21 +63,19 @@ FishAndChips.Fish {
 	end
 }
 
--- function G.FUNCS.fac_reroll_location (e)
-local G_funcs_fac_reroll_location_ref = G.FUNCS.fac_reroll_location
-function G.FUNCS.fac_reroll_location(e)
-	print('In reroll location function')
-	for k,v in pairs(G.fac_fish_area.cards) do
-		print(v.ability.extra)
-		if v.config.center.key == 'fish_fac_pa_heatshield' and v.ability.extra.cost_set == true then
-			print('key is read')
-			if v.ability.extra.rerolls > 0 then
-				G.GAME.fac_environment_reroll_cost = 0
-			elseif v.ability.extra.rerolls <= 0 then
-				G.GAME.fac_environment_reroll_cost = v.ability.extra.original_cost
-				v.ability.extra.cost_set = false
+local FishAndChips_fishing_button_ref = FishAndChips.fishing_button
+function FishAndChips.fishing_button(key, text, price)
+	if price then
+		for k,v in pairs(G.fac_fish_area.cards) do
+			if v.config.center.key == 'fish_fac_pa_heatshield' and v.ability.extra.cost_set == true then
+				if v.ability.extra.rerolls > 0 then
+					G.GAME.fac_environment_reroll_cost = 0
+				elseif v.ability.extra.rerolls <= 0 then
+					G.GAME.fac_environment_reroll_cost = v.ability.extra.original_cost
+					v.ability.extra.cost_set = false
+				end
 			end
 		end
 	end
-	G_funcs_fac_reroll_location_ref(e)
+	return FishAndChips_fishing_button_ref(key, text, price)
 end
