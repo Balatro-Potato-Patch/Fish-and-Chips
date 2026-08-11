@@ -17,7 +17,7 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_DoodlenautsAvatar',
     pos = {x = 0, y = 0},
 	colour = HEX('ff00ff'),
-	fac_partner = 'Buckaroodle' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+	fac_partner = 'fac_Buckaroodle' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
 })
 
 PotatoPatchUtils.Developer({
@@ -25,7 +25,7 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_DoodlenautsAvatar',
 	pos = {x = 1, y = 0},
 	colour = G.C.GREEN,
-	fac_partner = 'F404'
+	fac_partner = 'fac_F404'
 })
 
 -- Bottom Feeder
@@ -33,6 +33,7 @@ FishAndChips.Fish {
 	key = 'bottomfeeder',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 2, y = 1 },
+	pixel_size = { w = 53, h = 75 },
 	weight = 5, --common / uncommon
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
@@ -99,6 +100,7 @@ FishAndChips.Fish {
 	key = 'bigbasswheel',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 1, y = 1 },
+	pixel_size = { w = 57, h = 57 },
 	weight = 5, --common
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
@@ -177,6 +179,7 @@ FishAndChips.Fish {
 	key = 'britishflag',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 2, y = 0 },
+	pixel_size = { w = 65, },
 	weight = 5, -- common
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
@@ -224,6 +227,7 @@ FishAndChips.Fish {
 	key = 'bullfrog',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 0, y = 1 },
+	pixel_size = { w = 51, h = 33 },
 	weight = 5, --common/uncommon
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
@@ -271,6 +275,7 @@ FishAndChips.Fish {
 	key = 'catfish',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 1, y = 0 },
+	pixel_size = { h = 53 },
 	weight = 5, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
@@ -300,6 +305,7 @@ FishAndChips.Fish {
 	key = 'eyelessfish',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 4, y = 0 },
+	pixel_size = { w = 55, h = 79 },
 	weight = 5, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
@@ -352,6 +358,7 @@ FishAndChips.Fish {
 	key = 'moonjelly',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 3, y = 0 },
+	pixel_size = { w = 49, h = 47 },
 	weight = 5, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
@@ -400,51 +407,21 @@ FishAndChips.Fish {
 		card.ability.extra.suit = _suit.key
 	end,
 	use = function(self, card, area)
-		G.E_MANAGER:add_event(Event({
+		for i = 1, #G.hand.cards do
+			local percent = 0.85 + (i - 0.999) / (#G.hand.cards - 0.998) * 0.3
+			G.hand.cards[i]:flip()
+			G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.4,
             func = function()
-                play_sound('tarot1')
-                card:juice_up(0.3, 0.5)
-                return true
+				play_sound('tarot1', percent, 0.6)
+                assert(SMODS.change_base(G.hand.cards[i], card.ability.extra.suit))
+                G.hand.cards[i]:flip()
+				G.hand.cards[i]:juice_up(0.3, 0.3)
+				return true
             end
-        }))
-        for i = 1, #G.hand.cards do
-            local percent = 1.15 - (i - 0.999) / (#G.hand.cards - 0.998) * 0.3
-            G.E_MANAGER:add_event(Event({
-                trigger = 'after',
-                delay = 0.15,
-                func = function()
-                    G.hand.cards[i]:flip()
-                    play_sound('card1', percent)
-                    G.hand.cards[i]:juice_up(0.3, 0.3)
-                    return true
-                end
-            }))
+        	}))
         end
-        for i = 1, #G.hand.cards do
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    local _card = G.hand.cards[i]
-                    assert(SMODS.change_base(_card, card.ability.extra.suit))
-                    return true
-                end
-            }))
-        end
-        for i = 1, #G.hand.cards do
-            local percent = 0.85 + (i - 0.999) / (#G.hand.cards - 0.998) * 0.3
-            G.E_MANAGER:add_event(Event({
-                trigger = 'after',
-                delay = 0.15,
-                func = function()
-                    G.hand.cards[i]:flip()
-                    play_sound('tarot2', percent, 0.6)
-                    G.hand.cards[i]:juice_up(0.3, 0.3)
-                    return true
-                end
-            }))
-        end
-        delay(0.5)
 	end,
 	can_use = function(self, card)
         return G.hand and #G.hand.cards > 1
@@ -456,6 +433,7 @@ FishAndChips.Fish {
 	key = 'loanshark',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 3, y = 1 },
+	pixel_size = { w = 47, h = 71 },
 	weight = 5, --common/uncommon
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
@@ -498,7 +476,7 @@ FishAndChips.Fish {
             delay = 0.4,
             func = function()
                 play_sound('timpani')
-                card:juice_up(0.3, 0.5)
+                card:juice_up(0.3, 0.3)
                 ease_dollars(card.ability.extra.money_loaned, true)
                 return true
             end
@@ -522,10 +500,8 @@ FishAndChips.Fish {
 
 local can_sell_card_ref = Card.can_sell_card
 function Card:can_sell_card(context)
-	if self.ability.extra and type(self.ability.extra) == 'table' and self.ability.extra.loanshark_current_debt ~= nil then
-		if self.ability.extra.loanshark_current_debt > 0 then
-			return false
-		end
+	if self.ability.extra and type(self.ability.extra) == 'table' and ((self.ability.extra.loanshark_current_debt ~= nil and self.ability.extra.loanshark_current_debt > 0) or (self.ability.extra.leech ~= nil)) then -- prevents loanshark from being sold when still in debt
+		return false
 	end
 	return can_sell_card_ref(self, context)
 end
@@ -535,6 +511,7 @@ FishAndChips.Fish {
 	key = 'neontetra',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 0, y = 2 },
+	pixel_size = { w = 47, h = 19 },
 	weight = 5, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
@@ -561,7 +538,7 @@ FishAndChips.Fish {
 		aquifer = 0.5
 	},
 	loc_vars = function(self, info_queue, card)
-		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom, 'fac_bigbasswheel')
+		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom, 'fac_neontetra')
 		return {
 			vars = {
 				numerator,
@@ -585,6 +562,7 @@ FishAndChips.Fish {
 	key = 'wantedposter',
 	atlas = 'DoodlenautsFish',
 	pos = { x = 0, y = 0 },
+	pixel_size = { w = 53, h = 85 },
 	weight = 5, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
@@ -650,7 +628,8 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = 'goldfishcrackers',
 	atlas = 'DoodlenautsFish',
-	pos = { x = 0, y = 0 },
+	pos = { x = 3, y = 2 },
+	pixel_size = { w = 33, h = 43 },
 	weight = 5, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
@@ -697,4 +676,418 @@ FishAndChips.Fish {
 			end
 		end
 	end
+}
+
+-- Buckaroodlefish
+FishAndChips.Fish {
+	key = 'buckaroodlefish',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 3, y = 3 },
+	pixel_size = { w = 57, h = 81 },
+	weight = 1, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'xmult', 'reroll', 'scaling' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
+	cost = 7,
+	config = {
+		extra = {
+			xmult_per_dollar = 0.01,
+			xmult_total = 1 + (xmult_total or 0)
+		}
+	},
+	environments = {
+		garden = 0.95,
+		backroom = 0.05,
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.xmult_per_dollar,
+				card.ability.extra.xmult_total,
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.reroll_shop then
+			card.ability.extra.xmult_total = card.ability.extra.xmult_total + (card.ability.extra.xmult_per_dollar * context.cost)
+			return {
+                message = localize('k_upgrade_ex'),
+            }
+		end
+		if context.fac_environment_changed then
+			card.ability.extra.xmult_total = card.ability.extra.xmult_total + (card.ability.extra.xmult_per_dollar * G.GAME.fac_environment_reroll_cost)
+			return {
+                message = localize('k_upgrade_ex'),
+            }
+		end
+		if context.joker_main then
+            return {
+                xmult = card.ability.extra.xmult_total
+            }
+        end
+	end
+}
+
+-- Frogspawn
+FishAndChips.Fish {
+	key = 'frogspawn',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 4, y = 1 },
+	pixel_size = { w = 35, h = 33 },
+	weight = 1, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'food', 'sell_value', 'scaling', 'economy', 'generation' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
+	cost = 4,
+	config = {
+		extra = {
+			inc_per_round = 2
+		}
+	},
+	environments = {
+		swamp = 0.6,
+		calm_pond = 0.4,
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.inc_per_round,
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+			card.ability.extra_value = card.ability.extra_value + card.ability.extra.inc_per_round
+            card:set_cost()
+            return {
+                message = localize('k_val_up'),
+                colour = G.C.MONEY
+            }
+		end
+		--[[if context.selling_card then
+			local all_fish = G.P_CENTER_POOLS.fac_Fish
+			local frogs = {}
+			for _, fish in ipairs(all_fish) do
+				local text = localize({ type = 'name_text', set = "fac_Fish", key = fish.config.center.key })
+				if text:lower():find("frog", 1, true) then
+					frogs[#frogs+1] = fish
+				end
+			end
+			print(frogs)
+		end]]
+	end
+}
+
+-- FihNULL
+FishAndChips.Fish {
+	key = 'fihnull',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 1, y = 2 },
+	pixel_size = { w = 59, h = 61 },
+	weight = 1, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'usable', 'suit', 'rank', 'economy', 'chance', 'enhancements', 'modify_card' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
+	cost = 4,
+	config = {
+		extra = {
+			num = 1,
+			denom = 2,
+		}
+	},
+	environments = {
+		wormhole = 0.50,
+		backroom = 0.50,
+	},
+	loc_vars = function(self, info_queue, card)
+		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom, 'fac_fihnull')
+		return {
+			vars = {
+				numerator,
+				denominator
+			}
+		}
+	end,
+	use = function(self, card, area)
+		for i = 1, #G.hand.cards do
+			local percent = 0.85 + (i - 0.999) / (#G.hand.cards - 0.998) * 0.3
+			G.hand.cards[i]:flip()
+			--local prob_hit = false
+			--if SMODS.pseudorandom_probability(card, 'fac_fihnull', card.ability.extra.num, card.ability.extra.denom) then
+			--	prob_hit = true
+			--end
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.4,
+				func = function()
+					play_sound('tarot1', percent, 0.6)
+					G.hand.cards[i]:set_base(pseudorandom_element(G.P_CARDS, pseudoseed('fac_fihnull')))
+					if SMODS.pseudorandom_probability(card, 'fac_fihnull', card.ability.extra.num, card.ability.extra.denom) and next(SMODS.get_enhancements(G.hand.cards[i])) == null then
+						local enhancement = SMODS.poll_enhancement{key = "fac_fihnull", guaranteed = true}
+						G.hand.cards[i]:set_ability(enhancement)
+					end
+					G.hand.cards[i]:flip()
+					G.hand.cards[i]:juice_up(0.3, 0.3)
+				return true
+				end
+			}))
+		end
+	end,
+	can_use = function(self, card)
+        return G.hand and #G.hand.cards > 1
+    end,
+}
+
+-- Leech
+FishAndChips.Fish {
+	key = 'leech',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 4, y = 2 },
+	pixel_size = { w = 63, h = 25 },
+	weight = 1, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'usable', 'destroy_card', },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
+	cost = 0,
+	config = {
+		extra = {
+			how_many_cards_to_destroy = 5,
+			money_per_hand = 1,
+			leech = true
+		}
+	},
+	environments = {
+		calm_pond = 0.6,
+		swamp = 0.3,
+		city_river = 0.1
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.how_many_cards_to_destroy,
+				card.ability.extra.money_per_hand,
+				card.ability.extra.leech
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.before then
+			return {
+				dollars = -card.ability.extra.money_per_hand
+			}
+		end
+	end,
+	use = function(self, card, area)
+		local destroyed_cards = {}
+		local temp_hand = {}
+		for _, playing_card in ipairs(G.hand.cards) do
+			temp_hand[#temp_hand + 1] = playing_card
+		end
+		table.sort(temp_hand, function(a, b) return not a.playing_card or not b.playing_card or a.playing_card < b.playing_card end )
+		pseudoshuffle(temp_hand, 'fac_leech')
+		for i = 1, card.ability.extra.how_many_cards_to_destroy do destroyed_cards[#destroyed_cards + 1] = temp_hand[i] end
+		SMODS.destroy_cards(destroyed_cards)
+	end,
+	can_use = function(self, card)
+		return G.hand and #G.hand.cards > 1
+	end
+}
+
+-- Obsidian Starfish
+FishAndChips.Fish {
+	key = 'obsidianstarfish',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 2, y = 2 },
+	pixel_size = { w = 51, h = 39 },
+	weight = 1, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'useable', 'generation', 'enhancements', 'seals' , 'edition', },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
+	cost = 4,
+	config = {
+		extra = {
+			how_many_stone_cards = 2,
+		}
+	},
+	environments = {
+		volcano = 1,
+	},
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
+		info_queue[#info_queue + 1] = G.P_SEALS['Purple']
+		info_queue[#info_queue + 1] = G.P_CENTERS.e_polychrome
+		return {
+			vars = {
+				card.ability.extra.how_many_stone_cards,
+			}
+		}
+	end,
+	use = function(self, card, area)
+		for i = 1, card.ability.extra.how_many_stone_cards do
+			SMODS.add_card{
+				set = 'Base',
+				area = G.hand,
+				enhancement = "m_stone",
+				seal = 'Purple',
+				edition = 'e_polychrome'
+			}
+		end
+	end,
+	can_use = function(self, card)
+		return G.hand and #G.hand.cards > 1
+	end
+}
+
+-- Hermit Crab
+FishAndChips.Fish {
+	key = 'hermitcrab',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 1, y = 3 },
+	pixel_size = { w = 47, h = 63 },
+	weight = 1, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'usable', 'economy' },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
+	cost = 3,
+	config = {
+		extra = {
+			money_max = 15,
+			sanddollar_max = 8,
+		}
+	},
+	environments = {
+		pier = 1,
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.money_max,
+				card.ability.extra.sanddollar_max
+			}
+		}
+	end,
+	use = function(self, card, area)
+		G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.1,
+            func = function()
+                play_sound('timpani')
+                card:juice_up(0.3, 0.5)
+                ease_dollars(math.max(0, math.min(G.GAME.dollars, card.ability.extra.money_max)), true)
+				ease_sand_dollars(math.max(0, math.min(G.GAME.fac_sand_dollars, card.ability.extra.sanddollar_max)), true)
+                return true
+            end
+        }))
+	end,
+	can_use = function(self, card)
+		return true
+	end
+}
+
+-- Spicy Tuna
+FishAndChips.Fish {
+	key = 'spicytuna',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 0, y = 3 },
+	pixel_size = { w = 63, h = 87 },
+	weight = 1, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'usable', 'destroy_card', },
+	stats = {
+		weight = {
+			min = 1,
+			max = 2,
+		},
+		length = {
+			min = 1,
+			max = 2
+		}
+	},
+	cost = 0,
+	config = {
+		extra = {
+			money = 7,
+		}
+	},
+	environments = {
+		soup = 0.35,
+		volcano = 0.65,
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.money
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.after then
+			if SMODS.last_hand_oneshot then
+				return {
+					dollars = card.ability.extra.money
+				}
+			end
+		end
+	end,
 }

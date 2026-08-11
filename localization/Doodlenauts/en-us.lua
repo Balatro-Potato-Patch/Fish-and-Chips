@@ -154,6 +154,65 @@ return {
                     'the holy grail of snack foods',
                     'fishermen can only dream of obtaining'
                 }
+            },
+            fish_fac_buckaroodlefish = {
+                name = 'Buckaroodlefish',
+                text = {
+                    'This Fish gains {X:mult,C:white}X#1#{} Mult',
+                    'per dollar spent {C:attention}rerolling',
+                    "{C:inactive}Currently {X:mult,C:white}X#2#{} {C:inactive}Mult"
+                },
+                flavour = {
+                    '"they turned me into',
+                    'a fish what the hell"',
+                    '- Buck'
+                }
+            },
+            fish_fac_frogspawn = {
+                name = 'Frogspawn',
+                text = {
+                    'Gains {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} of sell value',
+                    'at end of round'
+                },
+            },
+            fish_fac_fihnull = {
+                name = 'FihNULL',
+                text = {
+                    'Randomize the {C:attention}rank{} and {C:attention}suit{}',
+                    'of all cards held in hand,',
+                    '{C:green}#1# in #2#{} chance for each',
+                    'unenhanced card to gain',
+                    'a random {C:attention}enhancement'
+                }
+            },
+            fish_fac_leech = {
+                name = 'Leech',
+                text = {
+                    'Lose {C:red}$#2#{} each hand,',
+                    'destroys {C:attention}#1#{} random cards',
+                    'in hand {C:attention}when sold{}'
+                }
+            },
+            fish_fac_obsidianstarfish = {
+                name = 'Obsidian Starfish',
+                text = {
+                    'Create #1# {C:dark_edition}Polychrome{} {C:attention}Stone cards',
+                    'with {C:purple}Purple {C:attention}seals{}'
+                }
+            },
+            fish_fac_hermitcrab = {
+                name = 'Hermit Crab',
+                text = {
+                    'Doubles {C:money}money{} and {C:fac_sand_dollars}sand dollars',
+                    '{C:inactive}(Max of{} {C:money}$#1#{} {C:inactive}and{} {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{C:inactive}){}'
+                }
+            },
+            fish_fac_spicytuna = {
+                name = 'Spicy Tuna',
+                text = {
+                    'Earn {C:money}$#1#{} if played hand',
+                    'scores {C:attention}higher{} than the {C:attention}Blind amount'
+                }
             }
         },
     }
