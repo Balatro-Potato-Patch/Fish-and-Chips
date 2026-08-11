@@ -22,7 +22,7 @@ FishAndChips.Fish {
 		wormhole = 1,
 	},
 	stats = {
-		length = {min = 38e-8, max = 74e-8, units = { format = "nm_format", scale = 1e-9, precision = 4}},
+		length = {min = 4e-7, max = 7e-7, units = { format = "nm_format", scale = 1e-9, precision = 4}},
 		weight = {min = 0, max = 0}
 	},
 	blueprint_compat = true,
@@ -62,36 +62,36 @@ FishAndChips.Fish {
             end
         end
 	end,
-	set_sprites = function(self, card, front)
-		local position
-		local fish_length = card and card.ability and card.ability.stats and card.ability.stats.length / card.ability.stats.units.length.scale or 0
-		fish_length = tonumber(string.format('%.0f', fish_length))
-		-- From https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Map%3A_Organic_Chemistry_(Bruice)/13%3A_Mass_Spectrometry_Infrared_Spectroscopy_and_Ultraviolet_Visible_Spectroscopy/13.20%3A_The_Visible_Spectrum_and_Color
-		if fish_length > 625 then
-			position = 0
-		elseif fish_length > 590 then
-			position = 1
-		elseif fish_length > 565 then
-			position = 2
-		elseif fish_length > 520 then
-			position = 3
-		elseif fish_length > 500 then
-			position = 4
-		elseif fish_length > 435 then
-			position = 5
-		elseif fish_length >= 380 then
-			position = 6
-		end
+	-- set_sprites = function(self, card, front)
+	-- 	local position
+	-- 	local fish_length = card and card.ability and card.ability.stats and card.ability.stats.length / card.ability.stats.units.length.scale or 0
+	-- 	fish_length = tonumber(string.format('%.0f', fish_length))
+	-- 	-- From https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Map%3A_Organic_Chemistry_(Bruice)/13%3A_Mass_Spectrometry_Infrared_Spectroscopy_and_Ultraviolet_Visible_Spectroscopy/13.20%3A_The_Visible_Spectrum_and_Color
+	-- 	if fish_length > 625 then
+	-- 		position = 0
+	-- 	elseif fish_length > 590 then
+	-- 		position = 1
+	-- 	elseif fish_length > 565 then
+	-- 		position = 2
+	-- 	elseif fish_length > 520 then
+	-- 		position = 3
+	-- 	elseif fish_length > 500 then
+	-- 		position = 4
+	-- 	elseif fish_length > 435 then
+	-- 		position = 5
+	-- 	elseif fish_length >= 380 then
+	-- 		position = 6
+	-- 	end
 
-		if position then
-			card.children.center:set_sprite_pos({x = position, y = 4})
-		end
-	end,
+	-- 	if position then
+	-- 		card.children.center:set_sprite_pos({x = position, y = 4})
+	-- 	end
+	-- end,
 	draw = function(self, card, layer)
 		if self.discovered or card.params.bypass_discovery_center then
 			-- card.children.center:draw_shader('fac_hide_fish', nil, card.ARGS.send_to_shader)
 			card.children.center:draw_shader('fac_pa_photon', nil, card.ARGS.send_to_shader)
-			card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+			-- card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
 		end
 	end,
 	shader = 'pa_photon',

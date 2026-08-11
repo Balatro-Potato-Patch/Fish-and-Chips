@@ -20,6 +20,28 @@ vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv);
 
 extern PRECISION float fish_length; // 400-700 nm
 
+// Source - https://stackoverflow.com/a/22681410
+// Posted by Spektre, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-08-11, License - CC BY-SA 4.0
+
+vec3 spectral_color(number l) // RGB <0,1> <- lambda l <400,700> [nm]
+    {
+    number t; number r=0.0; number g=0.0; number b=0.0;
+         if ((l>=400.0)&&(l<410.0)) { t=(l-400.0)/(410.0-400.0); r=    +(0.33*t)-(0.20*t*t); }
+    else if ((l>=410.0)&&(l<475.0)) { t=(l-410.0)/(475.0-410.0); r=0.14         -(0.13*t*t); }
+    else if ((l>=545.0)&&(l<595.0)) { t=(l-545.0)/(595.0-545.0); r=    +(1.98*t)-(     t*t); }
+    else if ((l>=595.0)&&(l<650.0)) { t=(l-595.0)/(650.0-595.0); r=0.98+(0.06*t)-(0.40*t*t); }
+    else if ((l>=650.0)&&(l<700.0)) { t=(l-650.0)/(700.0-650.0); r=0.65-(0.84*t)+(0.20*t*t); }
+         if ((l>=415.0)&&(l<475.0)) { t=(l-415.0)/(475.0-415.0); g=             +(0.80*t*t); }
+    else if ((l>=475.0)&&(l<590.0)) { t=(l-475.0)/(590.0-475.0); g=0.8 +(0.76*t)-(0.80*t*t); }
+    else if ((l>=585.0)&&(l<639.0)) { t=(l-585.0)/(639.0-585.0); g=0.84-(0.84*t)           ; }
+         if ((l>=400.0)&&(l<475.0)) { t=(l-400.0)/(475.0-400.0); b=    +(2.20*t)-(1.50*t*t); }
+    else if ((l>=475.0)&&(l<560.0)) { t=(l-475.0)/(560.0-475.0); b=0.7 -(     t)+(0.30*t*t); }
+    return vec3(r,g,b);
+    }
+//--------------------------------------------------------------------------
+
+
 vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords )
 {
     vec4 tex = Texel(texture, texture_coords);
@@ -29,31 +51,32 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
         tex.a = 0;
     }
     
-    if (tex.rgb != vec3(0,0,0)) {
-        tex.a = tex.a * 0.3;
-    }
+    // if (tex.rgb != vec3(0,0,0)) {
+    //     tex.a = tex.a * 0.3;
+    // }
     
     // vec3 fish_color = vec3(0,0,0 + (pa_photon.y * pa_photon.x * 0.000001));
     vec3 fish_color = vec3(0,0,0);
-    if (fish_length > 625) {
-        fish_color = vec3(1.0, 0.0, 0.0);
-    } else if (fish_length > 590) {
-        fish_color = vec3(1.0, 0.40, 0.0);
-    } else if (fish_length > 565){
-        fish_color = vec3(1.0, 1.0, 0.0);
-    } else if (fish_length > 520){
-        fish_color = vec3(0.0, 0.60, 0.0);
-    } else if (fish_length > 500){
-        fish_color = vec3(0.0, 1.0, 1.0);
-    } else if (fish_length > 435){
-        fish_color = vec3(0.0, 0.0, 1.0);
-    } else if (fish_length >= 380) {
-        fish_color = vec3(0.40, 0.0, 0.40);
-    }
+    // if (fish_length > 625) {
+    //     fish_color = vec3(1.0, 0.0, 0.0);
+    // } else if (fish_length > 590) {
+    //     fish_color = vec3(1.0, 0.40, 0.0);
+    // } else if (fish_length > 565){
+    //     fish_color = vec3(1.0, 1.0, 0.0);
+    // } else if (fish_length > 520){
+    //     fish_color = vec3(0.0, 0.60, 0.0);
+    // } else if (fish_length > 500){
+    //     fish_color = vec3(0.0, 1.0, 1.0);
+    // } else if (fish_length > 435){
+    //     fish_color = vec3(0.0, 0.0, 1.0);
+    // } else if (fish_length >= 380) {
+    //     fish_color = vec3(0.40, 0.0, 0.40);
+    // }
+    fish_color = spectral_color(fish_length);
 
-    tex.rgb = tex.rgb * 0.3 + fish_color;
+    // tex.rgb = tex.rgb * 0.3 + fish_color;
     // tex.rgb = fish_color * max(tex.r, max(tex.g, tex.b));
-    // tex.rgb = fish_color;
+    tex.rgb = fish_color;
     // tex.rgba = vec4(1.0);
 
     return dissolve_mask(tex * colour, texture_coords, uv);
