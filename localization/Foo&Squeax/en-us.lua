@@ -19,8 +19,9 @@ return {
 					},
 					{
 						"While filled:",
-						"Use to eat all skewered {C:fac_fish}Fish{}"
-					}
+						"Use to eat all skewered {C:fac_fish}Fish{}",
+						"{ppu_bubble:usable}"
+					},
 				}
 			},
 			fish_fac_fas_submarine = {
@@ -37,7 +38,8 @@ return {
 						"{C:inactive}[#2#]"
 					},
 					{
-						"Use to submerge/unsubmerge"
+						"Use to submerge/unsubmerge",
+						"{ppu_bubble:toggle}"
 					}
 				}
 			},
@@ -87,7 +89,8 @@ return {
 					"Use to instantly {C:attention}win",
 					"current non-boss blind",
 					"or gain {X:purple,C:white}#1#%{} of",
-					"required chips"
+					"required chips",
+					"{ppu_bubble:usable}"
 				}
 			},
 			fish_fac_fas_can_of_wormholes = {
@@ -103,8 +106,9 @@ return {
 						"{C:inactive}[Currently {X:mult,C:white}X#3#{C:inactive} Mult]   {C:inactive}[Target changes every round]"
 					},
 					{
-						"Use this {C:fac_fish}Fish{} to convert it into {C:attention}#4#{} bait per {C:attention}#1# {X:mult,C:white}XMult{} gained"
-					}
+						"Use this {C:fac_fish}Fish{} to convert it into {C:attention}#4#{} bait per {C:attention}#1# {X:mult,C:white}XMult{} gained",
+						"{ppu_bubble:usable}"
+					},
 				}
 			},
 			fish_fac_fas_super_bo_noise = {
@@ -153,7 +157,8 @@ return {
 					{
 						"Use to {C:red}consume{} held Joker",
 						"and then {C:attention}grab{} leftmost Joker",
-					}
+						"{ppu_bubble:usable}"
+					},
 				}
 			},
 			fish_fac_fas_tsundere = {
@@ -165,7 +170,8 @@ return {
 					"Needs some encouragement",
 					"before it's ready to help you.",
 					"Maybe some {C:attention}ACT{}ing would work?",
-					"{C:inactive}[Once per round]"
+					"{C:inactive}[Once per round]",
+					"{ppu_bubble:usable}{ppu_bubble:inactive}"
 				}
 			},
 			fish_fac_fas_tsundere_active = {
@@ -176,7 +182,8 @@ return {
 				},
 				text = {
 					"It's not like I want to give you",
-					"{C:attention}+#1#{} selection limit. Hmph!"
+					"{C:attention}+#1#{} selection limit. Hmph!",
+					"{ppu_bubble:active}"
 				}
 			},
 			fish_fac_fas_toby_fish = {
@@ -185,7 +192,8 @@ return {
 					"{element:1}"
 				},
 				text = {
-					"this should never appear"
+					"this should never appear",
+					"{ppu_bubble:usable}{ppu_bubble:toggle}{ppu_bubble:active}{ppu_bubble:inactive}"
 				}
 			},
 			fish_fac_fas_isreal = {
@@ -236,7 +244,8 @@ return {
 				text = {
 					"Once per {C:attention}Ante",
 					"Use to wish a random {C:dark_edition}edition",
-					"upon the next {C:fac_fish}Fish{} caught"
+					"upon the next {C:fac_fish}Fish{} caught",
+					"{ppu_bubble:usable}"
 				}
 			}
 		},
@@ -248,7 +257,8 @@ return {
 				name = "Foo54",
 				text = {
 					{
-						"You should click me it'll be funny trust"
+						"You should click me it'll be funny trust",
+						"{ppu_bubble:usable}"
 					},
 					{
 						"Defoko drawn by {C:ED5B5B}me",
