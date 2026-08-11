@@ -1,9 +1,16 @@
+FishAndChips.radiation_eremel = {}
+
 PotatoPatchUtils.Developer({
 	name = 'eremel',
     loc = true,
 	-- atlas = 'radiation_eremel_credits',
 	colour = HEX('3FC7EB'),
-	fac_partner = 'fac_radiation'
+	fac_partner = 'fac_radiation',
+    calculate = function(self, context)
+        if context.fac_fish_caught and G.P_CENTERS[context.fish].set == 'fac_Fish' then
+            FishAndChips.radiation_eremel.last_fish = context.fish
+        end
+    end
 })
 
 PotatoPatchUtils.Developer({
@@ -168,3 +175,30 @@ FishAndChips.Fish({
     end,
 })
 
+FishAndChips.Fish({
+    key = 'r_e_orca_cola',
+    atlas = 'r_e_fish',
+    pos = {x = 0, y = 0},
+    ppu_coder = {'eremel'},
+    ppu_artist = {'radiation'},
+    weight = 10,
+    environments = {
+        city_river = 7,
+        wormhole = 2,
+        chocolate_river = 3,
+        garden = 2
+    },
+    attributes = {'on_sell',},
+    stats = {
+        weight = {min = 0.010, max = 0.014},
+        length = {min = 0.115, max = 0.115},
+    },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {FishAndChips.radiation_eremel.last_fish and localize({type = 'name_text', set = 'fac_Fish', key = FishAndChips.radiation_eremel.last_fish}) or 'None'}}
+    end,
+    calculate = function(self, card, context)
+        if context.selling_self then
+            G.GAME.fac_forced_fish = FishAndChips.radiation_eremel.last_fish
+        end
+    end,
+})

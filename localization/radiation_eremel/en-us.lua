@@ -45,6 +45,15 @@ return {
                     'Thrives near sacrificial sites.'
                 }
             },
+            fish_fac_r_e_orca_cola = {
+                name = 'Orca Cola',
+                text = {
+                    'Sell this fish to make your',
+                    '{C:attention}next bite{} the same as',
+                    'your last {C:attention}successful{} catch',
+                    '{C:inactive,s:0.9}(Currently #1#)'
+                }
+            },  
         },
     },
     misc = {
