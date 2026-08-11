@@ -30,8 +30,8 @@ FishAndChips.Fish{
 	key = "fas_kawkaw",
 	weight = 5,
 	environments = {
-		calm_pond = 1, -- WHY is it not garden above it's liek the field of flowersssssss </3
-		garden = 0.75
+		garden = 1
+		calm_pond = 0.75,
 	},
 	atlas = "fas_nyon",
 	badge_key = "k_fac_fas_nyon_label",

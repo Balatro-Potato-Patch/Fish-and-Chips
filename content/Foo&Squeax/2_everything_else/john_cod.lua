@@ -3,7 +3,7 @@ FishAndChips.Fish{
 	weight = 5,
 	environments = {
 		city_river = 1,
-		wormhole = 1,
+		wormhole = 0.9,
 		backroom = 0.2,
 	},
 	atlas = "fas_fish_general",

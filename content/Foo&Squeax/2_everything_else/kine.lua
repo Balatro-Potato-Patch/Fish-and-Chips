@@ -2,8 +2,8 @@ FishAndChips.Fish{
 	key = "fas_kine",
 	weight = 5,
 	environments = {
+		garden = 1,
 		calm_pond = 0.2,
-		garden = 1
 	},
 	ppu_coder = {"Foo54"},
 	ppu_artist = {"squeax09"},
