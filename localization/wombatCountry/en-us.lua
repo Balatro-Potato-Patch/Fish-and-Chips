@@ -15,8 +15,9 @@ return {
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
-                    "The eighth",
-                    "wishplane tether."
+                    "Stand and unfold yourself!",
+                    "Long live the king!",
+                    "-William Shakespeare"
                 }
             },
             fish_fac_wombatCountry_dylan = {
