@@ -7,7 +7,8 @@ return {
                     {
                         'Hey! I\'m a part of the organiser team here at the Potato Patch,',
                         'and I\'m really proud of the work everyone has done on this mod!',
-                        'It\'s been a blast hosting this event and I hope you all enjoy it!'
+                        'It\'s been a blast hosting this event and I hope you all enjoy it!',
+                        '{ppu_bubble:active}'
                     },
                     {
                         'Some of the other mods I\'ve worked on are',
@@ -29,7 +30,7 @@ return {
                     '{C:inactive,s:0.9}(Currently {C:1,s:0.9}#4#{C:inactive,s:0.9})'
                 },
                 flavour = {
-                    'A true miracle of {E:1,C:fac_suits}adaptability' -- TODO: rainbow gradient colour
+                    'A true miracle of {E:1,C:fac_suits}adaptability'
                 }
             },            
         },

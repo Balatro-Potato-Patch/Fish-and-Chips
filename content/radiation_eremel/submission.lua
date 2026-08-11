@@ -29,10 +29,13 @@ FishAndChips.Fish({
     ppu_artist = {'radiation'},
     weight = 10,
     environments = {
-        calm_pond = 2,
-        pier = 3,
-        garden = 4
+        calm_pond = 3,
+        pier = 4,
+        garden = 6,
+        wormhole = 1,
+        chocolate_river = 1
     },
+    attributes = {'chance', 'modify_card', 'suit', 'hand_type'},
     stats = {
         weight = {min = 0.03, max = 0.15},
         length = {min = 0.12, max = 0.22},
@@ -42,7 +45,8 @@ FishAndChips.Fish({
         local n, d = SMODS.get_probability_vars(card, 1, card.ability.extra.denom, 'r_e_butterfly')
         return {vars = {n, d, localize(card.ability.extra.hand, 'poker_hands'), 
            card.ability.extra.current and (card.ability.extra.current == 'Wild' and localize({set = 'Enhanced', type = 'name_text', key = 'm_wild'}) or localize(card.ability.extra.current, 'suits_plural')) or localize('fac_r_e_random_suits'),
-           colours = {card.ability.extra.current and (G.C.SO_1[card.ability.extra.current] or G.ARGS.LOC_COLOURS.attention) or G.ARGS.LOC_COLOURS.inactive}}}
+           colours = {card.ability.extra.current and (G.C.SO_1[card.ability.extra.current] or G.ARGS.LOC_COLOURS.attention) or G.ARGS.LOC_COLOURS.inactive},
+        ppu_bubbles = {'usable', 'toggle'}}}
     end,
     flush_options = {
         Hearts = {pos = {x=1,y=0}, colour = 'Hearts'},
