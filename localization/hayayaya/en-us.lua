@@ -208,10 +208,12 @@ return {
 			fish_fac_gfzrock = {
 				name = "GFZROCK",
 				text = {
-					"Does nothing",
+					"{X:mult,C:white}X#1#{} Mult if",
+					"you have {C:money}$#2#{}",
 				},
 				flavor = {
-					"The games will never stop...",
+					"When you're out of quarters,",
+					"He's got your back!",
 				},
 			},
 		},

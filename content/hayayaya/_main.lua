@@ -66,6 +66,9 @@ PotatoPatchUtils.Developer({
 	colour = G.C.PURPLE,
 	fac_partner = "fac_Pepix",
 	loc = true,
+	click = function()
+		play_sound("fac_hayayaya_rainer")
+	end,
 })
 
 PotatoPatchUtils.Developer({
