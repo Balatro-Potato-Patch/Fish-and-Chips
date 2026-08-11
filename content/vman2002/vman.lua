@@ -447,7 +447,7 @@ FishAndChips.Fish { --Timothy
 	},
 	loc_vars = function(self, info_queue, card)
 		local ex = card.ability.extra
-		return {vars = {ex.xmult, ex.xmult_gain, ppu_bubbles = {FishAndChips.vman2002.timothyActive() and "active" or "inactive"}}}
+		return {vars = {ex.xmult, ex.xmult_gain, ppu_bubbles = {FishAndChips.vman2002.timothyActive() and "active" or "inactive", ex.ante_used and "used" or "usable"}}}
 	end,
 	flavour_vars = function(self, info_queue, card)
 		return {vars = {localize(FishAndChips.vman2002.timothyActive() and "fac_vman2002_timothy_active" or "fac_vman2002_timothy_inactive")}}

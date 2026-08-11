@@ -107,7 +107,7 @@ return {
 					{
 						q("Once per {~A}Ante{},"),
 						q("Pay {~A}attention{} to {~f}Timothy"),
-						"{ppu_bubble:usable}"
+						"{ppu_bubble:2}"
 					}, {
 						q("Gains {~x}X#2#{} Mult at {~A}end of round"),
 						q("Resets instead if {~f}Timothy{} is not"),
