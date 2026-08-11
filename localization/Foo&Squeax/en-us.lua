@@ -14,12 +14,12 @@ return {
 					},
 					{
 						"While Empty:",
-						"Use to skewer all {C:fac_fish}Fish{}",
+						"Skewer all {C:fac_fish}Fish{}",
 						"to the right of this {C:fac_fish}Fish{}",
 					},
 					{
 						"While filled:",
-						"Use to eat all skewered {C:fac_fish}Fish{}",
+						"Eat all skewered {C:fac_fish}Fish{}",
 						"{ppu_bubble:usable}"
 					},
 				}
@@ -31,16 +31,11 @@ return {
 					"take the 3-0-0 out on a joyride"
 				},
 				text = {
-					{
-						"While Submerged:",
-						"All {C:attention}Jokers{} are debuffed",
-						"All {C:fac_fish}Fish{} retrigger {C:attention}#1#{} times",
-						"{C:inactive}[#2#]"
-					},
-					{
-						"Use to submerge/unsubmerge",
-						"{ppu_bubble:toggle}"
-					}
+					"While Submerged:",
+					"All {C:attention}Jokers{} are debuffed",
+					"All {C:fac_fish}Fish{} retrigger {C:attention}#1#{} times",
+					"{C:inactive}[#2#]",
+					"{ppu_bubble:toggle}"
 				}
 			},
 			fish_fac_fas_chimera = {
@@ -86,7 +81,7 @@ return {
 					"he's john cod"
 				},
 				text = {
-					"Use to instantly {C:attention}win",
+					"Instantly {C:attention}win",
 					"current non-boss blind",
 					"or gain {X:purple,C:white}#1#%{} of",
 					"required chips",
@@ -102,11 +97,15 @@ return {
 				},
 				text = {
 					{
-						"This {C:fac_fish}Fish{} gains {X:mult,C:white}X#1#{} Mult when a {C:fac_fish}Fish{} made by {C:attention}#2#{} is caught",
-						"{C:inactive}[Currently {X:mult,C:white}X#3#{C:inactive} Mult]   {C:inactive}[Target changes every round]"
+						"This {C:fac_fish}Fish{} gains {X:mult,C:white}X#1#{} Mult"<
+						"when a {C:fac_fish}Fish{} made by {C:attention}#2#{} is caught",
+						"{C:inactive}[Currently {X:mult,C:white}X#3#{C:inactive} Mult]",
+						"{C:inactive}[Target changes every round]"
 					},
 					{
-						"Use this {C:fac_fish}Fish{} to convert it into {C:attention}#4#{} bait per {C:attention}#1# {X:mult,C:white}XMult{} gained",
+						"Use this {C:fac_fish}Fish{} to",
+						"convert it into {C:attention}#4#{} bait",
+						"per {C:attention}#1# {X:mult,C:white}XMult{} gained",
 						"{ppu_bubble:usable}"
 					},
 				}
@@ -155,8 +154,8 @@ return {
 						"Held Joker is treated as if it was a {C:fac_fish}Fish"
 					},
 					{
-						"Use to {C:red}consume{} held Joker",
-						"and then {C:attention}grab{} leftmost Joker",
+						"{C:red}Consumes{} held Joker",
+						"and then {C:attention}grabs{} leftmost Joker",
 						"{ppu_bubble:usable}"
 					},
 				}
@@ -243,7 +242,7 @@ return {
 				},
 				text = {
 					"Once per {C:attention}Ante",
-					"Use to wish a random {C:dark_edition}edition",
+					"Wish a random {C:dark_edition}edition",
 					"upon the next {C:fac_fish}Fish{} caught",
 					"{ppu_bubble:usable}"
 				}
