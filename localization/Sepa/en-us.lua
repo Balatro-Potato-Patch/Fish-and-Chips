@@ -67,12 +67,24 @@ return {
                     "Hi"
                 }
             },
-			
-			            fish_fac_slugbunny = {
-                name = "Bunny Slug",
+            fish_fac_friendfish = {
+                name = "DEVICE_FRIEND",
+                text = {
+                    'Earn {C:money}$2{} for each',
+                    'empty {C:fac_fish}Fish{} slot in the',
+                    'bucket at the end of round',
+                    '{C:inactive}(Currently {}{C:money}$#1#{}{C:inactive}){}'
+                },
+                flavor = {
+                    "ALWAYS_AT_YOUR",
+                    "HUMBLE_SERVICE"
+                }
+            },
+            fish_fac_bunnyslug = {
+                name = "Sea Bunny",
                 text = {
                     "{C:mult}+#1#{} Mult for each",
-                    "{C:attention}fish{} in your bucket",
+                    "{C:C:fac_fish}Fish{} in your bucket",
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}"
                 },
                 flavor = {
