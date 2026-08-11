@@ -6,9 +6,9 @@ FishAndChips.FooSqueax = {
 		timer = nil,
 		fih = nil,
 		scale = function(card, mod)
-			card.T.w = card.T.w / card.ability.extra.xmult
+			card.T.w = card.T.w / math.max(1, card.ability.extra.xmult / 2)
 			card.ability.extra.xmult = card.ability.extra.xmult + mod
-			card.T.w = card.T.w * card.ability.extra.xmult
+			card.T.w = card.T.w * math.max(1, card.ability.extra.xmult / 2)
 		end
 	},
 	tsunderfish = {},
