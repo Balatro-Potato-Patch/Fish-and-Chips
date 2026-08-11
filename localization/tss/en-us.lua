@@ -51,15 +51,15 @@ return {
 				name = "Cultfish",
 				text = {
 					{
-						"Once per {C:attention}Ante{}, Use this {C:fac_fish}Fish{}",
-						"to {C:red}Sacrifice{} the {C:fac_fish}Fish{} on the",
+						"Once per {C:attention}Ante{},",
+						"{C:red}Sacrifice{} the {C:fac_fish}Fish{} on the",
 						"right and gain {C:white,X:mult}X#1#{} Mult",
-						"{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult)"
+						"{ppu_bubble:1}"
 					},
 					{
 						"Lose {C:white,X:mult}X#3#{} Mult if no",
 						"{C:red}Sacrifice{} is made this {C:attention}Ante",
-						"{C:inactive}(#4#)"
+						"{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult)"
 					}
 				},
 				flavour = {
@@ -237,7 +237,7 @@ return {
 			PotatoPatchDev_slimestuff = {
 				name = 'slimestuff.',
 				text = {
-					"A system of 11 different creatures"
+					"A system of #1# different {E:ellesys_Ash}creatures"
 				}
 			},
 			PotatoPatchDev_azazel = {

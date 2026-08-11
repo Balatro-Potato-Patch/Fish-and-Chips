@@ -358,13 +358,8 @@ FishAndChips.Fish {
 	ppu_artist = { "slimestuff" },
 	attributes = { "passive" },
 	config = { immutable = { num = 2, den = 3 } },
-	environments = {
-		wormhole = 2,
-		soup = 3,
-		backroom = 2,
-		calm_pond = 1,
-		chocolate_river = 2
-	},
+	environments = {},
+	treasure = true,
 	loc_vars = function(self, info_queue, card)
 		local num, den = SMODS.get_probability_vars(card, card.ability.immutable.num, card.ability.immutable.den, "fac_tss_slop", nil, true)
 		return { vars = { num, den } }

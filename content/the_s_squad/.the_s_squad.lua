@@ -12,6 +12,9 @@ PotatoPatchUtils.Developer{
 	colour = HEX("FF53A9"),
 	fac_partner = 'fac_azazel',
 	loc = true,
+	loc_vars = function(self)
+		return { vars = {#FishAndChips.TheShitSquad.syslist} }
+	end,
 	calculate = function(self, context)
 		-- Putting Chesh here so they can all swarm at once like a pack of hungry piranhas
 		if context.fac_end_fishing and not context.failed then
@@ -139,8 +142,8 @@ PotatoPatchUtils.Developer{
 PotatoPatchUtils.Developer{
 	name = 'azazel',
 	atlas = 'fac_tss_devs',
-	pos = {x=4,y=0},
-	soul_pos = {x=5,y=0},
+	pos = {x=2,y=0},
+	soul_pos = {x=3,y=0},
 	colour = HEX("850021"),
 	fac_partner = 'fac_slimestuff',
 	loc = true,

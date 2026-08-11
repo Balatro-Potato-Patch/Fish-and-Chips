@@ -66,8 +66,10 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = "tss_bfb",
-	atlas = "tss_ellefish",
-	pos = { x = 0, y = 0 },
+	atlas = "tss_azfish",
+	pos = { x = 2, y = 2 },
+	pixel_size = { w = 75, h = 91 },
+	display_size = { w = 75, h = 91 },
 	weight = 3,
 	stats = {weight = {min = 2000, max = 2500}, length = {min = 7, max = 10}},
 	ppu_coder = { "slimestuff" },
@@ -111,8 +113,10 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = "tss_moab",
-	atlas = "tss_ellefish",
-	pos = { x = 0, y = 0 },
+	atlas = "tss_azfish",
+	pos = { x = 1, y = 2 },
+	pixel_size = { w = 80, h = 78 },
+	display_size = { w = 80, h = 78 },
 	weight = 6,
 	stats = {weight = {min = 800, max = 1000}, length = {min = 5, max = 7}},
 	ppu_coder = { "slimestuff" },
@@ -148,7 +152,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "tss_cult",
 	atlas = "tss_azfish",
-	pos = { x = 3, y = 0 },
+	pos = { x = 2, y = 1 },
 	pixel_size = { w = 83, h = 109 },
 	display_size = { w = 83*.8, h = 109*.8 },
 	weight = 3,
@@ -162,7 +166,7 @@ FishAndChips.Fish {
 	},
 	config = { extra = { xmult = 1, xmult_mod = .5, lose = 1, antecheck = false } },
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.xmult_mod, card.ability.extra.xmult, card.ability.extra.lose, localize("fac_tss_cult_"..(card.ability.extra.antecheck and "used" or "available")) } }
+		return { vars = { card.ability.extra.xmult_mod, card.ability.extra.xmult, card.ability.extra.lose, ppu_bubbles = {card.ability.extra.antecheck and "inactive" or "usable"} } }
 	end,
 	calculate = function(self, card, context)
 		if card.ability.extra.xmult ~= 1 then
@@ -206,8 +210,10 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = "tss_watrena",
-	atlas = "tss_ellefish",
-	pos = { x = 0, y = 0 },
+	atlas = "tss_azfish",
+	pos = { x = 0, y = 2 },
+	pixel_size = { w = 106, h = 102 },
+	display_size = { w = 106*.9, h = 102*.9 },
 	weight = 3,
 	stats = {weight = {min = 0, max = 0}, length = {min = 0, max = 0}}, -- pls replace later
 	ppu_coder = { "slimestuff" },
