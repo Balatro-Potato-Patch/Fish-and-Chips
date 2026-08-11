@@ -185,7 +185,7 @@ return {
 					"{ppu_bubble:active}"
 				}
 			},
-			fish_fac_fas_toby_fish = {
+			fish_fac_fas_annoying_fish = {
 				name = "Goby Fox",
 				flavour = {
 					"{element:1}"

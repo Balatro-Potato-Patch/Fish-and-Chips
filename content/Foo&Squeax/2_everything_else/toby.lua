@@ -6,7 +6,7 @@ SMODS.Atlas{
 }
 
 SMODS.Atlas{
-	key = "fas_toby_fish",
+	key = "fas_annoying_fish",
 	path = FishAndChips.FooSqueax.file_path .. "toby/toby_fish.png",
 	px = 71,
 	py = 71
@@ -21,7 +21,7 @@ SMODS.Atlas{
 
 
 FishAndChips.Fish{
-	key = "fas_toby_fish",
+	key = "fas_annoying_fish",
 	ppu_coder = {"Foo54"},
 	ppu_artist = {"squeax09"},
 	atlas = 'fas_fish_general',
@@ -31,7 +31,7 @@ FishAndChips.Fish{
 	environments = {
 		wormhole = 1,
 		aquifer = 1,
-		pier = 1,
+		chocolate_river = 1,
 		garden = 1,
 		volcano = 1,
 		swamp = 1
@@ -116,7 +116,7 @@ function G.UIDEF.card_h_popup(card)
 			search2.table.text = "  " .. localize("ph_fac_fas_def")
 		end
 	end
-	if card.config and card.config.center and card.config.center.key == "fish_fac_fas_toby_fish" then
+	if card.config and card.config.center and card.config.center.key == "fish_fac_fas_annoying_fish" then
 		FishAndChips.FooSqueax.toby_fish.no_desc = true
 		ret = g_uidef_card_h_popup_ref(card)
 		
@@ -181,7 +181,7 @@ function G.UIDEF.card_h_popup(card)
 end
 
 function G.UIDEF.fac_fas_toby_fish(i, card)
-	local sprite = SMODS.create_sprite(0, 0, 1, 1, "fac_fas_toby_fish")
+	local sprite = SMODS.create_sprite(0, 0, 1, 1, "fac_fas_annoying_fish")
 	return {n = G.UIT.ROOT, config = {func = "fac_fas_toby_update", colour = G.C.CLEAR, ref_table = {
 		v = {
 			x = math.random() * 4 - 2,
@@ -265,7 +265,7 @@ local use_and_sell = G.UIDEF.use_and_sell_buttons
 ---@diagnostic disable-next-line: duplicate-set-field
 function G.UIDEF.use_and_sell_buttons(card)
 	local ret = use_and_sell(card)
-	if card.config.center.key == "fish_fac_fas_toby_fish" then
+	if card.config.center.key == "fish_fac_fas_annoying_fish" then
 		local sell = {n=G.UIT.C, config={align = "cr"}, nodes={
 			{n=G.UIT.C, config={ref_table = card, align = "cr",padding = 0.1, r=0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'sell_card', func = 'fac_fas_toby_nuhuh', handy_insta_action = 'sell'}, nodes={
 				{n=G.UIT.B, config = {w=0.1,h=0.6}},
