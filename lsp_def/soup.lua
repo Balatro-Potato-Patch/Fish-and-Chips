@@ -16,13 +16,15 @@
 ---@field backroom? number
 ---@field wormhole? number
 
+---@class Units
+---@field format string localization key to be inputting into string.format
+---@field scale number how many metres/kilograms are in 1 of the custom unit
+---@field precision integer how many decimals of precision should be displayed
+
 ---@class IntStats
 ---@field min number Minimum value of this measurement
 ---@field max number Maximum value of this measurement
-
----@class Stats
----@field weight IntStats Set a min and max value for weight, measure in kilograms
----@field length IntStats Set a min and max value for length, measured in metres
+---@field units? Units custom formatting for the stat 
 
 ---@class FishAndChips.Fish: SMODS.Center
 ---@field environments Environments where this fish can appear, key = weight
@@ -45,7 +47,8 @@
 ---@field disable_visual_scaling? boolean disable adjustments of the size of this fish based on its caught measurements
 ---@field on_catch? fun(self: FishAndChips.Fish, card: Card) If defined, this function will be called when this fish is called.
 ---@field badge_key? string replace the text on the fish badge with whatever is in misc.dictionary[badge_key]
----@field button_key? string|fun(self: FishAndChips.Fish): string Replace the use button text key with the provided key. Providing a function replaces the text without localizing
+---@field button_key? string|fun(self: FishAndChips.Fish, card: Card): string Replace the use button text key with the provided key. Providing a function replaces the text without localizing
+---@field flavour_vars? fun(self: FishAndChips.Fish|table, info_queue: table, card: Card|table): table? loc_vars but for flavour text. See [`loc_vars`](https://docs.smods.dev/API%20Documentation/Localization#loc_vars) documentation for return value details. 
 ---@overload fun(self: FishAndChips.Fish): FishAndChips.Fish
 FishAndChips.Fish = setmetatable({}, {
 	__call = function(self)
