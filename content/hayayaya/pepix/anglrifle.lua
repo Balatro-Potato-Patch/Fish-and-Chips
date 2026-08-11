@@ -27,6 +27,9 @@ FishAndChips.Fish({
 				card.ability.extra.chips,
 				card.ability.extra.done and localize("ph_facyou_hayayaya_inactive")
 					or localize("ph_facyou_hayayaya_active"),
+				ppu_bubbles = {
+					card.ability.extra.done and "inactive" or "active",
+				},
 			},
 		}
 	end,

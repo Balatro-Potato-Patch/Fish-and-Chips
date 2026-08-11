@@ -34,6 +34,7 @@ return {
 					"when used and multiplies",
 					"its values by {X:attention,C:white}X#1#-X#2#{}",
 					"{C:inactive,s:0.8}Cannot be other Cloner Fish{}",
+					"{ppu_bubble:usable}",
 				},
 				flavor = {
 					"Cloning fish like",
@@ -58,6 +59,7 @@ return {
 				text = {
 					"{C:red,f:fac_hayayaya_pkmn}Removes",
 					"{f:fac_hayayaya_pkmn}an ante",
+					"{ppu_bubble:usable}",
 				},
 				flavor = {
 					"{f:fac_hayayaya_pkmn}3 NEW",
@@ -69,6 +71,7 @@ return {
 					"{C:red}Explodes{} when used and",
 					"either {C:attention}halves{} or {C:attention}doubles{}",
 					"the boss blind's requirement",
+					"{ppu_bubble:usable}",
 				},
 				flavor = {
 					"'Try my new flavor!'",
@@ -81,7 +84,7 @@ return {
 					"discarded in the first",
 					"discard and {C:red}destroys{} them",
 					"{C:inactive}(Currently{} {C:chips}+#2#{C:inactive} Chips)",
-					"{C:inactive}#3#",
+					"{ppu_bubble:1}",
 				},
 				flavor = {
 					"This fish somehow shoots bullet-like",
@@ -156,6 +159,7 @@ return {
 				text = {
 					"Add {C:dark_edition}Polychrome{} to",
 					"a random {C:fac_fish}Fish{}",
+					"{ppu_bubble:usable}",
 				},
 				flavor = {
 					"{C:white}Celadon City Gym Badge",
