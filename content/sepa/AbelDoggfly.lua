@@ -606,3 +606,53 @@ FishAndChips.Fish {
  	end,
 
 }
+
+FishAndChips.Fish {
+    key = "slugbunny",
+    atlas = pez,
+    pos = { x = 0, y = 3 },
+    weight = 12,
+    ppu_coder = { "DoggFly" },
+    ppu_artist = { "DoggFly" },
+    attributes = { "mult" },
+    config = {
+        extra = {
+            mult = 4
+        }
+    },
+		stats = {
+		weight = {min = 0, max = 0},
+		length = {min = 0.12 , max = 0.22}
+    environments = {
+        calm_pond = 1
+    },
+	
+    loc_vars = function(self, info_queue, card)
+        local bucket_fish_count = 0
+        if G.fac_fish_area and G.fac_fisharea.cards then
+            for , c in ipairs(G.fac_fish_area.cards) do
+                if c ~= card then
+                    bucket_fish_count = bucket_fish_count + 1
+                end
+            end
+        end
+        return { vars = { card.ability.extra.mult, card.ability.extra.mult * bucket_fish_count } }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local bucket_fish_count = 0
+            if G.fac_fish_area and G.fac_fisharea.cards then
+                for , c in ipairs(G.fac_fish_area.cards) do
+                    if c ~= card then
+                        bucket_fish_count = bucket_fish_count + 1
+                    end
+                end
+            end
+            if bucket_fish_count > 0 then
+                return {
+                    mult = card.ability.extra.mult * bucket_fish_count
+                }
+            end
+        end
+    end,
+}

@@ -67,6 +67,18 @@ return {
                     "Hi"
                 }
             },
+			
+			            fish_fac_slugbunny = {
+                name = "Bunny Slug",
+                text = {
+                    "{C:mult}+#1#{} Mult for each",
+                    "{C:attention}fish{} in your bucket",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}"
+                },
+                flavor = {
+                    "hi again"
+                }
+            },
 
             fish_fac_bombfish = {
                 name = "{f:fac_sepa_ultra}Bomb Fish{}",
