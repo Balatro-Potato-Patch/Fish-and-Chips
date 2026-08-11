@@ -69,8 +69,8 @@ local returnTrue = topuplib and topuplib.returnTrue or function() return true en
 
 --#region Fish
 
-local chips_col = {HEX("EBF6F8"), HEX("FD5F55"), HEX("55A383"), HEX("009CFD"), HEX("4F6367"), HEX("8A71E1"), HEX("E47C4C"), HEX("F2C255")}
-FishAndChips.vman2002.chips_col = chips_col
+--You're welcome to add to this color list in your crossmod (please do, it'd be cool af :3)
+FishAndChips.vman2002.chips_col = {HEX("EBF6F8"), HEX("FD5F55"), HEX("55A383"), HEX("009CFD"), HEX("4F6367"), HEX("8A71E1"), HEX("E47C4C"), HEX("F2C255")}
 FishAndChips.Fish { --Chips
 	key = "vman2002_chips",
 	atlas = "vman2002_chips",
@@ -98,7 +98,7 @@ FishAndChips.Fish { --Chips
 			local s = os.time() - math.floor(os.clock() * 100) % 7e4
 			while #card.ability.unriggable.fac_chips_col ~= 5 do
 				s = (s * 43) % 46217
-				table.insert(card.ability.unriggable.fac_chips_col, (s % #chips_col) + 1)
+				table.insert(card.ability.unriggable.fac_chips_col, (s % #FishAndChips.vman2002.chips_col) + 1)
 			end
 		end
 	end,
@@ -119,7 +119,7 @@ FishAndChips.Fish { --Chips
 			love.graphics.push()
 			love.graphics.origin()
 			c.canvas:renderTo(function()
-				local ps, rps, colcnt, zc, o_r, o_g, o_b, o_a, r_r, r_g, xa, ya = sc - 1, rsc - 1, #chips_col
+				local ps, rps, colcnt, zc, o_r, o_g, o_b, o_a, r_r, r_g, xa, ya = sc - 1, rsc - 1, #FishAndChips.vman2002.chips_col
 				local imd = G.ASSET_ATLAS.fac_vman2002_chips.image_data
 				local off = bit.lshift(71, ps)
 				for x = 1, 70 do
@@ -129,7 +129,7 @@ FishAndChips.Fish { --Chips
 						o_r, o_g, o_b, o_a = imd:getPixel(xa, ya)
 						r_r, r_g = imd:getPixel(xa + off, ya)
 						if r_g < 0.5 then
-							zc = chips_col[(card.ability.unriggable.fac_chips_col[math.ceil(r_r * 10)] % colcnt) + 1]
+							zc = FishAndChips.vman2002.chips_col[(card.ability.unriggable.fac_chips_col[math.ceil(r_r * 10)] % colcnt) + 1]
 							--print("seek chip col ",math.ceil(r_r * 10))
 							love.graphics.setColor(o_r * zc[1], o_g * zc[2], o_b * zc[3], o_a)
 						else
