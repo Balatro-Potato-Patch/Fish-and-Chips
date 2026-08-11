@@ -203,8 +203,26 @@ return {
                     'To be my wings and my eyes'
                 }
             }
+        },
+        PotatoPatch = {
+            PLagger = {
+                name = 'PLagger',
+                text = {
+                'I had a lot of fun coding these fish,',
+                'except Mystic Remora. $$$$ UI code.',
+                'Click on me to see more of my stuff!',
+                'You should try Balatro Story Mode ;)'
+                }
+            },
+            Omegaflowey18 = {
+                name = 'Omegaflowey18',
+                text = {
+                    'Click on me!'
+                }
+            }
         }
     },
+
     misc = {
         dictionary = {
             fac_plaggeromega_active_ex = 'Active!',

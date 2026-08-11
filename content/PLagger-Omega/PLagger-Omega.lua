@@ -4,18 +4,26 @@
 
 PotatoPatchUtils.Developer {
   name = 'Omegaflowey18',
-  colour = G.C.MULT,
+  colour = HEX('7D91AA'),
   fac_partner = 'fac_PLagger',
   atlas = 'fac_plaggeromega_credits',
-  pos = {x = 0, y = 0}
+  pos = {x = 0, y = 0},
+  loc = 'Omegaflowey18',
+  click = function (self)
+    love.system.openURL('https://www.instagram.com/omegaflowey18')
+  end
 }
 
 PotatoPatchUtils.Developer {
   name = 'PLagger',
-  colour = G.C.MULT,
+  colour = HEX('92394A'),
   fac_partner = 'fac_Omegaflowey18',
   atlas = 'fac_plaggeromega_credits',
-  pos = {x = 1, y = 0}
+  pos = {x = 1, y = 0},
+  loc = 'PLagger',
+  click = function (self)
+    love.system.openURL('https://plagger.carrd.co/')
+  end
 }
 
 --[[
