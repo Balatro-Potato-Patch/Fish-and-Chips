@@ -5,6 +5,7 @@ FishAndChips.Fish{
     key = "minty_fission",
     atlas = atlas,
     pos = pos,
+    badge_key = "k_fac_maybe_fish",
     weight = 1,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
