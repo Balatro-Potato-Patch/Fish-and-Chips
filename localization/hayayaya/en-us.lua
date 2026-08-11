@@ -4,10 +4,18 @@ return {
 			["PotatoPatchDev_Ellen (Haya)"] = {
 				name = "Ellen (Haya)",
 				text = {
-					"{s:1.2}You already know who it is......",
-					"It's still {C:red}haya{} but feel free to call me {C:edition}ellen{} now",
-					"{s:0.6}also {s:1.5,C:dark_edition}PLAY MY GAME(s):",
-					"https://haya3218.nekoweb.org/",
+					{
+						"{f:1}There's a note attached...",
+						"{f:fac_hayayaya_pkmn,C:red}LEAF's{f:fac_hayayaya_pkmn} just an {f:fac_hayayaya_pkmn,C:blue}ABYSS",
+						"{f:fac_hayayaya_pkmn}for {f:fac_hayayaya_pkmn,C:dark_edition}MISSINGNO.{f:fac_hayayaya_pkmn} about the",
+						"{f:fac_hayayaya_pkmn,C:green}new rock by the water",
+					},
+					{
+						"{s:1.2}You already know who it is......",
+						"It's still {C:red}haya{} but feel free to call me {C:edition}ellen{} now",
+						"{s:0.6}also {s:1.5,C:dark_edition}PLAY MY GAME(s):",
+						"https://haya3218.nekoweb.org/",
+					},
 				},
 			},
 			PotatoPatchDev_Pepix = {
@@ -101,7 +109,8 @@ return {
 					"{C:inactive}(Evolves at #3#/#4#)",
 				},
 				flavor = {
-					"PLACEHOLDER",
+					"Strong against reds",
+					"Doesn't work on blinds",
 				},
 			},
 			fish_fac_cat2 = {
@@ -114,7 +123,7 @@ return {
 					"{C:inactive}(Evolves at #3#/#4#)",
 				},
 				flavor = {
-					"PLACEHOLDER",
+					"It's a little better...",
 				},
 			},
 			fish_fac_cat3 = {
@@ -126,7 +135,7 @@ return {
 					"{C:inactive}(Currently{} {X:chips,C:white}X#2#{C:inactive} Chips)",
 				},
 				flavor = {
-					"PLACEHOLDER",
+					"This isn't a fish anymore...",
 				},
 			},
 			fish_fac_inferno = {

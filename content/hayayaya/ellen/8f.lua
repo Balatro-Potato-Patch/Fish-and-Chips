@@ -144,6 +144,11 @@ FishAndChips.Fish({
 			key = self.key .. (card.ability.immutable.count >= card.ability.immutable.max and "_alt" or "_normal"),
 		}
 	end,
+	flavour_vars = function(self, info_queue, card)
+		return {
+			key = self.key .. (card.ability.immutable.count >= card.ability.immutable.max and "_alt" or "_normal"),
+		}
+	end,
 	stats = {
 		length = { min = 0, max = 0 },
 		weight = { min = 0, max = 0 },
