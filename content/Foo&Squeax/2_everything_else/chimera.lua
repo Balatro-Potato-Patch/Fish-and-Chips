@@ -28,6 +28,9 @@ FishAndChips.Fish{
 	badge_key = "k_fac_fas_fatchud",
 	weight = 5,
 	ppu_coder = {"Foo54"},
+	ppu_artist = {"squeax09"},
+	atlas = "fas_fish_general",
+	pos = {x=1,y=1},
 	environments = {
 		soup = 1,
 		wormhole = 1,
