@@ -80,36 +80,40 @@ FishAndChips.Fish {
 
         if context.individual and context.cardarea == G.play then
             if (context.other_card:get_id() == 13 or context.other_card:get_id() == 12) then
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        FountainOpeners.random_flowery_sound({
-                            "hoo",
-                            "hah",
-                            "jarona1",
-                            "jarona2",
-                            "jarona3",
-                            "jarona4",
-                        })
-                        return true
-                    end
-                }))
+                if not context.retrigger_joker then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            FountainOpeners.random_flowery_sound({
+                                "hoo",
+                                "hah",
+                                "jarona1",
+                                "jarona2",
+                                "jarona3",
+                                "jarona4",
+                            })
+                            return true
+                        end
+                    }))
+                end
                 return {
                     xmult = card.ability.extra.xmult
                 }
             elseif context.other_card:get_id() == 11 then
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        FountainOpeners.random_flowery_sound({
-                            "hoo",
-                            "hah",
-                            "jarona1",
-                            "jarona2",
-                            "jarona3",
-                            "jarona4",
-                        })
-                        return true
-                    end
-                }))
+                if not context.retrigger_joker then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            FountainOpeners.random_flowery_sound({
+                                "hoo",
+                                "hah",
+                                "jarona1",
+                                "jarona2",
+                                "jarona3",
+                                "jarona4",
+                            })
+                            return true
+                        end
+                    }))
+                end
                 return {
                     mult = card.ability.extra.mult
                 }
