@@ -74,7 +74,7 @@ FishAndChips.vman2002.chips_col = {HEX("EBF6F8"), HEX("FD5F55"), HEX("55A383"), 
 FishAndChips.Fish { --Chips
 	key = "vman2002_chips",
 	atlas = "vman2002_chips",
-	pos = { x = 0, y = 0 },
+	pos = { x = 2, y = 0 },
 	weight = 6,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
