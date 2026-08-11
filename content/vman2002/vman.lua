@@ -476,7 +476,7 @@ FishAndChips.Fish { --Timothy
 	use = function(self, card)
 		card.ability.extra.ante_used = true
 		slowmf(function() SMODS.calculate_effect({ message_card = card,
-			message = localize("fac_vman2002_timothy" .. (math.floor(os.clock() * 69420) % 6)),
+			message = localize("fac_vman2002_timothy" .. (math.floor(os.clock() * 69420) % 8)),
 			colour = G.C.RED,
 			pitch = 1
 		}, card) end)
