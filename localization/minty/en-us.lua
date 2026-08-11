@@ -203,7 +203,7 @@ return {
             fish_fac_minty_jeal = {
                 name = "Jeal Inygmu, Ghoti Shop Owner",
                 flavour = {
-                    "Pronounced 'jewel' and",
+                    "Pronounced 'jewel', 'enigma', and",
                     "'fish', respectively."
                 },
                 text = {
@@ -215,7 +215,7 @@ return {
             fish_fac_minty_jeal_unready = {
                 name = "Jeal Inygmu, Ghoti Shop Owner",
                 flavour = {
-                    "Pronounced 'jewel' and",
+                    "Pronounced 'jewel', 'enigma', and",
                     "'fish', respectively."
                 },
                 text = {
