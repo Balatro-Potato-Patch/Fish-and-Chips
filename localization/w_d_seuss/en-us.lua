@@ -72,6 +72,7 @@ return {
                     "Creates a Fish with",
                     "a {C:blind}Deltarune{} attribute",
                     "{C:inactive}(Must have room)",
+                    "{ppu_bubble:usable}",
                 },
                 flavour = {
                     "{C:green}Gyaa Ha Ha!"
@@ -105,7 +106,7 @@ return {
                 text = {
                     "{X:mult,C:white}X#1#{} Mult after",
                     "{C:attention}#2#{C:inactive} [#3#]{} rounds",
-                    "{C:inactive}#4#"
+                    "{ppu_bubble:1}"
                 },
                 flavour = {
                     "I'm on my way, I'm on my way!"
@@ -132,7 +133,8 @@ return {
                     "{C:attention}ability{} when used",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
-                    "{C:inactive}(Currently: #3#){}"
+                    "{C:inactive}(Currently: #3#){}",
+                    "{ppu_bubble:usable}{ppu_bubble:toggle}",
                 },
                 flavour = {
                     "King of Sturgeons"
@@ -191,7 +193,8 @@ return {
                 name = "[[{C:spalmon_pink}SPA{}L{C:spalmon_gold}MON{}]]",
                 text = {
                     "{s:2}[Press F1 For] HELP",
-                    "{C:inactive}at a [[phishing]] [site]"
+                    "{C:inactive}at a [[phishing]] [site]",
+                    "{ppu_bubble:1}"
                 },
                 flavour = {
                     "ARE {s:0.5,C:hearts}YOU{} GETTING ALL THIS {s:1.5,C:white}[Mack]{}!?",
@@ -231,7 +234,11 @@ return {
             fish_fac_kay = {
                 name = "'Kai",
                 text = {
-                    "",
+                    "{X:blind,C:white}S-Swing:",
+                    "Destroys up to",
+                    "{C:attention}#1#{} selected cards",
+                    "{C:inactive,E:2}but...{}",
+                    "{ppu_bubble:usable}",
                 },
                 flavour = {
                     ""
@@ -240,7 +247,12 @@ return {
             fish_fac_actually = {
                 name = "Macktually",
                 text = {
-                    "",
+                    "{X:blind,C:white}Twister:",
+                    "Up to {C:attention}#1#{} selected cards,",
+                    "{C:attention}combine{} all ranks together",
+                    "and create {C:attention}evenly split{} cards",
+                    "{C:inactive,E:2}but...{}",
+                    "{ppu_bubble:usable}",
                 },
                 flavour = {
                     ""
@@ -249,16 +261,26 @@ return {
             fish_fac_know = {
                 name = "Minknow",
                 text = {
-                    "",
+                    "{X:blind,C:white}Icetomb",
+                    "Turn {C:attention}#1#{} random",
+                    "cards in hand",
+                    "into {C:attention}#2#{}",
+                    "{C:inactive,E:2}but...{}",
+                    "{ppu_bubble:usable}",
                 },
                 flavour = {
-                    ""
+                    "Watch what happens when",
+                    "I cast a spell I {C:dark_edition,E:2}know{}"
                 }
             },
             fish_fac_jack = {
                 name = "Jack",
                 text = {
-                    "",
+                    "{X:blind,C:white}Mean`````Fellow:",
+                    "Decrease Blind",
+                    "Requirement by {X:blind,C:white}X#1#{}",
+                    "{C:inactive,E:2}but...{}",
+                    "{ppu_bubble:usable}",
                 },
                 flavour = {
                     ""
@@ -267,7 +289,7 @@ return {
             fish_fac_great = {
                 name = "Great White",
                 text = {
-                    "",
+                    "{X:blind,C:white}Mean`````Fellow:",
                 },
                 flavour = {
                     ""
@@ -319,6 +341,7 @@ return {
             k_reversal = "Reversal",
             k_bigtrout = "[[BIG TROUT]]",
             k_hokimama = "[HOKI MAMA]",
+            k_miss = "Miss",
         },
         achievement_names = {
         },
