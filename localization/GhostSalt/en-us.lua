@@ -237,6 +237,7 @@ return {
                 text = {
                     "Also check out my other mods, such as",
                     "{C:tarot}Phanta{}, {C:blue}BFDI{}, {C:attention}Catan{}, {C:red}Ghost Cards{} and {C:tarot}Ghostposting!{}",
+                    "{C:dark_edition}[she/her, please ^w^]{}",
                     "{element:1}",
                     "{C:red,E:2,S:0.8}(Don't click me!){}"
                 }
