@@ -8,6 +8,10 @@ FishAndChips.Fish{
 		weight = {min = 0.002, max = 0.005}
 	},
 	ppu_coder = {"Foo54"},
+	ppu_artist = {"squeax09"},
+	atlas = "fas_fish_general",
+	pos = {x=5,y=1},
+	pixel_size = {w=65,h=87},
 	environments = {
 		city_river = 1,
 		garden = 1
