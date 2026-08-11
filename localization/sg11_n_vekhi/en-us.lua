@@ -149,6 +149,7 @@ return {
 				text = {
 					"{C:attention}Use{} to create {C:attention}#1#{} {C:attention}Sprats{}",
 					"{C:inactive}(Does not require room){}",
+					"{ppu_bubble:usable}",
 				},
 				flavour = {
 					"{element:1}",
@@ -158,6 +159,7 @@ return {
 				name = "Lemon Fish",
 				text = {
 					"{C:attention}Use{} to create {C:attention}#1#{} {C:attention}Skip Tags{}",
+					"{ppu_bubble:usable}",
 				},
 				flavour = {
 					"When life gives you lemons, uhhh....",
