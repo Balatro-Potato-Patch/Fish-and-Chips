@@ -301,7 +301,12 @@ return {
         labels={},
         poker_hand_descriptions={},
         poker_hands={},
-        quips={},
+        quips={
+            fac_minty_trauma_center = {
+                "The Medical Board",
+                "will be notified."
+            }
+        },
         v_dictionary={},
         v_text={},
     },
