@@ -5,9 +5,8 @@ FishAndChips.Fish {
     weight = 5,
 
     environments = {
-        city_river = 50,
-        pier = 20,
-        soup = 5,
+        city_river = 30,
+        soup = 20,
     },
 
     attributes = {
@@ -21,7 +20,7 @@ FishAndChips.Fish {
 
     atlas = 'fac_Parsa_atlas_dish',
     stats = {
-    weight = { min = 10, max = 20 },
+    weight = { min = 0.1, max = 0.5 },
     length = { min = 0.10, max = 0.20 },
     },
     pos = { x = 0, y = 0 },
@@ -35,7 +34,7 @@ FishAndChips.Fish {
     decision_max = 0.55,
     vel_limit = 0.42,
     requires_hand = false,
-    treasure = false,
+    treasure = true,
 
     config = {
         extra = {
@@ -118,7 +117,7 @@ FishAndChips.Fish {
     blueprint_compat = false,
  
     stats = {
-        weight = { min = 0.01, max = 0.09 },
+        weight = { min = 0.001, max = 0.009 },
         length = { min = 0.1, max = 0.5 },
     },
  
@@ -138,14 +137,18 @@ FishAndChips.Fish {
  
     loc_vars = function(self, info_queue, card)
         return {
-            vars = { card.ability.extra.rounds_played },
             ppu_bubbles = { card.ability.extra.rounds_played < 2 and 'active' or 'inactive' },
+            vars = { card.ability.extra.rounds_played },
         }
     end,
  
 calculate = function(self, card, context)
     if context.setting_blind then
-        card.ability.extra.rounds_played = card.ability.extra.rounds_played + 1
+        if card.ability.extra.rounds_played <= 2 then
+            card.ability.extra.rounds_played = 2
+        else
+            card.ability.extra.rounds_played = card.ability.extra.rounds_played + 1
+        end
 
         local destructable_jokers = {}
         for i = 1, #G.jokers.cards do
