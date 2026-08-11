@@ -86,11 +86,23 @@ return {
                     "What do you do?"
                 }
             },
+            fish_fac_r_e_spookfish = {
+                name = 'Abstract Spookfish',
+                text = {
+                    '{C:money}#1#{} to {C:fac_environment}Environment{}',
+                    'reroll cost when {C:attention}perfectly{}',
+                    'catching a {C:fac_fish}Fish'
+                },
+                flavour = {
+                    "Piscesso's finest work"
+                }
+            },
         },
     },
     misc = {
         dictionary = {
-            fac_r_e_random_suits = 'random suits'
+            fac_r_e_random_suits = 'random suits',
+            fac_r_e_reduce = '-$1',
         }
     }
 }

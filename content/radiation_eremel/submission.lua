@@ -272,3 +272,42 @@ FishAndChips.Fish({
         card.children.center:set_sprite_pos({x= card.ability.extra.active and 4 or 3, y = 2})
     end
 })
+
+FishAndChips.Fish({
+    key = 'r_e_spookfish',
+    atlas = 'r_e_fish',
+    pos = {x = 1, y = 3},
+    ppu_coder = {'eremel'},
+    ppu_artist = {'radiation'},
+    weight = 7,
+    environments = {
+        swamp = 5,
+        backroom = 4,
+        styx = 2
+    },
+    attributes = {'economy', 'passive'},
+    stats = {
+        weight = {min = 0.055, max = 0.140},
+        length = {min = 0.10, max = 0.17},
+    },
+    config = {extra = {reduction = 1}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.reduction}}
+    end,
+    calculate = function(self, card, context)
+        if context.fac_end_fishing and context.perfect then
+            if G.GAME.fac_environment_reroll_cost > 0 then
+                G.GAME.fac_environment_reroll_cost = math.max(0, G.GAME.fac_environment_reroll_cost - card.ability.extra.reduction)
+                card.ability.extra.track = (card.ability.extra.track or 0) + 1
+            end
+            return {
+                message = localize('fac_r_e_reduce'),
+                colour = G.C.GOLD
+            }
+        end
+        if context.fac_environment_changed then 
+            G.GAME.fac_environment_reroll_cost = G.GAME.fac_environment_reroll_cost + (card.ability.extra.track or 0)
+            card.ability.extra.track = 0
+        end
+    end,
+})
