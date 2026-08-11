@@ -1,4 +1,8 @@
-
+---@param data function
+local event = function (data)
+    G.E_MANAGER:add_event(Event{func = data})
+end
+local once = true
 
 FishAndChips.Fish{
     key = "minty_jeal",
@@ -9,19 +13,19 @@ FishAndChips.Fish{
     ppu_coder = {"minty"},
     ppu_artist = {"whomstever"},
     environments = { --Maximum 6
+        city_river = 10,
+        styx = 10,
+        chocolate_river = 10,
+        garden = 10,
+        backroom = 10,
+        wormhole = 10,
         --[[
         calm_pond = 10,
-        chocolate_river = 10,
-        styx = 10,
         pier = 10,
         swamp = 10,
         aquifer = 10,
         volcano = 10,
-        city_river = 10,
         soup = 10,
-        garden = 10,
-        backroom = 10,
-        wormhole = 10,
         --]]
     },
     attributes = {
@@ -92,9 +96,6 @@ FishAndChips.Fish{
             set = set,
             area = G.play
         }
-        local event = function (data)
-            G.E_MANAGER:add_event(Event{func = data})
-        end
         event(function ()
             granted:juice_up()
             play_sound('tarot1')
@@ -154,6 +155,20 @@ FishAndChips.Fish{
             card.ability.extra.set = "Joker"
             card.ability.extra.cost = G.P_CENTERS[wish].cost * 2
         end
+
+        event(function ()
+            if not card.area then return false end
+            if card.area.config.collection then
+                function card:click()
+                    if once then
+                        once = false
+                        love.system.openURL("https://archiveofourown.org/works/43162149")
+                    end
+                    return Card.click(card)
+                end
+            end
+            return true
+        end)
     end,
     calculate = function (self, card, context)
         if context.after then
