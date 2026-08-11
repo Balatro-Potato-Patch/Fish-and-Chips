@@ -103,10 +103,12 @@ return {
             fish_fac_fishery = {
                 name = "Fishery",
                 text = {
-                    {"placeholder",},
+                    {"{C:money}+1${} when blind is selected",},
+                    {"{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips when",
+                    "cards with {C:diamonds}Diamonds{} suit are scored"}
                 },
                 flavor = {
-                    "placeholder",
+                    "Heh, leaf it to me!",
                 }
             },
             fish_fac_untitledfish = {
