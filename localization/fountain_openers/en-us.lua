@@ -46,6 +46,10 @@ return {
                     "Use this fish to get",
                     "{X:mult,C:white}X#1#{} Mult next hand",
                     "{ppu_bubble:usable}"
+                },
+                flavor = {
+                    "DRIVING IN MY CAR",
+                    "RIGHT AFTER A-"
                 }
             },
             fish_fac_fo_fishery = {
@@ -209,7 +213,7 @@ return {
 
             k_fac_fo_hydra = "Hydra",
             k_fac_fo_crab = "Crab",
-            k_fac_fo_vodka = "Vodka",
+            k_fac_fo_vodka = "Whiskey",
             k_fac_fo_anvil = "Anvil",
             k_fac_fo_merfolk_wizard = "Merfolk Wizard",
             k_fac_fo_slimegirl = "Slimegirl",
