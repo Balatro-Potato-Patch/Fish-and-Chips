@@ -240,7 +240,8 @@ FishAndChips.Fish {
 	},
 	environments = {
 		calm_pond = 10,
-		pier = 5
+		pier = 5,
+		wormhole = 0.1
 	},
 	loc_vars = function(self, info_queue, card)
 		local bucket_fish_count = 0
