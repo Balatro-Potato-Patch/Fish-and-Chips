@@ -740,7 +740,7 @@ FishAndChips.Fish({
 		"inky",
 	},
 	attributes = {
-		"economy",
+		"generation",
 	},
 	environments = {
 		backroom = 1,
