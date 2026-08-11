@@ -11,8 +11,8 @@ end
 
 FishAndChips.Fish {
 	key = "fo_thoracle",
-	atlas = "fish",
-	pos = { x = 3, y = 0 },
+	atlas = "fo_fish",
+	pos = { x = 8, y = 0 },
 	weight = 8,
 	disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },

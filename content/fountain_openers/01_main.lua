@@ -1,5 +1,12 @@
 FountainOpeners = {}
 
+local a = SMODS.current_mod.optional_features
+SMODS.current_mod.optional_features = function()
+    local ret = a and a() or {}
+    ret.retrigger_joker = true
+    return ret
+end
+
 local alexi_text_colors = {
     HEX("45FFDA"),
     HEX("2AC2FF"),
@@ -38,6 +45,14 @@ SMODS.Atlas {
     path = "fountain_openers/alexi.png",
     px = 234,
     py = 240,
+    atlas_table = "ASSET_ATLAS"
+}
+
+SMODS.Atlas {
+    key = "fo_lake",
+    path = "fountain_openers/lake.png",
+    px = 321,
+    py = 347,
     atlas_table = "ASSET_ATLAS"
 }
 

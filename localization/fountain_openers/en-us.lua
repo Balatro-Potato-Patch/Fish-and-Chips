@@ -164,9 +164,8 @@ return {
                     "{s:0.75}Wave, Morgan, and Saph"
                 },
                 text = {
-                    "This Fish gains {X:mult,C:white}X#2#{} Mult when",
-                    "a {C:rare}Rare{} Joker is sold or destroyed",
-                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
+                    "Retriggers all {C:fac_fish}Fish {C:attention}#1#{} times",
+                    "if you have no {C:attention}Jokers"
                 },
                 flavor = {
                     "Three people, one body, all the world's rage."

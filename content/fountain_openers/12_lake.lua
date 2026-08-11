@@ -1,17 +1,18 @@
 FishAndChips.Fish {
 	key = "fo_lake",
-	atlas = "fish",
-	pos = { x = 3, y = 0 },
+	atlas = "fo_lake",
+	pos = { x = 0, y = 0 },
 	weight = 1,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_alexi" },
-	attributes = { "emult", "scaling" },
+	attributes = { "retrigger" },
 	config = {
 		extra = {
-			xmult = 1,
-            xmult_mod = 0.5
+			retriggers = 3
 		},
 	},
+	display_size = { w = 321 * 0.5, h = 347 * 0.5 },
+    pixel_size = { w = 321, h = 347 },
     cost = 9,
 	environments = {
 		city_river = 1,
@@ -23,21 +24,13 @@ FishAndChips.Fish {
 		length = {min = 7.2, max = 7.21},
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.xmult, card.ability.extra.xmult_mod } }
+		return { vars = { card.ability.extra.retriggers } }
 	end,
 	calculate = function(self, card, context)
-        if context.joker_main then
-            return {
-                emult = card.ability.extra.emult
-            }
-        end
-
-        if (context.selling_card or context.joker_type_destroyed) and context.card:is_rarity("Rare") then
-            SMODS.scale_card(card, {
-                ref_table = card.ability.extra,
-                ref_value = "emult",
-                scalar_value = "emult_mod"
-            })
-        end
+        if context.retrigger_joker_check and #G.jokers.cards == 0 and context.other_card.area == G.fac_fish_area and not context.retrigger_joker then
+			return {
+				repetitions = card.ability.extra.retriggers
+			}
+		end
 	end,
 }

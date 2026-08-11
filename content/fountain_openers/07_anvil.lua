@@ -75,7 +75,7 @@ FountainOpeners.anvil_animation = {
 		G.E_MANAGER:add_event(Event({func = function()
 			self.active = true
             self.start_timer = G.TIMERS.REAL
-            self.end_timer = self.start_timer + 0.5
+            self.end_timer = self.start_timer + 0.4
             self.card = card
 
             local pos = get_movable_pixel_pos(card)
@@ -170,6 +170,7 @@ FishAndChips.Fish {
 			mult_mod = 5,
 		}
 	},
+    treasure = true,
 	environments = {
 		aquifer = 1,
 		volcano = 1,
