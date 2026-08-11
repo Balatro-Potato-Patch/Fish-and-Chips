@@ -88,6 +88,7 @@ end
 function FishAndChips.mod.reset_game_globals (run_start)
 	if run_start then
 		G.GAME.fac_fishing_environment = "calm_pond"
+		G.GAME.fac_environment_reroll_cost = 5
 		G.FUNCS.fac_set_active_bait({ config = G.GAME.fac_bait_inventory[1] })
 		G.GAME.fac_bucket_price = 10
 		G.GAME.fac_upgrade_text = localize{type = "variable", key = "ph_fac_upgrade_increase", vars = {G.fac_fish_area.config.card_limits.base, G.fac_fish_area.config.card_limits.base + 1}}
