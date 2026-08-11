@@ -559,7 +559,7 @@ FishAndChips.Fish { --Navy Blade
 	},
 	loc_vars = function(self, info_queue, card)
 		local ex = card.ability.extra
-		return {vars = {ex.uses, ex.uses_max, ex.xblindsize, ex.dollars, ppu_bubbles = {FishAndChips.vman2002.navy_blade_usable(self, card) and "usable" or "inactive"}}}
+		return {vars = {ex.uses, ex.uses_max, ex.xblindsize, ex.dollars, ppu_bubbles = {FishAndChips.vman2002.navy_blade_usable(self, card) and "usable" or "used"}}}
 	end,
 	can_use = FishAndChips.vman2002.navy_blade_usable,
 	use = function(self, card)
