@@ -21,10 +21,12 @@ function FishAndChips.FooSqueax.toggle_bucket_shader()
 	if not FishAndChips then return end
 	G.GAME.fac_FooSqueax.bucket.on = not G.GAME.fac_FooSqueax.bucket.on
 	if G.GAME.fac_FooSqueax.bucket.on then
+		G.GAME.fac_FooSqueax.bucket.water_height = 1
 		ease_value(G.GAME.fac_FooSqueax.bucket, "water_height", -1.1, nil, nil, nil, 20)
 		G.fac_fishing_bucket_top.definition.nodes[1].config.shader = "fac_fas_water"
 		G.fac_fishing_bucket_bottom.definition.nodes[1].config.shader = "fac_fas_water"
 	else
+		G.GAME.fac_FooSqueax.bucket.water_height = -0.1
 		ease_value(G.GAME.fac_FooSqueax.bucket, "water_height", 1.1, nil, nil, nil, 20)
 		G.E_MANAGER:add_event(Event{
 			blocking = false,
