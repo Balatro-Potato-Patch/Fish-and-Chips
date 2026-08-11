@@ -421,8 +421,9 @@ return {
 			}
 		},
 		v_dictionary = {
-			k_fac_fas_attributes = "The Fish to the #3# has #1# attribute#2#",
-			k_fac_fas_zaako_no_fish = "There are no Fish to the #1#",
+			ph_fac_fas_attributes = "The Fish to the #3# has #1# attribute#2#",
+			ph_fac_fas_zaako_no_fish = "There are no Fish to the #1#",
+			ph_fac_fas_zaako_not_a_fish = "The card to the #1# is not a Fish"
 		}
 	}
 }
