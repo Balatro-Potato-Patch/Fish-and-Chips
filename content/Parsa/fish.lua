@@ -34,7 +34,7 @@ FishAndChips.Fish {
     decision_max = 0.55,
     vel_limit = 0.42,
     requires_hand = false,
-    treasure = true,
+    treasure = false,
 
     config = {
         extra = {
@@ -137,7 +137,6 @@ FishAndChips.Fish {
  
     loc_vars = function(self, info_queue, card)
         return {
-            ppu_bubbles = { card.ability.extra.rounds_played < 2 and 'active' or 'inactive' },
             vars = { card.ability.extra.rounds_played },
         }
     end,

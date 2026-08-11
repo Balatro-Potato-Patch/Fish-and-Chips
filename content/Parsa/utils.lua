@@ -1,9 +1,11 @@
 
 G.C.FAC_PARSA = HEX('FF5096FF')
 PotatoPatchUtils.Developer({
-	name = 'Parsa',
-	colour = G.C.FAC_PARSA,
+	name = "Parsa",
 	atlas = 'fac_Parsa_atlas',
+    colour = G.C.FAC_PARSA,
+    colours = { G.C.FAC_PARSA, HEX('8A3FE0'), HEX('FF4FA3') },
+    loc = true,
 })
 SMODS.Atlas({
 	key = "Parsa_atlas_dish",
