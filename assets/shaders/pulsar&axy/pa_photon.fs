@@ -30,11 +30,11 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     }
     
     if (tex.rgb != vec3(0,0,0)) {
-        tex.a = tex.a * 0;
+        tex.a = tex.a * 0.3;
     }
     
     // vec3 fish_color = vec3(0,0,0 + (pa_photon.y * pa_photon.x * 0.000001));
-    vec3 fish_color = vec3(0,0,0 + (pa_photon.x * 0.000001));
+    vec3 fish_color = vec3(0,0,0);
     if (fish_length > 625) {
         fish_color = vec3(1.0, 0.0, 0.0);
     } else if (fish_length > 590) {
