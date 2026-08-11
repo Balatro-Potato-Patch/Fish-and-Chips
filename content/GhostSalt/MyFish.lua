@@ -259,11 +259,11 @@ FishAndChips.Fish {
 		local n = {
 			n = G.UIT.C,
 			config = { align = "cm" },
-			nodes = { { n = G.UIT.O, config = { object = tile } } }
+			nodes = { { n = G.UIT.O, config = { object = tile } } },
 		}
 		info_queue[#info_queue + 1] = { key = "fac_ghostsalt_tap_code", set = "Other", vars = { elements = {} } }
 		info_queue[#info_queue + 1] = { key = "fac_ghostsalt_tap_code_table", set = "Other", vars = { elements = { n } } }
-		return { vars = { card.ability.fac_ghostsalt_tap_cod_used and localize("k_fac_ghostsalt_tapcod_inactive") or localize("k_fac_ghostsalt_tapcod_active") } }
+		return { vars = { ppu_bubbles = { card.ability.fac_ghostsalt_tap_cod_used and "inactive" or "active" } } }
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and not context.invididual and not context.repetition and not context.game_over and not context.blueprint then
@@ -1442,7 +1442,7 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue + 1] = G.P_SEALS.Gold
 		info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
-		return { }
+		return {}
 	end,
 	blueprint_compat = false,
 	requires_hand = true,

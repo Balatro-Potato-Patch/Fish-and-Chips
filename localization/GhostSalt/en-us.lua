@@ -34,10 +34,11 @@ return {
                 name = "Tap Cod",
                 text = {
                     {
-                        "Once per round {C:inactive}[#1#]{}, transmit",
-                        "the name of any {C:attention}consumable{} using",
+                        "Once per round, transmit the",
+                        "name of any {C:attention}consumable{} using",
                         "{C:blue}tap code{} to create a copy of it",
-                        "{C:inactive}(Must have room){}"
+                        "{C:inactive}(Must have room){}",
+                        "{ppu_bubble:1}"
                     },
                     {
                         "{C:red,E:2}Self destructs{} if your message",
@@ -111,9 +112,10 @@ return {
             fish_fac_ghostsalt_finvestor = {
                 name = "Finvestor",
                 text = {
-                    "Use to convert all",
-                    "{C:fac_sand_dollars}sand dollars{} into an",
-                    "equal amount of {C:money}dollars{}"
+                    "Converts your {C:fac_sand_dollars}sand{}",
+                    "{C:fac_sand_dollars}dollars{} into an equal",
+                    "amount of {C:money}dollars{}",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "I can't stop finning!"
@@ -122,9 +124,10 @@ return {
             fish_fac_ghostsalt_kitkatla = {
                 name = "KitKatla",
                 text = {
-                    "Use to {C:attention}double{} the rank",
-                    "of {C:attention}1{} selected card",
-                    "{C:inactive}(A = 1, J-K = 11-13){}"
+                    "{C:attention}Doubles{} the rank of",
+                    "{C:attention}1{} selected card",
+                    "{C:inactive}(A = 1, J-K = 11-13){}",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Chocolate may be breakable,",
@@ -134,10 +137,11 @@ return {
             fish_fac_ghostsalt_troweltrout = {
                 name = "Trowel Trout",
                 text = {
-                    "Select exactly {C:attention}2{} cards with",
-                    "{C:spades}Spades{} suit, use to earn",
+                    "Select exactly {C:attention}2{} cards",
+                    "with {C:spades}Spades{} suit, earn ",
                     "{C:money}money{} equal to the sum of",
-                    "their base {C:chips}Chips{} values"
+                    "their base {C:chips}Chips{} values",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Both a very slow shovel",
@@ -199,10 +203,10 @@ return {
             fish_fac_ghostsalt_eelongtea = {
                 name = "Eelong Tea",
                 text = {
-                    "Select exactly {C:attention}3{} cards and",
-                    "use this {C:attention}Fish{}: one gains a",
-                    "{C:attention}Gold{} seal, one becomes {C:attention}Lucky{}",
-                    "and one is {C:red}destroyed{}"
+                    "Select exactly {C:attention}3{} cards: one",
+                    "gains a {C:attention}Gold{} seal, one becomes",
+                    "{C:attention}Lucky{} and one is {C:red}destroyed{}",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "I certainly have to tip my hat to",
