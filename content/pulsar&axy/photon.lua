@@ -90,7 +90,7 @@ FishAndChips.Fish {
 	draw = function(self, card, layer)
 		if self.discovered or card.params.bypass_discovery_center then
 			-- card.children.center:draw_shader('fac_hide_fish', nil, card.ARGS.send_to_shader)
-			card.children.center:draw_shader('fac_pa_photon', nil, card.ARGS.send_to_shader)
+			-- card.children.center:draw_shader('fac_pa_photon', nil, card.ARGS.send_to_shader)
 			card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
 		end
 	end,

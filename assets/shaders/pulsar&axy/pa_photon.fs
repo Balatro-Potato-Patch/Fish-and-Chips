@@ -5,7 +5,6 @@
 #endif
 
 extern PRECISION vec2 pa_photon;
-// extern uniform vec3 pa_photon;
 
 extern PRECISION number dissolve;
 extern PRECISION number time;
@@ -30,8 +29,12 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
         tex.a = 0;
     }
     
+    if (tex.rgb != vec3(0,0,0)) {
+        tex.a = tex.a * 0;
+    }
+    
     // vec3 fish_color = vec3(0,0,0 + (pa_photon.y * pa_photon.x * 0.000001));
-    vec3 fish_color = vec3(0,0,0);
+    vec3 fish_color = vec3(0,0,0 + (pa_photon.x * 0.000001));
     if (fish_length > 625) {
         fish_color = vec3(1.0, 0.0, 0.0);
     } else if (fish_length > 590) {
@@ -48,8 +51,8 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
         fish_color = vec3(0.40, 0.0, 0.40);
     }
 
-    // tex.rgb = tex.rgb * 0.6 + fish_color;
-    tex.rgb = fish_color * max(tex.r, max(tex.g, tex.b));
+    tex.rgb = tex.rgb * 0.3 + fish_color;
+    // tex.rgb = fish_color * max(tex.r, max(tex.g, tex.b));
     // tex.rgb = fish_color;
     // tex.rgba = vec4(1.0);
 
