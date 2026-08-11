@@ -69,6 +69,11 @@ SMODS.Sound { -- Spalmon
 	path = "w_d_seuss/spamtonf1.ogg",
 }
 
+SMODS.Sound { -- G_____
+	key = "smile",
+	path = "w_d_seuss/smile.ogg",
+}
+
 SMODS.Sound { -- 'Kay
 	key = "swing",
 	path = "w_d_seuss/swing.ogg",
@@ -733,7 +738,7 @@ FishAndChips.Fish {
 	pos = { x = 0, y = 2 },
 	weight = 2,
 	ppu_coder = { "Jolyne" },
-	ppu_artist = { "Nick" },
+	ppu_artist = { "Jolyne" },
 	attributes = { "xmult" },
 	config = {
 		extra = {
@@ -753,16 +758,20 @@ FishAndChips.Fish {
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_i_miss_the_quiet") } } }
 	end,
 	loc_vars = function(self, info_queue, card)
+		local alone = false
+		if G.playing_cards and #G.fac_fish_area.cards == card.ability.extra.count and G.fac_fish_area.cards[1] == card then
+			alone = true
+		end
 		return {
 			vars = {
-				card.ability.extra.xmult
+				card.ability.extra.xmult,
+				ppu_bubbles = { alone == true and "active" or "inactive" }
 			}
 		}
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main then
-			if #G.fac_fish_area.cards == card.ability.extra.count and
-				G.fac_fish_area.cards[1] == card then
+			if #G.fac_fish_area.cards == card.ability.extra.count and G.fac_fish_area.cards[1] == card then
 				return {
 					xmult = card.ability.extra.xmult
 				}
@@ -811,9 +820,10 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = {},
+	attributes = { "xmult" },
 	config = {
 		extra = {
+			xmult = 3
 		}
 	},
 	environments = {
@@ -827,9 +837,14 @@ FishAndChips.Fish {
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_red_handed") } } }
 	end,
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		return { vars = { ppu_bubbles = { next(SMODS.find_card("fish_fac_lordx")) and "active" or "inactive" } } }
 	end,
 	calculate = function(self, card, context)
+		if next(SMODS.find_card("fish_fac_lordx")) and context.joker_main then
+			return {
+				xmult = card.ability.extra.xmult
+			}
+		end
 	end
 }
 
@@ -1001,9 +1016,10 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "deltarune" },
+	attributes = { "mult", "deltarune" },
 	config = {
 		extra = {
+			mult = 5
 		}
 	},
 	environments = {
@@ -1014,9 +1030,23 @@ FishAndChips.Fish {
 		length = { min = 1.21, max = 1.85 }
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		local place = 1
+		local middle = false
+		if G.playing_cards then
+			local place = math.ceil(#G.fac_fish_area.cards / 2)
+			if G.fac_fish_area.cards[place] == card and #G.fac_fish_area.cards > 2 then
+				middle = true
+			end
+		end
+		return { vars = { card.ability.extra.mult, ppu_bubbles = { middle == true and "active" or "inactive" } } }
 	end,
 	calculate = function(self, card, context)
+		local place = math.ceil(#G.fac_fish_area.cards / 2)
+		if context.joker_main and G.fac_fish_area.cards[place] == card and #G.fac_fish_area.cards > 2 then 
+			return {
+				mult = card.ability.extra.mult
+			}
+		end
 	end
 }
 
@@ -1029,9 +1059,10 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "deltarune" },
+	attributes = { "economy", "usable", "deltarune" },
 	config = {
 		extra = {
+			dollar = 66
 		}
 	},
 	environments = {
@@ -1042,10 +1073,23 @@ FishAndChips.Fish {
 		length = { min = 66.00, max = 67.00 }
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		return { vars = { card.ability.extra.dollar } }
 	end,
 	calculate = function(self, card, context)
-	end
+	end,
+	use = function(self, card, area, copier)
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				play_sound('fac_smile')
+				ease_sand_dollars(-G.GAME.fac_sand_dollars + card.ability.extra.dollar,true)
+				return true
+			end
+		}))
+		delay(0.2)
+	end,
+	can_use = function(self, card)
+		return true
+	end,
 }
 
 --  'Kai (Koi) ('Kay)
@@ -1349,8 +1393,7 @@ FishAndChips.Fish {
 				G.GAME.blind.chips = reduce
 				G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
 				G.GAME.chips = G.GAME.chips - math.floor((before - reduce) / 2)
-				SMODS.calculate_effect(
-					{ message = '-' .. math.floor((before - reduce) / 2) .. ' Score', colour = G.C.DYN_UI.DARK }, card)
+				SMODS.calculate_effect({ message = '-' .. math.floor((before - reduce) / 2) .. ' Score', colour = G.C.DYN_UI.DARK }, card)
 				return true
 			end
 		}))
@@ -1370,9 +1413,10 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "deltarune" },
+	attributes = { "economy", "xblindsize", "usable", "deltarune" },
 	config = {
 		extra = {
+			blind = 50
 		}
 	},
 	environments = {
@@ -1386,5 +1430,24 @@ FishAndChips.Fish {
 		return { vars = {} }
 	end,
 	calculate = function(self, card, context)
-	end
+	end,
+	use = function(self, card, area, copier)
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				play_sound('fac_mean_fellow')
+				local before = to_number(G.GAME.blind.chips)
+				local reduce = math.floor(to_number(G.GAME.blind.chips) * ((100 - card.ability.extra.blind) / 100))
+				G.GAME.blind.chips = reduce
+				G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+				if G.GAME.fac_sand_dollars ~= 0 then
+					ease_sand_dollars(-math.ceil(G.GAME.fac_sand_dollars/2),true)
+				end
+				return true
+			end
+		}))
+		delay(0.2)
+	end,
+	can_use = function(self, card)
+		return G.STATE == G.STATES.SELECTING_HAND
+	end,
 }

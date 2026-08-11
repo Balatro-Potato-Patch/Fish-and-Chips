@@ -156,12 +156,14 @@ return {
             fish_fac_lordx = {
                 name = "Lord X-ray Fish",
                 text = {
-                    "{X:mult,C:white}X#1#{} Mult if by itself"
+                    "{X:mult,C:white}X#1#{} Mult when {C:attention}alone{}",
+                    "{ppu_bubble:1}"
                 },
                 flavour = {
                     "{element:1}",
-                    "{C:inactive}This fish seems to miss when",
-                    "{C:inactive}the pond was quieter...",
+                    "{s:0.3} ",
+                    "This fish seems to miss when",
+                    "the pond was quieter...",
                 }
             },
             fish_fac_majin = {
@@ -171,21 +173,23 @@ return {
                 },
                 flavour = {
                     "{element:1}",
-                    "{C:inactive}Don't let its looks fool",
-                    "{C:inactive}you, it's no savage!"
+                    "{s:0.3} ",
+                    "Don't let its looks fool",
+                    "you, it's no savage!"
                 }
             },
             fish_fac_redglove = {
                 name = "Red-Herring",
                 text = {
                     "{X:mult,C:white,s:0.8}Verdreifache{s:0.8} deinen aktuellen Punktemultiplikator,",
-                    "{s:0.8}wenn sich dieser Fisch neben {C:attention,s:0.8}Lord X-Ray{s:0.8} befindet."
+                    "{s:0.8}wenn sich dieser Fisch neben {C:attention,s:0.8}Lord X-Ray{s:0.8} befindet.",
+                    "{ppu_bubble:1}"
                 },
                 flavour = {
-                    "{f:fac_tiktoksans,s:0.6}How I feel after singing my verse",
-                    "{f:fac_tiktoksans,s:0.6}in German instead of English:",
+                    "{element:1}",
                     "{s:0.3} ",
-                    "{element:1}"
+                    "{f:fac_tiktoksans,s:0.6}How I feel after singing my verse",
+                    "{f:fac_tiktoksans,s:0.6}in German instead of English:"
                 }
             },
             fish_fac_faker = {
@@ -224,7 +228,9 @@ return {
             fish_fac_togore = {
                 name = "Topegore",
                 text = {
-                    "",
+                    "{C:mult}+#1#{} Mult when in the",
+                    "{C:attention}middle{} of the bucket",
+                    "{ppu_bubble:1}"
                 },
                 flavour = {
                     ""
@@ -233,7 +239,9 @@ return {
             fish_fac_gaster = {
                 name = "Basster",
                 text = {
-                    "",
+                    "Sets your {C:attention}FUN{}",
+                    "value to {C:attention}#1#{}",
+                    "{ppu_bubble:usable}"
                 },
                 flavour = {
                     "Notably Not Green"
@@ -298,6 +306,10 @@ return {
                 name = "Great White",
                 text = {
                     "{X:blind,C:white}Mean`````Fellow:",
+                    "Halves Blind",
+                    "Requirement",
+                    "{C:inactive,E:2}but...{}",
+                    "{ppu_bubble:usable}"
                 },
                 flavour = {
                     ""
