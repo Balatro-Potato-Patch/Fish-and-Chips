@@ -97,7 +97,7 @@ return {
 				},
 				text = {
 					{
-						"This {C:fac_fish}Fish{} gains {X:mult,C:white}X#1#{} Mult"<
+						"This {C:fac_fish}Fish{} gains {X:mult,C:white}X#1#{} Mult",
 						"when a {C:fac_fish}Fish{} made by {C:attention}#2#{} is caught",
 						"{C:inactive}[Currently {X:mult,C:white}X#3#{C:inactive} Mult]",
 						"{C:inactive}[Target changes every round]"
@@ -277,7 +277,7 @@ return {
 					"I also worked with Foo to art a lot of silly things",
 					"for our entry, so I do hope you enjoy the goofiness that's come of it! :3"},
 					{"Additionally, feel free to check out {C:attention}Balacats{}, {C:purple}Maximus{},",
-					"and {C:planet}Wormhole{}, all of which I contributed to!",
+					"and {C:planets}Wormhole{}, all of which I contributed to!",
 				"{s:0.9}(also {C:blue,E:1,s:0.9}Washmachine{}{s:0.9} but that one's not out yet lmao)"}
 				}
 			}
