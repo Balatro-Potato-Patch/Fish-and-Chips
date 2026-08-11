@@ -167,7 +167,7 @@ FishAndChips.Fish { --Chips
 	end,
 	in_pool = function()
 		--because +score is so powerful in early antes
-		local a = (G.GAME.fac_chips_attempts or 0) + 0.6
+		local a = (G.GAME.fac_chips_attempts or 0) + 0.4
 		G.GAME.fac_chips_attempts = a
 		return a >= 4 - G.GAME.round_resets.ante
 	end,
@@ -290,7 +290,7 @@ FishAndChips.Fish { --Manos
 					colour = G.C.RED,
 					pitch = 1,
 					func = function()
-						
+						FishAndChips.vman2002.manoboom_time = G.TIMERS.REAL
 					end
 				}
 			end
@@ -383,7 +383,7 @@ FishAndChips.Fish { --Necklace
 	attributes = { "editions" },
 	stats = { weight = { min = 0.01, max = 0.09 }, length = {min = 0.4, max = 0.6}},
 	environments = {
-		pier = 0.6, city_river = 1, backroom = 0.3, garden = 0.8
+		pier = 0.6, city_river = 1
 	},
 	set_ability = function(self, card)
 		if not card.edition then
@@ -439,6 +439,9 @@ FishAndChips.Fish { --Coupon
 }
 
 local tim = "fish_fac_vman2002_timothy"
+FishAndChips.vman2002.timothyActive = function()
+	return G.GAME.fac_last_used_fish == tim
+end
 FishAndChips.Fish { --Timothy
 	key = "vman2002_timothy",
 	atlas = "vman2002_fish",
@@ -461,10 +464,10 @@ FishAndChips.Fish { --Timothy
 	},
 	loc_vars = function(self, info_queue, card)
 		local ex = card.ability.extra
-		return {vars = {ex.xmult, ex.xmult_gain}}
+		return {vars = {ex.xmult, ex.xmult_gain, ppu_bubbles = {FishAndChips.vman2002.timothyActive() and "active" or "inactive"}}}
 	end,
 	flavour_vars = function(self, info_queue, card)
-		return {vars = {localize(G.GAME.fac_last_used_fish == tim and "fac_vman2002_timothy_active" or "fac_vman2002_timothy_inactive")}}
+		return {vars = {localize(FishAndChips.vman2002.timothyActive() and "fac_vman2002_timothy_active" or "fac_vman2002_timothy_inactive")}}
 	end,
 	use = function(self, card)
 		card.ability.extra.ante_used = true
@@ -503,7 +506,8 @@ FishAndChips.Fish { --Timothy
 	decision_max = 0.7
 }
 
-local blackbody_targets = function()
+
+FishAndChips.vman2002.blackbody_targets = function()
 	local ret = {}
 	for k,v in pairs(G.jokers.cards) do
 		if not v.edition then
@@ -512,7 +516,6 @@ local blackbody_targets = function()
 	end
 	return ret
 end
-FishAndChips.vman2002.blackbody_targets = blackbody_targets
 FishAndChips.Fish { --Blackbody
 	key = "vman2002_blackbody",
 	atlas = "vman2002_blackbody",
@@ -534,7 +537,7 @@ FishAndChips.Fish { --Blackbody
 	loc_vars = function(self, info_queue, card)
 		local ex = card.ability.extra
 		info_queue[#info_queue+1] = G.P_CENTERS.e_negative
-		return {vars = {ex.rounds, ex.rounds_goal}}
+		return {vars = {ex.rounds, ex.rounds_goal, ppu_bubbles = {ex.rounds >= ex.rounds_goal and "usable" or "inactive"}}}
 	end,
 	use = function(self, card)
 		local t = FishAndChips.vman2002.blackbody_targets()
@@ -555,6 +558,9 @@ FishAndChips.Fish { --Blackbody
 	blueprint_compat = true
 }
 
+FishAndChips.vman2002.navy_blade_usable = function(self, card)
+	return card.ability.extra.uses < card.ability.extra.uses_max and (G.STATE == G.STATES.SELECTING_HAND or card.area.config.collection or card.area.config.fac_compendium)
+end
 FishAndChips.Fish { --Navy Blade
 	key = "vman2002_navyblade",
 	atlas = "vman2002_fish",
@@ -570,11 +576,9 @@ FishAndChips.Fish { --Navy Blade
 	},
 	loc_vars = function(self, info_queue, card)
 		local ex = card.ability.extra
-		return { vars = { ex.uses, ex.uses_max, ex.xblindsize, ex.dollars } }
+		return {vars = {ex.uses, ex.uses_max, ex.xblindsize, ex.dollars, ppu_bubbles = {FishAndChips.vman2002.navy_blade_usable(self, card) and "usable" or "inactive"}}}
 	end,
-	can_use = function(self, card)
-		return card.ability.extra.uses < card.ability.extra.uses_max and G.STATE == G.STATES.SELECTING_HAND
-	end,
+	can_use = FishAndChips.vman2002.navy_blade_usable,
 	use = function(self, card)
 		local ex = card.ability.extra
 		ex.uses = ex.uses + 1
