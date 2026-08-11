@@ -224,7 +224,7 @@ FishAndChips.Fish {
 G.FUNCS.fac_fo_can_take_fish = function(e)
 	local card = e.config.ref_table
 	card._fac_use_key = localize("fac_fo_take")
-	if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
+	if (#G.fac_fish_area.cards+1) < G.fac_fish_area.config.card_limit then
 		e.config.colour = G.C.ORANGE
 		e.config.button = "fac_fo_take_fish"
 	else
