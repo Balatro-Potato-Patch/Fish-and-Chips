@@ -723,7 +723,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Jolyne" },
 	ppu_artist = { "Nick" },
-	attributes = {},
+	attributes = { "xmult" },
 	config = {
 		extra = {
 			count = 1,
