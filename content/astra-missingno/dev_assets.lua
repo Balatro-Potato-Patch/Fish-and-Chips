@@ -121,6 +121,9 @@ PotatoPatchUtils.Developer({
 	loc = true,
 	colour = HEX('8710c7'),
 	fac_partner = 'fac_MissingNo',
+	loc_vars = function(self, info_queue, card)
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 432 / 576, "fac_astra-missingno-real_fish")}}}
+	end,
 	click = function(self)
 		play_sound('fac_am_astra_click')
 		self:juice_up(0.1, 0.1)
@@ -228,6 +231,13 @@ SMODS.Atlas({
 	path = "astra-missingno/credits.png",
 	px = 71,
 	py = 95,
+})
+
+SMODS.Atlas({
+	key = "astra-missingno-real_fish",
+	path = "astra-missingno/real_fish.png",
+	px = 432,
+	py = 576,
 })
 
 SMODS.Atlas({

@@ -4,12 +4,15 @@ return {
 			PotatoPatchDev_theAstra = {
 				name = "theAstra",
                 text = {
-                    "Howdy! I'm {C:purple,E:2}Astra{}, head of the {C:attention}Potato Patch!",
+                    {"Howdy! I'm {C:purple,E:2}Astra{}, head of the {C:attention}Potato Patch!",
                     "Thanks for playing the mod! This was easily our {C:red}most ambitious",
                     "event mod yet, and I had a blast making it happen! Shout out to",
                     "my fellow {C:attention}Organizers{} and the {C:planet}Guest Dev{} team for bringing this crazy",
                     "vision to life!",
-                    "{C:dark_edition,s:1.4}To The Stars!!! {C:dark_edition,s:1.4,f:8}🪐"
+                    "{C:dark_edition,s:1.4}To The Stars!!! {C:dark_edition,s:1.4,f:8}🪐"},
+                    {"Also check out this Brooke Trout I caught irl",
+                    "during the development of this mod",
+                    "{element:1}"}
                 }
 			},
 			PotatoPatchDev_MissingNo = {
