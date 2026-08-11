@@ -159,8 +159,8 @@ function FishAndChips.mod.custom_card_areas(game)
 	G.fac_pa_box_jellyfish_area = CardArea( -- Should be saved in G for it to be preserved between reloads
         0, -- x coordinate relative to top left
         0, -- y coordinate relative to top left
-        game.CARD_W * 4.95, -- width (this is the default for G.jokers)
-        game.CARD_H * 0.95, -- height (this is the default for G.jokers)
+        game.CARD_W * 0, -- width (4.95 is the default for G.jokers)
+        game.CARD_H * 0, -- height (0.95 is the default for G.jokers)
         {
             -- optional, but recommended configs:
             type = 'joker', -- area type, doesn't affect what type of cards can be in it, only how they're displayed and act
