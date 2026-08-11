@@ -30,7 +30,7 @@ FishAndChips.Fish{
 	key = "fas_kawkaw",
 	weight = 5,
 	environments = {
-		garden = 1
+		garden = 1,
 		calm_pond = 0.75,
 	},
 	atlas = "fas_nyon",
