@@ -4,7 +4,8 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_pa_pulsarfish',
 	pos = {x = 2, y = 3},
 	colour = FishAndChips.C.FISH,            --fish!!!!!
-	fac_partner = 'fac_Axy'
+	fac_partner = 'fac_Axy',
+	loc = true
 })
 
 PotatoPatchUtils.Developer({

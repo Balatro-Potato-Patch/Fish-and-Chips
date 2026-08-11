@@ -19,7 +19,7 @@ FishAndChips.Fish {
 		length = {min = 1.75, max = 2},
 		weight = { min = .75, max = 1.25}
 	},
-	blueprint_compat = true,
+	blueprint_compat = false,
 	config = {
 		extra = {
 			ate_booster = false

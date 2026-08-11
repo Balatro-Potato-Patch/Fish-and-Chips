@@ -6,6 +6,25 @@ local pa_fish = {
 			},
 			PotatoPatchDev_Pulsar = {
 				name = "Pulsar",
+                text = {
+                    {"I'm {C:fac_fish}Pulsar{}, I did the art and a",
+                    "smidge of code for me and {C:green}Axy's{} fish"},
+
+                    {"I'm a {X:chips,C:white}Blue{} goat-{C:fac_fish}fish{} creature",
+                    "that likes space and drawi-",
+                    "w-wait... {C:fac_fish}fish{}...?",
+                    "i'm just a little guy...",
+                    "please don't fish me... :C"}, --replace :C with :pleading_face: if possible, including the corrisponding one in my fish
+
+                    {"I'm currently working on my own mod",
+                    "{C:legendary}Nebula{}, that adds about 60 jokers",
+                    "and a new Consumable set",
+                    "there's a good chance it'll be out when this is!",
+                    "{C:blue}https://github.com/PSRPulsar/Nebula"
+                    },
+
+                    {"RANDOM QUOTE GOES HERE"}
+                }
 			},
         },
         fac_Fish = {
