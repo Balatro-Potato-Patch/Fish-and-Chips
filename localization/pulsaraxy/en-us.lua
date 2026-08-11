@@ -19,7 +19,7 @@ local pa_fish = {
                     {"I'm currently working on my own mod",
                     "{C:legendary}Nebula{}, that adds about 60 jokers",
                     "and a new Consumable set",
-                    "there's a good chance it'll be out when this is!",
+                    "there's a good chance it'll be finished when this is!",
                     "{C:blue}https://github.com/PSRPulsar/Nebula"
                     },
 
@@ -274,8 +274,9 @@ local pa_fish = {
                     '{s:0.8}{C:inactive}(Usable {C:attention}once{}{s:0.8}{C:inactive} per shop)'
                 },
                 flavour = {
-                    'Despite the name, it is',
-                    'not very good at boxing'
+                    'I wonder why nobody has',
+                    'tried doing an unboxing',
+                    "on one of these"
                 }
             },
             fish_fac_pa_blackhole = {
