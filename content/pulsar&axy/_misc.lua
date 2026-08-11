@@ -21,7 +21,7 @@ PotatoPatchUtils.Developer({
         local quip = pseudorandom_element(quip_list, pseudoseed('pulsar'))
         return { vars = {
             quip,
-			elements = { SMODS.create_sprite(0, 0, 0.35, 0.35 * 318 / 346, "fac_pa_pulsarplead") }
+			elements = { SMODS.create_sprite(0, 0, 0.4, 0.4, "fac_pa_pulsarplead") }
         }}
     end,
 	click = function(self)
@@ -81,7 +81,7 @@ SMODS.Atlas({
 	key = 'pa_pulsarplead',
 	path = 'pulsar&axy/pulsarplead.png',
 	px = 346,
-	py = 318
+	py = 346
 })
 
 SMODS.Atlas({

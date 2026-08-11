@@ -20,7 +20,7 @@ FishAndChips.Fish {
 	blueprint_compat = true,
 	config = {
 		extra = {
-			chips_gain = 8,
+			chips_gain = 10,
 			chips = 0
 		},
 		max_highlighted = 1
