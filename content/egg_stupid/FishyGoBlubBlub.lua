@@ -84,14 +84,6 @@ SMODS.Sound {
 	path = 'egg_stupid/Giant_Flea_howl_short_03.ogg',
 }
 
---[[
-
-Bait Attributes
-
-"passive"
-
-]]
-
 --#region utility
 
 local function fly_away(card)
@@ -563,7 +555,7 @@ FishAndChips.Fish {
 	atlas = "segg_fishies",
 	pos = { x = 1, y = 1 },
 
-	weight = 15,
+	weight = 10,
 
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
@@ -613,8 +605,62 @@ FishAndChips.Fish {
 
 
 -- Courier's Rasher
--- +1 hands size for every discard remaining <- soup fish
+--  <- soup fish
+-- +1 hands size for every discard remaining (strong that's why is rare)
+FishAndChips.Fish {
+	key = "segg_couriers_rasher",
+	atlas = "segg_fishies",
+	pos = { x = 2, y = 1 },
 
+	weight = 2,
+
+	ppu_coder = { "stupid" },
+	ppu_artist = { "egg_node" },
+
+	blueprint_compat = false,
+	attributes = { "passive", "food", "hand_size" },
+	config = {
+		extra = {
+			hand_size = 1,
+			discards_cache = 0,
+		}
+	},
+	stats = {
+		weight = {min = 1., max = 4.},
+		length = {min = 0.5, max = 1.5}
+	},
+	environments = {
+		soup = 1,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.hand_size } }
+	end,
+
+	
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and (card.config.center.discovered or card.bypass_discovery_center) then
+            if G.GAME.current_round.discards_left > 0 then
+                card.children.center:set_sprite_pos({ x = 2, y = 1 })
+            else
+                card.children.center:set_sprite_pos({ x = 3, y = 1 })
+            end
+        end
+    end,
+
+	update = function (self, card)
+		if card.ability.extra.in_deck and card.ability.extra.discards_cache ~= G.GAME.current_round.discards_left then
+			G.hand:change_size(-math.floor(card.ability.extra.discards_cache * card.ability.extra.hand_size))
+			G.hand:change_size(math.floor(G.GAME.current_round.discards_left * card.ability.extra.hand_size))
+
+			card.ability.extra.discards_cache = G.GAME.current_round.discards_left
+		end
+	end,
+
+    add_to_deck = function(self, card, from_debuff)
+        card.ability.extra.in_deck = true
+    end,
+
+}
 
 
 -- Yumama

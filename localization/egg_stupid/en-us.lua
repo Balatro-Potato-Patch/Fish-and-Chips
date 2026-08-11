@@ -76,6 +76,7 @@ return {
                     "from its tribe.",
                 }
             },
+
             fish_fac_segg_huge_fleash = {
                 name = "Huge Fleash",
                 text = {
@@ -100,6 +101,20 @@ return {
                 flavor = {
                     "You can never",
                     "eat just one chip.",
+                }
+            },
+
+            fish_fac_segg_couriers_rasher = {
+                name = "Courier's Rasher",
+                text = {
+                    "{C:attention}+#1#{} hand size",
+                    "for every",
+                    "{C:mult}discard{} remaining"
+                },
+                flavor = {
+                    "Fatty meat of indeterminate origin.",
+                    "Once prepared it will quickly",
+                    "spoil if not stored properly."
                 }
             },
 
