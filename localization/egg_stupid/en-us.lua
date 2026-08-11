@@ -3,9 +3,16 @@ return {
 		PotatoPatch = {
 			PotatoPatchDev_stupid = {
 				name = "stupid",
+                text = {
+                    "Play {C:red}Balatro{}, I heard", -- waa waa waa I will update this later
+                    "it's a great game!",
+                }
 			},
 			PotatoPatchDev_egg_node = {
 				name = "egg_node",
+                text = {
+                    "fart (fish art)",
+                }
 			},
         },
         fac_Fish = {
