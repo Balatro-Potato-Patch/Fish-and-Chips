@@ -221,7 +221,7 @@ function G.FUNCS.fac_can_open_bait_shop(e)
 end
 
 function G.FUNCS.fac_can_reroll_location(e)
-	return G.FISHING_STATE == G.FISHING_STATES.LOBBY and (G.GAME.dollars - G.GAME.bankrupt_at) - 5 >= 0
+	return G.FISHING_STATE == G.FISHING_STATES.LOBBY and (G.GAME.dollars - G.GAME.bankrupt_at) - G.GAME.fac_environment_reroll_cost >= 0
 end
 
 function G.UIDEF.fac_bait_inventory_button()
