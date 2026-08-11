@@ -54,6 +54,25 @@ local pa_fish = {
                 }
             },
             fish_fac_pa_onering = {
+                name = "The One Fish",
+                text = {{
+                    "Disable all {C:attention}Boss Blinds{}",
+                    "Blind Size temporarily increases by",
+                    "{B:blind,C:white}X#1#{} each round while held",
+                    "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
+                },{
+                    "If {C:attention}sold or destroyed{}:",
+                    "Outside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size permanently",
+                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
+                }},
+                flavour = {
+                    "One fish to rule them all,",
+                    "one fish to find them,",
+                    "One fish to bring them all",
+                    "and in the darkness bind them."
+                }
+            },
+            fish_fac_pa_onering_variable = {
                 name = "The #5# Fish",
                 text = {{
                     "Disable all {C:attention}Boss Blinds{}",
@@ -288,9 +307,6 @@ local pa_fish = {
             k_fac_pa_box_jellyfish_open = "Open",
             k_fac_pa_box_jellyfish_consume = "Consume",
         },
-        v_dictionary = {
-            fish_fac_pa_onering = 'The #1# Ring'
-        }
     }
 }
 pa_fish.descriptions.fac_Fish.fish_fac_pa_doorfish = SMODS.load_file("localization/pulsaraxy/doorfish/en-us.lua", "FishAndChips")()

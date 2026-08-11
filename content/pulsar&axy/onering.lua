@@ -37,12 +37,12 @@ FishAndChips.Fish {
 			G.GAME.starting_params.ante_scaling,
 			text
 		},
-		-- key = (dupeCount > 0 and self.key .. "_" .. dupeCount) or self.key .. "_1"
+		key = self.key .. "_variable"
 	}
 	end,
 	flavour_vars = function(self, info_queue, card)
 		local text = self:count_duplicates()
-		return { vars = { text, string.lower(text) }}
+		return { vars = { text, string.lower(text) }, key = self.key .. "_variable" }
 	end,
     add_to_deck = function(self, card, from_debuff)
 		if not from_debuff then
