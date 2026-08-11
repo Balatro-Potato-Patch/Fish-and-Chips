@@ -16,13 +16,15 @@
 ---@field backroom? number
 ---@field wormhole? number
 
+---@class Units
+---@field format string localization key to be inputting into string.format
+---@field scale number how many metres/kilograms are in 1 of the custom unit
+---@field precision integer how many decimals of precision should be displayed
+
 ---@class IntStats
 ---@field min number Minimum value of this measurement
 ---@field max number Maximum value of this measurement
-
----@class Stats
----@field weight IntStats Set a min and max value for weight, measure in kilograms
----@field length IntStats Set a min and max value for length, measured in metres
+---@field units? Units custom formatting for the stat 
 
 ---@class FishAndChips.Fish: SMODS.Center
 ---@field environments Environments where this fish can appear, key = weight
