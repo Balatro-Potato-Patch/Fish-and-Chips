@@ -402,7 +402,7 @@ FishAndChips.Fish { --Coupon
 		add_tag({key = pseudorandom_element(possible, "fac_vman2002_coupon")})
 	end,
 	loc_vars = function(self, card)
-		return {vars = {ppu_bubbles = {G.STATE == G.STATES.FAC_FISHING and "inactive" and "usable"}}}
+		return {vars = {ppu_bubbles = {G.STATE == G.STATES.FAC_FISHING and "inactive" or "usable"}}}
 	end,
 	can_use = function()
 		return G.STATE ~= G.STATES.FAC_FISHING
@@ -422,7 +422,7 @@ FishAndChips.Fish { --Coupon
 }
 
 local tim = "fish_fac_vman2002_timothy"
-FishAndChips.vman2002.timothyActive = function()
+FishAndChips.vman2002.timothy_active = function()
 	return G.GAME.fac_last_used_fish == tim
 end
 FishAndChips.Fish { --Timothy
@@ -447,10 +447,10 @@ FishAndChips.Fish { --Timothy
 	},
 	loc_vars = function(self, info_queue, card)
 		local ex = card.ability.extra
-		return {vars = {ex.xmult, ex.xmult_gain, ppu_bubbles = {FishAndChips.vman2002.timothyActive() and "active" or "inactive", ex.ante_used and "used" or "usable"}}}
+		return {vars = {ex.xmult, ex.xmult_gain, ppu_bubbles = {FishAndChips.vman2002.timothy_active() and "active" or "inactive", ex.ante_used and "used" or "usable"}}}
 	end,
 	flavour_vars = function(self, info_queue, card)
-		return {vars = {localize(FishAndChips.vman2002.timothyActive() and "fac_vman2002_timothy_active" or "fac_vman2002_timothy_inactive")}}
+		return {vars = {localize(FishAndChips.vman2002.timothy_active() and "fac_vman2002_timothy_active" or "fac_vman2002_timothy_inactive")}}
 	end,
 	use = function(self, card)
 		card.ability.extra.ante_used = true
