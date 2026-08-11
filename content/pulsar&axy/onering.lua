@@ -28,16 +28,21 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		local opposite = 1 / (card.ability.extra.perma_xblind_size or 1)
 
-		local dupeCount = self:count_duplicates()
+		local text = self:count_duplicates()
 
 		return { vars = {
 			card.ability.extra.blindsize_increase,
 			card.ability.extra.perma_xblind_size,
 			opposite,
-			G.GAME.starting_params.ante_scaling
+			G.GAME.starting_params.ante_scaling,
+			text
 		},
-		key = (dupeCount > 0 and self.key .. "_" .. dupeCount) or self.key .. "_1"
+		-- key = (dupeCount > 0 and self.key .. "_" .. dupeCount) or self.key .. "_1"
 	}
+	end,
+	flavour_vars = function(self, info_queue, card)
+		local text = self:count_duplicates()
+		return { vars = { text, string.lower(text) }}
 	end,
     add_to_deck = function(self, card, from_debuff)
 		if not from_debuff then
@@ -120,6 +125,23 @@ FishAndChips.Fish {
 				end
 			end
 		end
-		return dupeCount > 7 and 7 or dupeCount -- stop at seven because six sevennn
+
+		local text = "One"
+		if dupeCount == 1 then
+			text = "One"
+		elseif dupeCount == 2 then
+			text = "Two"
+		elseif dupeCount == 3 then
+			text = "Three"
+		elseif dupeCount == 4 then
+			text = "Four"
+		elseif dupeCount == 5 then
+			text = "Five"
+		elseif dupeCount == 6 then
+			text = "Six"
+		elseif dupeCount == 7 then -- stop at seven because six sevennn
+			text = "Seven"
+		end
+		return text
 	end,
 }

@@ -28,6 +28,11 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xchips } }
 	end,
+	flavour_vars = function(self, info_queue, card)
+		return { vars = {
+			elements = { SMODS.create_sprite(0, 0, 0.35, 0.35, "fac_pa_pulsarplead") }
+		}}
+	end,
 	calculate = function(self, card, context)
         -- gives xchips for each club held in hand
         if context.individual and context.cardarea == G.hand and context.other_card:is_suit('Clubs') and not context.end_of_round then

@@ -31,7 +31,7 @@ FishAndChips.Fish {
 			card.ability.extra.sell_value_increase = pseudorandom(pseudoseed(self.key), card.ability.extra.sequence_min, card.ability.extra.sequence_max)
 			card.ability.extra.current_position = 1
 			for i=1,card.ability.extra.sell_value_increase do
-				table.insert(card.ability.extra.sequence, (SMODS.Ranks['Ace']))
+				table.insert(card.ability.extra.sequence, ('Ace'))
 			end
 		end
 

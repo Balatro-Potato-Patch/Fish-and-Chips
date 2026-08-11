@@ -14,7 +14,7 @@ local pa_fish = {
                     "that likes space and drawi-",
                     "w-wait... {C:fac_fish}fish{}...?",
                     "i'm just a little guy...",
-                    "please don't fish me... :C"}, --replace :C with :pleading_face: if possible, including the corrisponding one in my fish
+                    "please don't fish me... {element:1}"}, --replace :C with :pleading_face: if possible, including the corrisponding one in my fish
 
                     {"I'm currently working on my own mod",
                     "{C:legendary}Nebula{} that adds about 60 jokers",
@@ -54,7 +54,7 @@ local pa_fish = {
                 }
             },
             fish_fac_pa_onering = {
-                name = "The One Fish",
+                name = "The #5# Fish",
                 text = {{
                     "Disable all {C:attention}Boss Blinds{}",
                     "Blind Size temporarily increases by",
@@ -66,142 +66,9 @@ local pa_fish = {
                     "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
                 }},
                 flavour = {
-                    "One fish to rule them all,",
-                    "one fish to find them,",
-                    "One fish to bring them all",
-                    "and in the darkness bind them."
-                }
-            },
-            fish_fac_pa_onering_1 = {
-                name = "The One Fish",
-                text = {{
-                    "Disable all {C:attention}Boss Blinds{}",
-                    "Blind Size temporarily increases by",
-                    "{B:blind,C:white}X#1#{} each round while held",
-                    "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
-                },{
-                    "If {C:attention}sold or destroyed{}:",
-                    "Outside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size permanently",
-                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
-                }},
-                flavour = {
-                    "One fish to rule them all,",
-                    "one fish to find them,",
-                    "One fish to bring them all",
-                    "and in the darkness bind them."
-                }
-            },
-            fish_fac_pa_onering_2 = {
-                name = "The Two Fish",
-                text = {{
-                    "Disable all {C:attention}Boss Blinds{}",
-                    "Blind Size temporarily increases by",
-                    "{B:blind,C:white}X#1#{} each round while held",
-                    "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
-                },{
-                    "If {C:attention}sold or destroyed{}:",
-                    "Outside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size permanently",
-                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
-                }},
-                flavour = {
-                    "Two fish to rule them all,",
-                    "two fish to find them,",
-                    "Two fish to bring them all",
-                    "and in the darkness bind them."
-                }
-            },
-            fish_fac_pa_onering_3 = {
-                name = "The Three Fish",
-                text = {{
-                    "Disable all {C:attention}Boss Blinds{}",
-                    "Blind Size temporarily increases by",
-                    "{B:blind,C:white}X#1#{} each round while held",
-                    "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
-                },{
-                    "If {C:attention}sold or destroyed{}:",
-                    "Outside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size permanently",
-                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
-                }},
-                flavour = {
-                    "Three fish to rule them all,",
-                    "three fish to find them,",
-                    "Three fish to bring them all",
-                    "and in the darkness bind them."
-                }
-            },
-            fish_fac_pa_onering_4 = {
-                name = "The Four Fish",
-                text = {{
-                    "Disable all {C:attention}Boss Blinds{}",
-                    "Blind Size temporarily increases by",
-                    "{B:blind,C:white}X#1#{} each round while held",
-                    "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
-                },{
-                    "If {C:attention}sold or destroyed{}:",
-                    "Outside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size permanently",
-                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
-                }},
-                flavour = {
-                    "Four fish to rule them all,",
-                    "four fish to find them,",
-                    "Four fish to bring them all",
-                    "and in the darkness bind them."
-                }
-            },
-            fish_fac_pa_onering_5 = {
-                name = "The Five Fish",
-                text = {{
-                    "Disable all {C:attention}Boss Blinds{}",
-                    "Blind Size temporarily increases by",
-                    "{B:blind,C:white}X#1#{} each round while held",
-                    "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
-                },{
-                    "If {C:attention}sold or destroyed{}:",
-                    "Outside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size permanently",
-                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
-                }},
-                flavour = {
-                    "Five fish to rule them all,",
-                    "five fish to find them,",
-                    "Five fish to bring them all",
-                    "and in the darkness bind them."
-                }
-            },
-            fish_fac_pa_onering_6 = {
-                name = "The Six Fish",
-                text = {{
-                    "Disable all {C:attention}Boss Blinds{}",
-                    "Blind Size temporarily increases by",
-                    "{B:blind,C:white}X#1#{} each round while held",
-                    "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
-                },{
-                    "If {C:attention}sold or destroyed{}:",
-                    "Outside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size permanently",
-                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
-                }},
-                flavour = {
-                    "Six fish to rule them all,",
-                    "six fish to find them,",
-                    "Six fish to bring them all",
-                    "and in the darkness bind them."
-                }
-            },
-            fish_fac_pa_onering_7 = {
-                name = "The Seven Fish",
-                text = {{
-                    "Disable all {C:attention}Boss Blinds{}",
-                    "Blind Size temporarily increases by",
-                    "{B:blind,C:white}X#1#{} each round while held",
-                    "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
-                },{
-                    "If {C:attention}sold or destroyed{}:",
-                    "Outside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size permanently",
-                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
-                }},
-                flavour = {
-                    "Seven fish to rule them all,",
-                    "seven fish to find them,",
-                    "Seven fish to bring them all",
+                    "#1# fish to rule them all,",
+                    "#2# fish to find them,",
+                    "#1# fish to bring them all",
                     "and in the darkness bind them."
                 }
             },
@@ -312,7 +179,7 @@ local pa_fish = {
                     'Common fish made entirely',
                     'of solid milk chocolate',
                     'usually described as better',
-                    ' than normal chocolate bars'
+                    'than normal chocolate bars'
                 }
             },
             fish_fac_pa_cake = {
@@ -377,7 +244,7 @@ local pa_fish = {
                     "gives {X:mult,C:white}X#1#{} mult"
                 },
                 flavour = {
-                    "This Fish has an ingenous",
+                    "This Fish has an ingenious",
                     "disguise: it looks like a",
                     "sushi roll, meaning nobody",
                     "will try putting it in sushi"
@@ -405,9 +272,9 @@ local pa_fish = {
                 },
                 flavour = {
                     "I give {X:chips,C:white}XChips{}",
-                    "bceause i'm {X:chips,C:white}Blue{}",
+                    "because I'm {X:chips,C:white}Blue{}",
                     "...I told you not",
-                    "to catch me :C",
+                    "to catch me {element:1}",
                 }
             }
         },

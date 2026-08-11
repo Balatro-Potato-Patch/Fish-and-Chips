@@ -20,7 +20,8 @@ PotatoPatchUtils.Developer({
 		}
         local quip = pseudorandom_element(quip_list, pseudoseed('pulsar'))
         return { vars = {
-            quip
+            quip,
+			elements = { SMODS.create_sprite(0, 0, 0.35, 0.35, "fac_pa_pulsarplead") }
         }}
     end,
 
@@ -57,5 +58,12 @@ SMODS.Sound {
 	key = "pa_wiibonus",
 	path = "pulsar&axy/wiiplayfishingbonus.ogg"
 }
+
+SMODS.Atlas({
+	key = 'pa_pulsarplead',
+	path = 'pulsar&axy/pulsarplead.png',
+	px = 113,
+	py = 113
+})
 
 --#endregion

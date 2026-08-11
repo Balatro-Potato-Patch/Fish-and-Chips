@@ -12,7 +12,7 @@ SMODS.Shader{
 
 FishAndChips.Fish {
 	key = "pa_photon",
-	weight = 1,
+	weight = 4,
 	atlas = "pa_pulsarfish",
 	pos = { x = 1, y = 3 },
 	ppu_artist = { "Pulsar" },
