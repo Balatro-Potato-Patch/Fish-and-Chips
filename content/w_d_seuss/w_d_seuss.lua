@@ -101,6 +101,17 @@ G.ARGS.LOC_COLOURS['jolyne'] = HEX("FCB3EA")           -- Old
 G.ARGS.LOC_COLOURS['spalmon_pink'] = HEX("ffaec9")     -- Spalmon
 G.ARGS.LOC_COLOURS['spalmon_gold'] = HEX("fff200")     -- Spalmon
 
+-- Fonts
+
+SMODS.Font({
+	key = "tiktoksans",
+	path = "TikTokSans.ttf",
+	FONTSCALE = 0.15,
+	squish = 1,
+	TEXT_HEIGHT_SCALE = 0.75,
+	TEXT_OFFSET = { x = 0, y = -10 }
+})
+
 -- No Sell (Thank you Hyperfixation Priceless)
 
 local nosell_hook = Card.can_sell_card -- Bad
