@@ -75,8 +75,8 @@ FishAndChips.Fish{
         }
     end,
     stats = {
-        weight = { min = 1, max = 1}, --In kilograms
-        length = { min = 1, max = 2}, --In meters
+        weight = { min = 80, max = 95}, --In kilograms
+        length = { min = 1.5, max = 1.9}, --In meters
     },
     can_use = function (self, card)
         return card.ability.extra.wish and (G.GAME.fac_sand_dollars + G.GAME.bankrupt_at) >= card.ability.extra.cost and (card.ability.extra.set ~= "Joker" or #G.jokers.cards < G.jokers.config.card_limit)
