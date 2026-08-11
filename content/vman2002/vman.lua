@@ -219,7 +219,7 @@ FishAndChips.Fish { --Manos
 	key = "vman2002_manos",
 	atlas = "vman2002_manos",
 	pos = { x = 0, y = 0 },
-	weight = 2,
+	weight = 3,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "usable", "retrigger", "destroy_card", "self_eternal" },
@@ -379,7 +379,7 @@ FishAndChips.Fish { --Necklace
 	atlas = "vman2002_fish",
 	pos = { x = 2, y = 0 },
 	pixel_size = {w=68,h=68},
-	weight = 2,
+	weight = 5,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "editions" },
@@ -408,7 +408,7 @@ FishAndChips.Fish { --Coupon
 	key = "vman2002_coupon",
 	atlas = "vman2002_fish",
 	pos = { x = 0, y = 1 },
-	weight = 1,
+	weight = 2,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "tag", "usable" },
@@ -423,7 +423,7 @@ FishAndChips.Fish { --Coupon
 				table.insert(possible, v)
 			end
 		end
-		add_tag({key = pseudorandom_element(possible, "fac_vman2002_coupon")})
+		add_tag({key = pseudorandom_element(possible, "fac_vman2002_coupon")}, vars = {ppu_bubbles = {G.STATE == G.STATES.FAC_FISHING and "inactive" and "usable"}})
 	end,
 	can_use = function()
 		return G.STATE ~= G.STATES.FAC_FISHING
@@ -569,7 +569,7 @@ FishAndChips.Fish { --Navy Blade
 	key = "vman2002_navyblade",
 	atlas = "vman2002_fish",
 	pos = { x = 2, y = 1 },
-	weight = 7,
+	weight = 8,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "xblindsize", "usable", "economy", "reset" }, 

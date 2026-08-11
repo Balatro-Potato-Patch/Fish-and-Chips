@@ -93,9 +93,9 @@ return {
 				name = "Glimmering Coupon",
 				flavor = {"Big Companies Care About You!","They Really Do"},
 				text = {
-					"Create a {C:attention}Shop Edition Tag",
+					"Creates a {C:attention}Shop Edition Tag",
 					"Cannot be used while fishing",
-					"{ppu_bubble:usable}"
+					"{ppu_bubble:1}"
 				}
 			},
 			fish_fac_vman2002_timothy = {
