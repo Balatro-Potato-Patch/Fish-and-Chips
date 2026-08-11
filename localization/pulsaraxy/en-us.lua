@@ -17,7 +17,8 @@ local pa_fish = {
                         "Made a mod called Berry's Legendaries",
                         "around mid-2025 as our first ever mod!",
                         "It adds a few {C:legendary}legendaries{} based on some friends",
-                        "Can be found at {C:blue}https://github.com/TonyKrZa/BerryLegendaries"
+                        "Can be found at {C:blue}https://github.com/TonyKrZa/BerryLegendaries",
+                        "{C:attention}Click{} on this card to go there!"
                     }
                 }
 			},
@@ -37,7 +38,8 @@ local pa_fish = {
                     "{C:legendary}Nebula{} that adds about 60 jokers",
                     "and a new Consumable set",
                     "there's a good chance it'll be finished when this is!",
-                    "{C:blue}https://github.com/PSRPulsar/Nebula"
+                    "{C:blue}https://github.com/PSRPulsar/Nebula",
+                    "{C:attention}Click{} this card to go to my Github profile"
                     },
 
                     {"#1#"}
