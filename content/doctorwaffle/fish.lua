@@ -54,6 +54,7 @@ SMODS.ObjectType({
 local waffleFunctions = {}
 do
     function waffleFunctions.flipFunctionCards(cards, applyFunc)
+        stop_use()
         G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.4,
@@ -876,7 +877,7 @@ end
 -- Duck drawstep
 SMODS.DrawStep {
     key = "fac_waffle_duck_drawstep",
-    order = 1,
+    order = 21,
     func = function(card, layer)
         if next(SMODS.find_card("fish_fac_waffle_bonus_duck", true)) then -- Only draw ducks if Bonus Duck is held
             if not G.fac_waffle_duck_sprite then

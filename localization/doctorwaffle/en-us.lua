@@ -191,7 +191,7 @@ return {
                 },
                 flavor = {
                     "Fittingly enough, the book is",
-                    "titled \"How to play Go Fish\""
+                    "titled \"How to play Go Fish\"."
                 }
             },
 
@@ -204,7 +204,7 @@ return {
                 },
                 flavor = {
                     "Fittingly enough, the book is",
-                    "titled \"How to play Go Fish\""
+                    "titled \"How to play Go Fish\"."
                 }
             },
 
@@ -263,6 +263,10 @@ return {
                         "add stored {C:chips}Chips{} to played card",
                         "and reset stored {C:chips}Chips{}"
                     }
+                },
+                flavor = {
+                    "Pyukumuku can eject its internal organs,",
+                    "using them to attack prey and enemies alike."
                 }
             },
 
@@ -273,6 +277,10 @@ return {
                     "made by {V:1}waffle{} with",
                     "a random {C:dark_edition}Edition",
                     "{C:inactive}({C:dark_edition}Negative{C:inactive} excluded)"
+                },
+                flavor = {
+                    "The undisputed NEET",
+                    "of the seven seas."
                 }
             }
 

@@ -74,5 +74,8 @@ PPU.Developer({
             G.GAME.fac_waffle_snail_activated = nil
         end
 
+    end,
+    click = function ()
+        love.system.openURL("https://github.com/DoctorWafflePhD/WaffleMod")
     end
 })
