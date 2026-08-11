@@ -25,7 +25,7 @@ function PotatoPatchUtils.Developers.fac_notmario.create_vtext(vtext, AUT, nodes
         if i == 1 or next(AUT.info) then
             nodes[#nodes+1] = final_line -- Sends main box to AUT.main
             if not next(AUT.info) then nodes.main_box_flag = true end
-        elseif not next(AUT.info) then 
+        elseif not next(AUT.info) then
             nodes.main_box_flag = true
             AUT.multi_box[i-1] = AUT.multi_box[i-1] or {}
             AUT.multi_box[i-1][#AUT.multi_box[i-1]+1] = final_line
@@ -185,6 +185,37 @@ function PotatoPatchUtils.Developers.fac_notmario.add_extra_multiboxes(_c, info_
         end
     end
 
+    if ability and ability.fac_mf_gold_pearl then
+        local desc_text = G.localization.descriptions.Other["fac_mf_car_battery"].text
+        local desc_text_multiple = G.localization.descriptions.Other["fac_mf_car_battery_multiple"].text
+        -- collate them so we dont go off screen
+        local counts = {}
+        local order = {} -- :p
+        for _, odds in ipairs(ability.fac_mf_gold_pearl) do
+            local key = odds[1] .. "_" .. odds[2]
+            if not counts[key] then
+                counts[key] = 0
+                order[#order + 1] = odds
+            end
+            counts[key] = counts[key] + 1
+        end
+
+        for _, odds in ipairs(order) do
+            local num, den = odds[1], odds[2]
+            local key = odds[1] .. "_" .. odds[2]
+            PotatoPatchUtils.Developers.fac_notmario.generate_ui_multiboxes({
+                {
+                    localized_text = counts[key] <= 1 and desc_text or desc_text_multiple,
+                    loc_vars = function(self, card, center)
+                        local new_numerator, new_denominator =
+                            SMODS.get_probability_vars(card, num, den, "fac_mf_gold_pearl")
+                        return { vars = { new_numerator, new_denominator, counts[key] } }
+                    end
+                }
+            })(_c, info_queue, other_card, desc_nodes, specific_vars, full_UI_table)
+        end
+    end
+
 	for _, other_card in ipairs(G.fac_fish_area.cards) do
         if other_card.config.center.fac_mf_add_multibox then
             other_card.config.center.fac_mf_add_multibox(_c, info_queue, card, desc_nodes, specific_vars, full_UI_table, ability, other_card)
@@ -252,6 +283,23 @@ function PotatoPatchUtils.Developers.fac_notmario.calculate_extra_effects(card, 
         end
     end
 
+    if card.ability and card.ability.fac_mf_gold_pearl then
+		if context.retrigger_joker_check and not context.retrigger_joker and context.other_card == (context.blueprint_card or card) then
+            if not jokers then jokers = {} end
+            jokers = SMODS.merge_effects({ jokers, { repetitions = #card.ability.fac_mf_gold_pearl }})
+        end
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker_check and not context.blueprint then
+            for _, odds in ipairs(card.ability.fac_mf_gold_pearl) do
+                if SMODS.pseudorandom_probability(card, 'fac_mf_gold_pearl', odds[1], odds[2]) then
+                    SMODS.destroy_cards(card, nil, nil, true)
+                    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_lost_ex'), colour = G.C.RED})
+                    break
+                end
+            end
+        end
+    end
+
+
 	for _, other_card in ipairs(G.fac_fish_area.cards) do
         if other_card.config.center.fac_mf_add_extra_effect then
             jokers, triggered = other_card.config.center.fac_mf_add_extra_effect(card, context, jokers, triggered, other_card)
@@ -265,6 +313,6 @@ end
 local card_calculate_joker = Card.calculate_joker
 function Card:calculate_joker(context, ...)
 	local jokers, triggered = card_calculate_joker(self, context, ...)
-    
+
 	return PotatoPatchUtils.Developers.fac_notmario.calculate_extra_effects(self, context, jokers, triggered)
 end

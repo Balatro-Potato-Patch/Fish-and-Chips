@@ -2306,6 +2306,7 @@ FishAndChips.Fish {
 		weight = {min = 0.02, max = 0.06},
 		length = {min = 0.0012, max = 0.021}
 	},
+	requires_jokers = true,
 	blueprint_compat = false,
 	pixel_size = {w = 39, h = 39},
 	loc_vars = function(self, info_queue, card)
@@ -2362,6 +2363,7 @@ FishAndChips.Fish {
 		weight = {min = 0.02, max = 0.06},
 		length = {min = 0.0012, max = 0.021}
 	},
+	requires_hand = true,
 	blueprint_compat = false,
 	pixel_size = {w = 39, h = 39},
 	loc_vars = function(self, info_queue, card)
@@ -2398,7 +2400,7 @@ FishAndChips.Fish {
         delay(0.3)
     end,
     can_use = function(self, card)
-        return #G.hand.highlighted ~= 0 and #G.hand.highlighted <= card.ability.extra.base_highlighted + math.floor( card.ability.extra.discards_per / card.ability.extra.my_discards )
+        return #G.hand.highlighted ~= 0 and #G.hand.highlighted <= card.ability.extra.base_highlighted + math.floor( card.ability.extra.my_discards / card.ability.extra.discards_per )
     end
 }
 
