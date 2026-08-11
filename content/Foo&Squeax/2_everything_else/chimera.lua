@@ -9,7 +9,6 @@ SMODS.Atlas{
 
 FishAndChips.Fish{
 	key = "fas_chimera",
-	atlas = "fas_chirema_placeholder",
 	config = {
 		extra = {
 			scaling = 0.401,
@@ -101,7 +100,7 @@ FishAndChips.Fish{
 							fih:shatter()
 							FishAndChips.FooSqueax.fat_chud.state = 4
 						elseif FishAndChips.FooSqueax.fat_chud.state == 4 and G.TIMERS.REAL - FishAndChips.FooSqueax.fat_chud.timer < 2 then
-							card.T.w = card.T.w / card.ability.extra.xmult
+							card.T.w = card.T.w / math.max(1, card.ability.extra.xmult / 2)
 							SMODS.scale_card(card, {
 								ref_table = card.ability.extra,
 								ref_value = "xmult",
@@ -110,7 +109,7 @@ FishAndChips.Fish{
 									message = localize("k_fac_fas_nom")
 								}
 							})
-							card.T.w = card.T.w * card.ability.extra.xmult
+							card.T.w = card.T.w * math.max(1, card.ability.extra.xmult / 2)
 							FishAndChips.FooSqueax.fat_chud.active = false
 							FishAndChips.FooSqueax.fat_chud.timer = nil
 							card.disable_align = false
