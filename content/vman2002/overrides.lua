@@ -31,7 +31,12 @@ local click_ref = Card.click
 function Card.click(c, ...)
 	if c.ppu_member and c.ppu_member.mod_id == "FishAndChips" and c.ppu_member.name == "VMan_2002" then
 		c:juice_up(10, 4)
-		play_sound(SMODS.Sounds.talisman_echip and "talisman_eechip" or "explosion_release1")
+		for k,v in pairs({"talisman_eechip", "slib_eechips", "payasaka_eechips", "explosion_release1"}) do
+			if k == 4 or SMODS.Sounds[v] then
+				play_sound(v)
+				break
+			end
+		end
 		peepeeTimer = G.TIMERS.REAL
 	end
 	return click_ref(c, ...)

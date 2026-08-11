@@ -423,8 +423,11 @@ FishAndChips.Fish { --Coupon
 				table.insert(possible, v)
 			end
 		end
-		add_tag({key = pseudorandom_element(possible, "fac_vman2002_coupon")}, vars = {ppu_bubbles = {G.STATE == G.STATES.FAC_FISHING and "inactive" and "usable"}})
+		add_tag({key = pseudorandom_element(possible, "fac_vman2002_coupon")})
 	end,
+	loc_vars = function(self, card)
+		return {vars = {ppu_bubbles = {G.STATE == G.STATES.FAC_FISHING and "inactive" and "usable"}}}
+	end
 	can_use = function()
 		return G.STATE ~= G.STATES.FAC_FISHING
 	end,
