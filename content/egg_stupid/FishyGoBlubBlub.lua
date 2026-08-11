@@ -50,28 +50,133 @@ SMODS.Sound {
 	path = 'egg_stupid/void_tick_damage.ogg',
 }
 
+SMODS.Sound {
+	key = 'segg_flea_1',
+	path = 'egg_stupid/Flea_bark_01.ogg',
+}
+SMODS.Sound {
+	key = 'segg_flea_2',
+	path = 'egg_stupid/Flea_bark_02.ogg',
+}
+SMODS.Sound {
+	key = 'segg_flea_3',
+	path = 'egg_stupid/Flea_bark_03.ogg',
+}
+SMODS.Sound {
+	key = 'segg_flea_4',
+	path = 'egg_stupid/Flea_bark_04.ogg',
+}
+SMODS.Sound {
+	key = 'segg_flea_5',
+	path = 'egg_stupid/Flea_bark_07.ogg',
+}
+
+SMODS.Sound {
+	key = 'segg_big_flea_1',
+	path = 'egg_stupid/Giant_Flea_howl_short_01.ogg',
+}
+SMODS.Sound {
+	key = 'segg_big_flea_2',
+	path = 'egg_stupid/Giant_Flea_howl_short_02.ogg',
+}
+SMODS.Sound {
+	key = 'segg_big_flea_3',
+	path = 'egg_stupid/Giant_Flea_howl_short_03.ogg',
+}
+
 --[[
 
 Bait Attributes
 
-"mult"
-"chips"
-"economy"
-"xmult"
-"retrigger"
-"space"
-"function"
-"suit"
 "passive"
-"rank"
-"copy"
-
-"boss"
-"destroy"
 
 ]]
 
 --#region utility
+
+local function fly_away(card)
+	
+	local start = copy_table(card.T)
+
+	local time_start = G.TIMERS.REAL
+
+	card.states.drag.is = true
+
+	G.E_MANAGER:add_event(Event {
+		blocking = false,
+		blockable = false,
+		func = function ()
+			local time_passed = G.TIMERS.REAL - time_start
+			if card.removed or time_passed > 2 or card.dissolve > 0.95 then
+				return true
+			end
+
+			card.T.x = start.x - (time_passed * 10 - 0.5)
+			card.T.y = start.y - (time_passed * 10 - 0.5) ^ 2
+			return false
+	end })
+end
+
+function fac_awoo(card, yuge)
+	if yuge then
+		math.randomseed(os.time())
+		local name = "fac_segg_big_flea_"..math.random(1, 3)
+
+		play_sound(name)
+	else
+		math.randomseed(os.time())
+		local name = "fac_segg_flea_"..math.random(1, 5)
+	
+		play_sound(name)
+	end
+
+	fly_away(card)
+end
+
+
+function fac_fleash_treasure(beeg)
+	local consumables = { }
+
+	if beeg then
+		consumables[1] = {"Spectral", 30}
+		consumables[2] = {"Tarot", 60}
+		consumables[3] = {"Planet", 10}
+	else
+		consumables[1] = {"Spectral", 5}
+		consumables[2] = {"Tarot", 60}
+		consumables[3] = {"Planet", 35}
+	end
+
+	local get_type = function ()
+		local random_type = pseudorandom("fac_segg_fleash"..(beeg and "_huge" or ""), 1, 100)
+		local w = 0
+
+		for _, t in ipairs(consumables) do
+			w = w + t[2]
+
+			if random_type < w then
+				return t[1]
+			end
+		end
+
+		return consumables[#consumables][1]
+	end
+
+	local empty_slots = G.consumeables.config.card_limit - #G.consumeables.cards + G.GAME.consumeable_buffer
+
+	for _ = 1, empty_slots do
+		G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+
+		local t = get_type()
+		SMODS.add_card({set = t, key_append = 'fac_segg_fleash_'..t})
+	end
+
+	G.E_MANAGER:add_event(Event {
+		func = function ()
+			G.GAME.consumeable_buffer = 0
+			return true
+	end })
+end
 
 function fac_get_plasmium_blind_mod(single)
 	if G.GAME.fac_plasmium_infection >= 10 then
@@ -362,11 +467,97 @@ FishAndChips.Fish {
 -- Fleash (Awoo!)
 -- goes “awoo” and it’s gone (gives sand dollart)
 -- could also spawn random consumable (must have room) (small chance for spectrals also)
+FishAndChips.Fish {
+	key = "segg_fleash",
+	atlas = "segg_fishies",
+	pos = { x = 4, y = 0 },
 
+	weight = 10,
+
+	ppu_coder = { "stupid" },
+	ppu_artist = { "egg_node" },
+
+	blueprint_compat = false,
+	attributes = { "usable", "function" },
+
+	config = {
+	},
+	stats = {
+		weight = {min = 0.3, max = 1.},
+		length = {min = 0.2, max = 0.4}
+	},
+	environments = {
+		pier = 1.,
+		swamp = 1.,
+		aquifer = 1.,
+		city_river = 1.0
+	},
+	loc_vars = function(self, info_queue, card)
+	end,
+
+	use = function(self, card)
+		fac_awoo(card)
+
+		card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('b_fac_segg_chips_awoo'), colour = G.C.MONEY})
+
+		G.E_MANAGER:add_event(Event {
+			func = function ()
+				fac_fleash_treasure()
+				return true
+		end })
+	end,
+	can_use = function(self, card)
+		return true
+	end
+}
+
+FishAndChips.Fish {
+	key = "segg_huge_fleash",
+	atlas = "segg_fishies",
+	pos = { x = 0, y = 1 },
+
+	weight = 3,
+
+	ppu_coder = { "stupid" },
+	ppu_artist = { "egg_node" },
+
+	blueprint_compat = false,
+	attributes = { "usable", "function" },
+
+	config = {
+	},
+	stats = {
+		weight = {min = 1.5, max = 10.},
+		length = {min = 1., max = 4}
+	},
+	environments = {
+		pier = 1.,
+		swamp = 1.,
+		aquifer = 1.,
+		city_river = 1.0
+	},
+	loc_vars = function(self, info_queue, card)
+	end,
+
+	use = function(self, card)
+		fac_awoo(card, true)
+
+		card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('b_fac_segg_chips_awoo'), colour = G.C.MONEY})
+
+		G.E_MANAGER:add_event(Event {
+			func = function ()
+				fac_fleash_treasure(true)
+				return true
+		end })
+	end,
+	can_use = function(self, card)
+		return true
+	end
+}
 
 
 -- Lost Lay's
--- (+80 chips, -20 chips at end of round. u can never eat just one chip)
+-- (+100 chips, -20 chips at end of round. u can never eat just one chip)
 FishAndChips.Fish {
 	key = "segg_lost_lays",
 	atlas = "segg_fishies",
@@ -377,7 +568,7 @@ FishAndChips.Fish {
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
 
-	attributes = { "chips" },
+	attributes = { "chips", "food" },
 	config = {
 		extra = {
 			chips = 100,

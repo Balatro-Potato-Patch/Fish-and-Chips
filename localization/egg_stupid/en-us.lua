@@ -12,9 +12,11 @@ return {
             fish_fac_segg_pale_oil = {
                 name = "Pale Oil",
                 text = {
-                    "Use to apply an {C:dark_edition}Edition{}",
+                    "Applies an {C:dark_edition}Edition{}",
                     "to a random Joker",
-                    "{s:0.8,C:inactive}Cannot apply Negative{}"
+                    "{s:0.8,C:inactive}Cannot apply Negative{}",
+                    "",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Bile gland of a",
@@ -51,14 +53,42 @@ return {
                 name = "Plasmium Phial",
                 text = {
                     "{C:blue}+#1#{} Hands",
+                    "",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Injecting the liquid allows",
                     "one to gain health beyond",
-                    "their natural limits."
+                    "their natural limits.",
                 }
             },
-            -- todo
+
+            fish_fac_segg_fleash = {
+                name = "Fleash",
+                text = {
+                    "Awoo!",
+                    "{C:inactive}(Must have room)",
+                    "",
+                    "{ppu_bubble:usable}"
+                },
+                flavor = {
+                    "Lost creature separated",
+                    "from its tribe.",
+                }
+            },
+            fish_fac_segg_huge_fleash = {
+                name = "Huge Fleash",
+                text = {
+                    "AWOO!",
+                    "{C:inactive}(Must have room)",
+                    "",
+                    "{ppu_bubble:usable}"
+                },
+                flavor = {
+                    "Lost creature separated",
+                    "from its tribe.",
+                }
+            },
 
             fish_fac_segg_lost_lays = {
                 name = "Lost Lay's",
@@ -81,6 +111,8 @@ return {
                     "Add {C:attention}#1#{} randomly {C:attention}Enhanced cards{}",
                     "with the rank of {C:attention}#2#{} selected card",
                     "to your hand",
+                    "",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Large, gelatinous drifter.",
@@ -96,6 +128,8 @@ return {
             b_fac_segg_void_fish = "Void",
             b_fac_segg_chips_down = "Yum Yum!",
             b_fac_segg_chips_gone = "Bye Bye!",
+            b_fac_segg_chips_awoo = "Awoo",
+            b_fac_segg_chips_AWOO = "AWOO",
         },
     },
 }
