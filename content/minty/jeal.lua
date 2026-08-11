@@ -11,7 +11,7 @@ FishAndChips.Fish{
     pos = {x=3, y=0},
     weight = 1,
     ppu_coder = {"minty"},
-    ppu_artist = {"whomstever"},
+    ppu_artist = {"minty"},
     environments = { --Maximum 6
         city_river = 10,
         styx = 10,
