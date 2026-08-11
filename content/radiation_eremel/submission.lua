@@ -189,7 +189,7 @@ FishAndChips.Fish({
 FishAndChips.Fish({
     key = 'r_e_orca_cola',
     atlas = 'r_e_fish',
-    pos = {x = 0, y = 0},
+    pos = {x = 2, y = 3},
     ppu_coder = {'eremel'},
     ppu_artist = {'radiation'},
     weight = 10,
@@ -310,4 +310,37 @@ FishAndChips.Fish({
             card.ability.extra.track = 0
         end
     end,
+})
+
+FishAndChips.Fish({
+    key = 'r_e_flowerhorn',
+    atlas = 'r_e_fish',
+    pos = {x = 0, y = 3},
+    ppu_coder = {'eremel'},
+    ppu_artist = {'radiation'},
+    weight = 10,
+    environments = {
+        swamp = 6,
+        backroom = 3,
+        styx = 3
+    },
+    attributes = {'generation', 'destroy_card'},
+    stats = {
+        weight = {min = 0.5, max = 2.6},
+        length = {min = 0.21, max = 0.35},
+    },
+    can_use = function() return true end,
+    use = function(self, card)
+        local weight = card.ability.stats.weight
+        local targets = {low = {}, high = {}}
+        for _, fish in ipairs(G.fac_fish_area.cards) do
+            if fish ~= card then
+                if fish.ability.stats.weight <= weight then targets.low[#targets.low + 1] = fish else targets.high[#targets.high + 1] = fish end
+            end
+        end
+        SMODS.destroy_cards(targets.low)
+        for _, fish in ipairs(targets.high) do
+            SMODS.copy_card(fish)
+        end
+    end
 })

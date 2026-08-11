@@ -97,6 +97,19 @@ return {
                     "Piscesso's finest work"
                 }
             },
+            fish_fac_r_e_flowerhorn = {
+                name = 'Infectious Flowerhorn',
+                text = {
+                    'When used, {C:red}destroy{} all {C:fac_fish}Fish{} that',
+                    'weigh less than this Fish and',
+                    '{C:attention}create copies{} of {C:fac_fish}Fish{} that weigh more',
+                    '{ppu_bubble:usable}'
+                },
+                flavour = {
+                    "Be careful or you'll",
+                    "catch it's disease, too"
+                }
+            },
         },
     },
     misc = {
