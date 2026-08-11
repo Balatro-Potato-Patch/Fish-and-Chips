@@ -30,7 +30,7 @@ FishAndChips.Fish {
 	end,
 	flavour_vars = function(self, info_queue, card)
 		return { vars = {
-			elements = { SMODS.create_sprite(0, 0, 0.35, 0.35, "fac_pa_pulsarplead") }
+			elements = { SMODS.create_sprite(0, 0, 0.4, 0.4, "fac_pa_pulsarplead") }
 		}}
 	end,
 	calculate = function(self, card, context)
