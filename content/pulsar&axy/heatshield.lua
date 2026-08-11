@@ -14,7 +14,9 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			rerolls = 0,
-            reroll_gain = 1
+            reroll_gain = 1,
+			original_cost = 0,
+			cost_set = false
 		}
 	},
 	stats = {
@@ -34,20 +36,48 @@ FishAndChips.Fish {
                 scalar_value = "reroll_gain"
             })
         end
-
-		if card.ability.extra.rerolls > 0 and (G.GAME.fishing and not FishAndChips.in_tutorial) then
-			G.GAME.fac_environment_reroll_cost = 0
-			if context.fac_environment_changed then
+		
+		if context.fac_environment_changed then
+			if card.ability.extra.rerolls > 0 then
 				SMODS.scale_card(card, {
 					ref_table = card.ability.extra,
 					ref_value = "rerolls",
 					scalar_value = "reroll_gain",
-					operation = '-'
+					operation = '-',
+					no_message = true
 				})
 			end
-			-- return {
-			-- 	dollars = 5
-			-- }
 		end
 	end,
+	add_to_deck = function (self, card, from_debuff)
+		if not from_debuff then
+			card.ability.extra.original_cost = G.GAME.fac_environment_reroll_cost
+			card.ability.extra.cost_set = true
+		end
+	end,
+	remove_from_deck = function (self, card, from_debuff)
+		if not from_debuff and card.ability.extra.cost_set then
+			G.GAME.fac_environment_reroll_cost = card.ability.extra.original_cost
+			card.ability.extra.cost_set = false
+		end
+	end
 }
+
+-- function G.FUNCS.fac_reroll_location (e)
+local G_funcs_fac_reroll_location_ref = G.FUNCS.fac_reroll_location
+function G.FUNCS.fac_reroll_location(e)
+	print('In reroll location function')
+	for k,v in pairs(G.fac_fish_area.cards) do
+		print(v.ability.extra)
+		if v.config.center.key == 'fish_fac_pa_heatshield' and v.ability.extra.cost_set == true then
+			print('key is read')
+			if v.ability.extra.rerolls > 0 then
+				G.GAME.fac_environment_reroll_cost = 0
+			elseif v.ability.extra.rerolls <= 0 then
+				G.GAME.fac_environment_reroll_cost = v.ability.extra.original_cost
+				v.ability.extra.cost_set = false
+			end
+		end
+	end
+	G_funcs_fac_reroll_location_ref(e)
+end
