@@ -201,7 +201,9 @@ function FishAndChips.verify_submissions()
 		end
 	end
 	for dev, submission in pairs(devs) do
-		local dev_obj = PotatoPatchUtils.Developers["fac_" .. dev]
+		local dev_key = {key = dev}
+		SMODS.modify_key(dev_key, 'fac')
+		local dev_obj = PotatoPatchUtils.Developers[dev_key.key]
 		local total_weight = 0
 		local treasure_fish_count = 0
 		for _, fish in ipairs(submission) do
