@@ -150,6 +150,16 @@ return {
 					"{s:0.8}vman-2002.bsky.social"
 				}
 			}
+		},
+		TopUpLib_Music = {
+			fac_calm_pond_music = {
+				name = "Calm Pond", --TODO: replace this with the actual song name
+				text = {
+					q("While {~f}Fishing"),
+					"By GhostSalt"
+				},
+				atlas = "fac_rods"
+			}
 		}
 	}
 }
