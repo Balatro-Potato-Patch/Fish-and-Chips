@@ -12,6 +12,9 @@ FishAndChips.Fish({
 	},
 	-- atlas = "hayayaya_fih",
 	-- pos = { x = 1, y = 1 },
+	atlas = "hayayaya_fih",
+	pos = { x = 2, y = 2 },
+	pixel_size = { w = 50, h = 50 },
 	stats = {
 		length = { min = 0.1, max = 0.1 },
 		weight = { min = 0.1, max = 0.1 },

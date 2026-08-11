@@ -64,7 +64,7 @@ PotatoPatchUtils.Developer({
 	name = "Ellen (Haya)",
 	atlas = "fac_hayayaya_credits",
 	colour = G.C.PURPLE,
-	fac_partner = "Pepix",
+	fac_partner = "fac_Pepix",
 	loc = true,
 })
 
@@ -73,7 +73,7 @@ PotatoPatchUtils.Developer({
 	atlas = "fac_hayayaya_credits",
 	pos = { x = 1, y = 0 },
 	colour = G.C.GOLD,
-	fac_partner = "Ellen (Haya)",
+	fac_partner = "fac_Ellen (Haya)",
 	loc = true,
 	calculate = function(self, context)
 		-- Used for freedom motif
