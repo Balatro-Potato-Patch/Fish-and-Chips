@@ -3,11 +3,11 @@ FishAndChips.Fish {
     weight = 5,
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
-    attributes = {  "chips" },
+    attributes = { "chips" },
     stats = { weight = { min = 1, max = 1 }, length = { min = 1, max = 1 } },
     atlas = 'fac_vv_fish',
     pos = { x = 5, y = 0 },
-    environments = { 
+    environments = {
         -- calm_pond = 1, (its your private property friend)
         -- chocolate_river = 1, (the oompa loompa did not make it)
         -- styx = 1, (everyone is fucking dead)
@@ -27,7 +27,7 @@ FishAndChips.Fish {
         return { vars = { card.ability.extra.chips } }
     end,
     calculate = function(self, card, context)
-        card.ability.extra.chips = ( G.GAME.fac_sand_dollars )
+        card.ability.extra.chips = (G.GAME.fac_sand_dollars)
         if context.joker_main then
             return {
                 chips = card.ability.extra.chips
@@ -42,7 +42,7 @@ FishAndChips.Fish {
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
     attributes = { "xblindsize" },
-        atlas = 'fac_vv_fish',
+    atlas = 'fac_vv_fish',
     pos = { x = 2, y = 1 },
     stats = { weight = { min = 98, max = 98 }, length = { min = 2.06, max = 2.06 } },
     environments = { wormhole = 0.05 },
@@ -53,7 +53,10 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         if context.setting_blind then
-            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.1,
+                func = function()
                     G.GAME.blind.chips = math.floor(G.GAME.blind.chips * card.ability.extra.x_blind)
                     G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
 
@@ -61,7 +64,9 @@ FishAndChips.Fish {
                     G.FUNCS.blind_chip_UI_scale(G.hand_text_area.blind_chips)
                     G.HUD_blind:recalculate()
                     chips_UI:juice_up()
-                return true end }))
+                    return true
+                end
+            }))
         end
     end,
 }
@@ -103,7 +108,7 @@ FishAndChips.Fish {
     ppu_artist = { "Willow" },
     attributes = { "xmult", 'editions' },
     environments = { pier = 5 },
-        atlas = 'fac_vv_fish',
+    atlas = 'fac_vv_fish',
     pos = { x = 0, y = 1 },
     stats = { weight = { min = 0.67, max = 0.67 }, length = { min = 1, max = 1.05 } },
     cost = 5,
@@ -112,11 +117,11 @@ FishAndChips.Fish {
         return { vars = { card.ability.extra.x_mult } }
     end,
     calculate = function(self, card, context)
-    if context.other_joker and context.other_joker.edition ~= nil then
-        return {
-            x_mult = card.ability.extra.x_mult
-        }
-        end 
+        if context.other_joker and context.other_joker.edition ~= nil then
+            return {
+                x_mult = card.ability.extra.x_mult
+            }
+        end
     end
 }
 
@@ -127,7 +132,7 @@ FishAndChips.Fish {
     ppu_artist = { "Willow" },
     attributes = { "chips" },
     stats = { weight = { min = 66.6, max = 66.6 }, length = { min = 6, max = 6 } },
-    environments = { 
+    environments = {
         styx = 6,
         wormhole = 3,
         backroom = 1.6
@@ -162,7 +167,7 @@ FishAndChips.Fish {
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
     stats = { weight = { min = 0.04, max = 0.1 }, length = { min = 1, max = 1 } },
-    attributes = {  },
+    attributes = {},
     atlas = 'fac_vv_fish',
     pos = { x = 3, y = 0 },
     environments = { pier = 3, aquifer = 2, city_river = 0.9 },
@@ -251,8 +256,8 @@ FishAndChips.Fish {
         if context.cardarea == G.play and context.repetition and context.other_card:is_suit_shade('dark') then
             return {
                 message = 'Again!',
-				repetitions = 1,
-				card = context.other_card
+                repetitions = 1,
+                card = context.other_card
             }
         end
         if context.individual and context.cardarea == G.play and context.other_card:is_suit_shade('light') then
@@ -276,11 +281,11 @@ FishAndChips.Fish {
     pos = { x = 1, y = 1 },
     environments = { pier = 3 },
     cost = 1,
-    config = { extra = {  } },
+    config = { extra = {} },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.e_foil
         info_queue[#info_queue + 1] = G.P_CENTERS.e_holo
-        return { vars = {  } }
+        return { vars = {} }
     end,
     use = function(self, card, area, copier)
         local editionless_fish = SMODS.Edition:get_edition_cards(G.fac_fish_area, true)
@@ -316,7 +321,7 @@ FishAndChips.Fish {
             return {
                 sand_dollars = card.ability.extra.sand_dollar,
                 remove = true
-        }
+            }
         end
     end
 }
@@ -336,32 +341,35 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.sand_dollar } }
     end,
-    add_to_deck = function(self, card, context)        
-                for i = 1, math.min(1, G.consumeables.config.card_limit - #G.consumeables.cards) do
-                    G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.4,
-                    func = function()
-                        local sets = {'Tarot', 'Planet', 'Spectral'}
-                        local random_set = pseudorandom_element(sets, 'random_consumable_set')
-                        SMODS.add_card({ set = random_set })     
-                        SMODS.destroy_cards(card)
-                        card:juice_up(0.3, 0.5)
-                        return true
-                        end
-                    }))
+    use = function(self, card, area)
+        for i = 1, math.min(1, G.consumeables.config.card_limit - #G.consumeables.cards) do
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.4,
+                func = function()
+                    local sets = { 'Tarot', 'Planet', 'Spectral' }
+                    local random_set = pseudorandom_element(sets, 'random_consumable_set')
+                    SMODS.add_card({ set = random_set })
+                    SMODS.destroy_cards(card)
+                    card:juice_up(0.3, 0.5)
+                    return true
                 end
-                delay(0.6)
-                play_sound('fac_vv_fish')
-                return true
-                end
+            }))
+        end
+        delay(0.6)
+        play_sound('fac_vv_fish')
+        return true
+    end,
+    can_use = function(self, card)
+        return #G.consumeables.cards < G.consumeables.config.card_limit
+    end
 }
 
 local oldcardsetsellvalue = Card.set_sell_value
 function Card:set_sell_value()
-  local g = oldcardsetsellvalue(self)
-  if self.config.center.key == 'fish_fac_vv_stinkyboot' then
-    self.sell_cost = 0
-  end
-  return g
+    local g = oldcardsetsellvalue(self)
+    if self.config.center.key == 'fish_fac_vv_stinkyboot' then
+        self.sell_cost = 0
+    end
+    return g
 end

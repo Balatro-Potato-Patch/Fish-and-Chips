@@ -120,8 +120,7 @@ return {
                     name = "The Fish",
                     text = {
                         {
-                            "Creates a random {C:tarot}Tarot{}, {C:planet}Planet{} or {C:spectral}Spectral{} card",
-                            "{C:red,E:1}Self-destructs{} when caught",
+                            "On use, create a random {C:tarot}Tarot{}, {C:planet}Planet{} or {C:spectral}Spectral{} card",
                             "{C:inactive,s:0.8}(Must have room)"
                         }
                     },
