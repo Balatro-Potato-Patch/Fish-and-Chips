@@ -175,7 +175,7 @@ FishAndChips.Fish { --Chips
 	impulse_max = 0.2,
 	decision_min = 0.4,
 	decision_max = 0.6,
-	badge_key = "k_fac_poker_chips"
+	badge_key = "k_fac_pkr_chips"
 }
 
 FishAndChips.Fish { --Trust
