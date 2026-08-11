@@ -287,6 +287,9 @@ local pa_fish = {
             k_fac_pa_fromg = "fromg",
             k_fac_pa_box_jellyfish_open = "Open",
             k_fac_pa_box_jellyfish_consume = "Consume",
+        },
+        v_dictionary = {
+            fish_fac_pa_onering = 'The #1# Ring'
         }
     }
 }
