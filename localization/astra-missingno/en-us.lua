@@ -90,7 +90,8 @@ return {
                     "Gives {C:attention}1",
                     "selected card ",
                     "permanent {C:money}$#1#{}",
-                    "when scored"
+                    "when scored",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Finding one of these in",
@@ -161,7 +162,8 @@ return {
                 text = {
                     {"Use this {C:fac_fish}Fish{} to upgrade",
                     "the level of the {C:attention}last played{}",
-                    "poker hand #1# times"},
+                    "poker hand #1# times",
+                    "{ppu_bubble:usable}"},
                     {"{S:0.8}({S:0.8,V:1}lvl.#2#{S:0.8}){} Level up",
                     "{C:attention}#3#",
                     "{C:mult}+#4#{} Mult and",
