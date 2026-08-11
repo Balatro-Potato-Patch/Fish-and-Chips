@@ -11,7 +11,8 @@ return {
                 text = {
                     "earn between",
                     "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#-#2#{}",
-                    "Sand dollars"
+                    "Sand dollars",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "The eighth",
@@ -71,7 +72,8 @@ return {
                 text = {
                     "Randomizes the",
                     "{C:attention}suit{} of all cards",
-                    "in full deck"
+                    "in full deck",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Deypuhspunjbabindufihumah"
@@ -82,7 +84,8 @@ return {
                 text = {
                     "Randomizes the",
                     "{C:attention}rank{} of all cards",
-                    "in full deck"
+                    "in full deck",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Everybody's gone fishin'",
