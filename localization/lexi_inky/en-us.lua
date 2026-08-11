@@ -67,18 +67,6 @@ return {
 					"best source of protein in pairs",
 				},
 			},
-			fish_fac_l_i_smartass = {
-				name = "Smartass Fish",
-				text = {
-					"This fish will sometimes",
-					"jump out of the water",
-					"clicking it before it goes back",
-					"does some BULLSHIT",
-				},
-				flavour = {
-					"{element:1}",
-				},
-			},
 			fish_fac_l_i_wood = {
 				name = "Wooden #1# Fish",
 				text = {
