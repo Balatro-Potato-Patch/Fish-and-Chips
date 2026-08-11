@@ -5,19 +5,25 @@ return {
 				name = "Eremel",
                 text = {
                     {
-                        'Hey! I\'m a part of the organiser team here at the Potato Patch,',
-                        'and I\'m really proud of the work everyone has done on this mod!',
-                        'It\'s been a blast hosting this event and I hope you all enjoy it!',
-                        '{ppu_bubble:active}'
+                        'Hey! I\'m {C:3FC7EB}Eremel{}, one of the {C:attention}Organisers{} here at the {C:attention}Potato Patch!',
+                        'This mod has been a long time in the making, and I\'m',
+                        'really excited for you all to play it!',
+                        'This {C:attention}compendium{} here is my creation, and I helped work on',
+                        'a lot of the other UI in the mod.',
+                        '{C:3FC7EB,s:1.6}Let\'s go fishin\'!'
                     },
                     {
-                        'Some of the other mods I\'ve worked on are',
-                        'SMODS, Galdur #1#, Malverk, Ortalab and Monarchy'
+                        'If you want to check out some of the',
+                        'other mods I\'ve worked on look at',
+                        '{C:FF13F0}SMODS{}, {C:00D4FF}Galdur #1#{}, {C:E0B0FF}Malverk{}, {C:990000}Ortalab{} and {C:00919c}Monarchy'
                     }
                 }
 			},
 			PotatoPatchDev_radiation = {
 				name = "RadiationV2",
+                text = {
+                    'placeholder'
+                }
 			},
         },
         fac_Fish = {

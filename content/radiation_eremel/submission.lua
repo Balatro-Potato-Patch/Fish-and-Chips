@@ -1,23 +1,34 @@
 FishAndChips.radiation_eremel = {}
 
+SMODS.Atlas({
+    key = 'radiation_eremel_credits',
+    path = 'radiation_eremel/credits.png',
+    px = 142, py = 80
+})
+
 PotatoPatchUtils.Developer({
 	name = 'eremel',
     loc = true,
-	-- atlas = 'radiation_eremel_credits',
+	atlas = 'fac_radiation_eremel_credits',
+    joint_credits = true,
 	colour = HEX('3FC7EB'),
 	fac_partner = 'fac_radiation',
+    loc_vars = function()
+        return {vars = {'RIP'}, scale = 1.2}
+    end,
     calculate = function(self, context)
         if context.fac_fish_caught and G.P_CENTERS[context.fish].set == 'fac_Fish' then
             FishAndChips.radiation_eremel.last_fish = context.fish
         end
-    end
+    end,
 })
 
 PotatoPatchUtils.Developer({
 	name = 'radiation',
     loc = true,
-	-- atlas = 'radiation_eremel_credits',
-	pos = {x = 1, y = 0},
+	atlas = 'fac_radiation_eremel_credits',
+    joint_credits = true,
+	pos = {x = 0, y = 0},
 	colour = HEX('FF7C0A'),
 	fac_partner = 'fac_eremel'
 })
