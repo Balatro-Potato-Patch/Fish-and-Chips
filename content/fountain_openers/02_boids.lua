@@ -271,35 +271,49 @@ end
 -- Draw hook to place boids onscreen
 if not love.draw then function love.draw() end end
 local draw_hook = love.draw
-function love.draw()
-	draw_hook()
 
-	local color = {love.graphics.getColor()}
-	if G.FISHING_STATE == G.FISHING_STATES.HOOKING then
-		love.graphics.setColor(unpack(HEX("307fff")))
-	else
-		love.graphics.setColor(1, 1, 1, 1)
-	end
+SMODS.Shader {
+	key = "fo_shader_that_does_absolutely_fucking_nothing",
+	path = "fountain_openers/shader_that_does_absolutely_fucking_nothing.fs"
+}
 
-	for i, v in pairs(FountainOpeners.Boids) do
-		if v.clicked then
-			local color2 = {love.graphics.getColor()}
-			love.graphics.setColor(1, 1, 1, 1)
+SMODS.ScreenShader {
+    key = "fac_fo_boids",
+    shader = "fac_fo_shader_that_does_absolutely_fucking_nothing",
+    should_apply = function(self)
+        return true
+    end,
+    order = 2,
+    draw = function(self,shader,canvas)
+		love.graphics.setShader()
+		love.graphics.draw(canvas,0,0)
 
-			local f = math.floor(v.clicked * 17 * 2)
-			boid_quad:setViewport(f * 71, 0, 71, 100, ex, ey) -- Reposition quad to use the correct frame
-			love.graphics.draw(explosion_sprite, boid_quad, v.pos.x, v.pos.y, 0, 1, 1, 35, 55)
-
-			love.graphics.setColor(unpack(color2))
+        local color = {love.graphics.getColor()}
+		if G.FISHING_STATE == G.FISHING_STATES.HOOKING then
+			love.graphics.setColor(unpack(HEX("307fff")))
 		else
-			boid_quad:setViewport(v.spr.x * bx/1, v.spr.y * by/1, bx/1, by/1, bx, by) -- Reposition quad to use the correct frame
-			love.graphics.draw(boid_sprite, boid_quad, v.pos.x, v.pos.y, v.pos.rot, 2, 2, 15.5, 9.5)
+			love.graphics.setColor(1, 1, 1, 1)
 		end
-	end
 
-	love.graphics.setColor(unpack(color))
-end
+		for i, v in pairs(FountainOpeners.Boids) do
+			if v.clicked then
+				local color2 = {love.graphics.getColor()}
+				love.graphics.setColor(1, 1, 1, 1)
 
+				local f = math.floor(v.clicked * 17 * 2)
+				boid_quad:setViewport(f * 71, 0, 71, 100, ex, ey) -- Reposition quad to use the correct frame
+				love.graphics.draw(explosion_sprite, boid_quad, v.pos.x, v.pos.y, 0, 1, 1, 35, 55)
+
+				love.graphics.setColor(unpack(color2))
+			else
+				boid_quad:setViewport(v.spr.x * bx/1, v.spr.y * by/1, bx/1, by/1, bx, by) -- Reposition quad to use the correct frame
+				love.graphics.draw(boid_sprite, boid_quad, v.pos.x, v.pos.y, v.pos.rot, 2, 2, 15.5, 9.5)
+			end
+		end
+
+		love.graphics.setColor(unpack(color))
+    end
+}
 
 FishAndChips.Fish {
 	key = "fo_boids",

@@ -136,13 +136,23 @@ FountainOpeners.anvil_animation = {
 }
 
 -- Draw the anvil
-if not love.draw then function love.draw() end end
-local draw_hook = love.draw
-function love.draw()
-	draw_hook()
+SMODS.Shader {
+	key = "fo_shader_that_also_does_absolutely_fucking_nothing",
+	path = "fountain_openers/shader_that_also_does_absolutely_fucking_nothing.fs"
+}
 
-    local anim = FountainOpeners.anvil_animation
-    if anim.active and not anim.freeze_img then
+SMODS.ScreenShader {
+    key = "fac_fo_anvil",
+    shader = "fac_fo_shader_that_also_does_absolutely_fucking_nothing",
+    should_apply = function(self)
+        return FountainOpeners.anvil_animation.active and not FountainOpeners.anvil_animation.freeze_img
+    end,
+    order = 1,
+    draw = function(self, shader, canvas)
+        love.graphics.setShader()
+        love.graphics.draw(canvas,0,0)
+
+        local anim = FountainOpeners.anvil_animation
         local color = {love.graphics.getColor()}
         love.graphics.setColor(1, 1, 1, 1)
 
@@ -150,7 +160,7 @@ function love.draw()
 		love.graphics.draw(anvil_sprite, anvil_quad, anim.pos.x, anim.pos.y, 0, 4, 4, ax/2, ay/2)
         love.graphics.setColor(unpack(color))
     end
-end
+}
 
 FishAndChips.Fish {
 	key = "fo_anvil",

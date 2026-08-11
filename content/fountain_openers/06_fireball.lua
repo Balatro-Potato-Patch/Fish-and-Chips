@@ -25,7 +25,7 @@ FishAndChips.Fish {
     impulse_min = 0.55,
     decision_max = 0.9,
     decision_min = 0.5,
-    vel_limit = 1.3,
+    vel_limit = 0.75,
     loc_vars = function(self, info_queue, card)
 		return { vars = {
             card.ability.extra.xmult,

@@ -28,7 +28,7 @@ FishAndChips.Fish {
     impulse_min = 0.25,
     decision_max = 0.45,
     decision_min = 0.15,
-    vel_limit = 0.65,
+    vel_limit = 0.45,
 
 	environments = {
 		backroom = 1,
