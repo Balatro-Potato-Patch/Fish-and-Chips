@@ -20,7 +20,7 @@ return {
                 text = {
                     "Played {C:attention}Aces{}",
                     "give {C:mult}+#1#{} Mult",
-                    "when scored",
+                    "when scored"
                 },
                 flavour = {
                     "Its name seems redundant.",
@@ -33,7 +33,7 @@ return {
                 text = {
                     "Played {C:attention}2s{}",
                     "give {C:mult}+#1#{} Mult",
-                    "when scored",
+                    "when scored"
                 },
                 flavour = {
                     "Well, holy carp! You CAN",
@@ -46,7 +46,7 @@ return {
                     "Converts {C:attention}#1#%{} of scored",
                     "{C:chips}Chips{} to {C:mult}Mult{} and set",
                     "scored {C:chips}Chips{} to base",
-                    "poker hand {C:chips}Chips",
+                    "poker hand {C:chips}Chips"
                 },
                 flavour = {
                     "Doesn't really work",
@@ -59,7 +59,7 @@ return {
                     "Convert {C:attention}#1#%{} of scored",
                     "{C:mult}Mult{} to {C:chips}Chips{} and set",
                     "scored {C:mult}Mult{} to base",
-                    "poker hand {C:mult}Mult",
+                    "poker hand {C:mult}Mult"
                 },
                 flavour = {
                     "Doesn't really work",
@@ -72,7 +72,7 @@ return {
                     "Creates a Fish with",
                     "a {C:blind}Deltarune{} attribute",
                     "{C:inactive}(Must have room)",
-                    "{ppu_bubble:usable}",
+                    "{ppu_bubble:usable}"
                 },
                 flavour = {
                     "{C:green}Gyaa Ha Ha!"
@@ -84,7 +84,7 @@ return {
                     {
                         "{X:blind,C:inscryption_blue}Brittle:",
                         "{C:red}Instantly perish{} at the",
-                        "end of final score",
+                        "end of final score"
                     },
                     {
                         "{X:blind,C:inscryption_blue}Annoying:",
@@ -134,7 +134,7 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
                     "{C:inactive}(Currently: #3#){}",
-                    "{ppu_bubble:usable}{ppu_bubble:toggle}",
+                    "{ppu_bubble:usable}{ppu_bubble:toggle}"
                 },
                 flavour = {
                     "King of Sturgeons"
@@ -207,7 +207,7 @@ return {
                 text = {
                     "Gains {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} of",
                     "{C:attention}sell value{} at",
-                    "end of fishing",
+                    "end of fishing"
                 },
                 flavour = {
                     "Well, there is a fish here."
@@ -238,7 +238,7 @@ return {
                     "Destroys up to",
                     "{C:attention}#1#{} selected cards",
                     "{C:inactive,E:2}but...{}",
-                    "{ppu_bubble:usable}",
+                    "{ppu_bubble:usable}"
                 },
                 flavour = {
                     ""
@@ -252,7 +252,7 @@ return {
                     "{C:attention}combine{} all ranks together",
                     "and create {C:attention}evenly split{} cards",
                     "{C:inactive,E:2}but...{}",
-                    "{ppu_bubble:usable}",
+                    "{ppu_bubble:usable}"
                 },
                 flavour = {
                     ""
@@ -266,7 +266,7 @@ return {
                     "cards in hand",
                     "into {C:attention}#2#{}",
                     "{C:inactive,E:2}but...{}",
-                    "{ppu_bubble:usable}",
+                    "{ppu_bubble:usable}"
                 },
                 flavour = {
                     "Watch what happens when",
@@ -280,7 +280,7 @@ return {
                     "Decrease Blind",
                     "Requirement by {X:blind,C:white}X#1#{}",
                     "{C:inactive,E:2}but...{}",
-                    "{ppu_bubble:usable}",
+                    "{ppu_bubble:usable}"
                 },
                 flavour = {
                     ""
