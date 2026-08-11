@@ -23,7 +23,7 @@ SMODS.Gradient {
 }
 
 local marshii_colour = SMODS.Gradient {
-    key = "felli",
+    key = "marshii_colour",
     colours = {
         HEX("c6abf5"),
         HEX("c6abf5"),
@@ -37,10 +37,29 @@ PotatoPatchUtils.Developer({
     loc = true,
 })
 
+SMODS.Atlas {
+    key = "marshii_credits",
+    path = "marshii-ivy/marshii.png",
+    px = 71,
+    py = 95,
+}
+
 PotatoPatchUtils.Developer({
     name = "marshii",
     fac_partner = "fac_ivy",
+    atlas = "fac_marshii_credits",
+    pos = {x=0, y=0},
+    colour = marshii_colour,
+    loc = true,
 })
+
+local cuhook = Card.update -- i deeply apologize for hooking update you can put me on the stake and kill me if you want
+function Card:update(...)
+    cuhook(self, ...)
+    if self.ppu_member and self.ppu_member.key == "fac_marshii" then
+        self.children.center:set_sprite_pos({x=self.states.hover.is and 1 or 0, y=0})
+    end
+end
 
 SMODS.Atlas {
     key = "ivy-tsnefish",

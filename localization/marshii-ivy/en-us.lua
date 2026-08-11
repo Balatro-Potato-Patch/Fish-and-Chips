@@ -15,7 +15,9 @@ return {
 			},
             PotatoPatchDev_marshii = {
                 name = "MarshiiRose",
-                
+                text = {
+                    "filler text to not crash the game"
+                }
             }
         },
         fac_Fish = {
