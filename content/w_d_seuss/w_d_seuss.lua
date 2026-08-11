@@ -742,7 +742,11 @@ FishAndChips.Fish {
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_i_miss_the_quiet") } } }
 	end,
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		return {
+			vars = {
+				card.ability.extra.xmult
+			}
+		}
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main then
