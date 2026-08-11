@@ -427,7 +427,7 @@ FishAndChips.Fish { --Coupon
 	end,
 	loc_vars = function(self, card)
 		return {vars = {ppu_bubbles = {G.STATE == G.STATES.FAC_FISHING and "inactive" and "usable"}}}
-	end
+	end,
 	can_use = function()
 		return G.STATE ~= G.STATES.FAC_FISHING
 	end,
