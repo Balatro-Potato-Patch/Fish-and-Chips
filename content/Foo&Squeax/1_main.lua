@@ -89,7 +89,7 @@ PotatoPatchUtils.Developer{
 }
 
 function FishAndChips.FooSqueax.sqx_credit_ui_baits()
-	local area = CardArea(G.ROOM.T.x, G.ROOM.T.y, (G.CARD_W * 4.5), G.CARD_H*0.3, { card_limit = 15, type = 'title', highlight_limit = 0, collection = true }) 
+	local area = CardArea(G.ROOM.T.x, G.ROOM.T.y, (G.CARD_W * 4.5), G.CARD_H*0.4, { card_limit = 15, type = 'title', highlight_limit = 0, collection = true }) 
 	for i=1, #G.P_CENTER_POOLS.fac_Bait do
 		local card = Card(area.T.x, area.T.y, G.CARD_W*0.4, G.CARD_H*0.4, G.P_CARDS.empty, G.P_CENTERS[G.P_CENTER_POOLS.fac_Bait[i].key])
 		area:emplace(card)
@@ -102,7 +102,7 @@ function FishAndChips.FooSqueax.sqx_credit_ui_baits()
 			-- Card Area
             {
                 n = G.UIT.R,
-                config = { align = "cm", padding = 0.1 },
+                config = { align = "cm", padding = 0.05 },
                 nodes = {
                     { n = G.UIT.O, config = { object = area } }
                 }
@@ -112,7 +112,7 @@ function FishAndChips.FooSqueax.sqx_credit_ui_baits()
 end
 
 function FishAndChips.FooSqueax.sqx_credit_ui_fish()
-	local area = CardArea(G.ROOM.T.x, G.ROOM.T.y, (G.CARD_W * 4.5), G.CARD_H*0.5, { card_limit = 7, type = 'title', highlight_limit = 0, collection = true })
+	local area = CardArea(G.ROOM.T.x, G.ROOM.T.y, (G.CARD_W * 4.5), G.CARD_H*0.4, { card_limit = 11, type = 'title', highlight_limit = 0, collection = true })
 	local listables = {
 		"submarine",
 		"fish_kebab",
@@ -123,6 +123,11 @@ function FishAndChips.FooSqueax.sqx_credit_ui_fish()
 		"super_bo_noise",
 		"kine",
 		'tsundere',
+		'you',
+		'luka',
+		'chimera',
+		'kyu_kurafin',
+		'sardine',
 	}
 	for i=1, #listables do
 		local card = Card(area.T.x, area.T.y, G.CARD_W*0.5, G.CARD_H*0.5, G.P_CARDS.empty, G.P_CENTERS['fish_fac_fas_' .. listables[i]])
