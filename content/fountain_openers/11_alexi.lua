@@ -117,4 +117,7 @@ FishAndChips.Fish {
             badges[#badges+1] = slimeutils.table_create_badge(elle_badges.poly)
         end
     end or nil,
+    set_card_type_badge = function(self, card, badges)
+		badges[#badges + 1] = create_badge(localize("k_fac_fo_slimegirl"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
+	end,
 }

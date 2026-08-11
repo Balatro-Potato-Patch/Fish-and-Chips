@@ -138,7 +138,7 @@ return {
                     },
                 },
                 flavor = {
-                    "haiiiiii"
+                    "You loooove seeing me, don't you~"
                 }
             },
             fish_fac_fo_alexi_alt = {
@@ -186,7 +186,9 @@ return {
             PotatoPatchDev_fo_grahkon = {
                 name = "Grahkon",
                 text = {
-                    "placeholder text"
+                    "Strange dragon-ish greenboy",
+                    "He is rumored to be capable of great things.",
+                    "Oh also uh thanks for checking my credits! (ps. Alexi is kinda goated)"
                 }
             }
         }
@@ -205,6 +207,13 @@ return {
             fac_fo_take = "Take",
 
             k_fac_fo_inactive = "Inactive...",
+
+            k_fac_fo_hydra = "Hydra",
+            k_fac_fo_crab = "Crab",
+            k_fac_fo_vodka = "Vodka",
+            k_fac_fo_anvil = "Anvil",
+            k_fac_fo_merfolk_wizard = "Merfolk Wizard",
+            k_fac_fo_slimegirl = "Slimegirl",
         },
     }
 }
