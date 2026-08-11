@@ -183,6 +183,18 @@ return {
 					"you're doing is worth it?",
 				},
 			},
+			fish_fac_miku = {
+				name = "Hatsune Fishu",
+				text = {
+					{
+						"{C:attention}Aces{} give {X:chips,C:white}X#1#{} Chips",
+						"when scored",
+					},
+				},
+				flavor = {
+					"The idol of the sea",
+				},
+			},
 		},
 		Other = {},
 		PotatoPatch = {
