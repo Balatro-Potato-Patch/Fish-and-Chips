@@ -79,7 +79,7 @@ FishAndChips.Fish{
         length = { min = 1.5, max = 1.9}, --In meters
     },
     can_use = function (self, card)
-        return card.ability.extra.wish and (G.GAME.fac_sand_dollars + G.GAME.bankrupt_at) >= card.ability.extra.cost and (card.ability.extra.set ~= "Joker" or #G.jokers.cards < G.jokers.config.card_limit)
+        return card.ability.extra.wish and (G.GAME.fac_jeal_free_wishes or (G.GAME.fac_sand_dollars + G.GAME.bankrupt_at) >= card.ability.extra.cost) and (card.ability.extra.set ~= "Joker" or #G.jokers.cards < G.jokers.config.card_limit)
     end,
     keep_on_use = function (self, card)
         return true
@@ -99,7 +99,9 @@ FishAndChips.Fish{
         event(function ()
             granted:juice_up()
             play_sound('tarot1')
-            ease_sand_dollars(-card.ability.extra.cost, true)
+            if not G.GAME.fac_jeal_free_wishes then
+                ease_sand_dollars(-card.ability.extra.cost, true)
+            end
             return true
         end)
         delay(2)
