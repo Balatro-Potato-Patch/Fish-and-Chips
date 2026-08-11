@@ -1,14 +1,39 @@
-local ivy_coloured = SMODS.Gradient {
-    key = "ivy_coloured",
+local felli_colours = SMODS.Gradient {
+    key = "felli",
     colours = {
         HEX("ff9a2e"),
         HEX("ff6bfd"),
     }
 }
 
+SMODS.Gradient {
+    key = "ivy_orange",
+    colours = {
+        HEX("ff9a2e"),
+        HEX("ff9a2e"),
+    }
+}
+
+SMODS.Gradient {
+    key = "may_pink",
+    colours = {
+        HEX("ff6bfd"),
+        HEX("ff6bfd"),
+    }
+}
+
+local marshii_colour = SMODS.Gradient {
+    key = "felli",
+    colours = {
+        HEX("c6abf5"),
+        HEX("c6abf5"),
+    }
+}
+
 PotatoPatchUtils.Developer({
     name = "ivy",
     fac_partner = "fac_marshii",
+    colour = felli_colours,
     loc = true,
 })
 
@@ -43,7 +68,7 @@ FishAndChips.Fish {
         backroom = 0.75,
     },
     stats = {
-        weight = { min = 4 / 1000, max = 6 / 1000 }, --it's paper
+        weight = { min = 4 / 1000, max = 6 / 1000 },    --it's paper
         length = { min = 29.7 / 100, max = 29.7 / 100 } -- dimensions of a4 paper lol
     },
     config = { extra = { xmult = 1 } },
@@ -59,8 +84,10 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         if context.joker_main then
-            return { xmult = 1 +
-            card.ability.extra.xmult * (G.fac_fish_area.config.card_limit - G.fac_fish_area.config.card_count) }
+            return {
+                xmult = 1 +
+                    card.ability.extra.xmult * (G.fac_fish_area.config.card_limit - G.fac_fish_area.config.card_count)
+            }
         end
     end,
     attributes = { "joker_slot", "xmult" }
@@ -76,7 +103,7 @@ FishAndChips.Fish {
         wormhole = 0.2,
     },
     stats = {
-        weight = { min = 4 / 10, max = 6 / 10 },    --it's canvas
+        weight = { min = 4 / 10, max = 6 / 10 },          --it's canvas
         length = { min = 81.12 / 100, max = 81.12 / 100 } -- 81.12cm is the width of the original painting
     },
     config = { extra = { used = false } },
@@ -117,7 +144,7 @@ FishAndChips.Fish {
     set_card_type_badge = function(self, card, badges)
         table.insert(badges, create_badge(localize("k_ivy_not_a_fish"), G.C.SET.fac_Fish))
     end,
-    attributes = {"modify_card", "usable", "joker"}
+    attributes = { "modify_card", "usable", "joker" }
 }
 
 FishAndChips.Fish {
@@ -132,8 +159,8 @@ FishAndChips.Fish {
         backroom = 1,
     },
     stats = {
-        weight = { min = 4 / 1000, max = 6 / 1000 }, --it's paper
-        length = { min = 29.7 / 100, max = 29.7 / 100 } -- dimensions of a4 paper lol
+        weight = { min = 1.2, max = 2.4 },
+        length = { min = 0.7, max = 1.6 }
     },
     config = { extra = { mult = 0, scaleby = 1, hatred = -5 } },
     loc_vars = function(self, info_queue, card)
@@ -148,10 +175,10 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         if context.fac_end_fishing then
             if context.failed then
-                SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "mult", scalar_value = "hatred"})
+                SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "mult", scalar_value = "hatred" })
                 card.ability.extra.mult = math.max(0, card.ability.extra.mult)
             else
-                SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "mult", scalar_value = "scaleby"})
+                SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "mult", scalar_value = "scaleby" })
             end
         end
 
@@ -161,5 +188,72 @@ FishAndChips.Fish {
             }
         end
     end,
-    attributes = { "joker_slot", "xmult" }
+    attributes = { "scaling", "mult" }
+}
+
+FishAndChips.Fish {
+    key = "fishbone_dagger",
+    ppu_coder = { "ivy" },
+    ppu_artist = { "marshii" },
+    atlas = "marshii-chud-fishies",
+    pos = { x = 2, y = 0 },
+    weight = 10,
+    environments = { -- i
+        swamp = 1.0,
+        volcano = 0.7,
+        aquifer = 0.7,
+        styx = 0.4,
+    },
+    stats = {
+        weight = { min = 1.2, max = 2.4 },
+        length = { min = 0.7, max = 1.6 }
+    },
+    config = { extra = { chips = 0 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {
+            card.ability.extra.chips
+        }}
+    end,
+    calculate = function(self, card, context)
+        if context.setting_blind then
+            local fisharea = card.area
+            local index = nil
+            for i, ifish in ipairs(fisharea.cards) do
+                if ifish == card then
+                    index = i
+                end
+            end
+            local sliced = fisharea.cards[index + 1]
+            if (not sliced) or (SMODS.is_eternal(sliced)) or (sliced.getting_sliced) then
+                return
+            end
+
+            -- thank you N' for vanillaremade so i could save 90 seconds writing this myself
+            sliced.getting_sliced = true
+            G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+            local new_chips = card.ability.extra.chips + sliced.sell_cost * 10
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.joker_buffer = 0
+                    card.ability.extra.chips = new_chips
+                    card:juice_up(0.8, 0.8)
+                    sliced:start_dissolve({ G.C.CHIPS }, nil, 1.6)
+                    play_sound('slice1', 0.96 + math.random() * 0.08)
+                    return true
+                end
+            }))
+            return {
+                message = localize { type = 'variable', key = 'a_chips', vars = { new_chips } },
+                colour = G.C.CHIPS,
+                no_juice = true
+            }
+        end
+
+        if context.joker_main then
+            return {
+                chips = card.ability.extra.chips
+            }
+        end
+    end,
+    attributes = { "scaling", "chips", "destroy_card" }
 }

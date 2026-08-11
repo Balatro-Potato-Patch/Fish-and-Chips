@@ -4,9 +4,19 @@ return {
 			PotatoPatchDev_ivy = {
 				name = "Ivy (and May)",
                 text = {
-                    "life is ruff, be a dog if you've gotta :)"
+                    {
+                        "hi, we're {C:fac_ivy_orange}ivy{} & {C:fac_may_pink}May!{} ..mostly ivy though!",
+                        "{C:fac_felli}we{} had.. quite a lot going on mentally during F&C",
+                        "but {C:fac_felli}we{} tried {C:fac_felli}our{} best!",
+                        "follow my tumblr {C:fac_ivy_orange}-ivy{}",
+                        "take care of yourself {C:fac_may_pink}-May{}"
+                    },
                 }
 			},
+            PotatoPatchDev_marshii = {
+                name = "MarshiiRose",
+                
+            }
         },
         fac_Fish = {
             -- fish_fac_cod = {
@@ -58,6 +68,21 @@ return {
                     "It's not a fish, it's not!",
                     "but it *captures* the *essence* of",
                     "what a \"Fish\" truly is!"
+                }
+            },
+            fish_fac_fishbone_dagger = {
+                name = "Fishbone Dagger",
+                text = {
+                    "When {C:attention}Blind{} selected,",
+                    "destroy the {C:blue}Fish{} to the",
+                    "right, and add {C:attention}ten times{} its",
+                    "sell value to this {C:blue}Fish's{} Chips",
+                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
+                },
+                flavor = {
+                    "It's not technically alive, but",
+                    "that doesn't mean you should let",
+                    "your kids play with this thing, it's sharp!"
                 }
             }
         },
