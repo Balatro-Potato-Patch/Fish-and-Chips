@@ -246,13 +246,14 @@ FishAndChips.Fish { --Manos
 			if rip % 9 > 7 then
 				manoline = manoline + 2
 			end
-		else
-			info_queue[#info_queue+1] = {set = "Other", key = "eternal"}
 		end
 		return {vars = {localize("fac_vman2002_manos" .. manoline)}}
 	end,
 	loc_vars = function(self, info_queue, card)
 		local ex = card.ability.extra
+		if not ex.active then
+			info_queue[#info_queue+1] = {set = "Other", key = "eternal"}
+		end
 		return {
 			vars = {
 				69, --unused
