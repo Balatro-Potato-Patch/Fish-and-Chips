@@ -22,7 +22,7 @@ FishAndChips.Fish {
 		wormhole = 1,
 	},
 	stats = {
-		length = {min = 4e-7, max = 7e-7, units = { format = "nm_format", scale = 1e-9, precision = 4}},
+		length = {min = 4e-7, max = 6.5e-7, units = { format = "nm_format", scale = 1e-9, precision = 4}},
 		weight = {min = 0, max = 0}
 	},
 	blueprint_compat = true,
