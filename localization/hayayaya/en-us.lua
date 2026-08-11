@@ -232,7 +232,7 @@ return {
 				name = "Tower of Babel",
 				text = {
 					"{X:mult,C:white}X#1#{} Mult for every",
-					"{C:attention}unique suit{} in played hand",
+					"{C:attention}unique suit{} in scored hand",
 				},
 				flavor = {
 					"Y'know, from the Bible!",

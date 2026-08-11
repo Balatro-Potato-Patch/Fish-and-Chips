@@ -34,7 +34,7 @@ FishAndChips.Fish({
 		if context.joker_main then
 			local xmult = 0
 			local suits = {}
-			for _, c in ipairs(context.full_hand) do
+			for _, c in ipairs(context.scoring_hand) do
 				-- Cards with any suit qualify for this as well
 				if (not suits[c.base.suit]) or SMODS.has_any_suit(c) then
 					xmult = xmult + 1
