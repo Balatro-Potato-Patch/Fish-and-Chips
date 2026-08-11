@@ -1,4 +1,9 @@
 -- Prismond Bunnyfish
+SMODS.Shader {
+    key = "prismond",
+    path = "seabunny/prismond.fs"
+}
+
 FishAndChips.Fish {
     key = "prismond_bunnyfish",
     atlas = "seabunny",
@@ -81,5 +86,9 @@ FishAndChips.Fish {
     stats = {
         weight = {min = 3, max = 5},
         length = {min = 0.25, max = 0.4}
-    }
+    },
+    draw = function(self, card, layer)
+        card.children.center:draw_shader("fac_prismond", nil, G.TIMERS.REAL)
+        card.children.center:draw_shader("voucher", nil, card.ARGS.send_to_shader)
+    end
 }
