@@ -107,7 +107,7 @@ local function fly_away(card)
 		blockable = false,
 		func = function ()
 			local time_passed = G.TIMERS.REAL - time_start
-			if card.removed or time_passed > 2 or card.dissolve > 0.95 then
+			if card.removed or time_passed > 2 then
 				return true
 			end
 
