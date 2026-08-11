@@ -42,7 +42,7 @@ local pa_fish = {
             fish_fac_pa_heatshield = {
                 name = "Heatshield Tile",
                 text = {
-                    "Gains {C:attention}+#1#{} {C:attention}Location Reroll{} refund",
+                    "Gains {C:attention}+#1#{} free {C:attention}Location Reroll{}",
                     "for each used {C:planet}Planet{} card",
                     "{C:inactive}(Refunds left: {C:attention}#2#{})"
                 },
