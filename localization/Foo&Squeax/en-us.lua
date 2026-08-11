@@ -339,6 +339,7 @@ return {
 			k_fac_fas_nyon_label = "Nyon",
 			k_fac_fas_submarine = "Submarine",
 			k_fac_fas_fatchud = "Fat Chud",
+			k_fac_fas_frog = "Frog",
 
 			k_fac_fas_undertale_fight = "FIGHT",
 			k_fac_fas_undertale_act = "ACT",

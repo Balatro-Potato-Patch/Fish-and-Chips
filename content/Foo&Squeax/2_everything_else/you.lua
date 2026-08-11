@@ -6,6 +6,7 @@ FishAndChips.Fish{
 		backroom = 0.25,
 		swamp = 0.5
 	},
+	badge_key = "k_fac_fas_frog",
 	ppu_coder = {"Foo54"},
 	ppu_artist = {"squeax09"},
 	atlas = "fas_fish_general",
