@@ -22,7 +22,8 @@ return {
                 text = {
                     "Use to {C:red}destroy{} all cards held in hand",
                     "Level up a random {C:attention}poker hand",
-                    "for each card destroyed"
+                    "for each card destroyed",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "the cards when i throw a dying",
@@ -43,7 +44,8 @@ return {
                 name = "Fireball",
                 text = {
                     "Use this fish to get",
-                    "{X:mult,C:white}X#1#{} Mult next hand"
+                    "{X:mult,C:white}X#1#{} Mult next hand",
+                    "{ppu_bubble:usable}"
                 }
             },
             fish_fac_fo_fishery = {
@@ -109,7 +111,8 @@ return {
                     "the {C:attention}Blind's{} requirement by {X:purple,C:white}X#2#{} if the {C:attention}sum{} of ranks",
                     "of all {C:clubs}Clubs{} held in hand is greater than the",
                     "number of remaining cards in your {C:attention}deck",
-                    "{C:inactive}(#1#)"
+                    "{C:inactive}(#1#)",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Looking for demons to consult with..."
@@ -176,7 +179,7 @@ return {
             PotatoPatchDev_fo_alexi = {
                 name = "Alexi",
                 text = {
-                    "hiiiiii",
+                    "silly shapeshifting slimegirl.",
                     "also see slimestuff she's really cute or something"
                 }
             },
