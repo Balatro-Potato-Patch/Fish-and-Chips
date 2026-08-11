@@ -279,7 +279,7 @@ return {
 					"I also worked with Foo to art a lot of silly things",
 					"for our entry, so I do hope you enjoy the goofiness that's come of it! :3"},
 					{"Additionally, feel free to check out {C:attention}Balacats{}, {C:purple}Maximus{},",
-					"and {C:planets}Wormhole{}, all of which I contributed to!",
+					"and {C:planet}Wormhole{}, all of which I contributed to!",
 				"{s:0.9}(also {C:blue,E:1,s:0.9}Washmachine{}{s:0.9} but that one's not out yet lmao)"}
 				}
 			}

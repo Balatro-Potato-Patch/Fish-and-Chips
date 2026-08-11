@@ -24,7 +24,7 @@ FishAndChips.FooSqueax.undertale = {
 			{
 				{"worked_on", "nothing"},
 				{"synthb", "link", "https://github.com/Foo54/SynthB"},
-				{"bad_director", "link", "https://github.com/Clickseee/BadDirector"}
+				{"bad_director", "link", "https://github.com/Foo54/BadDirectorReprinted"}
 			}
 		}
 	}
