@@ -176,7 +176,7 @@ FishAndChips.Fish {
         backroom = 0.1
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.scoring, card.ability.extra.gain, colours = { HEX("4db1f6") } } }
+        return { vars = { card.ability.extra.scoring, card.ability.extra.gain, colours = { HEX("4db1f6") }, ppu_bubbles = {card.ability.extra.trigger and 'active' or 'inactive' } } }
     end,
     calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval then

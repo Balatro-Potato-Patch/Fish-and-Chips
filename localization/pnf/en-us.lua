@@ -12,7 +12,8 @@ return {
                     "{C:attention}scoring effect{} equal to {C:dark_edition}#1#",
                     "in the {C:attention}next hand"},
                     {"Resets after scoring",
-                    "or after each round"}
+                    "or after each round"},
+                    {"{ppu_bubble:1}"}
                 },
                 flavor = {
                     [["I'm sorry for existing"]]
@@ -120,7 +121,8 @@ return {
             fish_fac_tagfish = {
                 name = "Fishy Coupon",
                 text = {
-                    {"Creates a random tag",},
+                    {"Creates a random tag",
+                    "{ppu_bubble:usable}",},
                 },
                 flavor = {
                     "It's surprisingly waterproof.",
