@@ -1,8 +1,91 @@
 FishAndChips.Fish {
+	key = "enveloach",
+	atlas = "fac_breukel_fish",
+	pos = {x = 1,y = 2},
+	weight = 5,
+	stats = {weight = {min = 0.008, max = 0.011}, length = {min = 0.1, max = 0.12}},
+	ppu_coder = {"Breuhh"},
+	ppu_artist = {"Comykel"},
+	attributes = {"economy"},
+
+	environments = {
+		city_river = 10,
+		styx = 5
+	},
+	config = {
+		extra = {
+			dollars = 0,
+			Overtime = 0.5,
+		}
+	},
+
+	loc_vars = function(self, info_queue, card)
+		return {vars = {
+			card.ability.extra.Overtime,
+			G.fac_Breukel.GetOverTime()
+		}}
+	end,
+
+	calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval then
+			G.fac_Breukel.AddOverTime(card, card.ability.extra.Overtime)
+		end
+		card.ability.extra.dollars = math.floor(G.fac_Breukel.GetOverTime())
+	end,
+	calc_dollar_bonus = function(self, card)
+        if card.ability.extra.dollars > 0 then
+            return card.ability.extra.dollars
+        end
+    end,
+}
+
+FishAndChips.Fish {
+	key = "businesscarp",
+	atlas = "fac_breukel_fish",
+	pos = {x = 2,y = 2},
+	weight = 5,
+	stats = {weight = {min = 0.008, max = 0.011}, length = {min = 0.1, max = 0.12}},
+	ppu_coder = {"Breuhh"},
+	ppu_artist = {"Comykel"},
+	attributes = {"economy"},
+
+	environments = {
+		city_river = 10,
+		styx = 5
+	},
+	config = {
+		extra = {
+			Overtime = 1,
+			Sand_dollars = 0
+		}
+	},
+
+	loc_vars = function(self, info_queue, card)
+		return {vars = {
+			card.ability.extra.Overtime,
+			G.fac_Breukel.GetOverTime()
+		}}
+	end,
+
+	calculate = function(self, card, context)
+		if context.setting_blind then
+			G.fac_Breukel.AddOverTime(card, card.ability.extra.Overtime)
+			card.ability.extra.Sand_dollars = 0
+			for i = 1, #G.fac_fish_area.cards do
+				if SMODS.pseudorandom_probability(card, 'fac_fish_businesscarp_rand', (2 + (G.fac_Breukel.GetOverTime())/2), 10) then
+					card.ability.extra.Sand_dollars = card.ability.extra.Sand_dollars + 1
+				end
+			end
+			return {sand_dollars = card.ability.extra.Sand_dollars}
+		end
+	end,
+}
+
+FishAndChips.Fish {
 	key = "employeel",
 	atlas = "fac_breukel_fish",
 	pos = {x = 1,y = 0},
-	weight = 8,
+	weight = 5,
 	stats = {weight = {min = 0.05, max = 0.086}, length = {min = 1.4, max = 1.7}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
@@ -37,7 +120,7 @@ FishAndChips.Fish {
 	key = "plecoworker",
 	atlas = "fac_breukel_fish",
 	pos = {x = 1,y = 1},
-	weight = 8,
+	weight = 5,
 	stats = {weight = {min = 0.2, max = 0.45}, length = {min = 0.075, max = 0.1}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
@@ -213,7 +296,7 @@ FishAndChips.Fish {
 	key = "codcument",
 	atlas = "fac_breukel_fish",
 	pos = {x = 0,y = 1},
-	weight = 8,
+	weight = 5,
 	stats = {weight = {min = 5, max = 12}, length = {min = 0.6, max = 1.2}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
@@ -263,7 +346,7 @@ FishAndChips.Fish {
 	key = "pirinter",
 	atlas = "fac_breukel_fish",
 	pos = {x = 2,y = 1},
-	weight = 8,
+	weight = 5,
 	stats = {weight = {min = 130, max = 150}, length = {min = 1, max = 1.2}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
@@ -319,7 +402,7 @@ FishAndChips.Fish {
 	key = "produck",
 	atlas = "fac_breukel_fish",
 	pos = {x = 0,y = 2},
-	weight = 8,
+	weight = 5,
 	stats = {weight = {min = 0.009, max = 0.015}, length = {min = 0.13, max = 0.15}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},

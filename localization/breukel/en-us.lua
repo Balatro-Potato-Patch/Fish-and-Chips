@@ -1,6 +1,37 @@
 return {
     descriptions = {
         fac_Fish = {
+
+            fish_fac_businesscarp = {
+                name = "Business Carp",
+                text = {
+                    {"has a {E:1,C:green}chance{} to give {C:fac_sand_dollars}+1{C:fac_sand_dollars,f:fac_sand_dollars}${}",
+                    "for each {C:fish}fish{} in bucket",
+                    "when {C:attention}blind is selected",
+                    "{E:1,C:green}Chances{} increases with {C:fac_breukel_overtime,E:1}Overtime{}"},
+                    {"{C:attention}+#1#{} to {C:fac_breukel_overtime,E:1}Overtime{}",
+                    "{C:inactive}(Overtime: #2#/#3#){}"}
+                },
+                flavor = {
+                    "oh my god. it even",
+                    "has a watermark."
+                }
+            },
+
+            fish_fac_enveloach = {
+                name = "Enveloach",
+                text = {
+                    {"Gives {C:money}+${} equal to ",
+                    "{C:fac_breukel_overtime,E:1}Overtime{} rounded down",
+                    "at {C:attention}end of round"},
+                    {"{C:attention}+#1#{} to {C:fac_breukel_overtime,E:1}Overtime{}",
+                    "{C:inactive}(Overtime: #2#/#3#){}"}
+                },
+                flavor = {
+                    "paid bidaily"
+                }
+            },
+
             fish_fac_markerel = {
                 name = "Markerel",
                 text = {
