@@ -538,7 +538,7 @@ FishAndChips.Fish { --Blackbody
 		end
 	end,
 	usable = true,
-	blueprint_compat = true
+	blueprint_compat = false
 }
 
 FishAndChips.vman2002.navy_blade_usable = function(self, card)
