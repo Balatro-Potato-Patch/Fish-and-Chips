@@ -154,6 +154,7 @@ return {
 					"{C:red}+#1#{} temporary Discards",
 					"{C:inactive,s:0.8}Only useable while",
 					"{C:inactive,s:0.8}a blind is selected",
+					"{ppu_bubble:usable}",
 				},
 				flavour = {
 					"{s:1.1}(Mackee dues)",
