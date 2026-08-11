@@ -275,7 +275,10 @@ return {
 					"{s:0.8}(Though you'll likely see I ended up spriting more stuff besides all the baits lol)",
 					"{element:2}",
 					"I also worked with Foo to art a lot of silly things",
-					"for our entry, so I do hope you enjoy the goofiness that's come of it! :3"}
+					"for our entry, so I do hope you enjoy the goofiness that's come of it! :3"},
+					{"Additionally, feel free to check out {C:attention}Balacats{}, {C:purple}Maximus{},",
+					"and {C:planet}Wormhole{}, all of which I contributed to!",
+				"{s:0.9}(also {C:blue,E:1,s:0.9}Washmachine{}{s:0.9} but that one's not out yet lmao)"}
 				}
 			}
 		}
@@ -338,6 +341,7 @@ return {
 			k_fac_fas_nyon_label = "Nyon",
 			k_fac_fas_submarine = "Submarine",
 			k_fac_fas_fatchud = "Fat Chud",
+			k_fac_fas_frog = "Frog",
 
 			k_fac_fas_undertale_fight = "FIGHT",
 			k_fac_fas_undertale_act = "ACT",
