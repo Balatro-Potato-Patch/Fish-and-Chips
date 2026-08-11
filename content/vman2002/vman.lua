@@ -66,28 +66,6 @@ local function slowmf(lol, speed)
 end
 FishAndChips.vman2002.slowmf = slowmf
 
-fac_topuplib_inspect = topuplib and topuplib.inspect or function(name, value) --TODO: this is temporary (this is from topuplib, which has an incompatibility rn)
-	if not value then
-		value = name
-		name = "var"
-	end
-	fac_topuplib_inspectedvalue = value
-	local t = type(value)
-	if t == "table" then
-		local r = {}
-		local keys = {}
-		for k, v in pairs(value) do
-			r[#r + 1] = tostring(k)..": "..type(v).." "..tostring(v)
-			keys[#keys + 1] = tostring(k)
-		end
-		print(name .. ": " .. tostring(value) .. ", table with length " .. #value .. " and " .. tostring(r).." keys")
-		print("inspect: {" .. table.concat(r, ", ") .. "}")
-		print("keys: {" .. table.concat(keys, ", ") .. "}")
-	else
-		print(name .. ": " .. tostring(value) .. " of type " .. t)
-	end
-end
-
 local returnTrue = topuplib and topuplib.returnTrue or function() return true end
 
 --#region Fish
