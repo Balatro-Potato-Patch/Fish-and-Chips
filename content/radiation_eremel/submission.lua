@@ -18,7 +18,7 @@ PotatoPatchUtils.Developer({
     end,
     calculate = function(self, context)
         if context.fac_fish_caught and G.P_CENTERS[context.fish].set == 'fac_Fish' then
-            FishAndChips.radiation_eremel.last_fish = context.fish
+            G.GAME.fac_r_e_last_fish = context.fish
         end
     end,
 })
@@ -205,11 +205,11 @@ FishAndChips.Fish({
         length = {min = 0.115, max = 0.115},
     },
     loc_vars = function(self, info_queue, card)
-        return {vars = {FishAndChips.radiation_eremel.last_fish and localize({type = 'name_text', set = 'fac_Fish', key = FishAndChips.radiation_eremel.last_fish}) or 'None'}}
+        return {vars = {G.GAME.fac_r_e_last_fish and localize({type = 'name_text', set = 'fac_Fish', key = G.GAME.fac_r_e_last_fish}) or 'None'}}
     end,
     calculate = function(self, card, context)
         if context.selling_self then
-            G.GAME.fac_forced_fish = FishAndChips.radiation_eremel.last_fish
+            G.GAME.fac_forced_fish = G.GAME.fac_r_e_last_fish
         end
     end,
 })
@@ -341,6 +341,59 @@ FishAndChips.Fish({
         SMODS.destroy_cards(targets.low)
         for _, fish in ipairs(targets.high) do
             SMODS.copy_card(fish)
+        end
+    end
+})
+
+FishAndChips.Fish({
+    key = 'r_e_tempura',
+    atlas = 'r_e_fish',
+    pos = {x = 2, y = 1},
+    ppu_coder = {'eremel'},
+    ppu_artist = {'radiation'},
+    weight = 7,
+    environments = {
+        volcano = 4,
+        city_river = 3,
+        soup = 3,
+        chocolate_river = 1
+    },
+    attributes = {'chips', 'food', 'chance'},
+    stats = {
+        weight = {min = 0.025, max = 0.080},
+        length = {min = 0.003, max = 0.3},
+    },
+    config = {extra = {multiplier = 1000, denom = 6, max_length = 0.3}},
+    loc_vars = function(self, info_queue, card)
+        local n, d = SMODS.get_probability_vars(card, 1, card.ability.extra.denom, 'fac_r_e_tempura')
+        return {vars = {(card.ability.stats and card.ability.stats.length or 0.003) * card.ability.extra.multiplier, n, d, card.ability.extra.max_length * card.ability.extra.multiplier, localize({type = 'name_text', set = self.set, key = self.key})}}
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                chips = card.ability.stats.length * card.ability.extra.multiplier
+            }
+        end
+        if context.after then
+            if SMODS.pseudorandom_probability(card, 'fac_r_e_tempura', 1, card.ability.extra.denom) then
+                G.GAME.fac_r_e_tempura_eaten = true
+                SMODS.destroy_cards(card, {pinch_anim = true})
+                return {
+                    message = localize('k_eaten_ex')
+                }
+            end
+        end
+    end,
+    set_ability = function(self, card)
+        if G.GAME.fac_r_e_tempura_eaten then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    if not card.ability.stats then return end
+                    card.ability.stats.length = card.ability.extra.max_length
+                    card.ability.stats.l_prop = 1
+                    return true
+                end
+            }))
         end
     end
 })

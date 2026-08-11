@@ -110,6 +110,25 @@ return {
                     "catch it's disease, too"
                 }
             },
+            fish_fac_r_e_tempura = {
+                name = 'Tempura Shrimp',
+                text = {
+                    {
+                        '{C:blue}+#1#{} Chips',
+                        'This Fish gains chips equivalent to',
+                        'it\'s {C:attention}length{} in mm'
+                    },{
+                        '{C:green}#2# in #3#{} chance this fish',
+                        'is destroyed at end of round',
+                        'and force the next','{C:attention}#5#{} to be {C:dark_edition}#4#mm',
+                    }
+
+                },
+                flavour = {
+                    "You may see them as food, but",
+                    "they're still a fish on the inside."
+                }
+            },
         },
     },
     misc = {
