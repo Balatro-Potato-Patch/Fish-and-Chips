@@ -721,7 +721,7 @@ FishAndChips.Fish {
 	atlas = "w_d_seuss_fish",
 	pos = { x = 0, y = 2 },
 	weight = 2,
-	ppu_coder = { "Nick" },
+	ppu_coder = { "Jolyne" },
 	ppu_artist = { "Nick" },
 	attributes = {},
 	config = {

@@ -156,11 +156,12 @@ return {
             fish_fac_lordx = {
                 name = "Lord X-ray Fish",
                 text = {
-                    "{X:mult}X#1#{} Mult if",
+                    "{X:mult.C:white}X#1#{} Mult if",
                     "by itself"
                 },
                 flavour = {
-                    "{element:1}"
+                    "{element:1}",
+                    "{C:inactive}This fish seems to miss when the pond was quieter...",
                 }
             },
             fish_fac_majin = {
