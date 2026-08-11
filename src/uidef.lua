@@ -163,7 +163,7 @@ function FishAndChips.fishing_button(key, text, price)
 				config = { align = "cm" },
 				nodes = {
 					{ n = G.UIT.T, config = { text = localize("$"), scale = 0.7, colour = FishAndChips.C.FISHING_BUTTONS_TEXT } },
-					{ n = G.UIT.T, config = { text = "5", scale = 0.7, colour = FishAndChips.C.FISHING_BUTTONS_TEXT } },
+					{ n = G.UIT.T, config = { ref_table = G.GAME, ref_value = 'fac_environment_reroll_cost', scale = 0.7, colour = FishAndChips.C.FISHING_BUTTONS_TEXT } },
 				}
 			},
 		}
