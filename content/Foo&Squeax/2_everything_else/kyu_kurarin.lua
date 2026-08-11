@@ -8,6 +8,10 @@ FishAndChips.Fish{
 		styx = 0.1
 	},
 	ppu_coder = {"Foo54"},
+	ppu_artist = {"squeax09"},
+	atlas = "fas_fish_general",
+	pos = {x=4,y=1},
+	pixel_size = {w=70,h=92},
 	config = {
 		extra = {
 			chips = 0,
