@@ -248,7 +248,9 @@ return {
             b_input = "INPUT",
             k_fac_ghostsalt_tapcod_active = "active",
             k_fac_ghostsalt_tapcod_inactive = "inactive",
-            k_fac_ghostsalt_tapcod_reactive = "Active!"
+            k_fac_ghostsalt_tapcod_reactive = "Active!",
+            k_fac_ghostsalt_glaggle1 = "GLAGGLE MAXIMUM",
+            k_fac_ghostsalt_glaggle2 = "SECURITY PRISON"
         },
         v_dictionary = {
             a_planet = "+#1# Planet"
