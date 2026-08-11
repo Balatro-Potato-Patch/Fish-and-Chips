@@ -187,7 +187,7 @@ FishAndChips.Fish { --Trust
 	ppu_artist = { "VMan_2002" },
 	attributes = { "mod_chance" }, 
 	config = {extra = {odds_add = 2}},
-	stats = { weight = { min = 0.01, max = 0.02 }, length = {min = 0.01, max = 0.02}}, --TODO: Stats
+	stats = { weight = { min = 20*2, max = 21*2 }, length = {min = 0.17*1.8, max = 0.251*1.9}},
 	environments = {
 		calm_pond = 0.7, pier = 0.6
 	},
@@ -458,7 +458,7 @@ FishAndChips.Fish { --Timothy
 	ppu_artist = { "VMan_2002" },
 	attributes = { "xmult", "reset", "usable" },
 	pronouns = "he_him",
-	stats = { weight = { min = 0.21, max = 0.67 --[[i dont like 67 but it fits here]] }, length = {min = 0.017, max = 0.025}},
+	stats = { weight = { min = 21*6, max = 67*7 --[[i dont like 67 but it fits here]] }, length = {min = 0.17*4, max = 0.25*5}},
 	environments = {
 		calm_pond = 0.5, pier = 0.9
 	},
@@ -531,7 +531,7 @@ FishAndChips.Fish { --Blackbody
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "usable", "editions", "xblindsize" },
-	stats = { weight = { min = 0.4*5, max = 0.6618*5 }, length = {min = 0.015*12, max = 0.0234*12}},
+	stats = { weight = { min = 0.4*5*4, max = 0.6618*5*4 }, length = {min = 0.015*12*4, max = 0.0234*12*4}},
 	environments = {
 		wormhole = 0.5, styx = 1, backroom = 0.4
 	},
