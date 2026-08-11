@@ -1,9 +1,9 @@
-FishAndChips.vman2002 = PotatoPatchUtils.Developer({
+FishAndChips.vman2002 = {developer = PotatoPatchUtils.Developer({
 	name = 'VMan_2002',
 	atlas = 'fac_vman2002_fish',
 	colour = G.C.BLUE,
 	loc = "fac_dev_vman2002"
-})
+})}
 
 SMODS.Atlas({
 	key = "vman2002_fish",
