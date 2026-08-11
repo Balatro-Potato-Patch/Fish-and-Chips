@@ -204,8 +204,6 @@ function CardArea:emplace(card, ...)
 	cardarea_emplace_red(self, card, ...)
 end
 
-loc_parse_string
-
 local FishAndChips_mod_custom_card_areas_ref = FishAndChips.mod.custom_card_areas
 ---@diagnostic disable-next-line: duplicate-set-field
 function FishAndChips.mod.custom_card_areas(game)
