@@ -16,7 +16,7 @@ PotatoPatchUtils.Developer({
 		self:juice_up()
 		play_sound('fac_credits_voices_' .. voice)
 	else
-		self:juice_up()
+		self:juice_up(0.1 , 0.1)
 		play_sound('fac_credits_audio_' .. audio)
 	end
   end
@@ -140,7 +140,7 @@ FishAndChips.Fish {
 	key = "freds_leg",
 	atlas = pez,
 	pos = { x = 2, y = 0 },
-	weight = 6,
+	weight = 8,
 	ppu_coder = { "DoggFly" },
 	ppu_artist = { "DoggFly" },
 	attributes = { "hands", "destruction" },
@@ -152,7 +152,8 @@ FishAndChips.Fish {
 		length = {min = 0.20 , max = 0.20}
 	},
 	environments = {
-		city_river = 6
+		city_river = 8,
+		pier = 4
 	},
 	loc_vars = function(self, info_queue, card)
 		return {}
@@ -180,7 +181,96 @@ FishAndChips.Fish {
 	end,
 }
 
+FishAndChips.Fish {
+	key = "friendfish",
+	atlas = pez,
+	pos = { x = 3, y = 0 },
+	weight = 8,
+	ppu_coder = { "AbelSketch" },
+	ppu_artist = { "DoggFly" },
+	attributes = { 'economy' },
+	stats = {
+		weight = {min = 10, max = 12},
+		length = {min = 1.2 , max = 1.4}
+	},
+	config = {
+        extra = {
+            mula = 0
+        }
+	},
+	environments = {
+		wormhole = 8
+	},
 
+    loc_vars = function(self, info_queue, card)
+        return {vars = {(((G.fac_fish_area and G.fac_fish_area.config.card_limit or 0) - #(G.fac_fish_area and (G.fac_fish_area and G.fac_fish_area.cards or {}) or {}))) * 2}}
+    end,
+    
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval  then
+            card.ability.extra.mula = (((G.fac_fish_area.config.card_limit) - #(G.fac_fish_area.cards))) * 2
+            return true
+        end
+    end,
+    calc_dollar_bonus = function(self, card)
+        return card.ability.extra.mula
+    end,
+
+ 	set_badges = function(self, card, badges)
+ 		badges[#badges+1] = create_badge("Darkner", G.C.BLACK, G.C.WHITE, 1 )
+ 	end,
+}
+
+FishAndChips.Fish {
+	key = "bunnyslug",
+	atlas = pez,
+	pos = { x = 4, y = 0 },
+	weight = 10,
+	ppu_coder = { "AbelSketch" },
+	ppu_artist = { "DoggFly" },
+	attributes = { "mult" },
+	config = {
+		extra = {
+			mult = 4
+		}
+	},
+	stats = {
+		weight = {min = 0.002, max = 0.005},
+		length = {min = 0.015 , max = 0.025}
+	},
+	environments = {
+		calm_pond = 10,
+		pier = 5
+	},
+	loc_vars = function(self, info_queue, card)
+		local bucket_fish_count = 0
+		if G.fac_fish_area and G.fac_fish_area.cards then
+			for _, c in ipairs(G.fac_fish_area.cards) do
+				if c ~= card then
+					bucket_fish_count = bucket_fish_count + 1
+				end
+			end
+		end
+		return { vars = { card.ability.extra.mult, card.ability.extra.mult * bucket_fish_count } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			local bucket_fish_count = 0
+			if G.fac_fish_area and G.fac_fish_area.cards then
+				for _, c in ipairs(G.fac_fish_area.cards) do
+					if c ~= card then
+						bucket_fish_count = bucket_fish_count + 1
+					end
+				end
+			end
+			if bucket_fish_count > 0 then
+				return {
+					mult = card.ability.extra.mult * bucket_fish_count
+				}
+			end
+		end
+	end,
+}
 
 -- Im gonna be honest, half of this wouldnt have been possible without Vanilla remade 
 FishAndChips.Fish {
@@ -190,7 +280,7 @@ FishAndChips.Fish {
 	weight = 4,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
-	attributes = { "hands", "economy", "generation" },
+	attributes = { "economy", "generation" },
 	config = {
 		extra = {
 			poker_hand = 'High Card',
@@ -326,7 +416,7 @@ FishAndChips.Fish {
 	vel_limit = 1.5,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
-	attributes = { "hands", "economy", "generation" },
+	attributes = { "economy", "generation" },
 	config = {
 		extra = { 
 			poker_hand = 'Pair',
@@ -440,7 +530,7 @@ FishAndChips.Fish {
 	weight = 8,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
-	attributes = { "economy", "hands", "destroy_card" },
+	attributes = { "economy", "destroy_card" },
 	config = {
 		extra = {
 			dollars = 0
@@ -453,6 +543,7 @@ FishAndChips.Fish {
 	environments = {
 		pier = 8,
 		styx = 4,
+		city_river = 2,
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.dollars } }
@@ -559,7 +650,7 @@ FishAndChips.Fish {
 	key = "bagrehumo",
 	atlas = 'fac_sepa_bagremove',
 	pos = { x = 0, y = 0 },
-	weight = 6,
+	weight = 8,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
 	attributes = { "hands" },
@@ -605,54 +696,4 @@ FishAndChips.Fish {
  		badges[#badges+1] = create_badge("Smoke", G.C.BLACK, G.C.WHITE, 1 )
  	end,
 
-}
-
-FishAndChips.Fish {
-    key = "slugbunny",
-    atlas = pez,
-    pos = { x = 0, y = 3 },
-    weight = 12,
-    ppu_coder = { "DoggFly" },
-    ppu_artist = { "DoggFly" },
-    attributes = { "mult" },
-    config = {
-        extra = {
-            mult = 4
-        }
-    },
-		stats = {
-		weight = {min = 0, max = 0},
-		length = {min = 0.12 , max = 0.22}
-    environments = {
-        calm_pond = 1
-    },
-	
-    loc_vars = function(self, info_queue, card)
-        local bucket_fish_count = 0
-        if G.fac_fish_area and G.fac_fisharea.cards then
-            for , c in ipairs(G.fac_fish_area.cards) do
-                if c ~= card then
-                    bucket_fish_count = bucket_fish_count + 1
-                end
-            end
-        end
-        return { vars = { card.ability.extra.mult, card.ability.extra.mult * bucket_fish_count } }
-    end,
-    calculate = function(self, card, context)
-        if context.joker_main then
-            local bucket_fish_count = 0
-            if G.fac_fish_area and G.fac_fisharea.cards then
-                for , c in ipairs(G.fac_fish_area.cards) do
-                    if c ~= card then
-                        bucket_fish_count = bucket_fish_count + 1
-                    end
-                end
-            end
-            if bucket_fish_count > 0 then
-                return {
-                    mult = card.ability.extra.mult * bucket_fish_count
-                }
-            end
-        end
-    end,
 }

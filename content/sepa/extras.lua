@@ -18,7 +18,7 @@ SMODS.Atlas({
 SMODS.Atlas({
 	key = "fac_sepa_darkner",
 	path = "sepa/devicehands.png",
-	px = 81,
+	px = 89,
 	py = 95,
 	atlas_table = 'ANIMATION_ATLAS',
 	frames = 4, 
