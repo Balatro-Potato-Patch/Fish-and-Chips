@@ -21,7 +21,10 @@ return {
 			fac_vman2002_timothy5 = "I can't move Ceremonial Dagger?",
 			fac_vman2002_timothy_active = "Yayyyyyy",
 			fac_vman2002_timothy_inactive = "Pay attention to me",
-			fac_vman2002_timothy_reset = "*crys* why..."
+			fac_vman2002_timothy_reset = "*crys* why...",
+			k_fac_pkr_chips = "Chips",
+			k_fac_coupon = "Coupon",
+			k_fac_jewellery = "Jewellery"
 		}
 	},
 	descriptions = {

@@ -174,7 +174,8 @@ FishAndChips.Fish { --Chips
 	impulse_min = 0.1,
 	impulse_max = 0.2,
 	decision_min = 0.4,
-	decision_max = 0.6
+	decision_max = 0.6,
+	badge_key = "k_fac_poker_chips"
 }
 
 FishAndChips.Fish { --Trust
@@ -398,7 +399,8 @@ FishAndChips.Fish { --Necklace
 		end
 	end,
 	treasure = true,
-	blueprint_compat = false
+	blueprint_compat = false,
+	badge_key = "k_fac_jewellery"
 }
 
 FishAndChips.Fish { --Coupon
@@ -435,7 +437,8 @@ FishAndChips.Fish { --Coupon
 	impulse_max = 0.6,
 	decision_min = 0.3,
 	decision_max = 0.7,
-	blueprint_compat = false
+	blueprint_compat = false,
+	badge_key = "k_fac_coupon"
 }
 
 local tim = "fish_fac_vman2002_timothy"
