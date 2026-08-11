@@ -12,7 +12,8 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_pa_pulsarfish',
 	pos = {x = 4, y = 3},
 	colour = HEX('418A83'),
-	fac_partner = 'fac_Pulsar'
+	fac_partner = 'fac_Pulsar',
+	pronouns = 'they_them'
 })
 
 SMODS.Atlas({

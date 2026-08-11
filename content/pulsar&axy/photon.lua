@@ -33,7 +33,7 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
 		local color = HEX('ffffff')
-		local fish_length = card and card.ability and card.ability.stats and card.ability.stats.length / card.ability.stats.units.length.scale or 500
+		local fish_length = card and card.ability and card.ability.stats and card.ability.stats.length / card.ability.stats.units.length.scale or 0
 		fish_length = tonumber(string.format('%.0f', fish_length))
 		if fish_length > 625 then
 			color = HEX('ff0000')
@@ -66,6 +66,7 @@ FishAndChips.Fish {
 		local position = 1
 		local fish_length = card and card.ability and card.ability.stats and card.ability.stats.length / card.ability.stats.units.length.scale or 500
 		fish_length = tonumber(string.format('%.0f', fish_length))
+		-- From https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Map%3A_Organic_Chemistry_(Bruice)/13%3A_Mass_Spectrometry_Infrared_Spectroscopy_and_Ultraviolet_Visible_Spectroscopy/13.20%3A_The_Visible_Spectrum_and_Color
 		if fish_length > 625 then
 			position = 0
 		elseif fish_length > 590 then
@@ -88,8 +89,10 @@ FishAndChips.Fish {
 	end,
 	draw = function(self, card, layer)
 		if self.discovered or card.params.bypass_discovery_center then
+			-- card.children.center:draw_shader('fac_hide_fish', nil, card.ARGS.send_to_shader)
+			card.children.center:draw_shader('fac_pa_photon', nil, card.ARGS.send_to_shader)
 			card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
 		end
 	end,
-	-- shader = 'pa_photon',
+	shader = 'pa_photon',
 }

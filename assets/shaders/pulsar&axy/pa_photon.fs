@@ -27,33 +27,34 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
 
     if (pa_photon.x == pa_photon.x * 2) {
-        colour.a = 0;
+        tex.a = 0;
     }
-    // From https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Map%3A_Organic_Chemistry_(Bruice)/13%3A_Mass_Spectrometry_Infrared_Spectroscopy_and_Ultraviolet_Visible_Spectroscopy/13.20%3A_The_Visible_Spectrum_and_Color
+    
     // vec3 fish_color = vec3(0,0,0 + (pa_photon.y * pa_photon.x * 0.000001));
-    vec3 fish_color = vec3(0,0,0 + (pa_photon.x * 0.000001));
+    vec3 fish_color = vec3(0,0,0);
     if (fish_length > 625) {
         fish_color = vec3(1.0, 0.0, 0.0);
     } else if (fish_length > 590) {
         fish_color = vec3(1.0, 0.40, 0.0);
     } else if (fish_length > 565){
         fish_color = vec3(1.0, 1.0, 0.0);
-    } else if (fish_length > 565){
+    } else if (fish_length > 520){
         fish_color = vec3(0.0, 0.60, 0.0);
-    } else if (fish_length > 565){
+    } else if (fish_length > 500){
         fish_color = vec3(0.0, 1.0, 1.0);
-    } else if (fish_length > 565){
+    } else if (fish_length > 435){
         fish_color = vec3(0.0, 0.0, 1.0);
-    } else {
+    } else if (fish_length >= 380) {
         fish_color = vec3(0.40, 0.0, 0.40);
     }
 
-    tex.rgb = tex.rgb * 0.6 + fish_color;
+    // tex.rgb = tex.rgb * 0.6 + fish_color;
+    tex.rgb = fish_color * max(tex.r, max(tex.g, tex.b));
     // tex.rgb = fish_color;
     // tex.rgba = vec4(1.0);
 
-    // return dissolve_mask(tex * colour, texture_coords, uv);
-    return dissolve_mask(tex, texture_coords, uv);
+    return dissolve_mask(tex * colour, texture_coords, uv);
+    // return dissolve_mask(tex, texture_coords, uv);
 }
 
 vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv)
