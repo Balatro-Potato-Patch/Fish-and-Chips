@@ -55,7 +55,7 @@ return {
 					{
 						"{f:fac_kreon}This {C:attention,f:fac_kreon}Fish{f:fac_kreon} can be",
 						"{f:fac_kreon}used {C:attention,f:fac_kreon}once{f:fac_kreon} per round",
-						"{C:inactive,f:fac_kreon}(#4#)",
+						"{ppu_bubble:usable}{ppu_bubble:1}",
 					},
 					{
 						"{f:fac_kreon}When used, adds {C:attention,f:fac_kreon}#1#{f:fac_kreon} random",
@@ -98,6 +98,7 @@ return {
 						"Fish and turn {C:attention}1{} selected",
 						"card into a {C:attention}Glass Card",
 						"{C:inactive}(Currently {C:attention}#1#{C:inactive} charges)",
+						"{ppu_bubble:usable}",
 					},
 				},
 				flavor = {
@@ -142,6 +143,7 @@ return {
 						"{C:attention}Voucher{}, {C:money}$#1#{}, or {C:attention}#2#{}",
 						"random {C:tarot}Tarot{} cards",
 						"{C:inactive}(Must have room)",
+						"{ppu_bubble:usable}",
 					},
 				},
 				flavor = {

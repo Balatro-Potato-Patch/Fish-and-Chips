@@ -370,14 +370,16 @@ FishAndChips.Fish({
 	attributes = { "xmult", "generation", "scaling", "usable" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
-	config = { extra = { xmult = 1, xmult_gain = 0.25, cards = 2, used = false } },
+	config = { extra = { xmult = 1, xmult_gain = 0.2, cards = 2, used = false } },
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
 				card.ability.extra.cards,
 				card.ability.extra.xmult_gain,
 				card.ability.extra.xmult,
-				localize(card.ability.extra.used and "k_fac_was_used" or "k_fac_not_used"),
+				ppu_bubbles = {
+					card.ability.extra.used and "inactive" or "active"
+				},
 			},
 		}
 	end,
@@ -903,6 +905,7 @@ FishAndChips.Fish({
 	environments = {
 		aquifer = 1,
 	},
+	display_size = { w = 71 * 1.2, h = 95 * 1.2 },
 	atlas = "thunder_and_aiko",
 	pos = { x = 4, y = 1 },
 	stats = {
