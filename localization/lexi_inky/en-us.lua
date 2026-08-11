@@ -11,11 +11,7 @@ return {
 						"click me to open my carrd page",
 					},
 					{
-						'"You make me so anxious,',
-						"and being with you is dangerous,",
-						'so why do I take the risk?"',
-						"bluu! - anxious!",
-						"It's a great song",
+						"shoutout bluu! (shes the goat)",
 					},
 				},
 			},
