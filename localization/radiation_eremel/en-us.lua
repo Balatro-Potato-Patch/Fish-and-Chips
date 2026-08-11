@@ -64,8 +64,28 @@ return {
                     'by fish, from fish, for fish.',
                     '"Taste the fishness!"'
                 }
+            },
+            fish_fac_r_e_sushi_crab = {
+                name = 'Sushi Crab',
+                text = {
+                    {
+                        'Use this fish to toggle it\'s state',
+                        '{ppu_bubble:toggle}{ppu_bubble:1}'
+                    },
+                    {
+                        'When {C:green}active{}, gives {C:white,X:red}X#3#{} Mult',
+                        'and loses {C:white,X:red}X#2#{} for every hand played'
+                    },{
+                        'When {C:red}inactive{}, gains {C:white,X:red}X#1#{} Mult',
+                        'when {C:attention}Blind{} is selected'
+                    },
+                },
+                flavour = {
+                    "This giant enemy crab offers you",
+                    "it's stack of tasty looking sushi.",
+                    "What do you do?"
                 }
-            },  
+            },
         },
     },
     misc = {

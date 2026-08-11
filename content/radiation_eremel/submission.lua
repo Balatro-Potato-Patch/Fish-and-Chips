@@ -213,3 +213,62 @@ FishAndChips.Fish({
         end
     end,
 })
+
+FishAndChips.Fish({
+    key = 'r_e_sushi_crab',
+    atlas = 'r_e_fish',
+    pos = {x = 3, y = 2},
+    ppu_coder = {'eremel'},
+    ppu_artist = {'radiation'},
+    weight = 10,
+    environments = {
+        soup = 5,
+        city_river = 4,
+        pier = 2
+    },
+    attributes = {'scaling', 'xmult'},
+    stats = {
+        weight = {min = 3.8, max = 4.3},
+        length = {min = 0.56, max = 0.91},
+    },
+    config = {extra = {xmult = 1, gain = 0.3, loss = 0.2, active = false}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.gain, card.ability.extra.loss, card.ability.extra.xmult,
+            ppu_bubbles = {card.ability.extra.active and 'active' or 'inactive'},
+            box_colours = {G.C.WHITE, card.ability.extra.active and mix_colours(G.C.PALE_GREEN, G.C.WHITE, 0.3) or G.C.UI.TRANSPARENT_DARK, card.ability.extra.active and G.C.UI.TRANSPARENT_DARK or mix_colours(G.C.PALE_GREEN, G.C.WHITE, 0.3)}}}
+    end,
+    calculate = function(self, card, context)
+        if context.setting_blind and not card.ability.extra.active then
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = 'xmult',
+                scalar_value = 'gain',
+                message_key = 'a_xmult'
+            })
+            return nil, true
+        end
+        if context.joker_main and card.ability.extra.active then
+            card.ability.extra.scale_down = true
+            return {
+                xmult = card.ability.extra.xmult
+            }
+        end
+        if context.after and card.ability.extra.scale_down then
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = 'xmult',
+                scalar_value = 'loss',
+                operation = "-",
+                message_key = 'a_xmult_minus',
+                colour = G.C.RED,
+            })
+            return nil, true
+        end
+    end,
+    keep_on_use = function() return true end,
+    can_use = function() return true end,
+    use = function(self, card)
+        card.ability.extra.active = not card.ability.extra.active
+        card.children.center:set_sprite_pos({x= card.ability.extra.active and 4 or 3, y = 2})
+    end
+})
