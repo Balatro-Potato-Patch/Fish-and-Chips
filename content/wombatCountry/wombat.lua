@@ -175,7 +175,7 @@ FishAndChips.Fish({
 	},
 	config = {
 		extra = {
-			chips = 10
+			chips = 20
 		}
 	},
 	blueprint_compat = true,
@@ -184,7 +184,7 @@ FishAndChips.Fish({
 		return { vars = { card.ability.extra.chips} }
 	end,
 	calculate = function(self, card, context)
-		if context.ending_fishing then
+		if context.ending_fishing and not context.blueprint then
 			--counts the number of one fish sticks
 			local count = fac_wombat_count_sticks(1)
 			--while there are an even number of one fish sticks, merge them
@@ -221,7 +221,7 @@ FishAndChips.Fish({
 	},
 	config = {
 		extra = {
-			chips = 30
+			chips = 60
 		}
 	},
 	blueprint_compat = true,
@@ -230,7 +230,7 @@ FishAndChips.Fish({
 		return { vars = { card.ability.extra.chips} }
 	end,
 	calculate = function(self, card, context)
-		if context.ending_fishing then
+		if context.ending_fishing and not context.blueprint then
 			--counts the number of two fish sticks
 			local count = fac_wombat_count_sticks(2)
 			--while there are an even number of two fish sticks, merge them
@@ -267,7 +267,7 @@ FishAndChips.Fish({
 	},
 	config = {
 		extra = {
-			chips = 90
+			chips = 180
 		}
 	},
 	blueprint_compat = true,
@@ -342,8 +342,8 @@ FishAndChips.Fish({
         pier = 0.25,
 	},
 	stats = {
-		weight = {min = 0.8, max = 22.2},
-		length = {min = 0.07, max = 0.825}
+		weight = {min = 1.81, max = 4.08},
+		length = {min = 0.127, max = 0.254}
 	},
 	config = {
 		extra = {
@@ -355,7 +355,7 @@ FishAndChips.Fish({
 		return { vars = { card.ability.extra.xmult} }
 	end,
 	calculate = function(self, card, context)
-		if context.remove_playing_cards then
+		if context.remove_playing_cards and not context.blueprint then
 			SMODS.destroy_cards(card)
 		end
 		if context.joker_main then
@@ -363,5 +363,39 @@ FishAndChips.Fish({
                 xmult = card.ability.extra.xmult,
             }
         end
+	end
+})
+
+--old boot
+FishAndChips.Fish({
+    key = "wombatCountry_boot",
+	weight = 10,
+	atlas = "wombatCountry_fish",
+	pos = { x = 2, y = 2 },
+	ppu_artist = { "wombatCountry" },
+	ppu_coder = { "wombatCountry" },
+	attributes = { "hand_level", "usable"},
+	environments = {
+		city_river = 1,
+        calm_pond = 0.75,
+		swamp = 0.5,
+	},
+	stats = {
+		weight = {min = 0.8, max = 22.2},
+		length = {min = 0.07, max = 0.825}
+	},
+	blueprint_compat = false,
+	use = function(self, card)
+		-- used some vanilla remade for this one https://github.com/nh6574/VanillaRemade/blob/6ada4a41bca13b7e4b238ade3806c63a2e09dc98/src/jokers.lua#L2068
+		local least_played_hand = G.GAME.hands["High Card"]
+		for hand_name, hand in pairs(G.GAME.hands) do
+			if ((hand.played or 0) < least_played_hand.played) or ((hand.played or 0) == least_played_hand.played and hand.order > least_played_hand.order) and SMODS.is_poker_hand_visible(hand_name) then
+				least_played_hand = hand
+			end
+		end
+		SMODS.upgrade_poker_hands({hands = least_played_hand.key})
+	end,
+	can_use = function(self, card)
+		return true
 	end
 })

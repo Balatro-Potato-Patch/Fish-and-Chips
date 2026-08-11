@@ -104,6 +104,18 @@ return {
                     "Depths of the UnderWater"
                 }
             },
+            fish_fac_wombatCountry_boot = {
+                name = "old boot lol",
+                text = {
+                    "Level up your",
+                    "{C:attention}least played hand{}",
+                    "{C:inactive(weakest if tie){}",
+                    "{ppu_bubble:usable}"
+                },
+                flavor = {
+                    "A supremely unfortunate find."
+                }
+            },
         }
     },
     misc = {
