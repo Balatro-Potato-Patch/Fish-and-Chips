@@ -6,6 +6,7 @@ FishAndChips.Fish {
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_alexi" },
 	attributes = { "retrigger" },
+	blueprint_compat = true,
 	config = {
 		extra = {
 			retriggers = 3
