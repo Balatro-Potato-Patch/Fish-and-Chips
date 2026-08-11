@@ -25,7 +25,7 @@ end
 
 function G.FUNCS.fac_reroll_location (e)
 	if G.FISHING_STATE == G.FISHING_STATES.LOBBY and not FishAndChips.in_tutorial then
-		ease_dollars(-5)
+		ease_dollars(-G.GAME.fac_environment_reroll_cost)
 		FishAndChips:stop_ambience()
 		local old_env = G.GAME.fac_fishing_environment
 		G.GAME.fac_fishing_environment = G.GAME.fac_next_environment or pseudorandom_element(FishAndChips.Environments, "fac_next_location", {
