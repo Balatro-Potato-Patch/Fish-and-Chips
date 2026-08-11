@@ -319,7 +319,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "Pixel" },
     ppu_artist = { "FirstTry" },
-    attributes = { "chips", "chipgain", "xchips", "xchipgain", "sellamount", "sellgoal" },
+    attributes = { "chips", "xchips" },
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
 	config = {
         extra = {
@@ -566,7 +566,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "Pixel" },
     ppu_artist = { "Pixel" },
-    attributes = { "destroy_card" },
+    attributes = { "economy" },
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
 	environments = {
         city_river = 1,
@@ -578,23 +578,21 @@ FishAndChips.Fish {
     remove_from_deck = function(self, card, from_debuff)
         play_sound("fac_pnf_fishery2")
     end,
+    config = { extra = { s_mult = 2, s_chips = 10, suit = 'Diamonds' }, },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.s_mult, card.ability.extra.s_chips, localize(card.ability.extra.suit, 'suits_singular') } }
+    end,
     calculate = function(self, card, context)
-        local current_index
-        for i = 1, #G.fac_fish_area.cards do
-            if G.fac_fish_area.cards[i] == card then
-                current_index = i
-            end
-        end
         if context.setting_blind then
-			for i = 1, #G.fac_fish_area.cards do
-				if G.fac_fish_area.cards[i] == card then
-					if G.fac_fish_area.cards[current_index + 1] then
-						SMODS.destroy_cards(G.fac_fish_area.cards[current_index + 1])
-                    elseif G.fac_fish_area.cards[current_index - 1] then
-                        SMODS.destroy_cards(G.fac_fish_area.cards[current_index - 1])
-                    end
-				end
-			end
+            ease_dollars(1)
+            play_sound("fac_pnf_fishery1")
+        end
+        if context.individual and context.cardarea == G.play and
+            context.other_card:is_suit(card.ability.extra.suit) then
+            return {
+                mult = card.ability.extra.s_mult,
+                chips = card.ability.extra.s_chips
+            }
         end
     end,
 }
