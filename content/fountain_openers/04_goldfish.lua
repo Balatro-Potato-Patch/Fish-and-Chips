@@ -18,7 +18,8 @@ FishAndChips.Fish {
 	},
     cost = 5,
 	environments = {
-		wormhole = 1,
+		chocolate_river = 1,
+        soup = 1,
 	},
     -- placeholder values
     stats = {
