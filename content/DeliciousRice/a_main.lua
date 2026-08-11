@@ -25,6 +25,11 @@ SMODS.Sound({
 	path = "DeliciousRice/instakilled.ogg"
 })
 
+SMODS.Sound({
+	key = "delrice_blender",
+	path = "DeliciousRice/blender.ogg"
+})
+
 FishAndChips.DeliciousRice = {}
 FishAndChips.DeliciousRice.SB_envs = {
 	"calm_pond",
@@ -43,8 +48,55 @@ FishAndChips.DeliciousRice.valid_SB_env = function(key)
 	return false
 end
 
+FishAndChips.DeliciousRice.fancy_death = function(card, destroy_args, middle_func, destroys)
+	local old_state = G.STATE
+	G.E_MANAGER:add_event(Event({
+		func = function()
+			G.STATE = nil
+			sendDebugMessage('is expanded during death: '..(G.GAME.fac_fish_expanded and 'true' or 'false'))
+			if not G.GAME.fac_fish_expanded then G.FUNCS.fac_open_fishing_menu() end
+			FishAndChips.DeliciousRice.bucket_locked = true
+			return true
+		end
+	}))
+
+	middle_func()
+
+	destroys = destroys or true
+	if destroys then SMODS.destroy_cards(card, destroy_args) end
+
+	G.E_MANAGER:add_event(Event({
+		trigger = "after",
+		timer = "REAL",
+		delay = 0.2,
+		func = function()
+			sendDebugMessage("end death")
+			FishAndChips.DeliciousRice.bucket_locked = false
+			G.FUNCS.fac_open_fishing_menu()
+			G.STATE = old_state
+			return true
+		end
+	}))
+
+end
+
+local start_run_ref = G.start_run
+function G:start_run(args)
+	local ret = start_run_ref(self, args)
+    G.GAME.delrice_blenders = G.GAME.delrice_blenders or 0
+	G.delrice_blender_areas = G.delrice_blender_areas or {}
+    return ret
+end
+
+local areas_ref = SMODS.current_mod.custom_card_areas or function(game) return end
+SMODS.current_mod.custom_card_areas = function(game)
+	local ret = areas_ref(game)
+	return ret
+end
+
 local flip_ref = Card.flip
 function Card:flip()
+	-- TODO: make this not freeze the entire game when you start a run
 	local ret = flip_ref(self)
 	SMODS.calculate_context({card_flipped = true})
 	return ret

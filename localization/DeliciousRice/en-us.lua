@@ -25,7 +25,7 @@ return {
                 name = "SpongeBob",
                 text = {
                     {
-                        "Gains {C:mult}+#2#{} Mult,",
+                        "Gains {C:mult}+#2#{} Mult",
                         "when a card {C:attention}flips{}",
                         "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult){}"
                     },
@@ -34,7 +34,26 @@ return {
                     }
                 },
                 flavor = {
-                    "The original goofy goober"
+                    "The original goofy goober!"
+                }
+            },
+            
+            fish_fac_delrice_blender = {
+                name = "Faulty Blender",
+                text = {
+                    {
+                        "Can be used once to turn all fish",
+                        "into a {C:attention}fish smoothie{} that contains",
+                        "every effect of the blended fish",
+                        "{C:inactive}(#3#){}"
+                    },
+                    {
+                        "{C:green}#1# in #2#{} chance to {C:red,E:2}self-destruct{} after every hand"
+                    }
+                },
+                flavor = {
+                    "A little water damaged, but",
+                    "I'm sure it probably works fine"
                 }
             }
         }
