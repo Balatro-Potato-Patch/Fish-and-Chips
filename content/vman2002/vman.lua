@@ -119,7 +119,7 @@ FishAndChips.Fish { --Chips
 			love.graphics.push()
 			love.graphics.origin()
 			c.canvas:renderTo(function()
-				local ps, rps, zc, o_r, o_g, o_b, o_a, r_r, r_g, xa, ya = sc - 1, rsc - 1
+				local ps, rps, colcnt, zc, o_r, o_g, o_b, o_a, r_r, r_g, xa, ya = sc - 1, rsc - 1, #chips_col
 				local imd = G.ASSET_ATLAS.fac_vman2002_chips.image_data
 				local off = bit.lshift(71, ps)
 				for x = 1, 70 do
@@ -129,7 +129,7 @@ FishAndChips.Fish { --Chips
 						o_r, o_g, o_b, o_a = imd:getPixel(xa, ya)
 						r_r, r_g = imd:getPixel(xa + off, ya)
 						if r_g < 0.5 then
-							zc = chips_col[card.ability.unriggable.fac_chips_col[math.ceil(r_r * 10)]]
+							zc = chips_col[(card.ability.unriggable.fac_chips_col[math.ceil(r_r * 10)] % colcnt) + 1]
 							--print("seek chip col ",math.ceil(r_r * 10))
 							love.graphics.setColor(o_r * zc[1], o_g * zc[2], o_b * zc[3], o_a)
 						else
