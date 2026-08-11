@@ -142,8 +142,12 @@ return {
             PotatoPatchDev_Pixel = {
                 name = 'Pixel',
                 text = {
-                    "{s:2,C:planet}pi xle LL e",
-                    "I am the one who is computer,.,"
+                    "{s:2,C:planet}Pixel",
+                    "I am the one who is computer,.,",
+                    "i WILL steal all your RAM :]",
+                    "but yeah uhh this event was fun even though",
+                    "i was kinda lazy and demotivated lol",
+                    "thank you {C:spectral}FirstTry{} for helping me on this!"
                 },
             }
         }
