@@ -261,7 +261,7 @@ FishAndChips.Fish {
 	weight = 5,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "chips" },
+	attributes = { "xmult" },
 	config = {
 		extra = {
 			divide = 250,
@@ -385,7 +385,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "chips" },
+	attributes = { "chips", "mult", "economy" },
 	config = {
 		extra = {
 			min_sand_dollars = -1,
@@ -521,7 +521,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "chips" },
+	attributes = { "economy" },
 	config = {
 		extra = {
 			sands = 1
@@ -626,4 +626,68 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.joker_main then return { chips = card.ability.extra.chips } end
 	end,
+}
+
+FishAndChips.Fish {
+	key = "lizie_cafindish",
+	atlas = "pangaea47_main",
+	pos = { x = 1, y = 2 },
+	weight = 10,
+	ppu_coder = { "lanedarushpy" },
+	ppu_artist = { "pangaea47" },
+	attributes = { "chips" },
+	config = {
+		extra = {
+			odds = 670,
+            Xmult = 1.35
+		}
+	},
+    
+    stats = {
+        weight = { min = 1, max = 15 },
+        length = { min = 0.8, max = 2.4}
+    },
+	environments = {
+        pier = 1,
+        soup = 0.35,
+        city_river = 0.15
+	},
+	loc_vars = function(self, info_queue, card)
+        local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizie_cafindish")
+		return { vars = { num, denom, card.ability.extra.Xmult } }
+	end,
+	calculate = function(self, card, context)
+        if (context.other_main and context.cardarea == G.fac_fish_area) or context.joker_main then
+            return {
+                Xmult = card.ability.extra.Xmult,
+                message_card = context.other_main and context.other_main or card,
+                func = function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function(e)
+                            card:juice_up(0.7, 0.3);
+                            return true
+                        end
+                    }))
+                end
+            }
+        end
+
+        if context.end_of_round and context.cardarea == G.fac_fish_area then
+            local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizie_cafindish")
+		    if SMODS.pseudorandom_probability(card, "lizie_cafindish", num, denom) then 
+                SMODS.destroy_cards(card, nil, nil, true)
+                return {
+                    message = localize('k_extinct_ex')
+                }
+            else
+                return {
+                    message = localize('k_safe_ex')
+                }
+            end
+        end
+	end,
+
+    in_pool = function(self, args) -- equivalent to `yes_pool_flag = 'vremade_gros_michel_extinct'`
+        return G.GAME.pool_flags.fac_lizie_cafindish_extinct
+    end
 }

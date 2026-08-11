@@ -76,6 +76,18 @@ return {
                     "catching its unmoving body."
                 }
             },
+
+            fish_fac_lizie_cafindish = {
+                name = "Cafindish",
+                text = {
+                    "All owned Fish give {X:mult,C:white}X#3#{} Mult",
+                    "{C:green}#1# in #2#{} chance this Fish is",
+                    "destroyed at end of round",
+                },
+                flavour = {
+                    "banana fih"
+                }
+            },
         },
         PotatoPatch = {
             PotatoPatchDev_lanedarushpy = {
