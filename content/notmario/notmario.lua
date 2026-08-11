@@ -582,7 +582,7 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { localize(card.ability.extra.available and "k_active" or "k_inactive") } }
+		return { vars = { ppu_bubbles = {card.ability.extra.available and 'usable' or 'used'} } }
 	end,
     use = function(self, card, area, copier)
         local my_pos = nil
@@ -986,6 +986,8 @@ SMODS.Atlas({
 	py = 96,
 })
 
+PotatoPatchUtils.Bubble_Colours["mf_evil"] = G.C.RED
+
 FishAndChips.Fish {
 	key = "mf_flounder_felony",
 	atlas = "notmario_shellony",
@@ -1353,7 +1355,7 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		local new_numerator, new_denominator =
 			SMODS.get_probability_vars(card, 1, card.ability.extra.destroy_odds, "fac_mf_fishion_reactor")
-		return { vars = { new_numerator, new_denominator } }
+		return { vars = { new_numerator, new_denominator, ppu_bubbles = {card.ability.extra.available and 'usable' or 'used'} } }
 	end,
     use = function(self, card, area, copier)
         local my_pos = nil
@@ -2057,7 +2059,7 @@ FishAndChips.Fish {
 	blueprint_compat = false,
 	pixel_size = {w = 71, h = 78},
 	loc_vars = function(self, info_queue, card)
-	    return { vars = { card.ability.extra.money, localize(card.ability.extra.available and "k_active" or "k_inactive") } }
+	    return { vars = { card.ability.extra.money, ppu_bubbles = {card.ability.extra.available and 'usable' or 'used'} } }
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and G.GAME.blind.boss then

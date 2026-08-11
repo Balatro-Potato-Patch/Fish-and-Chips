@@ -4,9 +4,9 @@ return {
             fish_fac_mf_john_fishlatro = {
                 name = "John Fishlatro",
                 text = {
-                    "Use for {X:fac_mf_esanddollars,C:white,f:fac_sand_dollars}^^$2{}",
-                    "{C:red}self destructs",
-                    "{C:inactive}(Max of {C:inactive,f:fac_sand_dollars}$#1#{C:inactive})"
+                    "{X:fac_mf_esanddollars,C:white,f:fac_sand_dollars,s:1.5}^^$2{}",
+                    "{C:inactive}(Max of {C:inactive,f:fac_sand_dollars}$#1#{C:inactive})",
+                    "{ppu_bubble:usable}",
                 },
                 flavour = {
                     "Greetings."
@@ -97,12 +97,11 @@ return {
             fish_fac_mf_spindown_plaice = {
                 name = "Spindown Dace",
                 text = {
-                    "Once per round, {C:attention}use{}",
-                    "this {C:fac_fish}Fish{} to {C:spectral}transform",
+                    "Once per round, {C:spectral}transform",
                     "the {C:fac_fish}Fish{} to the right into",
                     "the {C:fac_fish}Fish{} before it in",
                     "the {C:spectral}collection",
-                    "{C:inactive}(Currently #1#)"
+                    "{ppu_bubble:1}",
                 }
             },
             fish_fac_mf_junk_carp = {
@@ -165,11 +164,10 @@ return {
             fish_fac_mf_car_battery = {
                 name = "Car Battery",
                 text = {
-                    "{C:attention}Use{} this to give",
-                    "each {C:fac_fish}Fish{} a {C:attention}retrigger{}",
+                    "Give each {C:fac_fish}Fish{} a {C:attention}retrigger{}",
                     "and a {C:green}#1# in #2#{} chance to",
                     "{C:red}self destruct{} at end of round",
-                    "then {C:red}self destructs{}"
+                    "{ppu_bubble:usable}",
                 },
                 flavour = {
                     "It's quick, easy, and free"
@@ -178,10 +176,10 @@ return {
             fish_fac_mf_flounder_felony = {
                 name = "Shellony",
                 text = {
-                    "{C:attention}Use{} this {C:fac_fish}Fish{} to",
                     "{s:2,E:1,C:red}Kill",
                     "{C:attention}#1#{} random playing cards",
-                    "{C:red}self destructs{}"
+                    "{ppu_bubble:usable}",
+                    "{ppu_bubble:mf_evil}",
                 },
                 flavour = {
                     ":flounder:"
@@ -259,11 +257,12 @@ return {
             fish_fac_mf_fishion_reactor = {
                 name = "Fishion Reactor",
                 text = {
-                    "Once per round, {C:attention}Use{} this to",
-                    "duplicate the {C:fac_fish}Fish{} to the right",
+                    "Once per round, duplicate",
+                    "the {C:fac_fish}Fish{} to the right",
                     "Both copies have a {C:green}#1# in #2#{} chance",
                     "to {C:red}self destruct{} at end of round",
-                    "{C:inactive}(Does not require room)"
+                    "{C:inactive}(Does not require room)",
+                    "{ppu_bubble:1}",
                 },
                 flavour = {
                     "Use with care"
@@ -319,10 +318,9 @@ return {
             fish_fac_mf_frying_fish = {
                 name = "Frying Fish",
                 text = {
-                    "{C:attention}Use{} this {C:fac_fish}Fish{} to",
-                    "create a {C:green}Food{} {C:attention}Joker{}",
+                    "Create a {C:green}Food{} {C:attention}Joker{}",
                     "It gains a {C:attention}retrigger{}",
-                    "{C:red}self destructs{}"
+                    "{ppu_bubble:usable}",
                 },
                 flavour = {
                     "Cannot be fried"
@@ -355,11 +353,10 @@ return {
             fish_fac_mf_the_sole = {
                 name = "The Sole",
                 text = {
-                    "{C:attention}Use{} this to create a",
-                    "{C:purple}Legendary{} {C:attention}Joker{}",
+                    "Create a {C:purple}Legendary{} {C:attention}Joker{}",
                     "It gains a {C:green}#1# in #2#{} chance to",
                     "{C:red}self destruct{} at end of round",
-                    "then this {C:red}self destructs{}"
+                    "{ppu_bubble:usable}",
                 },
                 flavour = {
                     "of a Boot"
@@ -379,13 +376,13 @@ return {
             fish_fac_mf_number_gem = {
                 name = "Number Gem",
                 text = {
-                    "{C:attention}Use{} this for {X:attention,C:white}..Round{} Round,",
+                    "{X:attention,C:white}..Round{} Round,",
                     "then earn {C:gold}$#1#{} for every",
                     "digit in {C:attention}Round{} {C:inactive}(max of $#2#)",
-                    "{C:red}self destructs{}",
                     "{C:inactive,s:0.8}(ex. round 12 -> round 1212,",
                     "{C:inactive,s:0.8}round 1284 -> round 12841284,",
                     "{C:inactive,s:0.8}67676155 -> 6767615567676155)",
+                    "{ppu_bubble:usable}",
                 },
                 flavour = {
                     "A prized artifact"
@@ -394,19 +391,19 @@ return {
             fish_fac_mf_treasure_chest = {
                 name = "Treasure Chest",
                 text = {
-                    "Once per Ante, {C:attention}Use{} this to",
-                    "create a {C:fac_fish}Pearl{}, or if",
-                    "{C:fac_fish}Fish{} slots are full, earn {C:gold}$#1#{}",
-                    "{C:inactive}(Currently #2#)"
+                    "Once per Ante, create a",
+                    "{C:fac_fish}Pearl{}, or if {C:fac_fish}Fish{} slots",
+                    "are full, earn {C:gold}$#1#{}",
+                    "{ppu_bubble:1}",
                 },
             },
             fish_fac_mf_red_pearl = {
                 name = "Red Pearl",
                 text = {
                     {
-                        "{C:attention}Use{} to give up to {C:attention}#1#{}",
+                        "Give up to {C:attention}#1#{}",
                         "selected cards {C:mult}+#2#{} Mult",
-                        "{C:red}self destructs{}"
+                        "{ppu_bubble:usable}",
                     },
                     {
                         "Select an additional",
@@ -420,11 +417,10 @@ return {
                 name = "Blue Pearl",
                 text = {
                     {
-                        "{C:attention}Use{} this to",
-                        "convert up to {C:attention}#1#{}",
+                        "Convert up to {C:attention}#1#{}",
                         "selected cards",
                         "to {C:attention}Wild Cards",
-                        "{C:red}self destructs{}"
+                        "{ppu_bubble:usable}",
                     },
                     {
                         "Select an additional",
@@ -438,9 +434,8 @@ return {
                 name = "Green Pearl",
                 text = {
                     {
-                        "{C:attention}Use{} this to give",
-                        "{C:green}#1#{} free rerolls",
-                        "{C:red}self destructs{}"
+                        "Give {C:green}#1#{} free rerolls",
+                        "{ppu_bubble:usable}",
                     },
                     {
                         "Gives an additional {C:green}reroll",
@@ -454,11 +449,11 @@ return {
                 name = "Gold Pearl",
                 text = {
                     {
-                        "{C:attention}Use{} to give each {C:attention}Joker",
+                        "Give each {C:attention}Joker",
                         "a {C:attention}retrigger{} and a",
                         "{C:green}#1# in #2#{} chance to {C:red}self{}",
                         "{C:red}destruct{} each round",
-                        "then {C:red}self destructs"
+                        "{ppu_bubble:usable}",
                     },
                     {
                         "Increase {C:green}denominator{} by {C:green}#3#{}",
@@ -471,9 +466,9 @@ return {
                 name = "Black Pearl",
                 text = {
                     {
-                        "{C:attention}Use{} this to destroy",
-                        "up to {C:attention}#1#{} selected cards",
-                        "{C:red}self destructs{}"
+                        "Destroy up to",
+                        "{C:attention}#1#{} selected cards",
+                        "{ppu_bubble:usable}",
                     },
                     {
                         "Select an additional",
@@ -597,6 +592,8 @@ return {
             k_fac_mf_angelfish = "Angel Fish",
             k_fac_mf_block = "Block",
             k_fac_mf_pearl = "Pearl",
+
+            ppu_bubble_mf_evil = ' EVIL ',
         },
     }
 }
