@@ -51,6 +51,16 @@ SMODS.Atlas{
 	py = 95
 }
 
+SMODS.Atlas{
+	key = "fas_credits_silly",
+	path = FishAndChips.FooSqueax.file_path .. "credits/silly.png",
+	px = 240,
+	py = 240,
+	atlas_table = "ANIMATION_ATLAS",
+	frames = 38,
+	fps = 10
+}
+
 PotatoPatchUtils.Developer{
 	name = "Foo54",
 	atlas = "fac_fas_credits_foo",
@@ -64,6 +74,9 @@ PotatoPatchUtils.Developer{
 	end,
 	click = function(self)
 		FishAndChips.FooSqueax.undertale:init(self)
+	end,
+	loc_vars = function(self)
+		return {vars = {elements = {SMODS.create_sprite(0, 0, 2, 2, "fac_fas_credits_silly")}}}
 	end
 }
 

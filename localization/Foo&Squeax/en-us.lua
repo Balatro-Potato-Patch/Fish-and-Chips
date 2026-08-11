@@ -257,10 +257,12 @@ return {
 				text = {
 					{
 						"You should click me it'll be funny trust",
+						"{element:1}",
 						"{ppu_bubble:usable}"
 					},
 					{
 						"Defoko drawn by {C:ED5B5B}me",
+						"Animation drawn by {C:attention}An Artist With Pickles",
 						"Harpoon Gun drawn by {C:attention}Kitty"
 					}
 				}
