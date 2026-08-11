@@ -1,18 +1,18 @@
 return {
     descriptions = {
         PotatoPatch = {
-			PotatoPatchDev_Nick = {
-				name = "Moby Nick",
+            PotatoPatchDev_Nick = {
+                name = "Moby Nick",
                 text = {
                     "Meow"
                 },
-			},
+            },
             PotatoPatchDev_Jolyne = {
-				name = "JoFIN",
+                name = "JoFIN",
                 text = {
                     "Meow"
                 },
-			},
+            },
         },
         fac_Fish = {
             fish_fac_one = {
@@ -156,7 +156,8 @@ return {
             fish_fac_lordx = {
                 name = "Lord X-ray Fish",
                 text = {
-                    ""
+                    "{X:mult}X#2#{} Mult if",
+                    "by itself"
                 },
                 flavour = {
                     "{element:1}"
@@ -299,7 +300,7 @@ return {
         Other = {
             w_d_seuss_dismantle = {
                 name = "Dismantle",
-                text= {
+                text = {
                     "Destroy a random Fish",
                     "and add {C:attention}double{} its",
                     "sell value to this {C:mult}Mult{}",
@@ -307,7 +308,7 @@ return {
             },
             w_d_seuss_cleave = {
                 name = "Cleave",
-                text= {
+                text = {
                     "Destroy selected card",
                     "and add {C:attention}triple{} its rank",
                     "value to this {C:chips}Chips{}",
@@ -315,7 +316,7 @@ return {
             },
             w_d_seuss_amplified = {
                 name = "Amplified",
-                text= {
+                text = {
                     "Total {C:dark_edition}Negative{} playing",
                     "cards / {C:attention}Full deck{} =",
                     "{C:green}Fixed #1#% chance{}"
@@ -323,7 +324,7 @@ return {
             },
             w_d_seuss_reversal = {
                 name = "Reversal",
-                text= {
+                text = {
                     "Total {C:dark_edition}Polychrome{} playing",
                     "cards / {C:attention}Full deck{} =",
                     "{C:green}Fixed #1#% chance{}"
