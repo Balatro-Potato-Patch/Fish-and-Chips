@@ -119,9 +119,8 @@ FishAndChips.Fish { --Chips
 			love.graphics.push()
 			love.graphics.origin()
 			c.canvas:renderTo(function()
-				local ps, rps, colcnt, zc, o_r, o_g, o_b, o_a, r_r, r_g, xa, ya = sc - 1, rsc - 1, #FishAndChips.vman2002.chips_col
-				local imd = G.ASSET_ATLAS.fac_vman2002_chips.image_data
-				local off = bit.lshift(71, ps)
+				local ps, rps, colcnt, imd, off, zc, o_r, o_g, o_b, o_a, r_r, r_g, xa, ya = sc - 1, rsc - 1, #FishAndChips.vman2002.chips_col
+				local imd, off = G.ASSET_ATLAS.fac_vman2002_chips.image_data, bit.lshift(71, ps)
 				for x = 1, 70 do
 					for y = 1, 94 do
 						xa, ya, rxa, rya = bit.lshift(x, ps), bit.lshift(y, ps), bit.lshift(x, rps), bit.lshift(y, rps)
