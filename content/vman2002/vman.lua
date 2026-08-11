@@ -53,7 +53,7 @@ SMODS.Sound({
 	path = "vman2002/manoboom.ogg"
 })
 
-local function slowmf(lol, speed)
+FishAndChips.vman2002.slowmf = function(lol, speed)
 	local x = G.SETTINGS.GAMESPEED
 	G.SETTINGS.GAMESPEED = speed or 1
 	lol()
@@ -64,7 +64,6 @@ local function slowmf(lol, speed)
 		end
 	}))
 end
-FishAndChips.vman2002.slowmf = slowmf
 
 local returnTrue = topuplib and topuplib.returnTrue or function() return true end
 
@@ -331,7 +330,7 @@ FishAndChips.Fish { --Manos
 		local ex = card.ability.extra
 		if not ex.active then
 			ex.active = true
-			slowmf(function() SMODS.calculate_effect({ message_card = card,
+			FishAndChips.vman2002.slowmf(function() SMODS.calculate_effect({ message_card = card,
 				message = localize("fac_vman2002_manosorry"),
 				sound = "fac_vman2002_manosorry",
 				colour = G.C.RED,
@@ -456,7 +455,7 @@ FishAndChips.Fish { --Timothy
 	end,
 	use = function(self, card)
 		card.ability.extra.ante_used = true
-		slowmf(function() SMODS.calculate_effect({ message_card = card,
+		FishAndChips.vman2002.slowmf(function() SMODS.calculate_effect({ message_card = card,
 			message = localize("fac_vman2002_timothy" .. (math.floor(os.clock() * 69420) % 8)),
 			colour = G.C.RED,
 			pitch = 1
