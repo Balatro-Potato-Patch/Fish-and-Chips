@@ -105,11 +105,15 @@ return {
 			fish_fac_cat1 = {
 				name = "Crazed Fish Cat",
 				text = {
-					"Gains {C:chips}+#1#{} Chips when",
-					"a card is scored",
-					"{C:inactive}Resets after scoring hand{}",
-					"{C:inactive}(Currently{} {C:chips}+#2#{C:inactive} Chips)",
-					"{C:inactive}(Evolves at #3#/#4#)",
+					{
+						"Gains {C:chips}+#1#{} Chips when",
+						"a card is {C:attention}scored",
+						"{C:inactive}Resets after scoring hand{}",
+					},
+					{
+						"{C:inactive}(Currently{} {C:chips}+#2#{C:inactive} Chips)",
+						"{C:inactive}(Evolves at #3#/#4#)",
+					},
 				},
 				flavor = {
 					"Strong against reds",
@@ -119,11 +123,15 @@ return {
 			fish_fac_cat2 = {
 				name = "Crazed Whale Cat",
 				text = {
-					"Gains {C:chips}+#1#{} Chips when",
-					"a card is scored",
-					"{C:inactive}Resets at end of round{}",
-					"{C:inactive}(Currently{} {C:chips}+#2#{C:inactive} Chips)",
-					"{C:inactive}(Evolves at #3#/#4#)",
+					{
+						"Gains {C:chips}+#1#{} Chips when",
+						"a card is {C:attention}scored",
+						"{C:inactive}Resets at end of round{}",
+					},
+					{
+						"{C:inactive}(Currently{} {C:chips}+#2#{C:inactive} Chips)",
+						"{C:inactive}(Evolves at #3#/#4#)",
+					},
 				},
 				flavor = {
 					"It's a little better...",
@@ -132,10 +140,14 @@ return {
 			fish_fac_cat3 = {
 				name = "Manic Island Cat",
 				text = {
-					"Gains {X:chips,C:white}X#1#{} Chips when",
-					"a card is scored",
-					"{C:inactive}Resets at end of ante{}",
-					"{C:inactive}(Currently{} {X:chips,C:white}X#2#{C:inactive} Chips)",
+					{
+						"Gains {X:chips,C:white}X#1#{} Chips when",
+						"a card is {C:attention}scored",
+						"{C:inactive}Resets at end of ante{}",
+					},
+					{
+						"{C:inactive}(Currently{} {X:chips,C:white}X#2#{C:inactive} Chips)",
+					},
 				},
 				flavor = {
 					"This isn't a fish anymore...",
@@ -214,6 +226,16 @@ return {
 				flavor = {
 					"When you're out of quarters,",
 					"He's got your back!",
+				},
+			},
+			fish_fac_tower = {
+				name = "Tower of Babel",
+				text = {
+					"{X:mult,C:white}X#1#{} Mult for every",
+					"{C:attention}unique suit{} in played hand",
+				},
+				flavor = {
+					"Y'know, from the Bible!",
 				},
 			},
 		},
