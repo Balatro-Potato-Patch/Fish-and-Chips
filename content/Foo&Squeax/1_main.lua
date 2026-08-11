@@ -149,13 +149,14 @@ FishAndChips.mod.optional_features = FishAndChips.mod.optional_features or {}
 FishAndChips.mod.optional_features.retrigger_joker = true
 
 
-local mainmenuref = Game.main_menu
+local game_start_run_ref = Game.start_run
 ---@diagnostic disable-next-line: duplicate-set-field
-function Game:main_menu(change_context)
+function Game:start_run(...)
 	if G.fac_fas_nyon then
 		G.fac_fas_nyon:remove()
 		G.fac_fas_nyon = nil
 	end
+	return game_start_run_ref(self, ...)
 end
 
 local fishandchips_mod_reset_game_globals_ref = FishAndChips.mod.reset_game_globals

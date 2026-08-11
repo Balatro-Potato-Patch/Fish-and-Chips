@@ -140,6 +140,13 @@ FishAndChips.Fish{
 		if card_table.ability.immutable.slow then
 			FishAndChips.FooSqueax.nyon.sticky()
 		end
+	end,
+	remove_from_deck = function (self, card, from_debuff)
+		if not from_debuff then
+			if card.ability.immutable.slow then
+				FishAndChips.FooSqueax.nyon.unsticky()
+			end
+		end
 	end
 }
 
@@ -166,6 +173,7 @@ function FishAndChips.FooSqueax.nyon.sticky()
 				instance_type = "DROPDOWN"
 			}
 		}
+		G.fac_fas_nyon.states.collide.can = false
 	end
 end
 
