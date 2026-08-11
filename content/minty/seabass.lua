@@ -1,4 +1,4 @@
-local all_other_minty_fish_weights = 12
+local all_other_minty_fish_weights = 13
 local invasive_weight = 75 - all_other_minty_fish_weights
 
 FishAndChips.Fish{

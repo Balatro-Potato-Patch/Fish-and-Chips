@@ -1,6 +1,13 @@
 return {
     descriptions = {
-        Other={},
+        Other={
+            fac_minty_jeal_needsroom = {
+                name = "h",
+                text = {
+                    "{C:inactive}(You will need room, of course!)"
+                }
+            }
+        },
         fac_Fish = {
             fish_fac_minty_seabass = {
                 name = "Sea Bass",
@@ -191,6 +198,58 @@ return {
                 },
                 text = {
                     "Worth a lot of {C:fac_sand_dollars,f:fac_sand_dollars}${}"
+                }
+            },
+            fish_fac_minty_jeal = {
+                name = "Jeal Inygmu, Ghoti Shop Owner",
+                flavour = {
+                    "Pronounced 'jewel' and",
+                    "'fish', respectively."
+                },
+                text = {
+                    "Hello! I'm Jeal, and",
+                    "I grant wishes! Today",
+                    "I have {C:attention}#1#{} for {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{}!"
+                }
+            },
+            fish_fac_minty_jeal_unready = {
+                name = "Jeal Inygmu, Ghoti Shop Owner",
+                flavour = {
+                    "Pronounced 'jewel' and",
+                    "'fish', respectively."
+                },
+                text = {
+                    "Hello! I'm Jeal, and",
+                    "I grant wishes! I'll have",
+                    "a new offering next hand!"
+                }
+            },
+            fish_fac_minty_jeal_2 = {
+                name = "Jeal Inygmu, Ghoti Shop Owner",
+                flavour = {
+                    "Normally I grant wishes for free,",
+                    "but this is a game, and people",
+                    "prefer balance in this case!"
+                },
+                text = {
+                    "Hello! I'm Jeal, and",
+                    "I grant wishes! Today",
+                    "I have {C:attention}#1#{} for {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{}!"
+                }
+            },
+            fish_fac_minty_jeal_3 = {
+                name = "Jeal Inygmu, Ghoti Shop Owner",
+                flavour = {
+                    "I see you have DebugPlus!",
+                    "If you're not concerned about",
+                    "balance, you can set",
+                    "G.GAME.fac_jeal_free_wishes",
+                    "and I'll stop charging!"
+                },
+                text = {
+                    "Hello! I'm Jeal, and",
+                    "I grant wishes! Today",
+                    "I have {C:attention}#1#{} for {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{}!"
                 }
             },
             fish_fac_minty_template = {
