@@ -585,7 +585,6 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         if context.setting_blind then
             ease_dollars(1)
-            play_sound("fac_pnf_fishery1")
         end
         if context.individual and context.cardarea == G.play and
             context.other_card:is_suit(card.ability.extra.suit) then
