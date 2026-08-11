@@ -571,8 +571,6 @@ FishAndChips.Fish {
 }
 
 -- Mudskipper
--- Notes: Might be a little broken with how many fish can be caught in one trip.
--- Might either need to become limited to first catch per trip, or change the trigger to when line snaps. I leave this up to the playtester discretion.
 FishAndChips.Fish {
     key = "fac_waffle_mudskipper",
     atlas = "waffle_fish",
@@ -593,7 +591,10 @@ FishAndChips.Fish {
     config = { extra = {
         tag_created = false
     } },
-    attributes = { "generation" },                                                                    -- Doesn't really generate cards, but this is really the only fitting bait attribute I can think of
+    loc_vars = function (self, info_queue, card)
+        return {vars = {ppu_bubbles = {card.ability.tag_created and 'inactive' or 'active'}}}
+    end,
+    attributes = { "generation" }, -- Doesn't really generate cards per se, but this is really the only fitting bait attribute I can think of
     calculate = function(self, card, context)
         if context.fac_end_fishing and not context.failed and not card.ability.extra.tag_created then -- thanks eremel
             local tag_pool = get_current_pool('Tag')
@@ -722,8 +723,9 @@ FishAndChips.Fish {
             }
         end
         return {
-            main_end = main_end,
-            vars = { card.ability.extra.boost }
+            --main_end = main_end,
+            vars = { card.ability.extra.boost, ppu_bubbles = {card.ability.extra.active and "active" or "inactive"} },
+            
         }
     end,
     blueprint_compat = false,

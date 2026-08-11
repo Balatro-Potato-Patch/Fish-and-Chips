@@ -23,7 +23,8 @@ return {
                     "{C:attention}Once per round{}, ask the",
                     "Magic Conch for a {C:attention}Food Joker{},",
                     "{C:green}#1# in #2#{} chance for it to say {C:attention}yes{}",
-                    "{C:inactive}(Must have room)"
+                    "{C:inactive}(Must have room)",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Oh, Magic Conch Shell, what do we",
@@ -37,7 +38,8 @@ return {
                     "{C:attention}Once per round{}, ask the",
                     "Magic Conch for a {C:attention}Food Joker{},",
                     "{C:green}#1# in #2#{} chance for it to say {C:attention}yes{}",
-                    "{C:inactive}(Must have room)"
+                    "{C:inactive}(Must have room)",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "KILL EVERYONE",
@@ -84,7 +86,8 @@ return {
                 name = "Mudskipper",
                 text = {
                     "First {C:attention}catch{} each fishing trip",
-                    "creates a random {C:attention}Tag{}"
+                    "creates a random {C:attention}Tag{}",
+                    "{ppu_bubble:1}"
                 },
                 flavor = {
                     "Stop staring at me",
@@ -111,7 +114,8 @@ return {
                 text = {
                     "{X:green,C:white}X#1#{} to all {C:attention}listed{} {C:green}probabilities{} if a{C:attention}",
                     "{C:attention}perfect catch{} was made last fishing trip",
-                    "{C:inactive}(ex: {C:green}1 in 3 {C:inactive}-> {C:green}#1# in 3{C:inactive})"
+                    "{C:inactive}(ex: {C:green}1 in 3 {C:inactive}-> {C:green}#1# in 3{C:inactive})",
+                    "{ppu_bubble:1}"
                 },
                 flavor = {
                     "This determined duo will roll with",
@@ -187,7 +191,8 @@ return {
                 name = "Worn Book",
                 text = {
                     "Create {C:attention}#1#{} random {C:attention}Enhanced",
-                    "{C:attention}#2#s{} and draw them to {C:attention}hand"
+                    "{C:attention}#2#s{} and draw them to {C:attention}hand",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Fittingly enough, the book is",
@@ -200,7 +205,8 @@ return {
                 text = {
                     "Create {C:attention}#1#{} random {C:attention}Enhanced",
                     "{C:attention}#2#s{} and draw them to {C:attention}hand",
-                    "{C:inactive,s:0.85}(Chooses a random rank when caught)"
+                    "{C:inactive,s:0.85}(Chooses a random rank when caught)",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Fittingly enough, the book is",
@@ -276,7 +282,8 @@ return {
                     "Creates a random {C:fac_fish}Fish",
                     "made by {V:1}waffle{} with",
                     "a random {C:dark_edition}Edition",
-                    "{C:inactive}({C:dark_edition}Negative{C:inactive} excluded)"
+                    "{C:inactive}({C:dark_edition}Negative{C:inactive} excluded)",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "The undisputed NEET",
