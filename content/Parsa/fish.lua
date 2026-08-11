@@ -2,7 +2,7 @@
 FishAndChips.Fish {
     key = 'Parsa_dish',
 
-    weight = 5,
+    weight = 50,
 
     environments = {
         city_river = 30,
