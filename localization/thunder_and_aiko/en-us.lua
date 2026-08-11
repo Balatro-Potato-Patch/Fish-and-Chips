@@ -189,8 +189,16 @@ return {
 			PotatoPatchDev_thunderedge = {
 				name = "ThunderEdge",
 				text = {
-					"Play Multiverse",
-					"{C:inactive}(coming soon)",
+					"Did all the coding work for our fish",
+					"Play {C:fac_thunderedge_gradient}Multiverse{} maybe",
+					"{C:inactive}(coming soon i swear)",
+					"Can't thank Aikoyori enough for helpin",
+					"out with the art, they did a really",
+					"good job with the spritework",
+					"{C:inactive}can confirm, fishes are hard to draw",
+					" ",
+					"{C:inactive,s:0.7}(also sorry about the electricity",
+					"{C:inactive,s:0.7}i can't help it)",
 				},
 			},
 			PotatoPatchDev_aikoyori = {
@@ -207,7 +215,7 @@ return {
 					"{s:1.3,C:red}Aikoyori's ow Shenanigans",
 					"{C:inactive}P.S. Fishes are so ow",
 					"{C:inactive}ow hard to draw",
-					"",
+					" ",
 					"{C:inactive,s:0.7}that hurts a lot",
 				},
 			},
