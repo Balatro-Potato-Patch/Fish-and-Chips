@@ -58,6 +58,12 @@ return {
                     '{C:attention}next bite{} the same as',
                     'your last {C:attention}successful{} catch',
                     '{C:inactive,s:0.9}(Currently #1#)'
+                },
+                flavour = {
+                    'Saltwater drink made',
+                    'by fish, from fish, for fish.',
+                    '"Taste the fishness!"'
+                }
                 }
             },  
         },
