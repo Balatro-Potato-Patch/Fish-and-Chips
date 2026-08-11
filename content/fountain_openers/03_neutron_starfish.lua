@@ -17,7 +17,7 @@ FishAndChips.Fish {
 	},
     stats = {
 		weight = {min = 1000, max = 2000},
-        length = {min = 2.5 * 10^-15, max = (2.5 + 0.00001) * 10^-15, units = {format = "fac_fo_fm", scale = 1e-15, precision = 1}},
+        length = {min = 2.5 * 10^-15, max = 2.5 * 10^-15, units = {format = "fac_fo_fm", scale = 1e-15, precision = 1}},
 	},
 	use = function(self, card, area)
         local amt = #G.hand.cards

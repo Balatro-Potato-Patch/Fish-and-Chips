@@ -22,8 +22,8 @@ FishAndChips.Fish {
 		city_river = 1,
 	},
 	stats = {
-		weight = {min = 5, max = 5.000001, units = {format = "fac_fo_cij_weight", scale = 1, precision = 1}},
-		length = {min = 3, max = 3.000001, units = {format = "fac_fo_cij_length", scale = 1, precision = 1}},
+		weight = {min = 5, max = 5, units = {format = "fac_fo_cij_weight", scale = 1, precision = 1}},
+		length = {min = 3, max = 3, units = {format = "fac_fo_cij_length", scale = 1, precision = 1}},
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { localize("poker_hands", "Straight") } }

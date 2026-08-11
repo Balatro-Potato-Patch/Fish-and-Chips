@@ -21,8 +21,8 @@ FishAndChips.Fish {
         calm_pond = 0.01,
 	},
 	stats = {
-		weight = {min = 500, max = 500.01},
-		length = {min = 7.2, max = 7.21},
+		weight = {min = 500, max = 500},
+		length = {min = 7.2, max = 7.2},
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.retriggers } }

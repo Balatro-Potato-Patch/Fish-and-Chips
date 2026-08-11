@@ -39,8 +39,8 @@ FishAndChips.Fish {
 		garden = 1,
 	},
     stats = {
-        weight = {min = 80, max = 80.000001, units = {format = "fac_fo_flowery_unit", scale = 99999, precision = 3}},
-		length = {min = 2.2, max = 2.2000001, units = {format = "fac_fo_flowery_unit", scale = 99999, precision = 3}},
+        weight = {min = 80, max = 80, units = {format = "fac_fo_flowery_unit", scale = 99999, precision = 3}},
+		length = {min = 2.2, max = 2.2, units = {format = "fac_fo_flowery_unit", scale = 99999, precision = 3}},
 	},
     cost = 4,
 

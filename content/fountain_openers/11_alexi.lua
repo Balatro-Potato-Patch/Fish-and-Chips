@@ -36,8 +36,8 @@ FishAndChips.Fish {
         wormhole = 1,
 	},
     stats = {
-        weight = {min = 220, max = 220.000001},
-		length = {min = 5.35, max = 5.35000001},
+        weight = {min = 220, max = 220},
+		length = {min = 5.35, max = 5.35},
 	},
     cost = 8,
     loc_vars = function(self, info_queue, card)
