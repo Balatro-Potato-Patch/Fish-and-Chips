@@ -75,7 +75,7 @@ FishAndChips.Fish { --Chips
 	key = "vman2002_chips",
 	atlas = "vman2002_chips",
 	pos = { x = 2, y = 0 },
-	weight = 6,
+	weight = 4,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "xchips", "score" },--i did this knowingly
@@ -158,7 +158,7 @@ FishAndChips.Fish { --Trust
 	key = "vman2002_trust",
 	atlas = "vman2002_fish",
 	pos = { x = 1, y = 0 },
-	weight = 8,
+	weight = 6,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "mod_chance" }, 
@@ -195,7 +195,7 @@ FishAndChips.Fish { --Manos
 	key = "vman2002_manos",
 	atlas = "vman2002_manos",
 	pos = { x = 0, y = 0 },
-	weight = 3,
+	weight = 2,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "usable", "retrigger", "destroy_card", "self_eternal" },
@@ -211,7 +211,7 @@ FishAndChips.Fish { --Manos
 	},
 	_manohands_quads = manohands_quads,
 	_manohands_sprites = manohands_sprites,
-	stats = { length = { min = 3.8, max = 4.5 }, weight = {min = 600, max = 1100}},
+	stats = { length = { min = 4, max = 5.797 }, weight = {min = 600, max = 1100}},
 	environments = {styx = 1},
 	flavour_vars = function(self, info_queue, card)
 		local manoline = 1
@@ -355,7 +355,7 @@ FishAndChips.Fish { --Necklace
 	atlas = "vman2002_fish",
 	pos = { x = 2, y = 0 },
 	pixel_size = {w=68,h=68},
-	weight = 5,
+	weight = 3,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "editions" },
@@ -384,11 +384,11 @@ FishAndChips.Fish { --Coupon
 	key = "vman2002_coupon",
 	atlas = "vman2002_fish",
 	pos = { x = 0, y = 1 },
-	weight = 2,
+	weight = 1,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "tag", "usable" },
-	stats = { weight = { min = 0.02, max = 0.02 }, length = {min = 0.015*2, max = 0.021*2}},
+	stats = { weight = { min = 0.02, max = 0.02 }, length = {min = 0.0152*2, max = 0.021*2}},
 	environments = {
 		wormhole = 1, pier = 0.9
 	},
@@ -434,7 +434,7 @@ FishAndChips.Fish { --Timothy
 	ppu_artist = { "VMan_2002" },
 	attributes = { "xmult", "reset", "usable" },
 	pronouns = "he_him",
-	stats = { weight = { min = 21*6, max = 67*7 --[[i dont like 67 but it fits here]] }, length = {min = 0.17*4, max = 0.25*5}},
+	stats = { weight = { min = 21*6/2, max = 67*7/2 --[[i dont like 67 but it fits here]] }, length = {min = 0.17*4, max = 0.256*4}},
 	environments = {
 		calm_pond = 0.5, pier = 0.9
 	},
@@ -503,7 +503,7 @@ FishAndChips.Fish { --Blackbody
 	key = "vman2002_blackbody",
 	atlas = "vman2002_blackbody",
 	pos = { x = 0, y = 0 },
-	weight = 3,
+	weight = 2,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "usable", "editions", "xblindsize" },
@@ -548,18 +548,22 @@ FishAndChips.Fish { --Navy Blade
 	key = "vman2002_navyblade",
 	atlas = "vman2002_fish",
 	pos = { x = 2, y = 1 },
-	weight = 8,
+	weight = 4,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "xblindsize", "usable", "economy", "reset" }, 
 	config = {extra = {uses = 0, uses_max = 6, xblindsize = 1.2, dollars = 5}},
-	stats = { weight = { min = 0.6*10, max = 0.6618*10.5 }, length = {min = 0.015*15, max = 0.0234*15.5}},
+	stats = { weight = { min = 580, max = 770 }, length = {min = 2.7, max = 3.451}},
 	environments = {
 		aquifer = 0.9, swamp = 0.5
 	},
 	loc_vars = function(self, info_queue, card)
 		local ex = card.ability.extra
-		return {vars = {ex.uses, ex.uses_max, ex.xblindsize, ex.dollars, ppu_bubbles = {FishAndChips.vman2002.navy_blade_usable(self, card) and "usable" or "used"}}}
+		local bub = FishAndChips.vman2002.navy_blade_usable(self, card) and "usable" or "inactive"
+		if card.ability.extra.uses >= card.ability.extra.uses_max then
+			bub = "used"
+		end
+		return {vars = {ex.uses, ex.uses_max, ex.xblindsize, ex.dollars, ppu_bubbles = {bub}}}
 	end,
 	can_use = FishAndChips.vman2002.navy_blade_usable,
 	use = function(self, card)
