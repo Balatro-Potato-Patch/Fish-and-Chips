@@ -225,8 +225,8 @@ FishAndChips.Fish {
 	key = "bunnyslug",
 	atlas = pez,
 	pos = { x = 4, y = 0 },
-	weight = 10,
-	ppu_coder = { "AbelSketch" },
+	weight = 8,
+	ppu_coder = { "DoggFly" },
 	ppu_artist = { "DoggFly" },
 	attributes = { "mult" },
 	config = {
@@ -235,8 +235,9 @@ FishAndChips.Fish {
 		}
 	},
 	stats = {
-		weight = {min = 0.002, max = 0.005},
-		length = {min = 0.015 , max = 0.025}
+    stats = {
+        weight = {min = 0.001, max = 0.005},
+        length = {min = 0.007, max = 0.025}
 	},
 	environments = {
 		calm_pond = 10,
@@ -272,6 +273,8 @@ FishAndChips.Fish {
 		end
 	end,
 }
+
+
 
 -- Im gonna be honest, half of this wouldnt have been possible without Vanilla remade 
 FishAndChips.Fish {
