@@ -208,7 +208,7 @@ function FishAndChips.verify_submissions()
 		local treasure_fish_count = 0
 		for _, fish in ipairs(submission) do
 			total_weight = total_weight + fish.weight
-			assert(fish.weight == math.floor(fish.weight) and fish.weight > 0, "Fish "..fish.key.." has wrong weight (should be whole number above 0)")
+			assert((fish.weight == math.floor(fish.weight) and fish.weight > 0) or dev_obj.ignore_limits, "Fish "..fish.key.." has wrong weight (should be whole number above 0)")
 			if fish.treasure then treasure_fish_count = treasure_fish_count + 1 end
 			local in_envs = SMODS.table_size(fish.environments)
 			assert(in_envs <= FishAndChips.fish_environment_limit or dev_obj.ignore_limits, "Fish " .. fish.key .. " is in " .. in_envs .. " environments when the limit is " .. FishAndChips.fish_environment_limit)
