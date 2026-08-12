@@ -637,7 +637,7 @@ FishAndChips.Fish({
     end,
     set_sprites = function(self, card)
         card.children.base_shine = SMODS.create_sprite(0,0, card.T.w, card.T.h, SMODS.get_atlas(self.atlas), {x=2, y=2})
-        card.children.base_shine:set_role({major = card, role_type = 'Glued', draw_major = card}) -- TODO: figure out how to get this to stick properly
+        card.children.base_shine:set_role({major = card, role_type = 'Glued', draw_major = card})
         card.children.base_shine.custom_draw = true
         if card.ability and card.ability.fac_r_e_globed_fish then
             for k, info in pairs(card.ability.fac_r_e_globed_fish) do
