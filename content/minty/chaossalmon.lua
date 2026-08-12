@@ -62,7 +62,7 @@ FishAndChips.Fish{
                 }
             end
 
-            for i,v in ipairs{othername or "", othercenter.original_key, localize{type = "name_text", key = otherkey, set = "fac_Fish"}} do
+            for i,v in ipairs{othername, othercenter.original_key, localize{type = "name_text", key = otherkey, set = "fac_Fish"}} do
                 print(v)
                 if string.find(v:lower(), "fish") then
                     PotatoPatchUtils.Developers.fac_minty.fish_named_fish[otherkey] = true
