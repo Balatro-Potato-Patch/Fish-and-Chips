@@ -36,9 +36,6 @@ FishAndChips.Fish{
 		backroom = 1,
 	},
 	attributes = {"scaling", "food", "xmult", "destroy_card", "vocaloid"},
-	load = function (self, card, card_table, other_card)
-		card.T.w = card.T.w * card_table.ability.extra.xmult
-	end,
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS[card.ability.immutable.fish]
 		return {vars = {localize{type = "name_text", key = card.ability.immutable.fish, set = "fac_Fish"}, card.ability.extra.rate, card.ability.extra.scaling, card.ability.extra.xmult}}
@@ -100,7 +97,6 @@ FishAndChips.Fish{
 							fih:shatter()
 							FishAndChips.FooSqueax.fat_chud.state = 4
 						elseif FishAndChips.FooSqueax.fat_chud.state == 4 and G.TIMERS.REAL - FishAndChips.FooSqueax.fat_chud.timer < 2 then
-							card.T.w = card.T.w / math.max(1, card.ability.extra.xmult / 2)
 							SMODS.scale_card(card, {
 								ref_table = card.ability.extra,
 								ref_value = "xmult",
@@ -109,7 +105,6 @@ FishAndChips.Fish{
 									message = localize("k_fac_fas_nom")
 								}
 							})
-							card.T.w = card.T.w * math.max(1, card.ability.extra.xmult / 2)
 							FishAndChips.FooSqueax.fat_chud.active = false
 							FishAndChips.FooSqueax.fat_chud.timer = nil
 							card.disable_align = false
