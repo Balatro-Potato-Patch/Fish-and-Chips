@@ -1,9 +1,9 @@
 PotatoPatchUtils.Developer({
 	name = 'Carrier4133 (MP)',
-	atlas = 'fac_MPcards',
-	colour = G.C.YELLOW,
+	atlas = 'MP/fac_MPcards.png',
+	pos = { x = 0, y = 0 }
+	colour = G.C.BLACK,
 	ignore_limits = false, -- USING THIS VALUE WILL RESULT IN YOUR SUBMISSION BEING REJECTED
-	fac_partner = 'Snapper' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
 })
 
 local function fac_count_rank(scoring_hand, rank)
