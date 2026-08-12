@@ -13,6 +13,7 @@ FishAndChips.Fish {
 		length = {min = 0.14, max = 0.25},  --vibes
 		weight = {min = 0.075, max = 140}
 	},
+	cost = 3,
 	blueprint_compat = true,
 	config = {
 		extra = {

@@ -14,6 +14,7 @@ FishAndChips.Fish {
 		length = { min = 2.5, max = 2.5},  --based on absolutely nothing, kept min and max the same because it's one specific guy
 		weight = { min = 200, max = 200}
 	},
+    cost = 6,
 	blueprint_compat = true,
 	config = {
 		extra = {

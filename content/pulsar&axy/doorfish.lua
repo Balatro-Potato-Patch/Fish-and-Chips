@@ -20,6 +20,7 @@ FishAndChips.Fish {
 		weight = { min = 40, max = 45}
 	},
 	choose = 3,
+	cost = 6,
 	blueprint_compat = false,
 	config = {
 		extra = {

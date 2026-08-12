@@ -18,5 +18,6 @@ FishAndChips.Fish {
 		length = {min = 5e11, max = 1e12, units = { format = "au_format", scale = 1.49597e11, precision = 4}},  --0.5 to 2 terameters (for context, Saturn's orbital height is about 1.4Tm)
 		weight = { min = 1e22, max = 1e23, units = { format = "yg_format", scale = 1e21, precision = 3}} -- 10 to 100 yottagrams (for context, the Moon is about 73 Yg)
 	},
+	cost = 8,
 	blueprint_compat = false,
 }

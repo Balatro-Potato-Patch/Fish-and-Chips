@@ -17,6 +17,7 @@ FishAndChips.Fish {
 		length = { min = 0.0197, max = 0.0197 },  --based on average gold ring
 		weight = { min = 0.008, max = 0.008 }
 	},
+	cost = 4,
 	blueprint_compat = false,
 	config = {
 		extra = {
