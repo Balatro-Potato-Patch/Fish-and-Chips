@@ -697,10 +697,10 @@ SMODS.DrawStep {
     key = 'fac_r_e_globe_fish',
     order = -11,
     func = function(self)
-        self.children.base_shine:draw()
+        self.children.base_shine:draw_shader('dissolve', nil, nil, nil, self.children.center)
         for k, v in pairs(self.children) do
             if v.custom_draw and v.custom_draw == 'globe' then
-                v:draw()    
+                v:draw()
             end
         end
     end,
