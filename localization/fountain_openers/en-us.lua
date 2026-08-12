@@ -183,23 +183,34 @@ return {
             PotatoPatchDev_fo_alexi = {
                 name = "Alexi",
                 text = {
-                    {"{f:fac_tss_slimelets}silly shapeshifting slimegirl.",
-                    "{f:fac_tss_slimelets}also see slimestuff she's really cute or something"},
-                    {"{f:fac_tss_slimelets}sole programmer here for our team",
-                    "{f:fac_tss_slimelets}did some art too which has Aura"},
-                    {"{f:fac_tss_slimelets}also our team is",
-                    "{c:red,f:fac_tss_slimelets}the fountain openers group chat"}
+                    {
+                        "{f:fac_tss_slimelets}silly shapeshifting slimegirl.",
+                        "{f:fac_tss_slimelets}also see slimestuff she's really cute or something"
+                    },
+                    {
+                        "{f:fac_tss_slimelets}sole programmer here for our team",
+                        "{f:fac_tss_slimelets}did some art too which has",
+                        "{element:1}"
+                    },
+                    {
+                        "{f:fac_tss_slimelets}also our team is",
+                        "{c:red,f:fac_tss_slimelets}the fountain openers group chat"
+                    }
                 }
             },
             PotatoPatchDev_fo_grahkon = {
                 name = "Grahkon",
                 text = {
-                    {"Strange dragon-ish greenboy",
-                    "He is rumored to be capable of great things.",
-                    "Oh also uh thanks for checking my credits! (ps. Alexi is kinda goated)"},
-                    {"{f:fac_tss_slimelets}also our team is",
-                    "{c:red,f:fac_tss_slimelets}the fountain openers group chat",
-                    "{f:fac_tss_slimelets}-alexi"}
+                    {
+                        "Strange dragon-ish greenboy",
+                        "He is rumored to be capable of great things.",
+                        "Oh also uh thanks for checking my credits! (ps. Alexi is kinda goated)"
+                    },
+                    {
+                        "{f:fac_tss_slimelets}also our team is",
+                        "{c:red,f:fac_tss_slimelets}the fountain openers group chat",
+                        "{f:fac_tss_slimelets}-{f:fac_tss_slimelets,E:fac_alexi_text}Alexi"
+                    }
                 }
             }
         }

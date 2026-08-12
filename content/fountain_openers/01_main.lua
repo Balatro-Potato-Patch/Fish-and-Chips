@@ -126,6 +126,26 @@ PotatoPatchUtils.Developer {
             alexi_click_count = alexi_click_count - 1
         end
     end,
+    loc_vars = function(self)
+        local area = CardArea(
+            0, 0,
+            0.95*G.CARD_W,
+            0.95*G.CARD_H, 
+            {type = 'joker', highlight_limit = 1, colour = HEX("00000000")}
+        )
+        SMODS.add_card({ key = "c_aura", area = area })
+        return {
+            vars = {
+                elements = {
+                    { n=G.UIT.R, config = { align="cm" }, nodes = {
+                        { n=G.UIT.O, config={ object=
+                            area
+                        }}
+                    }},
+                }
+            }
+        }
+    end,
     calculate = function(self, context)
         local floweries = SMODS.find_card("fish_fac_fo_fishery")
         if #floweries > 0 then
