@@ -3,10 +3,16 @@ SMODS.Shader{
   path = "core/ui_image.fs",
   send_vars = function(element, extra)
     local atlas = SMODS.Atlases[element.config.atlas]
+    local pixel_size = element.config.pixel_size
+    local pos = element.config.pos and {element.config.pos.x, element.config.pos.y} or {0, 0}
+    if pixel_size then
+        pos[1] = pos[1] * (atlas.px / pixel_size.w)
+        pos[2] = pos[2] * (atlas.py / pixel_size.h)
+    end
     return {
       mask = atlas.image,
-      atlas_dim = {atlas.px/atlas.image:getWidth(), atlas.py/atlas.image:getHeight()},
-      atlas_pos = element.config.pos and {element.config.pos.x, element.config.pos.y} or {0, 0}
+      atlas_dim = {(pixel_size and pixel_size.w or atlas.px)/atlas.image:getWidth(), (pixel_size and pixel_size.h or atlas.py)/atlas.image:getHeight()},
+      atlas_pos = pos
     }
   end
 }
@@ -145,7 +151,10 @@ G.FUNCS.fac_reset_all_progress = function(e)
             G.SETTINGS.ACHIEVEMENTS_EARNED[ach.key] = nil
         end
 
+        G.PROFILES[G.SETTINGS.profile].fac_tutorial_seen = nil
+
         G:save_progress()
+        remove_save()
         love.filesystem.remove(G.SETTINGS.profile..'/'..'meta.jkr')
         convert_save_to_meta()
         G.SAVE_MANAGER.channel:push({
@@ -287,12 +296,13 @@ end
 function FishAndChips.Compendium.compendium_area(amount, dim)
     amount = amount or 1
     dim = dim or {(8*amount)/4 * 71/95, 2}
+    local adjust = amount > 1 and 2*G.CARD_W/G.CARD_H
     local area = CardArea(0, 0, dim[1], dim[2], {type = 'voucher', fac_compendium = true})
     area.align_cards = function(self)
         for k, card in ipairs(self.cards) do
             card.states.drag.can = false
             if not card.states.drag.is then
-                card.T.x = self.T.x + 0.5*(self.T.w - card.T.w) + (amount > 1 and ((k-2) * card.T.w * 1.2) or 0)
+                card.T.x = self.T.x + 0.5*(self.T.w - (adjust or card.T.w)) + (amount > 1 and ((k-2) * ((adjust and (card.T.w + adjust)/2 or card.T.w)) * 1.2) or 0)
                 card.T.y = self.T.y + 0.5*(self.T.h - card.T.h)
             end
         end
@@ -303,6 +313,11 @@ end
 function FishAndChips.Compendium.compendium_card(fish, area, scale)
     scale = scale or 2/G.CARD_H
     local compendium_card = SMODS.create_card({key = fish.key, area = area, scale = {w=scale, h=scale}})
+    if compendium_card.T.w > scale * G.CARD_W or compendium_card.T.h > scale * G.CARD_H then
+        local adjust = math.min(scale*G.CARD_W/compendium_card.T.w, scale*G.CARD_H/compendium_card.T.h)
+        compendium_card.T.h = compendium_card.T.h * adjust
+        compendium_card.T.w = compendium_card.T.w * adjust
+    end
     compendium_card.no_shadow = true
     local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {}
     local should_silhouette = fish.set == 'fac_Fish' and not (fish_data.times_caught and fish_data.times_caught > 0) or (fish.set == 'fac_Rod' or fish.set == 'fac_Bait') and not fish.discovered
@@ -311,6 +326,7 @@ function FishAndChips.Compendium.compendium_card(fish, area, scale)
         self.ability_UIBox_table = self:generate_UIBox_ability_table()
         self.config.h_popup = G.UIDEF.card_h_popup(self)
         self.config.h_popup_config = self:align_h_popup()
+        play_sound('paper1', math.random() * 0.2 + 0.9, 0.35)
 
         Node.hover(self)
     end
@@ -325,7 +341,9 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
     local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {
         first_catch = '',
         rod = '',
-        times_caught = ''
+        times_caught = '',
+        record_weight = '',
+        record_length = ''
     }
 
     local fish_caught = type(fish_data.times_caught) == 'number' and (fish_data.times_caught > 0)
@@ -335,9 +353,11 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
     local caught = localize('ph_fac_first_caught')..(fish_caught and fish_data.first_catch or '')
     local rod = fish_caught and localize('ph_fac_with_rod')..localize({key = fish_data.rod, set = 'fac_Rod', type = 'name_text'}) or ' '
     local count = localize('ph_fac_times_caught')..(fish_caught and fish_data.times_caught or '')
+    local record_weight = fish_caught and localize('ph_fac_record_weight')..FishAndChips.format_measurement(fish_data.record_weight or nil, 'weight', fish.stats.units) or ' '
+    local record_length = fish_caught and localize('ph_fac_record_length')..FishAndChips.format_measurement(fish_data.record_length or nil, 'length', fish.stats.units) or ' '
 
     local text = {n=G.UIT.R, config = {align = left and 'cl' or 'cr', padding = 0.1}, nodes = {
-        {n = G.UIT.C, config = {align = 'cl', padding = 0.03, minw = 3.4}, nodes = {
+        {n = G.UIT.C, config = {align = 'cl', padding = 0.03, minw = 3.2}, nodes = {
             {n=G.UIT.R, nodes = {
                 {n=G.UIT.R, config = {underline = FishAndChips.C.COMPENDIUM_COLOUR, underline_scale = 0.04, padding = -0.08}, nodes = {
                     {n=G.UIT.T, config = {text = fish_name, scale = 0.5, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}
@@ -346,37 +366,39 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
             {n=G.UIT.R, nodes = {{n=G.UIT.T, config = {text = caught, scale = 0.4, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}}},
             {n=G.UIT.R, config = {align = 'cr', minw = 3}, nodes = {{n=G.UIT.T, config = {text = rod, scale = 0.4, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}}},
             {n=G.UIT.R, nodes = {{n=G.UIT.T, config = {text = count, scale = 0.4, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}}},
+            {n=G.UIT.R, nodes = {{n=G.UIT.O, config={object = DynaText({string = record_weight, colours = {FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 3.2, pop_in_rate = 0, scale = 0.3, silent = true})}}}},
+            {n=G.UIT.R, nodes = {{n=G.UIT.O, config={object = DynaText({string = record_length, colours = {FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 3.2, pop_in_rate = 0, scale = 0.3, silent = true})}}}},
         }}
     }}
     
-    local temp_area = FishAndChips.Compendium.compendium_area()
-    local compendium_card = FishAndChips.Compendium.compendium_card(fish, temp_area)
+    local temp_area = FishAndChips.Compendium.compendium_area(nil, {2.25 * 71/95, 2.25})
+    local compendium_card = FishAndChips.Compendium.compendium_card(fish, temp_area, 0.85)
     temp_area:emplace(compendium_card)
-    table.insert(text.nodes, left and 1 or 2, {n=G.UIT.C, nodes = {{n=G.UIT.O, config={object=temp_area}}}})
+    table.insert(text.nodes, left and 1 or 2, {n=G.UIT.C, config = {align = 'cm'}, nodes = {{n=G.UIT.O, config={object=temp_area}}}})
     
     return text
 end
 
 function FishAndChips.Compendium.extended_fish_page(page_number, left)
-    local fish_per_page = 4
+    local fish_per_page = 3
     local start_index = (page_number-1)*fish_per_page
     local pool = SMODS.collection_pool(G.P_CENTER_POOLS.fac_Fish)
 
     local page = {n=G.UIT.C, config = {minh = 9.3, align = 'tm', minw = 5.4, padding = 0.1}, nodes = {
         FishAndChips.Compendium.page_title('extended_fish_page', page_number),
-        {n=G.UIT.R, config = {align = 'tm', minh = 8, padding = -0.15, id = 'fac_compendium_extended_fish_page'}, nodes = {
+        {n=G.UIT.R, config = {align = 'tm', minh = 8, id = 'fac_compendium_extended_fish_page'}, nodes = {
             -- fish added here
         }}
     }}
 
-    local last_page = false
+    local last_page = start_index >= #pool
     for i = 1, fish_per_page do
         table.insert(page.nodes[2].nodes, FishAndChips.Compendium.extended_fish_entry(pool[start_index + i], i%2 == 1))
         if start_index + i >= #pool then last_page = true; break end
     end
 
     if page_number > 1 and (not last_page or left) then
-        table.insert(page.nodes, FishAndChips.Compendium.nav_button(page_number, left, 'extended_fish_page', 0.2))
+        table.insert(page.nodes, FishAndChips.Compendium.nav_button(page_number, left, 'extended_fish_page', 0.1))
     end
 
     return page
@@ -395,7 +417,7 @@ function FishAndChips.Compendium.condensed_fish_page(page_number, left)
         }}
     }}
 
-    local last_page = false
+    local last_page = start_index >= #pool
     for i=1, rows do
         local temp_area = FishAndChips.Compendium.compendium_area(fish_per_row)
 
@@ -416,6 +438,18 @@ function FishAndChips.Compendium.condensed_fish_page(page_number, left)
     end
 
     return page
+end
+
+G.FUNCS.open_compendium_to_env = function(e)
+    play_sound("fac_flip_page")
+
+    local page_to_turn = FishAndChips.Environments[G.GAME.fac_fishing_environment].order
+    page_to_turn = page_to_turn%2 == 0 and page_to_turn - 1 or page_to_turn
+    G.OVERLAY_MENU = UIBox{
+        definition = FishAndChips.Compendium.page({type = 'environment_page', left = page_to_turn, right = page_to_turn + 1}),
+        config =  {align = "cm", offset = {x=0,y=0}, major = G.ROOM_ATTACH, bond = 'Weak'}
+    }
+    G.OVERLAY_MENU:get_UIE_by_ID("overlay_menu_back_button").config.button = 'exit_overlay_menu'
 end
 
 function FishAndChips.Compendium.environment_page(page_number, left)
@@ -464,7 +498,9 @@ function FishAndChips.Compendium.environment_page(page_number, left)
             local fish = fish_pool[index]
             local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {}
             local fish_caught = fish_data.times_caught and fish_data.times_caught > 0
-            table.insert(row.nodes, {n=G.UIT.C, config = {shader = 'fac_ui_image', atlas = fish.atlas, pos = fish.pos, colour = fish_caught and G.C.WHITE or FishAndChips.C.COMPENDIUM_COLOUR, minh = 0.45 * 91/75, minw = 0.45}})
+            local atlas = SMODS.get_atlas(fish.atlas)
+            
+            table.insert(row.nodes, {n=G.UIT.C, config = {align = 'cm'}, nodes = {{n=G.UIT.R, config = {align = 'cm', shader = 'fac_ui_image', atlas = fish.atlas, pos = fish.pos, pixel_size = fish.pixel_size, colour = fish_caught and G.C.WHITE or FishAndChips.C.COMPENDIUM_COLOUR, minh = 0.45 * (fish.pixel_size and fish.pixel_size.h/fish.pixel_size.w or atlas.py/atlas.px), minw = 0.45}}}})
             if index >= #fish_pool then last_page = true end
         end
         table.insert(page.nodes[3].nodes[1].nodes, row)
@@ -564,7 +600,7 @@ function FishAndChips.Compendium.bait_page(page_number, left)
     local bait_per_row = bait_per_page/rows
     local start_index = (page_number - 1) * bait_per_page
 
-    local last_page = false
+    local last_page = start_index >= #G.P_CENTER_POOLS.fac_Bait
     for i=1, rows do
         local row = {n=G.UIT.R, config = {align = 'tm', minh = 7.8/3, minw = 5, padding = 0.1}, nodes = {}}
         for j=1, bait_per_row do
@@ -641,7 +677,7 @@ function FishAndChips.Compendium.rod_page(page_number, left)
 
     local rods_per_page = 4
     local start_index = (page_number - 1) * rods_per_page
-    local last_page = false
+    local last_page = start_index >= #G.P_CENTER_POOLS.fac_Rod
     for i=1, rods_per_page do
         table.insert(page.nodes[2].nodes, FishAndChips.Compendium.rod_entry(G.P_CENTER_POOLS.fac_Rod[i + start_index], i%2 == 1))
         if i + start_index >= #G.P_CENTER_POOLS.fac_Rod then last_page = true; break end
@@ -723,7 +759,7 @@ function FishAndChips.Compendium.achievement_page(page_number, left)
     local start_index = (page_number - 1) * achievements_per_page
     local achi_pool = FishAndChips.Compendium.get_achievements()
 
-    local last_page = false
+    local last_page = start_index >= #achi_pool
     for i = 1, achievements_per_page do
         table.insert(page.nodes[2].nodes, FishAndChips.Compendium.achievement(achi_pool[start_index + i], i%2 == (left and 0 or 1)))
         if start_index + i >= #achi_pool then last_page = true; break end
@@ -736,11 +772,48 @@ function FishAndChips.Compendium.achievement_page(page_number, left)
     return page
 end
 
+function Node:hover() 
+    if self.config and self.config.h_popup then
+        if not self.children.h_popup then 
+            self.config.h_popup_config.instance_type = 'POPUP'
+            self.children.h_popup = UIBox{
+                definition = self.config.h_popup,
+                config = self.config.h_popup_config,
+            }
+            self.children.h_popup.states.collide.can = false
+            self.children.h_popup.states.drag.can = true
+        end
+    end
+    if self.config and self.config.h_popup_2 then
+        if not self.children.h_popup_2 then 
+            self.config.h_popup_2_config.instance_type = 'POPUP'
+            self.children.h_popup_2 = UIBox{
+                definition = self.config.h_popup_2,
+                config = self.config.h_popup_2_config,
+            }
+            self.children.h_popup_2.states.collide.can = false
+            self.children.h_popup_2.states.drag.can = true
+        end
+    end
+end
+
+local old_stop = Node.stop_hover
+function Node:stop_hover()
+    old_stop(self)
+    if self.children.h_popup_2 then
+        self.children.h_popup_2:remove()
+        self.children.h_popup_2 = nil
+    end
+end
+
+SMODS.draw_ignore_keys.h_popup_2 = true
+
 function FishAndChips.Compendium.dev_card(dev)
     if not dev then return nil end
+    local partner = dev.joint_credits and PotatoPatchUtils.Developers[dev.fac_partner]
     
-    local temp_area = FishAndChips.Compendium.compendium_area()
-    local dev_card = Card(0, 0, G.CARD_W / 1.25, G.CARD_H / 1.25, nil, G.P_CENTERS.c_base)
+    local temp_area = FishAndChips.Compendium.compendium_area(1, dev.joint_credits and {0.2 + 4 * 71/95, 2})
+    local dev_card = Card(0, 0, (dev.joint_credits and 2 or 1) * G.CARD_W / 1.25, G.CARD_H / 1.25, nil, G.P_CENTERS.c_base)
     dev_card.children.center:remove()
     dev_card.children.center = SMODS.create_sprite(dev_card.T.x, dev_card.T.y, dev_card.T.w, dev_card.T.h, dev.atlas or "Joker", dev.pos or {x = 0, y = 0})
     dev_card.children.center.states.hover = dev_card.states.hover
@@ -760,62 +833,141 @@ function FishAndChips.Compendium.dev_card(dev)
     dev_card.no_shadow = true
 
     dev_card.ppu_member = dev
-    dev_card.click = dev.click or dev_card.click
+    dev_card.click = function(self)
+        if not dev.click and not (partner and partner.click) then
+            return Card.click(dev_card)
+        end
+        if dev.click then
+            dev.click(dev_card)
+        end
+        if partner and partner.click then
+            partner.click(dev_card)
+        end
+    end
+
+    dev_card.align_h_popup = function(self, dir)
+        local focused_ui = self.children.focused_ui and true or false
+        local popup_direction = dir or self.config.h_popup_dir or (self.T.x < G.ROOM.T.w*0.5) and 'cr' or 'cl'
+        local sign = 1
+        return {
+            major = self.children.focused_ui or self,
+            parent = self,
+            xy_bond = 'Strong',
+            r_bond = 'Weak',
+            wh_bond = 'Weak',
+            offset = {
+                x = popup_direction ~= 'cl' and popup_direction ~= 'cr' and 0 or
+                    focused_ui and sign*-0.05 or
+                    (self.ability.consumeable and 0.0) or
+                    (self.ability.set == 'Voucher' and 0.0) or
+                    sign*-0.05,
+                y = focused_ui and (
+                            popup_direction == 'tm' and (self.area and self.area == G.hand and -0.08 or-0.15) or
+                            popup_direction == 'bm' and 0.12 or
+                            0
+                        ) or
+                    popup_direction == 'tm' and -0.13 or
+                    popup_direction == 'bm' and 0.1 or
+                    0
+            },
+            type = popup_direction,
+        }
+
+    end
 
     -- Create tooltip
     dev_card.hover = function(self)
-        local info_nodes = {n = G.UIT.R, config = { align = "cm", padding = 0, colour = G.C.CLEAR }, nodes = {
-            {n = G.UIT.C, config = { align = "cm", padding = 0.2 }, nodes = {}},
-        }}
-        local text = dev.loc and G.localization.descriptions.PotatoPatch[dev.loc].text_parsed or nil
-        local loc_vars = dev.loc_vars and dev:loc_vars() or {}
-        loc_vars.text_colour = loc_vars.text_colour or G.C.UI.TEXT_LIGHT
-        loc_vars.font = loc_vars.font or SMODS.Fonts.fac_collection
-        if text then
-            if not text[1][1][1] then text = {text} end
-            for _, box in ipairs(text) do
-                local node = {n=G.UIT.R, config = {colour = G.C.L_BLACK, r=0.1, padding = 0.15, align = 'cm', shadow = true}, nodes = {}}
-                for _, v in ipairs(box) do
-                    table.insert(node.nodes, {n=G.UIT.R, config={align='cm'}, nodes = SMODS.localize_box(v, loc_vars)})
+        local create_tooltip = function(dev)
+            local info_nodes = {n = G.UIT.R, config = { align = "cm", padding = 0, colour = G.C.CLEAR }, nodes = {
+                {n = G.UIT.C, config = { align = "cm", padding = 0.2 }, nodes = {}},
+            }}
+            local text = dev.loc and G.localization.descriptions.PotatoPatch[dev.loc].text_parsed or nil
+            local loc_vars = dev.loc_vars and dev:loc_vars() or {}
+            loc_vars.text_colour = loc_vars.text_colour or G.C.UI.TEXT_LIGHT
+            loc_vars.font = loc_vars.font or SMODS.Fonts.fac_collection
+            if text then
+                if not text[1][1][1] then text = {text} end
+                for _, box in ipairs(text) do
+                    local node = {n=G.UIT.R, config = {colour = G.C.L_BLACK, r=0.1, padding = 0.15, align = 'cm', shadow = true}, nodes = {}}
+                    for _, v in ipairs(box) do
+                        table.insert(node.nodes, {n=G.UIT.R, config={align='cm'}, nodes = SMODS.localize_box(v, loc_vars)})
+                    end
+                    info_nodes.nodes[1].nodes[#info_nodes.nodes[1].nodes + 1] = {n=G.UIT.R, config = {align = 'cm'}, nodes = {{n=G.UIT.C, config = {align = 'cm', colour = G.C.WHITE, r=0.1, padding = 0.025}, nodes = {node}}}}
                 end
-                info_nodes.nodes[1].nodes[#info_nodes.nodes[1].nodes + 1] = {n=G.UIT.R, config = {align = 'cm'}, nodes = {{n=G.UIT.C, config = {align = 'cm', colour = G.C.WHITE, r=0.1, padding = 0.025}, nodes = {node}}}}
             end
+            return info_nodes
         end
         self:juice_up(0.05, 0.03)
         play_sound('paper1', math.random() * 0.2 + 0.9, 0.35)
-        dev_card.config.h_popup = info_nodes
-        dev_card.config.h_popup_config = self:align_h_popup()
+        dev_card.config.h_popup = create_tooltip(dev)
+        dev_card.config.h_popup_dir = partner and 'cl'
+        dev_card.config.h_popup_config = dev_card:align_h_popup()
+        if partner then
+            dev_card.config.h_popup_2 = create_tooltip(partner)
+            dev_card.config.h_popup_2_dir = 'cr'
+            dev_card.config.h_popup_2_config = dev_card:align_h_popup('cr')
+        end
         Moveable.hover(self)
     end
 
-    local name = {}
+    local name = {{}}
     if dev.always_use_dynatext or dev.text_effect or dev.shaders or dev.colours then
-        name = {n=G.UIT.O, config = {object = DynaText({
+        name[1] = {n=G.UIT.O, config = {align = 'bm', object = DynaText({
             string = dev.loc and localize({type = 'name_text', key = dev.loc, set = 'PotatoPatch'}) or dev.name or 'ERROR',
             colours = dev.colours or { dev.colour or FishAndChips.C.COMPENDIUM_TEXT }, scale = 0.47,
             text_effect = dev.text_effect or nil, shaders = dev.shaders or nil,
             silent = true, shadow = false, y_offset = -0.6, font = SMODS.Fonts.fac_collection, maxw = 1.45
         })}}
     else
-        localize({ type = 'name', set = 'PotatoPatch', key = dev.loc, nodes = name, scale = 0.8, maxw = 1.45, font = SMODS.Fonts.fac_collection, text_colour = dev.colour or FishAndChips.C.COMPENDIUM_TEXT, stylize = true, no_shadow = true, no_pop_in = true, no_bump = true, no_silent = true, no_spacing = true})
-        name = name[1] and name[1][1] or {n=G.UIT.O, config={object = DynaText({string = dev.name, colours = {dev.colour or FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 1.45, pop_in_rate = 0, scale = 0.4, silent = true})}}
+        localize({ type = 'name', set = 'PotatoPatch', key = dev.loc, nodes = name[1], scale = 0.8, maxw = 1.45, font = SMODS.Fonts.fac_collection, text_colour = dev.colour or FishAndChips.C.COMPENDIUM_TEXT, stylize = true, no_shadow = true, no_pop_in = true, no_bump = true, no_silent = true, no_spacing = true})
+        name[1] = name[1][1] and name[1][1][1] or {n=G.UIT.O, config={align = 'bm', object = DynaText({string = dev.name, colours = {dev.colour or FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 1.45, pop_in_rate = 0, scale = 0.4, silent = true})}}
+        name[1].config.align = 'bm'
+    end
+
+    if partner then
+        name[2] = {n=G.UIT.O, config = {align = 'bm', object = DynaText({
+                string = ' & ',
+                colours = {FishAndChips.C.COMPENDIUM_TEXT}, scale = 0.7,
+                silent = true, shadow = false, y_offset = -0.6, font = SMODS.Fonts.fac_collection, maxw = 0.3
+            })}}
+        if partner.always_use_dynatext or partner.text_effect or partner.shaders or partner.colours then
+            name[3] = {n=G.UIT.O, config = {align = 'bm', object = DynaText({
+                string = partner.loc and localize({type = 'name_text', key = partner.loc, set = 'PotatoPatch'}) or dev.name or 'ERROR',
+                colours = partner.colours or { partner.colour or FishAndChips.C.COMPENDIUM_TEXT }, scale = 0.47,
+                text_effect = partner.text_effect or nil, shaders = partner.shaders or nil,
+                silent = true, shadow = false, y_offset = -0.6, font = SMODS.Fonts.fac_collection, maxw = 1.45
+            })}}
+        else
+            name[3] = {}
+            localize({ type = 'name', set = 'PotatoPatch', key = partner.loc, nodes = name[3], scale = 0.8, maxw = 1.45, font = SMODS.Fonts.fac_collection, text_colour = partner.colour or FishAndChips.C.COMPENDIUM_TEXT, stylize = true, no_shadow = true, no_pop_in = true, no_bump = true, no_silent = true, no_spacing = true})
+            name[3] = name[3][1] and name[3][1][1] or {n=G.UIT.O, config={align = 'bm', object = DynaText({string = partner.name, colours = {partner.colour or FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 1.45, pop_in_rate = 0, scale = 0.4, silent = true})}}
+            name[3].config.align = 'bm'
+        end
+    end
+    for i, node in ipairs(name) do
+        name[i] = {n=G.UIT.C, config = {align = 'cm'}, nodes = {node}}
     end
 
     temp_area:emplace(dev_card)
 
+    if dev.modify_card then dev.modify_card(dev_card) end
+    if partner and partner.modify_card then partner.modify_card(dev_card) end
+
     return {n=G.UIT.C, config = {align = 'bm', padding = 0.1}, nodes = {
-        {n=G.UIT.R, config = {align = 'cm'}, nodes = {name}},
+        {n=G.UIT.R, config = {align = 'bm'}, nodes = name},
         {n=G.UIT.R, config = {align = 'cm'}, nodes = {{n=G.UIT.O, config={object=temp_area}}}},
     }}
 end
 
+local holding_partners = {}
+local partner_buffer = 0
 function FishAndChips.Compendium.credits_page(page_number, left)
     local page = {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {
         FishAndChips.Compendium.page_title(page_number == 1 and 'credits_page' or 'credits_page_2', 1),
         {n=G.UIT.R, config = {align = 'tm', minh = 7, minw = 5}, nodes = {}}
     }}
 
-    if page_number > 1 then 
+    if page_number > 1 then
         local mod_devs = {}
         for _, key in ipairs(PotatoPatchUtils.Developer.obj_buffer) do
             local dev = PotatoPatchUtils.Developers[key]
@@ -829,15 +981,66 @@ function FishAndChips.Compendium.credits_page(page_number, left)
         local start_index = (page_number - 2) * devs_per_page
         local rows = 2
         local devs_per_row = devs_per_page/rows
+        
+        if not next(holding_partners) or holding_partners[1] > start_index then
+            holding_partners = {}
+            partner_buffer = 0
+            if start_index > max then return {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {}} end
+            if mod_devs[start_index] and mod_devs[start_index].fac_partner then
+                holding_partners[#holding_partners+1] = start_index
+                local it = 1
+                while mod_devs[start_index + it] and mod_devs[start_index + it].fac_partner do
+                    holding_partners[#holding_partners+1] = start_index + it
+                    it = it + 1
+                end
+                it = 2
+                local offset = 0
+                while mod_devs[start_index - it] and mod_devs[start_index - it].fac_partner do
+                    if offset < 4 then
+                        table.insert(holding_partners, 1, start_index - it + 1)
+                        table.insert(holding_partners, 1, start_index - it)
+                    end
+                    offset = offset + 2
+                    it = it + 2
+                end
+                if #holding_partners%2 == 1 then holding_partners = {} else partner_buffer = #holding_partners/2 - 1 end
+            end
 
+        end
         local last_page = false
         for i=1, rows do
             local row = {n=G.UIT.R, config = {align = 'bm', minh = 6.8/2, minw = 5}, nodes = {}}
-            for j=1, devs_per_row do
+            local j=1
+            while j <= devs_per_row do
                 if last_page then break end
                 local index = start_index + (i-1)*devs_per_row + j
+                if j == devs_per_row then
+                    if next(holding_partners) then
+                        index = index + #holding_partners
+                        partner_buffer = partner_buffer - 1
+                    end
+                    while mod_devs[index] and mod_devs[index].fac_partner do
+                        holding_partners[#holding_partners+1] = index
+                        index = index + 1
+                    end
+                    if partner_buffer == 0 and next(holding_partners) then partner_buffer = #holding_partners/2 - 1 end
+                else
+                    if next(holding_partners) then index = holding_partners[1] end
+                end
                 table.insert(row.nodes, FishAndChips.Compendium.dev_card(mod_devs[index]))
-                if index >= max then last_page = true; break end
+                if mod_devs[index] and mod_devs[index].joint_credits then
+                    j = j + 1
+                elseif mod_devs[index] and mod_devs[index].fac_partner then
+                    table.insert(row.nodes, FishAndChips.Compendium.dev_card(mod_devs[index + 1]))
+                    j = j + 1
+                end
+                if next(holding_partners) and index == holding_partners[1] then
+                    table.remove(holding_partners, 1)
+                    table.remove(holding_partners, 1)
+                    index = start_index + (i-1)*devs_per_row + j
+                end
+                if start_index + (i-1)*devs_per_row + j >= max then last_page = true; break end
+                j = j + 1
             end
             table.insert(page.nodes[2].nodes, row)
             if last_page then break end
@@ -850,7 +1053,7 @@ function FishAndChips.Compendium.credits_page(page_number, left)
 
         return page
         
-    end -- TODO: add artwork to page 2
+    end
 
     local modNodes = {}
 
@@ -869,19 +1072,23 @@ function FishAndChips.Compendium.credits_page(page_number, left)
     return page
 end
 
+FishAndChips.mod.config_tab = true
+
 function FishAndChips.Compendium.config_page(page_number, left)
     if page_number > 1 then return end -- TODO: add artwork to page 2
     FishAndChips.Compendium.reset_warning = G.STAGE ~= G.STAGES.RUN and localize('ph_fac_reset_all') or localize('ph_fac_cannot_reset')
     
     local page = {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {
         FishAndChips.Compendium.page_title('config_page', page_number),
-        {n=G.UIT.R, config = {minh = 1}},
+        {n=G.UIT.R, config = {minh = 0.4}},
         {n=G.UIT.R, config = {align = 'tm', minh = 3, minw = 5}, nodes = {
             FishAndChips.Compendium.toggle {text_key = 'b_fac_ambience_toggle', ref_value = "ambience", callback = G.FUNCS.fac_toggle_ambience},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_menu_toggle', ref_value = "menu"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_condensed_fish', ref_value = "condensed_fish"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_flavour_text', ref_value = "disable_flavour"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_flashing_lights', ref_value = "disable_flashing"},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_fish_scaling', ref_value = "disable_fish_scaling"},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_performance_mode', ref_value = "performance_mode"},
         }},
         {n=G.UIT.R, config = {align = 'cm', minh = 2}, nodes = {
             {n=G.UIT.R, config = {align = 'cm', colour = FishAndChips.C.COMPENDIUM_COLOUR, r = 0.1, hover = true, button = 'fac_reset_all_progress', func = 'fac_can_reset_progress', minw = 3.2, minh = 0.8, padding = 0.05}, nodes = {
