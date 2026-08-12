@@ -19,14 +19,15 @@ FishAndChips.Fish({
 			requirement = 3,
 		},
 	},
-	weight = 1,
+	weight = 5,
 	stats = {
-		weight = { min = 0.75, max = 1.2 },
-		length = { min = 0.4, max = 0.6 },
+		weight = { min = 1.1, max = 1.3 },
+		length = { min = 0.5, max = 0.6 },
 	},
 	environments = {
-		volcano = 8,
-		city_river = 5,
+		volcano = 5,
+		city_river = 8,
+		wormhole = 4,
 	},
 	loc_vars = function(self, info_queue, card)
 		return {
