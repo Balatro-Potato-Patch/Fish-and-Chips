@@ -424,6 +424,8 @@ local tim = "fish_fac_vman2002_timothy"
 FishAndChips.vman2002.timothy_active = function()
 	return G.GAME.fac_last_used_fish == tim
 end
+FishAndChips.vman2002.timothy_quotes = {}
+for i = 0, 7 do table.insert(FishAndChips.vman2002.timothy_quotes, "fac_vman2002_timothy" .. i) end
 FishAndChips.Fish { --Timothy
 	key = "vman2002_timothy",
 	atlas = "vman2002_fish",
@@ -454,7 +456,7 @@ FishAndChips.Fish { --Timothy
 	use = function(self, card)
 		card.ability.extra.ante_used = true
 		FishAndChips.vman2002.slowmf(function() SMODS.calculate_effect({ message_card = card,
-			message = localize("fac_vman2002_timothy" .. (math.floor(os.clock() * 69420) % 8)),
+			message = localize(FishAndChips.vman2002.timothy_quotes[(math.floor(os.clock() * 69420) % #FishAndChips.vman2002.timothy_quotes) + 1]),
 			colour = G.C.RED,
 			pitch = 1
 		}, card) end)
