@@ -676,7 +676,7 @@ FishAndChips.Fish {
 	attributes = { "economy" },
 	config = {
 		extra = {
-            max = 30,
+            consumables = 0,
 		}
 	},
 	environments = {
@@ -740,7 +740,7 @@ FishAndChips.Fish {
             func = function()
                 play_sound('timpani')
                 card:juice_up(0.3, 0.5)
-                ease_sand_dollars(math.max(0, math.min(G.GAME.fac_sand_dollars, card.ability.extra.max)), true)
+                ease_sand_dollars(math.max(0, math.min(G.GAME.fac_sand_dollars, card.ability.extra.max)), true) -- figurre out what var is
                 return true
             end
         }))
