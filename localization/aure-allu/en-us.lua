@@ -10,8 +10,23 @@ return {
             PotatoPatchDev_AllUniversal = {
                 name = "AllUniversal",
                 text = {
-                    "I {C:hearts}<3{}",
-                    "{element:1}{C:fac_fish}ees"
+                    {
+                        "I {C:hearts}<3{}",
+                        "{element:1}{C:fac_fish}ees"
+                    },
+                    {
+                        "Thanks to the {C:attention}Event Organizers,",
+                        "all the {C:green}Guest Devs{} and simply",
+                        "{C:fac_fish,s:1.3}Everyone{} involved! :D",
+                        "This was so much {C:attention}fun{}",
+                        "{C:fac_allu_bl_wh_g,s:1.5}<3"
+                    },
+                    {
+                        "{C:inactive,s:0.67}Also, {C:attention,s:0.67,E:1}Quantum Ranks",
+                        "{C:inactive,s:0.67}Tomorrow :tm: {X:mult,C:white,s:0.69}!!",
+                        "{C:inactive,s:1.1}- {C:fac_allu_bl_wh_g}AllUniversal{C:inactive,s:0.67}, 2026.8.12",
+                    }
+
                 }
             },
         },
