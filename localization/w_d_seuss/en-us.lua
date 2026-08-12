@@ -21,7 +21,8 @@ return {
                 name = "JoFIN",
                 text = {
                     {
-                        "Meow"
+                        "WE COULDNT FINISH CREDIT ART",
+                        "SORRRRYYYYYYYY"
                     },
                     {
                         "Play {C:jolyne}Hypererfixation{} and {C:incognito}Incognito{} :3"
