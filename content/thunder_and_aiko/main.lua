@@ -962,7 +962,8 @@ FishAndChips.Fish({
 	end,
 	update = function (self, card, dt)
 		-- bugfixers, my request is that this should somehow only play ONCE when you click and WAIT until it is finished playing
-		-- it also plays every so often so there might have to be 
+		-- it also plays every so often so there might have to fix if you have more than one it will override the other sounds
+		-- feel free to look in just_miku_sounds.lua - aiko
 		if card.added_to_deck then
 			card.fac_thu_aik_timer = (card.fac_thu_aik_timer or 0) + (dt / G.SETTINGS.GAMESPEED)
 			if card.fac_thu_aik_timer >= 20 then
