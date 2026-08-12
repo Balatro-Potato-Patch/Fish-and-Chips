@@ -132,6 +132,123 @@ FishAndChips.Fish({
 	end
 })
 
+--dylan fishmin
+FishAndChips.Fish({
+    key = "wombatCountry_dylan",
+	weight = 10,
+	atlas = "wombatCountry_fish",
+	pos = { x = 0, y = 2 },
+	ppu_artist = { "wombatCountry" },
+	ppu_coder = { "wombatCountry" },
+	attributes = { "mult", "destroy_card", "scaling" },
+	environments = {
+		garden = 1,
+        soup = 0.5,
+	},
+	stats = {
+		weight = {min = 0.3, max = 0.7},
+		length = {min = 0.025, max = 0.035}
+	},
+	config = {
+		extra = {
+			mult = 0.0
+		}
+	},
+	blueprint_compat = true,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.mult} }
+	end,
+	calculate = function(self, card, context)
+		if context.setting_blind and not context.blueprint and #G.fac_fish_area.cards >= 2 and not (G.fac_fish_area.cards[1] == card) then
+			--adds the weight of the leftmost fish to dylan's mult AND weight stat
+			card.ability.extra.mult = card.ability.extra.mult + G.fac_fish_area.cards[1].ability.stats.weight
+			card.ability.stats.weight = card.ability.stats.weight + G.fac_fish_area.cards[1].ability.stats.weight
+
+			SMODS.destroy_cards(G.fac_fish_area.cards[1], nil, nil, true)
+			return {
+				message = localize('fac_wombatCountry_dylan')
+			}
+		end
+		if context.joker_main then
+            return {
+                mult = card.ability.extra.mult,
+            }
+        end
+	end
+})
+
+--yellowfish
+FishAndChips.Fish({
+    key = "wombatCountry_yellow",
+	weight = 10,
+	atlas = "wombatCountry_fish",
+	pos = { x = 1, y = 2 },
+	ppu_artist = { "wombatCountry" },
+	ppu_coder = { "wombatCountry" },
+	attributes = { "xmult", "destroy_card"},
+	environments = {
+		wormhole = 1,
+        pier = 0.25,
+	},
+	stats = {
+		weight = {min = 1.81, max = 4.08},
+		length = {min = 0.127, max = 0.254}
+	},
+	config = {
+		extra = {
+			xmult = 2
+		}
+	},
+	blueprint_compat = true,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.xmult} }
+	end,
+	calculate = function(self, card, context)
+		if context.remove_playing_cards and not context.blueprint then
+			SMODS.destroy_cards(card)
+		end
+		if context.joker_main then
+            return {
+                xmult = card.ability.extra.xmult,
+            }
+        end
+	end
+})
+
+--old boot
+FishAndChips.Fish({
+    key = "wombatCountry_boot",
+	weight = 10,
+	atlas = "wombatCountry_fish",
+	pos = { x = 2, y = 2 },
+	ppu_artist = { "wombatCountry" },
+	ppu_coder = { "wombatCountry" },
+	attributes = { "hand_level", "usable"},
+	environments = {
+		city_river = 1,
+        calm_pond = 0.75,
+		swamp = 0.5,
+	},
+	stats = {
+		weight = {min = 0.8, max = 22.2},
+		length = {min = 0.07, max = 0.825}
+	},
+	blueprint_compat = false,
+	use = function(self, card)
+		-- used some vanilla remade for this one https://github.com/nh6574/VanillaRemade/blob/6ada4a41bca13b7e4b238ade3806c63a2e09dc98/src/jokers.lua#L2068
+		local least_played_hand = G.GAME.hands["High Card"]
+		for hand_name, hand in pairs(G.GAME.hands) do
+			if ((hand.played or 0) < least_played_hand.played) or ((hand.played or 0) == least_played_hand.played and hand.order > least_played_hand.order) and SMODS.is_poker_hand_visible(hand_name) then
+				least_played_hand = hand
+			end
+		end
+		SMODS.upgrade_poker_hands({hands = least_played_hand.key})
+	end,
+	can_use = function(self, card)
+		return true
+	end
+})
+
 --functions to help the fish sticks work
 function fac_wombat_count_sticks (level)
 	local key = "fish_fac_wombatCountry_fishstick_" .. level
@@ -280,122 +397,5 @@ FishAndChips.Fish({
                 chips = card.ability.extra.chips,
             }
         end
-	end
-})
-
---dylan fishmin
-FishAndChips.Fish({
-    key = "wombatCountry_dylan",
-	weight = 10,
-	atlas = "wombatCountry_fish",
-	pos = { x = 0, y = 2 },
-	ppu_artist = { "wombatCountry" },
-	ppu_coder = { "wombatCountry" },
-	attributes = { "mult", "destroy_card", "scaling" },
-	environments = {
-		garden = 1,
-        soup = 0.5,
-	},
-	stats = {
-		weight = {min = 0.3, max = 0.7},
-		length = {min = 0.025, max = 0.035}
-	},
-	config = {
-		extra = {
-			mult = 0.0
-		}
-	},
-	blueprint_compat = true,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult} }
-	end,
-	calculate = function(self, card, context)
-		if context.setting_blind and not context.blueprint and #G.fac_fish_area.cards >= 2 and not (G.fac_fish_area.cards[1] == card) then
-			--adds the weight of the leftmost fish to dylan's mult AND weight stat
-			card.ability.extra.mult = card.ability.extra.mult + G.fac_fish_area.cards[1].ability.stats.weight
-			card.ability.stats.weight = card.ability.stats.weight + G.fac_fish_area.cards[1].ability.stats.weight
-
-			SMODS.destroy_cards(G.fac_fish_area.cards[1], nil, nil, true)
-			return {
-				message = localize('fac_wombatCountry_dylan')
-			}
-		end
-		if context.joker_main then
-            return {
-                mult = card.ability.extra.mult,
-            }
-        end
-	end
-})
-
---yellowfish
-FishAndChips.Fish({
-    key = "wombatCountry_yellow",
-	weight = 10,
-	atlas = "wombatCountry_fish",
-	pos = { x = 1, y = 2 },
-	ppu_artist = { "wombatCountry" },
-	ppu_coder = { "wombatCountry" },
-	attributes = { "xmult", "destroy_card"},
-	environments = {
-		wormhole = 1,
-        pier = 0.25,
-	},
-	stats = {
-		weight = {min = 1.81, max = 4.08},
-		length = {min = 0.127, max = 0.254}
-	},
-	config = {
-		extra = {
-			xmult = 2
-		}
-	},
-	blueprint_compat = true,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.xmult} }
-	end,
-	calculate = function(self, card, context)
-		if context.remove_playing_cards and not context.blueprint then
-			SMODS.destroy_cards(card)
-		end
-		if context.joker_main then
-            return {
-                xmult = card.ability.extra.xmult,
-            }
-        end
-	end
-})
-
---old boot
-FishAndChips.Fish({
-    key = "wombatCountry_boot",
-	weight = 10,
-	atlas = "wombatCountry_fish",
-	pos = { x = 2, y = 2 },
-	ppu_artist = { "wombatCountry" },
-	ppu_coder = { "wombatCountry" },
-	attributes = { "hand_level", "usable"},
-	environments = {
-		city_river = 1,
-        calm_pond = 0.75,
-		swamp = 0.5,
-	},
-	stats = {
-		weight = {min = 0.8, max = 22.2},
-		length = {min = 0.07, max = 0.825}
-	},
-	blueprint_compat = false,
-	use = function(self, card)
-		-- used some vanilla remade for this one https://github.com/nh6574/VanillaRemade/blob/6ada4a41bca13b7e4b238ade3806c63a2e09dc98/src/jokers.lua#L2068
-		local least_played_hand = G.GAME.hands["High Card"]
-		for hand_name, hand in pairs(G.GAME.hands) do
-			if ((hand.played or 0) < least_played_hand.played) or ((hand.played or 0) == least_played_hand.played and hand.order > least_played_hand.order) and SMODS.is_poker_hand_visible(hand_name) then
-				least_played_hand = hand
-			end
-		end
-		SMODS.upgrade_poker_hands({hands = least_played_hand.key})
-	end,
-	can_use = function(self, card)
-		return true
 	end
 })
