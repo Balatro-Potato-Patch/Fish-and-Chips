@@ -637,7 +637,7 @@ return {
             k_omega_crimsonfang_27 = {" WE ARE CALLED RUBY AND JADE.", "WE ARE TRANS DOGGIRLTHINGS,", "ARTISTS, AND PROGRAMMERS.", "WE CAN TANK ANY ATTACK.", "WE WILL GO TO HEAVEN."},
             k_omega_crimsonfang_28 = "TECHNICOLOUR DREAMS",
             k_omega_crimsonfang_29 = "",
-            k_omega_crimsonfang_30 = "<3"
+            k_omega_crimsonfang_30 = "<3",
 
             k_give_up = "GIVE UP",
             k_lose_hope = "LOSE HOPE",
