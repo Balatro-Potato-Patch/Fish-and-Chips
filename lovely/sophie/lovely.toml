@@ -1,0 +1,36 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+match_indent = true
+pattern = '''if self.seal == 'Blue' and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit and not self.ability.extra_enhancement then'''
+position = 'after'
+payload = '''
+SMODS.calculate_context({cardarea = G.jokers, fish_sophie_seal_trigger = true, seal = 'Blue', other_card = self})
+'''
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+match_indent = true
+pattern = '''elseif self.seal == 'Gold' and not self.ability.extra_enhancement then'''
+position = 'after'
+payload = '''
+SMODS.calculate_context({cardarea = G.jokers, fish_sophie_seal_trigger = true, seal = 'Gold', other_card = self})
+'''
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+match_indent = true
+pattern = '''if self.seal == 'Red' then'''
+position = 'after'
+payload = '''
+if not context.end_of_round or next(self:get_end_of_round_effect(context)) then
+    SMODS.calculate_context({cardarea = G.jokers, fish_sophie_seal_trigger = true, seal = 'Red', other_card = self})
+end
+'''
