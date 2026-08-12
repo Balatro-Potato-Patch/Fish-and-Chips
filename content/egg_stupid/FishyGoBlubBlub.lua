@@ -6,6 +6,7 @@ PotatoPatchUtils.Developer({
 	pos = {x = 1, y = 0},
 	colour = G.C.BLUE,
 	fac_partner = 'fac_egg_node',
+	loc = true,
 
 	calculate = function (self, context)
 		if context.setting_blind and G.GAME.fac_plasmium_infection then
@@ -27,7 +28,8 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_segg_credits',
 	pos = {x = 0, y = 0},
 	colour = G.C.MONEY,
-	fac_partner = 'fac_stupid'
+	fac_partner = 'fac_stupid',
+	loc = true,
 })
 
 SMODS.Atlas({
