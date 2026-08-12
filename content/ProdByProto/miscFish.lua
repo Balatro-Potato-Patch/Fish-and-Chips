@@ -138,6 +138,8 @@ FishAndChips.ProdByProto.loadFih = function()
 		blockable = false,
 		blocking = false,
 		func = function()
+			G.ARGS.push.type = 'restart_music'
+			G.SOUND_MANAGER.channel:push(G.ARGS.push)
 			FishAndChips.ProdByProto.q_music = false
 			return true
 		end
@@ -218,13 +220,12 @@ FishAndChips.ProdByProto.loadFih = function()
 					return true
 				end
 			})
-			G.ARGS.push.type = 'restart_music'
-			G.SOUND_MANAGER.channel:push(G.ARGS.push)
 			FishAndChips.ProdByProto.q_music = "jclub"
 			G.E_MANAGER:add_event(Event(playlistEvent))
 		end,
 		can_use = function(self,card)
-			return true
+			if SMODS.find_card("fish_proto_noir")[1] then noirFish = SMODS.find_card("fish_proto_noir")[1] end
+			return not noirFish.ability.extra.storyActive
 		end
 			
 	}
