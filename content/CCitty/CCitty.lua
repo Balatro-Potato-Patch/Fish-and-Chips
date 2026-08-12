@@ -620,7 +620,7 @@ function G.UIDEF.card_h_popup(card)
 	if card.ability and card.ability.set == 'fac_Fish' and card.config.center_key == 'fish_fac_seiunsky' and card.area and not (card.area.config.collection or card.area.config.fac_compendium) then
 		local name = SMODS.deepfind(ret, 'main_box_flag', 'i')[1]
         local name_node = name.objtree
-		name_node[#name_node-3][4].nodes[2].config.text = "Undeclared"
+        name_node[#name_node-3][5].nodes[2].config.text = "Undeclared" 
     end
 	return ret
 end
