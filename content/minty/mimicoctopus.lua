@@ -39,7 +39,15 @@ FishAndChips.Fish{
         length = { min = 1, max = 2}, --In meters
     },
     update = function (self, card, dt)
-        PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
+        local center = card.ability.extra.target_key and G.P_CENTERS[card.ability.extra.target_key] or self
+
+        if center.update then
+            PotatoPatchUtils.Developers.fac_minty:set_line_boil(center, card, center.pos.y)
+        end
+
+        if false --[[current sprite doesn't match card.ability.extra.sprite (how do we check that???)]] then
+            card:set_sprites(center)
+        end
     end,
     can_use = function (self, card)
         if card.ability.extra.copying then return false end
@@ -99,8 +107,10 @@ FishAndChips.Fish{
         local target_center = G.P_CENTERS[target_key]
         local target_vars = target_center.loc_vars and (target_center:loc_vars({}, target_card) or {}).vars or {}
         card.ability.extra.target_name = localize{type = "name_text", key = target_key, vars = target_vars}
+        card.ability.extra.target_key = target_key
 
         card:set_sprites(target_center)
+        card.ability.extra.sprite = target_center.key
 
         SMODS.calculate_effect{message = localize("k_copied_ex"), card = card}
     end,
@@ -154,7 +164,9 @@ FishAndChips.Fish{
                     G.E_MANAGER:add_event(Event{
                         func = function ()
                             card.ability.extra.copying = false
-                            card.ability.extra.target_val = false
+                            card.ability.extra.target_val = nil
+                            card.ability.extra.target_key = nil
+                            card.ability.extra.sprite = nil
                             card.ability.extra.target_name = "None"
                             card:set_sprites(self)
                             return true

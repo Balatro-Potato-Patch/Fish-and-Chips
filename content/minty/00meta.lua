@@ -35,6 +35,7 @@ PotatoPatchUtils.Developer({
         end
     end,
     set_line_boil = function (self, center, card, row, force)
+        if not center.update then return end
         if (G.SETTINGS.reduced_motion or force) and not card.nomotion then
             card.nomotion = true
             center.atlas = "fac_minty_nolineboilfish"
