@@ -17,9 +17,9 @@
 extern PRECISION vec2 chimaera;
 
 extern PRECISION vec4 texture_sizes;
-extern PRECISION Image morph_mask;
+extern Image morph_mask;
 extern PRECISION number morph_progress;
-extern PRECISION bool green;
+extern bool green;
 
 extern PRECISION number dissolve;
 extern PRECISION number time;
