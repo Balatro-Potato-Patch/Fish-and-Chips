@@ -1,5 +1,38 @@
 return {
     descriptions = {
+        PotatoPatch = {
+            PotatoPatchDev_CampfireCollective = {
+				name = "CC",
+				text = {{
+					"Hi, I'm {C:tarot}CampfireCollective{}! I did all",
+                    "the programming for mine and Kitty's",
+                    "wonderful and beautiful fishes. Shoutout",
+                    "Kitty, love working with ya, and don't",
+                    "worry the {C:FFBCDA}horse girls{} will still be running"
+				},
+                {
+                    "I actually did the art for this",
+                    "guy right here {element:1} myself"
+                }}
+			},
+            PotatoPatchDev_DottyKitty = {
+				name = "Kitty",
+				text = {{
+					"I was invited to be a guest dev! I did some",
+                    "of the artwork for the rods and fishing backgrounds,",
+                    "alongside making a bunch of fish with my talented",
+                    "teammate, {C:tarot}CampfireCollective{}. Shout out CC, love",
+                    "working with ya, hopefully {C:FFBCDA}Uma Musamod{} update soon",
+                    "(when I lock tf in)."
+                },
+                {
+                    "Anyway, gone fishing with this guy. He keeps talking",
+                    "about his {C:money}Jarona{} and how he's \"your dad's best friend\"",
+                    "but he kinda cute?? Chat help what do I do I'm so nervous",
+                    "{element:1}",
+                }},
+			},
+        },
         fac_Fish = {
             fish_fac_fihs_CCitty = {
                 name = "fihs.....",
@@ -405,6 +438,9 @@ return {
             },
             CCitty_Potassium = {
                 "Potassium"
+            },
+            CCitty_IsThatYou = {
+                "..."
             },
         }
     }
