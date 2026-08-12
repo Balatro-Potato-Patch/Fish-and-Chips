@@ -268,10 +268,6 @@ function love.update(dt)
 	end
 end
 
--- Draw hook to place boids onscreen
-if not love.draw then function love.draw() end end
-local draw_hook = love.draw
-
 SMODS.Shader {
 	key = "fo_shader_that_does_absolutely_fucking_nothing",
 	path = "fountain_openers/shader_that_does_absolutely_fucking_nothing.fs"
@@ -317,13 +313,13 @@ SMODS.ScreenShader {
 
 FishAndChips.Fish {
 	key = "fo_boids",
-	atlas = "fish",
-	pos = { x = 3, y = 0 },
+	atlas = "fo_fish",
+	pos = { x = 0, y = 0 },
 	weight = 12,
 	blueprint_compat = true,
 	disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },
-	ppu_artist = { "fo_alexi", "fo_grahkon" },
+	ppu_artist = { "fo_alexi" },
 	attributes = { "chips", "scaling" },
 	config = {
 		extra = {

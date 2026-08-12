@@ -183,16 +183,21 @@ return {
             PotatoPatchDev_fo_alexi = {
                 name = "Alexi",
                 text = {
-                    "silly shapeshifting slimegirl.",
-                    "also see slimestuff she's really cute or something"
+                    {"{f:fac_tss_slimelets}silly shapeshifting slimegirl.",
+                    "{f:fac_tss_slimelets}also see slimestuff she's really cute or something"},
+                    {"{f:fac_tss_slimelets}also our team is",
+                    "{c:red,f:fac_tss_slimelets}the fountain openers group chat"}
                 }
             },
             PotatoPatchDev_fo_grahkon = {
                 name = "Grahkon",
                 text = {
-                    "Strange dragon-ish greenboy",
+                    {"Strange dragon-ish greenboy",
                     "He is rumored to be capable of great things.",
-                    "Oh also uh thanks for checking my credits! (ps. Alexi is kinda goated)"
+                    "Oh also uh thanks for checking my credits! (ps. Alexi is kinda goated)"},
+                    {"{f:fac_tss_slimelets}also our team is",
+                    "{c:red,f:fac_tss_slimelets}the fountain openers group chat",
+                    "{f:fac_tss_slimelets}-alexi"}
                 }
             }
         }
