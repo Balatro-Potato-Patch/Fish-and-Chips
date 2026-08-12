@@ -320,7 +320,7 @@ FishAndChips.Fish {
 	},
 	environments = {
 		backroom = 10,
-		swamp = 1.5
+		styx = 1.5
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money } }
@@ -659,7 +659,7 @@ FishAndChips.Fish {
 	
     draw = function(self, card, layer)
         if (layer == 'card' or layer == 'both') and (card.config.center.discovered or card.bypass_discovery_center) then
-            if G.GAME.current_round.discards_left > 0 then
+            if G.GAME.current_round.discards_left > 0 or G.OVERLAY_MENU then
                 card.children.center:set_sprite_pos({ x = 2, y = 1 })
             else
                 card.children.center:set_sprite_pos({ x = 3, y = 1 })
@@ -706,7 +706,6 @@ FishAndChips.Fish {
 	},
 	environments = {
 		pier = 2.,
-		city_river = 5.0
 	},
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cards, card.ability.max_highlighted } }
