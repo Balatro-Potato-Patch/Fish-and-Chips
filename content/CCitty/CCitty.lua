@@ -1,22 +1,26 @@
---[[ TODO SHIT
-https://www.youtube.com/watch?v=-ARE0i6dzsU garfield monday lines
-
-Seiun Sky weight displayed as "Undeclared"
-]]
-
-
+SMODS.Atlas({
+	key = "CCitty_dev", 
+	path = "CCitty/Kittyfire.png",
+	px = 142,
+	py = 95,
+})
 PotatoPatchUtils.Developer({
 	name = 'DottyKitty',
-	atlas = 'fac_cards',
+	atlas = 'CCitty_dev',
+	pos = {x = 0, y = 0},
 	colour = G.C.BLUE,
-	fac_partner = 'CampfireCollective' 
+	fac_partner = 'fac_CampfireCollective',
+	joint_credits = 2,
+	loc = true
 })
 PotatoPatchUtils.Developer({
 	name = 'CampfireCollective',
-	atlas = 'fac_cards',
-	pos = {x = 1, y = 0},
+	atlas = 'CCitty_dev',
+	pos = {x = 0, y = 0},
 	colour = G.C.PURPLE,
-	fac_partner = 'DottyKitty'
+	fac_partner = 'fac_DottyKitty',
+	joint_credits = 2,
+	loc = true
 })
 SMODS.Atlas({
 	key = "CCittyfish", 
@@ -25,54 +29,6 @@ SMODS.Atlas({
 	py = 95,
 })
 
-SMODS.Sound({
-	key = "CCitty_drewitup",
-	path = "CCitty/drewitup.mp3"
-})
-SMODS.Sound({
-	key = "CCitty_ecstasy",
-	path = "CCitty/ecstasy.mp3"
-})
-SMODS.Sound({
-	key = "CCitty_gonext",
-	path = "CCitty/gonext.mp3"
-})
-SMODS.Sound({
-	key = "CCitty_laugh",
-	path = "CCitty/laugh.mp3"
-})
-SMODS.Sound({
-	key = "CCitty_lightemup",
-	path = "CCitty/lightemup.mp3"
-})
-SMODS.Sound({
-	key = "CCitty_michelle",
-	path = "CCitty/michelle.mp3"
-})
-SMODS.Sound({
-	key = "CCitty_muhnee",
-	path = "CCitty/muhnee.mp3"
-})
-SMODS.Sound({
-	key = "CCitty_nooo",
-	path = "CCitty/nooo.mp3"
-})
-SMODS.Sound({
-	key = "CCitty_sadmuhnee",
-	path = "CCitty/sadmuhnee.mp3"
-})
-SMODS.Sound({
-	key = "CCitty_stinky",
-	path = "CCitty/stinky.mp3"
-})
-SMODS.Sound({
-	key = "CCitty_welcomeback",
-	path = "CCitty/welcomeback.mp3"
-})
-SMODS.Sound({
-	key = "CCitty_yass",
-	path = "CCitty/yass.mp3"
-})
 
 FishAndChips.Fish { --perkoio
 	key = "perkoio",
@@ -84,9 +40,13 @@ FishAndChips.Fish { --perkoio
 	attributes = { 'generation','copying'},
 	config = {
 		extra = {
-			rounds = 1,
-            remaining = 1
+			rounds = 4,
+            remaining = 4
 		}
+	},
+	stats = {
+		weight = {min = 2.2, max = 18},
+		length = {min = .6, max = 1}
 	},
 	environments = {
 		soup = 1
@@ -127,6 +87,10 @@ FishAndChips.Fish { --yoray
             Xmult = .23
 		}
 	},
+	stats = {
+		weight = {min = 1, max = 30},
+		length = {min = .1, max = 400}
+	},
 	environments = {
         styx = 1
 	},
@@ -134,7 +98,7 @@ FishAndChips.Fish { --yoray
 		return {vars = {card.ability.extra.Xmult}}
 	end,
 	calculate = function(self, card, context)
-		if context.discard then
+		if context.discard and G.GAME.current_round.discards_left == 1 then
             context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult or 1
             context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult + card.ability.extra.Xmult
             return {
@@ -158,6 +122,10 @@ FishAndChips.Fish { --canioctopus
 		extra = {
             bait = 1
 		}
+	},
+	stats = {
+		weight = {min = 0.06, max = .3},
+		length = {min = .06, max = .15}
 	},
 	environments = {
         volcano = 1
@@ -276,11 +244,15 @@ FishAndChips.Fish { --troutulet
 			rep = 1
 		}
 	},
+	stats = {
+		weight = {min = 0.2, max = 4},
+		length = {min = 0.2, max = 0.7}
+	},
 	environments = {
         city_river = 1
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		return { vars = {card.ability.extra.sand} }
 	end,
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play then
@@ -314,6 +286,10 @@ FishAndChips.Fish { --chicod
             reduce = 0.75
 		}
 	},
+	stats = {
+		weight = {min = 2.7, max = 11},
+		length = {min = 0.7, max = 1}
+	},
 	environments = {
 		swamp = 1
 	},
@@ -340,9 +316,16 @@ function Card:CCitty_dialogue_say_stuff(n, sound, not_first, pitch)
             self:CCitty_dialogue_say_stuff(n, sound, true, pitch)
         return true end}), 'other')
 		if sound then
-			play_sound(sound[1], sound[2] or nil, sound[3] or nil)
-			play_sound(sound[1], sound[2] or nil, sound[3] or nil)
-			-- play_sound(sound[1], sound[2] or nil, sound[3] or nil)
+			if not G.GAME.sixsevenalready then
+				if pseudorandom('docsixseven') < 1 / 150 then
+					sound = {}
+					sound = {3, 'fac_CCitty_67'}
+					G.GAME.sixsevenalready = true
+				end
+			end
+			for i=1, sound[1] do
+			play_sound(sound[2], sound[3] or nil, sound[4] or nil)
+			end
 		end
     else
         if n <= 0 then self.talking = false; return end
@@ -378,7 +361,7 @@ end
 function CCitty_tip()
 	return 'CCitty_tip'..pseudorandom('doctortips',1,5)
 end
-FishAndChips.Fish { --Doctor Sharktred TODO
+FishAndChips.Fish { --Doctor Sharktred
 	key = "drspectred",
 	atlas = "CCittyfish",
 	pos = { x = 2, y = 1 },
@@ -391,6 +374,10 @@ FishAndChips.Fish { --Doctor Sharktred TODO
 		extra = {
 		}
 	},
+	stats = {
+		weight = {min = 80, max = 330},
+		length = {min = 1, max = 3}
+	},
 	environments = {
         calm_pond = 20,
         city_river = 18,
@@ -401,45 +388,221 @@ FishAndChips.Fish { --Doctor Sharktred TODO
 		return { vars = {  } }
 	end,
 	add_to_deck = function (self, card, from_debuff)
-		card:CCitty_add_dialogue('CCitty_welcomeback',{'fac_CCitty_welcomeback'})
+		card:CCitty_add_dialogue('CCitty_welcomeback',{2,'fac_CCitty_welcomeback'})
 		card:CCitty_remove_dialogue(5)
 	end,
 	remove_from_deck = function(self,card,from_debuff)
-		card:CCitty_add_dialogue('CCitty_nooo',{'fac_CCitty_nooo'}) --can't see the dialogue but eh
+		card:CCitty_add_dialogue('CCitty_nooo',{2,'fac_CCitty_nooo'}) --can't see the dialogue but eh
 		card:CCitty_remove_dialogue(5)
 	end,
 
 	calculate = function(self, card, context)
 		if not context.blueprint then
-			if context.end_of_round and context.main_eval then 													--end of round options
-				if G.GAME.chips/G.GAME.blind.chips < 1.02 and G.GAME.chips > G.GAME.blind.chips then				--close call
-					card:CCitty_add_dialogue('CCitty_calc')
+			if context.end_of_round and not context.repetition and not context.individual then 													--end of round options
+				if G.GAME.chips == G.GAME.blind.chips then
+					card:CCitty_add_dialogue('CCitty_Potassium', {4,'fac_CCitty_Potassium'})
 					card:CCitty_remove_dialogue(5)
-				elseif G.GAME.current_round.hands_left then 														--all hands used
-					card:CCitty_add_dialogue('CCitty_neverpunished')
+				elseif G.GAME.chips/G.GAME.blind.chips < 1.02 and G.GAME.chips > G.GAME.blind.chips then				--close call
+					card:CCitty_add_dialogue('CCitty_calc', {4,'fac_CCitty_Kachow'})
+					card:CCitty_remove_dialogue(5)
+				elseif G.GAME.current_round.hands_left == 0 then 														--all hands used
+					card:CCitty_add_dialogue('CCitty_neverpunished',{4,'fac_CCitty_NeverDidntHaveIt'})
+					card:CCitty_remove_dialogue(5)
+				elseif G.GAME.blind.boss then																		--boss beaten
+					card:CCitty_add_dialogue('CCitty_drewitup',{2,'fac_CCitty_drewitup'})
 					card:CCitty_remove_dialogue(5)
 				elseif context.game_over then
-					card:CCitty_add_dialogue('CCitty_gameover',{'fac_CCitty_stinky'})
+					card:CCitty_add_dialogue('CCitty_gameover',{2,'fac_CCitty_stinky'})
 					card:CCitty_remove_dialogue(5)
 				end
 
-			elseif context.money_altered then																	--money changes
-				if context.amount <= -20 then																		--big loss
-					card:CCitty_add_dialogue('CCitty_loss',{'fac_CCitty_sadmuhnee'})
+			elseif context.before then
+				if SMODS.has_enhancement(context.scoring_hand[#context.scoring_hand], "m_glass") then
+					card:CCitty_add_dialogue('CCitty_GoSmash',{3,'fac_CCitty_GoSmash'})
 					card:CCitty_remove_dialogue(5)
-				elseif context.amount >= 20 then																	--big gain
-					card:CCitty_add_dialogue('CCitty_gain',{'fac_CCitty_yass'})
+				end
+
+			elseif context.after then
+				if math.floor(mult*hand_chips) < 100 then
+					card:CCitty_add_dialogue('CCitty_Amount',{3,'fac_CCitty_Amount'})
+					card:CCitty_remove_dialogue(5)
+				elseif G.GAME.chips/G.GAME.blind.chips > 0.98 and G.GAME.chips < G.GAME.blind.chips then
+					card:CCitty_add_dialogue('CCitty_NotEnough',{3,'fac_CCitty_NotEnough'})
+					card:CCitty_remove_dialogue(5)
+				end
+
+			elseif context.debuffed_hand then
+				if G.GAME.current_round.hands_left == 1 then
+					card:CCitty_add_dialogue('CCitty_UhOh',{2,'fac_CCitty_UhOh'})
+					card:CCitty_remove_dialogue(5)
+				else
+					card:CCitty_add_dialogue('CCitty_ThatsYikes',{2,'fac_CCitty_ThatsYikes'})
+					card:CCitty_remove_dialogue(5)
+				end
+				
+
+			elseif context.money_altered then																	--money changes
+				if context.amount <= -11 then																		--big loss
+					card:CCitty_add_dialogue('CCitty_loss',{2,'fac_CCitty_sadmuhnee'})
+					card:CCitty_remove_dialogue(5)
+				elseif context.amount > 20 then																	--big gain
+					card:CCitty_add_dialogue('CCitty_gain',{2,'fac_CCitty_yass'})
 					card:CCitty_remove_dialogue(5)
 				end
 
 			elseif context.first_hand_drawn then
+				if pseudorandom('doc_tips') < 1 / 6 then
+					card:CCitty_add_dialogue('CCitty_tip'..pseudorandom('doc_tips',1,5))
+					card:CCitty_remove_dialogue(7)
+				elseif G.GAME.blind.boss and pseudorandom('doc_boss') < 1 / 3 then
+					card:CCitty_add_dialogue('CCitty_StinkyBoss',{3,'fac_CCitty_StinkyBoss'})
+					card:CCitty_remove_dialogue(5)
+				else 
+					local outofcontext = pseudorandom_element({'ForbiddenYaoi','Ball','Buttons','Cooking','LaughPanic','PlayThose','RIPRoffle','ShuffleSigh','Straight','uhhhh','WorkedOut','Worm','YourNew'},pseudoseed('doc_tips'))
+					local vol = ((outofcontext == 'Straight' or outofcontext == 'Worm') and 1) or 3
+					card:CCitty_add_dialogue('CCitty_'..outofcontext,{vol,'fac_CCitty_'..outofcontext})
+					card:CCitty_remove_dialogue(5)
+				end
 				
+
+			elseif context.starting_shop or context.reroll_shop then																	--enter shop
+				local shopping = {michel = false,ball = false, swash = false,egg=false,mask=false,blue=false,vamp=false,wee=false,square=false,neg=false}
+				for _, v in pairs(G.shop_jokers.cards) do
+					if v.config.center.key == "j_gros_michel" then
+						shopping.michel = true
+					elseif v.config.center.key == "j_wee" then
+						shopping.wee = true
+					elseif v.config.center.key == "j_8_ball" then
+						shopping.ball = true
+					elseif v.config.center.key == 'j_swashbuckler' then
+						shopping.swash = true
+					elseif v.config.center.key == 'j_egg' then
+						shopping.egg = true
+					elseif v.config.center.key == 'j_midas_mask' then
+						shopping.mask = true
+					elseif v.config.center.key == 'j_blueprint' then
+						shopping.blue = true
+					elseif v.config.center.key == 'j_vampire' then
+						shopping.vamp = true
+					elseif v.config.center.key == 'j_square' then
+						shopping.square = true
+					elseif v.edition and v.edition.negative then
+						shopping.neg = true
+					end
+				end
+				if shopping.michel then
+					card:CCitty_add_dialogue('CCitty_michelle',{4,'fac_CCitty_michelle'})
+					card:CCitty_remove_dialogue(5)
+				elseif shopping.neg then
+					card:CCitty_add_dialogue('CCitty_ecstasy',{2,'fac_CCitty_ecstasy'})
+					card:CCitty_remove_dialogue(5)
+				elseif shopping.wee then
+					card:CCitty_add_dialogue('CCitty_Wee',{3,'fac_CCitty_Wee'})
+					card:CCitty_remove_dialogue(5)
+				elseif shopping.ball then
+					card:CCitty_add_dialogue('CCitty_8BallGlass',{4,'fac_CCitty_8BallGlass'})
+					card:CCitty_remove_dialogue(5)
+				elseif shopping.swash then
+					card:CCitty_add_dialogue('CCitty_BuggyDClown',{2,'fac_CCitty_BuggyDClown'})
+					card:CCitty_remove_dialogue(5)
+				elseif shopping.egg then
+					card:CCitty_add_dialogue('CCitty_ChickenJoker',{3,'fac_CCitty_ChickenJoker'})
+					card:CCitty_remove_dialogue(5)
+				elseif shopping.mask then
+					card:CCitty_add_dialogue('CCitty_Midas',{4,'fac_CCitty_Midas'})
+					card:CCitty_remove_dialogue(5)
+				elseif shopping.blue then
+					card:CCitty_add_dialogue('CCitty_SellBlueprint',{4,'fac_CCitty_SellBlueprint'})
+					card:CCitty_remove_dialogue(5)
+				elseif shopping.vamp then
+					card:CCitty_add_dialogue('CCitty_Suck',{3,'fac_CCitty_Suck'})
+					card:CCitty_remove_dialogue(5)
+				elseif shopping.square then
+					card:CCitty_add_dialogue('CCitty_YaoiHands',{1,'fac_CCitty_YaoiHands'})
+					card:CCitty_remove_dialogue(5)
+				end
+
+			elseif context.open_booster then
+				if context.booster.kind == 'Celestial' then
+					card:CCitty_add_dialogue('CCitty_Uranus',{1,'fac_CCitty_Uranus'})
+					card:CCitty_remove_dialogue(5)
+				else
+					card:CCitty_add_dialogue('CCitty_Interesting',{3,'fac_CCitty_Interesting'})
+					card:CCitty_remove_dialogue(5)
+				end
+
+
+			elseif context.skipping_booster then
+				if context.booster.kind == 'Celestial' then
+					card:CCitty_add_dialogue('CCitty_NotInterested',{5,'fac_CCitty_NotInterested'})
+					card:CCitty_remove_dialogue(5)
+				elseif context.booster.kind == 'Standard' then
+					card:CCitty_add_dialogue('CCitty_RatherDie',{5,'fac_CCitty_RatherDie'})
+					card:CCitty_remove_dialogue(5)
+				elseif context.booster.kind == 'Spectral' then
+					card:CCitty_add_dialogue('CCitty_Yikes',{5,'fac_CCitty_Yikes'})
+					card:CCitty_remove_dialogue(5)
+				end
+
+			elseif context.buying_card then
+				if pseudorandom('doc_purchase') < 1 / 5 then
+					local choice = pseudorandom_element({'DoesntHurt','Expectations','Forgor','HowDare','Laugh','MakesSense','MidVibes','Nice','OhOkay','Risky','TakeOne','ThatHelps','ThatsHuge','Wut'}, pseudoseed('doc_purchase'))
+					card:CCitty_add_dialogue('CCitty_'..choice,{3,'fac_CCitty_'..choice})
+					card:CCitty_remove_dialogue(5)
+				end
+
+			elseif context.selling_card and not context.selling_self then
+				if pseudorandom('doc_sell') < 1 / 6 then
+					card:CCitty_add_dialogue('CCitty_ThatsMoney',{1,'fac_CCitty_ThatsMoney'})
+					card:CCitty_remove_dialogue(5)
+				end
+
+			elseif context.using_consumeable then
+				if context.consumeable.config.center.key == "c_hanged_man" then
+					card:CCitty_add_dialogue('CCitty_Bang',{3,'fac_CCitty_Bang'})
+					card:CCitty_remove_dialogue(5)
+				elseif context.consumeable.config.center.key == 'c_hermit' then
+					card:CCitty_add_dialogue('CCitty_Plus20',{3,'fac_CCitty_Plus20'})
+					card:CCitty_remove_dialogue(5)
+				elseif context.consumeable.config.center.key == 'c_temperance' then
+					card:CCitty_add_dialogue('CCitty_Money',{2,'fac_CCitty_Money'})
+					card:CCitty_remove_dialogue(5)
+				elseif context.consumeable.config.center.key == "c_trance" then
+					card:CCitty_add_dialogue('CCitty_BlueSeals',{4,'fac_CCitty_BlueSeals'})
+					card:CCitty_remove_dialogue(5)
+				elseif context.consumeable.config.center.key == "c_pluto" then
+					card:CCitty_add_dialogue('CCitty_Plutonium',{4,'fac_CCitty_Plutonium'})
+					card:CCitty_remove_dialogue(5)
+				elseif context.consumeable.config.center.key == "c_immolate" then
+					card:CCitty_add_dialogue('CCitty_lightemup',{4,'fac_CCitty_lightemup'})
+					card:CCitty_remove_dialogue(5)
+				end
+
+			elseif context.joker_type_destroyed then
+				card:CCitty_add_dialogue('CCitty_Ao3',{2,'fac_CCitty_Ao3'})
+				card:CCitty_remove_dialogue(5)
+
+			elseif context.discard then
+				if #context.full_hand == 3 then
+					card:CCitty_add_dialogue('CCitty_3Cards',{4,'fac_CCitty_3Cards'})
+					card:CCitty_remove_dialogue(5)
+				end
 			end
 		end
 	end,
 }
 
-FishAndChips.Fish { --Seiun Sky seahorse TODO
+local CCitty_g_uidef_card_h_popup_ref = G.UIDEF.card_h_popup --Don't ask a girl how much she weighs. That's rude.
+function G.UIDEF.card_h_popup(card)
+	local ret = CCitty_g_uidef_card_h_popup_ref(card)
+	if card.ability and card.ability.set == 'fac_Fish' and card.config.center_key == 'fish_fac_seiunsky' and card.area and not (card.area.config.collection or card.area.config.fac_compendium) then
+		local name = SMODS.deepfind(ret, 'main_box_flag', 'i')[1]
+        local name_node = name.objtree
+		name_node[#name_node-3][4].nodes[2].config.text = "Undeclared"
+    end
+	return ret
+end
+FishAndChips.Fish { --Seiun Sky seahorse
 	key = "seiunsky",
 	atlas = "CCittyfish",
 	pos = { x = 1, y = 2 },
@@ -453,9 +616,12 @@ FishAndChips.Fish { --Seiun Sky seahorse TODO
 	attributes = {'passive','usable'},
 	config = {
 		extra = {
-            odds = 4,
             freeroll = 1
 		}
+	},
+	stats = {
+		weight = {min = 63, max = 68},
+		length = {min = 1.55, max = 1.55}
 	},
 	environments = {
         garden = 5,
@@ -463,12 +629,22 @@ FishAndChips.Fish { --Seiun Sky seahorse TODO
         calm_pond = 2
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		return { vars = {card.ability.extra.freeroll} }
 	end,
 
     use = function(self, card)
-        
-        card.ability.extra.freeroll = 0
+		card.ability.extra.freeroll = card.ability.extra.freeroll - 1 
+        G.TAROT_INTERRUPT = nil
+        FishAndChips:stop_ambience()
+		local old_env = G.GAME.fac_fishing_environment
+		G.GAME.fac_fishing_environment = pseudorandom_element(FishAndChips.Environments, "fac_next_location", {
+			in_pool = function (v, args)
+				return v.key ~= G.GAME.fac_fishing_environment
+			end
+		}).key
+		SMODS.calculate_context{fac_environment_changed = G.GAME.fac_fishing_environment, old_environment = old_env, forced = true}
+		G.FISHING_STATE = G.FISHING_STATES.MOVING
+		G.FISHING_STATE_COMPLETE = false
     end,
     can_use = function(self, card)
         return card.ability.extra.freeroll > 0 and G.FISHING_STATE == G.FISHING_STATES.LOBBY
@@ -478,10 +654,16 @@ FishAndChips.Fish { --Seiun Sky seahorse TODO
     end,
 
 	calculate = function(self, card, context)
-		if context.fac_end_fishing and context.fish then
-            
+		if context.after and G.GAME.current_round.hands_left == 0 then
+			if card.ability.extra.freeroll > 0 and (G.GAME.chips + math.floor(mult*hand_chips)) - G.GAME.blind.chips < 0 then
+				ease_hands_played(1)
+				card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_hands', vars = {1}}})
+				if not context.blueprint then
+					card.ability.extra.freeroll = card.ability.extra.freeroll - 1
+				end
+			end
         elseif context.ending_fishing and not context.blueprint then
-            card.ability.extra.freeroll = 1
+            card.ability.extra.freeroll = card.ability.extra.freeroll + 1
         end
 	end,
 }
@@ -549,10 +731,17 @@ FishAndChips.Fish { --sweet bro and hella jeff fish
 			chosen = 1
 		}
 	},
+	stats = {
+		weight = {min = 0.0003, max = 0.0004},
+		length = {min = -1000000, max = 0}
+	},
 	environments = {
         backroom = 1
 	},
 	loc_vars = function(self, info_queue, card)
+		return { vars = {elements = {SMODS.create_sprite(0, 0, 3.5, 3.5 * 250 / 500, "fac_fihs_CCitty_desc")}, card.ability.extra.lines[card.ability.extra.chosen]}}
+	end,
+	flavour_vars = function(self, info_queue, card)
 		return { vars = {elements = {SMODS.create_sprite(0, 0, 3.5, 3.5 * 250 / 500, "fac_fihs_CCitty_desc")}, card.ability.extra.lines[card.ability.extra.chosen]}}
 	end,
 	in_pool = function(self, args)
@@ -569,7 +758,7 @@ FishAndChips.Fish { --sweet bro and hella jeff fish
             G.GAME.distaction = G.GAME.distaction + 0.04
 			card.ability.extra.chosen = pseudorandom('keepitreal',1,15)
         elseif context.final_scoring_step and not context.blueprint then
-            mult = mult + pseudorandom('hehastheball',8,13) + pseudorandom('hehastheball')
+            mult = mult + (pseudorandom('hehastheball',8,13) + pseudorandom('hehastheball')) * (pseudorandom('aids',-1,10) * .5)
             return {
                 message = "+10 mult..........",
                 colour = G.C.FILTER
@@ -579,6 +768,8 @@ FishAndChips.Fish { --sweet bro and hella jeff fish
 
     use = function(self, card)
         local _card = copy_card(card) --intended behaviour
+		_card:CCitty_add_dialogue('CCitty_sbahj',nil,'tl')
+		_card:CCitty_remove_dialogue(20)
     end,
     can_use = function(self, card)
         return true
@@ -588,7 +779,33 @@ FishAndChips.Fish { --sweet bro and hella jeff fish
     end,
 }
 
-FishAndChips.Fish { --Garfield Phone TODO
+local garf_change = end_round
+function end_round()
+	garf_change()
+	if G.GAME.garfield_day then
+		if G.GAME.garfield_day == "Monday" then
+			G.GAME.garfield_day = "Tuesday"
+		elseif G.GAME.garfield_day == "Tuesday" then
+			G.GAME.garfield_day = "Wednesday"
+		elseif G.GAME.garfield_day == "Wednesday" then
+			G.GAME.garfield_day = "Thursday"
+		elseif G.GAME.garfield_day == "Thursday" then
+			G.GAME.garfield_day = "Friday"
+		elseif G.GAME.garfield_day == "Friday" then
+			G.GAME.garfield_day = "Saturday"
+		elseif G.GAME.garfield_day == "Saturday" then
+			G.GAME.garfield_day = "Sunday"
+		elseif G.GAME.garfield_day == "Sunday" then
+			G.GAME.garfield_day = "Monday"
+		end
+	end
+end
+local garf_start = Game.start_run
+function Game:start_run(args)
+	garf_start(self, args)
+	G.GAME.garfield_day = G.GAME.garfield_day or pseudorandom_element({"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"},pseudoseed('ihatemondays'))
+end
+FishAndChips.Fish { --Garfield Phone
 	key = "garfieldphone",
 	atlas = "CCittyfish",
 	pos = { x = 0, y = 2 },
@@ -599,18 +816,141 @@ FishAndChips.Fish { --Garfield Phone TODO
 	attributes = { 'usable', 'generation' },
 	config = {
 		extra = {
+			can_call = true
 		}
+	},
+	stats = {
+		weight = {min = 1, max = 2},
+		length = {min = .25, max = 2}
 	},
 	environments = {
         pier = 10,
         backroom = 3,
         wormhole = 2
 	},
-	loc_vars = function(self, info_queue, card)
-		return { vars = {  } }
+	in_pool = function(self, args)
+		return G.GAME.garfield_day ~= 'Monday'
 	end,
+	loc_vars = function(self, info_queue, card)
+		if card.area and card.area == G.fac_fish_area then
+			local colour = G.C.BLACK
+			if G.GAME.garfield_day == "Monday" then
+				colour = G.C.RED
+			elseif G.GAME.garfield_day == "Tuesday" then
+				colour = G.C.BLUE
+			elseif G.GAME.garfield_day == "Wednesday" then
+				colour = G.C.PURPLE
+			elseif G.GAME.garfield_day == "Thursday" then
+				colour = G.C.BLACK
+			elseif G.GAME.garfield_day == "Friday" then
+				colour = G.C.GREEN
+			elseif G.GAME.garfield_day == "Saturday" then
+				colour = G.C.MONEY
+			elseif G.GAME.garfield_day == "Sunday" then
+				colour = G.C.ETERNAL
+			end
+			local main_end = {
+				{
+					n = G.UIT.C,
+					config = { align = "bm", minh = 0.4 },
+					nodes = {
+						{
+							n = G.UIT.C,
+							config = { ref_table = card, align = "m", colour = colour, r = 0.05, padding = 0.06 },
+							nodes = {
+								{ n = G.UIT.T, config = { text = " " .. G.GAME.garfield_day .. " ", colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
+							}
+						}
+					}
+				}
+			}
+			return { main_end = main_end }
+		end
+	end,
+
+	use = function(self, card)
+		local actually_used = false
+    	if G.GAME.garfield_day == "Monday" then
+			play_sound('fac_CCitty_garf'..pseudorandom('ihatemondays',1,5))
+			card_eval_status_text(card, 'extra', nil, nil, nil, {message = "No answer...", colour = G.C.ORANGE})
+			actually_used = true
+		elseif G.GAME.garfield_day == "Tuesday" then
+			SMODS.upgrade_poker_hands{hands = G.GAME.current_round.most_played_poker_hand, level_up = 3, from = card}
+			actually_used = true
+		elseif G.GAME.garfield_day == "Wednesday" then
+			for i=1, (G.consumeables.config.card_limit) do
+				if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+					G.E_MANAGER:add_event(Event({func = function()
+                        local new = SMODS.add_card{set = 'Spectral', area = G.consumeables, key = 'c_medium'}
+                        G.GAME.consumeable_buffer = 0
+                        new:juice_up(0.5, 0.5)
+                        return true
+                    end}))
+					actually_used = true
+                    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+				end
+			end
+			if not actually_used then
+				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_no_room_ex')})
+			end
+		elseif G.GAME.garfield_day == "Thursday" then
+			G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base + 2
+			card_eval_status_text(card, 'extra', nil, nil, nil,{colour = G.C.ORANGE, message = localize{type = "variable", key = "ph_fac_upgrade_increase", vars = {G.fac_fish_area.config.card_limits.base - 2, G.fac_fish_area.config.card_limits.base}}})
+			actually_used = true
+		elseif G.GAME.garfield_day == "Friday" then
+			if #G.jokers.cards < G.jokers.config.card_limit then
+				SMODS.add_card{set = 'Joker', rarity = 'Rare', key_append = 'garfybaby'}
+				actually_used = true
+			else
+				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_no_room_ex')})
+			end
+		elseif G.GAME.garfield_day == "Saturday" then
+			local available = {}
+			for k, v in pairs(G.fac_fish_area.cards) do
+				if v ~= card and not v.ability.eternal then
+					available[#available+1] = v
+				end
+			end
+			if available[1] then
+				actually_used = true
+				SMODS.destroy_cards(pseudorandom_element(available, pseudoseed('garfybaby')))
+				ease_sand_dollars(9)
+				ease_dollars(20)
+			else
+				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_nope_ex'), colour = G.C.ORANGE})
+			end
+		elseif G.GAME.garfield_day == "Sunday" then
+			local available = {}
+			for k, v in pairs(G.fac_fish_area.cards) do
+				if v ~= card and not v.edition then
+					available[#available+1] = v
+				end
+			end
+			if available[1] then
+				actually_used = true
+				pseudorandom_element(available, pseudoseed('garfybaby')):set_edition('e_polychrome')
+			else
+				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_nope_ex'), colour = G.C.ORANGE})
+			end
+		end
+		if actually_used then card.ability.extra.can_call = false end
+    end,
+
+    can_use = function(self, card)
+        return card.ability.extra.can_call
+    end,
+    keep_on_use = function(self, card)
+        return true
+    end,
+
 	calculate = function(self, card, context)
-		
+		if context.end_of_round and context.main_eval and G.GAME.blind.boss and not context.blueprint then
+            card.ability.extra.can_call = true
+            return {
+                message = localize('k_reset')
+            }
+        end
 	end,
 }
 
@@ -629,6 +969,10 @@ FishAndChips.Fish { --Bluebell Angler
 	environments = {
 		aquifer = 1,
 		garden = 1
+	},
+	stats = {
+		weight = {min = .01, max = .06},
+		length = {min = .02, max = .18}
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = {} }
@@ -721,13 +1065,19 @@ FishAndChips.Fish { --Solin the Sea Slug
 			chosen = 1
 		}
 	},
+	stats = {
+		weight = {min = .2, max = 3.3},
+		length = {min = .07, max = .44}
+	},
 	environments = {
 		chocolate_river = 1
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = {card.ability.extra.dollars, card.ability.extra.remaining, card.ability.extra.names[card.ability.extra.chosen], card.ability.extra.chosen < 17 and "This delectable Slug goes by numerous names. It often rolls on" or "You could say he is... pogging through the pain. It attempts to", card.ability.extra.chosen < 17 and "the ocean floor, picking up chocolate beans in the process." or "roll on the ocean floor, though typically gets stuck on it."} }
 	end,
-
+	flavour_vars = function(self, info_queue, card)
+		return { vars = {card.ability.extra.dollars, card.ability.extra.remaining, card.ability.extra.names[card.ability.extra.chosen], card.ability.extra.chosen < 17 and "This delectable Slug goes by numerous names. It often rolls on" or "You could say he is... pogging through the pain. It attempts to", card.ability.extra.chosen < 17 and "the ocean floor, picking up chocolate beans in the process." or "roll on the ocean floor, though typically gets stuck on it."} }
+	end,
 	on_catch = function(self, card)
 		card.ability.extra.chosen = pseudorandom('solin',1,20)
 		if card.ability.extra.chosen >= 5 then
