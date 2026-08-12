@@ -1,8 +1,8 @@
 FishAndChips.Fish {
     key = 'gappieyouh_obsession',
-    atlas = 'placeholders',
+    atlas = 'gy_fish',
     weight = 10,
-    pos = {x=0,y=0},
+    pos = {x=1,y=0},
     ppu_coder = { 'Youh' },
     ppu_artist = { 'Gappie' },
     attributes = { 'economy' },
