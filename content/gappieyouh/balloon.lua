@@ -30,7 +30,7 @@ FishAndChips.Fish {
                 card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
                 return {message = 'Upgrade!', colour = G.C.CHIPS}
             end
-            if context.selling_card and context.card.ability.set == 'Fish' then
+            if context.selling_card and context.card.ability.set == 'fac_Fish' then
                 card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
                 return {message = 'Upgrade!', colour = G.C.CHIPS}
             end
