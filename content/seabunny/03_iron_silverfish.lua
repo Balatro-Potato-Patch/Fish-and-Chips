@@ -2,7 +2,7 @@
 FishAndChips.Fish {
     key = "iron_silverfish",
     atlas = "seabunny",
-    pos = {x = 0, y = 0},
+    pos = {x = 2, y = 0},
     config = {extra = {chips = 50, req = 50, times = 10, count = 10}},
     blueprint_compat = true,
     badge_key = "k_fac_seabunny_mineral_fish",
@@ -59,12 +59,13 @@ FishAndChips.Fish {
     weight = 4,
     attributes = {"chips", "generation", "destroy_card"},
     environments = {
-        -- TODO
+        pier = 20,
+        aquifer = 80
     },
     ppu_coder = {"ouiiskey"},
     ppu_artist = {"Lusha"},
     stats = {
-        weight = {min = 0, max = 0}, -- TODO
-        length = {min = 0, max = 0} -- TODO
+        weight = {min = 1.2, max = 2},
+        length = {min = 0.2, max = 0.4}
     }
 }

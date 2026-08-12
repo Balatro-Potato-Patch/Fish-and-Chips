@@ -2,7 +2,7 @@
 FishAndChips.Fish {
     key = "aquamarine_anglerfish",
     atlas = "seabunny",
-    pos = {x = 0, y = 0},
+    pos = {x = 9, y = 0},
     config = {extra = {gain = 0.03, xmult = 1, cards = 5, times = 8, count = 0}},
     blueprint_compat = true,
     badge_key = "k_fac_seabunny_mineral_fish",

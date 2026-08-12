@@ -2,7 +2,7 @@
 FishAndChips.Fish {
     key = "opal_moonfish",
     atlas = "seabunny",
-    pos = {x = 0, y = 0},
+    pos = {x = 6, y = 0},
     config = {extra = {times = 2, count = 0}},
     blueprint_compat = true,
     badge_key = "k_fac_seabunny_mineral_fish",

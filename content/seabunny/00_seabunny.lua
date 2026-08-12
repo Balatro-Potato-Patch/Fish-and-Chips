@@ -54,10 +54,17 @@ SMODS.current_mod.calculate = function(self, context)
 end
 
 -- Potato Patch Utils
+SMODS.Atlas {
+    key = "seabunny_credits",
+    path = "seabunny/credits.png",
+    px = 71,
+    py = 95
+}
+
 PotatoPatchUtils.Developer {
     name = "ouiiskey",
     colour = HEX("f96932"),
-    atlas = "fac_seabunny",
+    atlas = "fac_seabunny_credits",
     pos = {x = 0, y = 0},
     fac_partner = "fac_Lusha",
     loc = "PotatoPatchDev_ouiiskey",
@@ -118,8 +125,8 @@ PotatoPatchUtils.Developer {
     name = "Lusha",
     colour = HEX("f35555"),
     shaders = {"fac_lusha"},
-    atlas = "fac_seabunny",
-    pos = {x = 0, y = 0},
+    atlas = "fac_seabunny_credits",
+    pos = {x = 1, y = 0},
     fac_partner = "fac_ouiiskey",
     loc = "PotatoPatchDev_Lusha",
     loc_vars = function(self, info_queue, card)

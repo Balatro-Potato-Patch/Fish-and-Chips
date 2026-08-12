@@ -2,7 +2,7 @@
 FishAndChips.Fish {
     key = "ruby_snapper",
     atlas = "seabunny",
-    pos = {x = 0, y = 0},
+    pos = {x = 3, y = 0},
     config = {extra = {times = 5, count = 5}},
     blueprint_compat = true,
     badge_key = "k_fac_seabunny_mineral_fish",
@@ -38,12 +38,13 @@ FishAndChips.Fish {
     weight = 4,
     attributes = {"economy"},
     environments = {
-        -- TODO
+        pier = 20,
+        aquifer = 80
     },
     ppu_coder = {"ouiiskey"},
     ppu_artist = {"Lusha"},
     stats = {
-        weight = {min = 0, max = 0}, -- TODO
-        length = {min = 0, max = 0} -- TODO
+        weight = {min = 8, max = 12},
+        length = {min = 0.7, max = 0.9}
     }
 }
