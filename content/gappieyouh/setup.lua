@@ -1,12 +1,12 @@
 PotatoPatchUtils.Developer({
 	name = 'Gappie',
-	atlas = 'fac_prototypes',
-	colour = G.C.MULT,
+	atlas = 'prototypes',
+	colour = HEX('FFCB00FF'),
 	fac_partner = 'fac_Youh',
 })
 PotatoPatchUtils.Developer({
 	name = 'Youh',
-	atlas = 'fac_cards',
+	atlas = 'prototypes',
 	colour = G.C.CHIPS,
 	fac_partner = 'fac_Gappie',
 })

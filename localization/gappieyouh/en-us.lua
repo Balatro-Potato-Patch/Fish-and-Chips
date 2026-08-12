@@ -99,8 +99,8 @@ return {
                 name = 'Freshly Minted PSA 10 Fish',
                 text = {
                     { 
-                        "Beating a {C:attention}boss blind{} in one",
-                        "{C:hand}hand{} gives {C:planet}#1# bait{} and {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{}"
+                        "Defeating a {C:attention}Boss Blind{} in one",
+                        "{C:blue}hand{} gives {C:planet}#1# Bait{} and {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{}"
                     }
                 },
                 flavour = {
