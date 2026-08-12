@@ -33,11 +33,11 @@ return {
             PotatoPatchDev_Parsa = {
                     name = "Parsa",
                     text = {
-                        '{C:green}Hi guys{}',
+                        '{C:green}Hello there!{}',
                         '{C:blue}hope you enjoy this mod as much as we enjoyed developing it{}',
                         "{C:inactive}although I haven't added much{}",
-                        "{s:2,C:dark_edition}I'M SO SORRY{}",
-                        "{C:inactive}if you don't know why I'm apologising, you'll find out soon...{}"
+"happy playing and", 
+"see u around" 
             },
         },
     },
