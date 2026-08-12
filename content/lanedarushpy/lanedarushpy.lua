@@ -395,6 +395,7 @@ FishAndChips.Fish {
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "xmult" },
+    badge_key = 'k_fac_lizie_fly',
 	config = {
 		extra = {
 			divide = 250,
@@ -519,6 +520,7 @@ FishAndChips.Fish {
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "chips", "mult", "economy" },
+    badge_key = 'k_fac_lizie_windows',
 	config = {
 		extra = {
 			min_sand_dollars = -1,
@@ -655,6 +657,7 @@ FishAndChips.Fish {
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "economy" },
+    badge_key = 'k_fac_lizie_blow',
 	config = {
 		extra = {
 			sands = 1
@@ -708,6 +711,7 @@ FishAndChips.Fish {
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "economy", "destroy_card" },
+    badge_key = 'k_fac_lizie_thing',
 	config = {
 		extra = {
 			sell_value = 1,
@@ -787,6 +791,7 @@ FishAndChips.Fish {
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "copying" },
+    badge_key = 'k_fac_lizie_still',
 	config = {
 		extra = {
 			odds = 4
@@ -864,9 +869,9 @@ FishAndChips.Fish {
         length = { min = 0.1, max = 0.6}
     },
 	environments = {
-        pier = 1,
-        soup = 0.35,
-        city_river = 0.15
+        pier = 50,
+        soup = 20,
+        city_river = 5
 	},
 	loc_vars = function(self, info_queue, card)
         local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizie_cafindish")
@@ -922,6 +927,7 @@ FishAndChips.Fish {
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "economy" },
+    badge_key = 'k_fac_lizie_jelly',
 	config = {
 		extra = {
 			odds = 2,
@@ -950,9 +956,9 @@ FishAndChips.Fish {
         length = { min = 0.4, max = 1.2}
     },
 	environments = {
-        pier = 1,
-        calm_pond = 0.2,
-        wormhole = 0.2
+        volcano = 1,
+        aquifer = 0.2,
+        styx = 0.2
 	},
 
     loc_vars = function (self, info_queue, card)
@@ -1062,6 +1068,7 @@ FishAndChips.Fish {
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "xmult" },
+    badge_key = 'k_fac_lizie_terria',
 	config = {
 		extra = {
 			Xmult = 2
@@ -1076,9 +1083,8 @@ FishAndChips.Fish {
         length = { min = 0.1, max = 0.6}
     },
 	environments = {
-        pier = 1,
         soup = 0.35,
-        city_river = 0.15
+        wormhole = 0.15
 	},
 
     loc_vars = function (self, info_queue, card)
@@ -1180,6 +1186,7 @@ FishAndChips.Fish {
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "blindsize", "destroy_cards" },
+    badge_key = 'k_fac_lizie_terria',
 	config = {
 		extra = {
 			Xblindsize = 0.5
@@ -1195,9 +1202,8 @@ FishAndChips.Fish {
         length = { min = 0.1, max = 0.6}
     },
 	environments = {
-        pier = 1,
         soup = 0.35,
-        city_river = 0.15
+        wormhole = 0.15
 	},
 
     update = function (self, card, dt)

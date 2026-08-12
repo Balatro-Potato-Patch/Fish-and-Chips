@@ -26,7 +26,7 @@ return {
                 },
                 flavour = {
                     "I'm pretty sure this",
-                    "is a fish? It has fins"
+                    "is a fish, right? It has fins."
                 }
             },
 
@@ -40,8 +40,8 @@ return {
                     "passed on the way"
                 },
                 flavour = {
-                    "Why people throw these in the ocean?",
-                    "I have no idea."
+                    "I'm sorry, but what did you expect",
+                    "for a 'blowfish'?"
                 }
             },
 
@@ -51,7 +51,7 @@ return {
                     "{C:inactive}(Music made by {C:purple}Lizzie{C:inactive})"
                 },
                 flavour = {
-                    "Is this even a physical object?",
+                    "Would probably taste like Fruit Air.",
                 }
             },
 
@@ -115,6 +115,11 @@ return {
                         "when it matures",
                         "{C:inactive}(Stage changes at end of round){}"
                     }
+                },
+                flavour = {
+                    "Branching off from the known immortal jellyfish,",
+                    "this jellyfish has adapted to mimic a purple",
+                    "presence just to survive in the harshest environments."
                 }
             },
 
@@ -130,6 +135,11 @@ return {
                         "during {C:attention}scoring{}, the bubble",
                         "pops, giving {X:mult,C:white}X#1#{} Mult"
                     }
+                },
+                flavour = {
+                    "Fished from the waters of scourges and tumors,",
+                    "this fish would be having better days",
+                    "not as a makeshift weapon."
                 }
             },
 
@@ -144,8 +154,13 @@ return {
                         "When active, Bladetongue {C:red}slashes",
                         "the first scored {C:hearts}Hearts{} card,",
                         "destroying it and applying",
-                        "{X:purple, C:white}X#1#{} blind size"
+                        "{X:purple,C:white}X#1#{} blind size"
                     }
+                },
+                flavour = {
+                    "Fished from the waters of guck and flesh,",
+                    "this fish would be having better days",
+                    "with a cleaner tongue."
                 }
             }
         },
@@ -161,7 +176,9 @@ return {
             PotatoPatchDev_pangaea47 = {
                 name = "Argel",
                 text = {
-                    "im a spider i think"
+                    "im a spider who just fishened",
+                    "i dont think thats a word",
+                    "whatever im a good artist hi"
                 }
             }
         }
@@ -177,7 +194,13 @@ return {
             k_fac_lizie_regressed = "Regressed!",
             k_fac_lizie_birthed = "Birthed!",
             k_fac_lizie_aged = "Aged!",
-
+            k_fac_lizie_fly = "Totally a Fish",
+            k_fac_lizie_windows = "Window",
+            k_fac_lizie_blow = "Fan",
+            k_fac_lizie_thing = "Unknown",
+            k_fac_lizie_still = "Still Life",
+            k_fac_lizie_jelly = "Jellyfish",
+            k_fac_lizie_terria = "Weaponized Fish",
             k_fac_lizie_jellyfish_larva = "(Larva)",
             k_fac_lizie_jellyfish_polyp = "(Polyp)",
             k_fac_lizie_jellyfish_maturing = "(Maturing)",
