@@ -1,0 +1,32 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = 'engine/sound_manager.lua'
+pattern = "        elseif request.type == 'modulate' then "
+position = "before"
+payload = '''elseif request.type == 'fac_th_ai_stop' then 
+    FAC_TH_AI_STOP_SOUND()
+'''
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = 'engine/sound_manager.lua'
+pattern = "function STOP_AUDIO()"
+position = "before"
+payload = '''function FAC_TH_AI_STOP_SOUND()
+    for _, source in pairs(SOURCES) do
+        for _, s in pairs(source) do
+            if s.sound:isPlaying() or string.find(s.sound_code, "thunder_aiko_miku_") then
+                s.sound:stop()
+            end
+        end
+    end
+end
+'''
+match_indent = true

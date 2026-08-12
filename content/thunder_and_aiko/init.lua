@@ -1,3 +1,5 @@
+FishAndChipsThunderEdgeAiko = {}
+
 local thunderedge_gradient = SMODS.Gradient({
 	key = "thunderedge_gradient",
 	colours = {

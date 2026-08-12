@@ -910,6 +910,11 @@ FishAndChips.Fish({
 	end,
 })
 
+local miku_click = function (self)
+	Card.click(self)
+	FishAndChipsThunderEdgeAiko.play_random_miku_sound()
+end
+
 FishAndChips.Fish({
 	key = "miku",
 	weight = 5,
@@ -934,6 +939,12 @@ FishAndChips.Fish({
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
 	config = { extra = { xchips = 2 } },
+	set_ability = function (self, card, initial, delay_sprites)
+		card.click = miku_click
+	end,
+	add_to_deck = function (self, card, from_debuff)
+		card.fac_thu_aik_timer = 0
+	end,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -949,6 +960,20 @@ FishAndChips.Fish({
 			}
 		end
 	end,
+	update = function (self, card, dt)
+		-- bugfixers, my request is that this should somehow only play ONCE when you click and WAIT until it is finished playing
+		-- it also plays every so often so there might have to be 
+		if card.added_to_deck then
+			card.fac_thu_aik_timer = (card.fac_thu_aik_timer or 0) + (dt / G.SETTINGS.GAMESPEED)
+			if card.fac_thu_aik_timer >= 20 then
+				local playsoundornot = pseudorandom("miku_fish.play_random_miku_sound")
+				if playsoundornot >= 0.9 then
+					FishAndChipsThunderEdgeAiko.play_random_miku_sound(0.3)
+				end
+				card.fac_thu_aik_timer = 0
+			end
+		end
+	end
 })
 
 FishAndChips.Fish({
