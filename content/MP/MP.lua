@@ -1,8 +1,7 @@
 PotatoPatchUtils.Developer({
 	name = 'Carrier4133 (MP)',
-	atlas = 'MP/fac_MPcards.png', --reused from Wormhole because I'm tired (credit art by SarcPot)
-	pos = { x = 0, y = 0 }
-	colour = G.C.BLACK,
+	atlas = 'fac_MPcards',
+	colour = G.C.YELLOW,
 	ignore_limits = false, -- USING THIS VALUE WILL RESULT IN YOUR SUBMISSION BEING REJECTED
 })
 
