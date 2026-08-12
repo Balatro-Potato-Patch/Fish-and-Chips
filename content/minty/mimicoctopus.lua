@@ -41,7 +41,7 @@ FishAndChips.Fish{
     update = function (self, card, dt)
         local center = card.ability.extra.target_key and G.P_CENTERS[card.ability.extra.target_key] or self
 
-        if center.update and center.ppu_coder[1] == self.ppu_coder[1] then
+        if center.update and (center.ppu_coder or {})[1] == self.ppu_coder[1] then
             PotatoPatchUtils.Developers.fac_minty:set_line_boil(center, card, center.pos.y)
         end
 
