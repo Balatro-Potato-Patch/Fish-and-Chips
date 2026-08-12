@@ -14,7 +14,9 @@ FishAndChips.Fish {
 	},
 	environments = {
 		volcano = 1,
-        calm_pond = 1,
+        calm_pond = 0.25,
+        city_river = 1,
+        soup = 0.25,
 	},
     stats = {
         weight = {min = 0.015, max = 0.03},

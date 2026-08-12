@@ -20,6 +20,7 @@ FishAndChips.Fish {
 	environments = {
 		chocolate_river = 1,
         soup = 1,
+        styx = 1,
 	},
     -- placeholder values
     stats = {

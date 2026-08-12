@@ -14,6 +14,7 @@ FishAndChips.Fish {
     cost = 3,
 	environments = {
 		wormhole = 1,
+        styx = 0.0001, -- because it's dying
 	},
     stats = {
 		weight = {min = 1000, max = 2000},

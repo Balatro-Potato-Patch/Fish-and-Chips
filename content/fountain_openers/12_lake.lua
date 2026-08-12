@@ -17,7 +17,7 @@ FishAndChips.Fish {
     cost = 9,
 	environments = {
 		city_river = 1,
-        backroom = 0.1,
+        backroom = 1,
         calm_pond = 0.01,
 	},
 	stats = {
