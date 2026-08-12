@@ -134,35 +134,44 @@ FishAndChips.Fish({
                 colour = G.C.SO_1[card.ability.extra.current]
             }
         end
-        -- TODO: tidy up these animations
         if context.individual and context.cardarea == G.play and self:check_card(card, context.other_card) then
             if SMODS.pseudorandom_probability(card, 'r_e_butterfly', 1, card.ability.extra.denom) then
                 local target = context.other_card
                 local suit = card.ability.extra.current or pseudorandom_element(SMODS.Suit.obj_buffer)
+                while target:is_suit(suit) do
+                    suit = pseudorandom_element(SMODS.Suit.obj_buffer)
+                end
 
                 if suit == 'Wild' then
                     G.E_MANAGER:add_event(Event({
-                            type = 'after',
-                            func = function()
-                                target:juice_up()
-                                target:set_ability('m_wild')
-                                return true
-                            end
-                        }))
+                        type = 'after', delay = 0.7,
+                        func = function()
+                            target:juice_up()
+                            target:set_ability('m_wild')
+                            SMODS.calculate_effect({
+                                message = localize('fac_r_e_butterfly'),
+                                instant = true
+                            }, target)
+                            return true
+                        end
+                    }))
                 else
-                    target.base.suit = card.ability.extra.current
-                        G.E_MANAGER:add_event(Event({
-                            type = 'after',
-                            func = function()
-                                target:juice_up()
-                                assert(SMODS.change_base(target, suit))
-                                return true
-                            end
-                        }))
+                    target.base.suit = suit
+                    G.E_MANAGER:add_event(Event({
+                        type = 'after', delay = 0.7,
+                        func = function()
+                            target:juice_up()
+                            assert(SMODS.change_base(target, suit))
+                            SMODS.calculate_effect({
+                                message = localize('fac_r_e_butterfly'),
+                                instant = true
+                            }, target)
+                            return true
+                        end
+                    }))
                 end
-                return {
-                    message = 'Butterfly!',
-                }
+                delay(1)
+                return nil, true
             end
         end
     end,

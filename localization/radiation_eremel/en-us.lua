@@ -233,6 +233,7 @@ return {
             fac_r_e_reduce = '-$1',
             fac_r_e_temporary_bubble = '  temporary  ',
             fac_r_e_stored = 'Stored!',
+            fac_r_e_butterfly = 'Butterfly!',
         }
     }
 }
