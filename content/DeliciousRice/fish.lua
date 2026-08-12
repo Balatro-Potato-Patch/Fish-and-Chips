@@ -323,9 +323,11 @@ FishAndChips.Fish { -- Blender
 			if v ~= card then
 				---@type Card
 				local copy = copy_card(v, nil, 0)
+				copy.ability = copy.ability or {}
+				copy.ability.extra = copy.ability.extra or {}
 				copy.ability.extra.blender_id = card.ability.extra.id
 				G.delrice_blender_area:emplace(copy)
-				SMODS.destroy_cards(v)
+				SMODS.destroy_cards(v, {bypass_eternal = true})
 			end
 		end
 		G.E_MANAGER:add_event(Event({
