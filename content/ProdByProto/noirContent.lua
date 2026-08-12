@@ -151,7 +151,7 @@ FishAndChips.ProdByProto.loadFih = function()
             cae = card.ability.extra
             local vars_ = {}
             if cae.storyComplete then
-                vars_[#vars_+1] = localize({type = "variable", key = "proot_sanddoller", vars = {floor(cae.finalScore/10)}})
+                vars_[#vars_+1] = localize({type = "variable", key = "proot_sanddoller", vars = {math.floor(cae.finalScore/10)}})
                 if cae.finalScore > 144 then vars_[#vars_+1] = "{C:chips}"..localize({type = "variable", key = "a_chips", vars = {cae.finalScore*2}}) else vars_[#vars_+1] = " " end
                 if cae.finalScore > 184 then vars_[#vars_+1] = "{C:white,X:mult}"..localize({type = "variable", key = "a_xmult", vars = {cae.finalScore/100}}) else vars_[#vars_+1] = " " end
             else
@@ -185,6 +185,12 @@ FishAndChips.ProdByProto.loadFih = function()
             return true
         end,
 
+        remove_from_deck = function (self, card, from_debuff)
+            if not from_debuff then
+                G.GAME.proto_noirshade = nil
+                facp.q_music = "false"
+            end
+        end,
 
         calculate = function(self, card, context)
             local cae = card.ability.extra
@@ -329,6 +335,9 @@ FishAndChips.ProdByProto.loadFih = function()
                             if cae.final_investigation then
                                 facp.noirProg({flg = 6, lvl = 12})
                             end
+                            if cae.playing_true_end then
+                                SMODS.destroy_cards(self,nil,nil,true)
+                            end
                         end
                     end
                 end
@@ -357,7 +366,7 @@ FishAndChips.ProdByProto.loadFih = function()
 
             if cae.storyComplete then
                 if context.modify_final_cashout then
-                    local money = math.max(0, math.floor(cae.finalScore/10))
+                    local money = math.max(0, math.math.floor(cae.finalScore/10))
                     if money > 0 then
                         return { sand_dollars = money }
                     end
@@ -375,7 +384,7 @@ FishAndChips.ProdByProto.loadFih = function()
                     end
                 end
             end
-        end,
+        end
 
     }
 
