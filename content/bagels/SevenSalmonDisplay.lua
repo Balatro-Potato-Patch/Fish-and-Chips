@@ -8,7 +8,7 @@ SMODS.Atlas {
 FishAndChips.Fish {
 	key = 'bagels_seven_salmon_display',
 	atlas = 'bagels_seven_salmon_display',
-	ppu_coder = { 'BakersDozenBagels' },
+	ppu_coder = { 'BakersDozenBagels', 'Emik' },
 	ppu_artist = { 'BakersDozenBagels' },
 	weight = 10,
 	environments = { garden = 1, calm_pond = 1, chocolate_river = 0.7 },

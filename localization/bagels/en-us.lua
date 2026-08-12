@@ -55,13 +55,22 @@ return {
 				flavor = { 'This carniverous fish grows fast,', 'often outgrowing its habitat.' },
 			},
 			fish_fac_bagels_fish_phone = {
-				name = 'fish fone',
+				name = 'fish phone',
 				text = {
 					'{C:attention}+#1#{} card slots in shop',
 					'{C:red}Destroys{} a random {C:fac_fish}Fish{} or',
 					'{C:attention}Joker{} when {C:attention}rerolling{} the shop',
 				},
 				flavor = { 'Honorable mention of', 'Top 10 Cool Phones' },
+			},
+			bagels_seven_salmon_display = {
+				name = 'Seven Salmon Display',
+				text = {
+					'{X:red,C:white}X#1#{} Mult if hand contains',
+					'exactly {C:attention}#2# {}scored cards',
+					'{C:inactive}(Card amount changes every round)',
+				},
+				flavor = { 'Shockingly, its circuit', 'contains ω-3 fatty acids!' },
 			},
 		},
 	},
