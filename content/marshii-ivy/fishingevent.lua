@@ -25,14 +25,22 @@ SMODS.Gradient {
 local marshii_colour = SMODS.Gradient {
     key = "marshii_colour",
     colours = {
-        HEX("c6abf5"),
-        HEX("c6abf5"),
+        HEX("c8a8ff"),
+        HEX("f2a8ff"),
     }
+}
+
+SMODS.Atlas {
+    key = "ivy_may_credits",
+    path = "marshii-ivy/ivy_may.png",
+    px = 71,
+    py = 95,
 }
 
 PotatoPatchUtils.Developer({
     name = "ivy",
     fac_partner = "fac_marshii",
+    atlas = "fac_ivy_may_credits",
     colour = felli_colours,
     loc = true,
 })
@@ -54,7 +62,7 @@ PotatoPatchUtils.Developer({
 })
 
 local cuhook = Card.update -- i deeply apologize for hooking update you can put me on the stake and kill me if you want
-function Card:update(...)
+function Card:update(...) --hey, marshii here below. #watdatmean. all I know is that it works
     cuhook(self, ...)
     if self.ppu_member and self.ppu_member.key == "fac_marshii" then
         self.children.center:set_sprite_pos({x=self.states.hover.is and 1 or 0, y=0})
@@ -78,7 +86,7 @@ SMODS.Atlas {
 FishAndChips.Fish {
     key = "stencil",
     ppu_coder = { "ivy" },
-    ppu_artist = { "marshii" },
+    ppu_artist = { "marshii" }, --:chud:
     atlas = "marshii-chud-fishies",
     pos = { x = 0, y = 0 },
     weight = 10,
