@@ -17,6 +17,7 @@ FishAndChips.Fish { -- Fring
 		wormhole = 2,
 		city_river = 3
 	},
+	blueprint_compat = true,
 	eternal_compat = false,
 	stats = {
 		weight = {min = 7, max = 11},
@@ -258,6 +259,10 @@ FishAndChips.Fish { -- Blender
 			id = 0
 		}
 	},
+	
+	blueprint_compat = true,
+	eternal_compat = false,
+
 	cost = 5,
 	weight = 15,
 	environments = {
@@ -388,47 +393,50 @@ FishAndChips.Fish { -- Gambling
 	loc_vars = function(self, info_queue, card)
  		return {vars = {card.ability.extra.money, card.ability.extra.scalar}}
 	end,
-
+	blueprint_compat = true,
+	eternal_compat = false,
 	add_to_deck = function(self, card, from_debuff)
 		FishAndChips.DeliciousRice.talk(card, 1.2, 0.2, "fac_delrice_letsgo", 0.6)
 	end,
 	calculate = function(self, card, context)
 		if context.fac_end_fishing and context.treasure_available then
 			if context.treasure then
-				SMODS.scale_card(card, {
-					ref_table = card.ability.extra,
-					ref_value = "money",
-					scalar_value = "scalar",
-				})
+				if not context.blueprint then
+					SMODS.scale_card(card, {
+						ref_table = card.ability.extra,
+						ref_value = "money",
+						scalar_value = "scalar",
+					})
 
-				local middle_func = function()
-					G.E_MANAGER:add_event(Event({
-						func = function()
-							card.children.center:set_sprite_pos({x = 1, y = 2})
-							-- sendDebugMessage("set")
-							return true
-						end
-					}))
-					local length = 1.2 
-					FishAndChips.DeliciousRice.talk(card, length, 0.2, "fac_delrice_winning", 0.6)
-				end
+					local middle_func = function()
+						G.E_MANAGER:add_event(Event({
+							func = function()
+								card.children.center:set_sprite_pos({x = 1, y = 2})
+								-- sendDebugMessage("set")
+								return true
+							end
+						}))
+						local length = 1.2 
+						FishAndChips.DeliciousRice.talk(card, length, 0.2, "fac_delrice_winning", 0.6)
+					end
 
-				local end_func = function() 
-					card.children.center:set_sprite_pos({x = 0, y = 0}) 
-					-- sendDebugMessage("reset")
+					local end_func = function() 
+						card.children.center:set_sprite_pos({x = 0, y = 0}) 
+						-- sendDebugMessage("reset")
+					end
+					
+					FishAndChips.DeliciousRice.fancy_death(card,
+						nil,
+						middle_func, 
+						false,
+						nil,
+						nil,
+						end_func
+					)
 				end
-				
-				FishAndChips.DeliciousRice.fancy_death(card,
-					nil,
-					middle_func, 
-					false,
-					nil,
-					nil,
-					end_func
-				)
 
 				return {sand_dollars = card.ability.extra.money}
-			else				
+			elseif not context.blueprint then				
 				local middle_func = function()
 					G.E_MANAGER:add_event(Event({
 						func = function()
