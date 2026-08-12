@@ -459,7 +459,7 @@ FishAndChips.Fish({
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = {set='Other',key='fac_r_e_temp'}
         return {vars = {localize({type='name_text', set='Enhanced', key=card.ability.extra.enhancement}), card.ability.extra.amount, card.ability.extra.reset, card.ability.extra.current},
-    key = card.ability.extra.active and 'fish_fac_r_e_clam' or 'fish_fac_r_e_clam_2'}
+    key = not card.ability.extra.active and self.key..'_2'}
     end,
     calculate = function(self, card, context)
         if context.first_hand_drawn and card.ability.extra.active then
@@ -527,3 +527,172 @@ FishAndChips.Fish({
         end
     end,
 })
+
+
+function FishAndChips.radiation_eremel.create_multi_box(args, AUT)
+    local _c = G.P_CENTERS[args.center]
+    if _c then
+        local res = {}
+        res = _c:loc_vars({}, args.card, args.type).vars
+        args.vars = args.vars or res
+    end
+    local box = {background_colour = G.C.WHITE}
+    for j, line in ipairs(G.localization.descriptions[args.set][args.key].text_parsed) do
+        local final_line = SMODS.localize_box(line, args)
+        box[#box+1] = final_line
+    end
+    return box
+end
+
+local gen_aut_hook = Card.generate_UIBox_ability_table
+function Card:generate_UIBox_ability_table(v)
+    if v then return gen_aut_hook(self, v) end
+    local aut = gen_aut_hook(self)
+    aut.multi_box = aut.multi_box or {}
+    aut.info = aut.info or {}
+    if self.config.center_key == 'fish_fac_r_e_globe' then
+        if next(self.ability.extra.current_scaling) then
+            for _, type in ipairs(self.ability.extra.current_scaling) do
+                aut.multi_box[#aut.multi_box+1] = FishAndChips.radiation_eremel.create_multi_box({key = 'fac_r_e_'..type, set = 'Other', center = self.config.center_key, card = self, type = type}, aut)
+            end
+        end
+    end
+    return aut
+end
+
+FishAndChips.Fish({
+    key = 'r_e_globe',
+    atlas = 'r_e_fish',
+    pos = {x = 1, y = 2},
+    ppu_coder = {'eremel'},
+    ppu_artist = {'radiation'},
+    weight = 9,
+    environments = {
+        calm_pond = 6,
+        garden = 5,
+        wormhole = 2,
+        soup = 2
+    },
+    attributes = {'scaling', 'destroy_card', 'usable'},
+    stats = {
+        weight = {min = 1, max = 2},
+        length = {min = 1, max = 2},
+    },
+    config = {extra = {consumed = 0, current_scaling = {}}},
+    scaling_types = {
+        mult = {gain = 2, key = 'mult'},
+        chips = {gain = 10, key = 'chips'},
+        economy = {gain = 1, key = 'dollars'},
+        xmult = {gain = 0.05, key = 'xmult', base = 1}
+    },
+    loc_vars = function(self, info_queue, card, type)
+        if card.ability and not next(card.ability.extra.current_scaling) then 
+            for type, _ in pairs(self.scaling_types) do
+                info_queue[#info_queue+1] = {set = 'Other', key = 'fac_r_e_'..type, vars = {(type=='economy' and localize('$') or '') .. _.gain, _.gain * card.ability.extra.consumed + (_.base or 0)}}
+            end
+            local target
+            local att = ''
+            for i, fish in ipairs(G.fac_fish_area.cards) do
+                if fish == card and G.fac_fish_area.cards[i+1] then target = G.fac_fish_area.cards[i+1]; break end
+            end
+            if target and not next(card.ability.extra.current_scaling) then
+                for attribute, v in pairs(target.config.center.attributes) do
+                    if v and self.scaling_types[attribute] then
+                        att = att .. ' ' .. localize({type='name_text', key='fac_r_e_'..attribute, set='Other'})
+                    end
+                end
+            end
+            if string.len(att) == 0 then att = ' None' end
+            return {vars = {att}}
+        end
+        return {vars = type and {self.scaling_types[type].gain, self.scaling_types[type].gain * card.ability.extra.consumed + (self.scaling_types[type].base or 0)} or {card.ability.extra.consumed},
+                key = next(card.ability.extra.current_scaling) and self.key..'_2'}
+    end,
+    can_use = function(self, card)
+        for i, fish in ipairs(G.fac_fish_area.cards) do
+            if fish == card and G.fac_fish_area.cards[i+1] then
+                for attribute, v in pairs(G.fac_fish_area.cards[i+1].config.center.attributes) do
+                    if v and self.scaling_types[attribute] then
+                        return true
+                    end
+                end
+                return next(card.ability.extra.current_scaling)
+            end
+        end
+        return false
+    end,
+    set_sprites = function(self, card)
+        card.children.base_shine = SMODS.create_sprite(0,0, card.T.w, card.T.h, SMODS.get_atlas(self.atlas), {x=2, y=2})
+        card.children.base_shine:set_role({major = card, role_type = 'Glued', draw_major = card}) -- TODO: figure out how to get this to stick properly
+        card.children.base_shine.custom_draw = true
+        if card.ability and card.ability.fac_r_e_globed_fish then
+            for k, info in pairs(card.ability.fac_r_e_globed_fish) do
+                    card.children['stored_'..k] = SMODS.create_sprite(0,0, info.w, info.h, SMODS.get_atlas(info.atlas), info.pos)
+                    local offset = {
+                        x = card.T.w/2 - card.children['stored_'..k].T.w/2,
+                        y = card.T.h/2 - card.children['stored_'..k].T.h/4
+                    }
+                    card.children['stored_'..k]:set_role({major = card, role_type = 'Minor', draw_major = card, offset = offset})
+                    card.children['stored_'..k].T.scale = 0.4
+                    card.children['stored_'..k].custom_draw = 'globe'
+            end
+        end
+    end,
+    use = function(self, card)
+        local target
+        for i, fish in ipairs(G.fac_fish_area.cards) do
+            if fish == card and G.fac_fish_area.cards[i+1] then target = G.fac_fish_area.cards[i+1]; break end
+        end
+        if target and not next(card.ability.extra.current_scaling) then
+            for attribute, v in pairs(target.config.center.attributes) do
+                if v and self.scaling_types[attribute] then
+                    card.ability.extra.current_scaling[#card.ability.extra.current_scaling + 1] = attribute
+                end
+            end
+            card.ability.fac_r_e_globed_fish = {}
+            local ignore_keys = {back = true, shadow = true}
+            for k, sprite in pairs(target.children) do
+                if not ignore_keys[k] then
+                    local info = {
+                        w = sprite.T.w/3, h = sprite.T.h/3,
+                        atlas = sprite.atlas.key, pos = sprite.sprite_pos
+                    }
+                    card.ability.fac_r_e_globed_fish[k] = info
+                end
+            end
+            self:set_sprites(card)
+        end
+        card.ability.extra.consumed = card.ability.extra.consumed + 1
+        SMODS.destroy_cards(target, {pinch_anim = true})
+        SMODS.calculate_effect({message = localize('fac_r_e_stored')}, card)
+    end,
+    keep_on_use = function() return true end,
+    calculate = function(self, card, context)
+        if context.joker_main and next(card.ability.extra.current_scaling) then
+            local ret = {}
+            for _, key in ipairs(card.ability.extra.current_scaling) do
+                local s = self.scaling_types[key]
+                ret[s.key] = s.gain * card.ability.extra.consumed + (s.base or 0)
+            end
+            return ret
+        end
+    end,
+})
+
+SMODS.DrawStep {
+    key = 'fac_r_e_globe_fish',
+    order = -11,
+    func = function(self)
+        self.children.base_shine:draw()
+        for k, v in pairs(self.children) do
+            if v.custom_draw and v.custom_draw == 'globe' then
+                v:draw()    
+            end
+        end
+    end,
+    check_individual_condition = function(self, card, layer, k, v)
+        if k == 'key' then return card.config.center_key == v end
+        return true
+    end,
+    conditions = {key = 'fish_fac_r_e_globe'}
+}

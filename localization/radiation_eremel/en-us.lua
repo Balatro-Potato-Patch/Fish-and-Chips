@@ -131,7 +131,7 @@ return {
                         'This Fish gains chips equivalent to',
                         'it\'s {C:attention}length{} in mm'
                     },{
-                        '{C:green}#2# in #3#{} chance this fish',
+                        '{C:green}#2# in #3#{} chance this Fish',
                         'is destroyed at end of round',
                         'and force the next','{C:attention}#5#{} to be {C:dark_edition}#4#mm',
                     }
@@ -162,12 +162,67 @@ return {
                     '{C:inactive}(Currently #4#/#3#)'
                 }
             },
+            fish_fac_r_e_globe = {
+                name = 'Globe Fish',
+                text = {
+                    'Store the {C:fac_fish}Fish{} to the',
+                    '{C:attention}right{} within this fish',
+                    'and gain {C:attention}scaling types',
+                    'based on it\'s {C:attention}attributes',
+                    '{C:inactive,s:0.8}(Will gain:#1#)',
+                    '{ppu_bubble:usable}'
+                },
+                flavour = {
+                    'Choose your very own pet fish!'
+                }
+            },
+            fish_fac_r_e_globe_2 = {
+                name = 'Globe Fish',
+                text = {
+                    'Store the {C:fac_fish}Fish{} to the',
+                    '{C:attention}right{} within this fish',
+                    '{C:inactive}(Stored {C:attention}#1#{C:fac_fish} Fish{C:inactive})',
+                    '{ppu_bubble:usable}'
+                }
+            },
         },
         Other = {
             fac_r_e_temp = {
                 name = 'Temporary',
                 text = {
                     'Removed at end of round'
+                }
+            },
+            fac_r_e_mult = {
+                name = 'Mult',
+                text = {
+                    'Gain {C:mult}+#1#{} Mult for each',
+                    'stored {C:fac_fish}Fish',
+                    '{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)'
+                }
+            },
+            fac_r_e_xmult = {
+                name = 'XMult',
+                text = {
+                    'Gain {C:white,X:mult}X#1#{} Mult for each',
+                    'stored {C:fac_fish}Fish',
+                    '{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult)'
+                }
+            },
+            fac_r_e_chips = {
+                name = 'Chips',
+                text = {
+                    'Gain {C:chips}+#1#{} Chips for each',
+                    'stored {C:fac_fish}Fish',
+                    '{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)'
+                }
+            },
+            fac_r_e_economy = {
+                name = 'Dollars',
+                text = {
+                    'Earn {C:money}#1#{} for each',
+                    'stored {C:fac_fish}Fish',
+                    '{C:inactive}(Currently {C:money}#2#{C:inactive})'
                 }
             }
         }
@@ -176,7 +231,8 @@ return {
         dictionary = {
             fac_r_e_random_suits = 'random suits',
             fac_r_e_reduce = '-$1',
-            fac_r_e_temporary_bubble = '  temporary  '
+            fac_r_e_temporary_bubble = '  temporary  ',
+            fac_r_e_stored = 'Stored!',
         }
     }
 }
