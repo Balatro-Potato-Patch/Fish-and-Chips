@@ -356,7 +356,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = 'reaver_fish',
 	atlas = 'fac_placeholders',
-	pos = { x = 8, y = 0 },
+	pos = { x = 9, y = 0 },
 	weight = 1,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
@@ -468,6 +468,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = 'primordial_wyrm',
 	atlas = 'fac_placeholders',
+	pos = { x = 8, y = 0 },
 	weight = 0.5,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
