@@ -1,27 +1,46 @@
 SMODS.Atlas({
-	key = "CCitty_dev", 
+	key = "Kittyfire", 
 	path = "CCitty/Kittyfire.png",
 	px = 142,
 	py = 95,
 })
+SMODS.Atlas({
+	key = "We_fishing_it", 
+	path = "CCitty/We_fishing_it.png",
+	px = 128,
+	py = 64,
+})
+SMODS.Atlas({
+	key = "mybeautifulandwonderfulfish", 
+	path = "CCitty/mybeautifulandwonderfulfish.png",
+	px = 3024,
+	py = 4032,
+})
 PotatoPatchUtils.Developer({
 	name = 'DottyKitty',
-	atlas = 'CCitty_dev',
+	atlas = 'fac_Kittyfire',
 	pos = {x = 0, y = 0},
-	colour = G.C.BLUE,
+	colour = G.C.GREEN,
 	fac_partner = 'fac_CampfireCollective',
 	joint_credits = 2,
-	loc = true
+	loc = true,
+	loc_vars = function(self, info_queue, card)
+		return { vars = {elements = {SMODS.create_sprite(0, 0, 3.5, 3.5 * 64 / 128, "fac_We_fishing_it")}}}
+	end,
 })
 PotatoPatchUtils.Developer({
 	name = 'CampfireCollective',
-	atlas = 'CCitty_dev',
+	atlas = 'fac_Kittyfire',
 	pos = {x = 0, y = 0},
 	colour = G.C.PURPLE,
 	fac_partner = 'fac_DottyKitty',
 	joint_credits = 2,
-	loc = true
+	loc = true,
+	loc_vars = function(self, info_queue, card)
+		return { vars = {elements = {SMODS.create_sprite(0, 0, 2, 2 * 4032 / 3024, "fac_mybeautifulandwonderfulfish")}}}
+	end,
 })
+
 SMODS.Atlas({
 	key = "CCittyfish", 
 	path = "CCitty/CCittyfish.png",
@@ -575,6 +594,9 @@ FishAndChips.Fish { --Doctor Sharktred
 					card:CCitty_remove_dialogue(5)
 				elseif context.consumeable.config.center.key == "c_immolate" then
 					card:CCitty_add_dialogue('CCitty_lightemup',{4,'fac_CCitty_lightemup'})
+					card:CCitty_remove_dialogue(5)
+				elseif context.consumeable.config.center.key == "c_soul" then
+					card:CCitty_add_dialogue('CCitty_IsThatYou',{3,'fac_CCitty_IsThatYou'})
 					card:CCitty_remove_dialogue(5)
 				end
 

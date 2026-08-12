@@ -317,3 +317,7 @@ SMODS.Sound({
 	key = "CCitty_3Cards",
 	path = "CCitty/Doc_3Cards.ogg"
 })
+SMODS.Sound({
+	key = "CCitty_IsThatYou",
+	path = "CCitty/Doc_IsThatYou.ogg"
+})
