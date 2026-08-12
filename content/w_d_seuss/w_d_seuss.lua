@@ -458,14 +458,8 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
 			if card.ability.extra.rounds <= 0 then
-				card.ability.extra.rounds = card.ability.extra.rounds_total
-				return {
-					message = localize('k_lost'),
-				}
 			else
 				card.ability.extra.rounds = card.ability.extra.rounds - 1
-				local eval = function(card) return card.ability.extra.rounds == 0 and not card.REMOVED end
-				juice_card_until(card, eval, true)
 				return {
 					message = localize('k_omw'),
 				}
@@ -512,6 +506,8 @@ FishAndChips.Fish {
 			if card.ability.extra.pear - 1 <= 0 then
 				SMODS.destroy_cards(card, nil, nil, true)
 				return {
+					level_up = card.ability.extra.levels,
+					level_up_hand = "Pair",
 					message = localize('k_eaten_ex'),
 					colour = G.C.NIC_TETO
 				}
@@ -764,7 +760,6 @@ FishAndChips.Fish {
 		weight = { min = 33.53, max = 34.93 },
 		length = { min = 0.98, max = 1.01 }
 	},
-	blueprint_compat = false,
 	flavour_vars = function(self, info_queue, card)
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_i_miss_the_quiet") } } }
 	end,
@@ -818,6 +813,7 @@ FishAndChips.Fish {
 		length = { min = 0.98, max = 1.01 }
 	},
 	requires_hand = true,
+	blueprint_compat = false,
 	flavour_vars = function(self, info_queue, card)
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_sinister") } } }
 	end,
@@ -976,7 +972,22 @@ FishAndChips.Fish {
 		return { vars = {} }
 	end,
 	calculate = function(self, card, context)
-	end
+	end,
+	use = function(self, card, area, copier)
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				local sand_dollar = G.GAME.fac_sand_dollars
+				local dollar = G.GAME.dollars
+				ease_dollars(-dollar + sand_dollar, true)
+				ease_sand_dollars(-sand_dollar + dollar,true)
+				return true
+			end
+		}))
+		delay(0.2)
+	end,
+	can_use = function(self, card)
+		return true
+	end,
 }
 
 -- Spalmon
@@ -1060,6 +1071,8 @@ FishAndChips.Fish {
 		end
 		if context.end_of_round and context.game_over == false and context.main_eval and card.ability.extra.f1 == false then
 			card.ability.extra.f1 = true
+			local eval = function(card) return card.ability.extra.f1 == true and not card.REMOVED end
+			juice_card_until(card, eval, true)
 			return {
 				message = localize('k_hokimama'),
 			}
@@ -1128,20 +1141,29 @@ FishAndChips.Fish {
 		weight = { min = 43.91, max = 45.19 },
 		length = { min = 1.21, max = 1.85 }
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		local place = 1
+		local even = false
 		local middle = false
 		if G.playing_cards then
+			if #G.fac_fish_area.cards % 2 == 0 then
+				even = true
+			end
 			local place = math.ceil(#G.fac_fish_area.cards / 2)
-			if G.fac_fish_area.cards[place] == card and #G.fac_fish_area.cards > 2 then
+			if (G.fac_fish_area.cards[place] == card or (G.fac_fish_area.cards[place + 1] == card and even)) and #G.fac_fish_area.cards > 2 then
 				middle = true
 			end
 		end
 		return { vars = { card.ability.extra.mult, ppu_bubbles = { middle == true and "active" or "inactive" } } }
 	end,
 	calculate = function(self, card, context)
+		local even = false
+		if #G.fac_fish_area.cards % 2 == 0 then
+			even = true
+		end
 		local place = math.ceil(#G.fac_fish_area.cards / 2)
-		if context.joker_main and G.fac_fish_area.cards[place] == card and #G.fac_fish_area.cards > 2 then 
+		if context.joker_main and (G.fac_fish_area.cards[place] == card or (G.fac_fish_area.cards[place + 1] == card and even)) and #G.fac_fish_area.cards > 2 then 
 			return {
 				mult = card.ability.extra.mult
 			}
@@ -1171,6 +1193,7 @@ FishAndChips.Fish {
 		weight = { min = 88.39, max = 88.40 },
 		length = { min = 66.00, max = 67.00 }
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.dollar } }
 	end,
@@ -1214,6 +1237,7 @@ FishAndChips.Fish {
 		length = { min = 0.60, max = 0.90 }
 	},
 	requires_hand = true,
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.max_highlighted } }
 	end,
@@ -1313,6 +1337,7 @@ FishAndChips.Fish {
 		length = { min = 0.31, max = 0.71 }
 	},
 	requires_hand = true,
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.max_highlighted } }
 	end,
@@ -1406,6 +1431,7 @@ FishAndChips.Fish {
 		weight = { min = 13.05, max = 45.12 },
 		length = { min = 1.24, max = 1.82 }
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.amount, localize { type = 'name_text', set = 'Enhanced', key = card.ability.extra.enhancement } } }
 	end,
@@ -1477,6 +1503,7 @@ FishAndChips.Fish {
 		weight = { min = 0.59, max = 80.12 },
 		length = { min = 0.33, max = 1.93 }
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.blind / 100 } }
 	end,
@@ -1524,6 +1551,7 @@ FishAndChips.Fish {
 		weight = { min = 522.81, max = 2268.12 },
 		length = { min = 3.71, max = 6.32 }
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = {} }
 	end,

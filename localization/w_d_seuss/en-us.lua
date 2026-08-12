@@ -223,10 +223,15 @@ return {
             fish_fac_faker = {
                 name = "Flounder",
                 text = {
-                    ""
+                    "Swaps current {C:money}money{}",
+                    "and {C:fac_sand_dollars}sand dollars{}"
                 },
                 flavour = {
-                    "{element:1}"
+                    "{element:1}",
+                    "{s:0.3} ",
+                    "AND IT WINDS, AND IT WEAVES",
+                    "ALL IT BINDS, ALL IT BLEEDS",
+                    "NOWWWWWW",
                 }
             },
             fish_fac_spalmon = {
