@@ -627,7 +627,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "fish_award",
+	key = "sophie_fish_award",
 	atlas = "sophie_fish",
 	pos = { x = 1, y = 2 },
 	weight = 2,
@@ -641,8 +641,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-        soup = 1,
-        chocolate_river = 0.2,
+        aquifer = 1,
         wormhole = 0.3,
 	},
 	loc_vars = function(self, info_queue, card)
@@ -651,13 +650,13 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
 		if context.fish_sophie_seal_trigger then
             return {
-                fish_dollars = card.ability.extra.fish_dollars,
+                sand_dollars = card.ability.extra.fish_dollars,
             }
         end
 	end,
 }
 
-local calculate_seal_ref = Card.calculate_seal -- thisaint enough
+local calculate_seal_ref = Card.calculate_seal
 function Card:calculate_seal(context, ...)
     local ret, ret2 = calculate_seal_ref(self, context, ...)
     if (ret or ret2) and (self.seal ~= "Red" or not context.repetition) then
@@ -665,5 +664,166 @@ function Card:calculate_seal(context, ...)
     end
     return ret, ret2
 end
+
+FishAndChips.Fish {
+	key = "sophie_kfc_statue",
+	atlas = "sophie_fish",
+	pos = { x = 2, y = 2 },
+	weight = 4,
+    stats = {weight = {min = 0.1, max = 0.3}, length = {min = 0.1, max = 0.15}},
+	ppu_coder = { "Sophie" },
+	ppu_artist = { "gfs" },
+	attributes = { "economy" },
+	config = {
+		extra = {
+            max = 30,
+		}
+	},
+	environments = {
+        calm_pond = 1,
+        pier = 1,
+        swamp = 1,
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+    blueprint_compat = false,
+    calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval then
+            card.ability.extra.consumables = G.GAME.current_round.hands_left or 0
+        end
+        if context.starting_shop then
+            for i = 1, card.ability.extra.consumables do
+                local consumable = create_card('Consumeables', G.shop_jokers)
+                consumable.states.visible = false
+                G.shop_jokers:emplace(consumable)
+                consumable:start_materialize()
+                consumable:set_cost()
+                create_shop_card_ui(consumable)
+            end
+            card.ability.extra.consumables = 0
+        end
+	end,
+}
+
+FishAndChips.Fish {
+	key = "sophie_fish_finder",
+	atlas = "sophie_fish",
+	pos = { x = 3, y = 2 },
+	weight = 5,
+    stats = {weight = {min = 10, max = 30}, length = {min = 0.5, max = 1.72}},
+	ppu_coder = { "Sophie" },
+	ppu_artist = { "gfs" },
+	attributes = { "generation" },
+	config = {
+		extra = {
+            consumables = 0
+		}
+	},
+	environments = {
+        calm_pond = 1,
+        pier = 1,
+        swamp = 1,
+        styx = 1
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+    can_use = function(self, card)
+        return true
+    end,
+    treasure = true,
+    use = function(self, card)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                play_sound('timpani')
+                card:juice_up(0.3, 0.5)
+                ease_sand_dollars(math.max(0, math.min(G.GAME.fac_sand_dollars, card.ability.extra.max)), true)
+                return true
+            end
+        }))
+    end
+}
+
+FishAndChips.Fish {
+	key = "sophie_gay_fish",
+	atlas = "sophie_fish",
+	pos = { x = 4, y = 2 },
+	weight = 1,
+    stats = {weight = {min = 40, max = 70}, length = {min = 1.5, max = 1.9}},
+	ppu_coder = { "Sophie" },
+	ppu_artist = { "gfs" },
+	attributes = { "xmult" },
+	config = {
+		extra = {
+            xmult = 0.5
+		}
+	},
+	environments = {
+        soup = 1,
+        pier = 1,
+        garden = 1
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.xmult } }
+	end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local kings = 0
+            for _, playing_card in ipairs(G.deck.cards) do
+                if playing_card:get_id() == 13 then
+                    kings = kings + 1
+                end
+            end
+            return {
+                xmult = 1 + card.ability.extra.xmult * kings
+            }
+        end
+    end
+}
+
+FishAndChips.Fish {
+	key = "sophie_triple_barracuda",
+	atlas = "sophie_fish",
+	pos = { x = 0, y = 3 },
+	weight = 3,
+    stats = {weight = {min = 0.5, max = 3}, length = {min = 0.5, max = 1.2}},
+	ppu_coder = { "Sophie" },
+	ppu_artist = { "gfs" },
+	attributes = { },
+	config = {
+		extra = {
+		}
+	},
+	environments = {
+        calm_pond = 1,
+        pier = 1,
+        swamp = 1,
+        styx = 1
+	},
+	loc_vars = function(self, info_queue, card)
+		return { vars = { } }
+	end,
+    blueprint_compat = false,
+    calculate = function(self, card, context)
+        if context.before and G.GAME.current_round.hands_played == 0 and context.scoring_name == 'Three of a Kind' then
+            local i = 1
+            for _, playing_card in ipairs(context.scoring_hand) do
+                if i == 1 then
+                    playing_card:set_ability(G.P_CENTERS.m_bonus, nil, true)
+                end
+                if i == 2 then
+                    playing_card:set_ability(G.P_CENTERS.m_mult, nil, true)
+                end
+                if i == 3 then
+                    playing_card:set_ability(G.P_CENTERS.m_bonus, nil, true)
+                end
+                i = i + 1
+            end
+        end
+    end
+}
 
 --#endregion

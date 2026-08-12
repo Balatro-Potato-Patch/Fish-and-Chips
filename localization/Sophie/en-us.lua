@@ -167,6 +167,53 @@ return {
                     "in one place often."
                 }
             },
+            fish_fac_sophie_kfc_statue = {
+                name = "KFC Statue",
+                text = {
+                    "Add additional consumables",
+                    "to shop for each {C:blue}hand",
+                    "remaning last round"
+                },
+                flavour = {
+                    "Finger fishing good! (not sponsored)"
+                }
+            },
+            fish_fac_sophie_fish_finder = {
+                name = "Bamdai Pocket Sonar",
+                text = {
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#",
+                    "for each fish caught this run",
+                    "{C:inactive(Currently {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{C:inactive}, max {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{C:inactive})"
+                },
+                flavour = {
+                    "Not associated with any",
+                    "companies in the real world.",
+                    "(wasn't the last fish KFC?)"
+                }
+            },
+            fish_fac_sophie_gay_fish = {
+                name = "Mother Fucking Gay Fish",
+                text = {
+                    "{X:mult,C:white}X1{} Mult, plus {X:mult,C:white}X#1#{} Mult",
+                    "for each King still in the deck"
+                },
+                flavour = {
+                    "Do you like fish sticks?",
+                }
+            },
+            fish_fac_sophie_triple_barracuda = {
+                name = "Triple Barracuda",
+                text = {
+                    "If played hand is a",
+                    "{C:attention}Three of a Kind{}",
+                    "convert the three scoring cards",
+                    "into a Bonus Card, Mult Card",
+                    "and Gold Card"
+                },
+                flavour = {
+                    "Triples make it safe.",
+                }
+            },
         },
     },
     misc = {
