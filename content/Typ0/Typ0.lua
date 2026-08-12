@@ -17,14 +17,16 @@ PotatoPatchUtils.Developer({
 	name = 'SLDTyp0',
 	atlas = 'fac_SLDTyp0_art',
 	colour =  SMODS.Gradient{key = "Typ0", colours = {HEX('A4C2F4'), HEX('a4eaf4')},cycle = 8},
-	fac_partner = 'TigerThawk' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+	fac_partner = 'TigerThawk', -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+	loc = true
 })
 
 PotatoPatchUtils.Developer({
 	name = 'TigerThawk',
 	atlas = 'fac_Tiger_art',
 	colour = SMODS.Gradient{key = "Typ02", colours = {HEX('A4C2F4'), HEX('a4eaf4')},cycle = 8},
-	fac_partner = 'SLDTyp0'
+	fac_partner = 'SLDTyp0',
+	loc = true
 })
 
 SMODS.Atlas({
