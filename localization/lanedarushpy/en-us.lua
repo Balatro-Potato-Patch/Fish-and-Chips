@@ -58,7 +58,12 @@ return {
             fish_fac_argel_thing = {
                 name = "Thing",
                 text = {
-                    "Does nothing"
+
+                    "{C:attention}Using{} this Fish makes it",
+                    "eat a random owned Fish,",
+                    "gaining {C:fac_sand_dollars,f:fac_sand_dollars}+$#1#{} in",
+                    "sell value for each fish eaten",
+                    "{C:inactive}(Once per round, max of {C:fac_sand_dollars,f:fac_sand_dollars}+$#2#{C:inactive})"
                 },
                 flavour = {
                     "What the hell did you just find.",
@@ -69,7 +74,9 @@ return {
             fish_fac_still_fish = {
                 name = "Still Fish",
                 text = {
-                    "Does nothing"
+                    "{C:green}#1# in #2#{} chance for any",
+                    "Joker or Fish trigger",
+                    "to be {C:green}repeated"
                 },
                 flavour = {
                     "The hardest part was",
@@ -111,7 +118,9 @@ return {
         dictionary = {
             k_fac_sand_dollars = "Sand Dollars",
             k_fac_lizie_dollars = "Dollars",
-            k_fac_lizie_chips = "Chips"
+            k_fac_lizie_chips = "Chips",
+            k_fac_lizie_repeated = "Repeated!",
+            k_fac_lizie_ready = "Ready!"
         }
     }
 }

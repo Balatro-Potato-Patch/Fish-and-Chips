@@ -1,4 +1,8 @@
-
+if SMODS.current_mod.optional_features then 
+    SMODS.current_mod.optional_features.post_trigger = true 
+else 
+    SMODS.current_mod.optional_features = { post_trigger = true } 
+end
 
 SMODS.Atlas {
     key = "fac_lizie_credits",
@@ -47,6 +51,11 @@ SMODS.Sound {
 SMODS.Sound {
 	key = 'laneda_blowfish',
 	path = 'lanedarushpy/blowfish.ogg',
+	volume = 1
+}
+SMODS.Sound {
+	key = 'laneda_chips',
+	path = 'lanedarushpy/chips.mp3',
 	volume = 1
 }
 
@@ -574,11 +583,16 @@ FishAndChips.Fish {
 	weight = 5,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "chips" },
+	attributes = { "economy", "destroy_card" },
 	config = {
 		extra = {
-			chips = 30
-		}
+			sell_value = 1,
+            cap = 4
+		},
+
+        immutable = {
+            usable = false
+        }
 	},
 	environments = {
 		volcano = 40,
@@ -591,11 +605,54 @@ FishAndChips.Fish {
         length = { min = -10, max = 10}
     },
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips } }
+		return { vars = { 1, card.ability.extra.cap } }
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main then return { chips = card.ability.extra.chips } end
+        if context.setting_blind then 
+            G.E_MANAGER:add_event(Event({
+                func = function(e)
+                    card.ability.immutable.usable = true
+                    SMODS.calculate_effect({ message = localize("k_fac_lizie_ready"), message_card = card })
+                    return true;
+                end
+            }))
+        end
 	end,
+    can_use = function (self, card)
+        local fih = {}
+        for _, fish in ipairs(G.fac_fish_area.cards) do
+            if (fish ~= card) and not SMODS.is_eternal(fish) then fih[#fih+1] = fish end
+        end
+        
+        return card.ability.immutable.usable and (#fih > 0)
+    end,
+    keep_on_use = function ()
+        return true
+    end,
+    use = function (self, card)
+        G.E_MANAGER:add_event(Event({
+            func = function(e)
+                local fih = {}
+                for _, fish in ipairs(G.fac_fish_area.cards) do
+                    if fish ~= card and not SMODS.is_eternal(fish) then fih[#fih+1] = fish end
+                end
+
+                if #fih < 1 then return true end
+                SMODS.destroy_cards(pseudorandom_element(fih, "fac_lizie_thing"), { bypass_eternal = false, immediate = true })
+                play_sound("fac_laneda_chips", 1.0)
+                card.ability.extra_value = card.ability.extra_value + math.min(card.ability.extra.sell_value, card.ability.extra.cap)
+                card.ability.extra.sell_value = card.ability.extra.sell_value + 1
+                card:set_cost()
+                SMODS.calculate_effect {
+                    message = localize('k_val_up'),
+                    message_card = card,
+                    colour = FishAndChips.C.SAND_DOLLAR
+                }
+
+                return true
+            end
+        }))
+    end
 }
 
 FishAndChips.Fish {
@@ -605,10 +662,10 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "chips" },
+	attributes = { "copying" },
 	config = {
 		extra = {
-			chips = 30
+			odds = 4
 		}
 	},
     
@@ -616,15 +673,50 @@ FishAndChips.Fish {
         weight = { min = 1, max = 15 },
         length = { min = 0.8, max = 2.4}
     },
+
 	environments = {
 		backroom = 25,
-		wormhole = 25,
+		wormhole = 15,
 	},
+
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips } }
+		local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizie_stillfish")
+		return { vars = { num, denom } }
 	end,
+
 	calculate = function(self, card, context)
-		if context.joker_main then return { chips = card.ability.extra.chips } end
+        if context.post_trigger and (context.cardarea == G.jokers or context.cardarea == G.fac_fish_area) and (context.other_card ~= card) then
+            local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizie_stillfish")
+		    if SMODS.pseudorandom_probability(card, "fac_lizie_still_fish", num, denom) then
+                local new_ret = context.other_ret and context.other_ret.jokers or {};
+                print(context.other_ret or new_ret)
+                local function shuffle_letters(str)
+                    local letters = {}
+                    for letter in str:gmatch'.[\128-\191]*' do
+                        table.insert(letters, letter)
+                    end
+
+                    for i = 1, #letters - 1 do
+                        -- Swap the first item with a random item (including itself).
+                        local j = math.random(i, #letters)
+                        letters[i], letters[j] = letters[j], letters[i]
+                    end
+
+                    local ret = ""
+                    for _, j in ipairs(letters) do
+                        ret = ret .. j
+                    end
+
+                    return ret
+                end
+
+                if new_ret.message then new_ret.message = shuffle_letters(new_ret.message) end
+                if not new_ret.message then new_ret.message = localize("k_fac_lizie_repeated") end
+                new_ret.message_card = card
+                print("Post_trigger?")
+                return new_ret
+            end
+        end
 	end,
 }
 
@@ -638,14 +730,14 @@ FishAndChips.Fish {
 	attributes = { "chips" },
 	config = {
 		extra = {
-			odds = 670,
-            Xmult = 1.35
+			odds = 67,
+            Xmult = 1.3
 		}
 	},
     
     stats = {
-        weight = { min = 1, max = 15 },
-        length = { min = 0.8, max = 2.4}
+        weight = { min = 0.4, max = 2 },
+        length = { min = 0.1, max = 0.6}
     },
 	environments = {
         pier = 1,
