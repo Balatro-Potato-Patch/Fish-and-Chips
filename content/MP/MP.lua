@@ -222,8 +222,8 @@ FishAndChips.Fish {
 		pier = 1,
 	},
 	stats = {
-		weight = {min = 0.5, max = 1.5},
-		length = {min = 0.15, max = 0.30}
+		weight = {min = 0.2, max = 2},
+		length = {min = 0.2, max = 2}
 	},
 	config = {
 		extra = {
@@ -425,8 +425,8 @@ FishAndChips.Fish {
 		swamp = 2,
 	},
 	stats = {
-		weight = {min = 0.2, max = 0.8},
-		length = {min = 0.08, max = 0.15}
+		weight = {min = 5, max = 10},
+		length = {min = 100, max = 500}
 	},
 	config = {
 		extra = {
@@ -463,7 +463,7 @@ FishAndChips.Fish {
 	},
 	stats = {
 		weight = {min = 50.0, max = 150.0},
-		length = {min = 3.0, max = 6.0}
+		length = {min = 50000000, max = 100000000}
 	},
 	config = {
 		extra = {
