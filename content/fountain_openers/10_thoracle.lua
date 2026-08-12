@@ -26,8 +26,9 @@ FishAndChips.Fish {
 	},
     cost = 5,
 	environments = {
-		pier = 1,
-        swamp = 1
+		pier = 2,
+        swamp = 2,
+        styx = 0.1
 	},
 	stats = {
 		weight = {min = 60, max = 180},

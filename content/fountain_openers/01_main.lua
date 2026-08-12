@@ -57,6 +57,15 @@ SMODS.Atlas {
 }
 
 SMODS.Atlas {
+    key = "fo_crabkhon",
+    path = "fountain_openers/ezgif-19aec6d8ce4c8f00.png",
+    px = 234,
+    py = 240,
+    frames = 20,
+    atlas_table = "ANIMATION_ATLAS"
+}
+
+SMODS.Atlas {
     key = "fo_fucking_kill",
     path = "fountain_openers/fucking_kill.png",
     px = 377,

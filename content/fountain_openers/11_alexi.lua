@@ -31,9 +31,11 @@ FishAndChips.Fish {
     vel_limit = 0.45,
 
 	environments = {
-		backroom = 1,
-        swamp = 1,
-        wormhole = 1,
+		backroom = 2,
+        swamp = 2,
+        wormhole = 2,
+        aquifer = 0.25,
+        pier = 1,
 	},
     stats = {
         weight = {min = 220, max = 220},

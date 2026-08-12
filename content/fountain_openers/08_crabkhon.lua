@@ -1,7 +1,9 @@
 FishAndChips.Fish {
 	key = "fo_crabkhon",
-	atlas = "fo_fish",
-	pos = { x = 6, y = 0 },
+	atlas = "fo_crabkhon",
+	pos = { x = 0, y = 0 },
+	display_size = { w = 234 * 0.55, h = 240 * 0.55 },
+    pixel_size = { w = 234, h = 240 },
 	weight = 12,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
@@ -16,7 +18,8 @@ FishAndChips.Fish {
     cost = 2,
 	environments = {
 		pier = 1,
-		wormhole = 1,
+		wormhole = 0.75,
+		styx = 1,
 	},
 	stats = {
 		weight = {min = 30, max = 180},
