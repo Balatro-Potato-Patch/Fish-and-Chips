@@ -818,7 +818,7 @@ FishAndChips.Fish {
                     playing_card:set_ability(G.P_CENTERS.m_mult, nil, true)
                 end
                 if i == 3 then
-                    playing_card:set_ability(G.P_CENTERS.m_bonus, nil, true)
+                    playing_card:set_ability(G.P_CENTERS.m_gold, nil, true)
                 end
                 i = i + 1
             end

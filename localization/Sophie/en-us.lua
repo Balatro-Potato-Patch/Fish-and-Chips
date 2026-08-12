@@ -207,8 +207,8 @@ return {
                     "If played hand is a",
                     "{C:attention}Three of a Kind{}",
                     "convert the three scoring cards",
-                    "into a Bonus Card, Mult Card",
-                    "and Gold Card"
+                    "into a {C:attention}Bonus Card, Mult Card",
+                    "and {C:attention}Gold Card"
                 },
                 flavour = {
                     "Triples make it safe.",
