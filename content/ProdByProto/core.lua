@@ -145,7 +145,7 @@ function FishAndChips.ProdByProto.noirDialog(storyFlag)
         end
     end
     if storyFlag == 7 then
-        if G.GAME.proto_noirshade then G.GAME.proot_noirshade = false end
+        if G.GAME.proto_noirshade then G.GAME.proto_noirshade = false end
         vars_[1] = localize("proot_noir_congrats")
         vars_[2] = localize("proot_noir_finalgrade")
         if G.GAME.noir_pts < 145 then vars_[3] = "C\n" end
