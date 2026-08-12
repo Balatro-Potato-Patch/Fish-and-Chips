@@ -49,7 +49,10 @@ PotatoPatchUtils.Developer({
     joint_credits = true,
 	pos = {x = 0, y = 0},
 	colour = HEX('FF7C0A'),
-	fac_partner = 'fac_eremel'
+	fac_partner = 'fac_eremel',
+    loc_vars = function()
+        return {vars = {}, scale = 1.2}
+    end,
 })
 
 SMODS.Atlas({

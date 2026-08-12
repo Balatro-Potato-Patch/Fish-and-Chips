@@ -22,7 +22,20 @@ return {
 			PotatoPatchDev_radiation = {
 				name = "RadiationV2",
                 text = {
-                    'placeholder'
+                    {
+                        "Yo! I'm {C:FF7C0A}RadiationV2{}, an {C:attention}artist{}, {C:attention}coder{} and",
+                        "{C:attention}level designer{}, and this is my second",
+                        "Potato Patch contribution. All of the assets",
+                        "in our submission were {C:green}drawn by me{} and",
+                        "{C:3FC7EB}coded by Eremel{}. Everything went swimmingly",
+                        "and I had a fintastic time!",
+                    },
+                    {
+                        "If you like my art, you should look out for",
+                        "my challenge-based mod, {C:attention,E:1}House Rules{}.",
+                        "I'll be releasing it in {C:blue}early September{},",
+                        "after 8 months of solo dev time!",
+                    }
                 }
 			},
         },
