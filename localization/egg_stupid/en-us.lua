@@ -4,8 +4,7 @@ return {
 			PotatoPatchDev_stupid = {
 				name = "stupid",
                 text = {
-                    "Play {C:red}Balatro{}, I heard", -- waa waa waa I will update this later
-                    "it's a great game!",
+                    "cray cray bananas",
                 }
 			},
 			PotatoPatchDev_egg_node = {
