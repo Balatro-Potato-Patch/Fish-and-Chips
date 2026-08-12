@@ -11,12 +11,13 @@ PotatoPatchUtils.Developer({
             "IT'S! HD! HOUR!!!",
             'xchips.ogg',
             'Still a little sad I missed out on being a dev for wormhole',
-			'Can I give a shoutout to Fishing Resort (2011)',
+			'Can I give a shoutout to Fishing Resort (2011) for the Wii',
 			'My theory is that I am the roaring knight',
 			'Always bet on Planet 9',
 			"Try Blindside! It's not my mod I just think it's cool",
 			"I feel obligated to mention Kerbal Space Program 2 Redux somewhere",
-			"Someone really needs to draw Flatbread Flounder x Sticky Steelhead ship art"
+			"Someone really needs to draw Flatbread Flounder x Sticky Steelhead ship art",
+			"damn... I blue it"
 		}
         local quip = pseudorandom_element(quip_list, pseudoseed('pulsar'))
         return { vars = {
