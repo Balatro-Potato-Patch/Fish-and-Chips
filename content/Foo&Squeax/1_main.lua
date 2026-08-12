@@ -237,7 +237,7 @@ function CardArea:emplace(card, ...)
 			play_sound("fac_fas_defoko_" .. pseudorandom_element({
 				"hi",
 				"hello",
-				"what_is_up",
+				--"what_is_up",
 			}, "fac_fas_defoko"))
 		end
 	end
