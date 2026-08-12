@@ -355,7 +355,7 @@ FishAndChips.Fish({
         backroom = 3,
         styx = 3
     },
-    attributes = {'generation', 'destroy_card'},
+    attributes = {'generation', 'destroy_card', 'usable'},
     stats = {
         weight = {min = 0.5, max = 2.6},
         length = {min = 0.21, max = 0.35},
