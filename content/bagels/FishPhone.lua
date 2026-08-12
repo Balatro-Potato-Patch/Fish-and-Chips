@@ -5,10 +5,19 @@ SMODS.Atlas {
 	py = 95,
 }
 
+SMODS.Sound {
+	key = 'bagels_phone_add',
+	path = 'bagels/phone-add.ogg',
+}
+SMODS.Sound {
+	key = 'bagels_phone_remove',
+	path = 'bagels/phone-remove.ogg',
+}
+
 FishAndChips.Fish {
 	key = 'bagels_fish_phone',
 	atlas = 'bagels_fish_phone',
-	ppu_coder = { 'BakersDozenBagels' },
+	ppu_coder = { 'BakersDozenBagels', 'Emik' },
 	ppu_artist = { 'Emik' },
 	weight = 10,
 	environments = { backroom = 1, pier = 1 },
@@ -24,6 +33,7 @@ FishAndChips.Fish {
 		}
 	end,
 	add_to_deck = function(_, card)
+		play_sound "fac_bagels_phone_add"
 		G.E_MANAGER:add_event(Event {
 			func = function()
 				change_shop_size(card.ability.extra.slots)
@@ -32,6 +42,7 @@ FishAndChips.Fish {
 		})
 	end,
 	remove_from_deck = function(_, card)
+		play_sound "fac_bagels_phone_remove"
 		G.E_MANAGER:add_event(Event {
 			func = function()
 				change_shop_size(-card.ability.extra.slots)
