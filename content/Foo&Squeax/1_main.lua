@@ -131,7 +131,7 @@ function FishAndChips.FooSqueax.sqx_credit_ui_fish()
 		"fish_kebab",
 		"john_cod",
 		"kawkaw",
-		"toby_fish",
+		"annoying_fish",
 		'isreal',
 		"super_bo_noise",
 		"kine",
@@ -197,6 +197,24 @@ function FishAndChips.mod.reset_game_globals (run_start)
 	G.GAME.fac_FooSqueax.wormholes.target = pseudorandom_element(PotatoPatchUtils.Developers).name
 end
 
+SMODS.Sound{
+	key = "fas_defoko_hi",
+	path = FishAndChips.FooSqueax.file_path .. "hi.ogg",
+	pitch = 1,
+}
+
+SMODS.Sound{
+	key = "fas_defoko_hello",
+	path = FishAndChips.FooSqueax.file_path .. "hello.ogg",
+	pitch = 1,
+}
+
+SMODS.Sound{
+	key = "fas_defoko_what_is_up",
+	path = FishAndChips.FooSqueax.file_path .. "what is up.ogg",
+	pitch = 1,
+}
+
 local cardarea_emplace_red = CardArea.emplace
 ---@diagnostic disable-next-line: duplicate-set-field
 function CardArea:emplace(card, ...)
@@ -213,6 +231,15 @@ function CardArea:emplace(card, ...)
     dev_card2.no_shadow = true
 		function dev_card2:hover() end
 		self:emplace(dev_card2)
+		local card_hover_ref = card.hover
+		function card:hover()
+			card_hover_ref(self)
+			play_sound("fac_fas_defoko_" .. pseudorandom_element({
+				"hi",
+				"hello",
+				"what_is_up",
+			}, "fac_fas_defoko"))
+		end
 	end
 	cardarea_emplace_red(self, card, ...)
 end
@@ -228,7 +255,7 @@ function FishAndChips.mod.custom_card_areas(game)
 		{
 			type = "joker",
 			highlighted_limit = 1,
-			highlight_limit = 1
+			highlight_limit = 1,
 		}
 	)
 	game.fac_fas_kebab_cards = UIBox({

@@ -261,6 +261,10 @@ return {
 						"{ppu_bubble:usable}"
 					},
 					{
+						"{s:0.8}Wow making english speech",
+						"{s:0.8}with a japenese voicebank is hard",
+					},
+					{
 						"Defoko drawn by {C:ED5B5B}me",
 						"Animation drawn by {C:attention}An Artist With Pickles",
 						"Harpoon Gun drawn by {C:attention}Kitty"
