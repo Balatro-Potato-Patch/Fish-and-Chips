@@ -158,17 +158,17 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
-    attributes = { "mult", "chips", "xmult", "economy" },
+    attributes = { "chips" },
     weight = 1,
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
     config = {
         extra = {
             scoring = 1,
-            gain = 1.5,
+            gain = 4,
             trigger = false
         },
         immutable = {
-            revert = 2
+            revert = 1
         }
     },
     environments = {
@@ -179,45 +179,11 @@ FishAndChips.Fish {
         return { vars = { card.ability.extra.scoring, card.ability.extra.gain, colours = { HEX("4db1f6") }, ppu_bubbles = {card.ability.extra.trigger and 'active' or 'inactive' } } }
     end,
     calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval then
-            card.ability.extra.mult = card.ability.immutable.revert
-			card.ability.extra.trigger = false
-            return { message = localize("k_reset") }
-        end
         local eval = function(card) return card.ability.extra.trigger == true end
         juice_card_until(card, eval, false)
         if context.joker_main then
             if card.ability.extra.trigger then
-                local ret = {}
-                local scoreret = pseudorandom(pseudoseed("fish_fac_blueax"), 1, 10)
-                if scoreret == 1 or scoreret == 10 then
-                    ret.chips = card.ability.extra.scoring
-                end
-                if scoreret == 2 or scoreret == 10 then
-                    ret.mult = card.ability.extra.scoring
-                end
-                if scoreret == 3 or scoreret == 10 then
-                    ret.xmult = (card.ability.extra.scoring / 2)
-                end
-                if scoreret == 4 or scoreret == 10 then
-                    ret.xchips = (card.ability.extra.scoring / 2)
-                end
-                if scoreret == 5 or scoreret == 10 then
-                    ret.score = card.ability.extra.scoring
-                end
-                if scoreret == 6 or scoreret == 10 then
-                    ret.xscore = (card.ability.extra.scoring / 2)
-                end
-                if scoreret == 7 or scoreret == 10 then
-                    ret.blindsize = -card.ability.extra.scoring
-                end
-                if scoreret == 8 or scoreret == 10 then
-                    ret.xblindsize = -(card.ability.extra.scoring / 2)
-                end
-                if scoreret == 9 or scoreret == 10 then
-                    ret.dollars = card.ability.extra.scoring
-                end
-                return ret
+                return { chips = card.ability.extra.scoring }
             else
                 SMODS.scale_card(card, {
                     ref_table = card.ability.extra,
@@ -225,7 +191,7 @@ FishAndChips.Fish {
                     scalar_value = "gain",
                     operation = "X",
                     scaling_message = {
-                        message = "+" .. (card.ability.extra.scoring * card.ability.extra.gain) .. " Value",
+                        message = (card.ability.extra.scoring * card.ability.extra.gain) .. " Value",
                         colour = G.C.DARK_EDITION
                     }
                 })
@@ -251,7 +217,7 @@ FishAndChips.Fish {
             trigger = 'before',
             delay = 0.5 + math.random() * 0.4,
             func = function()
-                play_sound('gong', 1, 0.5)
+                play_sound('gong', 2, 0.5)
                 card:juice_up(1, 0.2)
                 return true
             end

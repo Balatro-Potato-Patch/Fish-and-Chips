@@ -6,14 +6,14 @@ return {
                 name = "Suspicious Blue Axolotl",
                 text = {
                     {"This {V:1}Fish{} gains",
-                    "{C:white,X:dark_edition}X#2#{} Scoring Value",
+                    "{C:white,X:dark_edition}X#2#{} {C:chips}Chips",
                     "{C:attention}when scoring",},
-                    {"{C:attention}Use{} this {V:1}Fish{} to give a random",
-                    "{C:attention}scoring effect{} equal to {C:dark_edition}#1#",
+                    {"{C:attention}Use{} this {V:1}Fish{} to",
+                    "unleash all accumulated",
+                    "{C:chips}Chips{} equal to {C:dark_edition}#1#",
                     "in the {C:attention}next hand"},
                     {"Resets after scoring",
-                    "or after each round"},
-                    {"{ppu_bubble:1}"}
+                    "{ppu_bubble:1}"}
                 },
                 flavor = {
                     [["I'm sorry for existing"]]
