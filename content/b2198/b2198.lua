@@ -323,7 +323,7 @@ FishAndChips.Fish {
 		wormhole = 1
 	},
 	stats = {
-		weight = {min = 10^308, max = 10^308},
+		weight = {min = 100, max = 10000},
 		length = {min = 1, max = 10}
 	},
     impulse_min = 0.2,
