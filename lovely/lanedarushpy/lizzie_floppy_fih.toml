@@ -1,0 +1,15 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+position = "before"
+pattern = "if (not self.OVERLAY_MENU) or (not self.F_HIDE_BG) then"
+payload = '''
+if FishAndChips and FishAndChips.laneda_draw_floppy_escapees then
+    FishAndChips.laneda_draw_floppy_escapees()
+end
+'''
+match_indent = true
