@@ -469,7 +469,7 @@ FishAndChips.Fish { --Timothy
 			card.ability.extra.ante_used = false
 		end
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-			if G.GAME.fac_last_used_fish ~= tim then
+			if not FishAndChips.vman2002.timothy_active() then
 				if card.ability.extra.xmult > 1 then
 					return SMODS.reset_card(card, {ref_value = "xmult", reset_value = 1, reset_message = {message_key = "fac_vman2002_timothy_reset"}})
 				end
