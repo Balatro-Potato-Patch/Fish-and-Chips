@@ -189,7 +189,8 @@ return {
 				name = "vevekhi",
 				text = {
 					{
-						"{C:inactive}To be added...{}",
+						"Pixel artist who makes a bunch of",
+						"stupid stuff."
 					},
 				},
 			},
