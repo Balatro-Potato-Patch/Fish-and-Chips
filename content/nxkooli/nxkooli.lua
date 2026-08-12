@@ -1,15 +1,21 @@
---[[
+
 SMODS.Atlas({
-key = "fac_nxkooli",
-path = "nxkooli/credits.png",
+key = "fac_nxkooli_nxk",
+path = "nxkooli/nikocredit.png",
 px = 71,
 py = 95,
 })
-]]
+SMODS.Atlas({
+key = "fac_nxkooli_fel",
+path = "nxkooli/felicredit.png",
+px = 71,
+py = 95,
+})
+
 PotatoPatchUtils.Developer({
 	name = 'Nxkoo',
-	atlas = 'fac_cards',
-	pos = {x = 1, y = 0},
+	atlas = 'fac_nxkooli_nxk',
+	pos = {x = 0, y = 0},
 	colour = G.C.PURPLE,
 	fac_partner = 'LasagnaFelidae',
 	loc = true
@@ -17,8 +23,8 @@ PotatoPatchUtils.Developer({
 
 PotatoPatchUtils.Developer({
 	name = 'LasagnaFelidae',
-	atlas = 'fac_cards',
-	pos = {x = 1, y = 0},
+	atlas = 'fac_nxkooli_fel',
+	pos = {x = 0, y = 0},
 	colour = G.C.FILTER,
 	fac_partner = 'Nxkoo',
 	loc = true
