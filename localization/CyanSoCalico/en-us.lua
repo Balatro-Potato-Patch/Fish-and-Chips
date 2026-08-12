@@ -13,7 +13,7 @@ return {
                     "\"fishmonger\"?"
                 },
                 text = {
-                    "When setting Blind,",
+                    "When {C:attention}Blind{} is selected,",
                     "add a {C:attention}#1#{} to a",
                     "random {C:attention}playing card{}",
                     "that has no {C:attention}seal{}"
@@ -35,7 +35,8 @@ return {
                         "Use this Fish before a",
                         "{C:attention}Boss Blind{} to replace",
                         "it with {C:attention}The Fish{}",
-                        "{C:inactive,s:0.8}Showdown Blind excluded{}"
+                        "{C:inactive,s:0.8}Showdown Blind excluded{}",
+                        "{ppu_bubble:usable}"
                     }
                 }
             },
@@ -60,9 +61,16 @@ return {
                     "Nothing is stronger than...",
                     "a... Flounder's... dream...!"
                 },
+                --[[
                 text = {
                     "{C:dark_edition}+#1#{} {C:blue}Fish{} slot per",
                     "empty {C:attention}Joker{} slot",
+                }
+                    ]]
+                text = {
+                    "{C:chips}+#1#{} Chips per {C:blue}Fish",
+                    "outnumbering {C:attention}Jokers{}",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips){}"
                 }
             },
             fish_fac_csc_basculegion = {
@@ -122,21 +130,8 @@ return {
                     "Select {C:attention}#1#+{} cards",
                     "sharing a {C:attention}suit{}",
                     "Use this Fish to",
-                    "{C:red}destroy{} them"
-                },
-            },
-            fish_fac_csc_splash_woman = {
-                name = "Splash Woman",
-                flavor = {
-                    "A Robot Master co-created",
-                    "by Dr. Light and Dr. Wily.",
-                    "Her Laser Trident weapon is",
-                    "effective against concrete!"
-                },
-                text = {
-                    "Use this Fish to",
-                    "{C:red}destroy{} all {C:attention}Stone{}",
-                    "{C:attention}Cards{} in full deck",
+                    "{C:red}destroy{} them",
+                    "{ppu_bubble:usable}"
                 },
             },
             fish_fac_csc_sardinium = {
@@ -149,6 +144,7 @@ return {
                     "Use this Fish to",
                     "upgrade selected",
                     "cards' {C:attention}poker hand{}",
+                    "{ppu_bubble:usable}"
                 }
             },
             fish_fac_csc_inkling_squid = {
@@ -158,24 +154,16 @@ return {
                     "doing in the water?"
                 },
                 text = {
+                    --[[
                     "This Fish gains {C:chips}+#1#{} Chips",
                     "per consecutive hand",
                     "played that contains",
                     "no {C:attention}#2#{} or {C:attention}#3#{}",
                     "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips){}"
-                }
-            },
-            fish_fac_csc_octoling_octopus = {
-                name = "Octoling Octopus",
-                flavor = {
-                    "Is it stuck in this",
-                    "form or something?"
-                },
-                text = {
-                    "Earn {C:money}$#1#{} if all hands",
-                    "played in the round",
-                    "did not contain a",
-                    "{C:attention}#2#{} or {C:attention}#3#{}"
+                    ]]
+                    "{C:mult}+#1#{} Mult if played hand",
+                    "did not contain any",
+                    "{C:attention}#2#{} or {C:attention}#3#{}",
                 }
             },
         },

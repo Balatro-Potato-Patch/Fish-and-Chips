@@ -9,8 +9,7 @@ FishAndChips.Fish {
 	attributes = { "chips" },
 	config = {
 		extra = {
-			chips_mod = 10,
-            chips = 0,
+			mult = 10,
             hands = {
                 "Straight",
                 "Flush"
@@ -37,34 +36,18 @@ FishAndChips.Fish {
 	},
 
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips_mod, card.ability.extra.hands[1], card.ability.extra.hands[2], card.ability.extra.chips } }
+		return { vars = { card.ability.extra.mult, card.ability.extra.hands[1], card.ability.extra.hands[2] } }
 	end,
 
 	calculate = function(self, card, context)
-		if context.before and context.poker_hands and next(context.poker_hands) then
+		if context.joker_main then
 			for _, hand in pairs(card.ability.extra.hands) do
 				if next(context.poker_hands[hand]) then
-					return {
-						message = card.ability.extra.chips ~= 0 and localize("k_reset"),
-						func = function()
-							card.ability.extra.chips = 0
-						end
-					}
+					return
 				end
 			end
 			return {
-				func = function()
-					SMODS.scale_card(card, {
-						ref_value = "chips",
-						scalar_value = "chips_mod",
-						message_colour = G.C.CHIPS
-					})
-				end
-			}
-		end
-		if context.joker_main and card.ability.extra.chips ~= 0 then
-			return {
-				chips = card.ability.extra.chips
+				mult = card.ability.extra.mult
 			}
 		end
 	end,
