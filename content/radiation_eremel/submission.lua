@@ -177,7 +177,6 @@ FishAndChips.Fish({
     end,
 })
 
--- TODO: visual scaling
 FishAndChips.Fish({
     key = 'r_e_ominous_whale',
     atlas = 'r_e_fish',
