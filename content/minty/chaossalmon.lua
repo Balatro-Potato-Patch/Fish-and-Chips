@@ -52,6 +52,7 @@ FishAndChips.Fish{
             local otherfish = context.other_main
             local othercenter = otherfish.config.center
             local otherkey = othercenter.key
+            local othername = othercenter.name ~= otherkey and othercenter.name or ""
 
             if PotatoPatchUtils.Developers.fac_minty.fish_named_fish[otherkey] then
                 return {
@@ -61,7 +62,8 @@ FishAndChips.Fish{
                 }
             end
 
-            for i,v in ipairs{othercenter.name or "", othercenter.original_key, localize{type = "name_text", key = otherkey, set = "fac_Fish"}} do
+            for i,v in ipairs{othername or "", othercenter.original_key, localize{type = "name_text", key = otherkey, set = "fac_Fish"}} do
+                print(v)
                 if string.find(v:lower(), "fish") then
                     PotatoPatchUtils.Developers.fac_minty.fish_named_fish[otherkey] = true
                     return {
