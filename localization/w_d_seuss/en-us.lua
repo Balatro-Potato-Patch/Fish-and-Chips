@@ -10,7 +10,12 @@ return {
                         "FOLLOW ME",
                         "AND YOU'LL NEVER GO HUNGRY AGAIN",
                         "ROOOOOOODSSSS UPPPPPP",
+                        "I WILL LEAD US TO THE FISH AND CHIPS",
                         "{s:2}I... AM... MEGALADON!"
+                    },
+                    {
+                        "Did half the art and concept ideas",
+                        "and majority of the code meow :3"
                     },
                     {
                         "Play {C:incognito}Incognito{} and {C:jolyne}Hypererfixation{} :3"
@@ -21,8 +26,12 @@ return {
                 name = "JoFIN",
                 text = {
                     {
-                        "WE COULDNT FINISH CREDIT ART",
-                        "SORRRRYYYYYYYY"
+                        "WE CLUTCHED THE ART :3333",
+                        "<- GLAZE ME FOR MY WONDERFUL ART"
+                    },
+                    {
+                        "Did half the art and concept ideas",
+                        "and some of the code :3"
                     },
                     {
                         "Play {C:jolyne}Hypererfixation{} and {C:incognito}Incognito{} :3"
