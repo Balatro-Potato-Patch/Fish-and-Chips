@@ -452,7 +452,7 @@ return {
             k_aureallu_chimaera_active = "Active",
             k_aureallu_chimaera_inactive = "Inactive",
             k_aureallu_starfish_1 = "I",
-            k_aureallu_tarfish_2 = "will also",
+            k_aureallu_starfish_2 = "will also",
             k_aureallu_starfish_3 = "join.",
         }
     }
