@@ -23,7 +23,7 @@ return {
                 },
             },
             PotatoPatchDev_Jolyne = {
-                name = "JoFIN",
+                name = "{X:blind}JoFIN",
                 text = {
                     {
                         "WE CLUTCHED THE ART :3333",
