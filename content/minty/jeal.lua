@@ -47,7 +47,7 @@ FishAndChips.Fish{
         else
             key = key.."_unready"
         end
-        local main_end = {}
+        local main_end
         if card.ability.extra.set == "Joker" then
             main_end = {}
             localize{type = 'other', key = 'fac_minty_jeal_needsroom', nodes = main_end, vars = {}}
