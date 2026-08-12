@@ -12,9 +12,13 @@ return {
             fish_fac_delrice_fringills = {
                 name = "Fringills",
                 text = {
-                    "{X:mult,C:white}X#1#{} Mult",
-                    "{C:red,E:2}self-destructs{} if you defeat",
-                    "a blind on your first hand"
+                    {
+                        "{X:mult,C:white}X#1#{} Mult"
+                    },
+                    {
+                        "{C:red,E:2}Self-destructs{} if you defeat",
+                        "a blind on your first hand"
+                    }
                 },
                 flavor = {
                     "(This is an inside joke)"
