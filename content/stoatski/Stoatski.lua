@@ -1,9 +1,18 @@
+SMODS.Atlas({
+	key = "stoatskidev", -- Please include your name/team name in your atlas keys
+	path = "stoatski/stoatskidev.png",
+	px = 71,
+	py = 95,
+})
+
 PotatoPatchUtils.Developer({
 	name = 'stoatski',
-	atlas = 'fac_cards',
-	colour = G.C.YELLOW,
-	ignore_limits = false -- USING THIS VALUE WILL RESULT IN YOUR SUBMISSION BEING REJECTED
+	-- Unsure why this is not working
+	--atlas = 'stoatskidev',
+	colour = G.C.SECONDARY_SET.Spectral,
+	ignore_limits = false
 })
+
 
 SMODS.Atlas({
 	key = "stoatskifish", -- Please include your name/team name in your atlas keys
@@ -12,36 +21,35 @@ SMODS.Atlas({
 	py = 95,
 })
 
--- FALLBACK FISH FOR EMPTY POOLS
-local function all_env()
-	local ret = {}
-	for _, k in ipairs(FishAndChips.Environment.obj_buffer) do
-		ret[k] = 10
-	end
-	return ret
-end
-
 FishAndChips.Fish {
 	key = "otter",
 	weight = 10,
 	atlas = "stoatskifish",
 	pos = { x = 0, y = 0 },
+	-- I belive this is correct but may need other attributes
 	attributes = { "generation" },
 	ppu_coder = { "stoatski" },
 	ppu_artist = { "stoatski" },
 	blueprint_compat = false,
-	--discovered = true,
+
     environments = {
 		calm_pond = 10,
+		pier = 10,
 		city_river = 5
 	},
+
+	-- Caculate function
 	calculate = function(self, card, context)
-		if context.before then
+		-- If the contexxt is the start of round/after selecting a blind
+		if context.setting_blind then
+			-- Checks to see if this fish is the rightmost fish
 			if G.fac_fish_area.cards[#G.fac_fish_area.cards] ~= card then
+				-- destoys rightmost fish and displays message if this card was the rightmost
 				SMODS.destroy_cards(G.fac_fish_area.cards[#G.fac_fish_area.cards])
 				SMODS.add_card({set = "Spectral", area = G.consumeables})
 				return {message = localize("ph_otter_eat")}
 			else
+				-- Destoys self and displays message if this fish was the rightmost
 				return {
 					message = localize("ph_otter_run"),
 					SMODS.destroy_cards(G.fac_fish_area.cards[#G.fac_fish_area.cards])

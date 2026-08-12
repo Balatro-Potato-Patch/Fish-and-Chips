@@ -4,11 +4,15 @@ return {
             fish_fac_otter = {
                 name = "Otter",
                 text = {
-                    "Sea Otter"
+                    "At the start of a round,",
+                    "Eats the rightmost fish.",
+                    "and creates a {C:spectral}Spectral{} card",
+                    "If this is the righmost fish,",
+                    "this otter runs away"
                 },
                 flavor = {
-                    "At the start of a round, Eats the rightmost fish.",
-                    "If there are no fish, runs away."
+                    "A hugry otter that eats fish",
+                    "and generates spectral cards."
                 }
             }
         },
