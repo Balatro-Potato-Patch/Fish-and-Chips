@@ -44,8 +44,8 @@ FishAndChips.Fish {
 	},
     cost = 4,
 
-    impulse_max = 0.9,
-    impulse_min = 0.5,
+    impulse_max = 1.1,
+    impulse_min = 0.65,
     decision_max = 0.75,
     decision_min = 0.45,
     vel_limit = 0.75,

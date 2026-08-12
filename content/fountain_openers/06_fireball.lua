@@ -21,10 +21,10 @@ FishAndChips.Fish {
 		length = {min = 3 * 2.25, max = 3 * 2.251},
 	},
     cost = 2,
-    impulse_max = 0.75,
+    impulse_max = 1.35,
     impulse_min = 0.55,
-    decision_max = 0.9,
-    decision_min = 0.5,
+    decision_max = 0.75,
+    decision_min = 0.4,
     vel_limit = 0.75,
     loc_vars = function(self, info_queue, card)
 		return { vars = {
