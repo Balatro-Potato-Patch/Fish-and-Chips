@@ -63,7 +63,7 @@ return {
 				},
 				flavor = { 'Honorable mention of', 'Top 10 Cool Phones' },
 			},
-			bagels_seven_salmon_display = {
+			fish_fac_bagels_seven_salmon_display = {
 				name = 'Seven Salmon Display',
 				text = {
 					'{X:red,C:white}X#1#{} Mult if hand contains',
