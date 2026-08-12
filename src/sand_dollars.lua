@@ -1,3 +1,7 @@
+table.insert(SMODS.other_calculation_keys, 'p_fac_sand_dollars')
+--table.insert(SMODS.other_calculation_keys, 'sand_dollars')
+table.insert(SMODS.other_calculation_keys, 'h_fac_sand_dollars')
+
 local csc = Card.sell_card
 function Card:sell_card()
     if self.ability.set ~= 'fac_Fish' then
@@ -275,4 +279,27 @@ function G.UIDEF.use_and_sell_buttons(card)
 
       G.GAME.current_round.fac_sand_dollars = G.GAME.current_round.fac_sand_dollars + config.sand_dollars
 
+end
+
+function Card:get_p_fac_sand_dollars()
+    if self.debuff then return 0 end
+    local ret = (self.ability.perma_p_fac_sand_dollars or 0)
+    return ret
+end
+
+function Card:get_h_fac_sand_dollars()
+    if self.debuff then return 0 end
+    local ret = (self.ability.perma_h_fac_sand_dollars or 0)
+    return ret
+end
+
+local perma_hook = SMODS.localize_perma_bonuses
+function SMODS.localize_perma_bonuses(specific_vars, desc_nodes)
+    perma_hook(specific_vars, desc_nodes)
+    if specific_vars and specific_vars.bonus_p_fac_sand_dollars then
+        localize{type = "other", key = "card_extra_p_fac_sand_dollars", nodes = desc_nodes, vars = {specific_vars.bonus_p_fac_sand_dollars}}
+    end
+    if specific_vars and specific_vars.bonus_h_fac_sand_dollars then
+        localize{type = "other", key = "card_extra_h_fac_sand_dollars", nodes = desc_nodes, vars = {specific_vars.bonus_h_fac_sand_dollars}}
+    end
 end
