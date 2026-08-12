@@ -30,7 +30,7 @@ FishAndChips.Fish{
         --]]
     },
     attributes = {
-
+        "usable", "generation"
     },
     config = {
         extra = {
