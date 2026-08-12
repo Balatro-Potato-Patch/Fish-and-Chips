@@ -44,6 +44,7 @@ FishAndChips.Fish({
     ppu_coder = { "sleepyg11" },
     ppu_artist = { "vevekhi" },
     attributes = { "prevents_death", "destroy_card" },
+    blueprint_compat = false,
     config = {
         extra = {
             sacrifice = 2,
@@ -80,6 +81,7 @@ FishAndChips.Fish({
         if
             context.end_of_round
             and context.game_over
+            and not context.blueprint
             and G.fac_fish_area
             and G.fac_fish_area.config.card_limits.base >= card.ability.extra.sacrifice
         then

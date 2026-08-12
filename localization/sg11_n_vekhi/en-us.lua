@@ -215,6 +215,7 @@ return {
                     },
                     {
                         "Pixel artist who makes stupid stuff sometimes"
+                    }
                 },
             },
         },
@@ -227,6 +228,7 @@ return {
             k_pac_soul_cannon_trigger = "Soul Cannon Activated",
             k_fac_recycle_ex = "Recycle!",
             k_fac_nom_ex = "Nom!",
+            k_fac_bait_ex = "Bait!",
         },
     },
 }
