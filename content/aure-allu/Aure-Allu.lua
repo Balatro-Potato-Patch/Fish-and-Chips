@@ -1329,6 +1329,15 @@ function get_pixel_distance(shader_data, x, y, width, height, green)
 	return distance
 end
 
+local function get_center_atlas_pos(center)
+	local a_state = center.sprite_args and (center.sprite_args.default_state and (center.sprite_args.states or {})[center.sprite_args.defautlt_state]) or {}
+	local pos = {
+		x = (a_state.start_pos or (center.sprite_args and center.sprite_args.start_pos) or center.pos or {}).x or 0,
+		y = (a_state.start_pos or (center.sprite_args and center.sprite_args.start_pos) or center.pos or {}).y or 0,
+	}
+	return pos
+end
+
 local pixel_distance_store_factor = 50
 function set_chimaera_morph_data(card, old_center, new_center, morph_time)
 	card.fac_aureallu_chimaera_morph_data = {}
@@ -1338,17 +1347,19 @@ function set_chimaera_morph_data(card, old_center, new_center, morph_time)
 	local old_data = old_atlas.image_data
     local old_px = (old_center.pixel_size or {}).w or (old_center.display_size or {}).w or old_atlas.px
 	local old_py = (old_center.pixel_size or {}).h or (old_center.display_size or {}).h or old_atlas.py
+	local old_pos = get_center_atlas_pos(old_center)
 	local old_offset = {
-		x = old_atlas.px * old_center.pos.x * scale,
-		y = old_atlas.py * old_center.pos.y * scale,
+		x = old_atlas.px * old_pos.x * scale,
+		y = old_atlas.py * old_pos.y * scale,
 	}
 	local new_atlas = SMODS.get_atlas(new_center.atlas)
 	local new_data = new_atlas.image_data
     local new_px = (new_center.pixel_size or {}).w or (new_center.display_size or {}).w or new_atlas.px
 	local new_py = (new_center.pixel_size or {}).h or (new_center.display_size or {}).h or new_atlas.py
+	local new_pos = get_center_atlas_pos(new_center)
 	local new_offset = {
-		x = new_atlas.px * new_center.pos.x * scale,
-		y = new_atlas.py * new_center.pos.y * scale,
+		x = new_atlas.px * new_pos.x * scale,
+		y = new_atlas.py * new_pos.y * scale,
 	}
 
 	local rel_px = math.max(old_px, new_px)
