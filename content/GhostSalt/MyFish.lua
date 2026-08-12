@@ -91,6 +91,11 @@ FishAndChips.Fish {
 			card.children.center:draw_shader("booster", nil, card.ARGS.send_to_shader)
 		end
 	end,
+	vel_limit = 0.6,
+	impulse_min = 0.2,
+	impulse_max = 0.4,
+	decision_min = 0.3,
+	decision_max = 0.6,
 	weight = fac_ghostsalt_common_weight,
 	stats = { weight = { min = 0, max = 0 }, length = { min = 0.50, max = 1.00 } },
 	ppu_coder = { "GhostSalt" },
@@ -208,6 +213,11 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.max_triggers } }
 	end,
+	vel_limit = 0.3,
+	impulse_min = 10,
+	impulse_max = 12,
+	decision_min = 0.6,
+	decision_max = 0.8,
 	requires_consumables = true,
 	blueprint_compat = true,
 	calculate = function(self, card, context)
@@ -733,6 +743,11 @@ FishAndChips.Fish {
 		city_river = 8,
 		backroom = 4
 	},
+	vel_limit = 0.2,
+	impulse_min = 0,
+	impulse_max = 0.1,
+	decision_min = 1,
+	decision_max = 1.2,
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { G.fac_fish_area and math.max(1, (G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) + #SMODS.find_card("fish_fac_ghostsalt_chalkoutline", true)) or 1 } }
@@ -817,6 +832,11 @@ FishAndChips.Fish {
 		styx = 10,
 		wormhole = 5
 	},
+	vel_limit = 0.5,
+	impulse_min = 0.2,
+	impulse_max = 0.4,
+	decision_min = 0.4,
+	decision_max = 0.5,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xmult } }
 	end,
@@ -856,6 +876,11 @@ FishAndChips.Fish {
 		garden = 1,
 		chocolate_river = 1
 	},
+	vel_limit = 0.8,
+	impulse_min = 0.4,
+	impulse_max = 0.5,
+	decision_min = 0.8,
+	decision_max = 1.3,
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xmult } }
@@ -883,6 +908,11 @@ FishAndChips.Fish {
 		calm_pond = 3,
 		pier = 2,
 	},
+	vel_limit = 0.3,
+	impulse_min = 0.1,
+	impulse_max = 0.2,
+	decision_min = 0.3,
+	decision_max = 0.4,
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.sand_dollars } }
@@ -908,6 +938,11 @@ FishAndChips.Fish {
 		city_river = 10,
 		volcano = 2,
 	},
+	vel_limit = 0.8,
+	impulse_min = 0.8,
+	impulse_max = 1,
+	decision_min = 0.5,
+	decision_max = 0.7,
 	blueprint_compat = false,
 	use = function(self, card)
 		G.E_MANAGER:add_event(Event {
@@ -940,6 +975,11 @@ FishAndChips.Fish {
 	environments = {
 		chocolate_river = 10
 	},
+	vel_limit = 0.35,
+	impulse_min = 0.2,
+	impulse_max = 0.4,
+	decision_min = 0.2,
+	decision_max = 0.4,
 	blueprint_compat = false,
 	requires_hand = true,
 	use = function(self, card)
@@ -1041,6 +1081,11 @@ FishAndChips.Fish {
 		garden = 8,
 		soup = 4
 	},
+	vel_limit = 0.15,
+	impulse_min = 0.1,
+	impulse_max = 0.3,
+	decision_min = 0.5,
+	decision_max = 0.8,
 	blueprint_compat = false,
 	requires_hand = true,
 	use = function(self, card)
@@ -1086,6 +1131,11 @@ FishAndChips.Fish {
 		styx = 5,
 		swamp = 2
 	},
+	vel_limit = 0.25,
+	impulse_min = 0.4,
+	impulse_max = 0.6,
+	decision_min = 0.6,
+	decision_max = 0.8,
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.set_chips, card.ability.extra.given_chips } }
@@ -1118,6 +1168,11 @@ FishAndChips.Fish {
 		city_river = 10,
 		swamp = 5
 	},
+	vel_limit = 0.7,
+	impulse_min = 1,
+	impulse_max = 1,
+	decision_min = 0.5,
+	decision_max = 0.5,
 	blueprint_compat = false,
 	calculate = function(self, card, context)
 		if context.skip_blind and not G.fac_skipper_skipping and not context.blueprint then
@@ -1206,6 +1261,11 @@ FishAndChips.Fish {
 		backroom = 5,
 		city_river = 2,
 	},
+	vel_limit = 0.5,
+	impulse_min = 0.1,
+	impulse_max = 0.2,
+	decision_min = 0.3,
+	decision_max = 0.4,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.word, card.ability.extra.xmult } }
 	end,
@@ -1328,6 +1388,11 @@ FishAndChips.Fish {
 	environments = {
 		wormhole = 10
 	},
+	vel_limit = 0.9,
+	impulse_min = 0.1,
+	impulse_max = 0.1,
+	decision_min = 0.1,
+	decision_max = 0.1,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.discards, card.ability.extra.money } }
 	end,
@@ -1439,6 +1504,11 @@ FishAndChips.Fish {
 		soup = 10,
 		styx = 5
 	},
+	vel_limit = 0.4,
+	impulse_min = 0,
+	impulse_max = 0.4,
+	decision_min = 0.2,
+	decision_max = 0.7,
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue + 1] = G.P_SEALS.Gold
 		info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
