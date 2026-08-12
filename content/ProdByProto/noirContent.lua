@@ -325,6 +325,11 @@ FishAndChips.ProdByProto.loadFih = function()
                             cae.finalScore = G.GAME.noir_pts + 0
                             facp.noirProg({flg = 7, lvl = 14})
                         end
+                        if cae.hand_limit < 1 then
+                            if cae.final_investigation then
+                                facp.noirProg({flg = 6, lvl = 12})
+                            end
+                        end
                     end
                 end
 
