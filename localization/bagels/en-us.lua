@@ -67,7 +67,7 @@ return {
 				name = 'Seven Salmon Display',
 				text = {
 					'{X:red,C:white}X#1#{} Mult if hand contains',
-					'exactly {C:attention}#2# {}scored cards',
+					'exactly {C:attention}#2# {}scored card#3#',
 					'{C:inactive}(Card amount changes every round)',
 				},
 				flavor = { 'Shockingly, its circuit', 'contains omega-3 fatty acids!' },
