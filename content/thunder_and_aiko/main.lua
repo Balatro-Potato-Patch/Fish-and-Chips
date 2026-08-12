@@ -918,8 +918,8 @@ FishAndChips.Fish({
 		garden = 1,
 	},
 	cost = 7,
-	-- atlas = "thunder_and_aiko",
-	-- pos = { x = 3, y = 1 },
+	atlas = "thunder_and_aiko",
+	pos = { x = 0, y = 2 },
 	stats = {
 		weight = {
 			min = 30,

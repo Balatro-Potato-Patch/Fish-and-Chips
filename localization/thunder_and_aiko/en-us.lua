@@ -192,7 +192,9 @@ return {
 					},
 				},
 				flavor = {
-					"The idol of the sea",
+					"It's me! Hatsune Fishu, the Diva of the Ocean!",
+					"Or Mikurel, or Sakana Miku, whatever you wish!",
+					"I'm a world sensation, you know?",
 				},
 			},
 		},
