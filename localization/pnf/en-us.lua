@@ -114,7 +114,9 @@ return {
             fish_fac_untitledfish = {
                 name = "Untitled",
                 text = {
-                    "Gives {C:purple}#4#{} Score on your {C:attention}penultimate hand"
+                    {"Gives {C:purple}#4#{} Score on your {C:attention}penultimate hand"},
+                    {"{C:green}1 in 10{} chance to be {C:mult}destroyed",
+                "when blind is selected"}
                 },
                 flavor = {
                     [[ERROR#4#ERROR#4#]]
