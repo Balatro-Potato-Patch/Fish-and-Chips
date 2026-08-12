@@ -19,6 +19,7 @@ FishAndChips.Fish({
 			max = 50,
 		},
 	},
+	cost = 1,
 	weight = 10,
 	environments = {
 		wormhole = 1,
@@ -125,11 +126,12 @@ FishAndChips.Fish({
 	key = "moai_statue",
 	atlas = "thunder_and_aiko",
 	pos = { x = 3, y = 0 },
-	weight = 10,
+	weight = 5,
 	environments = {
 		pier = 2,
 		calm_pond = 1,
 	},
+	cost = 10,
 	stats = {
 		weight = {
 			min = 65000,
@@ -211,6 +213,7 @@ FishAndChips.Fish({
 			max = 0,
 		},
 	},
+	cost = 8,
 	attributes = { "sell_value", "scaling", "economy", "mult" },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
@@ -356,7 +359,9 @@ FishAndChips.Fish({
 	environments = {
 		styx = 1,
 		wormhole = 1,
+		aquifer = 1,
 	},
+	cost = 7,
 	stats = {
 		weight = {
 			min = 6,
@@ -452,6 +457,7 @@ FishAndChips.Fish({
 	environments = {
 		soup = 1,
 	},
+	cost = 5,
 	stats = {
 		weight = {
 			min = 1.9,
@@ -492,6 +498,7 @@ SMODS.Atlas({
 
 FishAndChips.Fish({
 	key = "killer",
+	cost = 6,
 	atlas = "thunder_and_aiko_killer",
 	pos = { x = 0, y = 0 },
 	sprite_args = {
@@ -633,6 +640,7 @@ FishAndChips.Fish({
 
 FishAndChips.Fish({
 	key = "growfish",
+	cost = 1,
 	atlas = "thunder_and_aiko",
 	pos = { x = 0, y = 1 },
 	weight = 10,
@@ -693,6 +701,7 @@ FishAndChips.Fish({
 	atlas = "thunder_and_aiko",
 	pos = { x = 1, y = 1 },
 	weight = 5,
+	cost = 1,
 	environments = {
 		wormhole = 1,
 		swamp = 2,
@@ -777,6 +786,7 @@ end
 FishAndChips.Fish({
 	key = "message",
 	weight = 5,
+	cost = 2,
 	treasure = true,
 	atlas = "thunder_and_aiko",
 	pos = { x = 2, y = 1 },
@@ -857,11 +867,12 @@ FishAndChips.Fish({
 
 FishAndChips.Fish({
 	key = "snad",
-	weight = 5,
+	weight = 10,
 	environments = {
 		pier = 1,
 		calm_pond = 1,
 	},
+	cost = 3,
 	atlas = "thunder_and_aiko",
 	pos = { x = 3, y = 1 },
 	stats = {
@@ -900,11 +911,53 @@ FishAndChips.Fish({
 })
 
 FishAndChips.Fish({
+	key = "miku",
+	weight = 5,
+	environments = {
+		wormhole = 1,
+		garden = 1,
+	},
+	cost = 7,
+	-- atlas = "thunder_and_aiko",
+	-- pos = { x = 3, y = 1 },
+	stats = {
+		weight = {
+			min = 30,
+			max = 40,
+		},
+		length = {
+			min = 1.4,
+			max = 1.7,
+		},
+	},
+	attributes = { "xchips", "ace" },
+	ppu_coder = { "thunderedge" },
+	ppu_artist = { "aikoyori" },
+	config = { extra = { xchips = 2 } },
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.xchips,
+			},
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.individual and context.cardarea == G.play and context.other_card:get_id() == 14 then
+			return {
+				xchips = card.ability.extra.xchips,
+				-- sound_override = ...
+			}
+		end
+	end,
+})
+
+FishAndChips.Fish({
 	key = "reaper_leviathan",
 	weight = 5,
 	environments = {
 		aquifer = 1,
 	},
+	cost = 5,
 	display_size = { w = 71 * 1.2, h = 95 * 1.2 },
 	atlas = "thunder_and_aiko",
 	pos = { x = 4, y = 1 },
