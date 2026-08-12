@@ -1,13 +1,13 @@
 PotatoPatchUtils.Developer({
 	name = 'Blanthos',
-	atlas = 'blanthos_hunter_fish',
+	atlas = 'fac_blanthos_hunter_fish',
 	colour = G.C.DARK_EDITION,
 	fac_partner = 'fac_Hunter'
 })
 
 PotatoPatchUtils.Developer({
 	name = 'Hunter',
-	atlas = 'blanthos_hunter_fish',
+	atlas = 'fac_blanthos_hunter_fish',
 	colour = G.C.YELLOW,
 	fac_partner = 'fac_Blanthos'
 })
@@ -188,8 +188,8 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
 		return { 
-			vars = { card.ability.extra.mult, card.ability.extra.scaling }, 
-			ppu_bubbles = {card.ability.immutable.active and "active" or "inactive"} 
+			vars = { card.ability.extra.mult, card.ability.extra.scaling, ppu_bubbles = {card.ability.immutable.active and "active" or "inactive"} }, 
+			 
 }
 	end,
 	calculate = function(self, card, context)
