@@ -606,8 +606,10 @@ FishAndChips.Fish({
             end
             local target
             local att = ''
-            for i, fish in ipairs(G.fac_fish_area.cards) do
-                if fish == card and G.fac_fish_area.cards[i+1] then target = G.fac_fish_area.cards[i+1]; break end
+            if G.fac_fish_area and G.fac_fish_area.cards then
+                for i, fish in ipairs(G.fac_fish_area.cards) do
+                    if fish == card and G.fac_fish_area.cards[i+1] then target = G.fac_fish_area.cards[i+1]; break end
+                end
             end
             if target and not next(card.ability.extra.current_scaling) then
                 for attribute, v in pairs(target.config.center.attributes) do
