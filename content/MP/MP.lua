@@ -257,31 +257,7 @@ FishAndChips.Fish {
 	end,
 }
 
--- FishAndChips.Fish {
-	key = 'mirrorcarp',
-	atlas = 'fac_placeholders',
-	weight = 10,
-	ppu_coder = { 'MP' },
-	ppu_artist = { 'MP' },
-	attributes = { 'copying', 'mult' },
-	environments = {
-		pier = 5,
-		city_river = 3,
-	},
-	config = {
-		extra = {
-			mult = 2,
-		}
-	},
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult } }
-	end,
-	calculate = function(self, card, context)
-		if context.joker_main and fac_has_rank_pair(context.scoring_hand) then
-			return { mult = card.ability.extra.mult }
-		end
-	end,
--- }
+
 
 FishAndChips.Fish {
 	key = 'gezora',
@@ -524,31 +500,4 @@ FishAndChips.Fish {
 	end,
 -- }
 
--- FishAndChips.Fish {
-	key = 'stingray',
-	atlas = 'fac_placeholders',
-	weight = 10,
-	ppu_coder = { 'MP' },
-	ppu_artist = { 'MP' },
-	attributes = { 'chance', 'defense' },
-	environments = {
-		pier = 4,
-		swamp = 2,
-		volcano = 1,
-	},
-	config = {
-		extra = {
-			x_chips = 1.1,
-		}
-	},
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.x_chips } }
-	end,
-	calculate = function(self, card, context)
-		if context.joker_main and context.scoring_hand and not context.end_of_round then
-			if fac_count_low(context.scoring_hand) >= 2 then
-				return { x_chips = card.ability.extra.x_chips }
-			end
-		end
-	end,
--- }
+
