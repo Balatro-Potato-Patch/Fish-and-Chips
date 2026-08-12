@@ -707,47 +707,6 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-	key = "sophie_fish_finder",
-	atlas = "sophie_fish",
-	pos = { x = 3, y = 2 },
-	weight = 5,
-    stats = {weight = {min = 10, max = 30}, length = {min = 0.5, max = 1.72}},
-	ppu_coder = { "Sophie" },
-	ppu_artist = { "gfs" },
-	attributes = { "generation" },
-	config = {
-		extra = {
-            consumables = 0
-		}
-	},
-	environments = {
-        calm_pond = 1,
-        pier = 1,
-        swamp = 1,
-        styx = 1
-	},
-	loc_vars = function(self, info_queue, card)
-		return { vars = { } }
-	end,
-    can_use = function(self, card)
-        return true
-    end,
-    treasure = true,
-    use = function(self, card)
-        G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.4,
-            func = function()
-                play_sound('timpani')
-                card:juice_up(0.3, 0.5)
-                ease_sand_dollars(math.max(0, math.min(G.GAME.fac_sand_dollars, card.ability.extra.max)), true) -- figurre out what var is
-                return true
-            end
-        }))
-    end
-}
-
-FishAndChips.Fish {
 	key = "sophie_gay_fish",
 	atlas = "sophie_fish",
 	pos = { x = 4, y = 2 },
