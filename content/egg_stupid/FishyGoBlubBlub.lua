@@ -360,7 +360,7 @@ FishAndChips.Fish {
 	atlas = "segg_fishies",
 	pos = { x = 2, y = 0 },
 
-	weight = 5,
+	weight = 7,
 
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
@@ -575,7 +575,7 @@ FishAndChips.Fish {
 	atlas = "segg_fishies",
 	pos = { x = 1, y = 1 },
 
-	weight = 10,
+	weight = 13,
 
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
@@ -632,7 +632,7 @@ FishAndChips.Fish {
 	atlas = "segg_fishies",
 	pos = { x = 2, y = 1 },
 
-	weight = 2,
+	weight = 3,
 
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
