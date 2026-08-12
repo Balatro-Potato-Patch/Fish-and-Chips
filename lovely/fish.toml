@@ -133,3 +133,46 @@ if args.type == 'flavour' then
     return
 end
 '''
+
+[[patches]]
+[patches.pattern]
+target = '=[lovely debugplus.core "debugplus/core.lua"]'
+pattern = '''
+elseif _card.playing_card then
+'''
+position = 'before'
+payload = '''
+elseif _card.ability.set == 'fac_Fish' then
+    _area = G.fac_fish_area
+elseif _card.ability.set == 'fac_Bait' then
+    FishAndChips.add_bait_to_inventory(_card.config.center_key)
+    return
+'''
+match_indent = true
+times = 1
+
+# Mark main box to add stats below
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+match_indent = true
+position = 'after'
+pattern = '''
+AUT.main.background_colour = AUT.main.background_colour or AUT.box_colours and AUT.box_colours[1] or nil
+'''
+payload = '''
+AUT.main.main_box_flag = true
+'''
+
+# Juice up respect scale (this should be in smods)
+[[patches]]
+[patches.pattern]
+target = 'engine/moveable.lua'
+match_indent = true
+position = 'at'
+pattern = '''
+self.VT.scale = 1-0.6*amount
+'''
+payload = '''
+self.VT.scale = self.VT.scale-0.6*amount
+'''

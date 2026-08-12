@@ -41,6 +41,10 @@ FishAndChips.Fish {
 		pier = 10,
 		city_river = 2.5
 	},
+	stats = {
+		weight = {min = 5, max = 12},
+		length = {min = 0.25, max = 0.50}
+	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips } }
 	end,
@@ -65,6 +69,10 @@ FishAndChips.Fish {
 	environments = {
 		calm_pond = 10,
 		city_river = 5
+	},
+	stats = {
+		weight = {min = 1.30, max = 4.50},
+		length = {min = 0.20, max = 0.45}
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
@@ -99,6 +107,13 @@ FishAndChips.Fish {
 		wormhole = 1,
 		pier = 0.1
 	},
+	stats = {
+		weight = {min = 250, max = 750},
+		length = {min = 1.50, max = 2}
+	},
+	flavour_vars = function(self, info_queue, card)
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 51 / 513, "fac_earthfish_lore")}}}
+	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money, card.ability.extra.money_needed, elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 51 / 513, "fac_earthfish_lore") } } }
 	end,
@@ -122,6 +137,10 @@ FishAndChips.Fish {
 	attributes = { "copying", "food" },
 	environments = {
 		chocolate_river = 10
+	},
+	stats = {
+		weight = {min = 0.01, max = 0.05},
+		length = {min = 0.04, max = 0.08}
 	},
 	loc_vars = function(self, info_queue, card)
 		if card.area and card.area == G.fac_fish_area then
@@ -167,6 +186,10 @@ FishAndChips.Fish {
 	environments = {
 		volcano = 10
 	},
+	stats = {
+		weight = {min = 0.40, max = 3.50},
+		length = {min = 0.64, max = 1.17}
+	},
 	blueprint_compat = false,
 	calculate = function(self, card, context)
 		if context.first_hand_drawn then
@@ -197,6 +220,10 @@ FishAndChips.Fish {
 	attributes = { "boss_blind" },
 	environments = {
 		volcano = 10
+	},
+	stats = {
+		weight = {min = 1.10, max = 1.50},
+		length = {min = 0.30, max = 0.60}
 	},
 	blueprint_compat = false,
 	calculate = function(self, card, context)
@@ -231,6 +258,10 @@ FishAndChips.Fish {
 		aquifer = 1,
 		wormhole = 0.5
 	},
+	stats = {
+		weight = {min = 1.2, max = 4.8},
+		length = {min = 0.47, max = 0.92}
+	},
 	blueprint_compat = true,
 	calculate = function(self, card, context)
 		if context.repetition and context.other_card.ability.played_this_ante then
@@ -252,6 +283,10 @@ FishAndChips.Fish {
 	environments = {
 		swamp = 1,
 		city_river = 0.25,
+	},
+	stats = {
+		weight = {min = 1.2, max = 4.8},
+		length = {min = 0.47, max = 0.92}
 	},
 	config = {
 		extra = {
@@ -280,22 +315,24 @@ FishAndChips.Fish {
 			}
 		)
 		delay(1)
+        local bait_cards = {}
 		for i = 1, card.ability.extra.bait do
 			G.E_MANAGER:add_event(Event {
 				func = function()
-					local card = SMODS.create_card { set = "fac_Bait" }
-					G.fac_temp_bait_area:emplace(card)
-					FishAndChips.add_bait_to_inventory(card.config.center.key)
+					local _card = SMODS.create_card { set = "fac_Bait", area = G.fac_temp_bait_area }
+					G.fac_temp_bait_area:emplace(_card)
+                    table.insert(bait_cards, _card)
+					FishAndChips.add_bait_to_inventory(_card.config.center.key)
 					return true
 				end
 			})
 			delay(0.2)
 		end
 		delay(3)
-		for i = 1, card.ability.extra.bait do
+		for _, _card in ipairs(bait_cards) do
 			G.E_MANAGER:add_event(Event {
 				func = function()
-					G.fac_temp_bait_area.cards[1]:start_dissolve()
+					_card:start_dissolve()
 					return true
 				end
 			})
@@ -326,6 +363,10 @@ FishAndChips.Fish {
 	environments = {
 		garden = 1,
 		calm_pond = 0.1,
+	},
+	stats = {
+		weight = {min = 1.2, max = 4.8},
+		length = {min = 0.47, max = 0.92}
 	},
 	config = {
 		extra = {
@@ -372,6 +413,10 @@ FishAndChips.Fish {
 	environments = {
 		backroom = 1
 	},
+	stats = {
+		weight = {min = 1.2, max = 4.8},
+		length = {min = 0.47, max = 0.92}
+	},
 	config = {
 		extra = {
 			levels = 4,
@@ -416,6 +461,10 @@ FishAndChips.Fish {
 		soup = 1,
 		volcano = 0.5
 	},
+	stats = {
+		weight = {min = 1.2, max = 4.8},
+		length = {min = 0.47, max = 0.92}
+	},
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		if card.area and card.area == G.fac_fish_area then
@@ -458,6 +507,10 @@ FishAndChips.Fish {
 		soup = 1,
 		backroom = 0.5
 	},
+	stats = {
+		weight = {min = 1.2, max = 4.8},
+		length = {min = 0.47, max = 0.92}
+	},
 	blueprint_compat = true,
 	config = {
 		extra = {
@@ -490,6 +543,10 @@ FishAndChips.Fish {
 	environments = {
 		swamp = 1,
 		styx = 0.2
+	},
+	stats = {
+		weight = {min = 1.2, max = 4.8},
+		length = {min = 0.47, max = 0.92}
 	},
 	requires_hand = true,
 	blueprint_compat = false,
@@ -584,6 +641,10 @@ FishAndChips.Fish {
 		aquifer = 0.1,
 		styx = 1
 	},
+	stats = {
+		weight = {min = 1.2, max = 4.8},
+		length = {min = 0.47, max = 0.92}
+	},
 	blueprint_compat = false,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.game_over and context.main_eval then
@@ -617,6 +678,10 @@ FishAndChips.Fish {
 	attributes = { "suits", "mult", "food" },
 	environments = {
 		chocolate_river = 1
+	},
+	stats = {
+		weight = {min = 1.2, max = 4.8},
+		length = {min = 0.47, max = 0.92}
 	},
 	config = {
 		extra = {
