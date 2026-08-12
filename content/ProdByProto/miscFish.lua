@@ -224,7 +224,7 @@ FishAndChips.ProdByProto.loadFih = function()
 			G.E_MANAGER:add_event(Event(playlistEvent))
 		end,
 		can_use = function(self,card)
-			if SMODS.find_card("fish_proto_noir")[1] then noirFish = SMODS.find_card("fish_proto_noir")[1] end
+			if SMODS.find_card("fish_fac_proto_noir")[1] then noirFish = SMODS.find_card("fish_fac_proto_noir")[1] end
 			return not noirFish.ability.extra.storyActive
 		end
 			

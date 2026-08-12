@@ -126,7 +126,7 @@ function FishAndChips.ProdByProto.noirDialog(storyFlag)
     local nodes = {}
     local vars_ = {}
     local trueEnd = false
-    if SMODS.find_card("fish_proto_noir")[1] then local noirFish = SMODS.find_card("fish_proto_noir")[1] end
+    if SMODS.find_card("fish_fac_proto_noir")[1] then local noirFish = SMODS.find_card("fish_fac_proto_noir")[1] end
     G.SETTINGS.paused = true
     if storyFlag == 6 then
         for _,item in pairs(noirFish.ability.extra.noir_inv) do
