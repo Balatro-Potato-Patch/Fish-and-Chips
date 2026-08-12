@@ -472,7 +472,7 @@ return {
                     "After {C:attention}#1#{} rounds, sell this to",
                     "{C:dark_edition}enchant{} your {C:attention}Mineral Fishes{},",
                     "then double sell value of your",
-                    "Unenchanted {C:attention}Fishes{}, up to {C:money}+$#2#",
+                    "Unenchanted {C:attention}Fishes{}, up to {C:fac_sand_dollars}+{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#",
                     "{C:inactive}(Currently {C:attention}#3#{C:inactive}/#1#)"
                 },
                 flavor = {
