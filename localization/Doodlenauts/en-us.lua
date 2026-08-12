@@ -171,9 +171,13 @@ return {
             fish_fac_frogspawn = {
                 name = 'Frogspawn',
                 text = {
-                    'Gains {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} of sell value',
+                    'Gains {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{} of sell value',
                     'at end of round'
                 },
+                flavour = {
+                    "Beautiful pearls of soon-to-be life.",
+                    "Or at least what's left of it"
+                }
             },
             fish_fac_fihnull = {
                 name = 'FihNULL',
@@ -183,6 +187,11 @@ return {
                     '{C:green}#1# in #2#{} chance for each',
                     'unenhanced card to gain',
                     'a random {C:attention}enhancement'
+                },
+                flavour = {
+                    'Attempted to index fih,',
+                    'a nil value string expected,',
+                    'got fishing wire'
                 }
             },
             fish_fac_leech = {
@@ -191,6 +200,9 @@ return {
                     'Lose {C:red}$#2#{} each hand,',
                     'destroys {C:attention}#1#{} random cards',
                     'in hand {C:attention}when sold{}'
+                },
+                flavour = {
+                    'Filthy, annoying little bloodsuckers.'
                 }
             },
             fish_fac_obsidianstarfish = {
@@ -198,6 +210,11 @@ return {
                 text = {
                     'Create #1# {C:dark_edition}Polychrome{} {C:attention}Stone cards',
                     'with {C:purple}Purple {C:attention}seals{}'
+                },
+                flavour = {
+                    'These hardy stars are made',
+                    'when an ordinary starfish',
+                    'is engulfed in lava.'
                 }
             },
             fish_fac_hermitcrab = {
@@ -205,6 +222,11 @@ return {
                 text = {
                     'Doubles {C:money}money{} and {C:fac_sand_dollars}sand dollars',
                     '{C:inactive}(Max of{} {C:money}$#1#{} {C:inactive}and{} {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{C:inactive}){}'
+                },
+                flavour = {
+                    'These well known crustaceans live in',
+                    'discarded shells and will find new ones',
+                    'if they outgrow their old ones.'
                 }
             },
             fish_fac_spicytuna = {
@@ -212,6 +234,34 @@ return {
                 text = {
                     'Earn {C:money}$#1#{} if played hand',
                     'scores {C:attention}higher{} than the {C:attention}Blind amount'
+                },
+                flavour = {
+                    'These quick, red variants of tuna',
+                    'are known to be a hot as Thai Chilies.'
+                }
+            },
+            fish_fac_oldtire = {
+                name = 'Old Tire',
+                text = {
+                    '{C:attention}#1#{} free {C:green}Rerolls{} per shop,',
+                    'per ante'
+                },
+                flavour = {
+                    'The lost rubber wheel of someones bike.',
+                    'It, like the world, is still revolving.'
+                }
+            },
+            fish_fac_liveammunition = {
+                name = 'Live Ammunition',
+                text = {
+                    'On use, decrease',
+                    '{C:attention}Blind{} requirement by {C:attention}#1#%{}',
+                    '{C:inactive}(#2# uses left){}'
+                },
+                flavour = {
+                    "Careful! This stuff is still live!",
+                    "It's one of the few dangers that",
+                    "come with magnet fishing.",
                 }
             }
         },

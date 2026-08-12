@@ -40,12 +40,12 @@ FishAndChips.Fish {
 	attributes = { 'mult', 'rank', 'scaling', 'two', 'three', 'four', 'five' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 1.5,
+			max = 4,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 0.5,
+			max = 2.5
 		}
 	},
 	cost = 5,
@@ -107,8 +107,8 @@ FishAndChips.Fish {
 	attributes = { 'usable', 'chance', 'editions' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.8,
+			max = 5,
 		},
 		length = {
 			min = 1,
@@ -180,18 +180,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 2, y = 0 },
 	pixel_size = { w = 65, },
-	weight = 5, -- common
+	weight = 6, -- common
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'chips' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.7,
+			max = 0.7,
 		},
 		length = {
 			min = 1,
-			max = 2
+			max = 1
 		}
 	},
 	cost = 5,
@@ -228,18 +228,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 0, y = 1 },
 	pixel_size = { w = 51, h = 33 },
-	weight = 5, --common/uncommon
+	weight = 6, --common/uncommon
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'chips' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.18,
+			max = 0.5,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 0.07,
+			max = 0.15
 		}
 	},
 	cost = 5,
@@ -282,12 +282,12 @@ FishAndChips.Fish {
 	attributes = { 'passive', 'enhancements' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.9,
+			max = 8.5,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 0.3,
+			max = 0.8
 		}
 	},
 	cost = 7,
@@ -306,18 +306,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 4, y = 0 },
 	pixel_size = { w = 55, h = 79 },
-	weight = 5, --uncommon/rare
+	weight = 4, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'xmult', 'joker' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.5,
+			max = 1.4,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 0.1,
+			max = 0.9
 		}
 	},
 	cost = 7,
@@ -359,18 +359,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 3, y = 0 },
 	pixel_size = { w = 49, h = 47 },
-	weight = 5, --uncommon/rare
+	weight = 3, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'suit', 'clubs' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.2,
+			max = 1.3,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 0.3,
+			max = 1.1
 		}
 	},
 	cost = 4,
@@ -434,18 +434,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 3, y = 1 },
 	pixel_size = { w = 47, h = 71 },
-	weight = 5, --common/uncommon
+	weight = 3, --common/uncommon
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'economy', },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 13,
+			max = 165,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 1.5,
+			max = 5.5
 		}
 	},
 	cost = 6,
@@ -512,18 +512,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 0, y = 2 },
 	pixel_size = { w = 47, h = 19 },
-	weight = 5, --uncommon/rare
+	weight = 4, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'hand_type' , 'editions' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.1,
+			max = 0.4,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 0.1,
+			max = 0.3
 		}
 	},
 	cost = 8,
@@ -563,18 +563,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 0, y = 0 },
 	pixel_size = { w = 53, h = 85 },
-	weight = 5, --uncommon/rare
+	weight = 4, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'economy' , 'joker' , 'sell_value' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.7,
+			max = 0.9,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 0.4,
+			max = 1
 		}
 	},
 	cost = 7,
@@ -630,18 +630,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 3, y = 2 },
 	pixel_size = { w = 33, h = 43 },
-	weight = 5, --uncommon/rare
+	weight = 2, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'seals' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.2,
+			max = 0.5,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 0.3,
+			max = 1
 		}
 	},
 	cost = 6,
@@ -684,18 +684,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 3, y = 3 },
 	pixel_size = { w = 57, h = 81 },
-	weight = 1, --uncommon/rare
+	weight = 2, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'xmult', 'reroll', 'scaling' },
 	stats = {
 		weight = {
 			min = 1,
-			max = 2,
+			max = 77,
 		},
 		length = {
 			min = 1,
-			max = 2
+			max = 77
 		}
 	},
 	cost = 7,
@@ -744,23 +744,25 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 4, y = 1 },
 	pixel_size = { w = 35, h = 33 },
-	weight = 1, --uncommon/rare
+	weight = 4, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'food', 'sell_value', 'scaling', 'economy', 'generation' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.2,
+			max = 0.4,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 0.05,
+			max = 0.1
 		}
 	},
 	cost = 4,
 	config = {
 		extra = {
+			nun = 1,
+			denom = 6,
 			inc_per_round = 2
 		}
 	},
@@ -769,8 +771,11 @@ FishAndChips.Fish {
 		calm_pond = 0.4,
 	},
 	loc_vars = function(self, info_queue, card)
+		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom, 'fac_neontetra')
 		return {
 			vars = {
+				numerator,
+				denominator,
 				card.ability.extra.inc_per_round,
 			}
 		}
@@ -784,17 +789,21 @@ FishAndChips.Fish {
                 colour = G.C.MONEY
             }
 		end
-		--[[if context.selling_card then
-			local all_fish = G.P_CENTER_POOLS.fac_Fish
-			local frogs = {}
-			for _, fish in ipairs(all_fish) do
-				local text = localize({ type = 'name_text', set = "fac_Fish", key = fish.config.center.key })
-				if text:lower():find("frog", 1, true) then
-					frogs[#frogs+1] = fish
+		if context.selling_self then
+			if SMODS.pseudorandom_probability(card, 'fac_neontetra', card.ability.extra.num, card.ability.extra.denom) then
+				local all_fish = G.P_CENTER_POOLS.fac_Fish
+				local frogs = {}
+				for _, fish in ipairs(all_fish) do
+					local text = localize({ type = 'name_text', set = "fac_Fish", key = fish.key })
+					if text:lower():find("frog", 1, true) then
+						frogs[#frogs+1] = fish
+					end
 				end
+				local random_frog = pseudorandom_element(frogs, 'fac_frogspawn')
+				local random_frog_key = random_frog.key
+				SMODS.add_card{ key = random_frog_key }
 			end
-			print(frogs)
-		end]]
+		end
 	end
 }
 
@@ -804,18 +813,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 1, y = 2 },
 	pixel_size = { w = 59, h = 61 },
-	weight = 1, --uncommon/rare
+	weight = 2, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'usable', 'suit', 'rank', 'economy', 'chance', 'enhancements', 'modify_card' },
 	stats = {
 		weight = {
 			min = 1,
-			max = 2,
+			max = 255,
 		},
 		length = {
 			min = 1,
-			max = 2
+			max = 255
 		}
 	},
 	cost = 4,
@@ -874,18 +883,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 4, y = 2 },
 	pixel_size = { w = 63, h = 25 },
-	weight = 1, --uncommon/rare
+	weight = 4, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'usable', 'destroy_card', },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.4,
+			max = 1,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 0.1,
+			max = 0.5
 		}
 	},
 	cost = 0,
@@ -939,18 +948,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 2, y = 2 },
 	pixel_size = { w = 51, h = 39 },
-	weight = 1, --uncommon/rare
+	weight = 3, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'useable', 'generation', 'enhancements', 'seals' , 'edition', },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 2,
+			max = 60,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 0.1,
+			max = 1
 		}
 	},
 	cost = 4,
@@ -994,18 +1003,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 1, y = 3 },
 	pixel_size = { w = 47, h = 63 },
-	weight = 1, --uncommon/rare
+	weight = 4, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'usable', 'economy' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.1,
+			max = 1.1,
 		},
 		length = {
-			min = 1,
-			max = 2
+			min = 0.01,
+			max = 0.1
 		}
 	},
 	cost = 3,
@@ -1050,18 +1059,18 @@ FishAndChips.Fish {
 	atlas = 'DoodlenautsFish',
 	pos = { x = 0, y = 3 },
 	pixel_size = { w = 63, h = 87 },
-	weight = 1, --uncommon/rare
+	weight = 2, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'usable', 'destroy_card', },
+	attributes = { 'economy' },
 	stats = {
 		weight = {
-			min = 1,
-			max = 2,
+			min = 0.9,
+			max = 6.6,
 		},
 		length = {
 			min = 1,
-			max = 2
+			max = 5
 		}
 	},
 	cost = 0,
@@ -1090,4 +1099,131 @@ FishAndChips.Fish {
 			end
 		end
 	end,
+}
+
+-- Old Tire
+FishAndChips.Fish {
+	key = 'oldtire',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 2, y = 3 },
+	pixel_size = { w = 35, h = 51 },
+	weight = 4, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'rerolls', },
+	stats = {
+		weight = {
+			min = 0.9,
+			max = 2,
+		},
+		length = {
+			min = 0.4,
+			max = 0.4
+		}
+	},
+	cost = 0,
+	config = {
+		extra = {
+			rerolls = 3,
+			free_rerolls_used_shop = 0,
+			rerolls_this_ante = 0
+		}
+	},
+	environments = {
+		city_river = 1,
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.rerolls,
+				card.ability.extra.free_rerolls_used_shop,
+				card.ability.extra.rerolls_this_ante
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.reroll_shop and not context.blueprint then
+			--card.ability.extra.has_rerolled = true
+			card.ability.extra.rerolls_this_ante = card.ability.extra.rerolls_this_ante + 1
+			if card.ability.extra.rerolls_this_ante <= 3 then
+				card.ability.extra.free_rerolls_used_total = card.ability.extra.free_rerolls_used_total + 1
+				card.ability.extra.free_rerolls_used_shop = card.ability.extra.free_rerolls_used_shop + 1
+				--card.ability.extra.free_used = true
+			end
+		end
+		if context.ending_shop then
+			if --[[card.ability.extra.free_used == true and]] card.ability.extra.free_rerolls_used_shop > 0 then
+				SMODS.change_free_rerolls(-card.ability.extra.free_rerolls_used_shop)
+				card.ability.extra.free_rerolls_used_shop = 0
+			end
+		end
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+			if context.beat_boss then
+				SMODS.change_free_rerolls(card.ability.extra.rerolls)
+				card.ability.extra.rerolls_this_ante = 0
+				card.ability.extra.free_rerolls_used_total = 0
+				--print(card.ability.extra.rerolls)
+			end
+		end
+	end,
+	add_to_deck = function(self, card, from_debuff)
+        SMODS.change_free_rerolls(card.ability.extra.rerolls)
+		print(card.ability.extra.rerolls)
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        SMODS.change_free_rerolls(card.ability.extra.rerolls - card.ability.extra.free_rerolls_used_total) -- -free rerolls remaining
+		print(card.ability.extra.rerolls)
+    end
+}
+
+-- Live Ammunition
+FishAndChips.Fish {
+	key = 'liveammunition',
+	atlas = 'DoodlenautsFish',
+	pos = { x = 4, y = 3 },
+	pixel_size = { w = 47, h = 63 },
+	weight = 3, --uncommon/rare
+	ppu_coder = { 'Buckaroodle'},
+	ppu_artist = { 'F404' },
+	attributes = { 'usable' },
+	stats = {
+		weight = {
+			min = 0.1,
+			max = 0.3,
+		},
+		length = {
+			min = 0.01,
+			max = 0.11
+		}
+	},
+	cost = 3,
+	config = {
+		extra = {
+			percentage = 20,
+			uses = 3
+		}
+	},
+	environments = {
+		city_river = 0.5,
+		pier = 0.5,
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.percentage,
+				card.ability.extra.uses
+			}
+		}
+	end,
+	use = function(self, card, area)
+		G.GAME.blind.chips = math.floor(G.GAME.blind.chips - G.GAME.blind.chips * (card.ability.extra.percentage / 100))
+		G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+		card.ability.extra.uses = card.ability.extra.uses - 1
+		if card.ability.extra.uses <= 0 then
+			SMODS.destroy_cards(card, nil, nil, true)
+		end
+	end,
+	can_use = function(self, card)
+		return G.GAME.blind.in_blind
+	end
 }
