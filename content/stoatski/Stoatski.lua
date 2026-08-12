@@ -31,6 +31,10 @@ FishAndChips.Fish {
 	ppu_coder = { "stoatski" },
 	ppu_artist = { "stoatski" },
 	blueprint_compat = false,
+	stats = {
+        weight = {5, 45},
+	    length = {0.6, 1.8}
+    },
 
     environments = {
 		calm_pond = 10,
