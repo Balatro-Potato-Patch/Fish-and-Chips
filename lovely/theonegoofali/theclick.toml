@@ -1,0 +1,14 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "engine/controller.lua"
+pattern = "self.clicked.handled = true"
+position = "after"
+payload = '''
+if FishAndChips and type(FishAndChips.toga_updateclick) == 'function' then FishAndChips.toga_updateclick(self.clicked.target) end
+'''
+match_indent = true
