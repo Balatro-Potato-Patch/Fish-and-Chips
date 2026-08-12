@@ -54,7 +54,7 @@ else -- no comic sans installed :(
 end
 
 PotatoPatchUtils.Developer({
-	name = 'Sophe',
+	name = 'Sophie',
 	atlas = 'fac_sophie_cards',
     loc = true,
     pos = {x = 1, y = 0},
@@ -116,15 +116,11 @@ PotatoPatchUtils.Developer({
     end,
     click = function(self)
         self:juice_up()
-        card_eval_status_text(card, 'extra', nil, nil, nil, {
-            message = "+$5",
-            colour = G.C.MONEY,
-            card = card
-        }) 
+        play_sound('coin3', 0.9+0.2*math.random(), 0.7)
     end,
 	pos = {x = 0, y = 0},
 	colour = G.C.YELLOW,
-	fac_partner = 'fac_Sophe'
+	fac_partner = 'fac_Sophie'
 })
 
 SMODS.Atlas({
