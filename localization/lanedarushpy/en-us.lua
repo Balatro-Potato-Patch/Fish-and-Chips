@@ -199,7 +199,6 @@ return {
             k_fac_lizie_blow = "Fan",
             k_fac_lizie_thing = "Unknown",
             k_fac_lizie_still = "Still Life",
-            k_fac_lizie_jelly = "Jellyfish",
             k_fac_lizie_terria = "Weaponized Fish",
             k_fac_lizie_jellyfish_larva = "(Larva)",
             k_fac_lizie_jellyfish_polyp = "(Polyp)",

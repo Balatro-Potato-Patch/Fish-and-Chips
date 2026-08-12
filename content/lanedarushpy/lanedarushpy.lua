@@ -927,7 +927,6 @@ FishAndChips.Fish {
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
 	attributes = { "economy" },
-    badge_key = 'k_fac_lizie_jelly',
 	config = {
 		extra = {
 			odds = 2,
