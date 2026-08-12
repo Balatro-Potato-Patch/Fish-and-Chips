@@ -228,34 +228,7 @@ FishAndChips.Fish {
 	end,
 }
 
-FishAndChips.Fish {
-	key = 'school_of_shiners',
-	atlas = 'fac_placeholders',
-	weight = 8,
-	ppu_coder = { 'MP' },
-	ppu_artist = { 'MP' },
-	attributes = { 'chips', 'passive' },
-	environments = {
-		calm_pond = 8,
-		swamp = 2,
-	},
-	config = {
-		extra = {
-			chips = 2,
-		}
-	},
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips } }
-	end,
-	calculate = function(self, card, context)
-		if context.joker_main and context.scoring_hand then
-			local low_count = fac_count_low(context.scoring_hand)
-			if low_count > 0 then
-				return { chips = low_count * card.ability.extra.chips }
-			end
-		end
-	end,
-}
+
 
 
 
