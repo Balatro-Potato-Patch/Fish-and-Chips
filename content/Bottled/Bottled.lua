@@ -1,5 +1,3 @@
--- TODO: Replace "perma_p_sand_dollars" @ line 494 with official key
-
 SMODS.Atlas({ key = "Bottled_dev", path = "Bottled/dev.png", px = 71, py = 95 })
 SMODS.Atlas({ key = "Bottled_bottles", path = "Bottled/bottles.png", px = 71, py = 95 })
 --SMODS.Sound({ key = "Bottled_bottle_open", path = "Bottled/bottle_open.ogg" })
@@ -491,7 +489,7 @@ FishAndChips.Fish {
 	-- Fish Config
 	attributes = MB_attributes("economy"),
 	config = { extra = {
-		bottle = { main = "perma_p_sand_dollars", min = 1 },
+		bottle = { main = "perma_p_fac_sand_dollars", min = 1 },
 		modify = 1, amount = 1, mode = "random",
 		t_green = false, t_wrong = false
 	} },
