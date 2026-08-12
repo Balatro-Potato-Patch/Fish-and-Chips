@@ -11,7 +11,7 @@ return {
                 name = "AllUniversal",
                 text = {
                     "I {C:hearts}<3{}",
-                    "{element:1}{C:fac_fish}s"
+                    "{element:1}{C:fac_fish}ees"
                 }
             },
         },
