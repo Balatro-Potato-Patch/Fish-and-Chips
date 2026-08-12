@@ -1,5 +1,5 @@
 PotatoPatchUtils.Developer({
-	name = 'Carrier4133 (MP)',
+	name = 'MP',
 	atlas = 'fac_MPcards',
 	colour = G.C.YELLOW,
 	ignore_limits = false, -- USING THIS VALUE WILL RESULT IN YOUR SUBMISSION BEING REJECTED
@@ -85,6 +85,10 @@ FishAndChips.Fish {
 		pier = 10,
 		city_river = 4,
 	},
+	stats = {
+		weight = {min = 0.05, max = 0.15},
+		length = {min = 0.10, max = 0.20}
+	},
 	config = {
 		extra = {
 			sand_dollars = 1,
@@ -114,6 +118,10 @@ FishAndChips.Fish {
 	environments = {
 		calm_pond = 6,
 		pier = 3,
+	},
+	stats = {
+		weight = {min = 2.0, max = 5.0},
+		length = {min = 0.30, max = 0.50}
 	},
 	config = {
 		extra = {
@@ -174,6 +182,10 @@ FishAndChips.Fish {
 		styx = 5,
 		volcano = 3,
 	},
+	stats = {
+		weight = {min = 1.5, max = 3.5},
+		length = {min = 0.40, max = 0.70}
+	},
 	config = {
 		extra = {
 			blinds = 1,
@@ -209,6 +221,10 @@ FishAndChips.Fish {
 		calm_pond = 3,
 		pier = 1,
 	},
+	stats = {
+		weight = {min = 0.5, max = 1.5},
+		length = {min = 0.15, max = 0.30}
+	},
 	config = {
 		extra = {
 			x_mult = 2,
@@ -243,6 +259,10 @@ FishAndChips.Fish {
 		pier = 4,
 		city_river = 2,
 	},
+	stats = {
+		weight = {min = 30, max = 40},
+		length = {min = 25000000, max = 30000000}
+	},
 	config = {
 		extra = {
 			chance = 3,
@@ -272,6 +292,10 @@ FishAndChips.Fish {
 	environments = {
 		volcano = 2,
 		styx = 1,
+	},
+	stats = {
+		weight = {min = 1.2, max = 2.5},
+		length = {min = 0.60, max = 1.20}
 	},
 	config = {
 		extra = {
@@ -313,6 +337,10 @@ FishAndChips.Fish {
 		pier = 3,
 		swamp = 2,
 	},
+	stats = {
+		weight = {min = 3.0, max = 8.0},
+		length = {min = 0.50, max = 1.00}
+	},
 	config = {
 		extra = {
 			chips = 2,
@@ -350,6 +378,10 @@ FishAndChips.Fish {
 	environments = {
 		pier = 4,
 		city_river = 2,
+	},
+	stats = {
+		weight = {min = 2.5, max = 6.0},
+		length = {min = 0.45, max = 0.85}
 	},
 	config = {
 		extra = {
@@ -392,6 +424,10 @@ FishAndChips.Fish {
 		pier = 4,
 		swamp = 2,
 	},
+	stats = {
+		weight = {min = 0.2, max = 0.8},
+		length = {min = 0.08, max = 0.15}
+	},
 	config = {
 		extra = {
 			chips = 1,
@@ -425,6 +461,10 @@ FishAndChips.Fish {
 		volcano = 3,
 		styx = 2,
 	},
+	stats = {
+		weight = {min = 50.0, max = 150.0},
+		length = {min = 3.0, max = 6.0}
+	},
 	config = {
 		extra = {
 			blinds = 5,
@@ -443,7 +483,8 @@ FishAndChips.Fish {
 	end,
 }
 
--- FishAndChips.Fish {
+--[[
+FishAndChips.Fish {
 	key = 'dreadnautilus',
 	atlas = 'fac_placeholders',
 	weight = 0.5,
@@ -470,6 +511,8 @@ FishAndChips.Fish {
 			end
 		end
 	end,
--- }
+}
+]]
+
 
 
