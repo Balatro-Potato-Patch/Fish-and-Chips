@@ -437,7 +437,7 @@ FishAndChips.Fish({
 local popup_hook = G.UIDEF.card_h_popup
 function G.UIDEF.card_h_popup(card)
     local ret = popup_hook(card)
-	if card.ability.fac_r_e_temp then
+	if card.ability and card.ability.fac_r_e_temp then
 		local name = SMODS.deepfind(ret, 'main_box_flag', 'i')[1]
 		table.insert(name.objtree[#name.objtree-2].nodes,
 			{n=G.UIT.R, config = {align = 'cm', padding = 0.05}, nodes = {
