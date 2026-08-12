@@ -2,7 +2,7 @@ return {
     descriptions = {
         PotatoPatch = {
 			PotatoPatchDev_Sophie = {
-				name = "Sophie",
+				name = "Sophe",
                 text = {
                     {
                         "balatro modding has gone too far"
