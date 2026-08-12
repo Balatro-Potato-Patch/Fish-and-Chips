@@ -20,38 +20,11 @@ SMODS.Sound {
     path = "sophie/snd_won.wav"
 }
 
-
-local font_path = ''
-local system = love.system.getOS()
-
--- the chance of the user actually installing comic sans on a 
--- non-windows platform AND the app not being sandboxed out of reading it
--- is 1 out of 10000 but we might as well try
-if system == "Windows" then
-    font_path = 'C:/Windows/Fonts/comic.ttf'
-elseif system == "Android" then
-    font_path = '/product/fonts/comic.ttf'
-elseif system == "Linux" then
-    font_path = '/usr/local/share/fonts/c/comic.ttf'
-elseif system == "OS X" then
-    font_path = '/Library/Fonts/comic.ttf'
-end
-
-if NFS.newFileData(font_path) then
-    SMODS.Font {
-        key = 'sophie_comic',
-        inject = function(self)
-            self.full_path = NFS.getNormalizedPath(font_path)
-            local file_data = NFS.newFileData(self.full_path)
-            self.FONT = love.graphics.newFont(file_data, self.render_scale or G.TILESIZE)
-        end,
-    }
-else -- no comic sans installed :(
-    SMODS.Font {
-        key = 'sophie_comic',
-        path = 'sophie/comic_shanns_2.ttf',
-    }
-end
+-- I had to ditch your funny OS stuff sorry Sophie
+SMODS.Font {
+    key = 'sophie_comic',
+    path = 'sophie/comic_shanns_2.ttf',
+ }
 
 PotatoPatchUtils.Developer({
 	name = 'Sophie',
