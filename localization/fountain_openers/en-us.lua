@@ -184,7 +184,7 @@ return {
                 text = {
                     {
                         "{f:fac_tss_slimelets}silly {f:fac_tss_slimelets,C:fac_fo_alexi}shapeshifting slimegirl.",
-                        "{f:fac_tss_slimelets}also see {f:fac_tss_slimelets,C:attention}slimestuff {f:fac_tss_slimelets}she's really cute or something"
+                        "{f:fac_tss_slimelets}also see {f:fac_tss_slimelets,C:attention}slimestuff {f:fac_tss_slimelets}they're all really cute or something"
                     },
                     {
                         "{f:fac_tss_slimelets}sole programmer here for our team",
