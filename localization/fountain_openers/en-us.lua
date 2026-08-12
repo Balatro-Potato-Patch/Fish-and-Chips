@@ -112,11 +112,10 @@ return {
                 name = "Thassa's Oracle",
                 text = {
                     "Once per {C:attention}round{}, use this Fish to reduce",
-                    "the {C:attention}Blind's{} requirement by {X:purple,C:white}X#2#{} if the {C:attention}sum{} of ranks",
+                    "the {C:attention}Blind's{} requirement by {X:purple,C:white}X#1#{} if the {C:attention}sum{} of ranks",
                     "of all {C:clubs}Clubs{} held in hand is greater than the",
                     "number of remaining cards in your {C:attention}deck",
-                    "{C:inactive}(#1#)",
-                    "{ppu_bubble:usable}"
+                    "{ppu_bubble:usable}{element:1}"
                 },
                 flavor = {
                     "Looking for demons to consult with..."
@@ -226,8 +225,6 @@ return {
             fac_fo_cij_length = "3 letters",
 
             fac_fo_take = "Take",
-
-            k_fac_fo_inactive = "Inactive...",
 
             k_fac_fo_hydra = "Hydra",
             k_fac_fo_crab = "Crab",

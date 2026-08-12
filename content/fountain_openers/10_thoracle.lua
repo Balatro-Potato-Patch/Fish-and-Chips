@@ -38,13 +38,17 @@ FishAndChips.Fish {
     decision_max = 0.6,
     decision_min = 0.9,
 	loc_vars = function(self, info_queue, card)
-		return {
+        local active_str = card.ability.extra.active and "active" or "inactive"
+        return {
             vars = {
-                card.ability.extra.active and localize{
-                    type = "variable",
-                    key = "loyalty_active"
-                } or localize("k_fac_fo_inactive"),
                 card.ability.extra.xblindsize,
+                elements = {
+                    {n=G.UIT.C, config = {padding = 0.05}, nodes = {
+                        {n=G.UIT.C, config={align = "m", colour = PotatoPatchUtils.Bubble_Colours[active_str] or G.C.RED, r = 0.05, padding = 0.06, res = 0.45}, nodes={
+                            {n=G.UIT.T, config={text = localize('ppu_bubble_' .. active_str), colour = G.C.UI.TEXT_LIGHT, scale = 0.24}},
+                        }}
+                    }}
+                },
             }
         }
 	end,
