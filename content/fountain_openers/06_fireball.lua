@@ -28,6 +28,7 @@ FishAndChips.Fish {
     decision_max = 0.75,
     decision_min = 0.4,
     vel_limit = 0.75,
+    colour = G.C.RED,
     loc_vars = function(self, info_queue, card)
         local active_str = card.ability.extra.active and "used" or "usable"
         return {

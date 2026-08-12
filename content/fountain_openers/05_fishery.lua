@@ -49,6 +49,7 @@ FishAndChips.Fish {
     decision_max = 0.75,
     decision_min = 0.45,
     vel_limit = 0.75,
+    colour = G.C.MONEY,
 
     loc_vars = function(self, info_queue, card)
 		return { vars = {

@@ -19,6 +19,7 @@ FishAndChips.Fish {
 	decision_max = 0.4,
 	impulse_min = 0.18,
 	impulse_max = 0.38,
+	colour = HEX("1fffbb"),
 
     cost = 9,
 	environments = {

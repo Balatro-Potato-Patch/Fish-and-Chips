@@ -29,6 +29,7 @@ FishAndChips.Fish {
     decision_max = 0.45,
     decision_min = 0.15,
     vel_limit = 0.45,
+    colour = FountainOpeners.AlexiGradient,
 
 	environments = {
 		backroom = 2,

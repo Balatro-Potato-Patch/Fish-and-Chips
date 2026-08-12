@@ -108,6 +108,11 @@ SMODS.Sound {
     path = "fountain_openers/ultrakill_parry.ogg"
 }
 
+FountainOpeners.AlexiGradient = SMODS.Gradient {
+    key = "fo_alexi",
+    colours = alexi_text_colors
+}
+
 SMODS.DynaTextEffect {
     key = "alexi_text",
     func = function(dynatext, index, letter)
