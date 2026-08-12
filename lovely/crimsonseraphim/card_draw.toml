@@ -1,0 +1,123 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/card_draw.lua"]'''
+pattern = '''G.shared_shadow:draw_shader('dissolve', self.shadow_height)'''
+position = "at"
+payload = '''
+if G.shared_shadow.aeonfish_transmute then
+    G.shared_shadow:draw_shader('fac_aeonfish_transmute', self.shadow_height, self.ARGS.send_to_shader)
+else
+    G.shared_shadow:draw_shader('dissolve', self.shadow_height)
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/card_draw.lua"]'''
+pattern = '''self.children.center:draw_shader('dissolve')'''
+position = "at"
+payload = '''
+if self.ability.crimsonseraphim_starblighted then
+    self.children.center:draw_shader('fac_crimsonseraphim_starblighted', nil, self.ARGS.send_to_shader)
+else
+    if self.config.center_key == "fish_fac_crimsonseraphim_roaring_fish" and self.config.center.discovered then
+        for i = 5, 1, -1 do
+            G.afterimage_alpha = 1/i
+            self.children.center:draw_shader('fac_crimsonseraphim_afterimage', nil, self.ARGS.send_to_shader, nil, self.children.center,scale_mod, 0,nil, 0.1-0.15/2 + 0.25*math.sin(1.8*(G.TIMERS.REAL-0.3*(i+1))),nil, 0.6)	
+        end
+        G.afterimage_alpha = nil
+        FishAndChips.crimsonseraphim.draw_sprite(self.children.center, self, { 
+            nil,
+            nil,
+            nil,
+            self.children.center,
+            scale_mod, 
+            0,
+            nil, 
+            0.1-0.15/2 + 0.25*math.sin(1.8*(G.TIMERS.REAL-0.3)),
+            nil, 
+            0.6
+        })
+    else
+        self.children.center:draw_shader('dissolve')
+    end
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/card_draw.lua"]'''
+pattern = '''if (self.edition and self.edition.negative and (not self.delay_edition or self.delay_edition.negative)) or (self.ability.name == 'Antimatter' and (self.config.center.discovered or self.bypass_discovery_center)) then'''
+position = "at"
+payload = '''
+if ((self.edition and self.edition.negative and (not self.delay_edition or self.delay_edition.negative)) or (self.ability.name == 'Antimatter' and (self.config.center.discovered or self.bypass_discovery_center))) and self.config.center.key ~= "fish_fac_crimsonseraphim_roaring_fish" then
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/card_draw.lua"]'''
+pattern = '''local edition = self.delay_edition or self.edition'''
+position = "after"
+payload = '''
+if self.config.center_key == "fish_fac_crimsonseraphim_roaring_fish" then return end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/card_draw.lua"]'''
+pattern = '''for k, v in pairs(SMODS.Stickers) do'''
+position = "before"
+payload = '''
+if self.ability.crimsonseraphim_temporary then
+    G.shared_stickers["crimsonseraphim_temporary"] = G.shared_stickers["crimsonseraphim_temporary"] or
+    Sprite(0, 0, G.CARD_W, G.CARD_H, G.ASSET_ATLAS["fac_crimsonseraphim_temporary"], { x = 0, y = 0 })
+    G.shared_stickers["crimsonseraphim_temporary"].role.draw_major = self
+    G.shared_stickers["crimsonseraphim_temporary"]:draw_shader('dissolve', nil, nil, nil, self.children.center)
+    G.shared_stickers["crimsonseraphim_temporary"]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center)
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''cardarea.lua'''
+pattern = '''if self.children.view_deck then'''
+position = "before"
+payload = '''
+for k, card in ipairs(self.cards) do
+    if card.config and card.config.center and card.config.center.no_rotation then card.T.r = 0; card.VT.r = 0 end
+end
+'''
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS FishAndChips "/src/mod_menu.lua"]'''
+pattern = "local popup_direction = dir or self.config.h_popup_dir or (self.T.y < G.CARD_H*0.8) and 'bm' or 'tm'"
+position = "at"
+payload = '''
+local popup_direction = (self.ppu_member.h_popup_dir and self.ppu_member:h_popup_dir(self)) or dir or self.config.h_popup_dir or (self.T.y < G.CARD_H*0.8) and 'bm' or 'tm'
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''card.lua'''
+pattern = '''
+local popup_direction = (self.children.buy_button or (self.area and self.area.config.view_deck) or (self.area and self.area.config.type == 'shop')) and 'cl' or 
+'''
+position = "at"
+payload = '''
+local popup_direction = self.config.h_popup_dir or (self.children.buy_button or (self.area and self.area.config.view_deck) or (self.area and self.area.config.type == 'shop')) and 'cl' or 
+'''
+match_indent = true
