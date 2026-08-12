@@ -15,7 +15,7 @@ return {
                     {
                         'If you want to check out some of the',
                         'other mods I\'ve worked on look at',
-                        '{C:FF13F0}SMODS{}, {C:00D4FF}Galdur #1#{}, {C:E0B0FF}Malverk{}, {C:990000}Ortalab{} and {C:00919c}Monarchy'
+                        '{C:FF13F0}SMODS{}, {C:00D4FF,st:00D4FF}Galdur{element:1}{}, {C:E0B0FF}Malverk{}, {C:990000}Ortalab{} and {C:00919c}Monarchy'
                     }
                 }
 			},

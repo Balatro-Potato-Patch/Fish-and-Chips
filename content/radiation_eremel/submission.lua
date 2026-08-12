@@ -6,6 +6,12 @@ SMODS.Atlas({
     px = 142, py = 80
 })
 
+SMODS.Atlas({
+    key = 'galdur_grave',
+    path = 'radiation_eremel/grave.png',
+    px = 31, py = 31
+})
+
 PotatoPatchUtils.Developer({
 	name = 'eremel',
     loc = true,
@@ -14,7 +20,7 @@ PotatoPatchUtils.Developer({
 	colour = HEX('3FC7EB'),
 	fac_partner = 'fac_radiation',
     loc_vars = function()
-        return {vars = {'RIP'}, scale = 1.2}
+        return {vars = {elements = {SMODS.create_sprite(0,0,0.4,0.4,SMODS.get_atlas('fac_galdur_grave'), {x=0, y=0})}}, scale = 1.2}
     end,
     calculate = function(self, context)
         if context.fac_fish_caught and G.P_CENTERS[context.fish].set == 'fac_Fish' then
