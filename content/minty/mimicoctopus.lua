@@ -49,6 +49,7 @@ FishAndChips.Fish{
             card:set_sprites(center)
         end
     end,
+    --on_catch = function (self, card) --[[mimic a random other fish from the area?]] end,
     can_use = function (self, card)
         if card.ability.extra.copying then return false end
         local mypos
