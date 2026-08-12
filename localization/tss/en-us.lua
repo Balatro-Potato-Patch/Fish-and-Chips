@@ -237,19 +237,40 @@ return {
 			PotatoPatchDev_slimestuff = {
 				name = 'slimestuff.',
 				text = {
-					"A system of #1# different {E:ellesys_Ash}creatures"
+					{
+						"{f:fac_tss_slimelets}A system of {f:fac_tss_slimelets,E:fac_tss_rainbow}#1#{f:fac_tss_slimelets} different {f:fac_tss_slimelets,E:fac_tss_rainbow}creatures",
+						" {element:1} "
+					},
+					{
+						"{f:fac_tss_slimelets}We did all the code for our",
+						"{f:fac_tss_slimelets}entry as {f:fac_tss_slimelets,V:1}Azazel{f:fac_tss_slimelets} isn't a coder.",
+						"{f:fac_tss_slimelets}Usually {f:fac_tss_slimelets,V:2}I{f:fac_tss_slimelets} am fronting most of the time",
+						"{f:fac_tss_slimelets}but {f:fac_tss_slimelets,V:3}Sara{f:fac_tss_slimelets}'s been fronting a lot",
+						"{f:fac_tss_slimelets}so {f:fac_tss_slimelets,V:3}it{f:fac_tss_slimelets} also deserves coding credit."
+					},
+					{
+						"{f:fac_tss_slimelets}Play {f:fac_tss_slimelets,E:fac_tss_rainbow}Mallatro{f:fac_tss_slimelets} pretty please",
+						"{f:fac_tss_slimelets}*flutters eyelashes or something*",
+						"{f:fac_tss_slimelets,C:inactive}(Clicking the card will take",
+						"{f:fac_tss_slimelets,C:inactive}you to its page on our site)",
+					},
+					{
+						"{f:fac_tss_slimelets,s:.8}oh yeah btw our team name is {f:fac_tss_slimelets,E:fac_tss_rainbow,s:.8}the $!$? squad{f:fac_tss_slimelets,s:.8} :3"
+					}
 				}
 			},
 			PotatoPatchDev_azazel = {
 				name = 'That Azazel Fire',
 				text = {
-					"Hi, It's me Azazel, you probably know me.",
-					" ",
-					"I like making mods for games I like",
-					"and this game TECHNICALLY counts as a game I like.",
-					"So I worked with elle to add some fishies to this jam.",
-					" ",
-					"There are no friends inside me."
+					{
+						"Hi, It's me {V:1}Azazel{}, you probably know me.",
+					},
+					{
+						"I like making mods for games I like",
+						"and this game {C:attention}TECHNICALLY{} counts as a game I like.",
+						"So I worked with {V:2}elle.{} and {V:3}Sara{} to add some {C:fac_fish}fishies{} to this jam.",
+					},
+					{"There are no {V:4}friends in{V:5}side me{}."}
 				}
 			},
 		}
@@ -266,7 +287,10 @@ return {
 			fac_tss_cult_available = "Available",
 			fac_tss_popped = "Popped!",
 
-			fac_tss_good_news = "Good News!"
+			fac_tss_good_news = "Good News!",
+			fac_tss_na1 = "#1#",
+			fac_tss_na2 = "#2#",
+			fac_tss_bloon = "Bloon"
 		}
 	}
 }

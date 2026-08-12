@@ -20,6 +20,9 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		-- Chesh eating handled in dev calculate so they can all flock at once like hungry pirahnas
 		if context.joker_main and card.ability.extra.xmult ~= 1 then return { xmult = card.ability.extra.xmult } end
+	end,
+	set_card_type_badge = function(self, card, badges)
+		badges[#badges + 1] = create_badge('"'..localize("k_fac_fish")..'"', FishAndChips.C.FISH, G.C.WHITE, 1.2)
 	end
 }
 
@@ -113,7 +116,23 @@ FishAndChips.Fish {
 	atlas = "tss_ellefish",
 	pos = { x = 0, y = 0 },
 	weight = 5,
-	stats = {weight = {min = 0, max = 0}, length = {min = 0, max = 0}},
+	stats = {
+		weight = {
+			min = 0,
+			max = 0,
+			units = {
+				format = "fac_tss_na1",
+				scale=1,
+				precision = 1
+		}},
+		length = {
+			min = 0,
+			max = 0,
+			units = {
+				format = "fac_tss_na2",
+				scale=1,
+				precision = 1
+	}}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "generation" },
@@ -132,7 +151,7 @@ FishAndChips.Fish {
 			
 			if card.area.cards[self_pos+1] then
 				devs[1] = PotatoPatchUtils.Developers["fac_"..card.area.cards[self_pos+1].config.center.ppu_coder[1] ]
-				devs[2] = devs[1].fac_partner and PotatoPatchUtils.Developers["fac_"..devs[1].fac_partner] or nil
+				devs[2] = devs[1].fac_partner and PotatoPatchUtils.Developers[devs[1].fac_partner] or nil
 			end
 
 			for _, v in ipairs(devs) do
@@ -155,7 +174,7 @@ FishAndChips.Fish {
 
 			local devs = {}
 			devs[1] = PotatoPatchUtils.Developers["fac_"..target.config.center.ppu_coder[1] ]
-			devs[2] = devs[1].fac_partner and PotatoPatchUtils.Developers["fac_"..devs[1].fac_partner] or nil
+			devs[2] = devs[1].fac_partner and PotatoPatchUtils.Developers[devs[1].fac_partner] or nil
 
 			local showman_old = SMODS.showman
 			SMODS.showman = function() return true end
@@ -214,6 +233,9 @@ FishAndChips.Fish {
 				colour = G.C.SAND_DOLLAR
 			}
 		end
+	end,
+	set_card_type_badge = function(self, card, badges)
+		badges[#badges + 1] = create_badge("Food", FishAndChips.C.FISH, G.C.WHITE, 1.2)
 	end
 }
 
@@ -307,7 +329,10 @@ FishAndChips.Fish {
 				SMODS.change_base(c, nil, pseudorandom_element(SMODS.Ranks, "fac_tss_uranium").key)
 			end
 		end
-	end
+	end,
+	set_card_type_badge = function(self, card, badges)
+		badges[#badges + 1] = create_badge(localize("k_fac_rod"), FishAndChips.C.ROD, G.C.WHITE, 1.2)
+	end,
 }
 
 G.E_MANAGER:add_event(Event({blocking = false, blockable = false, func = function()

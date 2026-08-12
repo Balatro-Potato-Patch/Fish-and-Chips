@@ -61,6 +61,9 @@ FishAndChips.Fish {
 	end,
 	update = function(self, card, dt)
 		card.children.center:set_sprite_pos({x=card.ability.extra.blu and 1 or 0, y=1})
+	end,
+	set_card_type_badge = function(self, card, badges)
+		badges[#badges + 1] = create_badge("Mercenary", FishAndChips.C[card.ability.extra.blu and "FISH" or "ROD"], G.C.WHITE, 1.2)
 	end
 }
 
@@ -82,6 +85,7 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fcc_tss_bfb")
+		info_queue[#info_queue + 1] = G.P_CENTERS.fish_fac_tss_moab
 		return { vars = { card.ability.extra.chips, card.ability.extra.xmult, card.ability.extra.count, num, dem } }
 	end,
 	calculate = function(self, card, context)
@@ -108,6 +112,9 @@ FishAndChips.Fish {
 				end or nil
 			}
 		end
+	end,
+	set_card_type_badge = function(self, card, badges)
+		badges[#badges + 1] = create_badge(localize("fac_tss_bloon"), FishAndChips.C.ROD, G.C.WHITE, 1.2)
 	end
 }
 
@@ -146,6 +153,9 @@ FishAndChips.Fish {
 				end or nil
 			}
 		end
+	end,
+	set_card_type_badge = function(self, card, badges)
+		badges[#badges + 1] = create_badge(localize("fac_tss_bloon"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
 	end
 }
 

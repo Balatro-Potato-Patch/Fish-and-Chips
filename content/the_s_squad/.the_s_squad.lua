@@ -4,6 +4,31 @@ FishAndChips.TheShitSquad = {
 	force_swoon = false
 }
 
+SMODS.Font{
+	key = "tss_slimelets",
+	path = "tss_slimelets.ttf",
+	render_scale = 120
+}
+
+local rainbow = {
+	HEX("FF5173"),
+	HEX("FFA967"),
+	HEX("FFF886"),
+	HEX("97FF61"),
+	HEX("9EEFFF"),
+	HEX("7896FE"),
+	HEX("CD9AFF"),
+	HEX("FF72CE")
+}
+
+SMODS.DynaTextEffect{
+	key = "fac_tss_rainbow",
+	func = function(dynatext, index, letter)
+		local t = (G.TIMERS.REAL*3.75 + index) * 0.84
+		letter.colour = mix_colours(rainbow[math.ceil(t)%#rainbow+1], rainbow[math.floor(t)%#rainbow+1],t%1)
+	end
+}
+
 PotatoPatchUtils.Developer{
 	name = 'slimestuff',
 	atlas = 'fac_tss_devs',
@@ -13,7 +38,16 @@ PotatoPatchUtils.Developer{
 	fac_partner = 'fac_azazel',
 	loc = true,
 	loc_vars = function(self)
-		return { vars = {#FishAndChips.TheShitSquad.syslist} }
+		local fail = #FishAndChips.TheShitSquad.syslist==0
+		return { vars = {
+			fail and "???" or #FishAndChips.TheShitSquad.syslist,
+			elements = { FishAndChips.TheShitSquad.generate_syslist_ui(fail and {{name="Please Wait |"},{name="No Connection |"},{name="This happens sometimes :p |"}} or FishAndChips.TheShitSquad.syslist) },
+			colours = {
+				PotatoPatchUtils.Developers.fac_azazel.colour,
+				fail and G.C.WHITE or FishAndChips.TheShitSquad.syslist[1].colour,
+				fail and G.C.WHITE or FishAndChips.TheShitSquad.syslist[5].colour
+			}
+		}}
 	end,
 	calculate = function(self, context)
 		-- Putting Chesh here so they can all swarm at once like a pack of hungry piranhas
@@ -136,7 +170,17 @@ PotatoPatchUtils.Developer{
 			end
 		end
 	end,
+	click = function(self)
+		self:juice_up()
+		love.system.openURL("https://ellestuff.dev/mallatro/")
+		play_sound("fac_tss_squeak")
+	end,
 	fac_dw_shader = true
+}
+
+SMODS.Sound {
+    key = "tss_squeak",
+    path = "the_s_squad/squeak.ogg"
 }
 
 PotatoPatchUtils.Developer{
@@ -147,7 +191,19 @@ PotatoPatchUtils.Developer{
 	colour = HEX("850021"),
 	fac_partner = 'fac_slimestuff',
 	loc = true,
-	fac_dw_shader = true
+	fac_dw_shader = true,
+	loc_vars = function(self)
+		local fail = #FishAndChips.TheShitSquad.syslist==0
+		return { vars = {
+			colours = {
+				self.colour,
+				fail and G.C.WHITE or FishAndChips.TheShitSquad.syslist[1].colour,
+				fail and G.C.WHITE or FishAndChips.TheShitSquad.syslist[5].colour,
+				HEX("FF9CE6"),
+				HEX("FFED69")
+			}
+		}}
+	end,
 }
 
 
@@ -171,7 +227,7 @@ local swoon_img = love.graphics.newImage(love.image.newImageData(SMODS.NFS.newFi
 
 SMODS.ScreenShader {
 	key = "fac_tss_swoon",
-	shader = "fac_tss_uranium",
+	shader = "fac_tss_uranium", -- Can be any shader, just can't be blank
 	should_apply = function(self)
 		return FishAndChips.TheShitSquad.swoon_timer>0
 	end,
