@@ -8,7 +8,7 @@ SMODS.Atlas({
 PotatoPatchUtils.Developer({
 	name = 'stoatski',
 	-- Unsure why this is not working
-	--atlas = 'stoatskidev',
+	atlas = 'fac_stoatskidev',
 	colour = G.C.SECONDARY_SET.Spectral,
 	ignore_limits = false
 })
