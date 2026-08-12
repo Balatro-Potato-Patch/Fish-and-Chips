@@ -197,7 +197,7 @@ return {
                 text = {
                     {
                         "Was excited for f***ing event so much.",
-                        "As per usual, did coding.",
+                        "As per usual, did {C:attention}coding{}.",
                     },
                     {
                         "You already using or will use {C:chips}Handy{} anyway",
