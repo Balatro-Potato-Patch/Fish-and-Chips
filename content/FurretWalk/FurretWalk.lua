@@ -65,10 +65,10 @@ FishAndChips.Fish {
     key = "fishmael",
     atlas = "furretfih",
     pos = { x = 1, y = 0 },
-    weight = 50,
+    weight = 55,
     ppu_coder = { "FurretWalk" },
     ppu_artist = { "FurretWalk" },
-    attributes = { "mult" },
+    attributes = { "mult", "destroy_card"},
     config = {
         extra = {
             chips = 21, chipmod = 8, suit = 'Hearts'

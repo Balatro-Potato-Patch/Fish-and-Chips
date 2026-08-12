@@ -38,7 +38,7 @@ return {
                 text = {
                     "Destroys scoring {C:hearts}#3#{} cards and",
                     "gains {C:chips}+#2#{} Chips for every {C:hearts}Heart{} destroyed",
-                    "{C:inactive}(Currently {C:chips}+#1#{} Chips)"
+                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
                 },
                 flavor = {
                     "This fish is piercing through the rope",
