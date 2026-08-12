@@ -440,7 +440,7 @@ FishAndChips.Fish { -- Gambling
 				local middle_func = function()
 					G.E_MANAGER:add_event(Event({
 						func = function()
-							card.children.center:set_sprite_pos({x = 1, y = 2})
+							card.children.center:set_sprite_pos({x = 2, y = 2})
 							return true
 						end
 					}))
