@@ -383,7 +383,7 @@ FishAndChips.Fish { -- Gambling
 	},
 	stats = {
 		weight = {min = 130, max = 140},
-		length = {min = 1.5, max = 1.7}
+		length = {min = 1.5, max = 1.6}
 	},
 	loc_vars = function(self, info_queue, card)
  		return {vars = {card.ability.extra.money, card.ability.extra.scalar}}
@@ -402,24 +402,29 @@ FishAndChips.Fish { -- Gambling
 				})
 
 				local middle_func = function()
-					card.children.center:set_sprite_pos({x = 1, y = 2})
-					local length = 1.2 
-					FishAndChips.DeliciousRice.talk(card, length, 0.2, "fac_delrice_winning", 0.6)
 					G.E_MANAGER:add_event(Event({
-						trigger = "after",
-						timer = "REAL",
-						delay = 3,
 						func = function()
-							card.children.center:set_sprite_pos({x = 0, y = 2})
+							card.children.center:set_sprite_pos({x = 1, y = 2})
+							-- sendDebugMessage("set")
 							return true
 						end
 					}))
+					local length = 1.2 
+					FishAndChips.DeliciousRice.talk(card, length, 0.2, "fac_delrice_winning", 0.6)
+				end
+
+				local end_func = function() 
+					card.children.center:set_sprite_pos({x = 0, y = 0}) 
+					-- sendDebugMessage("reset")
 				end
 				
 				FishAndChips.DeliciousRice.fancy_death(card,
 					nil,
 					middle_func, 
-					false
+					false,
+					nil,
+					nil,
+					end_func
 				)
 
 				return {sand_dollars = card.ability.extra.money}
@@ -427,7 +432,8 @@ FishAndChips.Fish { -- Gambling
 				local middle_func = function()
 					G.E_MANAGER:add_event(Event({
 						func = function()
-							card.children.center:set_sprite_pos({x = 2, y = 0})
+							card.children.center:set_sprite_pos({x = 1, y = 2})
+							return true
 						end
 					}))
 					FishAndChips.DeliciousRice.talk(card, 1, 0.2, "fac_delrice_dangit", 0.8)

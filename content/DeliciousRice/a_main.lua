@@ -99,8 +99,10 @@ end
 
 
 FishAndChips.DeliciousRice.talk = function(card, length, gap, sound, vol)
+	-- sendDebugMessage("start of talk")
 	G.E_MANAGER:add_event(Event({
 		func = function()
+			-- sendDebugMessage("sound")
 			play_sound(sound, nil, vol)
 			return true
 		end
@@ -176,13 +178,14 @@ FishAndChips.DeliciousRice.explode_destroy = function(card)
 	}))
 end
 
-FishAndChips.DeliciousRice.fancy_death = function(card, destroy_args, middle_func, destroys, delay_after, delay_before)
+FishAndChips.DeliciousRice.fancy_death = function(card, destroy_args, middle_func, destroys, delay_after, delay_before, end_func)
 	local old_state = G.STATE
 	G.E_MANAGER:add_event(Event({
 		func = function()
 			G.STATE = nil
 			if not G.GAME.fac_fish_expanded then G.FUNCS.fac_open_fishing_menu() end
 			FishAndChips.DeliciousRice.bucket_locked = true
+			-- sendDebugMessage("bucket open")
 			return true
 		end
 	}))
@@ -192,9 +195,10 @@ FishAndChips.DeliciousRice.fancy_death = function(card, destroy_args, middle_fun
 		timer = "REAL",
 		delay = delay_before or 0.2,
 	}))
-	if middle_func then middle_func(card) end
+	if middle_func then middle_func() end
 	if destroys == nil then destroys = true end
 	if destroys == true then SMODS.destroy_cards(card, destroy_args) end
+	-- sendDebugMessage("middle of death function")
 
 	G.E_MANAGER:add_event(Event({
 		trigger = "after",
@@ -203,6 +207,8 @@ FishAndChips.DeliciousRice.fancy_death = function(card, destroy_args, middle_fun
 		func = function()
 			FishAndChips.DeliciousRice.bucket_locked = false
 			G.FUNCS.fac_open_fishing_menu()
+			-- sendDebugMessage("bucket closed")
+			if end_func then end_func() end
 			G.STATE = old_state
 			return true
 		end
