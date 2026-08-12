@@ -3,7 +3,8 @@ PotatoPatchUtils.Developer({
 	atlas = "fac_bencredits",
 	colour = G.C.CHIPS,
 	ignore_limits = false,
-	soul_pos = { x = 0, y = 1 }
+	soul_pos = { x = 0, y = 1 },
+	loc = true
 })
 
 SMODS.Atlas({
@@ -51,6 +52,7 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		return { vars = { G.GAME.interest_amount, G.GAME.interest_cap / 5 } }
 	end,
+	stats = {weight = {min = 2, max = 2}, length = {min = 0.3, max = 0.3}},
 	calculate = function(self, card, context)
 		if context.modify_final_cashout then 
 			interest = math.min(math.floor(G.GAME.fac_sand_dollars / 5), G.GAME.interest_cap / 5)
@@ -121,19 +123,22 @@ FishAndChips.Fish {
         end
 		return { vars = { card.ability.extra.slot } }
     end,
+	stats = {weight = {min = 0.0008, max = 0.002}, length = {min = 0.05, max = 0.08}},
 	calculate = function(self, card, context)
-		if context.joker_main then 
-            if card.ability.extra.slot > #G.jokers.cards then return end
-			joker = G.jokers.cards[card.ability.extra.slot]
-
-			local ret = SMODS.blueprint_effect(card, joker, context)
-			return ret
-		end
+		 
 		if context.end_of_round and context.main_eval then
 			old_slot = card.ability.extra.slot
 			repeat
 				card.ability.extra.slot = pseudorandom("chameleon", 1, G.jokers.config.card_limit)
 			until card.ability.extra.slot ~= old_slot
+			return
+		end
+
+        if card.ability.extra.slot <= #G.jokers.cards then  
+			joker = G.jokers.cards[card.ability.extra.slot]
+
+			local ret = SMODS.blueprint_effect(card, joker, context)
+			return ret
 		end
 	end,
 	on_catch = function(self, card)
@@ -170,22 +175,26 @@ FishAndChips.Fish {
 		calm_pond = 10,
 		city_river = 10, 
 		swamp = 10,
-		volcano = 10,
+		--volcano = 10,
 		aquifer = 10,
-		styx = 10,
-		chocolate_river = 10,
+		--styx = 10,
+		--chocolate_river = 10,
 		pier = 10,
-		soup = 10,
+		--soup = 10,
 		garden = 10,
-		wormhole = 10,
-		backroom = 10
+		--wormhole = 10,
+		--backroom = 10
 	},
 	loc_vars = function(self, info_queue, card)
-		if FishAndChips.get_environment() then
-			return { key = "fish_fac_benyapping_"..G.GAME.fac_fishing_environment, vars = { card.ability.extra.visited } }
-		end
 		return { vars = { card.ability.extra.visited } }
 	end,
+	flavour_vars = function(self, info_queue, card)
+		environment = G.GAME.fac_fishing_environment
+		if environment then
+			return { key = "fish_fac_benyapping_"..environment }
+		end
+	end,
+	stats = {weight = {min = 4.5, max = 16}, length = {min = 0.20, max = 0.35}},
 	on_catch = function(self, card)
 		environment = G.GAME.fac_fishing_environment
 		if card.ability.extra[environment] == false then
@@ -249,6 +258,7 @@ FishAndChips.Fish {
 		xmult = 1 + scaled_sand_dollars * card.ability.extra.xmult_per
 		return { vars = { card.ability.extra.xmult_per, card.ability.extra.per_sand_dollars, xmult } }
 	end,
+	stats = {weight = {min = 0.001, max = 0.01}, length = {min = 0.02, max = 0.08}},
 	calculate = function(self, card, context)
 		if context.joker_main then
 			scaled_sand_dollars = math.floor(G.GAME.fac_sand_dollars / card.ability.extra.per_sand_dollars)
@@ -289,22 +299,23 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		calm_pond = 10,
-		city_river = 10,
-		swamp = 10,
+		--calm_pond = 10,
+		--city_river = 10,
+		--swamp = 10,
 		volcano = 10,
-		aquifer = 10,
+		--aquifer = 10,
 		styx = 10,
 		chocolate_river = 10,
-		pier = 10,
+		--pier = 10,
 		soup = 10,
-		garden = 10,
+		--garden = 10,
 		wormhole = 10,
 		backroom = 10
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = {  } }
 	end,
+	stats = {weight = {min = 0.001, max = 0.002}, length = {min = 0.1, max = 0.1}},
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval then
 			--key = pseudorandom_element(G.P_CENTER_POOLS["fac_Bait"], "benvoucher").key	--This is the optimal way, but breaks because of bait.lua 217
@@ -348,6 +359,7 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		return { vars = {  } }
 	end,
+	stats = {weight = {min = 0.0008, max = 0.002}, length = {min = 0.05, max = 0.08}},
 	calculate = function(self, card, context)
 		
 	end,

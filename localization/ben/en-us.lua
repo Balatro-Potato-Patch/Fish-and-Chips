@@ -1,5 +1,17 @@
 return {
 	descriptions = {
+        PotatoPatch = {
+            PotatoPatchDev_Ben = {
+                name = "Ben",
+                text = {
+                    { 
+                        "Worked on {C:dark_edition}Wormhole{} Mod!",
+                        "benroffey.uk",
+                        "Have fun :)"
+                    },
+                }
+            }
+        },
 		fac_Fish = {
             fish_fac_bensafe = {
                 name = "Safe",
@@ -38,7 +50,8 @@ return {
                 name = "Yapping Turtle",
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
-                    "Quite a sedate crowd"
+                    "{s:0.2} ",
+                    "'Quite a sedate crowd'"
                 },
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
@@ -50,7 +63,8 @@ return {
                 name = "Yapping Turtle",
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
-                    "This city is buzzing!"
+                    "{s:0.2} ",
+                    "'This city is buzzing!'"
                 },
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
@@ -62,7 +76,8 @@ return {
                 name = "Yapping Turtle",
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
-                    "Gonna play some grunge tonight"
+                    "{s:0.2} ",
+                    "'Gonna play some grunge tonight!'"
                 },
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
@@ -74,7 +89,8 @@ return {
                 name = "Yapping Turtle",
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
-                    "Hot hot hot!"
+                    "{s:0.2} ",
+                    "'Hot hot hot!'"
                 },
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
@@ -86,7 +102,8 @@ return {
                 name = "Yapping Turtle",
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
-                    "Chilled"
+                    "{s:0.2} ",
+                    "'The reverb is great!'"
                 },
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
@@ -98,7 +115,8 @@ return {
                 name = "Yapping Turtle",
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
-                    "Vibes are dead here.."
+                    "{s:0.2} ",
+                    "'Vibes are {C:red,E:2}dead{} here..'"
                 },
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
@@ -110,7 +128,9 @@ return {
                 name = "Yapping Turtle",
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
-                    "Can we stay here a bit longer?"
+                    "{s:0.2} ",
+                    "'Can we stay here a bit longer?",
+                    "This stuff is delicious!'"
                 },
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
@@ -122,7 +142,8 @@ return {
                 name = "Yapping Turtle",
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
-                    "Ah.. the open ocean."
+                    "{s:0.2} ",
+                    "'Ah.. the open ocean.'"
                 },
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
@@ -134,7 +155,8 @@ return {
                 name = "Yapping Turtle",
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
-                    "Good soup!"
+                    "{s:0.2} ",
+                    "'Good soup!'"
                 },
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
@@ -146,7 +168,8 @@ return {
                 name = "Yapping Turtle",
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
-                    "Get me the gardeners number"
+                    "{s:0.2} ",
+                    "'Get me the gardeners number!'"
                 },
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
@@ -158,7 +181,8 @@ return {
                 name = "Yapping Turtle",
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
-                    "Hold on.. I need some space"
+                    "{s:0.2} ",
+                    "'Hold on.. I need some {C:dark_edition,E:1}space{}'"
                 },
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
@@ -170,7 +194,9 @@ return {
                 name = "Yapping Turtle",
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
-                    "I like being watched!"
+                    "{s:0.2} ",
+                    "'I'm a celebrity!",
+                    "I like being watched!'"
                 },
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
