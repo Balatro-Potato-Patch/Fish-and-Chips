@@ -31,6 +31,23 @@ PotatoPatchUtils.Developer({
 })
 
 
+local cardarea_emplace_ref = CardArea.emplace
+---@diagnostic disable-next-line: duplicate-set-field
+function CardArea:emplace(card, ...)
+    if card.ppu_member and card.ppu_member.name == "Nxkoo" then
+        function card:hover()
+            self:juice_up(0.05, 0.03)
+            play_sound('paper1', math.random() * 0.2 + 0.9, 0.35)
+            self.config.h_popup = {n = G.UIT.ROOT, config = {colour = G.C.CLEAR}, nodes = {
+                {n = G.UIT.O, config = {object = SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H, "image")}}
+            }}
+            self.config.h_popup_dir = 'cl'
+            self.config.h_popup_config = self:align_h_popup()
+            Moveable.hover(self)
+        end
+    end
+    cardarea_emplace_ref(self, card, ...)
+end
 --#region Fish
 
 --inscryption
