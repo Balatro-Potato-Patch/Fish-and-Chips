@@ -65,7 +65,11 @@ function Game:update(dt)
 		if G.FISHING_STATE == G.FISHING_STATES.RESULTS then
 			G:update_fac_fishing_results(dt)
 		end
+	else
+		FishAndChips.stop_reel_sound()
 	end
+
+	FishAndChips.update_sound_volume()
 end
 
 function G:update_fac_fishing_moving(dt)
@@ -157,6 +161,7 @@ function FishAndChips.create_fishing_UI()
 	end
 	G.FISHING = {}
 	G.FAC_JIMBO_ANIMATION_STATE = nil
+	G.NOT_SAFE_TO_PRESS_BUTTONS = false
 	G.FISHING.fishing = UIBox({
 		definition = G.UIDEF.fac_fishing(),
 		config = {
@@ -205,8 +210,8 @@ function FishAndChips.create_fishing_UI()
 
 	G.FISHING.fac_fish_reward_area = CardArea(0, 0, G.CARD_W, G.CARD_H, {
 		type = "joker",
-		highlight_limit = 1,
-		highlighted_limit = 1,
+		highlight_limit = 0,
+		highlighted_limit = 0,
 		align_buttons = true,
 		bg_colour = G.C.CLEAR,
 		no_card_count = true,
@@ -229,8 +234,8 @@ function FishAndChips.create_fishing_UI()
 
 	G.FISHING.fac_treasure_reward_area = CardArea(0, 0, G.CARD_W, G.CARD_H, {
 		type = "joker",
-		highlight_limit = 1,
-		highlighted_limit = 1,
+		highlight_limit = 0,
+		highlighted_limit = 0,
 		align_buttons = true,
 		bg_colour = G.C.CLEAR,
 		no_card_count = true,
@@ -250,6 +255,24 @@ function FishAndChips.create_fishing_UI()
 			bond = "Glued",
 		},
 	})
+
+	for index = 1, 2 do
+		local status = UIBox({
+			T = { x = 0, y = 0 },
+			definition = G.UIDEF.fac_fishing_status(index),
+			config = {
+				align = "a",
+				can_collide = false,
+			},
+		})
+		G.FISHING["fishing_status_" .. index] = status
+		for ui_index, box in ipairs(G.I.UIBOX) do
+			if box == status then
+				table.remove(G.I.UIBOX, ui_index)
+				break
+			end
+		end
+	end
 
 	FishAndChips.update_jimbo_state(FishAndChips.JIMBO_ANIMATION_STATES.IDLE)
 

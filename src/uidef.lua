@@ -29,9 +29,41 @@ function G.UIDEF.fac_fishing()
 	}
 end
 
-FishAndChips.C.FISHING_BUTTONS_ACTIVE = { 62 / 255, 222 / 255, 250 / 255, 0.65 }
-FishAndChips.C.FISHING_BUTTONS_BG = { G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65 }
-FishAndChips.C.FISHING_BUTTONS_TEXT = { G.C.UI.TEXT_LIGHT[1], G.C.UI.TEXT_LIGHT[2], G.C.UI.TEXT_LIGHT[3], 1 }
+function G.UIDEF.fac_fishing_status(index)
+	local ref_value = "status_text_" .. index
+	G.FAC_FISH_GAME = G.FAC_FISH_GAME or {}
+	G.FAC_FISH_GAME[ref_value] = G.FAC_FISH_GAME[ref_value] or ""
+	return {
+		n = G.UIT.ROOT,
+		config = { colour = G.C.CLEAR },
+		nodes = {
+			{
+				n = G.UIT.R,
+				config = {
+					id = "fac_fishing_status_bg_" .. index,
+					align = "cm",
+					colour = { G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65 },
+					r = 0.1,
+					padding = 0.08,
+				},
+				nodes = {
+					{
+						n = G.UIT.T,
+						config = {
+							id = "fac_fishing_status_text_" .. index,
+							ref_table = G.FAC_FISH_GAME,
+							ref_value = ref_value,
+							colour = G.C.UI.TEXT_LIGHT,
+							scale = 0.4,
+							shadow = true,
+						},
+					},
+				},
+			},
+		},
+	}
+end
+
 
 local FAC_FISHING_BUTTON_IDS = {
 	"fac_btn_toggle_fishing",
@@ -59,42 +91,44 @@ end
 
 function FishAndChips.show_fishing_buttons()
 	G.NOT_SAFE_TO_PRESS_BUTTONS = false
-	ease_value(FishAndChips.C.FISHING_BUTTONS_BG, 4, 0.65, nil, "REAL", true, 0.3)
-	ease_value(FishAndChips.C.FISHING_BUTTONS_ACTIVE, 4, 0.65, nil, "REAL", true, 0.3)
-	ease_value(FishAndChips.C.FISHING_BUTTONS_TEXT, 4, 1, nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_BG, 4, 0.65 - FishAndChips.C.FISHING_BUTTONS_BG[4], nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_ACTIVE, 4, 0.65 - FishAndChips.C.FISHING_BUTTONS_ACTIVE[4], nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_TEXT, 4, 1 - FishAndChips.C.FISHING_BUTTONS_TEXT[4], nil, "REAL", true, 0.3)
 	FishAndChips.set_fishing_buttons_active(true)
 end
 
 function FishAndChips.fade_fishing_buttons()
 	G.NOT_SAFE_TO_PRESS_BUTTONS = true
-	ease_value(FishAndChips.C.FISHING_BUTTONS_BG, 4, -0.65, nil, "REAL", true, 0.3)
-	ease_value(FishAndChips.C.FISHING_BUTTONS_ACTIVE, 4, -0.65, nil, "REAL", true, 0.3)
-	ease_value(FishAndChips.C.FISHING_BUTTONS_TEXT, 4, -1, nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_BG, 4, -0.65 - FishAndChips.C.FISHING_BUTTONS_BG[4], nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_ACTIVE, 4, -0.65 - FishAndChips.C.FISHING_BUTTONS_ACTIVE[4], nil, "REAL", true, 0.3)
+	ease_value(FishAndChips.C.FISHING_BUTTONS_TEXT, 4, -1 - FishAndChips.C.FISHING_BUTTONS_TEXT[4], nil, "REAL", true, 0.3)
 	FishAndChips.set_fishing_buttons_active(false)
 end
 
 function FishAndChips.safe_to_press_buttons()
-	local fish_expanded = G.GAME and G.GAME.fac_fish_expanded
+	-- local fish_expanded = G.GAME and G.GAME.fac_fish_expanded
 	local in_fishing_state = G.STATE == G.STATES.FAC_FISHING
-	return not (fish_expanded or (in_fishing_state and G.NOT_SAFE_TO_PRESS_BUTTONS)) or G.OVERLAY_MENU
+	return not ((in_fishing_state and G.NOT_SAFE_TO_PRESS_BUTTONS)) or G.OVERLAY_MENU
 end
 
 function FishAndChips.update_bait_counter(major)
-	if G.FISHING.fishing_bait_count then
-		G.FISHING.fishing_bait_count:remove()
+	if G.FISHING then
+		if G.FISHING.fishing_bait_count then
+			G.FISHING.fishing_bait_count:remove()
+		end
+		G.FISHING.fishing_bait_count = UIBox({
+			definition = G.UIDEF.fac_bait_count(),
+			config = {
+				align = "br",
+				offset = { x = -0.5, y = -0.5 },
+				major = major,
+				bond = "Weak",
+				r_bond = "Weak",
+				instance_type = "CARD"
+			}
+		})
+		G.FISHING.fishing_bait_count.T.r = -0.3
 	end
-	G.FISHING.fishing_bait_count = UIBox({
-		definition = G.UIDEF.fac_bait_count(),
-		config = {
-			align = "br",
-			offset = { x = -0.5, y = -0.5 },
-			major = major,
-			bond = "Weak",
-			r_bond = "Weak",
-			instance_type = "CARD"
-		}
-	})
-	G.FISHING.fishing_bait_count.T.r = -0.3
 end
 
 function FishAndChips.fishing_button(key, text, price)
@@ -129,7 +163,7 @@ function FishAndChips.fishing_button(key, text, price)
 				config = { align = "cm" },
 				nodes = {
 					{ n = G.UIT.T, config = { text = localize("$"), scale = 0.7, colour = FishAndChips.C.FISHING_BUTTONS_TEXT } },
-					{ n = G.UIT.T, config = { text = "5", scale = 0.7, colour = FishAndChips.C.FISHING_BUTTONS_TEXT } },
+					{ n = G.UIT.T, config = { ref_table = G.GAME, ref_value = 'fac_environment_reroll_cost', scale = 0.7, colour = FishAndChips.C.FISHING_BUTTONS_TEXT } },
 				}
 			},
 		}
@@ -187,7 +221,7 @@ function G.FUNCS.fac_can_open_bait_shop(e)
 end
 
 function G.FUNCS.fac_can_reroll_location(e)
-	return G.FISHING_STATE == G.FISHING_STATES.LOBBY and (G.GAME.dollars - G.GAME.bankrupt_at) - 5 >= 0
+	return G.FISHING_STATE == G.FISHING_STATES.LOBBY and (G.GAME.dollars - G.GAME.bankrupt_at) - G.GAME.fac_environment_reroll_cost >= 0
 end
 
 function G.UIDEF.fac_bait_inventory_button()
@@ -279,13 +313,17 @@ function G.UIDEF.fac_fishing_area_display()
 							colour = { G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65 },
 							padding = 0.1,
 							align = "cm",
+							id = 'environment_desc',
+							button = 'open_compendium_to_env',
+							button_dist = 0.05,
+							hover = true
 						},
 						nodes = {
 							{
 								n = G.UIT.R,
 								config = {
 									align = 'cm',
-									padding = 0.1
+									padding = 0.1,
 								},
 								nodes = {
 									{
@@ -539,6 +577,54 @@ function G.UIDEF.fac_newly_discovered()
 	}
 end
 
+function G.UIDEF.fac_catch_text()
+	return {
+		n = G.UIT.ROOT,
+		config = { padding = 0.2, colour = G.C.CLEAR },
+		nodes = {
+			{
+				n = G.UIT.R,
+				config = { align = "cm", no_fill = true },
+				nodes = {
+					{
+						n = G.UIT.T,
+						config = {
+							text = localize('k_fac_catch_meter'),
+							scale = 0.3,
+							colour = {0.97, 0.76, 0.82, 1},
+							text_outline = G.C.BLACK,
+						},
+					},
+				},
+			},
+		}
+	}
+end
+
+function G.UIDEF.fac_treasure_text()
+	return {
+		n = G.UIT.ROOT,
+		config = { padding = 0.2, colour = G.C.CLEAR },
+		nodes = {
+			{
+				n = G.UIT.R,
+				config = { align = "cm", no_fill = true },
+				nodes = {
+					{
+						n = G.UIT.T,
+						config = {
+							text = localize('k_fac_treasure_meter'),
+							scale = 0.3,
+							colour = {0.98, 0.90, 0.62, 1},
+							text_outline = G.C.BLACK,
+						},
+					},
+				},
+			},
+		}
+	}
+end
+
 function G.UIDEF.fac_perfect_catch()
 	return {
 		n = G.UIT.ROOT,
@@ -640,7 +726,7 @@ function G.UIDEF.fac_treasure_reward(amount, kind)
 end
 
 function G.FUNCS.fac_upgrade_bucket (e)
-	ease_sand_dollars(-G.GAME.fac_bucket_price)
+	ease_sand_dollars(-G.GAME.fac_bucket_price, true)
 	G.GAME.fac_bucket_price = G.GAME.fac_bucket_price + 10
 	G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base + 1
 	G.GAME.fac_upgrade_text = localize{type = "variable", key = "ph_fac_upgrade_increase", vars = {G.fac_fish_area.config.card_limits.base, G.fac_fish_area.config.card_limits.base + 1}}
@@ -1230,7 +1316,7 @@ end
 function G.FUNCS.fac_set_active_bait(e)
 	G.GAME.fac_active_bait = e.config.key
 
-	G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[e.config.key] or {
+	G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] = G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] or {
         fish_caught = 0,
 		fish_lost = 0,
 		perfect_catch = 0,
