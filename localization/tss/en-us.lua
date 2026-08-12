@@ -119,6 +119,9 @@ return {
 					" ",
 					"Be careful when handling, its",
 					"diet isn't limited to fish..."
+				},
+				unlock = {
+					"Destroy a {C:attention}Residential Carp"
 				}
 			},
 			fish_fac_tss_resident = {

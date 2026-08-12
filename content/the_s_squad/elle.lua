@@ -14,6 +14,9 @@ FishAndChips.Fish {
 		styx = 2
 	},
 	loc_vars = function(self, info_queue, card)
+		if not self.unlocked then
+			info_queue[#info_queue+1] = G.P_CENTERS.fish_fac_tss_resident
+		end
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_tss_chesh")
 		return { vars = { num, dem, card.ability.extra.xmult_mod, card.ability.extra.xmult } }
 	end,
@@ -23,6 +26,10 @@ FishAndChips.Fish {
 	end,
 	set_card_type_badge = function(self, card, badges)
 		badges[#badges + 1] = create_badge('"'..localize("k_fac_fish")..'"', FishAndChips.C.FISH, G.C.WHITE, 1.2)
+	end,
+	unlocked = false,
+	check_for_unlock = function (self, args)
+		return args.type == "fac_tss_chesh"
 	end
 }
 
@@ -57,6 +64,10 @@ FishAndChips.Fish {
 		end
 
 		if context.joker_main then return { mult = card.ability.extra.mult } end
+
+		if context.joker_type_destroyed and context.card == card then
+			check_for_unlock{type="fac_tss_chesh"}
+		end
 	end
 }
 
