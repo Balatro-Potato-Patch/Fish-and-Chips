@@ -1,7 +1,7 @@
 return {
 	descriptions = {
 		fac_Fish = {
-			fish_fac_trojan_fish = {
+			fish_fac_ta_trojan_fish = {
 				name = "Trojan Fish",
 				text = {
 					"Copies the ability",
@@ -18,7 +18,7 @@ return {
 					"strange inside...",
 				},
 			},
-			fish_fac_moai_statue = {
+			fish_fac_ta_moai_statue = {
 				name = "Moai Statue",
 				text = {
 					"Gives more {X:mult,C:white}XMult{} the",
@@ -33,7 +33,7 @@ return {
 					"sunk into the water",
 				},
 			},
-			fish_fac_nft = {
+			fish_fac_ta_nft = {
 				name = "Non-Fungible Trout",
 				text = {
 					"when hand is played",
@@ -49,7 +49,7 @@ return {
 					"trust me bro",
 				},
 			},
-			fish_fac_soul_fysh = {
+			fish_fac_ta_soul_fysh = {
 				name = "Soul Fysh",
 				text = {
 					{
@@ -69,7 +69,7 @@ return {
 					"{f:fac_kreon}you to your doom",
 				},
 			},
-			fish_fac_fish_flavored_fish = {
+			fish_fac_ta_fish_flavored_fish = {
 				name = "Fish Flavored Fish",
 				text = {
 					"After a {C:attention}Fish{} is caught,",
@@ -83,7 +83,7 @@ return {
 					"*guitar riff*",
 				},
 			},
-			fish_fac_killer = {
+			fish_fac_ta_killer = {
 				name = { "Killer Fish", "from San Diego" },
 				text = {
 					{
@@ -106,7 +106,7 @@ return {
 					"but I taste really good",
 				},
 			},
-			fish_fac_growfish = {
+			fish_fac_ta_growfish = {
 				name = "Growfish",
 				text = {
 					"Gains {C:chips}+#1#{} Chips",
@@ -117,7 +117,7 @@ return {
 					"{f:fac_papyrus,s:1.2,C:white}address me",
 				},
 			},
-			fish_fac_phish = {
+			fish_fac_ta_phish = {
 				name = "Phish",
 				text = {
 					{
@@ -132,7 +132,7 @@ return {
 					"Looks too good to be true...",
 				},
 			},
-			fish_fac_message = {
+			fish_fac_ta_message = {
 				name = "Message in a Bottle",
 				text = {
 					{
@@ -150,7 +150,7 @@ return {
 					"I wonder who sent this?",
 				},
 			},
-			fish_fac_snad = {
+			fish_fac_ta_snad = {
 				name = "Snad",
 				text = {
 					"Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for every {C:attention}#2#",
@@ -162,7 +162,7 @@ return {
 					"fast sugarcane growth real!!!!",
 				},
 			},
-			fish_fac_reaper_leviathan = {
+			fish_fac_ta_reaper_leviathan = {
 				name = "Reaper Leviathan",
 				text = {
 					{
@@ -183,7 +183,7 @@ return {
 					"you're doing is worth it?",
 				},
 			},
-			fish_fac_miku = {
+			fish_fac_ta_miku = {
 				name = "Hatsune Fishu",
 				text = {
 					{
@@ -242,8 +242,10 @@ return {
 			k_fac_nft_sell_value1 = "Gains",
 			k_fac_nft_sell_value1_alt = "Loses",
 			k_fac_nft_sell_value2 = "of sell value",
-			k_fac_was_used = "Was used this round",
-			k_fac_not_used = "Not used this round",
+			k_fac_fish_question = "Fish?",
+			k_fac_statue = "Statue",
+			k_fac_bottle = "Bottle",
+			k_fac_snad = "Snad",
 		},
 	},
 }
