@@ -8,6 +8,7 @@ function evaluate_play_main(...)
 end
 
 local peepeeTimer = -6e9
+local peepeeClickCount = 0
 
 SMODS.ScreenShader({
 	key = "vman2002_cool_shit",
@@ -38,6 +39,10 @@ function Card.click(c, ...)
 			end
 		end
 		peepeeTimer = G.TIMERS.REAL
+		peepeeClickCount = peepeeClickCount + 1
+		if (peepeeClickCount == 2) then
+			love.system.openURL("https://bsky.app/profile/vman-2002.bsky.social")
+		end
 	end
 	return click_ref(c, ...)
 end
