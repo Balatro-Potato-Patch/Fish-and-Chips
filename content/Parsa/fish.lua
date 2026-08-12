@@ -98,9 +98,9 @@ end
 
 FishAndChips.Fish {
     key = 'Parsa_facfile',
-    weight = 2,
+    weight = 15,
     environments = {
-        wormhole = 5,
+        wormhole = 7,
     },
     attributes = {
         destroy_card = true,
