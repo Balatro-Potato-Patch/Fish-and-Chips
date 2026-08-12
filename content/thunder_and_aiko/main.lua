@@ -6,7 +6,7 @@ SMODS.Atlas({
 })
 
 FishAndChips.Fish({
-	key = "ta_trojan_fish",
+	key = "trojan_fish",
 	atlas = "thunder_and_aiko",
 	pos = { x = 0, y = 0 },
 	stats = {
@@ -123,7 +123,7 @@ local function calc_moai_mult(card)
 end
 
 FishAndChips.Fish({
-	key = "ta_moai_statue",
+	key = "moai_statue",
 	atlas = "thunder_and_aiko",
 	pos = { x = 3, y = 0 },
 	weight = 5,
@@ -196,7 +196,7 @@ local function calc_nft_value_change(card)
 end
 
 FishAndChips.Fish({
-	key = "ta_nft",
+	key = "nft",
 	weight = 5,
 	atlas = "thunder_and_aiko",
 	pos = { x = 1, y = 0 },
@@ -352,7 +352,7 @@ FishAndChips.Fish({
 })
 
 FishAndChips.Fish({
-	key = "ta_soul_fysh",
+	key = "soul_fysh",
 	weight = 5,
 	atlas = "thunder_and_aiko",
 	pos = { x = 2, y = 0 },
@@ -450,7 +450,7 @@ FishAndChips.Fish({
 })
 
 FishAndChips.Fish({
-	key = "ta_fish_flavored_fish",
+	key = "fish_flavored_fish",
 	atlas = "thunder_and_aiko",
 	pos = { x = 4, y = 0 },
 	weight = 5,
@@ -497,7 +497,7 @@ SMODS.Atlas({
 })
 
 FishAndChips.Fish({
-	key = "ta_killer",
+	key = "killer",
 	cost = 6,
 	atlas = "thunder_and_aiko_killer",
 	pos = { x = 0, y = 0 },
@@ -639,7 +639,7 @@ FishAndChips.Fish({
 })
 
 FishAndChips.Fish({
-	key = "ta_growfish",
+	key = "growfish",
 	cost = 1,
 	atlas = "thunder_and_aiko",
 	pos = { x = 0, y = 1 },
@@ -697,7 +697,7 @@ FishAndChips.Fish({
 })
 
 FishAndChips.Fish({
-	key = "ta_phish",
+	key = "phish",
 	atlas = "thunder_and_aiko",
 	pos = { x = 1, y = 1 },
 	weight = 5,
@@ -784,7 +784,7 @@ FishAndChips.thunder_and_aiko.redeem_voucher = function(forced_key)
 end
 
 FishAndChips.Fish({
-	key = "ta_message",
+	key = "message",
 	weight = 5,
 	cost = 2,
 	treasure = true,
@@ -866,7 +866,7 @@ FishAndChips.Fish({
 })
 
 FishAndChips.Fish({
-	key = "ta_snad",
+	key = "snad",
 	weight = 10,
 	environments = {
 		pier = 1,
@@ -916,7 +916,7 @@ local miku_click = function (self)
 end
 
 FishAndChips.Fish({
-	key = "ta_miku",
+	key = "miku",
 	weight = 5,
 	environments = {
 		wormhole = 1,
@@ -978,7 +978,7 @@ FishAndChips.Fish({
 })
 
 FishAndChips.Fish({
-	key = "ta_reaper_leviathan",
+	key = "reaper_leviathan",
 	weight = 5,
 	environments = {
 		aquifer = 1,
