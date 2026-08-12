@@ -22,7 +22,7 @@ position = "before"
 payload = '''function FAC_TH_AI_STOP_SOUND()
     for _, source in pairs(SOURCES) do
         for _, s in pairs(source) do
-            if s.sound:isPlaying() or string.find(s.sound_code, "thunder_aiko_miku_") then
+            if s.sound:isPlaying() and string.find(s.sound_code, "thunder_aiko_miku_") then
                 s.sound:stop()
             end
         end

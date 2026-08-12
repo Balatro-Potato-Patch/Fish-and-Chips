@@ -936,12 +936,9 @@ FishAndChips.Fish({
 		},
 	},
 	attributes = { "xchips", "ace" },
-	ppu_coder = { "thunderedge" },
+	ppu_coder = { "thunderedge", "aikoyori"  },
 	ppu_artist = { "aikoyori" },
 	config = { extra = { xchips = 2 } },
-	set_ability = function (self, card, initial, delay_sprites)
-		card.click = miku_click
-	end,
 	add_to_deck = function (self, card, from_debuff)
 		card.fac_thu_aik_timer = 0
 	end,
@@ -964,6 +961,9 @@ FishAndChips.Fish({
 		-- bugfixers, my request is that this should somehow only play ONCE when you click and WAIT until it is finished playing
 		-- it also plays every so often so there might have to fix if you have more than one it will override the other sounds
 		-- feel free to look in just_miku_sounds.lua - aiko
+		if card.click ~= miku_click then
+			card.click = miku_click
+		end
 		if card.added_to_deck then
 			card.fac_thu_aik_timer = (card.fac_thu_aik_timer or 0) + (dt / G.SETTINGS.GAMESPEED)
 			if card.fac_thu_aik_timer >= 20 then
