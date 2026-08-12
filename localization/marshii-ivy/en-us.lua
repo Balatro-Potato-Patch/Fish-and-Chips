@@ -16,7 +16,11 @@ return {
             PotatoPatchDev_marshii = {
                 name = "MarshiiRose",
                 text = {
-                    "filler text to not crash the game"
+                    "Hihi! I'm {C:fac_marshii_colour}MarshiiRose{}, and this is my {C:attention,E:1}first time{} in a modding event :3",
+                    "I'm so happy I got to do this, and I hope I continue to improve <3",
+                    "{C:inactive}(even though I highkey slept through the whole thing)",
+                    "And if you aren't {C:red}allergic{} to them, I've also {C:dark_edition}blessed{} you with {C:uncommon,E:1}pistachios!!",
+                    '{C:inactive}"*yawn* Ill just start tomorr- THE DEADLINE IS WHEN??" -MarshiiRose 11 Aug, 2026'
                 }
             }
         },
@@ -85,8 +89,8 @@ return {
                     "It's not technically alive, but",
                     "that doesn't mean you should let",
                     "your kids play with this thing, it's sharp!"
-                }
-            }
+                },
+            },
         },
     },
     misc = {
