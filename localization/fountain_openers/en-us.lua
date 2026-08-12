@@ -45,7 +45,7 @@ return {
                 text = {
                     "Use this fish to get",
                     "{X:mult,C:white}X#1#{} Mult next hand",
-                    "{ppu_bubble:usable}"
+                    "{element:1}"
                 },
                 flavor = {
                     "DRIVING IN MY CAR",
