@@ -176,7 +176,7 @@ FishAndChips.Fish {
 	},
 	config = { extra = { xmult = 1, xmult_mod = .5, lose = 1, antecheck = false } },
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.xmult_mod, card.ability.extra.xmult, card.ability.extra.lose, ppu_bubbles = {card.ability.extra.antecheck and "inactive" or "usable"} } }
+		return { vars = { card.ability.extra.xmult_mod, card.ability.extra.xmult, card.ability.extra.lose, ppu_bubbles = {card.ability.extra.antecheck and "used" or "usable"} } }
 	end,
 	calculate = function(self, card, context)
 		if card.ability.extra.xmult ~= 1 then
