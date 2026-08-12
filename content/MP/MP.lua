@@ -257,7 +257,7 @@ FishAndChips.Fish {
 	end,
 }
 
-FishAndChips.Fish {
+-- FishAndChips.Fish {
 	key = 'mirrorcarp',
 	atlas = 'fac_placeholders',
 	weight = 10,
@@ -281,7 +281,7 @@ FishAndChips.Fish {
 			return { mult = card.ability.extra.mult }
 		end
 	end,
-}
+-- }
 
 FishAndChips.Fish {
 	key = 'gezora',
@@ -495,7 +495,7 @@ FishAndChips.Fish {
 	end,
 }
 
-FishAndChips.Fish {
+-- FishAndChips.Fish {
 	key = 'dreadnautilus',
 	atlas = 'fac_placeholders',
 	weight = 0.5,
@@ -522,9 +522,9 @@ FishAndChips.Fish {
 			end
 		end
 	end,
-}
+-- }
 
-FishAndChips.Fish {
+-- FishAndChips.Fish {
 	key = 'stingray',
 	atlas = 'fac_placeholders',
 	weight = 10,
@@ -551,4 +551,4 @@ FishAndChips.Fish {
 			end
 		end
 	end,
-}
+-- }
