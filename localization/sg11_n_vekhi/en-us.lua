@@ -92,7 +92,7 @@ return {
                     "and {C:attention}#1#{} Bucket Slots to trigger",
                 },
                 flavour = {
-                    "Proceeding with Soul Cannon firing sequence",
+                    "Proceeding with Soul Cannon firing sequence.",
                 },
             },
             fish_fac_sg11_n_vekhi_yellowbin_tuna = {
@@ -196,8 +196,13 @@ return {
                 name = "SleepyG11",
                 text = {
                     {
-                        "Amazing f***ing",
-                        "{C:inactive}To be added...{}",
+                        "Was excited for f***ing event so much.",
+                        "As per usual, did coding.",
+                    },
+                    {
+                        "You already using or will use {C:chips}Handy{} anyway",
+                        "{C:inactive}(You have no choice){}",
+                        "So no advertizing here",
                     },
                 },
             },
