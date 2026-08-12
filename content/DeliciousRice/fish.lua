@@ -11,7 +11,7 @@ FishAndChips.Fish { -- Fring
 			xmult = 3
 		}
 	},
-	cost = 2,
+	cost = 1,
 	weight = 20,
 	environments = {
 		wormhole = 2,
@@ -28,7 +28,11 @@ FishAndChips.Fish { -- Fring
 	calculate = function(self, card, context)
 		if context.joker_main then
             return {xmult = card.ability.extra.xmult}
-        elseif context.after and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+        elseif context.after
+		and SMODS.last_hand_oneshot
+		and G.GAME.current_round.hands_played == 0 
+		and not context.blueprint 
+		then
 			local middle_func = function()
 				G.E_MANAGER:add_event(Event({
 					func = function()
@@ -50,9 +54,10 @@ FishAndChips.Fish { -- Fring
 						end
 					}))
 				end
+				FishAndChips.DeliciousRice.explode_destroy(card)
 			end
 			
-			FishAndChips.DeliciousRice.fancy_death(card, {destroy_func = Card.shatter}, middle_func)
+			FishAndChips.DeliciousRice.fancy_death(card, nil, middle_func, false)
 		end
 	end,
 }
@@ -77,7 +82,8 @@ FishAndChips.Fish { -- Spongebob
 	},
 	blueprint_compat = true,
 	eternal_compat = false,
-
+	cost = 0,
+	
 	weight = 30,
 	environments = {
 		pier = 30
@@ -114,7 +120,7 @@ FishAndChips.Fish { -- Spongebob
 			})
 		
 			
-		elseif context.round_eval and not context.blueprint then
+		elseif context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
 			
 			G.E_MANAGER:add_event(Event({
 				func = function()
@@ -138,9 +144,6 @@ FishAndChips.Fish { -- Spongebob
 			card.ability.extra.valid_env = FishAndChips.DeliciousRice.valid_SB_env(context.fac_environment_changed)
 
 		elseif context.ending_fishing and not card.ability.extra.hydrated and not context.blueprint then
-		-- elseif context.after then
-			-- TODO: SWAP TO DEAD STATE
-			-- TODO: SEPARATE EVENTS
 			local middle_func = function() 
 				G.E_MANAGER:add_event(Event({
 					trigger = "after",
@@ -150,9 +153,46 @@ FishAndChips.Fish { -- Spongebob
 						return true
 					end
 				}))
-			end
+				
+				G.E_MANAGER:add_event(Event({
+					-- trigger = "after",
+					-- timer = "REAL",
+					-- delay = 2,
+					func = function()
+						card:flip()
+						card:set_ability(G.P_CENTERS["fish_fac_delrice_spongecorpse"])
+						return true
+					end
+				}))
+				
 
-			FishAndChips.DeliciousRice.fancy_death(card, nil, middle_func, true)
+				G.E_MANAGER:add_event(Event({
+					-- trigger = "after",
+					-- timer = "REAL",
+					-- delay = 0.2,
+					func = function()
+						card:flip()
+						return true
+					end
+				}))
+			end
+			local vol = G.SETTINGS.SOUND.music_volume
+			G.E_MANAGER:add_event(Event({
+				trigger = "ease",
+				ref_table = G.SETTINGS.SOUND,
+				ref_value = "music_volume",
+				ease_to = 0,
+				delay = 1
+			}))
+			G.SETTINGS.SOUND.music_volume = 0
+			FishAndChips.DeliciousRice.fancy_death(card, nil, middle_func, false, 6)
+			G.E_MANAGER:add_event(Event({
+				trigger = "ease",
+				ref_table = G.SETTINGS.SOUND,
+				ref_value = "music_volume",
+				ease_to = vol,
+				delay = 1
+			}))
 		end
 		
 	end,
@@ -187,6 +227,36 @@ FishAndChips.Fish { -- Spongebob
 	end
 }
 
+FishAndChips.Fish { -- Spongecorpse
+	ppu_coder = { "cheekyrotter" },
+	ppu_artist = { "EDriGO" },
+	atlas = "delrice_fish",
+
+	key = "delrice_spongecorpse",
+	pos = {x = 2, y = 0},
+	attributes = {},
+	config = {},
+	blueprint_compat = false,
+	eternal_compat = true,
+	no_collection = true,
+	cost = 0,
+
+	weight = 0,
+	environments = {
+		pier = 0
+	},
+	stats = {
+		weight = {min = 10, max = 10},
+		length = {min = 0.028, max = 0.028}
+	},
+	calculate = function(self, card, context)
+		if context.check_eternal then
+			if context.other_card == card then 
+				return {no_destroy = true}
+			end
+		end
+	end
+}
 
 local atlas_blender = {[true] = {x = 1, y = 1}, [false] = {x = 0, y = 1}}
 FishAndChips.Fish { -- Blender
@@ -201,18 +271,20 @@ FishAndChips.Fish { -- Blender
 		extra = {
 			used = false,
 			num = 1,
-			denom = 10,
+			denom = 15,
 			id = 0
 		}
 	},
-
+	cost = 5,
 	weight = 15,
 	environments = {
-		pier = 30
+		pier = 1,
+		city_river = 1,
+		backroom = 1
 	},
 	stats = {
-		weight = {min = 10, max = 10},
-		length = {min = 0.028, max = 0.028}
+		weight = {min = 3, max = 4},
+		length = {min = 0.37, max = 0.45}
 	},
 	loc_vars = function(self, info_queue, card)
  		local num, denom = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom)
@@ -222,31 +294,47 @@ FishAndChips.Fish { -- Blender
 	add_to_deck = function(self, card, from_debuff)
 		card.ability.extra.id = G.GAME.delrice_blenders
 		G.GAME.delrice_blenders = G.GAME.delrice_blenders + 1
-		G.delrice_blender_areas[card.ability.extra.id] = CardArea(0, 0, 0, 0, {type = "discard", major = G.play})
 	end,
 	remove_from_deck = function (self, card, from_debuff)
 		G.GAME.delrice_blenders = G.GAME.delrice_blenders - 1
-		G.delrice_blender_areas[card.ability.extra.id] = nil
-	end,
-	calculate = function(self, card, context)
-		if context.after and card.ability.extra.used and SMODS.pseudorandom_probability(card, 'blender_fcking_blow_up', card.ability.extra.num, card.ability.extra.denom) then
-			
-			
-		elseif G.delrice_blender_areas[card.ability.extra.id].cards then
-			for i, v in ipairs(G.delrice_blender_areas[card.ability.extra.id].cards) do
-				return SMODS.blueprint_effect(card, v, context)
+		
+		if G.delrice_blender_area.cards then
+			for i, v in ipairs(G.delrice_blender_area.cards) do
+				if v.ability.extra.blender_id == card.ability.extra.id then
+					SMODS.destroy_cards(v)
+				end
 			end
 		end
 	end,
-	can_use = function(self, card) return not card.ability.extra.used end,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint 
+		and SMODS.pseudorandom_probability(card, 'blender_fcking_blow_up', card.ability.extra.num, card.ability.extra.denom) then
+			FishAndChips.DeliciousRice.fancy_death(card,
+			nil,
+			FishAndChips.DeliciousRice.explode_destroy, 
+			false
+		)
+			
+		elseif G.delrice_blender_area.cards then
+			for i, v in ipairs(G.delrice_blender_area.cards) do
+				if v.ability.extra.blender_id == card.ability.extra.id then
+					local effect = SMODS.blueprint_effect(card, v, context) or nil
+					if effect then SMODS.calculate_effect(effect, card) end
+				end
+			end
+		end
+	end,
+	can_use = function(self, card) return not card.ability.extra.used and #G.fac_fish_area.cards > 1 end,
 	keep_on_use = function(self, card) return true end,
 	use = function(self, card)
 		card.ability.extra.used = true
 
 		for i, v in ipairs(G.fac_fish_area.cards) do
 			if v ~= card then
+				---@type Card
 				local copy = copy_card(v, nil, 0)
-				G.delrice_blender_areas[card.ability.extra.id]:emplace(copy)
+				copy.ability.extra.blender_id = card.ability.extra.id
+				G.delrice_blender_area:emplace(copy)
 				SMODS.destroy_cards(v)
 			end
 		end

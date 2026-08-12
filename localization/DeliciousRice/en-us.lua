@@ -12,13 +12,12 @@ return {
             fish_fac_delrice_fringills = {
                 name = "Fringills",
                 text = {
-                    "{X:mult,C:white}X#1#{} Mult,",
+                    "{X:mult,C:white}X#1#{} Mult",
                     "{C:red,E:2}self-destructs{} if you defeat",
                     "a blind on your first hand"
                 },
                 flavor = {
-                    "Very helpful but he does",
-                    "NOT like instakills"
+                    "(This is an inside joke)"
                 }
             },
             fish_fac_delrice_spongebob = {
@@ -30,11 +29,25 @@ return {
                         "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult){}"
                     },
                     {
-                        "{C:red,E:2}Self-destructs{} if not {C:attention}rehydrated{}"
+                        "{C:red,E:2}Self-destructs{} if not {C:attention}rehydrated{}",
+                        "at a fishing spot with water",
+                        "after every round"
                     }
                 },
                 flavor = {
                     "The original goofy goober!"
+                }
+            },
+            fish_fac_delrice_spongecorpse = {
+                name = "SpongeBob's Corpse",
+                text = {
+                    {
+                        "Does nothing, a reminder",
+                        "of your negligence."
+                    }
+                },
+                flavor = {
+                    "What have you done?"
                 }
             },
             
@@ -42,13 +55,12 @@ return {
                 name = "Faulty Blender",
                 text = {
                     {
-                        "Can be used once to turn all fish",
-                        "into a {C:attention}fish smoothie{} that contains",
-                        "every effect of the blended fish",
+                        "Blends all fish into a {C:attention}fish smoothie{},",
+                        "which absorbs all their effects",
                         "{C:inactive}(#3#){}"
                     },
                     {
-                        "{C:green}#1# in #2#{} chance to {C:red,E:2}self-destruct{} after every hand"
+                        "{C:green}#1# in #2#{} chance to {C:red,E:2}self-destruct{} after each round"
                     }
                 },
                 flavor = {
