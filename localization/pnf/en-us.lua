@@ -143,6 +143,7 @@ return {
                 name = 'Pixel',
                 text = {
                     "{s:2,C:planet}Pixel",
+                    "{s:1.5,C:planet}discord: pixeldavel",
                     "I am the one who is computer,.,",
                     "i WILL steal all your RAM :]",
                     "but yeah uhh this event was fun even though",
