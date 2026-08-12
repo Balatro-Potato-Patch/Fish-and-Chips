@@ -32,7 +32,7 @@ FishAndChips.Fish {
 	key = "wilson_measuring_tape",
 	ppu_coder = { "wilson" },
 	attributes = { "xmult", "scaling" },
-	weight = 1,
+	weight = 20,
 	atlas = "wilson_fish",
 	pos = { x = 1, y = 0 },
 	pixel_size = { w = 68, h = 46 },
@@ -116,7 +116,7 @@ FishAndChips.Fish {
 	atlas = "wilson_fish",
 	pos = { x = 0, y = 0 },
 	pixel_size = { w = 69, h = 55 },
-	weight = 1,
+	weight = 20,
 	badge_key = "k_fac_maybe_fish",
 	environments = {
 		wormhole = 10,
@@ -139,3 +139,111 @@ FishAndChips.Fish {
 	end,
 }
 
+local function checkSprites(fish)
+	if not fish.ability then return end
+	local extra = fish.ability.extra
+	if extra.active then
+		if extra.forced then
+			return fish.children.center:set_sprite_pos{x = 5, y = 0}
+		end
+		return fish.children.center:set_sprite_pos{x = 4, y = 0}
+	end
+	if extra.xmult >= 3 then
+		return fish.children.center:set_sprite_pos{x = 3, y = 0}
+	end
+	return fish.children.center:set_sprite_pos{x = 2, y = 0}
+end
+
+FishAndChips.Fish {
+	key = "wilson_teddy",
+	ppu_coder = { "wilson" },
+	attributes = { "xmult", "scaling" },
+	atlas = "wilson_fish",
+	pos = { x = 2, y = 0 },
+	pixel_size = { w = 62, h = 48 },
+	weight = 1,
+	badge_key = "k_fac_maybe_fish",
+	treasure = true,
+	environments = { },
+	stats = {
+		weight = {min = 0.5, max = 2},
+		length = {min = 0.30, max = 0.50}
+	},
+	config = {
+		extra = {
+			xmult = 2,
+			mod = 0.1,
+			max = 5,
+			active = false,
+			forced = false,
+		}
+	},
+	flavour_vars = function(self, info_queue, card)
+		local key = card.config.center_key
+		local extra = card.ability.extra
+		if extra.active then
+			if extra.forced then
+				key = key .. "_forced"
+			else
+				key = key .. "_loved"
+			end
+		end
+		return {
+			key = key,
+		}
+	end,
+	loc_vars = function(self, info_queue, card)
+		local key = card.config.center_key
+		local extra = card.ability.extra
+		if extra.active then
+			if extra.forced then
+				key = key .. "_forced"
+			else
+				key = key .. "_loved"
+			end
+		end
+		return {
+			key = key,
+			vars = { card.ability.extra.xmult, card.ability.extra.mod }
+		}
+	end,
+	calculate = function(self, card, context)
+		local extra = card.ability.extra
+		local active = extra.active
+		if active and context.joker_main then
+			return { xmult = extra.xmult }
+		end
+		if not active and context.fac_fish_caught then
+			extra.xmult = extra.xmult + extra.mod
+			if extra.xmult == extra.max then
+				extra.active = true
+			end
+			checkSprites(card)
+			return {
+				message = localize { type = 'variable', key = 'a_xmult', vars = { extra.mod } },
+				colour = G.C.RED,
+			}
+		end
+	end,
+	use = function(self, card)
+		card.ability.extra.active = true
+		card.ability.extra.forced = true
+		card:highlight(true)
+		checkSprites(card)
+	end,
+	can_use = function(self, card)
+		return not card.ability.extra.active
+	end,
+	add_to_deck = function()
+		G.GAME.pool_flags.fac_wilson_teddy = true
+	end,
+	keep_on_use = function()
+		return true
+	end,
+	in_pool = function()
+		return not G.GAME.pool_flags.fac_wilson_teddy
+	end,
+	set_sprites = function(self, card)
+		checkSprites(card)
+	end,
+}

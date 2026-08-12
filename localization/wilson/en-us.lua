@@ -53,7 +53,64 @@ return {
                     "They are always too mezmorized",
                     "to look all the way down.",
                 },
-            }
+            },
+            fish_fac_wilson_teddy = {
+                name = "Adandoned Teddy",
+                text = {
+                    {
+                        "When a fish is {C:attention}caught",
+                        "{C:attention}increase{} stored mult",
+                        "by {X:mult,C:white} X#2#",
+                    },
+                    {
+                        "{X:mult,C:white} X#1# {} Mult",
+                        "{ppu_bubble:inactive}",
+                    },
+                    {
+                        "You may {C:dark_edition}force it{} to",
+                        "come out of it's shell.",
+                        "It will {C:attention}not{} forgive you",
+                        "{ppu_bubble:usable}",
+                    },
+                },
+                flavor = {
+                    "A relic from a bygone age,",
+                    "loved and treasured by one before",
+                    "time's claws tore them apart",
+                    " ",
+                    "Perhaps a new bond could be ignited",
+                }
+            },
+            fish_fac_wilson_teddy_forced = {
+                name = "Betrayed Teddy",
+                text = {
+                    {
+                        "{X:mult,C:white} X#1# {} Mult",
+                        "{ppu_bubble:active}",
+                    },
+                },
+                flavor = {
+                    "A relic from a bygone age,",
+                    "twice betrayed",
+                    " ",
+                    "How could one bond again?",
+                }
+            },
+            fish_fac_wilson_teddy_loved = {
+                name = "Well Worn Teddy",
+                text = {
+                    {
+                        "{X:mult,C:white} X#1# {} Mult",
+                        "{ppu_bubble:active}",
+                    },
+                },
+                flavor = {
+                    "A relic from a bygone age,",
+                    "loved and treasured by you",
+                    " ",
+                    "It has an incredible bond",
+                }
+            },
         }
     },
     misc = {

@@ -1,0 +1,17 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS FishAndChips "/src/sand_dollars.lua"]'
+pattern = '''
+card.config.center.use and {n=G.UIT.R, config={align = 'cl'}, nodes={
+'''
+position = "before"
+payload = '''
+(not (card.config.center_key == "fish_fac_wilson_teddy" and card.ability.extra.active) or nil) and
+'''
+match_indent = true
+times = 1
