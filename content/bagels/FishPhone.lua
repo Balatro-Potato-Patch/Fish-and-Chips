@@ -1,13 +1,13 @@
--- SMODS.Atlas {
--- 	key = 'bagels_fish_phone',
--- 	path = 'bagels/fish_phone.png',
--- 	px = 71,
--- 	py = 95,
--- }
+SMODS.Atlas {
+	key = 'bagels_fish_phone',
+	path = 'bagels/fish_phone.png',
+	px = 71,
+	py = 95,
+}
 
 FishAndChips.Fish {
 	key = 'bagels_fish_phone',
-	-- atlas = 'bagels_fish_phone',
+	atlas = 'bagels_fish_phone',
 	ppu_coder = { 'BakersDozenBagels' },
 	ppu_artist = { 'Emik' },
 	weight = 10,

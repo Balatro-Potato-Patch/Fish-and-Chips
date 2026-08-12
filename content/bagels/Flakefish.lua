@@ -11,7 +11,7 @@ FishAndChips.Fish {
 	display_size = { w = 71 * 1.33, h = 71 * 1.33 },
 	ppu_coder = { 'BakersDozenBagels' },
 	ppu_artist = { 'BakersDozenBagels' },
-	weight = 15,
+	weight = 10,
 	environments = { backroom = 0.7, styx = 1 },
 	stats = { weight = { min = 0.006, max = 0.001 }, length = { min = 0.01, max = 0.03 } },
 	attributes = { 'xmult' },
