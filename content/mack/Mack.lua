@@ -315,24 +315,22 @@ FishAndChips.Fish {
 			}
 		)
 		delay(1)
-        local bait_cards = {}
 		for i = 1, card.ability.extra.bait do
 			G.E_MANAGER:add_event(Event {
 				func = function()
-					local _card = SMODS.create_card { set = "fac_Bait", area = G.fac_temp_bait_area }
-					G.fac_temp_bait_area:emplace(_card)
-                    table.insert(bait_cards, _card)
-					FishAndChips.add_bait_to_inventory(_card.config.center.key)
+					local card = SMODS.create_card { set = "fac_Bait" }
+					G.fac_temp_bait_area:emplace(card)
+					FishAndChips.add_bait_to_inventory(card.config.center.key)
 					return true
 				end
 			})
 			delay(0.2)
 		end
 		delay(3)
-		for _, _card in ipairs(bait_cards) do
+		for i = 1, card.ability.extra.bait do
 			G.E_MANAGER:add_event(Event {
 				func = function()
-					_card:start_dissolve()
+					G.fac_temp_bait_area.cards[i]:start_dissolve()
 					return true
 				end
 			})

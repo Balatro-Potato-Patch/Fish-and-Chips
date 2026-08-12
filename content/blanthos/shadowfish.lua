@@ -1,4 +1,34 @@
 
+SMODS.Sound {
+	key = "sax1",
+	path = 'blanthos/snd_shadowman_sax_1.wav',
+	volume = 0.8
+}
+
+
+SMODS.Sound {
+	key = "sax2",
+	path = 'blanthos/snd_shadowman_sax_2.wav',
+	volume = 0.8
+}
+
+
+SMODS.Sound {
+	key = "sax3",
+	path = 'blanthos/snd_shadowman_sax_3.wav',
+	volume = 0.8
+}
+
+
+SMODS.Sound {
+	key = "sax4",
+	path = 'blanthos/snd_shadowman_sax_long.wav',
+	volume = 0.8
+}
+
+
+
+
 --#region Fish
 
 
@@ -6,7 +36,7 @@ FishAndChips.Fish {
 	key = "shadowfish",
 	atlas = "blanthos_hunter_fish",
 	pos = { x = 2, y = 0 },
-	weight = 10,
+	weight = 15,
 	ppu_coder = { "Blanthos" },
 	ppu_artist = { "Hunter" },
 	config = {
@@ -15,24 +45,20 @@ FishAndChips.Fish {
 			chips = 30,
 			xmult = 1.5,
 			economy = 1,
-			retrigger = 1
+			retrigger = 1,
+			hand_level_one = "HighCard",
+			hand_level_two = "HighCard",
+			hand_level_three = "HighCard"
 		},
 		valid_attributes = {
-mult = "mult",
-chips = "chips",
-economy = "economy",
-xmult = "xmult",
-retrigger = "retrigger",
-
-hand_level = "hand_level",
-usable = "usable",
-rank = "rank",
-passive = "passive",
-suit = "suit",
-copying = "copying",
-generation = "generation",
-boss_blind = "boss_blind",
-destroy_card = "destroy_card" 
+			mult = "mult",
+			chips = "chips",
+			economy = "economy",
+			xmult = "xmult",
+			retrigger = "retrigger",
+			hand_level = "hand_level",
+			usable = "usable",
+			generation = "generation"
 		},
 		attributes = {
 attrone = "mult",
@@ -40,18 +66,42 @@ attrtwo = "chips",
 attrthree = "economy"
 		}
 	},
-	loc_vars = function(self, info_queue, card)
-		return { vars = {card.ability.attributes.attrone, card.ability.attributes.attrtwo, card.ability.attributes.attrthree} }
-	end,
+  loc_vars = function(self, info_queue, center)
+        info_queue[#info_queue+1] = {set = 'fac_Fish', key = center.ability.attributes.attrone, vars = {"First", center.ability.extra.hand_level_one}}
+        info_queue[#info_queue+1] = {set = 'fac_Fish', key = center.ability.attributes.attrtwo, vars = {"Second", center.ability.extra.hand_level_two}}
+        info_queue[#info_queue+1] = {set = 'fac_Fish', key = center.ability.attributes.attrthree, vars = {"Third", center.ability.extra.hand_level_three}}
+  end,
 	environments = {
-		styx = 1,
-		pier = 0.5,
+		city_river = 1,
 		garden = 0.1
 	},
 	stats = {
 		weight = {min = 0.5, max = 0.5},
 		length = {min = 0.62, max = 0.62}
 	},
+	can_use = function(self, card)
+			return card.ability.attributes.attrone == "usable" or card.ability.attributes.attrtwo == "usable" or card.ability.attributes.attrthree == "usable"
+	end,
+
+	use = function(self, card)
+if card.ability.attributes.attrone == "usable" and G.fac_fish_area.config.card_limit > #G.fac_fish_area then 
+                    play_sound("fac_sax1")
+                    SMODS.add_card({ set = "fac_Fish", key = "fish_fac_shadowfish" })
+                    card:juice_up(0.3, 0.5)
+end
+if card.ability.attributes.attrtwo == "usable" and G.fac_fish_area.config.card_limit > #G.fac_fish_area then 
+                    play_sound("fac_sax2")
+                    SMODS.add_card({ set = "fac_Fish", key = "fish_fac_shadowfish" })
+                    card:juice_up(0.3, 0.5)
+end
+if card.ability.attributes.attrthree == "usable" and G.fac_fish_area.config.card_limit > #G.fac_fish_area then 
+                    play_sound("fac_sax3")
+                    SMODS.add_card({ set = "fac_Fish", key = "fish_fac_shadowfish" })
+                    card:juice_up(0.3, 0.5)
+end
+
+end,
+
 
 	calculate = function(self, card, context)
 		if context.joker_main then 
@@ -119,6 +169,62 @@ end
 end
 
 
+if context.end_of_round and context.main_eval then
+
+if card.ability.attributes.attrone == "hand_level" then 
+SMODS.calculate_effect( { level_up = true, level_up_hand = card.ability.extra.hand_level_one }, card)
+end
+if card.ability.attributes.attrtwo == "hand_level" then 
+SMODS.calculate_effect( { level_up = true, level_up_hand = card.ability.extra.hand_level_two }, card)
+end
+if card.ability.attributes.attrthree == "hand_level" then 
+SMODS.calculate_effect( { level_up = true, level_up_hand = card.ability.extra.hand_level_three }, card)
+end
+	end
+
+
+if context.skip_blind then
+
+if card.ability.attributes.attrone == "generation" then 
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = (function()
+                        SMODS.add_card {
+                            set = 'Consumeables',
+                            key_append = 'fac_shadowfish'
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end)
+                }))
+end
+if card.ability.attributes.attrtwo == "generation" then 
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = (function()
+                        SMODS.add_card {
+                            set = 'Consumeables',
+                            key_append = 'fac_shadowfish'
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end)
+                }))
+end
+if card.ability.attributes.attrthree == "generation" then 
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = (function()
+                        SMODS.add_card {
+                            set = 'Consumeables',
+                            key_append = 'fac_shadowfish'
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end)
+                }))
+end
+	end
 
 end,
 
@@ -131,6 +237,18 @@ end
 		card.ability.attributes.attrone = pseudorandom_element(attributes, 'fac_shadowfish')
 		card.ability.attributes.attrtwo = pseudorandom_element(attributes, 'fac_shadowfish')
 		card.ability.attributes.attrthree = pseudorandom_element(attributes, 'fac_shadowfish')
+
+        local _poker_hands = {}
+        for handname, _ in pairs(G.GAME.hands) do
+            if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand then
+                _poker_hands[#_poker_hands + 1] = handname
+            end
+        end
+        card.ability.extra.hand_level_one = pseudorandom_element(_poker_hands, 'fac_shadowfish')
+        card.ability.extra.hand_level_two = pseudorandom_element(_poker_hands, 'fac_shadowfish')
+        card.ability.extra.hand_level_three = pseudorandom_element(_poker_hands, 'fac_shadowfish')
+	card.attributes = {card.ability.attributes.attrone, card.ability.attributes.attrtwo, card.ability.attributes.attrthree}
+
 end
             
 }

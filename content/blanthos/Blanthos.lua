@@ -1,7 +1,7 @@
 PotatoPatchUtils.Developer({
 	name = 'Blanthos',
 	atlas = 'fac_cards',
-	colour = G.C.YELLOW,
+	colour = G.C.DARK_EDITION,
 	fac_partner = 'fac_Hunter'
 })
 
@@ -38,6 +38,26 @@ SMODS.Gradient {
     colours = {G.C.SECONDARY_SET.Spectral, G.C.SECONDARY_SET.Planet},
     cycle = 1
 }
+
+
+SMODS.Sound({
+	key = "pirate_music",
+	path = "blanthos/pirate_zone.ogg",
+	select_music_track = function()
+		return (next(SMODS.find_card("fish_fac_gaster_hat"))
+)
+	end,
+})
+
+
+SMODS.Sound({
+	key = "probably_copyright_free_backup_music",
+	path = "blanthos/mus_st_him.ogg",
+	select_music_track = function()
+--if you are reading this i forgot to make a config setting 
+		return false
+	end,
+})
 
 --#region Fish
 
@@ -117,9 +137,6 @@ ease_dollars(-card.ability.extra.food_cost)
         if context.end_of_round and context.main_eval then
          if card.ability.extra.happiness - card.ability.extra.boredom <= 0 then
                 SMODS.destroy_cards(card, {pinch_anim = true})
-                return {
-                    message = localize("blanth_placeholder")
-                }
             else
                 SMODS.scale_card(card, {
                     ref_value = "happiness",
@@ -157,7 +174,7 @@ FishAndChips.Fish {
 			scaling = 14
 		},
 		immutable = {
-			inactive = false
+			active = true
 		}
 	},
 	decision_min = 1,
@@ -171,14 +188,17 @@ FishAndChips.Fish {
 		length = {min = 3, max = 8}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult, card.ability.extra.scaling, card.ability.immutable.inactive and "Inactive" or "Active" } }
+		return { 
+			vars = { card.ability.extra.mult, card.ability.extra.scaling }, 
+			ppu_bubbles = {card.ability.immutable.active and "active" or "inactive"} 
+}
 	end,
 	calculate = function(self, card, context)
         if context.end_of_round then
-            card.ability.immutable.inactive = false
+            card.ability.immutable.active = true
         end
-if (context.joker_type_destroyed and context.card == card and not card.ability.immutable.inactive) then
-            card.ability.immutable.inactive = true
+if (context.joker_type_destroyed and context.card == card and card.ability.immutable.active == true) then
+            card.ability.immutable.active = false
                 SMODS.scale_card(card, {
                     ref_value = "mult",
                     scalar_value = "scaling",
