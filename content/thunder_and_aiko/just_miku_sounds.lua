@@ -17,7 +17,8 @@ FishAndChipsThunderEdgeAiko.MikuSoundsObjects = {}
 for i, sound_keys in ipairs(FishAndChipsThunderEdgeAiko.MikuSounds) do
     FishAndChipsThunderEdgeAiko.MikuSoundsObjects[#FishAndChipsThunderEdgeAiko.MikuSoundsObjects+1] = SMODS.Sound{
         key = "thunder_aiko_miku_"..sound_keys,
-        path = "thunder_and_aiko/miku/"..sound_keys..".ogg"
+        path = "thunder_and_aiko/miku/"..sound_keys..".ogg",
+        fac_is_miku_sound = true,
     }
 end
 

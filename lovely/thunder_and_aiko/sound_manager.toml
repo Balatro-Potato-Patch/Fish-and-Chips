@@ -5,6 +5,24 @@ priority = 1
 
 [[patches]]
 [patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = "    G.ARGS.play_sound.sound_code = sound_code"
+position = "before"
+payload = '''    G.ARGS.play_sound.fac_is_miku_sound = (SMODS.Sounds[sound_code] or {}).fac_is_miku_sound'''
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = 'engine/sound_manager.lua'
+pattern = "  s.created_on_state = args.state"
+position = "before"
+payload = '''s.fac_is_miku_sound = args.fac_is_miku_sound'''
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
 target = 'engine/sound_manager.lua'
 pattern = "        elseif request.type == 'modulate' then "
 position = "before"
@@ -22,7 +40,7 @@ position = "before"
 payload = '''function FAC_TH_AI_STOP_SOUND()
     for _, source in pairs(SOURCES) do
         for _, s in pairs(source) do
-            if s.sound:isPlaying() and string.find(s.sound_code, "thunder_aiko_miku_") then
+            if s.sound:isPlaying() and s.fac_is_miku_sound then
                 s.sound:stop()
             end
         end
