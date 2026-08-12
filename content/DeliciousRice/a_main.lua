@@ -56,6 +56,29 @@ SMODS.Sound({
 	path = "DeliciousRice/explosion.ogg"
 })
 
+SMODS.Sound({
+	key = "delrice_letsgo",
+	path = "DeliciousRice/letsgo.ogg"
+})
+SMODS.Sound({
+	key = "delrice_dangit",
+	path = "DeliciousRice/dangit.ogg"
+})
+SMODS.Sound({
+	key = "delrice_winning",
+	path = "DeliciousRice/winning.ogg"
+})
+
+
+SMODS.Sound({
+	key = "delrice_boowomp",
+	path = "DeliciousRice/boowomp.ogg"
+})
+SMODS.Sound({
+	key = "delrice_imspongebob",
+	path = "DeliciousRice/imspongebob.ogg"
+})
+
 FishAndChips.DeliciousRice = {}
 FishAndChips.DeliciousRice.SB_envs = {
 	"calm_pond",
@@ -74,6 +97,29 @@ FishAndChips.DeliciousRice.valid_SB_env = function(key)
 	return false
 end
 
+
+FishAndChips.DeliciousRice.talk = function(card, length, gap, sound, vol)
+	G.E_MANAGER:add_event(Event({
+		func = function()
+			play_sound(sound, nil, vol)
+			return true
+		end
+	}))
+	gap = gap or 0.2
+	length = length or 2
+	local loops = math.ceil(length / gap)
+	for i = 1, loops do
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			timer = "REAL",
+			delay = gap,
+			func = function()
+				card:juice_up()
+				return true
+			end
+		}))
+	end
+end
 
 ---@param card Card
 FishAndChips.DeliciousRice.explode_destroy = function(card)
@@ -144,7 +190,7 @@ FishAndChips.DeliciousRice.fancy_death = function(card, destroy_args, middle_fun
 	G.E_MANAGER:add_event(Event({
 		trigger = "after",
 		timer = "REAL",
-		delay = delay_before or 0.8,
+		delay = delay_before or 0.2,
 	}))
 	if middle_func then middle_func(card) end
 	if destroys == nil then destroys = true end
@@ -153,7 +199,7 @@ FishAndChips.DeliciousRice.fancy_death = function(card, destroy_args, middle_fun
 	G.E_MANAGER:add_event(Event({
 		trigger = "after",
 		timer = "REAL",
-		delay = delay_after or 0.2,
+		delay = delay_after or 0,
 		func = function()
 			FishAndChips.DeliciousRice.bucket_locked = false
 			G.FUNCS.fac_open_fishing_menu()

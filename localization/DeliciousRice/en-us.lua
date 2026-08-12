@@ -67,6 +67,23 @@ return {
                     "A little water damaged, but",
                     "I'm sure it probably works fine"
                 }
+            },
+            fish_fac_delrice_gambling = {
+                name = "Can't Stop Fishing!",
+                text = {
+                    {
+                        "Gives {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} when a {C:attention}Treasure{} is",
+                        "collected and increase amount by #2#"
+                    },
+                    {
+                        "{C:red,E:2}Self-destructs{} if you fail to",
+                        "collect {C:attention}Treasure{} while fishing"
+                    }
+                },
+                flavor = {
+                    "pretend raxdflipnote is trapped inside,",
+                    "that's why you can hear him talking"
+                }
             }
         }
     }

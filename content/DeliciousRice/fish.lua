@@ -34,26 +34,7 @@ FishAndChips.Fish { -- Fring
 		and not context.blueprint 
 		then
 			local middle_func = function()
-				G.E_MANAGER:add_event(Event({
-					func = function()
-						play_sound("fac_delrice_instakill")
-						return true
-					end
-				}))
-				local gap = 0.2
-				local length = 3
-				local loops = math.ceil(length / gap)
-				for i = 1, loops do
-					G.E_MANAGER:add_event(Event({
-						trigger = "after",
-						timer = "REAL",
-						delay = gap,
-						func = function()
-							card:juice_up()
-							return true
-						end
-					}))
-				end
+				FishAndChips.DeliciousRice.talk(card, 3, 0.2, "fac_delrice_instakill")
 				FishAndChips.DeliciousRice.explode_destroy(card)
 			end
 			
@@ -97,6 +78,7 @@ FishAndChips.Fish { -- Spongebob
 	end,
 
 	add_to_deck = function(self, card, from_debuff)
+		FishAndChips.DeliciousRice.talk(card, 2, 0.2, "fac_delrice_imspongebob")
 		card.ability.extra.valid_env = FishAndChips.DeliciousRice.valid_SB_env(FishAndChips.get_environment().key)		
 	end,
 	calculate = function(self, card, context)
@@ -135,6 +117,7 @@ FishAndChips.Fish { -- Spongebob
 				delay = 0.1,
 				func = function()
 					card:flip()
+					play_sound("fac_delrice_boowomp")
 					return true
 				end
 			}))
@@ -310,10 +293,12 @@ FishAndChips.Fish { -- Blender
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint 
 		and SMODS.pseudorandom_probability(card, 'blender_fcking_blow_up', card.ability.extra.num, card.ability.extra.denom) then
 			FishAndChips.DeliciousRice.fancy_death(card,
-			nil,
-			FishAndChips.DeliciousRice.explode_destroy, 
-			false
-		)
+				nil,
+				FishAndChips.DeliciousRice.explode_destroy, 
+				false,
+				nil,
+				0.8
+			)
 			
 		elseif G.delrice_blender_area.cards then
 			for i, v in ipairs(G.delrice_blender_area.cards) do
@@ -373,4 +358,91 @@ FishAndChips.Fish { -- Blender
 		end
 		card.children.center:set_sprite_pos(atlas_blender[state])
 	end
+}
+
+FishAndChips.Fish { -- Gambling
+	ppu_coder = { "cheekyrotter" },
+	ppu_artist = { "EDriGO" },
+	atlas = "delrice_fish",
+
+	key = "delrice_gambling",
+	pos = {x = 0, y = 2},
+	attributes = { "scaling", "economy" },
+	config = {
+		extra = {
+			money = 1,
+			scalar = 1
+		}
+	},
+	cost = 5,
+	weight = 10,
+	treasure = true,
+	environments = {
+		backroom = 2,
+		wormhole = 3
+	},
+	stats = {
+		weight = {min = 130, max = 140},
+		length = {min = 1.5, max = 1.7}
+	},
+	loc_vars = function(self, info_queue, card)
+ 		return {vars = {card.ability.extra.money, card.ability.extra.scalar}}
+	end,
+
+	add_to_deck = function(self, card, from_debuff)
+		FishAndChips.DeliciousRice.talk(card, 1.2, 0.2, "fac_delrice_letsgo", 0.6)
+	end,
+	calculate = function(self, card, context)
+		if context.fac_end_fishing and context.treasure_available then
+			if context.treasure then
+				SMODS.scale_card(card, {
+					ref_table = card.ability.extra,
+					ref_value = "money",
+					scalar_value = "scalar",
+				})
+
+				local middle_func = function()
+					card.children.center:set_sprite_pos({x = 1, y = 2})
+					local length = 1.2 
+					FishAndChips.DeliciousRice.talk(card, length, 0.2, "fac_delrice_winning", 0.6)
+					G.E_MANAGER:add_event(Event({
+						trigger = "after",
+						timer = "REAL",
+						delay = 3,
+						func = function()
+							card.children.center:set_sprite_pos({x = 0, y = 2})
+							return true
+						end
+					}))
+				end
+				
+				FishAndChips.DeliciousRice.fancy_death(card,
+					nil,
+					middle_func, 
+					false
+				)
+
+				return {sand_dollars = card.ability.extra.money}
+			else				
+				local middle_func = function()
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							card.children.center:set_sprite_pos({x = 2, y = 0})
+						end
+					}))
+					FishAndChips.DeliciousRice.talk(card, 1, 0.2, "fac_delrice_dangit", 0.8)
+					FishAndChips.DeliciousRice.explode_destroy(card)
+				end
+				
+				FishAndChips.DeliciousRice.fancy_death(card,
+					nil,
+					middle_func, 
+					false
+				)
+				
+			end
+			
+		end
+	end
+	
 }
