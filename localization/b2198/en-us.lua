@@ -9,7 +9,7 @@ return {
                     },
                     {
                         "Increases in dimensions after",
-                        "defeating {C:attention}#3#{} boss blind"
+                        "defeating {C:attention}#3# Boss Blind#4#{}"
                     }
                 },
                 flavor = {
@@ -24,7 +24,7 @@ return {
                     },
                     {
                         "Increases in dimensions after",
-                        "defeating {C:attention}#3#{} bosses blinds",
+                        "defeating {C:attention}#3# Boss Blind#4#{}",
                         "{C:inactive}(Currently {C:attention}#2#{}{C:inactive}){}"
                     }
                 },
@@ -40,7 +40,7 @@ return {
                     },
                     {
                         "Increases in dimensions after",
-                        "{C:attention}#3#{} bosses defeated",
+                        "defeating {C:attention}#3# Boss Blind#4#{}",
                         "{C:inactive}(Currently {C:attention}#2#{}{C:inactive}){}"
                     }
                 },
@@ -54,12 +54,12 @@ return {
                     {
                         "{X:mult,C:white}X#1#{} Mult",
                         "Increases by {X:mult,C:white}X#2#{} for",
-                        "each owned Fish after",
-                        "defeating a boss blind"
+                        "each owned {C:attention}Fish{} after",
+                        "defeating a {C:attention}Boss Blind{}"
                     },
                     {
                         "Increases in dimensions after",
-                        "{C:attention}#4#{} bosses defeated",
+                        "defeating {C:attention}#4# Boss Blind#5#{}",
                         "{C:inactive}(Currently {C:attention}#3#{}{C:inactive}){}"
                     }
                 },
@@ -74,16 +74,12 @@ return {
                     {
                         "{X:mult,C:white}X#1#{} Mult",
                         "Increases by {X:mult,C:white}X#2#{} for",
-                        "each owned Fish after",
-                        "defeating a boss blind"
+                        "each owned {C:attention}Fish{} after",
+                        "defeating a {C:attention}Boss Blind{}"
                     },
                     {
-                        "Multiplies the scaling of",
+                        "Multiplies the {V:1}scaling{} of",
                         "most jokers and fishes by {B:1,C:white}X#3#{}",
-                        -- "After defeating a boss blind,",
-                        -- "multiplies most values on all",
-                        -- "owned fishes by {B:1,C:white}X#2#{}",
-                        -- "{C:inactive}(This effect not included){}"
                     }
                 },
                 flavor = {
