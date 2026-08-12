@@ -63,6 +63,8 @@ SMODS.Sound({
 	sync = false,
 })
 
+SMODS.Attribute({ key = "afterdark", alias = { "after_dark" } } )
+
 for _, v in ipairs({ "chimes", "chord", "comedy", "dialog-error", "dialog-question", "dialog-warning", "ding", "Indigo", "Laugh", "Wild-Eep" }) do
 	local k = string.lower(v)
 	SMODS.Sound({ key = "toga_"..k, path = "theonegoofali/TOGAClick/toga_"..v..".ogg" })
@@ -179,7 +181,7 @@ table.insert(fishregistry, {
 	weight = 8,
 	ppu_coder = { "theonegoofali" },
 	ppu_artist = { "theonegoofali" },
-	attributes = { "chips", "passive" },
+	attributes = { "chips", "passive", "afterdark" },
 	environments = {
 		swamp = 4,
 		aquifer = 4,
@@ -200,7 +202,7 @@ table.insert(fishregistry, {
 	weight = 8,
 	ppu_coder = { "theonegoofali" },
 	ppu_artist = { "theonegoofali" },
-	attributes = { "passive" },
+	attributes = { "passive", "afterdark" },
 	environments = {
 		wormhole = 5,
 		soup = 3,
@@ -226,7 +228,7 @@ table.insert(fishregistry, {
 	weight = 8,
 	ppu_coder = { "theonegoofali" },
 	ppu_artist = { "theonegoofali" },
-	attributes = { "usable", "generation", "tarot" },
+	attributes = { "usable", "generation", "tarot", "afterdark" },
 	environments = {
 		city_river = 4,
 		garden = 4,
@@ -269,7 +271,7 @@ table.insert(fishregistry, {
 	weight = 8,
 	ppu_coder = { "theonegoofali" },
 	ppu_artist = { "theonegoofali" },
-	attributes = { "passive", "hand_type" },
+	attributes = { "passive", "hand_type", "afterdark" },
 	environments = {
 		wormhole = 2,
 		soup = 2,
@@ -290,7 +292,7 @@ table.insert(fishregistry, {
 	weight = 8,
 	ppu_coder = { "theonegoofali" },
 	ppu_artist = { "theonegoofali" },
-	attributes = { "mult", "face" },
+	attributes = { "mult", "face", "afterdark" },
 	environments = {
 		volcano = 5,
 		soup = 5,
@@ -325,7 +327,7 @@ table.insert(fishregistry, {
 	weight = 8,
 	ppu_coder = { "theonegoofali" },
 	ppu_artist = { "theonegoofali" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "afterdark" },
 	environments = {
 		styx = 3,
 		garden = 4,
@@ -348,7 +350,7 @@ table.insert(fishregistry, {
 	weight = 8,
 	ppu_coder = { "theonegoofali" },
 	ppu_artist = { "theonegoofali" },
-	attributes = { "passive", "enhancements", "hand_type" },
+	attributes = { "passive", "enhancements", "hand_type", "afterdark" },
 	environments = {
 		city_river = 6,
 		soup = 4,
