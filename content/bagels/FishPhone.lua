@@ -33,7 +33,7 @@ FishAndChips.Fish {
 		}
 	end,
 	add_to_deck = function(_, card)
-		play_sound "fac_bagels_phone_add"
+		play_sound 'fac_bagels_phone_add'
 		G.E_MANAGER:add_event(Event {
 			func = function()
 				change_shop_size(card.ability.extra.slots)
@@ -42,7 +42,7 @@ FishAndChips.Fish {
 		})
 	end,
 	remove_from_deck = function(_, card)
-		play_sound "fac_bagels_phone_remove"
+		play_sound 'fac_bagels_phone_remove'
 		G.E_MANAGER:add_event(Event {
 			func = function()
 				change_shop_size(-card.ability.extra.slots)
@@ -60,6 +60,7 @@ FishAndChips.Fish {
 				cards[#cards + 1] = v
 			end
 			local gone = pseudorandom_element(cards, 'fac_fish_bagels_fish_phone')
+			play_sound 'fac_bagels_phone_remove'
 			SMODS.destroy_cards { gone }
 		end
 	end,
