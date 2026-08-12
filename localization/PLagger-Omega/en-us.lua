@@ -210,14 +210,21 @@ return {
                 text = {
                 'I had a lot of fun coding these fish,',
                 'except Mystic Remora. $$$$ UI code.',
-                'Click on me to see more of my stuff!',
-                'You should try Balatro Story Mode ;)'
+                'I\'ve worked on {C:chips}Wormhole{} and the {C:hearts}House of Hearts{} mod for charity,',
+                'and I made {C:money}Flowery{} as the Plant {C:attention}(Jarona!)',
+                '{C:attention,u:attention}Click on me{} to see more of my stuff!',
+                'You should try {C:attention}Balatro Story Mode{} ;)'
                 }
             },
             Omegaflowey18 = {
                 name = 'Omegaflowey18',
                 text = {
-                    'Click on me!'
+                    'Hey! I\'m Omega!',
+                    'Almost all {C:red}Lusty Joker{} fanart is my fault someway or another',
+                    'If you see {C:blue}Triboulet{} and {C:green}Perkeo{} kissing, that\'s also probably my fault',
+                    'I worked on {C:attention}Hot Potato{}, {C:chips}Wormhole{}, and am a guest artist',
+                    'on {C:purple}GARBSHIT{} and the {C:green}Balatro University Language mod{}.',
+                    '{C:attention,u:attention}Click on me{} to see more of my art!'
                 }
             }
         }
