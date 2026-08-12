@@ -14,7 +14,7 @@ PotatoPatchUtils.Developer({
 	name = "iamarta",
 	atlas = "fac_iamarta_credits",
     loc = true,
-	colour = HEX('774B94')
+	colour = HEX("9a00ff")
 })
 
 SMODS.Atlas({
@@ -52,6 +52,7 @@ FishAndChips.Fish{
     weight = 8,
     atlas = "iamarta_100_gar",
     ppu_coder = {"iamarta"},
+    ppu_artist = {"iamarta"},
     attributes = {"xmult", "passive"},
     display_size = {w = 186, h = 149},
     stats = {
@@ -142,6 +143,7 @@ FishAndChips.Fish{
     atlas = "iamarta_fish",
     pos = {x = 1, y = 0},
     ppu_coder = {"iamarta"},
+    ppu_artist = {"iamarta"},
     attributes = {"economy", "passive"},
     stats = {
 		weight = {min = 0.18, max = 0.30},
@@ -189,6 +191,7 @@ FishAndChips.Fish{
     pos = {x = 2, y = 0},
     pixel_size = {h = 71},
     ppu_coder = {"iamarta"},
+    ppu_artist = {"iamarta"},
     attributes = {"usable", "destroy_card"},
     requires_hand = true,
     stats = {
@@ -252,6 +255,7 @@ FishAndChips.Fish{
     blueprint_compat = false,
     pos = {x = 3, y = 0},
     ppu_coder = {"iamarta"},
+    ppu_artist = {"iamarta"},
     attributes = {"passive"},
     stats = {
 		weight = {min = 0.0012, max = 0.0015},
@@ -307,6 +311,7 @@ FishAndChips.Fish{
     weight = 8,
     atlas = "iamarta_fish",
     ppu_coder = {"iamarta"},
+    ppu_artist = {"iamarta"},
     attributes = {"usable", "xmult", "food"},
     keep_on_use = function(self, card) return true end,
     stats = {
@@ -371,6 +376,7 @@ FishAndChips.Fish{
     weight = 12,
     atlas = "iamarta_glider",
     ppu_coder = {"iamarta"},
+    ppu_artist = {"iamarta"},
     attributes = {"passive", "rank"},
     display_size = {w = 71, h = 71},
     stats = {
@@ -413,8 +419,9 @@ FishAndChips.Fish{
     key = "iamarta_big_fish",
     weight = 9,
     atlas = "iamarta_fish",
-    pos = {x = 4, y = 0},
+    pos = {x = 3, y = 1},
     ppu_coder = {"iamarta"},
+    ppu_artist = {"iamarta"},
     attributes = {"blind", "usable"},
     blueprint_compat = false,
     stats = {
@@ -472,6 +479,7 @@ FishAndChips.Fish{
     blueprint_compat = false,
     display_size = {w = 34, h = 115},
     ppu_coder = {"iamarta"},
+    ppu_artist = {"iamarta"},
     attributes = {"generation", "passive"},
     stats = {
 		weight = {min = 0.05, max = 0.07},
