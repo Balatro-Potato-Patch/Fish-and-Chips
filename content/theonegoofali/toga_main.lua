@@ -52,6 +52,7 @@ end
 SMODS.Sound({key = "toga_fish", path = "theonegoofali/fish.ogg"})
 SMODS.Sound({key = "toga_fishreverse", path = "theonegoofali/fishreverse.ogg"})
 SMODS.Sound({key = "toga_spidersolitairehint", path = "theonegoofali/126.wav"})
+SMODS.Sound({key = "toga_sonicspecialtext", path = "theonegoofali/s3k68.ogg"})
 SMODS.Sound({
 	key = "music_toga_shhh",
 	path = "theonegoofali/silence.ogg",
@@ -422,72 +423,5 @@ function get_flush(hand)
 			return ret
 		end
 		return {}
-	end
-end
-
--- No achievements? At least show something for all those clicks.
-function G.FUNCS.fac_toga_close(e)
-	if G.ACTIVE_MOD_UI and G.ACTIVE_MOD_UI.id == 'FishAndChips' then G.FUNCS.openModUI_FishAndChips() else G.FUNCS.exit_overlay_menu() end
-end
-
-function FishAndChips.toga_oopsnothinguidef()
-	local rtxt = G.localization.misc.ui_strings.fac_toga_oopsnothing
-	return { n = G.UIT.ROOT, config = { align = "cm", colour = {0,0,0,0.8}, padding = 32.01, r = 0.1, minw = 5, id = 'fac_toga_oopsnothing'}, nodes = {
-		{n = G.UIT.C, config = { align = "cl", outline = 1, outline_colour = HEX('C3C3C3'), colour = G.C.UI.BACKGROUND_INACTIVE, padding = 0.035 }, nodes = {
-			{n = G.UIT.R, config = {align = "cl", colour = HEX('000082'), minw = 5}, nodes = {
-				{n = G.UIT.C, config = { align = "cl", padding = 0.1 }, nodes = {
-					{n = G.UIT.T, config = { text = rtxt[1], scale = 0.5, colour = G.C.UI.TEXT_LIGHT }},
-				}},
-			}},
-			{n = G.UIT.R, config = { align = "cl", minw = 5 }, nodes = {
-				{n = G.UIT.C, config = { align = "tl", padding = 0.05 }, nodes = {
-					{n = G.UIT.O, config = { w = 1, h = 1, object = SMODS.create_sprite(0, 0, 0.8*1, 0.8*1, SMODS.get_atlas('fac_modicon')) } },
-				}},
-				{n = G.UIT.C, config = { align = "cl", padding = -0.05}, nodes = {
-					{n = G.UIT.R, config = { align = "cl", padding = 0.2 }, nodes = {
-						{n = G.UIT.R, config = { align = "cl", padding = -0.05 }, nodes = {
-							{n = G.UIT.T, config = { text = rtxt[2], scale = 0.5, colour = G.C.UI.TEXT_LIGHT }},
-						}},
-					}},
-				}},
-			}},
-			{n = G.UIT.R, config = {align = "cm", colour = HEX('c0c0c0'), padding = 0.15}, nodes = {
-				{n = G.UIT.C, config = { align = "cm" }, nodes = {
-					UIBox_button({label = { localize('fac_toga_ok') }, button = "fac_toga_close", minw = 2, minh = 0.65, colour = HEX('555555')})
-				}},
-			}},
-		}},
-	}}
-end
-
-local clickcount, hastriggered = 0, false
-function FishAndChips.toga_updateclick(self)
-	if self and self.ppu_member and not hastriggered then
-		clickcount = (clickcount or 0) + 1
-		if clickcount >= 1337 then
-			hastriggered = true
-			FishAndChips.toga_oopsnothing()
-			sendInfoMessage("54 68 65 20 45 61 73 74 65 72 20 45 67 67 20 77 61 73 20 74 72 69 67 67 65 72 65 64 2e", "Fish and Chips - TheOneGoofAli")
-			sendInfoMessage("54 68 61 6e 6b 73 20 66 6f 72 20 70 6c 61 79 69 6e 67 20 46 69 73 68 20 61 6e 64 20 43 68 69 70 73 21", "Fish and Chips - TheOneGoofAli")
-		end
-	end
-end
-
-local hasshown = false
-function FishAndChips.toga_oopsnothing()
-	if not hasshown then
-		hasshown = true
-		G.SETTINGS.paused = true
-		G.FUNCS.overlay_menu({
-			definition = FishAndChips.toga_oopsnothinguidef(),
-			config = {
-				align = "cm",
-				offset = {x = 0, y = 0},
-				bond = 'Weak',
-				no_esc = true,
-				no_back = true,
-			}
-		})
-		play_sound('fac_toga_spidersolitairehint', 1, 0.5)
 	end
 end

@@ -4,7 +4,8 @@ return {
 			PotatoPatchDev_theonegoofali = {
                 name = 'TheOneGoofAli',
                 text = {
-					{ "Additionally known under the {C:attention}TOGA{} acronym.", "Also check out {C:attention}TOGA's Stuff{}!", "Card art by: {X:inactive,C:white}GhostSalt{}" },
+					{ "Additionally known under the {C:attention}TOGA{} acronym.", "Previously participated in {C:planet}Wormhole (Team Dummies){} and {C:green}Stocking Stuffer{}.", "Also check out {C:attention}TOGA's Stuff{}!" },
+					{ "You can find me on {X:blue,C:white}BlueSky{} and {X:red,C:white}YouTube{} under the same name.", "Card art by: {X:inactive,C:white}GhostSalt{} (originally made for {C:planet}Wormhole{})" },
 					{ "{element:1}" },
 				}
 			},
@@ -111,9 +112,13 @@ return {
 		dictionary = {
 			fac_toga_red_clown_debuff = "Scoring hand must contain a face card",
 			fac_toga_ok = "OK",
+			fac_toga_fakechievement_txt = "Dedicated Creditor",
+			fac_toga_fakechievement_name = "Fish and Chips",
+			fac_toga_fakechievement_unlocked = "Acknowledged by TheOneGoofAli",
 		},
 		ui_strings = {
-			fac_toga_oopsnothing = { "Fish and Chips", "Sorry, nothing here this time around. :)" }
+			fac_toga_oopsnothing = { "Fish and Chips - TheOneGoofAli", "Event Error 451: Unavailable For Fishing Reasons" },
+			fac_toga_oopsnothing2 = { "Fish and Chips - TheOneGoofAli", "Despite that, your effort is acknowledged." },
 		}
 	},
 }
