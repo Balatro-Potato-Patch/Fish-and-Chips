@@ -111,6 +111,9 @@ FishAndChips.Fish {
 		weight = {min = 250, max = 750},
 		length = {min = 1.50, max = 2}
 	},
+	flavour_vars = function(self, info_queue, card)
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 51 / 513, "fac_earthfish_lore")}}}
+	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money, card.ability.extra.money_needed, elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 51 / 513, "fac_earthfish_lore") } } }
 	end,
@@ -312,22 +315,24 @@ FishAndChips.Fish {
 			}
 		)
 		delay(1)
+        local bait_cards = {}
 		for i = 1, card.ability.extra.bait do
 			G.E_MANAGER:add_event(Event {
 				func = function()
-					local card = SMODS.create_card { set = "fac_Bait" }
-					G.fac_temp_bait_area:emplace(card)
-					FishAndChips.add_bait_to_inventory(card.config.center.key)
+					local _card = SMODS.create_card { set = "fac_Bait", area = G.fac_temp_bait_area }
+					G.fac_temp_bait_area:emplace(_card)
+                    table.insert(bait_cards, _card)
+					FishAndChips.add_bait_to_inventory(_card.config.center.key)
 					return true
 				end
 			})
 			delay(0.2)
 		end
 		delay(3)
-		for i = 1, card.ability.extra.bait do
+		for _, _card in ipairs(bait_cards) do
 			G.E_MANAGER:add_event(Event {
 				func = function()
-					G.fac_temp_bait_area.cards[i]:start_dissolve()
+					_card:start_dissolve()
 					return true
 				end
 			})

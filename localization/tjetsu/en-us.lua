@@ -14,30 +14,30 @@ return {
             fish_fac_tje_cbc = {
                 name = "Candy Blossom Cod",
                 text = {
-                    "{C:inactive}A Fish made of Cotton Candy{}"
+                    "{s:0.85}[Value: {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{}{s:0.85}]{}"
                 },
                 flavor = {
-                    "{C:white,s:0.85}Value: {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{}{C:white,s:0.85}{}"
+                    "A Fish made of Cotton Candy"
                 }
             },
             fish_fac_tje_cbc_gold = {
                 name = "Candy Blossom Cod",
                 text = {
-                    "{C:inactive}A Fish made of Cotton Candy thats{}",
-                    "{C:inactive}covered in{} {C:money}Gold{}"
+                    "{s:0.85}[Mutation:{} {C:white,X:money,s:0.85}Gold{}{s:0.85}]{}  {s:0.85}[Value:{} {C:fac_sand_dollars,f:fac_sand_dollars,s:0.85}${C:fac_sand_dollars,s:0.85}#3#{} {C:white,X:money,s:0.85}+#4#{}{s:0.85}]{}"
                 },
                 flavor = {
-                    "{C:white,s:0.85}Mutation:{} {X:money,C:white,s:0.85}Gold{}  {C:white,s:0.85}Value:{} {C:fac_sand_dollars,f:fac_sand_dollars,s:0.85}${C:fac_sand_dollars,s:0.85}#3#{} {C:white,X:money,s:0.85}+#4#{}"
+                    "A Fish made of Cotton Candy thats",
+                    "covered in {C:money}Gold{}"
                 }
             },
             fish_fac_tje_cbc_rainbow = {
                 name = "Candy Blossom Cod",
                 text = {
-                    "{C:inactive}A Fish made of cotton candy thats{}",
-                    "{C:inactive}covered in{} {C:fac_tje_rainbow}Colors{}"
+                    '{s:0.85}[Mutation:{} {C:white,X:fac_tje_rainbow,s:0.85}Rainbow{}{s:0.85}]:{}  {s:0.85}[Value:{} {C:fac_sand_dollars,f:fac_sand_dollars,s:0.85}${C:fac_sand_dollars,s:0.85}#3#{} {C:white,X:fac_tje_rainbow,s:0.85}+#4#{}{s:0.85}]{}'
                 },
                 flavor = {
-                    "{C:white,s:0.85}Mutation:{} {X:fac_tje_rainbow,C:white,s:0.85}Rainbow{}  {C:white,s:0.85}Value:{} {C:fac_sand_dollars,f:fac_sand_dollars,s:0.85}${C:fac_sand_dollars,s:0.85}#3#{} {C:white,X:fac_tje_rainbow,s:0.85}+#4#{}"
+                    "A Fish made of cotton candy thats{}",
+                    "covered in {C:fac_tje_rainbow}Colors{}"
                 }
             },
             fish_fac_tje_ineffa = {
@@ -49,7 +49,7 @@ return {
                      "{C:attention}Perfect{} Catch"}
                 },
                 flavor = {
-                    "Model I.N.E.F.F.A [UNFINISHED SPRITE]"
+                    "Model I.N.E.F.F.A"
                 }
             },
             fish_fac_tje_sans = {

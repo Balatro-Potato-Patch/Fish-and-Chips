@@ -61,7 +61,7 @@ FishAndChips.Fish { -- Candy Blossom Cod
 		elseif card.ability.extra.mutation == "Rainbow" then
 			return {key = 'fish_fac_tje_cbc_rainbow', vars = { card.ability.extra.mutation, card.ability.extra.weight, card.ability.extra.worth,card.ability.extra.mut_worth}}
 		else
-			return {key = 'fish_fac_tje_cbc', vars = { card.ability.extra.mutation, card.ability.extra.weight, card.ability.extra.worth,card.ability.extra.mut_worth}}
+			return {key = 'fish_fac_tje_cbc', vars = { card.ability.extra.mutation, card.ability.extra.weight, card.ability.extra.worth}}
 		end
 	end,
 	add_to_deck = function(self, card, from_debuff)
@@ -70,23 +70,23 @@ FishAndChips.Fish { -- Candy Blossom Cod
 		end
 		-- Gamba for Weight
 		local tiers = {
-			{odds = 1/3,   key = "CBC1"},
-			{odds = 1/3.5, key = "CBC2"},
-			{odds = 1/4.5, key = "CBC3"},
+			{odds = 1/3.5,   key = "CBC1"},
+			{odds = 1/4.5, key = "CBC2"},
+			{odds = 1/5.5, key = "CBC3"},
 		}
 
 		local rangesw = {
 			{0.1, 7,  0.5, 5},
 			{1,   8,  2.5, 9},
 			{5,   15, 6,   23},
-			{15,  20, 8,   25},
+			{15,  20, 8,   20},
 		}
 
 		local rangesl = {
 			{0.5, 1.1, 0.425, 0.9},
 			{0.9, 2.1, 0.6, 1.8},
 			{1.6, 0.98, 2.3, 1.2},
-			{1.34, 4, 4, 8}
+			{1.34, 2, 4, 6}
 
 		}
 
