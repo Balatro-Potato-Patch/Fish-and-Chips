@@ -2,6 +2,7 @@ FishAndChips.Fish {
     key = "J8-Bit_money_mola_mola",
     atlas = "fac_j8bit_fish",
     pos = { x = 0, y = 0 },
+    pixel_size = { w = 70, h = 87 },
     weight = 8,
     stats = {
         weight = {
@@ -80,6 +81,7 @@ FishAndChips.Fish {
     badge_key = "k_J8-Bit_fishbadge_mollusk",
     atlas = "fac_j8bit_fish",
     pos = { x = 1, y = 0 },
+    pixel_size = { w = 69, h = 81 },
     weight = 8,
     stats = {
         weight = {
@@ -124,12 +126,12 @@ FishAndChips.Fish {
         }
     end,
     flavour_vars = function(self, info_queue, card)
-		return { 
-            vars = { 
+        return {
+            vars = {
                 G.PROFILES[G.SETTINGS.profile].name or "Jimbo"
             }
         }
-	end,
+    end,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and
             (context.other_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id) then
@@ -145,6 +147,7 @@ FishAndChips.Fish {
     key = "J8-Bit_boops_boops_all_6s",
     atlas = "fac_j8bit_fish",
     pos = { x = 2, y = 0 },
+    pixel_size = { w = 64, h = 72 },
     weight = 6,
     stats = {
         weight = {
@@ -243,6 +246,7 @@ FishAndChips.Fish {
     badge_key = "k_J8-Bit_fishbadge_crustacean",
     atlas = "fac_j8bit_fish",
     pos = { x = 3, y = 0 },
+    pixel_size = { w = 69, h = 73 },
     weight = 5,
     stats = {
         weight = {
@@ -307,6 +311,7 @@ FishAndChips.Fish {
     badge_key = "k_J8-Bit_fishbadge_mollusk",
     atlas = "fac_j8bit_fish",
     pos = { x = 4, y = 0 },
+    pixel_size = { w = 71, h = 83 },
     weight = 5,
     stats = {
         weight = {
@@ -434,6 +439,7 @@ FishAndChips.Fish {
     badge_key = "k_J8-Bit_fishbadge_echinoderm",
     atlas = "fac_j8bit_fish",
     pos = { x = 0, y = 1 },
+    pixel_size = { w = 71, h = 91 },
     weight = 4.5,
     stats = {
         weight = {
@@ -546,6 +552,7 @@ FishAndChips.Fish {
     badge_key = "k_J8-Bit_fishbadge_cephalopod",
     atlas = "fac_j8bit_fish",
     pos = { x = 1, y = 1 },
+    pixel_size = { w = 64, h = 84 },
     weight = 4.5,
     stats = {
         weight = {
@@ -589,6 +596,7 @@ FishAndChips.Fish {
     badge_key = "k_J8-Bit_fishbadge_mammal",
     atlas = "fac_j8bit_fish",
     pos = { x = 2, y = 1 },
+    pixel_size = { w = 69, h = 94 },
     weight = 4,
     stats = {
         weight = {
@@ -624,6 +632,11 @@ FishAndChips.Fish {
                 card.ability.extra.booster_size_mod
             }
         }
+    end,
+    draw = function(self, card, layer)
+        if card.config.center.discovered or card.bypass_discovery_center then
+            card.children.center:draw_shader('voucher', nil, card.ARGS.send_to_shader)
+        end
     end,
     add_to_deck = function(self, card, from_debuff)
         G.GAME.modifiers.booster_size_mod = (G.GAME.modifiers.booster_size_mod or 0) +
@@ -731,6 +744,7 @@ FishAndChips.Fish {
     key = "J8-Bit_mult_mahi_mahi",
     atlas = "fac_j8bit_fish",
     pos = { x = 4, y = 1 },
+    pixel_size = { w = 65, h = 95 },
     weight = 4,
     stats = {
         weight = {
@@ -772,7 +786,7 @@ FishAndChips.Fish {
         }
     end,
     flavour_vars = function(self, info_queue, card)
-		return { 
+        return {
             vars = {
                 localize({
                     type = 'name_text',
@@ -786,7 +800,7 @@ FishAndChips.Fish {
                 }
             }
         }
-	end,
+    end,
     calculate = function(self, card, context)
         if context.repetition and context.cardarea == G.play then
             if SMODS.has_enhancement(context.other_card, card.ability.extra.enhancement) then
@@ -803,6 +817,7 @@ FishAndChips.Fish {
     badge_key = "k_J8-Bit_fishbadge_question_marks",
     atlas = "fac_j8bit_fish",
     pos = { x = 0, y = 2 },
+    pixel_size = { w = 70, h = 95 },
     stats = {
         weight = {
             min = 0.0,
@@ -856,7 +871,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
     key = "J8-Bit_hot_gamer_shark_partner",
     atlas = "fac_j8bit_fish",
-    pos = { x = 1, y = 2 },
+    pos = { x = 4, y = 3 },
     weight = 4,
     stats = {
         weight = {
@@ -878,13 +893,9 @@ FishAndChips.Fish {
             bait = 3,
         }
     },
+    treasure = true,
     environments = {
-        calm_pond = 3.0,
-        pier = 4.0,
-        city_river = 2.0,
-        garden = 4.0,
-        backroom = 2.0,
-        wormhole = 4.0,
+
     },
     attributes = {
         "generation",
@@ -991,18 +1002,59 @@ FishAndChips.Fish {
             }
         end
     end,
-    set_ability = function(sellf, card, initial, delay_sprites)
+    set_ability = function(self, card, initial, delay_sprites)
         card.ability.extra.gender_presentation = pseudorandom_element({ "masc", "femme", "gnc" },
             "J8-Bit gives you a shark waifu")
         -- TODO: set sprites later
+        if card.ability.extra.gender_presentation == "masc" then
+            card.children.center:set_sprite_pos({ x = 4, y = 3 })
+            card.T.w = G.CARD_W * (60 / 71)
+            card.T.h = G.CARD_H * (95 / 95)
+            card.children.center.scale.x = 60
+            card.children.center.scale.y = 95
+        elseif card.ability.extra.gender_presentation == "femme" then
+            card.children.center:set_sprite_pos({ x = 0, y = 4 })
+            card.T.w = G.CARD_W * (53 / 71)
+            card.T.h = G.CARD_H * (87 / 95)
+            card.children.center.scale.x = 53
+            card.children.center.scale.y = 87
+        else
+            card.children.center:set_sprite_pos({ x = 1, y = 4 })
+            card.T.w = G.CARD_W * (47 / 71)
+            card.T.h = G.CARD_H * (87 / 95)
+            card.children.center.scale.x = 47
+            card.children.center.scale.y = 87
+        end
     end,
+    load = function(self, card, card_table, other_card)
+        if card.ability.extra.gender_presentation == "masc" then
+            card.children.center:set_sprite_pos({ x = 4, y = 3 })
+            card.T.w = G.CARD_W * (60 / 71)
+            card.T.h = G.CARD_H * (95 / 95)
+            card.children.center.scale.x = 60
+            card.children.center.scale.y = 95
+        elseif card.ability.extra.gender_presentation == "femme" then
+            card.children.center:set_sprite_pos({ x = 0, y = 4 })
+            card.T.w = G.CARD_W * (53 / 71)
+            card.T.h = G.CARD_H * (87 / 95)
+            card.children.center.scale.x = 53
+            card.children.center.scale.y = 87
+        else
+            card.children.center:set_sprite_pos({ x = 1, y = 4 })
+            card.T.w = G.CARD_W * (47 / 71)
+            card.T.h = G.CARD_H * (87 / 95)
+            card.children.center.scale.x = 47
+            card.children.center.scale.y = 87
+        end
+    end
 }
 
 FishAndChips.Fish {
     key = "J8-Bit_poppup",
     badge_key = "k_J8-Bit_fishbadge_darkner",
     atlas = "fac_j8bit_fish",
-    pos = { x = 2, y = 2 },
+    pos = { x = 1, y = 2 },
+    pixel_size = { w = 71, h = 95 },
     weight = 3.5,
     stats = {
         weight = {
@@ -1093,7 +1145,8 @@ FishAndChips.Fish {
     key = "J8-Bit_spectral_sea_angel",
     badge_key = "k_J8-Bit_fishbadge_sea_slug",
     atlas = "fac_j8bit_fish",
-    pos = { x = 3, y = 2 },
+    pos = { x = 2, y = 2 },
+    pixel_size = { w = 66, h = 75 },
     weight = 3,
     stats = {
         weight = {
@@ -1119,6 +1172,11 @@ FishAndChips.Fish {
         "generation",
         "spectral"
     },
+    draw = function(self, card, layer)
+        if card.config.center.discovered or card.bypass_discovery_center then
+            card.children.center:draw_shader('voucher', nil, card.ARGS.send_to_shader)
+        end
+    end,
     loc_vars = function(self, info_queue, card)
         -- This vanilla variable only checks for vanilla Tarots and Planets, you would have to keep track on your own for any custom consumables
         local angel_c = G.GAME.fac_j8bit_last_spectral and G.P_CENTERS[G.GAME.fac_j8bit_last_spectral] or nil
@@ -1281,7 +1339,8 @@ FishAndChips.Fish {
     key = "J8-Bit_kaleidolotl",
     badge_key = "k_J8-Bit_fishbadge_amphibian",
     atlas = "fac_j8bit_fish",
-    pos = { x = 4, y = 2 },
+    pos = { x = 3, y = 2 },
+    pixel_size = { w = 69, h = 87 },
     weight = 2,
     stats = {
         weight = {
@@ -1352,6 +1411,12 @@ FishAndChips.Fish {
             main_end = main_end
         }
     end,
+    draw = function(self, card, layer)
+        if card.config.center.discovered or card.bypass_discovery_center then
+            card.children.center:draw_shader('fac_axo', nil, card.ARGS.send_to_shader)
+            G.SHADERS['fac_axo']:send("extra_texture", FishAndChips.load_bearing_j8)
+        end
+    end,
     calculate = function(self, card, context)
         if context.joker_main then
             local attributes = get_all_fish_attributes()
@@ -1395,7 +1460,8 @@ FishAndChips.Fish {
     key = "J8-Bit_primarina",
     badge_key = "k_J8-Bit_fishbadge_pokemon",
     atlas = "fac_j8bit_fish",
-    pos = { x = 0, y = 3 },
+    pos = { x = 4, y = 2 },
+    pixel_size = { w = 70, h = 95 },
     weight = 2,
     stats = {
         weight = {
@@ -1467,14 +1533,30 @@ FishAndChips.Fish {
             SMODS.recalc_debuff(playing_card)
         end
     end,
-    set_ability = function(self, card, initial, delay_sprites) card.ability.extra.shiny = pseudorandom("J8-Bit_primarina_shiny", 1, 16) <= 1 end,
+    set_ability = function(self, card, initial, delay_sprites)
+        card.ability.extra.shiny = pseudorandom(
+            "J8-Bit_primarina_shiny", 1, 16) <= 1
+        if card.ability.extra.shiny then
+            card.children.center:set_sprite_pos({ x = 2, y = 4 })
+        else
+            card.children.center:set_sprite_pos({ x = 4, y = 2 })
+        end
+    end,
+    load = function(self, card, card_table, other_card)
+        if card.ability.extra.shiny then
+            card.children.center:set_sprite_pos({ x = 2, y = 4 })
+        else
+            card.children.center:set_sprite_pos({ x = 4, y = 2 })
+        end
+    end
 }
 
 FishAndChips.Fish {
     key = "J8-Bit_toxic_seahorse",
     badge_key = "k_J8-Bit_fishbadge_reploid",
     atlas = "fac_j8bit_fish",
-    pos = { x = 1, y = 3 },
+    pos = { x = 0, y = 3 },
+    pixel_size = { w = 70, h = 91 },
     weight = 1,
     stats = {
         weight = {
@@ -1608,7 +1690,8 @@ FishAndChips.Fish {
     key = "J8-Bit_left_shark",
     badge_key = "k_J8-Bit_fishbadge_person_in_a_suit",
     atlas = "fac_j8bit_fish",
-    pos = { x = 2, y = 3 },
+    pos = { x = 1, y = 3 },
+    pixel_size = { w = 57, h = 89 },
     weight = 1,
     stats = {
         weight = {
@@ -1702,7 +1785,8 @@ FishAndChips.Fish {
     key = "J8-Bit_sdmg",
     badge_key = "k_J8-Bit_fishbadge_ranged_weapon",
     atlas = "fac_j8bit_fish",
-    pos = { x = 3, y = 3 },
+    pos = { x = 2, y = 3 },
+    pixel_size = { w = 44, h = 93 },
     weight = 1,
     stats = {
         weight = {
@@ -1762,7 +1846,8 @@ FishAndChips.Fish {
 FishAndChips.Fish {
     key = "J8-Bit_red_herring",
     atlas = "fac_j8bit_fish",
-    pos = { x = 4, y = 3 },
+    pos = { x = 3, y = 3 },
+    pixel_size = { w = 68, h = 94 },
     weight = 0.5,
     stats = {
         weight = {

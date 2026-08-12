@@ -2,14 +2,14 @@
 
 SMODS.Atlas({
     key = "j8bit_fish", -- Please include your name/team name in your atlas keys
-    path = "J8-Bit/fish_temp.png",
+    path = "J8-Bit/fish.png",
     px = 71,
     py = 95,
 })
 
 SMODS.Atlas({
     key = "j8bit_credits", -- Please include your name/team name in your atlas keys
-    path = "J8-Bit/credits_temp.png",
+    path = "J8-Bit/credits.png",
     px = 71,
     py = 95,
 })
@@ -130,7 +130,7 @@ FishAndChips.AttributeColorTable = {
 }
 
 -- ## DEVELOPERS ##
-
+local j8_click_count = 5
 PotatoPatchUtils.Developer({
     name = 'J8-Bit',
     atlas = 'fac_j8bit_credits',
@@ -139,11 +139,26 @@ PotatoPatchUtils.Developer({
     pos = { x = 0, y = 0 },
     click = function(self)
         --play_sound('worm_lfc_j8_click',1.5-j8_click_count*0.1,2)
-        self:juice_up()
-        love.system.openURL("https://bsky.app/profile/j8-bit.bsky.social")
-        love.system.openURL("https://www.youtube.com/@j8-bitforager842")
-        love.system.openURL("https://aforager.tumblr.com")
-        love.system.openURL("https://store.steampowered.com/app/4551740/CalvinChess/")
-        love.system.openURL("https://balatromods.miraheze.org/wiki/Forager_Nonessentials")
+        j8_click_count = j8_click_count - 1
+        if j8_click_count <= 0 then
+            j8_click_count = 5
+            self:juice_up()
+            love.system.openURL("https://bsky.app/profile/j8-bit.bsky.social")
+            love.system.openURL("https://www.youtube.com/@j8-bitforager842")
+            love.system.openURL("https://aforager.tumblr.com")
+            love.system.openURL("https://store.steampowered.com/app/4551740/CalvinChess/")
+            love.system.openURL("https://balatromods.miraheze.org/wiki/Forager_Nonessentials")
+        end
     end
 })
+
+-- ## SHADERS ##
+
+FishAndChips.load_custom_image = function(filename)
+    local full_path = (SMODS.current_mod.path .. "assets/1x/" .. filename)
+    local file_data = assert(NFS.newFileData(full_path), ("Failed to create file_data"))
+    local tempimagedata = assert(love.image.newImageData(file_data), ("Failed to create tempimagedata"))
+    return (assert(love.graphics.newImage(tempimagedata), ("Failed to create return image")))
+end
+SMODS.Shader({ key = 'axo', path = 'J8-Bit/axo.fs' })
+FishAndChips.load_bearing_j8 = FishAndChips.load_custom_image("J8-Bit/load_bearing_j8.png")

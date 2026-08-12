@@ -5,17 +5,24 @@ return {
                 name = "J8-Bit",
                 text = {
                     {
-                        "[WIP]"
+                        "Hi! I'm {E:fac_j8_text}J8-Bit.",
+                        "You probably recognize me from",
+                        "previous jams like {C:attention}Stocking Stuffer{}",
+                        "and {C:planet}Wormhole{} as part of the {C:attention}Lancer Fan Club."
+                    },
+                    {
+                        "I've coded and sprited {C:attention}20 new {C:fac_fish}Fish.",
+                        "I hope you enjoy playing with them!"
                     },
                     {
                         "If you're interested in",
                         "more of my stuff:",
-                        "{s:0.9,X:j8bit_bluesky,C:white}Bluesky{s:0.9} @j8-bit.bsky.social",
-                        "{s:0.9,X:j8bit_youtube,C:white}YouTube{s:0.9} @j8-bitforager842",
-                        "{s:0.9,X:j8bit_tumblr,C:white}Tumblr{s:0.9} @aforager",
-                        "{s:0.9}Play CalvinChess on {s:0.9,X:j8bit_steam,C:white}Steam{s:0.9}!",
-                        "{s:0.9}Play the {s:0.9,E:fac_j8_text}Forager Nonessentials{s:0.9} mod!",
-                        "{s:0.75}Click to open these links!"
+                        "{s:1.0,X:j8bit_bluesky,C:white}Bluesky{s:1.0} @j8-bit.bsky.social",
+                        "{s:1.0,X:j8bit_youtube,C:white}YouTube{s:1.0} @j8-bitforager842",
+                        "{s:1.0,X:j8bit_tumblr,C:white}Tumblr{s:1.0} @aforager",
+                        "{s:1.0}Play CalvinChess on {s:1.0,X:j8bit_steam,C:white}Steam{s:1.0}!",
+                        "{s:1.0}Play the {s:1.0,E:fac_j8_text}Forager Nonessentials{s:1.0} mod!",
+                        "{s:0.9}Click {s:0.9,C:attention}5 times in a row{s:0.9} to open these links!"
                     }
                 }
             },
@@ -64,9 +71,9 @@ return {
             ["fish_fac_J8-Bit_hermit_crab"] = {
                 name = "Hermit Crab",
                 text = {
-                    "Use this {C:fac_fish}Fish{} to",
-                    "double {C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}$ Sand Dollars{}",
-                    "{C:inactive}(Max of {C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}$#1#{}{C:inactive})"
+                    "Doubles {C:fac_sand_dollars,s:1.0,f:fac_sand_dollars}$ Sand Dollars{}",
+                    "{C:inactive}(Max of {C:fac_sand_dollars,s:1.0,f:fac_sand_dollars}$#1#{}{C:inactive})",
+                    "{ppu_bubble:usable}"
                 },
                 flavour = {
                     "If it's under the shell,",
@@ -237,10 +244,10 @@ return {
                     "Spectral Sea Angel",
                 },
                 text = {
-                    "Use this {C:fac_fish}Fish{} to",
-                    "create the last used",
+                    "Creates the last used",
                     "{V:1}#1#{} card",
-                    "{C:inactive}(Must have room)"
+                    "{C:inactive}(Must have room)",
+                    "{ppu_bubble:usable}"
                 },
                 flavour = {
                     "Only fools succumb to",
@@ -307,10 +314,10 @@ return {
                 },
                 text = {
                     {
-                        "Use this {C:fac_fish}Fish{} to",
-                        "{C:red}destroy{} up to {C:attention}#1#{}",
+                        "{C:red}Destroy{} up to {C:attention}#1#{}",
                         "selected cards per round",
-                        "{s:0.8,C:inactive}(Infinite uses)"
+                        "{ppu_bubble:usable}",
+                        "{s:0.8,C:inactive}(Infinite uses)",
                     },
                     {
                         "If a card destroyed",
@@ -329,7 +336,7 @@ return {
                     "{C:inactive,s:0.8}(Katy Perry)"
                 },
                 text = {
-                    "Earn {C:money}+$#1#{} and {C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}+$#2#{}",
+                    "Earn {C:money}+$#1#{} and {C:fac_sand_dollars,s:1.0,f:fac_sand_dollars}+$#2#{}",
                     "if {C:fac_fish}Fish{} is caught",
                     "with unrelated {C:fac_bait}Bait{}"
                 },
