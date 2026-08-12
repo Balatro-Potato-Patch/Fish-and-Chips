@@ -252,6 +252,17 @@ return {
                     "I have {C:attention}#1#{} for {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{}!"
                 }
             },
+            fish_fac_minty_chaos_salmon = {
+                name = "Chaos Salmon",
+                flavour = {
+                    "I can do anything!"
+                },
+                text = {
+                    'Fish whose names',
+                    'contain "{C:attention}fish{}"',
+                    'give {C:white,X:mult}X#1#{} Mult'
+                }
+            },
             fish_fac_minty_template = {
                 name = "fish",
                 flavour = {
