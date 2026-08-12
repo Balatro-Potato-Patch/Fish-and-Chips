@@ -103,6 +103,9 @@ return {
                     "when {C:attention}Treasure{} is caught",
                     "{C:inactive}(Must have room){}",
                 },
+                flavour = {
+                    "One man's trash is another man's treasure",
+                },
             },
             fish_fac_sg11_n_vekhi_whale_shark = {
                 name = "Whale Shark",
@@ -124,6 +127,11 @@ return {
                     "{E:1,C:dark_edition}in visible existence",
                     "{C:inactive,E:1}(Currently {C:mult,E:1}#2#{C:inactive,E:1} Mult)",
                 },
+                flavour = {
+                    "A fish that transcends time and space, its",
+                    "presence so grand that it can not be understood",
+                    "in it's entirity, holding it's power in the unseen",
+                },
             },
             fish_fac_sg11_n_vekhi_diamond_fish = {
                 name = "Diamond Fish",
@@ -142,6 +150,10 @@ return {
                     "{C:chips}#1#{} chips",
                     "Earn {C:money}$#2#{} at",
                     "end of round",
+                },
+                flavour = {
+                    "Not quite filling, but a great snack",
+                    "nonetheless fresh out of the can",
                 },
             },
             fish_fac_sg11_n_vekhi_sprat_can = {
@@ -174,6 +186,7 @@ return {
                     "{C:attention}Enhancement{} to all cards held in hand",
                 },
                 flavour = {
+                    "Gomen, Amanai..."
                     "{element:1}",
                 },
             },
