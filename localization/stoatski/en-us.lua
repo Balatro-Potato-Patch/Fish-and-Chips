@@ -5,10 +5,10 @@ return {
                 name = "Otter",
                 text = {
                     "At the start of a round,",
-                    "Eats the rightmost fish.",
+                    "Eats the rightmost fish",
                     "and creates a {C:spectral}Spectral{} card",
                     "If this is the righmost fish,",
-                    "this otter runs away"
+                    "this otter runs away instead"
                 },
                 flavor = {
                     "A hugry otter that eats fish",
@@ -19,7 +19,7 @@ return {
     },
     misc = {
         dictionary = {
-            ph_otter_eat = "chomp!",
+            ph_otter_eat = "Chomp!",
             ph_otter_run = "weaseled away!"
         }
     }
