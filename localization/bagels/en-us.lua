@@ -70,7 +70,7 @@ return {
 					'exactly {C:attention}#2# {}scored cards',
 					'{C:inactive}(Card amount changes every round)',
 				},
-				flavor = { 'Shockingly, its circuit', 'contains ω-3 fatty acids!' },
+				flavor = { 'Shockingly, its circuit', 'contains omega-3 fatty acids!' },
 			},
 		},
 	},
