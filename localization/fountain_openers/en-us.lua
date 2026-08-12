@@ -183,8 +183,8 @@ return {
                 name = "Alexi",
                 text = {
                     {
-                        "{f:fac_tss_slimelets}silly shapeshifting slimegirl.",
-                        "{f:fac_tss_slimelets}also see slimestuff she's really cute or something"
+                        "{f:fac_tss_slimelets}silly {f:fac_tss_slimelets,C:fac_fo_alexi}shapeshifting slimegirl.",
+                        "{f:fac_tss_slimelets}also see {f:fac_tss_slimelets,C:attention}slimestuff {f:fac_tss_slimelets}she's really cute or something"
                     },
                     {
                         "{f:fac_tss_slimelets}sole programmer here for our team",
@@ -193,7 +193,7 @@ return {
                     },
                     {
                         "{f:fac_tss_slimelets}also our team is",
-                        "{c:red,f:fac_tss_slimelets}the fountain openers group chat"
+                        "{c:red,f:fac_tss_slimelets,E:1}the fountain openers group chat"
                     }
                 }
             },
@@ -207,7 +207,7 @@ return {
                     },
                     {
                         "{f:fac_tss_slimelets}also our team is",
-                        "{c:red,f:fac_tss_slimelets}the fountain openers group chat",
+                        "{c:red,f:fac_tss_slimelets,E:1}the fountain openers group chat",
                         "{f:fac_tss_slimelets}-{f:fac_tss_slimelets,E:fac_alexi_text}Alexi"
                     }
                 }
