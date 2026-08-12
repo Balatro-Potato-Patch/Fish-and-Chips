@@ -18,7 +18,7 @@ FishAndChips.Fish {
     cost = 2,
 	environments = {
 		pier = 1,
-		wormhole = 0.75,
+		volcano = 1,
 		styx = 1,
 	},
 	stats = {

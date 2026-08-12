@@ -14,6 +14,12 @@ FishAndChips.Fish {
 	},
 	display_size = { w = 321 * 0.5, h = 347 * 0.5 },
     pixel_size = { w = 321, h = 347 },
+
+	decision_min = 0.18,
+	decision_max = 0.4,
+	impulse_min = 0.18,
+	impulse_max = 0.38,
+
     cost = 9,
 	environments = {
 		city_river = 1,
