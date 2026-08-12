@@ -657,22 +657,28 @@ FishAndChips.Fish {
 		return { vars = { num, denom, card.ability.extra.Xmult } }
 	end,
 	calculate = function(self, card, context)
-        if (context.other_main and context.cardarea == G.fac_fish_area) or context.joker_main then
-            return {
-                Xmult = card.ability.extra.Xmult,
-                message_card = context.other_main and context.other_main or card,
-                func = function()
-                    G.E_MANAGER:add_event(Event({
-                        func = function(e)
-                            card:juice_up(0.7, 0.3);
-                            return true
-                        end
-                    }))
-                end
-            }
+        if (context.other_unknown and context.cardarea == G.fac_fish_area) or context.joker_main then
+            local fx = {}
+
+            for _, v in ipairs(G.fac_fish_area.cards) do
+                fx[#fx+1] = {
+                    Xmult = card.ability.extra.Xmult,
+                    message_card = v,
+                    func = function()
+                        G.E_MANAGER:add_event(Event({
+                            func = function(e)
+                                card:juice_up(0.7, 0.3);
+                                return true
+                            end
+                        }))
+                    end
+                }
+            end
+
+            return SMODS.merge_effects(fx);
         end
 
-        if context.end_of_round and context.cardarea == G.fac_fish_area then
+        if context.end_of_round and context.main_eval and context.cardarea == G.fac_fish_area then
             local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizie_cafindish")
 		    if SMODS.pseudorandom_probability(card, "lizie_cafindish", num, denom) then 
                 SMODS.destroy_cards(card, nil, nil, true)
