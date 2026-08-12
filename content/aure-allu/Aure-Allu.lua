@@ -9,6 +9,17 @@ SMODS.Atlas {
 		tiger2 = SMODS.create_sprite(0, 0, 0.5, 0.5, "fac_aure_tiger2")
 	end
 }
+local fishee2
+SMODS.Atlas {
+	key = "allu_fishee2",
+	path = "aure-allu/fishee2.png",
+	px = 36,
+	py = 36,
+	inject = function(...)
+		SMODS.Atlas.inject(...)
+		fishee2 = SMODS.create_sprite(0, 0, 0.5, 0.5, "fac_allu_fishee2")
+	end
+}
 
 PotatoPatchUtils.Developer({
 	name = 'Aure',
@@ -28,6 +39,9 @@ PotatoPatchUtils.Developer({
 	colour = G.C.GREY,
 	fac_partner = 'fac_Aure',
 	loc = true,
+	loc_vars = function(self, info_queue, card) 
+		return {vars = { elements = { fishee2 }}}
+	end,
 })
 
 SMODS.Atlas({

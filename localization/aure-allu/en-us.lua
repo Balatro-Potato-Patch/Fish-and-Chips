@@ -10,7 +10,8 @@ return {
             PotatoPatchDev_AllUniversal = {
                 name = "AllUniversal",
                 text = {
-                    "Fishees :3"
+                    "I {C:hearts}<3{}",
+                    "{element:1}{C:fac_fish}s"
                 }
             },
         },
