@@ -111,7 +111,7 @@ SMODS.Sound {
 FountainOpeners.AlexiGradient = SMODS.Gradient {
     key = "fo_alexi",
     colours = alexi_text_colors,
-    cycle = 3,a
+    cycle = 3,
 }
 
 SMODS.DynaTextEffect {
