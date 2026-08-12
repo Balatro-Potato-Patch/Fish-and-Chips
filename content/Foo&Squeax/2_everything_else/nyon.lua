@@ -50,8 +50,8 @@ FishAndChips.Fish{
 		}
 	},
 	stats = {
-		length = {min = 5, max = 5},
-		weight = {min = 5, max = 5}
+		length = {min = 1, max = 1.2},
+		weight = {min = 1, max = 1}
 	},
 	attributes = {"xmult", "deltarune", "utdr"},
 	flavour_vars = function(self, info_queue, card)

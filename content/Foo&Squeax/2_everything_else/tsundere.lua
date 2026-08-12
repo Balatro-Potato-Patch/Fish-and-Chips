@@ -24,8 +24,8 @@ FishAndChips.Fish{
 	},
 	disable_visual_scaling = true,
 	stats = {
-		length = {min = 25, max = 26},
-		weight = {min = 25, max = 26}
+		length = {min = 26, max = 26},
+		weight = {min = 25, max = 25}
 	},
 	attributes = {"usable", "passive", "undertale", "utdr"},
 	loc_vars = function(self, info_queue, card)

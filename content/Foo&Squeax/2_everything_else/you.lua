@@ -13,8 +13,8 @@ FishAndChips.Fish{
 	pos = {x=2,y=1},
 	pixel_size = {w=56,h=94},
 	stats = {
-		weight = {min = 5, max = 5},
-		length = {min = 5, max = 5}
+		weight = {min = 2, max = 2},
+		length = {min = 1, max = 1}
 	},
 	config = {
 		immutable = {

@@ -19,8 +19,8 @@ FishAndChips.Fish{
 		}
 	},
 	stats = {
-		length = {min = 5, max = 5},
-		weight = {min = 5, max = 5}
+		length = {min = 1.3, max = 1.6},
+		weight = {min = 0.7, max = 1.7}
 	},
 	disable_visual_scaling = true,
 	attributes = {"chips", "vocaloid"},

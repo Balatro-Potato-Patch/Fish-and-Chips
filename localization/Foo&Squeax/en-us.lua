@@ -303,6 +303,7 @@ return {
 			k_fas_fas_annoying_dog = "Annoying Fish",
 			k_fac_fas_toby = "%.0f Toby",
 			k_fac_fas_temmie = "%.0f Temmie",
+			k_fac_fas_tonne = "%.0ft",
 			k_fac_fas_left = "left",
 			k_fac_fas_right = "right",
 			k_fac_fas_infinity = "Infinity",

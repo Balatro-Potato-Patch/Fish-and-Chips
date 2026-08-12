@@ -56,8 +56,8 @@ FishAndChips.Fish{
 		aquifer = 0.01
 	},
 	stats = {
-		length = {min = 5, max = 5},
-		weight = {min = 5, max = 5}
+		length = {min = 165, max = 175},
+		weight = {min = 2000000, max = 18000000, units = {format = "k_fac_fas_tonne", scale = 1000, precision = 0}}
 	},
 	config = {
 		extra = {
