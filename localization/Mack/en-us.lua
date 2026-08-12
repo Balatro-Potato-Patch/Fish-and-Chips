@@ -196,5 +196,15 @@ return {
                 }
             }
         },
+        PotatoPatch = {
+            PotatoPatchDev_SLDTyp0 = {
+                name = "SLDTyp0",
+                text = {"big ball of muck and scum"}
+            },
+            PotatoPatchDev_TigerThawk = {
+                name = "TigerThawk",
+                text = {"bi (myself)"}
+            },
+        }
     }
 }

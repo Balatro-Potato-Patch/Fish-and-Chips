@@ -1,15 +1,29 @@
+SMODS.Atlas {
+	key = "SLDTyp0_art",
+	path = "Typ0/Typ0.png",
+	px = 71,
+	py = 95,
+}
+
+SMODS.Atlas {
+	key = "Tiger_art",
+	path = "Typ0/tiger.png",
+	px = 71,
+	py = 95,
+}
+
+
 PotatoPatchUtils.Developer({
 	name = 'SLDTyp0',
-	atlas = 'fac_cards',
-	colour = G.C.YELLOW,
+	atlas = 'fac_SLDTyp0_art',
+	colour =  SMODS.Gradient{key = "Typ0", colours = {HEX('A4C2F4'), HEX('a4eaf4')},cycle = 8},
 	fac_partner = 'TigerThawk' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
 })
 
 PotatoPatchUtils.Developer({
 	name = 'TigerThawk',
-	atlas = 'fac_cards',
-	pos = {x = 1, y = 0},
-	colour = G.C.YELLOW,
+	atlas = 'fac_Tiger_art',
+	colour = SMODS.Gradient{key = "Typ02", colours = {HEX('A4C2F4'), HEX('a4eaf4')},cycle = 8},
 	fac_partner = 'SLDTyp0'
 })
 
