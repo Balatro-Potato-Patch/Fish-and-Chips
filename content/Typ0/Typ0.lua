@@ -63,6 +63,10 @@ FishAndChips.Fish {
 	atlas = "typ0",
 	pos = { x = 2, y = 0 },
 	weight = 5,
+	stats = {
+        weight = {min = 44000, max = 50000}, --change this if its too heavy or too long. its currently just the average weight of a sperm whale cuz funni
+        length = {min = 15, max = 20 }
+    },
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "TigerThawk" },
 	attributes = { "retrigger" },
@@ -105,6 +109,10 @@ FishAndChips.Fish {
 			mult = 1
 		}
 	},
+	stats = {
+        weight = {min = 0.07, max = 0.1},
+        length = {min = 0.0254, max = 0.0762}
+    },
 	environments = {
 		wormhole = 1,
 		pier = 10,
@@ -126,6 +134,10 @@ FishAndChips.Fish {
 	atlas = "typ0",
 	pos = { x = 1, y = 0 },
 	weight = 10,
+	stats = {
+        weight = {min = 0.07, max = 0.1},
+        length = {min = 0.1524, max = 0.3048}
+    },
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
 	attributes = { "xmult" },
@@ -152,6 +164,10 @@ FishAndChips.Fish {
 	pos = { x = 0, y = 1 },
 	weight = 10,
 	cost = 0,
+	stats = {
+        weight = {min = 0.370, max = 0.385},
+        length = {min =  0.123, max = 0.194}
+    },
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
 	attributes = { "passive" },
@@ -174,6 +190,10 @@ FishAndChips.Fish {
 	pos = { x = 1, y = 1 },
 	weight = 8,
 	cost = 0,
+	stats = {
+        weight = {min = 2, max = 4},
+        length = {min = 15, max = 25}
+    },
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
 	attributes = { "economy" },
@@ -211,6 +231,10 @@ FishAndChips.Fish {
 			xmult = 3
 		}
 	},
+	stats = {
+        weight = {min = 235, max = 305},
+        length = {min = 6, max = 6.5}
+    },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xmult } }
 	end,
@@ -237,6 +261,10 @@ FishAndChips.Fish {
 			total_rounds = 3
 		}
 	},
+	stats = {
+        weight = {min = 5, max = 10},
+        length = {min = 0.5, max = 1}
+    },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.total_rounds, card.ability.extra.gary_rounds } }
 	end,
@@ -292,6 +320,10 @@ FishAndChips.Fish {
 			mult = 10
 		}
 	},
+	stats = {
+        weight = {min = 0.1, max = 0.3},
+        length = {min = 0.10, max = 0.20}
+    },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
 	end,
