@@ -54,6 +54,15 @@ return {
 				},
 				flavor = { 'This carniverous fish grows fast,', 'often outgrowing its habitat.' },
 			},
+			fish_fac_bagels_fish_phone = {
+				name = 'fish fone',
+				text = {
+					'{C:attention}+#1#{} card slots in shop',
+					'{C:red}Destroys{} a random {C:fac_fish}Fish{} or',
+					'{C:attention}Joker{} when {C:attention}rerolling{} the shop',
+				},
+				flavor = { 'Honorable mention of', 'Top 10 Cool Phones' },
+			},
 		},
 	},
 	misc = {
