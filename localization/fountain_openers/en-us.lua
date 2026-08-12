@@ -185,6 +185,8 @@ return {
                 text = {
                     {"{f:fac_tss_slimelets}silly shapeshifting slimegirl.",
                     "{f:fac_tss_slimelets}also see slimestuff she's really cute or something"},
+                    {"{f:fac_tss_slimelets}sole programmer here for our team",
+                    "{f:fac_tss_slimelets}did some art too which has Aura"},
                     {"{f:fac_tss_slimelets}also our team is",
                     "{c:red,f:fac_tss_slimelets}the fountain openers group chat"}
                 }
