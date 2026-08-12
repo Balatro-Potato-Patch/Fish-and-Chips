@@ -95,6 +95,59 @@ return {
                     "banana fih"
                 }
             },
+
+            fish_fac_lizzie_jellyfish = {
+                name = {
+                    "Immortal Jellyfish",
+                    "{C:inactive,s:0.75}#1#"
+                },
+                text = {
+                    {
+                        "{C:green}#2#{}#3#",
+                        "#4#{C:fac_sand_dollars,f:fac_sand_dollars}#5#{C:inactive}#8#",
+                        "#6#{C:attention}#7#"
+                    },
+                    {
+                        "A {C:attention}maturing{} or {C:attention}mature{} Jellyfish",
+                        "will regress to its {C:attention}Polyp{} stage",
+                        "when {C:red}destroyed{}, with a {C:green}#9# in #10#{}",
+                        "chance to create a new {C:attention}Larva{}",
+                        "when it matures",
+                        "{C:inactive}(Stage changes at end of round){}"
+                    }
+                }
+            },
+
+            fish_fac_lizie_toxikarp = {
+                name = "Toxikarp",
+                text = {
+                    {
+                        "Before scoring, blows a {C:attention}bubble",
+                        "around a random owned Joker"
+                    },
+                    {
+                        "If the bubbled Joker triggers",
+                        "during {C:attention}scoring{}, the bubble",
+                        "pops, giving {X:mult,C:white}X#1#{} Mult"
+                    }
+                }
+            },
+
+            fish_fac_lizie_bladetongue = {
+                name = "Bladetongue",
+                text = {
+                    {
+                        "Once per round, use this Fish",
+                        "to activate it for one hand"
+                    },
+                    {
+                        "When active, Bladetongue {C:red}slashes",
+                        "the first scored {C:hearts}Hearts{} card,",
+                        "destroying it and applying",
+                        "{X:purple, C:white}X#1#{} blind size"
+                    }
+                }
+            }
         },
         PotatoPatch = {
             PotatoPatchDev_lanedarushpy = {
@@ -120,7 +173,15 @@ return {
             k_fac_lizie_dollars = "Dollars",
             k_fac_lizie_chips = "Chips",
             k_fac_lizie_repeated = "Repeated!",
-            k_fac_lizie_ready = "Ready!"
+            k_fac_lizie_ready = "Ready!",
+            k_fac_lizie_regressed = "Regressed!",
+            k_fac_lizie_birthed = "Birthed!",
+            k_fac_lizie_aged = "Aged!",
+
+            k_fac_lizie_jellyfish_larva = "(Larva)",
+            k_fac_lizie_jellyfish_polyp = "(Polyp)",
+            k_fac_lizie_jellyfish_maturing = "(Maturing)",
+            k_fac_lizie_jellyfish_mature = "(Mature)",
         }
     }
 }

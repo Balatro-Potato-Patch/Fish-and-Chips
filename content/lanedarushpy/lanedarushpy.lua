@@ -3,6 +3,120 @@ if SMODS.current_mod.optional_features then
 else 
     SMODS.current_mod.optional_features = { post_trigger = true } 
 end
+SMODS.Atlas {
+    key = "pangaea47_bladetongue",
+    path = "lanedarushpy/bladetongue.png",
+    px = 135,
+    py = 285
+}
+
+-- thank you notmario for this implementation from balacats, ily twin
+SMODS.Atlas {
+    key = "lizie_toxikarp_bubble",
+    path = "lanedarushpy/toxikarp_bubble.png",
+    px = 71,
+    py = 95
+}
+
+SMODS.Atlas {
+    key = "lizie_toxikarp_bubble_idle",
+    path = "lanedarushpy/toxikarp_bubble_iso.png",
+    px = 71,
+    py = 95
+}
+
+SMODS.Atlas {
+    key = "lizie_toxikarp_bubble_pop",
+    path = "lanedarushpy/toxikarp_bubble_pop.png",
+    px = 71,
+    py = 95
+}
+
+FAC_lizzie = {}
+FAC_lizzie.animations = {
+    ["toxikarp_bubble"] = {
+        atlas = "fac_lizie_toxikarp_bubble",
+        frames = 6,
+        fps = 12,
+        scale = 2,
+    },
+    
+    ["toxikarp_bubble_idle"] = {
+        atlas = "fac_lizie_toxikarp_bubble_idle",
+        frames = 2,
+        fps = 0.01,
+        scale = 2,
+        loop = true
+    },
+
+    ["toxikarp_bubble_pop"] = {
+        atlas = "fac_lizie_toxikarp_bubble_pop",
+        frames = 3,
+        fps = 12,
+        scale = 2,
+    }
+}
+
+FAC_lizzie.animation_sprites = {}
+SMODS.DrawStep {
+    key = 'fac_lizzie_toxikarp_step',
+    order = 90,
+    func = function(self, layer)
+        if self.fac_lizzie_animation and self.fac_lizzie_animation_timer then
+            local animation = FAC_lizzie.animations[self.fac_lizzie_animation]
+            if not animation then return nil end
+
+            local frame_length = 1.0 / animation.fps
+            local duration = frame_length * animation.frames
+            local current_progress = G.TIMERS.REAL - self.fac_lizzie_animation_timer
+
+            if current_progress >= duration then 
+                if not animation.loop then
+                    if self.fac_lizzie_animation == "toxikarp_bubble" then
+                        self.fac_lizzie_animation = "toxikarp_bubble_idle"
+                        self.fac_lizzie_animation_timer = G.TIMERS.REAL
+                        animation = FAC_lizzie.animations[self.fac_lizzie_animation]
+                        frame_length = 1.0 / animation.fps
+                        duration = frame_length * animation.frames
+                        current_progress = G.TIMERS.REAL - self.fac_lizzie_animation_timer
+                    else 
+                        return
+                    end
+                else
+                    self.fac_lizzie_animation_timer = G.TIMERS.REAL
+                end
+            end
+
+            local current_frame = math.floor(current_progress / frame_length)
+            if current_frame > animation.frames then current_frame = animation.frames end
+
+            if not FAC_lizzie.animation_sprites[self.fac_lizzie_animation] then
+                FAC_lizzie.animation_sprites[self.fac_lizzie_animation] = Sprite(0, 0, 71, 95, G.ASSET_ATLAS[animation.atlas], { x = 0, y = 0 })
+            end
+
+            local spr = FAC_lizzie.animation_sprites[self.fac_lizzie_animation]
+            spr.role.draw_major = self
+
+            if animation.scale then
+                self.children.center.VT.scale = self.children.center.VT.scale * animation.scale
+            end
+            if animation.y_off then
+                self.children.center.VT.y = self.children.center.VT.y + G.CARD_H * self.children.center.VT.scale * animation.y_off
+            end
+
+			spr:set_sprite_pos({ x = current_frame, y = 0 })
+			spr:draw_shader("dissolve", nil, nil, nil, self.children.center)
+
+            if animation.y_off then
+                self.children.center.VT.y = self.children.center.VT.y - G.CARD_H * self.children.center.VT.scale * animation.y_off
+            end
+            if animation.scale then
+                self.children.center.VT.scale = self.children.center.VT.scale / animation.scale
+            end
+        end
+    end,
+    conditions = { vortex = false, facing = 'front' },
+}
 
 SMODS.Atlas {
     key = "fac_lizie_credits",
@@ -56,6 +170,16 @@ SMODS.Sound {
 SMODS.Sound {
 	key = 'laneda_chips',
 	path = 'lanedarushpy/chips.mp3',
+	volume = 1
+}
+SMODS.Sound {
+	key = 'laneda_toxikarp_bubble',
+	path = 'lanedarushpy/toxikarp_bubble.ogg',
+	volume = 1
+}
+SMODS.Sound {
+	key = 'laneda_toxikarp_pop',
+	path = 'lanedarushpy/toxikarp_pop.ogg',
 	volume = 1
 }
 
@@ -727,7 +851,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "chips" },
+	attributes = { "xmult" },
 	config = {
 		extra = {
 			odds = 67,
@@ -787,5 +911,358 @@ FishAndChips.Fish {
 
     in_pool = function(self, args) -- equivalent to `yes_pool_flag = 'vremade_gros_michel_extinct'`
         return G.GAME.pool_flags.fac_lizie_cafindish_extinct
+    end
+}
+
+FishAndChips.Fish {
+	key = "lizzie_jellyfish",
+	atlas = "pangaea47_main",
+	pos = { x = 3, y = 1 },
+	weight = 5,
+	ppu_coder = { "lanedarushpy" },
+	ppu_artist = { "pangaea47" },
+	attributes = { "economy" },
+	config = {
+		extra = {
+			odds = 2,
+            odds_pregnant = 5,
+            sand_dollars = 3
+		},
+
+        immutable = {
+            state = "mature",
+            odds = {
+                polyp = 4,
+                maturing = 3,
+                mature = 2,
+            },
+            sprite_pos = {
+                larva    = { x = 0, y = 1 },
+                polyp    = { x = 1, y = 1 },
+                maturing = { x = 2, y = 1 },
+                mature   = { x = 3, y = 1 },
+            }
+        }
+	},
+    
+    stats = {
+        weight = { min = 1.2, max = 4 },
+        length = { min = 0.4, max = 1.2}
+    },
+	environments = {
+        pier = 1,
+        calm_pond = 0.2,
+        wormhole = 0.2
+	},
+
+    loc_vars = function (self, info_queue, card)
+        local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizzie_jellyfish")
+		local num2, denom2 = SMODS.get_probability_vars(card, 1, card.ability.extra.odds_pregnant, "lizzie_jellyfish_gregnnant")
+		local baby = card.ability.immutable.state == "larva"
+        return {
+            vars = {
+                localize("k_fac_lizie_jellyfish_" .. card.ability.immutable.state),
+                not baby and (tostring(num) .. " in " .. tostring(denom)) or "",
+                not baby and " chance to" or "",
+                not baby and "earn " or "",
+                not baby and ("$" .. tostring(card.ability.extra.sand_dollars)) or "",
+                not baby and "at " or "",
+                not baby and "end of round" or "",
+                baby and "Does nothing... maybe wait a round?" or "",
+                num2,
+                denom2
+            }
+        }
+    end,
+
+    update =function (self, card, dt)
+        card.children.center:set_sprite_pos(card.ability.immutable.sprite_pos[card.ability.immutable.state])
+    end,
+    calculate = function (self, card, context)
+        if context.joker_type_destroyed and context.card == card then
+            if not (card.ability.immutable.state == "larva" or card.ability.immutable.state == "polyp") then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        card.ability.extra.odds = card.ability.immutable.odds.polyp
+                        card.ability.immutable.state = "polyp"
+                        card.children.center:set_sprite_pos({ x = 1, y = 1 })
+                        SMODS.calculate_effect({
+                            message = localize("k_fac_lizie_regressed"),
+                            message_card = card
+                        })
+                        return true
+                    end
+                }))
+
+                return { no_destroy = true }
+            end
+        end
+
+        if context.end_of_round and context.main_eval and context.cardarea == G.fac_fish_area then
+            local fx = {}
+            if not (card.ability.immutable.state == "larva") then
+                local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizzie_jellyfish")
+                if SMODS.pseudorandom_probability(card, "lizzie_jellyfish_money", num, denom) then
+                    fx[#fx+1] = { sand_dollars = card.ability.extra.sand_dollars }
+                end
+            end
+
+            if not (card.ability.immutable.state == "mature") then
+                G.E_MANAGER:add_event(Event({
+                    func = function(e)
+                        local aged = false
+                        if card.ability.immutable.state == "larva" then
+                            card.ability.extra.odds = card.ability.immutable.odds.polyp
+                            card.ability.immutable.state = "polyp"
+                            card.children.center:set_sprite_pos({ x = 0, y = 1 })
+                            aged = true
+                        elseif card.ability.immutable.state == "polyp" then
+                            local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds_pregnant, "lizzie_jellyfish")
+                            
+                            if SMODS.pseudorandom_probability(card, "lizzie_jellyfish_babybirthies", num, denom) then
+                                local fih = SMODS.add_card({ key = "fish_fac_lizzie_jellyfish" })
+                                fih.ability.immutable.state = "larva"
+                                fih.children.center:set_sprite_pos({ x = 0, y = 1 })
+                                SMODS.calculate_effect({ message = localize("k_fac_lizie_birthed"), message_card = fih })
+                            end
+
+                            card.ability.extra.odds = card.ability.immutable.odds.maturing
+                            card.ability.immutable.state = "maturing"
+                            card.children.center:set_sprite_pos({ x = 2, y = 1 })
+                            aged = true
+                        elseif card.ability.immutable.state == "maturing" then
+                            card.ability.extra.odds = card.ability.immutable.odds.mature
+                            card.ability.immutable.state = "mature"
+                            card.children.center:set_sprite_pos({ x = 3, y = 1 })
+                            aged = true
+                        end
+
+                        if aged then
+                            SMODS.calculate_effect({
+                                message = localize("k_fac_lizie_aged"),
+                                message_card = card
+                            })
+                        end
+                        return true    
+                    end
+                }))
+            end
+
+            if #fx > 0 then 
+            return SMODS.merge_effects(fx) end
+        end
+    end
+}
+
+FishAndChips.Fish {
+	key = "lizie_toxikarp",
+	atlas = "pangaea47_main",
+	pos = { x = 0, y = 2 },
+	weight = 10,
+	ppu_coder = { "lanedarushpy" },
+	ppu_artist = { "pangaea47" },
+	attributes = { "xmult" },
+	config = {
+		extra = {
+			Xmult = 2
+		},
+        immutable = {
+            current_bubble_joker = -1
+        }
+	},
+    
+    stats = {
+        weight = { min = 0.4, max = 2 },
+        length = { min = 0.1, max = 0.6}
+    },
+	environments = {
+        pier = 1,
+        soup = 0.35,
+        city_river = 0.15
+	},
+
+    loc_vars = function (self, info_queue, card)
+        return { vars = { card.ability.extra.Xmult } }
+    end,
+
+    calculate = function (self, card, context)
+        if context.before and context.main_eval then
+            if #G.jokers.cards < 1 then card.ability.immutable.current_bubble_joker = -1 end
+            if card.ability.immutable.current_bubble_joker < 0 then
+                local picked_joker = pseudorandom_element(G.jokers.cards, "fac_lizie_toxikarp_choice")
+                for k, v in ipairs(G.jokers.cards) do
+                    if v == picked_joker then 
+                        card.ability.immutable.current_bubble_joker = k
+                        G.E_MANAGER:add_event(Event({
+                            func = function(e)
+                                if not picked_joker then return true end
+                                play_sound("fac_laneda_toxikarp_bubble", 1.0)
+                                picked_joker.fac_lizzie_animation = "toxikarp_bubble"
+                                picked_joker.fac_lizzie_animation_timer = G.TIMERS.REAL
+                                return true
+                            end
+                        }))
+                    end
+                end
+            end
+        end
+
+        if context.after then 
+            if card.ability.immutable.current_bubble_joker >= 0 then
+                local jokie = G.jokers.cards[card.ability.immutable.current_bubble_joker]
+                G.E_MANAGER:add_event(Event({
+                    func = function(e)
+                        if not jokie then return true end
+                        if jokie.fac_lizzie_animation == "toxikarp_bubble_pop" then return true end
+                        play_sound("fac_laneda_toxikarp_pop", 1.0)
+                        jokie.fac_lizzie_animation = "toxikarp_bubble_pop"
+                        jokie.fac_lizzie_animation_timer = G.TIMERS.REAL
+                        card.ability.immutable.current_bubble_joker = -1
+                
+                        return true
+                    end
+                }))
+                card.ability.immutable.current_bubble_joker = -1
+            end
+        end
+
+        if context.post_trigger and card.ability.immutable.current_bubble_joker > -1 then
+            local jokie = G.jokers.cards[card.ability.immutable.current_bubble_joker]
+            if jokie and context.other_card and context.other_card == jokie then
+                return {
+                    Xmult = card.ability.extra.Xmult,
+                    func = function ()
+                        if not jokie then return true end
+                        G.E_MANAGER:add_event(Event({
+                            func = function(e)
+                                if jokie.fac_lizzie_animation == "toxikarp_bubble_pop" then return true end
+                                play_sound("fac_laneda_toxikarp_pop", 1.0)
+                                jokie.fac_lizzie_animation = "toxikarp_bubble_pop"
+                                jokie.fac_lizzie_animation_timer = G.TIMERS.REAL
+                                card.ability.immutable.current_bubble_joker = -1
+                                return true
+                            end
+                        }))
+                        return true
+                    end
+                }
+            end
+        end
+
+        if context.end_of_round then
+            if card.ability.immutable.current_bubble_joker >= 0 then
+                local jokie = G.jokers.cards[card.ability.immutable.current_bubble_joker]
+                G.E_MANAGER:add_event(Event({
+                    func = function(e)
+                        if not jokie then return true end
+                        if jokie.fac_lizzie_animation == "toxikarp_bubble_pop" then return true end
+                        play_sound("fac_laneda_toxikarp_pop", 1.0)
+                        jokie.fac_lizzie_animation = "toxikarp_bubble_pop"
+                        jokie.fac_lizzie_animation_timer = G.TIMERS.REAL
+                
+                        return true
+                    end
+                }))
+                card.ability.immutable.current_bubble_joker = -1
+            end
+        end
+    end
+}
+
+
+FishAndChips.Fish {
+	key = "lizie_bladetongue",
+	atlas = "pangaea47_bladetongue",
+	pos = { x = 0, y = 0 },
+    display_size = { w = 135, h = 285 },
+    pixel_size = { w = 135, h = 285 },
+	weight = 5,
+	ppu_coder = { "lanedarushpy" },
+	ppu_artist = { "pangaea47" },
+	attributes = { "blindsize", "destroy_cards" },
+	config = {
+		extra = {
+			Xblindsize = 0.5
+		},
+        immutable = {
+            active = false,
+            used_this_round = true
+        }
+	},
+    
+    stats = {
+        weight = { min = 0.4, max = 2 },
+        length = { min = 0.1, max = 0.6}
+    },
+	environments = {
+        pier = 1,
+        soup = 0.35,
+        city_river = 0.15
+	},
+
+    update = function (self, card, dt)
+        if card.ability.immutable.active then
+            card.children.center:set_sprite_pos({ x = 1, y = 0 }) 
+        else
+            card.children.center:set_sprite_pos({ x = 0, y = 0 })
+        end
+    end,
+
+    keep_on_use = function (self, card)
+        return true
+    end,
+
+    can_use = function (self, card)
+        return not card.ability.immutable.used_this_round and not card.ability.immutable.active
+    end,
+
+    use = function (self, card)
+        card.ability.immutable.active = true
+        card.ability.immutable.used_this_round = true
+    end,
+
+    calculate = function (self,card,context)
+        if context.setting_blind then
+            G.E_MANAGER:add_event(Event({
+                func = function(e)
+                    card.ability.immutable.used_this_round = false
+                    SMODS.calculate_effect({ message = localize("k_fac_lizie_ready"), message_card = card })
+                    return true;
+                end
+            }))
+        end
+
+        if context.joker_main and card.ability.immutable.active then
+            for _, v in ipairs(G.play.cards) do
+                if v:is_suit("Hearts") then
+                    G.E_MANAGER:add_event(Event({
+                        func = function(e)
+                            card:juice_up(0.8, 0.8)
+                            play_sound('slice1', 0.96 + math.random() * 0.08)
+                            SMODS.destroy_cards(v, { immediate = true })
+                            card.ability.immutable.active = false
+                            return true;
+                        end
+                    }))
+                    return {
+                        xblindsize = card.ability.extra.Xblindsize
+                    }
+                end
+            end
+        end
+
+        if context.end_of_round and context.main_eval then
+            G.E_MANAGER:add_event(Event({
+                func = function(e)
+                    card.ability.immutable.used_this_round = true
+                    card.ability.immutable.active = false
+                    return true;
+                end
+            }))
+        end
+    end,
+
+    loc_vars = function (self, info_queue, card)
+        return { vars = { card.ability.extra.Xblindsize } }
     end
 }
