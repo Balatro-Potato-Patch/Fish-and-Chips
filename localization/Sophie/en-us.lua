@@ -3,9 +3,21 @@ return {
         PotatoPatch = {
 			PotatoPatchDev_Sophie = {
 				name = "Sophie",
+                text = {
+                    {
+                        "balatro modding has gone too far"
+                    },
+                    {
+                        "also, click on me 5~20 times",
+                        "for shameless mod promotion"
+                    }
+                },
 			},
 			PotatoPatchDev_gfs = {
-				name = "gfs",
+				name = "{f:fac_sophie_comic}gfs",
+                text = {
+                    "{f:fac_sophie_comic}#1#{}{element:1}",
+                },
 			},
         },
         fac_Fish = {
@@ -130,6 +142,29 @@ return {
                 },
                 flavour = {
                     "Fish? Like the blind?",
+                }
+            },
+            fish_fac_sophie_glados = {
+                name = "GLaDOS",
+                text = {
+                    "This Fish gains {X:mult,C:white}X#1# {}~{X:mult,C:white} X#2#",
+                    "at end of round",
+                    "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)"
+                },
+                flavour = {
+                    "Agh! Bird! Bird! Kill it!",
+                    "It's evil."
+                }
+            },
+            fish_fac_sophie_fish_award = {
+                name = "Fished for it again award",
+                text = {
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#",
+                    "when a seal is triggered",
+                },
+                flavour = {
+                    "These are known to quickly accumulate",
+                    "in one place often."
                 }
             },
         },
