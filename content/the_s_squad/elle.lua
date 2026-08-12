@@ -14,11 +14,12 @@ FishAndChips.Fish {
 		styx = 2
 	},
 	loc_vars = function(self, info_queue, card)
-		if not self.unlocked then
-			info_queue[#info_queue+1] = G.P_CENTERS.fish_fac_tss_resident
-		end
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_tss_chesh")
 		return { vars = { num, dem, card.ability.extra.xmult_mod, card.ability.extra.xmult } }
+	end,
+	locked_loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue+1] = G.P_CENTERS.fish_fac_tss_resident
+		return {}
 	end,
 	calculate = function(self, card, context)
 		-- Chesh eating handled in dev calculate so they can all flock at once like hungry pirahnas
