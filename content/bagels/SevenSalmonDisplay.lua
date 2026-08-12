@@ -29,6 +29,11 @@ FishAndChips.Fish {
 		end
 	end,
 	calculate = function(_, card, context)
+		if context.end_of_round and not context.repetition then
+			card.ability.extra.cards = pseudorandom('fac_fish_bagels_seven_salmon_display', 1, 5)
+			return { message = localize "k_reset", colour = G.C.RED, message_card = card }
+		end
+
 		if context.joker_main and #context.scoring_hand == card.ability.extra.cards then
 			return {
 				x_mult = card.ability.extra.xmult,
