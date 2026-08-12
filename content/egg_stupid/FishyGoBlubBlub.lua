@@ -84,6 +84,23 @@ SMODS.Sound {
 	path = 'egg_stupid/Giant_Flea_howl_short_03.ogg',
 }
 
+SMODS.ScreenShader {
+	key = "segg_infection",
+	path = "egg_stupid/infection.fs",
+	order = 0,
+	should_apply = function (self)
+		return G.GAME and G.GAME.fac_plasmium_infection and G.GAME.fac_plasmium_infection > 1
+	end,
+	send_vars = function(self)
+		return {
+			time = G.TIMERS.REAL,
+			infection = G.GAME.fac_plasmium_infection,
+		}
+	end,
+}
+
+
+
 --#region utility
 
 local function fly_away(card)
@@ -171,7 +188,10 @@ function fac_fleash_treasure(beeg)
 end
 
 function fac_get_plasmium_blind_mod(single)
-	if G.GAME.fac_plasmium_infection >= 10 then
+	if G.GAME.fac_plasmium_infection > 10 then
+		return 1
+	end
+	if G.GAME.fac_plasmium_infection == 10 then
 		-- blind size is now always inf
 
 		return 1e308
