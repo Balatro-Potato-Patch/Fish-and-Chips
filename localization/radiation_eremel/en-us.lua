@@ -129,12 +129,41 @@ return {
                     "they're still a fish on the inside."
                 }
             },
+            fish_fac_r_e_clam = {
+                name = 'Treasure Clam',
+                text = {
+                    'Add {C:attention}#2# temporary #1#s{}',
+                    'to your first drawn hand',
+                    'and then {C:attention}slam shut'
+                },
+                flavour = {
+                    "Expanding the collection",
+                    "with an Armless Joker soon!"
+                }
+            },
+            fish_fac_r_e_clam_2 = {
+                name = 'Treasure Clam',
+                text = {
+                    'Catch {C:attention}#3# {C:money}treasures',
+                    'to open the chest',
+                    '{C:inactive}(Currently #4#/#3#)'
+                }
+            },
         },
+        Other = {
+            fac_r_e_temp = {
+                name = 'Temporary',
+                text = {
+                    'Removed at end of round'
+                }
+            }
+        }
     },
     misc = {
         dictionary = {
             fac_r_e_random_suits = 'random suits',
             fac_r_e_reduce = '-$1',
+            fac_r_e_temporary_bubble = '  temporary  '
         }
     }
 }

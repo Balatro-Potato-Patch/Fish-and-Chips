@@ -20,6 +20,25 @@ PotatoPatchUtils.Developer({
         if context.fac_fish_caught and G.P_CENTERS[context.fish].set == 'fac_Fish' then
             G.GAME.fac_r_e_last_fish = context.fish
         end
+        if context.end_of_round and context.main_eval then
+            for _, pcard in ipairs(G.playing_cards) do
+                if pcard.ability.fac_r_e_temp then 
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after', delay = 0.7,
+                        func = function()
+                            G.E_MANAGER:add_event(Event({
+                                trigger = 'after', delay = 0.7,
+                                func = function()
+                                    pcard:start_dissolve()
+                                    return true
+                                end
+                            }))
+                            return true
+                        end
+                    }))
+                end
+            end
+        end
     end,
 })
 
@@ -396,4 +415,112 @@ FishAndChips.Fish({
             }))
         end
     end
+})
+
+local popup_hook = G.UIDEF.card_h_popup
+function G.UIDEF.card_h_popup(card)
+    local ret = popup_hook(card)
+	if card.ability.fac_r_e_temp then
+		local name = SMODS.deepfind(ret, 'main_box_flag', 'i')[1]
+		table.insert(name.objtree[#name.objtree-2].nodes,
+			{n=G.UIT.R, config = {align = 'cm', padding = 0.05}, nodes = {
+				{n=G.UIT.C, config={align = "m", colour = G.C.RED, r = 0.05, padding = 0.06, res = 0.45}, nodes={
+					{n=G.UIT.T, config={text = localize('fac_r_e_temporary_bubble'), colour = G.C.UI.TEXT_LIGHT, scale = 0.24}},
+				}}
+			}}
+		)
+	end
+	return ret
+end
+
+-- TODO: fix sprite reset when going in bucket (Main FAC issue)
+FishAndChips.Fish({
+    key = 'r_e_clam',
+    atlas = 'r_e_fish',
+    pos = {x = 3, y = 1},
+    ppu_coder = {'eremel'},
+    ppu_artist = {'radiation'},
+    weight = 5,
+    environments = {
+        pier = 4,
+        swamp = 3,
+        calm_pond = 2,
+        aquifer = 2
+    },
+    attributes = {'generation', 'passive'},
+    stats = {
+        weight = {min = 515, max = 2136},
+        length = {min = 0.60, max = 0.90},
+    },
+    config = {extra = {enhancement = 'm_gold', amount = 3, reset = 3, current = 0, active = true}},
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = {set='Other',key='fac_r_e_temp'}
+        return {vars = {localize({type='name_text', set='Enhanced', key=card.ability.extra.enhancement}), card.ability.extra.amount, card.ability.extra.reset, card.ability.extra.current},
+    key = card.ability.extra.active and 'fish_fac_r_e_clam' or 'fish_fac_r_e_clam_2'}
+    end,
+    calculate = function(self, card, context)
+        if context.first_hand_drawn and card.ability.extra.active then
+            draw_card(G.fac_fish_area, G.play, nil, nil, nil, card)
+            for i=1, card.ability.extra.amount do
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after', delay = 0.8,
+                    func = function()
+                        local pcard = SMODS.add_card({key = card.ability.extra.enhancement, set = 'Enhanced', area = G.play, skip_materialize = true})
+                        pcard.ability.fac_r_e_temp = true
+                        local seal = SMODS.poll_object({type = 'Seal', chance = 0.4, seed = 'fac_r_e_clam_seal'})
+                        local edition = SMODS.poll_object({type = 'Edition', chance = 0.4, seed = 'fac_r_e_clam_edition', no_negative = true})
+                        pcard:set_seal(seal, true, true)
+                        pcard:set_edition(edition, true, true)
+                        card:juice_up()
+                        pcard:start_materialize()
+                        pcard.ability.extra_slots_used = -1
+                        return true
+                    end
+                }))
+            end
+            delay(0.8)
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after', delay = 0.7,
+                func = function()
+                    card:juice_up()
+                    card.children.center:set_sprite_pos({x=4, y=1})
+                    card.ability.extra.active = false
+                    return true
+                end
+            }))
+            delay(1.4)
+            draw_card(G.play, G.fac_fish_area, nil, nil, nil, card, 0.6)
+            for i=1, card.ability.extra.amount do
+                draw_card(G.play, G.hand, nil, nil, nil, nil, 0.6)
+            end
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            save_run()
+                            return true
+                        end
+                    }))
+                    return true
+                end
+            }))
+        end
+        if context.fac_end_fishing and not card.ability.extra.active and context.treasure then
+            card.ability.extra.current = card.ability.extra.current + 1
+            if card.ability.extra.current == card.ability.extra.reset then
+                draw_card(G.fac_fish_area, G.play, nil, nil, nil, card)
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after', delay = 0.7,
+                    func = function()
+                        card:juice_up()
+                        card.children.center:set_sprite_pos({x=3, y=1})
+                        card.ability.extra.active = true
+                        return true
+                    end
+                }))
+                delay(1.4)
+                draw_card(G.play, G.fac_fish_area, nil, nil, nil, card)
+            end
+        end
+    end,
 })
