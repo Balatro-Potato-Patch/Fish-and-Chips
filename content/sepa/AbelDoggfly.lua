@@ -234,7 +234,6 @@ FishAndChips.Fish {
 			mult = 4
 		}
 	},
-	stats = {
     stats = {
         weight = {min = 0.001, max = 0.005},
         length = {min = 0.007, max = 0.025}
