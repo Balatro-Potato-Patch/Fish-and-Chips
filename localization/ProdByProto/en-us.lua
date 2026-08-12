@@ -158,8 +158,9 @@ return {
         },
         PotatoPatch = {
             PotatoPatchDev_ProdByProto = {
-                name = '{s:3}The Proto System (aka ProdByProto)',
+                name = 'The Proto System',
                 text = {
+                    {"(aka ProdByProto)"},
                     {
                         "We all go by the same names (Either Ash or some variation of our username is fine)",
                         "There\'s a Foxgirl (It/They), and a Sylveon (It/She).",
