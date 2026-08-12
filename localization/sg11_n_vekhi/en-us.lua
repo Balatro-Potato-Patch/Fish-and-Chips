@@ -210,9 +210,11 @@ return {
                 name = "vevekhi",
                 text = {
                     {
-                        "Pixel artist who makes a bunch of",
-                        "stupid stuff."
+                        "Throughout heaven and earth,",
+                        "I alone am the whimsical one",
                     },
+                    {
+                        "Pixel artist who makes stupid stuff sometimes"
                 },
             },
         },
