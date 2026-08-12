@@ -66,6 +66,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+	key = "fac_MPcards",
+	path = "core/placeholders.png",
+	px = 71,
+	py = 95,
+})
+
+SMODS.Atlas({
 	key = "bucket",
 	path = "core/bucket.png",
 	px = 71,
