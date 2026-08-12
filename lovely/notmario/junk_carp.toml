@@ -1,0 +1,38 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''
+update_hand_text({sound = G.GAME.current_round.current_hand.handname ~= disp_text and 'button' or nil, volume = 0.4, immediate = true, nopulse = nil,
+delay = G.GAME.current_round.current_hand.handname ~= disp_text and 0.4 or 0}, {handname=disp_text, level=G.GAME.hands[text].level, mult = G.GAME.hands[text].mult, chips = G.GAME.hands[text].chips})
+'''
+position = "at"
+payload = '''
+junk_hands_mult = 1
+for _, card in ipairs(SMODS.find_card("fish_fac_mf_junk_carp")) do
+    junk_hands_mult = junk_hands_mult * card.ability.extra.xhand_amounts
+end
+
+update_hand_text({sound = G.GAME.current_round.current_hand.handname ~= disp_text and 'button' or nil, volume = 0.4, immediate = true, nopulse = nil,
+    delay = G.GAME.current_round.current_hand.handname ~= disp_text and 0.4 or 0}, 
+    {handname=disp_text, level=G.GAME.hands[text].level, mult = G.GAME.hands[text].mult * junk_hands_mult, chips = G.GAME.hands[text].chips * junk_hands_mult})
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''
+mult = mod_mult(G.GAME.hands[text].mult)
+hand_chips = mod_chips(G.GAME.hands[text].chips)
+'''
+position = "at"
+payload = '''
+mult = mod_mult(G.GAME.hands[text].mult * junk_hands_mult)
+hand_chips = mod_chips(G.GAME.hands[text].chips * junk_hands_mult)
+'''
+match_indent = true
