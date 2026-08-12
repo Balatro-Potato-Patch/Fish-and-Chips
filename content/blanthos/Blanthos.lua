@@ -1,14 +1,13 @@
 PotatoPatchUtils.Developer({
 	name = 'Blanthos',
-	atlas = 'fac_cards',
+	atlas = 'blanthos_hunter_fish',
 	colour = G.C.DARK_EDITION,
 	fac_partner = 'fac_Hunter'
 })
 
 PotatoPatchUtils.Developer({
 	name = 'Hunter',
-	atlas = 'fac_cards',
-	pos = {x = 1, y = 0},
+	atlas = 'blanthos_hunter_fish',
 	colour = G.C.YELLOW,
 	fac_partner = 'fac_Blanthos'
 })
