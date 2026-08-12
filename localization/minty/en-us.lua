@@ -144,7 +144,9 @@ return {
                     "charge ({C:blue}#1#{} available)",
                     "For each readied charge ({C:red}#2#{}),",
                     "retrigger every Joker and",
-                    "fish next hand"
+                    "fish next hand",
+                    "Gains 1 charge when",
+                    "defeating Boss Blind"
                     
                 }
             },
