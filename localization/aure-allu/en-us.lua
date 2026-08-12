@@ -1,5 +1,19 @@
 return {
     descriptions = {
+        PotatoPatch = {
+            PotatoPatchDev_Aure = {
+                name = "Aure",
+                text = {
+                    "{element:1}"
+                }
+            },
+            PotatoPatchDev_AllUniversal = {
+                name = "AllUniversal",
+                text = {
+                    "Fishees :3"
+                }
+            },
+        },
         fac_Fish = {
             fish_fac_aureallu_the_original___starfish = {
                 name = {"2 Original    ", "    2 Starfish"},

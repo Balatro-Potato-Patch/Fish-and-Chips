@@ -1,8 +1,24 @@
+local tiger2
+SMODS.Atlas {
+	key = "aure_tiger2",
+	path = "aure-allu/tiger2.png",
+	px = 36,
+	py = 36,
+	inject = function(...)
+		SMODS.Atlas.inject(...)
+		tiger2 = SMODS.create_sprite(0, 0, 0.5, 0.5, "fac_aure_tiger2")
+	end
+}
+
 PotatoPatchUtils.Developer({
 	name = 'Aure',
 	atlas = 'fac_aureallu_cards',
 	colour = G.C.ORANGE,
 	fac_partner = 'fac_AllUniversal',
+	loc = true,
+	loc_vars = function(self, info_queue, card) 
+		return {vars = { elements = { tiger2 }}}
+	end,
 })
 
 PotatoPatchUtils.Developer({
@@ -11,6 +27,7 @@ PotatoPatchUtils.Developer({
 	pos = {x = 1, y = 0},
 	colour = G.C.GREY,
 	fac_partner = 'fac_Aure',
+	loc = true,
 })
 
 SMODS.Atlas({
