@@ -3,8 +3,11 @@
 PotatoPatchUtils.Developer({
 	name = 'Nick',
 	loc = true,
+	atlas = 'fac_w_d_seuss_credits',
+	pos = { x = 0, y = 0 },
 	colour = HEX("d0d0d0"),
-	fac_partner = 'fac_Jolyne'
+	fac_partner = 'fac_Jolyne',
+	joint_credits = 2,
 })
 
 PotatoPatchUtils.Developer({
@@ -20,6 +23,13 @@ SMODS.Atlas({ -- All Fish
 	key = "w_d_seuss_fish",
 	path = "w_d_seuss/fish.png",
 	px = 71,
+	py = 95,
+})
+
+SMODS.Atlas({ -- Credit Art
+	key = "w_d_seuss_credits",
+	path = "w_d_seuss/credits.png",
+	px = 142,
 	py = 95,
 })
 
@@ -102,7 +112,8 @@ SMODS.Sound { -- Great
 -- Colours
 
 G.ARGS.LOC_COLOURS['inscryption_blue'] = HEX("01eaff") -- Old
-G.ARGS.LOC_COLOURS['jolyne'] = HEX("FCB3EA")           -- Old
+G.ARGS.LOC_COLOURS['jolyne'] = HEX("FCB3EA")           -- Hyperfixation
+G.ARGS.LOC_COLOURS['incognito'] = HEX("d0d0d0")        -- Incognito
 G.ARGS.LOC_COLOURS['spalmon_pink'] = HEX("ffaec9")     -- Spalmon
 G.ARGS.LOC_COLOURS['spalmon_gold'] = HEX("fff200")     -- Spalmon
 
@@ -486,8 +497,8 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		pier = 4,
-		soup = 1,
+		pier = 5,
+		soup = 5,
 	},
 	stats = {
 		weight = { min = 0.16, max = 0.18 },
@@ -659,7 +670,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		calm_pond = 5,
+		city_river = 5,
 	},
 	stats = {
 		weight = { min = 79.00, max = 84.00 },
@@ -789,9 +800,14 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = {},
+	attributes = { "usable", "generation", "rank" },
 	config = {
 		extra = {
+			attempts = 0,
+			amount = 5,
+			colour = { G.C.UI.TEXT_INACTIVE, G.C.UI.TEXT_INACTIVE, G.C.UI.TEXT_INACTIVE, G.C.UI.TEXT_INACTIVE, G.C.UI.TEXT_INACTIVE, G.C.UI.TEXT_INACTIVE },
+			insert = { "#", "#", "#", "#", "#", "#" },
+			code = {'4', '6', '1', '2', '2', '5'},
 		}
 	},
 	environments = {
@@ -801,13 +817,97 @@ FishAndChips.Fish {
 		weight = { min = 33.53, max = 34.93 },
 		length = { min = 0.98, max = 1.01 }
 	},
+	requires_hand = true,
 	flavour_vars = function(self, info_queue, card)
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 128 / 71, "fac_sinister") } } }
 	end,
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		return {
+			vars = {
+				colours = {
+					card.ability.extra.colour[1], card.ability.extra.colour[2], card.ability.extra.colour[3], card.ability.extra.colour[4], card.ability.extra.colour[5], card.ability.extra.colour[6]
+				},
+				card.ability.extra.insert[1], card.ability.extra.insert[2], card.ability.extra.insert[3], card.ability.extra.insert[4], card.ability.extra.insert[5], card.ability.extra.insert[6],
+				ppu_bubbles = { card.ability.extra.attempts == 6 and "usable" or "inactive" }
+			} 
+		}
 	end,
 	calculate = function(self, card, context)
+	end,
+	keep_on_use = function(self, card)
+		local verify = true
+		if card.ability.extra.attempts == 6 then
+			local correct = 0
+			for i = 1, 6 do 
+				if card.ability.extra.insert[i] == card.ability.extra.code[i] then
+					correct = correct + 1
+				end
+			end
+			if correct == 6 then
+				verify = false
+			end
+		end
+		return verify
+	end,
+	use = function(self, card, area)
+		if card.ability.extra.attempts < 6 then
+			card.ability.extra.attempts = card.ability.extra.attempts + 1
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.4,
+				func = function()
+					play_sound('tarot2')
+					local number = G.hand.highlighted[1].base.id
+					if number == 10 then
+						number = 0
+					elseif number == 14 then
+						number = 1
+					end
+					card.ability.extra.insert[card.ability.extra.attempts] = tostring(number)
+					card.ability.extra.colour[card.ability.extra.attempts] = G.C.BLUE
+					G.hand:unhighlight_all()
+					return true
+				end
+			}))
+			local eval = function(card) return card.ability.extra.attempts == 6 and not card.REMOVED end
+			juice_card_until(card, eval, true)
+		else
+			local correct = 0
+			for i = 1, 6 do 
+				if card.ability.extra.insert[i] == card.ability.extra.code[i] then
+					correct = correct + 1
+				end
+			end
+			if correct == 6 then
+				for i = 1, card.ability.extra.amount do 
+					G.E_MANAGER:add_event(Event({
+						trigger = 'after',
+						delay = 0.4,
+						func = function()
+							SMODS.add_card({ set = 'Consumeables' })
+							return true
+						end
+					}))
+				end
+				SMODS.calculate_effect({ message = localize('k_correct_ex') }, card)
+			else
+				card.ability.extra.attempts = 0
+				for i = 1, 6 do 
+					card.ability.extra.insert[i] = "#"
+					card.ability.extra.colour[i] = G.C.UI.TEXT_INACTIVE
+				end
+				SMODS.calculate_effect({ message = localize('k_failure_ex') }, card)
+			end
+		end
+	end,
+	can_use = function(self, card)
+		local use = false
+		if card.ability.extra.attempts < 6 then
+			use = #G.hand.highlighted > 0 and #G.hand.highlighted <= 1 and not SMODS.Ranks[G.hand.highlighted[1].base.value].face and not SMODS.has_no_rank(G.hand.highlighted[1])
+		else
+			use = true
+		end
+		return G.hand and use
 	end
 }
 
@@ -878,7 +978,6 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 	end
 }
-
 
 -- Spalmon
 
@@ -1066,7 +1165,7 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		calm_pond = 5,
+		wormhole = 5,
 	},
 	stats = {
 		weight = { min = 88.39, max = 88.40 },
@@ -1111,8 +1210,8 @@ FishAndChips.Fish {
 		calm_pond = 5,
 	},
 	stats = {
-		weight = { min = 1, max = 1 },
-		length = { min = 1, max = 1 }
+		weight = { min = 4.50, max = 16.00 },
+		length = { min = 0.60, max = 0.90 }
 	},
 	requires_hand = true,
 	loc_vars = function(self, info_queue, card)
@@ -1207,11 +1306,11 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		calm_pond = 5,
+		city_river = 5,
 	},
 	stats = {
-		weight = { min = 1, max = 1 },
-		length = { min = 1, max = 1 }
+		weight = { min = 0.61, max = 4.52 },
+		length = { min = 0.31, max = 0.71 }
 	},
 	requires_hand = true,
 	loc_vars = function(self, info_queue, card)
@@ -1280,8 +1379,7 @@ FishAndChips.Fish {
 				no_face = false
 			end
 		end
-		return G.hand and #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.max_highlighted and
-			no_face
+		return G.hand and #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.max_highlighted and no_face
 	end
 }
 
@@ -1302,11 +1400,11 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		calm_pond = 5,
+		garden = 5,
 	},
 	stats = {
-		weight = { min = 1, max = 1 },
-		length = { min = 1, max = 1 }
+		weight = { min = 13.05, max = 45.12 },
+		length = { min = 1.24, max = 1.82 }
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.amount, localize { type = 'name_text', set = 'Enhanced', key = card.ability.extra.enhancement } } }
@@ -1373,11 +1471,11 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		calm_pond = 5,
+		backroom = 5,
 	},
 	stats = {
-		weight = { min = 1, max = 1 },
-		length = { min = 1, max = 1 }
+		weight = { min = 0.59, max = 80.12 },
+		length = { min = 0.33, max = 1.93 }
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.blind / 100 } }
@@ -1420,11 +1518,11 @@ FishAndChips.Fish {
 		}
 	},
 	environments = {
-		calm_pond = 5,
+		volcano = 5,
 	},
 	stats = {
-		weight = { min = 1, max = 1 },
-		length = { min = 1, max = 1 }
+		weight = { min = 522.81, max = 2268.12 },
+		length = { min = 3.71, max = 6.32 }
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = {} }

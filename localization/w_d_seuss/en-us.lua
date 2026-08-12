@@ -2,15 +2,30 @@ return {
     descriptions = {
         PotatoPatch = {
             PotatoPatchDev_Nick = {
-                name = "Moby Nick",
+                name = "{X:blind}Moby-Nick",
                 text = {
-                    "Meow"
+                    {
+                        "THE AGE OF THE WORMHOLE HAS ENDED",
+                        "NO MORE SPACE THEMED EVENT",
+                        "FOLLOW ME",
+                        "AND YOU'LL NEVER GO HUNGRY AGAIN",
+                        "ROOOOOOODSSSS UPPPPPP",
+                        "{s:2}I... AM... MEGALADON!"
+                    },
+                    {
+                        "Play {C:incognito}Incognito{} and {C:jolyne}Hypererfixation{} :3"
+                    }
                 },
             },
             PotatoPatchDev_Jolyne = {
                 name = "JoFIN",
                 text = {
-                    "Meow"
+                    {
+                        "Meow"
+                    },
+                    {
+                        "Play {C:jolyne}Hypererfixation{} and {C:incognito}Incognito{} :3"
+                    }
                 },
             },
         },
@@ -169,7 +184,20 @@ return {
             fish_fac_majin = {
                 name = "Marlin",
                 text = {
-                    ""
+                    {
+                        "Gives you a {C:attention}prize{} if",
+                        "you know the {C:attention}code!{}",
+                        "{C:inactive,s:0.8}Reset when wrong",
+                        "{C:inactive}[{V:1}#1#{C:inactive}] [{V:2}#2#{C:inactive}] [{V:3}#3#{C:inactive}] [{V:4}#4#{C:inactive}] [{V:5}#5#{C:inactive}] [{V:6}#6#{C:inactive}]",
+                        "{ppu_bubble:1}"
+                    },
+                    {
+                        "Selected card is used",
+                        "to {C:attention}insert{} the next",
+                        "digit for the {C:attention}code{}",
+                        "{C:inactive,s:0.8}10 = 0, A = 1, no face cards",
+                        "{ppu_bubble:usable}"
+                    }
                 },
                 flavour = {
                     "{element:1}",
@@ -233,7 +261,7 @@ return {
                     "{ppu_bubble:1}"
                 },
                 flavour = {
-                    ""
+                    "{C:attention}TO{}riel + to{C:attention}PE{} + as{C:attention}GORE{}"
                 }
             },
             fish_fac_gaster = {
@@ -257,7 +285,7 @@ return {
                     "{ppu_bubble:usable}"
                 },
                 flavour = {
-                    ""
+                    "{C:hearts}    {}, {C:green}you {C:spades}actually {C:clubs}know {C:red}jack{}. {C:diamonds}Great{}"
                 }
             },
             fish_fac_actually = {
@@ -271,7 +299,7 @@ return {
                     "{ppu_bubble:usable}"
                 },
                 flavour = {
-                    ""
+                    "{C:hearts}'kay{}, {C:green}you {C:spades}         {C:clubs}know {C:red}jack{}. {C:diamonds}Great{}"
                 }
             },
             fish_fac_know = {
@@ -285,8 +313,7 @@ return {
                     "{ppu_bubble:usable}"
                 },
                 flavour = {
-                    "Watch what happens when",
-                    "I cast a spell I {C:dark_edition,E:2}know{}"
+                    "{C:hearts}'kay{}, {C:green}you {C:spades}actually {C:clubs}     {C:red}jack{}. {C:diamonds}Great{}"
                 }
             },
             fish_fac_jack = {
@@ -299,7 +326,7 @@ return {
                     "{ppu_bubble:usable}"
                 },
                 flavour = {
-                    ""
+                    "{C:hearts}'kay{}, {C:green}you {C:spades}actually {C:clubs}know {C:red}    {}. {C:diamonds}Great{}"
                 }
             },
             fish_fac_great = {
@@ -312,7 +339,7 @@ return {
                     "{ppu_bubble:usable}"
                 },
                 flavour = {
-                    ""
+                    "{C:hearts}'kay{}, {C:green}you {C:spades}actually {C:clubs}know {C:red}jack{}. {C:diamonds}     {}"
                 }
             },
         },
@@ -362,6 +389,8 @@ return {
             k_bigtrout = "[[BIG TROUT]]",
             k_hokimama = "[HOKI MAMA]",
             k_miss = "Miss",
+            k_correct_ex = "Correct!",
+            k_failure_ex = "Failure!",
         },
         achievement_names = {
         },
