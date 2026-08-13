@@ -815,7 +815,7 @@ function FishAndChips.Compendium.dev_card(dev)
     local temp_area = FishAndChips.Compendium.compendium_area(1, dev.joint_credits and {0.2 + 4 * 71/95, 2})
     local dev_card = Card(0, 0, (dev.joint_credits and 2 or 1) * G.CARD_W / 1.25, G.CARD_H / 1.25, nil, G.P_CENTERS.c_base)
     dev_card.children.center:remove()
-    dev_card.children.center = SMODS.create_sprite(dev_card.T.x, dev_card.T.y, dev_card.T.w, dev_card.T.h, dev.atlas or "Joker", dev.pos or {x = 0, y = 0})
+    dev_card.children.center = SMODS.create_sprite(dev_card.T.x, dev_card.T.y, dev_card.T.w, dev_card.T.h, dev.atlas or "Joker", dev.pos or {x = 0, y = 0}, dev.sprite_args)
     dev_card.children.center.states.hover = dev_card.states.hover
     dev_card.children.center.states.click = dev_card.states.click
     dev_card.children.center.states.drag = dev_card.states.drag
