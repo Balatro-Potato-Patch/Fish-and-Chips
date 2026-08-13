@@ -310,7 +310,7 @@ FishAndChips.Fish {
 	weight = 10,
 	cost = 0,
 	ppu_coder = { "SLDTyp0" },
-	ppu_artist = { "TigerThawk" },
+	ppu_artist = { "SLDTyp0" },
 	attributes = { "mult" },
 	environments = {
 		city_river = 10,
