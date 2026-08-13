@@ -352,7 +352,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = SMODS.Attribute.obj_buffer,
+	-- attributes = SMODS.Attribute.obj_buffer,
 	config = {
 		extra = { fish_slot = 1, },
 	},
