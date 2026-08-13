@@ -261,7 +261,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'chance' },
+	attributes = { 'probability' },
 	environments = {
 		pier = 4,
 		city_river = 2,
@@ -273,16 +273,16 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			chance = 3,
-			chips = 2,
+			xchips = 6,
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chance, card.ability.extra.chips } }
+		return { vars = { card.ability.extra.chance, card.ability.extra.xchips } }
 	end,
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.hand and not context.repetition and not context.mod_probability and not context.fix_probability then
 			if SMODS.pseudorandom_probability(card, 'fac_gezora', 1, card.ability.extra.chance) then
-				return { chips = card.ability.extra.chips }
+				return { xchips = card.ability.extra.xchips }
 			end
 		end
 	end,
