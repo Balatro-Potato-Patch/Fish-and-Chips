@@ -14,8 +14,7 @@ return {
                     "{C:attention}Ace{} in scoring hand"
                 },
                 flavour = {
-                    "A humble postal service",
-                    "in piscine form"
+                    "A humble postal service in piscine form."
                 }
             },
             fish_fac_luck_statue = {
@@ -26,8 +25,7 @@ return {
                     "as lucky in scoring hand"
                 },
                 flavour = {
-                    "Looks like Ehekatl took",
-                    "your fish. Have a statue instead."
+                    "Looks like Ehekatl took your fish. Have a statue instead."
                 }
             },
             fish_fac_toxikarp = {
@@ -45,12 +43,10 @@ return {
             fish_fac_size_2 = {
                 name = "Size Two",
                 text = {
-                    "{X:mult,C:white}X#1#{} Mult if scoring",
-                    "hand contains any {C:attention}2s{}"
+                    "{X:mult,C:white}X#1#{} Mult for {C:attention}2s{} in scoring hand"
                 },
                 flavour = {
-                    "So the rumors were",
-                    "true after all"
+                    "So the rumors were true after all."
                 }
             },
 
@@ -58,11 +54,10 @@ return {
                 name = "Gezora",
                 text = {
                     "{C:green}1 in #2#{} chance for",
-                    "{C:chips}+#1#{} Chips"
+                    "{C:chips}X#1#{} Chips"
                 },
                 flavour = {
-                    "This ISN'T Not-Gezora,",
-                    "by the way"
+                    "This ISN'T Not-Gezora, by the way."
                 }
             },
             fish_fac_crystal_serpent = {
@@ -73,8 +68,7 @@ return {
                     "contains {C:attention}2 or more{} suits"
                 },
                 flavour = {
-                    "The scales shimmer",
-                    "in the light"
+                    "The scales shimmer in the light."
                 }
             },
             fish_fac_reaver_fish = {
@@ -84,8 +78,7 @@ return {
                     "{C:attention}Face Card{} in scoring hand"
                 },
                 flavour = {
-                    "Used to mine ore in the",
-                    "depths of Hell"
+                    "Used to mine ore in the depths of Hell."
                 }
             },
             fish_fac_halibut_cannon = {
@@ -107,8 +100,7 @@ return {
                     "(Scales up as you score more)"
                 },
                 flavour = {
-                    "Collects bits of junk",
-                    "and rewards you slowly"
+                    "Straight from District 23!"
                 }
             },
             fish_fac_primordial_wyrm = {
@@ -119,8 +111,7 @@ return {
                     "(Minimum {C:attention}50%{} reduction)"
                 },
                 flavour = {
-                    "A colossal wyrm that",
-                    "bends the blind"
+                    "The Abyss's deadliest predator."
                 }
             },
         },
