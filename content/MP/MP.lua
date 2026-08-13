@@ -184,7 +184,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'chips' },
+	attributes = { 'face', 'blind_reduction' },
 	environments = {
 		styx = 5,
 		volcano = 3,
@@ -223,7 +223,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'mult' },
+	attributes = { 'xmult', 'twos' },
 	environments = {
 		calm_pond = 3,
 		pier = 1,
@@ -261,7 +261,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'probability' },
+	attributes = { 'probability', 'xchips' },
 	environments = {
 		pier = 4,
 		city_river = 2,
@@ -350,7 +350,7 @@ FishAndChips.Fish {
 	},
 	config = {
 		extra = {
-			chips = 2,
+			xchips = 2,
 		}
 	},
 	loc_vars = function(self, info_queue, card)
@@ -368,7 +368,7 @@ FishAndChips.Fish {
 				end
 			end
 			if face_count > 0 then
-				return { chips = face_count * card.ability.extra.chips }
+				return { xchips = face_count * card.ability.extra.xchips }
 			end
 		end
 	end,
@@ -381,7 +381,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'chance', 'retrigger' },
+	attributes = { 'probability', 'retrigger' },
 	environments = {
 		pier = 4,
 		city_river = 2,
@@ -426,7 +426,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'chips', 'suits' },
+	attributes = { 'chips', 'suits', 'spades' },
 	environments = {
 		pier = 4,
 		swamp = 2,
