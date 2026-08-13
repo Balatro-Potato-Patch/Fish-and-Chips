@@ -1,68 +1,68 @@
 return {
     descriptions = {
         fac_Fish = {
-            fish_fac_test = {
+            fish_fac_fish_fac_test = {
                 name = "Carpboard Cutout",
                 text = {
                     "Placeholder"
                 }
             },
-            letter_fish = {
+            fish_fac_letter_fish = {
                 name = "Letter Fish",
                 text = {
                     "A humble fish that sends mail."
                 }
             },
-            luck_statue = {
+            fish_fac_luck_statue = {
                 name = "Luck Statue",
                 text = {
                     "Looks like Ehekatl took your fish. Have a statue instead."
                 }
             },
-            toxikarp = {
+            fish_fac_toxikarp = {
                 name = "Toxikarp",
                 text = {
                     "Its corrosive bubbles melt through blinds and fish alike."
                 }
             },
-            size_2 = {
+            fish_fac_size_2 = {
                 name = "Size Two",
                 text = {
                     "So the rumors were true after all."
                 }
             },
 
-            gezora = {
+            fish_fac_gezora = {
                 name = "Gezora",
                 text = {
                     "This ISN'T Not-Gezora, by the way."
                 }
             },
-            crystal_serpent = {
+            fish_fac_crystal_serpent = {
                 name = "Crystal Serpent",
                 text = {
                     "The scales shimmer in the light."
                 }
             },
-            reaver_fish = {
+            fish_fac_reaver_fish = {
                 name = "Reaver Shark",
                 text = {
                     "Used to mine ore in the depths of Hell."
                 }
             },
-            halibut_cannon = {
+            fish_fac_halibut_cannon = {
                 name = "Halibut Cannon",
                 text = {
                     "Yup. Still overpowered."
                 }
             },
-            trash_crab = {
+            fish_fac_trash_crab = {
                 name = "Trash Crab",
                 text = {
                     "Collects bits of junk and rewards you slowly."
                 }
             },
-            primordial_wyrm = {
+            fish_fac_primordial_wyrm = {
                 name = "Primordial Wyrm",
                 text = {
                     "A colossal wyrm that bends the blind."

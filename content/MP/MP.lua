@@ -1,3 +1,10 @@
+SMODS.Atlas({
+	key = "fac_MPcards",
+	path = "MP/MP.png",
+	px = 71,
+	py = 95,
+})
+
 PotatoPatchUtils.Developer({
 	name = 'MP',
 	atlas = 'fac_MPcards',
@@ -75,7 +82,7 @@ end
 
 FishAndChips.Fish {
 	key = 'letter_fish',
-	atlas = 'fac_placeholders',
+	atlas = 'fac_MPcards',
 	pos = { x = 0, y = 0 },
 	weight = 22,
 	ppu_coder = { 'MP' },
@@ -109,7 +116,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = 'luck_statue',
-	atlas = 'fac_placeholders',
+	atlas = 'fac_MPcards',
 	pos = { x = 1, y = 0 },
 	weight = 7,
 	ppu_coder = { 'MP' },
@@ -172,7 +179,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = 'toxikarp',
-	atlas = 'fac_placeholders',
+	atlas = 'fac_MPcards',
 	pos = { x = 3, y = 0 },
 	weight = 10,
 	ppu_coder = { 'MP' },
@@ -211,7 +218,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = 'size_2',
-	atlas = 'fac_placeholders',
+	atlas = 'fac_MPcards',
 	pos = { x = 4, y = 0 },
 	weight = 2,
 	ppu_coder = { 'MP' },
@@ -249,7 +256,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = 'gezora',
-	atlas = 'fac_placeholders',
+	atlas = 'fac_MPcards',
 	pos = { x = 6, y = 0 },
 	weight = 1,
 	ppu_coder = { 'MP' },
@@ -283,7 +290,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = 'crystal_serpent',
-	atlas = 'fac_placeholders',
+	atlas = 'fac_MPcards',
 	pos = { x = 7, y = 0 },
 	weight = 1,
 	ppu_coder = { 'MP' },
@@ -327,7 +334,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = 'reaver_fish',
-	atlas = 'fac_placeholders',
+	atlas = 'fac_MPcards',
 	pos = { x = 9, y = 0 },
 	weight = 1,
 	ppu_coder = { 'MP' },
@@ -369,7 +376,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = 'halibut_cannon',
-	atlas = 'fac_placeholders',
+	atlas = 'fac_MPcards',
 	pos = { x = 5, y = 0 },
 	weight = 1,
 	ppu_coder = { 'MP' },
@@ -414,7 +421,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = 'trash_crab',
-	atlas = 'fac_placeholders',
+	atlas = 'fac_MPcards',
 	pos = { x = 2, y = 0 },
 	weight = 1,
 	ppu_coder = { 'MP' },
@@ -451,7 +458,7 @@ FishAndChips.Fish {
 
 FishAndChips.Fish {
 	key = 'primordial_wyrm',
-	atlas = 'fac_placeholders',
+	atlas = 'fac_MPcards',
 	pos = { x = 8, y = 0 },
 	weight = 0.5,
 	ppu_coder = { 'MP' },
@@ -486,7 +493,7 @@ FishAndChips.Fish {
 --[[
 FishAndChips.Fish {
 	key = 'dreadnautilus',
-	atlas = 'fac_placeholders',
+	atlas = 'fac_MPcards',
 	weight = 0.5,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
