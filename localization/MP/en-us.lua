@@ -10,62 +10,117 @@ return {
             fish_fac_letter_fish = {
                 name = "Letter Fish",
                 text = {
-                    "A humble fish that sends mail."
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for each",
+                    "{C:attention}Ace{} in scoring hand"
+                },
+                flavour = {
+                    "A humble postal service",
+                    "in piscine form"
                 }
             },
             fish_fac_luck_statue = {
                 name = "Luck Statue",
                 text = {
-                    "Looks like Ehekatl took your fish. Have a statue instead."
+                    "{C:mult}+#1#{} Mult",
+                    "Marks {C:attention}3s{} and {C:attention}7s{}",
+                    "as lucky in scoring hand"
+                },
+                flavour = {
+                    "Looks like Ehekatl took",
+                    "your fish. Have a statue instead."
                 }
             },
             fish_fac_toxikarp = {
                 name = "Toxikarp",
                 text = {
-                    "Its corrosive bubbles melt through blinds and fish alike."
+                    "Reduces {C:attention}Blind{} size by",
+                    "{C:attention}#1#%{} per {C:attention}Face Card{}",
+                    "in scoring hand"
+                },
+                flavour = {
+                    "Its corrosive bubbles melt",
+                    "through blinds and fish alike"
                 }
             },
             fish_fac_size_2 = {
                 name = "Size Two",
                 text = {
-                    "So the rumors were true after all."
+                    "{X:mult,C:white}X#1#{} Mult if scoring",
+                    "hand contains any {C:attention}2s{}"
+                },
+                flavour = {
+                    "So the rumors were",
+                    "true after all"
                 }
             },
 
             fish_fac_gezora = {
                 name = "Gezora",
                 text = {
-                    "This ISN'T Not-Gezora, by the way."
+                    "{C:green}1 in #2#{} chance for",
+                    "{C:chips}+#1#{} Chips"
+                },
+                flavour = {
+                    "This ISN'T Not-Gezora,",
+                    "by the way"
                 }
             },
             fish_fac_crystal_serpent = {
                 name = "Crystal Serpent",
                 text = {
-                    "The scales shimmer in the light."
+                    "Reduces {C:attention}Blind{} size by",
+                    "{C:attention}#1#%{} if scoring hand",
+                    "contains {C:attention}2 or more{} suits"
+                },
+                flavour = {
+                    "The scales shimmer",
+                    "in the light"
                 }
             },
             fish_fac_reaver_fish = {
                 name = "Reaver Shark",
                 text = {
-                    "Used to mine ore in the depths of Hell."
+                    "{C:chips}+#1#{} Chips per each",
+                    "{C:attention}Face Card{} in scoring hand"
+                },
+                flavour = {
+                    "Used to mine ore in the",
+                    "depths of Hell"
                 }
             },
             fish_fac_halibut_cannon = {
                 name = "Halibut Cannon",
                 text = {
+                    "{C:green}#1#{} in #2#{} chance to trigger",
+                    "{C:attention}Retrigger{} {C:attention}#3#{} times",
+                    "(All affected by unique fish caught)"
+                },
+                flavour = {
                     "Yup. Still overpowered."
                 }
             },
             fish_fac_trash_crab = {
                 name = "Trash Crab",
                 text = {
-                    "Collects bits of junk and rewards you slowly."
+                    "{C:chips}+#1#{} Chips per each",
+                    "{C:spades}Spade{} scored",
+                    "(Scales up as you score more)"
+                },
+                flavour = {
+                    "Collects bits of junk",
+                    "and rewards you slowly"
                 }
             },
             fish_fac_primordial_wyrm = {
                 name = "Primordial Wyrm",
                 text = {
-                    "A colossal wyrm that bends the blind."
+                    "Reduces {C:attention}Blind{} size by",
+                    "{C:attention}#1#%{} times the current ante",
+                    "(Minimum {C:attention}50%{} reduction)"
+                },
+                flavour = {
+                    "A colossal wyrm that",
+                    "bends the blind"
                 }
             },
         },
