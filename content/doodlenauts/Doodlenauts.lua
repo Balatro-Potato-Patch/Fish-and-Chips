@@ -363,7 +363,6 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'suit', 'clubs' },
-	treasure = true,
 	stats = {
 		weight = {
 			min = 0.2,
@@ -635,7 +634,6 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'seals' },
-	treasure = true,
 	stats = {
 		weight = {
 			min = 0.2,
@@ -889,7 +887,6 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'usable', 'destroy_card', },
-	treasure = false,
 	stats = {
 		weight = {
 			min = 0.4,
@@ -1011,7 +1008,6 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'usable', 'economy' },
-	treasure = true,
 	stats = {
 		weight = {
 			min = 0.1,
@@ -1191,7 +1187,6 @@ FishAndChips.Fish {
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
 	attributes = { 'usable' },
-	treasure = true,
 	stats = {
 		weight = {
 			min = 0.1,

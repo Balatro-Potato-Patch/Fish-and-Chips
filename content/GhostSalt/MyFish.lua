@@ -1288,9 +1288,12 @@ FishAndChips.Fish {
 
 function fac_ghostsalt_mezepheles_wordify_fish(key)
 	if key == "fish_fac_ghostsalt_mezepheles" then return {} end
+	if G.P_CENTERS[key].no_collection then return {} end;
 	local loc_target = G.localization.descriptions["fac_Fish"][key]
 	local final_line = ""
-	local multibox = not loc_target.text_parsed[1][1].strings
+	local box = loc_target.text_parsed[1]
+	if not box then return {} end
+	local multibox = not box[1].strings
 	if loc_target then
 		for _, total in ipairs(multibox and loc_target.text_parsed or { [1] = loc_target.text_parsed }) do
 			for _, lines in ipairs(total) do

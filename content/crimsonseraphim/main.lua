@@ -1480,7 +1480,7 @@ function Game:load_profile(p, ...)
         local prof = G.PROFILES[p]
         G.P_CENTERS.fish_fac_crimsonseraphim_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_default"
         for i, v in pairs(FishAndChips.crimsonseraphim.lotus_alts) do
-            if string.lower(prof.name) == v then
+            if string.lower(prof.name or "") == v then
                 G.P_CENTERS.fish_fac_crimsonseraphim_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_"..v
             end
         end
@@ -1494,7 +1494,7 @@ function G:save_settings(...)
         local prof = G.PROFILES[G.SETTINGS.profile]
         G.P_CENTERS.fish_fac_crimsonseraphim_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_default"
         for i, v in pairs(FishAndChips.crimsonseraphim.lotus_alts) do
-            if string.lower(prof.name) == v then
+            if string.lower(prof.name or "") == v then
                 G.P_CENTERS.fish_fac_crimsonseraphim_nameless_lotus.atlas = "fac_crimsonseraphim_lotus_"..v
             end
         end

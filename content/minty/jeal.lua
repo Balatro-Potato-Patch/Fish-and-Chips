@@ -137,6 +137,8 @@ FishAndChips.Fish{
 
         for k,v in pairs(G.P_CENTERS) do
             local atp = false
+            -- This is causing a crash when viewing this page on the title screen collection due to polling if the fish 
+            -- is in the pool or not. Not sure best way to fix - WilsontheWolf
             if SMODS.add_to_pool(v, {source = "fac_minty_jeal"}) then
                 atp = true
             end

@@ -5,8 +5,10 @@ SMODS.Shader{
     local atlas = SMODS.Atlases[element.config.atlas]
     local pixel_size = element.config.pixel_size
     local pos = element.config.pos and {element.config.pos.x, element.config.pos.y} or {0, 0}
-    if pixel_size then
+    if pixel_size and pixel_size.w then
         pos[1] = pos[1] * (atlas.px / pixel_size.w)
+    end
+    if pixel_size and pixel_size.h then
         pos[2] = pos[2] * (atlas.py / pixel_size.h)
     end
     return {
@@ -500,7 +502,7 @@ function FishAndChips.Compendium.environment_page(page_number, left)
             local fish_caught = fish_data.times_caught and fish_data.times_caught > 0
             local atlas = SMODS.get_atlas(fish.atlas)
             
-            table.insert(row.nodes, {n=G.UIT.C, config = {align = 'cm'}, nodes = {{n=G.UIT.R, config = {align = 'cm', shader = 'fac_ui_image', atlas = fish.atlas, pos = fish.pos, pixel_size = fish.pixel_size, colour = fish_caught and G.C.WHITE or FishAndChips.C.COMPENDIUM_COLOUR, minh = 0.45 * (fish.pixel_size and fish.pixel_size.h/fish.pixel_size.w or atlas.py/atlas.px), minw = 0.45}}}})
+            table.insert(row.nodes, {n=G.UIT.C, config = {align = 'cm'}, nodes = {{n=G.UIT.R, config = {align = 'cm', shader = 'fac_ui_image', atlas = fish.atlas, pos = fish.pos, pixel_size = fish.pixel_size, colour = fish_caught and G.C.WHITE or FishAndChips.C.COMPENDIUM_COLOUR, minh = 0.45 * (fish.pixel_size and (fish.pixel_size.h or atlas.py)/(fish.pixel_size.w or atlas.px) or atlas.py/atlas.px), minw = 0.45}}}})
             if index >= #fish_pool then last_page = true end
         end
         table.insert(page.nodes[3].nodes[1].nodes, row)

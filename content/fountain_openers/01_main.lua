@@ -1,11 +1,7 @@
 FountainOpeners = {}
 
-local a = SMODS.current_mod.optional_features
-SMODS.current_mod.optional_features = function()
-    local ret = a and a() or {}
-    ret.retrigger_joker = true
-    return ret
-end
+SMODS.current_mod.optional_features = SMODS.current_mod.optional_features or {}
+SMODS.current_mod.optional_features.retrigger_joker = true
 
 local alexi_text_colors = {
     HEX("45FFDA"),
