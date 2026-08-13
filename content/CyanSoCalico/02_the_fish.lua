@@ -40,6 +40,7 @@ FishAndChips.Fish {
 		styx = 0.1
 	},
 
+	blueprint_compat = false,
 --	treasure = true,
 
 	loc_vars = function(self, info_queue, card)
@@ -49,7 +50,7 @@ FishAndChips.Fish {
 
 	in_pool = function(self, args)
 		return G and G.GAME and G.GAME.round_resets and G.GAME.round_resets.blind_choices
-		and G.GAME.round_resets.blind_choices.Boss ~= card.ability.extra.blind
+		and G.GAME.round_resets.blind_choices.Boss ~= self.config.extra.blind
 	end,
 
 	add_to_deck = function(self, card, from_debuff)

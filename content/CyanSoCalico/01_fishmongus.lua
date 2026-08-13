@@ -64,7 +64,6 @@ FishAndChips.Fish {
 				candidates[#candidates+1] = (not v.seal) and v or nil
 			end
 			if next(candidates) then
-				sendDebugMessage(#candidates)
 				local playing_card = pseudorandom_element(candidates, pseudoseed("fishmongus"))
 				return {
                     message = localize("k_fac_csc_add_seal"),
@@ -72,7 +71,8 @@ FishAndChips.Fish {
                     effect = true,
 					func = function()
 						playing_card:set_seal(card.ability.extra.seal)
-					end
+					end,
+					card = context.blueprint and context.blueprint_card or card,
                 }
 			end
         end
