@@ -314,6 +314,16 @@ return {
             }
         },
         Other = {
+            card_extra_p_fac_sand_dollars = {
+                text = {
+                    "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} when scored",
+                }
+            },
+            card_extra_h_fac_sand_dollars = {
+                text = {
+                    "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} if held at end of round",
+                }
+            },
             undiscovered_fac_fish = {
                 name = "Not Caught",
                 text = {
