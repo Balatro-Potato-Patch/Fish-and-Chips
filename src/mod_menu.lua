@@ -475,7 +475,7 @@ function FishAndChips.Compendium.environment_page(page_number, left)
             }},
         }} or nil,
         {n=G.UIT.R, config = {align = 'tm', minh = page_number%2==1 and 3 or 8.2, minw = 4.8}, nodes = {
-            {n=G.UIT.R, config = {align = 'tm', minh = 4.5, minw = 4.8}, nodes = {
+            {n=G.UIT.R, config = {align = 'tl', minh = 4.5, minw = 4.6}, nodes = {
 
             }}
         }}
@@ -527,7 +527,7 @@ function FishAndChips.Compendium.environment_page(page_number, left)
     end
 
 
-    if page_number > 1 and (math.floor(page_number/2)) <= #FishAndChips.Environment.obj_buffer then
+    if page_number > 1 and (math.floor(page_number/2)) < #FishAndChips.Environment.obj_buffer then
         table.insert(page.nodes, FishAndChips.Compendium.nav_button(page_number, left, 'environment_page', 0.05))
     end
 
