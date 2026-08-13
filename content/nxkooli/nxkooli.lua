@@ -17,7 +17,7 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_nxkooli_nxk',
 	pos = {x = 0, y = 0},
 	colour = G.C.PURPLE,
-	fac_partner = 'LasagnaFelidae',
+	fac_partner = 'fac_LasagnaFelidae',
 	loc = true
 })
 
@@ -26,29 +26,9 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_nxkooli_fel',
 	pos = {x = 0, y = 0},
 	colour = G.C.FILTER,
-	fac_partner = 'Nxkoo',
+	fac_partner = 'fac_Nxkoo',
 	loc = true
 })
-
-
-local cardarea_emplace_ref = CardArea.emplace
----@diagnostic disable-next-line: duplicate-set-field
-function CardArea:emplace(card, ...)
-    if card.ppu_member and card.ppu_member.name == "Nxkoo" then
-        function card:hover()
-            self:juice_up(0.05, 0.03)
-            play_sound('paper1', math.random() * 0.2 + 0.9, 0.35)
-            self.config.h_popup = {n = G.UIT.ROOT, config = {colour = G.C.CLEAR}, nodes = {
-                {n = G.UIT.O, config = {object = SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H, "image")}}
-            }}
-            self.config.h_popup_dir = 'cl'
-            self.config.h_popup_config = self:align_h_popup()
-            Moveable.hover(self)
-        end
-    end
-    cardarea_emplace_ref(self, card, ...)
-end
---#region Fish
 
 --inscryption
 local nxkooli_pick = function(pool, roll)
@@ -354,8 +334,8 @@ FishAndChips.Fish {
 		length = {min = 0.6, max = 0.6},
 	},
 	cost = 5,
-	ppu_coder = { "LasagnaFelidae, Nxkoo" },
-	ppu_artist = { "LasagnaFelidae, Nxkoo" },
+	ppu_coder = { "LasagnaFelidae", "Nxkoo" },
+	ppu_artist = { "LasagnaFelidae", "Nxkoo" },
 	attributes = { "mult", "chips", "xchips", "xmult" },
 	config = {
 		extra = {
