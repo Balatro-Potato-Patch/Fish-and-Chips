@@ -16,7 +16,7 @@ PotatoPatchUtils.Developer({
 	name = 'Nxkoo',
 	atlas = 'fac_nxkooli_nxk',
 	pos = {x = 0, y = 0},
-	colour = G.C.PURPLE,
+	colour = G.C.UI.TEXT_INACTIVE,
 	fac_partner = 'fac_LasagnaFelidae',
 	loc = true
 })

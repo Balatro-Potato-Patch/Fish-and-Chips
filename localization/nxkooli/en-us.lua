@@ -129,9 +129,9 @@ return{
         },
         PotatoPatch = {
             PotatoPatchDev_Nxkoo = {
-                name = 'Nxkoo',
+                name = 'ooʞxͶ',
                 text = {
-                    "I made this book"
+                    "{C:inactive}* Please forget about me."
                 }
             },
             PotatoPatchDev_LasagnaFelidae = {
