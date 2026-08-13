@@ -49,9 +49,11 @@ FishAndChips.Fish {
         end
     end,
     in_pool = function(self, args)
-        for k, v in ipairs(G.playing_cards) do
-            if SMODS.has_enhancement(v, "m_stone") then
-                return true
+        if G.playing_cards then
+            for k, v in ipairs(G.playing_cards) do
+                if SMODS.has_enhancement(v, "m_stone") then
+                    return true
+                end
             end
         end
         return false

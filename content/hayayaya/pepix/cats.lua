@@ -23,9 +23,11 @@ FishAndChips.Fish({
 	},
 	config = { extra = { chips = 0, chips_add = 10, forme_counter = 0, forme_max = 3 } },
 	in_pool = function(self, args)
-		for _, c in ipairs(G.fac_fish_area.cards) do
-			if cats[c.config.center_key] then
-				return false
+		if G.fac_fish_area and G.fac_fish_area.cards then
+			for _, c in ipairs(G.fac_fish_area.cards) do
+				if cats[c.config.center_key] then
+					return false
+				end
 			end
 		end
 		return true
@@ -101,9 +103,11 @@ FishAndChips.Fish({
 	pos = { x = 2, y = 0 },
 	config = { extra = { chips = 0, chips_add = 10, forme_counter = 0, forme_max = 3 } },
 	in_pool = function(self, args)
-		for _, c in ipairs(G.fac_fish_area.cards) do
-			if cats[c.config.center_key] then
-				return false
+		if G.fac_fish_area and G.fac_fish_area.cards then
+			for _, c in ipairs(G.fac_fish_area.cards) do
+				if cats[c.config.center_key] then
+					return false
+				end
 			end
 		end
 		return true
@@ -175,9 +179,11 @@ FishAndChips.Fish({
 	badge_key = "k_fac_hayayaya_catfish",
 	config = { extra = { xchips = 1, xchips_add = 0.05 } },
 	in_pool = function(self, args)
-		for _, c in ipairs(G.fac_fish_area.cards) do
-			if cats[c.config.center_key] then
-				return false
+		if G.fac_fish_area and G.fac_fish_area.cards then
+			for _, c in ipairs(G.fac_fish_area.cards) do
+				if cats[c.config.center_key] then
+					return false
+				end
 			end
 		end
 		return true
