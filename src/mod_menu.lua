@@ -455,13 +455,13 @@ G.FUNCS.open_compendium_to_env = function(e)
 end
 
 function FishAndChips.Compendium.environment_page(page_number, left)
-    local environment_key = FishAndChips.Environment.obj_buffer[page_number]
+    local environment_key = FishAndChips.Environment.obj_buffer[math.ceil(page_number/2)]
     local environment = FishAndChips.Environments[environment_key]
 
     -- TODO: Fix artist
     local page = {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {
         FishAndChips.Compendium.page_title('environment_page', page_number),
-        {n=G.UIT.R, config = {align = 'tm', padding = 0}, nodes = {
+        page_number % 2 == 1 and {n=G.UIT.R, config = {align = 'tm', padding = 0}, nodes = {
             {n=G.UIT.R, config = {align = 'tm', colour = G.C.WHITE, minw = 4.2}, nodes = {
                 {n = G.UIT.R, config = {shader = 'fac_ui_image', atlas = 'fac_comp_locations', pos = environment.background_pos, colour = G.C.WHITE, minw = 293/73.25, minh = 174/73.25, align = 'tl'}, nodes = {}},
                 {n=G.UIT.R, config = {minh = 1, colour = G.C.WHITE, align = 'br', padding = 0.1}, nodes = {
@@ -473,9 +473,9 @@ function FishAndChips.Compendium.environment_page(page_number, left)
                     }},
                 }}
             }},
-        }},
-        {n=G.UIT.R, config = {align = 'tm', minh = 3, minw = 4.8}, nodes = {
-            {n=G.UIT.R, config = {align = 'tl', minh = 4.5, minw = 4.8}, nodes = {
+        }} or nil,
+        {n=G.UIT.R, config = {align = 'tm', minh = page_number%2==1 and 3 or 8.2, minw = 4.8}, nodes = {
+            {n=G.UIT.R, config = {align = 'tm', minh = 4.5, minw = 4.8}, nodes = {
 
             }}
         }}
@@ -487,29 +487,47 @@ function FishAndChips.Compendium.environment_page(page_number, left)
             table.insert(fish_pool, G.P_CENTERS[k])
         end
     end
+    table.sort(fish_pool, function(a, b) return a.environments[environment_key] < b.environments[environment_key] end)
 
-    local rows = 7
+    local rows = page_number % 2 == 1 and 8 or 14
     local fish_per_row = 9
+    local starting_index = page_number % 2 == 1 and 0 or 80
 
-    local last_page = false
-    for i=1, rows do
-        local row = {n=G.UIT.R, config = {align = 'cl', padding = 0.05}, nodes = {}}
-        for j = 1, fish_per_row do
-            if last_page then break end
-            local index = j + ((i-1)*fish_per_row)
-            local fish = fish_pool[index]
-            local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {}
-            local fish_caught = fish_data.times_caught and fish_data.times_caught > 0
-            local atlas = SMODS.get_atlas(fish.atlas)
-            
-            table.insert(row.nodes, {n=G.UIT.C, config = {align = 'cm'}, nodes = {{n=G.UIT.R, config = {align = 'cm', shader = 'fac_ui_image', atlas = fish.atlas, pos = fish.pos, pixel_size = fish.pixel_size, colour = fish_caught and G.C.WHITE or FishAndChips.C.COMPENDIUM_COLOUR, minh = 0.45 * (fish.pixel_size and (fish.pixel_size.h or atlas.py)/(fish.pixel_size.w or atlas.px) or atlas.py/atlas.px), minw = 0.45}}}})
-            if index >= #fish_pool then last_page = true end
+    if starting_index < #fish_pool then
+        local last_page = false
+        for i=1, rows do
+            local row = {n=G.UIT.R, config = {align = 'cl', padding = 0.05}, nodes = {}}
+            for j = 1, fish_per_row do
+                if last_page then break end
+                local index = j + ((i-1)*fish_per_row) + starting_index
+                local fish = fish_pool[index]
+                local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {}
+                local fish_caught = fish_data.times_caught and fish_data.times_caught > 0
+                local atlas = SMODS.get_atlas(fish.atlas)
+    
+                local dims = {
+                    h = 0.4 * (fish.pixel_size and (fish.pixel_size.h or atlas.py)/(fish.pixel_size.w or atlas.px) or atlas.py/atlas.px),
+                    w = 0.45
+                }
+    
+                if dims.h > 0.465 then
+                    dims.w = dims.w / (dims.h/0.465)
+                    dims.h = 0.465
+                end
+                
+                table.insert(row.nodes, {n=G.UIT.C, config = {align = 'cm', minw = 0.45}, nodes = {
+                    {n=G.UIT.R, config = {align = 'cm', shader = 'fac_ui_image', atlas = fish.atlas, pos = fish.pos, pixel_size = fish.pixel_size, colour = fish_caught and G.C.WHITE or FishAndChips.C.COMPENDIUM_COLOUR,
+                        minh = dims.h, minw = dims.w}}
+                }})
+                if index >= #fish_pool then last_page = true end
+            end
+            table.insert(page.nodes[3].nodes[1].nodes, row)
+            if final then break end
         end
-        table.insert(page.nodes[3].nodes[1].nodes, row)
-        if final then break end
     end
 
-    if page_number > 1 and page_number < #FishAndChips.Environment.obj_buffer then
+
+    if page_number > 1 and (math.floor(page_number/2)) <= #FishAndChips.Environment.obj_buffer then
         table.insert(page.nodes, FishAndChips.Compendium.nav_button(page_number, left, 'environment_page', 0.05))
     end
 
