@@ -1406,7 +1406,7 @@ FishAndChips.Fish {
         }))
         delay(0.6)
     end,
-    can_use = function () 
-        return true
+    can_use = function (self, card)
+        return (card.area == G.fac_fish_area) or #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit
     end
 }
