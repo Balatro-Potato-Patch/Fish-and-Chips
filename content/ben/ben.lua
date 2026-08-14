@@ -55,9 +55,9 @@ FishAndChips.Fish {
 	stats = {weight = {min = 2, max = 2}, length = {min = 0.3, max = 0.3}},
 	calculate = function(self, card, context)
 		if context.modify_final_cashout then 
-			interest = math.min(math.floor(G.GAME.fac_sand_dollars / 5), G.GAME.interest_cap / 5)
+			local interest = math.min(math.floor(G.GAME.fac_sand_dollars / 5), G.GAME.interest_cap / 5)
 			if interest <= 0 then return end
-			vars = {
+			local vars = {
 				name = "joker_safe",
 				sand_dollars = interest * G.GAME.interest_amount,
 				pitch = 1, --src/sand_dollars.lua 234 tries to do arithmetic on pitch (a nil value),
@@ -127,7 +127,7 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		 
 		if context.end_of_round and context.main_eval then
-			old_slot = card.ability.extra.slot
+			local old_slot = card.ability.extra.slot
 			repeat
 				card.ability.extra.slot = pseudorandom("chameleon", 1, G.jokers.config.card_limit)
 			until card.ability.extra.slot ~= old_slot
@@ -135,7 +135,7 @@ FishAndChips.Fish {
 		end
 
         if card.ability.extra.slot <= #G.jokers.cards then  
-			joker = G.jokers.cards[card.ability.extra.slot]
+			local joker = G.jokers.cards[card.ability.extra.slot]
 
 			local ret = SMODS.blueprint_effect(card, joker, context)
 			return ret
@@ -190,14 +190,14 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.visited } }
 	end,
 	flavour_vars = function(self, info_queue, card)
-		environment = G.GAME.fac_fishing_environment
+		local environment = G.GAME.fac_fishing_environment
 		if environment then
 			return { key = "fish_fac_benyapping_"..environment }
 		end
 	end,
 	stats = {weight = {min = 4.5, max = 16}, length = {min = 0.20, max = 0.35}},
 	on_catch = function(self, card)
-		environment = G.GAME.fac_fishing_environment
+		local environment = G.GAME.fac_fishing_environment
 		if card.ability.extra[environment] == false then
 			card.ability.extra[environment] = true
 			card.ability.extra.visited = card.ability.extra.visited + 1
@@ -205,14 +205,14 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.fac_environment_changed then
-			environment = G.GAME.fac_fishing_environment
+			local environment = G.GAME.fac_fishing_environment
 			if card.ability.extra[environment] == false then
 				card.ability.extra[environment] = true
 				card.ability.extra.visited = card.ability.extra.visited + 1
 			end
 		end
 		if context.modify_final_cashout then 
-			vars = {
+			local vars = {
 				name = "joker_yapping",
 				sand_dollars = card.ability.extra.visited,
 				pitch = 1, --src/sand_dollars.lua 234 tries to do arithmetic on pitch (a nil value),
@@ -255,14 +255,14 @@ FishAndChips.Fish {
 		--backroom = 0
 	},
 	loc_vars = function(self, info_queue, card)
-		scaled_sand_dollars = math.floor(G.GAME.fac_sand_dollars / card.ability.extra.per_sand_dollars)
-		xmult = 1 + scaled_sand_dollars * card.ability.extra.xmult_per
+		local scaled_sand_dollars = math.floor(G.GAME.fac_sand_dollars / card.ability.extra.per_sand_dollars)
+		local xmult = 1 + scaled_sand_dollars * card.ability.extra.xmult_per
 		return { vars = { card.ability.extra.xmult_per, card.ability.extra.per_sand_dollars, xmult } }
 	end,
 	stats = {weight = {min = 0.001, max = 0.01}, length = {min = 0.02, max = 0.08}},
 	calculate = function(self, card, context)
 		if context.joker_main then
-			scaled_sand_dollars = math.floor(G.GAME.fac_sand_dollars / card.ability.extra.per_sand_dollars)
+			local scaled_sand_dollars = math.floor(G.GAME.fac_sand_dollars / card.ability.extra.per_sand_dollars)
 			return { xmult = 1 + scaled_sand_dollars * card.ability.extra.xmult_per }
 		end
 	end,
@@ -321,7 +321,7 @@ FishAndChips.Fish {
 		if context.end_of_round and context.main_eval then
 			--key = pseudorandom_element(G.P_CENTER_POOLS["fac_Bait"], "benvoucher").key	--This is the optimal way, but breaks because of bait.lua 217
 																							--args.source indexes a nil value on pseudorandom_element
-			key = pseudorandom_element(baitpool, "benvoucher")
+			local key = pseudorandom_element(baitpool, "benvoucher")
 			FishAndChips.add_bait_to_inventory(key, 1)
 		end
 	end,
