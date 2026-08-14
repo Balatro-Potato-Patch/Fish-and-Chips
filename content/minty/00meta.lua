@@ -53,7 +53,7 @@ PotatoPatchUtils.Developer({
         if G.SETTINGS.reduced_motion then
             return "minty_nolineboilfish", {x=0, y=row}
         else
-            return "minty_lineboilfish", {y=row}
+            return "minty_lineboilfish", {x = 0, y=row}
         end
     end
 })

@@ -33,8 +33,7 @@ return {
                 name = "Froggy",
                 text = {
                     "{X:mult,C:white}X#1#{} Mult for every",
-                    "every round this",
-                    "{C:attention}Fish{} is owned.",
+                    "round this {C:attention}Fish{} is owned.",
                     "{C:red}May wander away.",
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
                 },

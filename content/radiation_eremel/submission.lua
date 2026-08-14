@@ -20,7 +20,7 @@ PotatoPatchUtils.Developer({
 	colour = HEX('3FC7EB'),
 	fac_partner = 'fac_radiation',
     loc_vars = function()
-        return {vars = {elements = {SMODS.create_sprite(0,0,0.4,0.4,SMODS.get_atlas('fac_galdur_grave'), {x=0, y=0})}}, scale = 1.2}
+        return {vars = {elements = {SMODS.create_sprite(0,0,0.4,0.4,SMODS.get_atlas('fac_galdur_grave'), {x=0, y=0})}}}
     end,
     calculate = function(self, context)
         if context.fac_fish_caught and G.P_CENTERS[context.fish].set == 'fac_Fish' then
@@ -57,7 +57,7 @@ PotatoPatchUtils.Developer({
 	colour = HEX('FF7C0A'),
 	fac_partner = 'fac_eremel',
     loc_vars = function()
-        return {vars = {}, scale = 1.2}
+        return {vars = {}}
     end,
 })
 
@@ -621,7 +621,8 @@ FishAndChips.Fish({
             if string.len(att) == 0 then att = ' None' end
             return {vars = {att}}
         end
-        return {vars = type and {self.scaling_types[type].gain, self.scaling_types[type].gain * card.ability.extra.consumed + (self.scaling_types[type].base or 0)} or {card.ability.extra.consumed},
+        local dollarPrefix = card.ability.extra.current_scaling[1] == "economy" and localize('$') or '' -- Prepend $ to scaling value if scaling economy
+        return {vars = type and {dollarPrefix .. self.scaling_types[type].gain, dollarPrefix .. self.scaling_types[type].gain * card.ability.extra.consumed + (self.scaling_types[type].base or 0)} or {card.ability.extra.consumed},
                 key = next(card.ability.extra.current_scaling) and self.key..'_2'}
     end,
     can_use = function(self, card)

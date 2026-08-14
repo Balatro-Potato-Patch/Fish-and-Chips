@@ -818,7 +818,7 @@ FishAndChips.Fish {
             local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizie_stillfish")
 		    if SMODS.pseudorandom_probability(card, "fac_lizie_still_fish", num, denom) then
                 local new_ret = context.other_ret and context.other_ret.jokers or {};
-                print(context.other_ret or new_ret)
+                --print(context.other_ret or new_ret)
                 local function shuffle_letters(str)
                     local letters = {}
                     for letter in str:gmatch'.[\128-\191]*' do
@@ -842,7 +842,7 @@ FishAndChips.Fish {
                 if new_ret.message then new_ret.message = shuffle_letters(new_ret.message) end
                 if not new_ret.message then new_ret.message = localize("k_fac_lizie_repeated") end
                 new_ret.message_card = card
-                print("Post_trigger?")
+                --print("Post_trigger?")
                 return new_ret
             end
         end

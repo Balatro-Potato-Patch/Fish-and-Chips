@@ -164,7 +164,7 @@ FishAndChips.Fish { -- Ineffa
                 card = card
             }
 		end
-		if context.end_of_round and card.ability.extra.ucount > 0 then
+		if context.end_of_round and context.main_eval and card.ability.extra.ucount > 0 then
 			card.ability.extra.ucount = card.ability.extra.ucount-1
 			return {
 				message = card.ability.extra.ucount.." Remaining",

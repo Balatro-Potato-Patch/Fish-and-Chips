@@ -592,7 +592,7 @@ FishAndChips.Fish {
         tag_created = false
     } },
     loc_vars = function (self, info_queue, card)
-        return {vars = {ppu_bubbles = {card.ability.tag_created and 'inactive' or 'active'}}}
+        return {vars = {ppu_bubbles = {card.ability.extra.tag_created and 'inactive' or 'active'}}}
     end,
     attributes = { "generation" }, -- Doesn't really generate cards per se, but this is really the only fitting bait attribute I can think of
     calculate = function(self, card, context)

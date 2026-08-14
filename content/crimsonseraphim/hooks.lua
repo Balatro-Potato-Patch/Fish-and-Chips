@@ -129,11 +129,11 @@ function G.FUNCS.get_poker_hand_info(_cards)
 end
 
 local poll_fish_ref = FishAndChips.poll_fish
-function FishAndChips.poll_fish(_fevn)
+function FishAndChips.poll_fish(_fenv)
     for i, v in pairs(SMODS.find_card("fish_fac_crimsonseraphim_ghost_chaosfish")) do
         _fenv = _fenv or v.config.center:force_environment(v)
     end
-    return poll_fish_ref(_fevn)
+    return poll_fish_ref(_fenv)
 end
 
 local card_eval_status_text_ref = card_eval_status_text

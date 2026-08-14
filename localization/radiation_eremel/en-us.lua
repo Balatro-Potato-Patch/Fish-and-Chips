@@ -5,7 +5,8 @@ return {
 				name = "Eremel",
                 text = {
                     {
-                        'Hey! I\'m {C:3FC7EB}Eremel{}, one of the {C:attention}Organisers{} here at the {C:attention}Potato Patch!',
+                        'Hey! I\'m {C:3FC7EB}Eremel{}, one of the {C:attention}Organisers{}',
+                        'here at the {C:attention}Potato Patch!',
                         'This mod has been a long time in the making, and I\'m',
                         'really excited for you all to play it!',
                         'This {C:attention}compendium{} here is my creation, and I helped work on',

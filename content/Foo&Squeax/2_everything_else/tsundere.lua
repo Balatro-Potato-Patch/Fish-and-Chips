@@ -39,7 +39,13 @@ FishAndChips.Fish{
 	end,
 	use = function (self, card)
 		card.ability.immutable.option = 0
+		card.ability.immutable.used = true
 		G.fac_fas_tsunderfish_ui = FishAndChips.FooSqueax.tsunderfish.create_act_uibox(card)
+	end,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval then
+			if card.ability.immutable.used and not card.ability.immutable.active then card.ability.immutable.used = false end
+		end
 	end
 }
 
