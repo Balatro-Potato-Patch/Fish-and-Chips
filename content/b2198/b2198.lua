@@ -357,14 +357,15 @@ FishAndChips.Fish {
             })
         end
 		if context.joker_main then return { xmult = card.ability.extra.xmult } end
-	end,
-    calc_scaling = function (self, card, other_card, initial_value, scalar_value, args)
-        return {
-            override_scalar_value = {
-                value = scalar_value * card.ability.immutable.spec_scalar
+
+        if context.scaling_card then
+            return {
+                override_scalar_value = {
+                    value = scalar_value * card.ability.immutable.spec_scalar
+                }
             }
-        }
-    end
+        end
+	end,
 }
 
 --#endregion
