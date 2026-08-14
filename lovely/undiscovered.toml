@@ -12,6 +12,7 @@ payload = '''
 if _center.set == "fac_Fish" or _center.set == "fac_Bait" then
     pos = _center.pos
     atlas = _center.atlas
+    sprite_args = _center.sprite_args
 end
 '''
 match_indent = true
