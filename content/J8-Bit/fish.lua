@@ -1517,19 +1517,11 @@ FishAndChips.Fish {
                 add_to_hand = true
             }
         end
-    end,
-    add_to_deck = function(self, card, from_debuff)
-        for index, playing_card in ipairs(G.playing_cards) do
-            if playing_card.base.value == card.ability.extra.rank and not SMODS.has_no_rank(playing_card) then
-                SMODS.debuff_card(playing_card, 'prevent_debuff', 'fac_J8-Bit_primarina')
-                SMODS.recalc_debuff(playing_card)
-            end
-        end
-    end,
-    remove_from_deck = function(self, card, from_debuff)
-        for _, playing_card in ipairs(G.playing_cards) do
-            SMODS.debuff_card(playing_card, false, 'fac_J8-Bit_primarina')
-            SMODS.recalc_debuff(playing_card)
+
+        if context.debuff_card and context.debuff_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id then
+            return {
+                prevent_debuff = "true"
+            }
         end
     end,
     set_sprites = function(self, card, front)
