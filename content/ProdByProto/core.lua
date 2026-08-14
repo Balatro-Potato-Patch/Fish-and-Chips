@@ -105,7 +105,7 @@ function FishAndChips.ProdByProto.addEnvs()
 	local envWeights = {}
 	local envBuffer = FishAndChips.Environment.obj_buffer
 	for i = 1, 6 do
-		envWeights[envBuffer[(i < 4 and i) or (i > 3 and (#envBuffer - (i - 4)))]] = 1
+		envWeights[envBuffer[i]] = 5 - ((0.5*i)-0.5)
 	end
 	return envWeights
 end
