@@ -1955,7 +1955,7 @@ FishAndChips.Fish {
 	weight = 3,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "generation", },
+	attributes = { "generation", "spectral", "tarot" },
 	stats = {weight = {min = 0.1, max = 0.7}, length = {min = 0.05, max = 0.1}},
 	blueprint_compat = true,
 	config = {
