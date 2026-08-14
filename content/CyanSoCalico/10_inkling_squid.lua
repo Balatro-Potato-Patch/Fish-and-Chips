@@ -6,7 +6,7 @@ FishAndChips.Fish {
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
 
-	attributes = { "chips" },
+	attributes = { "mult" },
 	config = {
 		extra = {
 			mult = 10,
@@ -47,7 +47,8 @@ FishAndChips.Fish {
 				end
 			end
 			return {
-				mult = card.ability.extra.mult
+				mult = card.ability.extra.mult,
+				card = context.blueprint and context.blueprint_card or card
 			}
 		end
 	end,

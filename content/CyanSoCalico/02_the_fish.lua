@@ -40,6 +40,7 @@ FishAndChips.Fish {
 		styx = 0.1
 	},
 
+	blueprint_compat = false,
 --	treasure = true,
 
 	loc_vars = function(self, info_queue, card)
