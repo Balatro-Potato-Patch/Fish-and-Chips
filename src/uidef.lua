@@ -518,6 +518,7 @@ end
 
 function G.UIDEF.fac_fish_data(fish, show_full)
 	local center = fish.config.center
+	local locvars = center.loc_vars and center:loc_vars({}, fish) or {}
 	local t = {
 		n = G.UIT.ROOT,
 		config = { emboss = 0.1, r = 0.2, padding = 0.2 },
@@ -529,7 +530,7 @@ function G.UIDEF.fac_fish_data(fish, show_full)
 					{
 						n = G.UIT.T,
 						config = {
-							text = localize({ type = "name_text", set = center.set, key = center.key }),
+							text = localize({ type = "name_text", set = center.set, key = center.key, vars = locvars.vars or {} }),
 							scale = 0.5,
 							colour = G.C.UI.TEXT_LIGHT,
 						},
