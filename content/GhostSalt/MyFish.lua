@@ -1468,6 +1468,10 @@ for i,v in ipairs(appropriate_sounds) do
 	sounds_seen[v] = true
 end
 
+local blacklisted_sounds = {
+
+}
+
 local play_sound_ref = play_sound
 function play_sound(sound_code, per, vol)
 	local new_sound_code = sound_code
@@ -1477,7 +1481,7 @@ function play_sound(sound_code, per, vol)
 		if not appropriate_sounds_populated then
 			appropriate_sounds_populated = true
 			for k,v in pairs(SMODS.Sounds) do
-				if v.original_mod and v.original_mod.id == "FishAndChips" and not sounds_seen[k] and not v.select_music_track then
+				if not blacklisted_sounds[k] and v.original_mod and v.original_mod.id == "FishAndChips" and not sounds_seen[k] and not v.select_music_track then
 					appropriate_sounds[#appropriate_sounds+1] = k
 					sounds_seen[k] = true
 				end
