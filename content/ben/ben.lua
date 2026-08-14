@@ -185,6 +185,7 @@ FishAndChips.Fish {
 		--wormhole = 10,
 		--backroom = 10
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.visited } }
 	end,
