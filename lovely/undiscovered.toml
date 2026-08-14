@@ -71,3 +71,25 @@ if card.set == 'fac_Rod' then discover_card(card); check_for_unlock({ type = 'fa
 '''
 match_indent = true
 times = 1
+
+[[patches]]
+[patches.pattern]
+target = "=[SMODS _ \"src/card_draw.lua\"]"
+pattern = '''
+if self.edition then 
+'''
+position = 'before'
+payload = '''
+if self.config.center.set == "fac_Fish" or self.config.center.set == "fac_Bait" then
+    if not self.config.center.discovered and (self.config.center.unlocked or self.area and self.area.config.fac_compendium) then
+        self.children.floating_sprite:draw_shader('fac_hide_fish', nil, nil, nil, self.children.center, scale_mod, rotate_mod)
+    else
+        local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[self.config.center_key] or {}
+		if not (fish_data.times_caught and fish_data.times_caught > 0) and self.area and self.area.config.fac_compendium then
+            self.children.floating_sprite:draw_shader('fac_hide_fish', nil, nil, nil, self.children.center, scale_mod, rotate_mod)
+        end
+    end
+end
+'''
+match_indent = true
+times = 1
