@@ -58,7 +58,7 @@ SMODS.Sound{
     pitch = 1,
     volume = 0.8,
     select_music_track = function (self)
-        if not G.screenwipe and FishAndChips.ProdByProto.q_music == "jclub" then
+        if G.GAME and not G.screenwipe and G.GAME.proto_q_music == "jclub" then
             return 1.7e308
         end
     end
@@ -70,7 +70,7 @@ SMODS.Sound{
     pitch = 1,
     volume = 0.8,
     select_music_track = function (self)
-        if not G.screenwipe and FishAndChips.ProdByProto.q_music == "noir1" then
+        if G.GAME and not G.screenwipe and G.GAME.proto_q_music == "noir1" then
             return 1.7e308
         end
     end
@@ -82,7 +82,7 @@ SMODS.Sound{
     pitch = 1,
     volume = 0.8,
     select_music_track = function (self)
-        if not G.screenwipe and FishAndChips.ProdByProto.q_music == "noir2" then
+        if G.GAME and not G.screenwipe and G.GAME.proto_q_music == "noir2" then
             return 1.7e308
         end
     end
@@ -99,8 +99,6 @@ SMODS.ScreenShader{
 
 
 FishAndChips.ProdByProto = {}
-
-FishAndChips.ProdByProto.q_music = false
 
 
 function FishAndChips.ProdByProto.addEnvs()
