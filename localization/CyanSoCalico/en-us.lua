@@ -51,7 +51,7 @@ return {
                 },
                 text = {
                     "{C:white,X:mult}X#1#{} Mult for",
-                    "every {C:blue}Fish{} owned",
+                    "each {C:blue}Fish{} owned",
                     "{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult){}"
                 },
             },

@@ -768,7 +768,7 @@ FishAndChips.Fish {
 	weight = fac_ghostsalt_common_weight,
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "modify_card" },
+	attributes = { "modify_card", "suit", "clubs" },
 	environments = {
 		calm_pond = 10,
 		garden = 10,
@@ -1362,7 +1362,7 @@ function fac_ghostsalt_mezepheles_find_doable_words(min_fish, max_fish)
 	return doable_words
 end
 
-G.fac_ghostsalt_mezepheles_min = 0.1
+G.fac_ghostsalt_mezepheles_min = 0.06
 G.fac_ghostsalt_mezepheles_max = 0.2
 
 local main_menu_ref = Game.main_menu
