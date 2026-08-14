@@ -26,7 +26,6 @@ FishAndChips.Fish {
     pos = { x = 0, y = 0 },
 
     cost = 3,
-    blueprint_compat = false,
 
     impulse_min = 0.12,
     impulse_max = 0.3,
@@ -55,7 +54,7 @@ FishAndChips.Fish {
     end,
 calculate = function(self, card, context)
 
-    if context.before then
+    if context.before and not context.blueprint then
         if G.GAME.dollars >= card.ability.extra.dollar_cost then
             ease_dollars(-card.ability.extra.dollar_cost, true)
             card.ability.extra.underpaid = false
