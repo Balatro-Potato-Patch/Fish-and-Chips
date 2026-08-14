@@ -48,6 +48,12 @@ FishAndChips.Fish {
             G.fac_temp_bait_area.cards[1]:start_dissolve()
             return true end})
         delay(0.7)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                G.fac_temp_bait_area:remove()
+                return true
+            end
+        }))
         card.ability.stats.length = card.ability.stats.length - card.ability.extra.shrink
     end,
     can_use = function(self, card)
