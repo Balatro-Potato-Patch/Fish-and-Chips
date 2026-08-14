@@ -170,6 +170,7 @@ FishAndChips.Fish {
 				end
 				return {
 					func = mark_lucky,
+					mult = card.ability.extra.mult,
 					post = { source = card, func = clear_lucky }
 				}
 			end

@@ -227,7 +227,6 @@ FishAndChips.Fish { -- Spongecorpse
 
 	weight = 0,
 	environments = {
-		pier = 0
 	},
 	stats = {
 		weight = {min = 10, max = 10},
@@ -239,6 +238,9 @@ FishAndChips.Fish { -- Spongecorpse
 				return {no_destroy = true}
 			end
 		end
+	end,
+	in_pool = function (self, args)
+		return false
 	end
 }
 
