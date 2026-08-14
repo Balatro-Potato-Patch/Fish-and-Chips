@@ -46,6 +46,21 @@ FishAndChips.Achievement({
     end
 })
 
+local add_to_deck_ref = Card.add_to_deck
+function Card:add_to_deck(...)
+    add_to_deck_ref(self, ...)
+    if self.ability.set == 'Joker' then
+        G.GAME.fac_no_jokers = false
+    end
+end
+
+FishAndChips.Achievement({
+    key = 'no_jokers',
+    unlock_condition = function(self, args)
+        return args.type == 'win' and G.GAME.fac_no_jokers
+    end
+})
+
 FishAndChips.Achievement({
     key = 'perfect_1',
     config = {amount = 1},
@@ -188,18 +203,17 @@ FishAndChips.Achievement({
     end
 })
 
-local add_to_deck_ref = Card.add_to_deck
-function Card:add_to_deck(...)
-    add_to_deck_ref(self, ...)
-    if self.ability.set == 'Joker' then
-        G.GAME.fac_no_jokers = false
-    end
-end
+
 
 FishAndChips.Achievement({
-    key = 'no_jokers',
+    key = 'all_rods',
     unlock_condition = function(self, args)
-        return args.type == 'win' and G.GAME.fac_no_jokers
+        if args.type == 'fac_rod_unlocked' then
+            for _, rod in ipairs(G.P_CENTER_POOLS.fac_Rod) do
+                if not rod.unlocked then return false end
+            end
+            return true
+        end
     end
 })
 
@@ -268,17 +282,7 @@ FishAndChips.Achievement({
     end
 })
 
-FishAndChips.Achievement({
-    key = 'all_rods',
-    unlock_condition = function(self, args)
-        if args.type == 'fac_rod_unlocked' then
-            for _, rod in ipairs(G.P_CENTER_POOLS.fac_Rod) do
-                if not rod.unlocked then return false end
-            end
-            return true
-        end
-    end
-})
+
 
 FishAndChips.Achievement({
     key = 'sell_1',
