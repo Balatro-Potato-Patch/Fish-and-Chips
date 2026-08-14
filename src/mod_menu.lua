@@ -308,7 +308,7 @@ function FishAndChips.Compendium.compendium_area(amount, dim)
         for k, card in ipairs(self.cards) do
             card.states.drag.can = false
             if not card.states.drag.is then
-                card.T.x = self.T.x + 0.5*(self.T.w - (adjust or card.T.w)) + (amount > 1 and ((k-2) * ((adjust and (card.T.w + adjust)/2 or card.T.w)) * 1.2) or 0)
+                card.T.x = self.T.x + 0.5*(self.T.w - (adjust or card.T.w)) + (adjust - card.T.w)/2 + (amount > 1 and ((k-2) * (adjust) * 1.2) or 0)
                 card.T.y = self.T.y + 0.5*(self.T.h - card.T.h)
             end
         end
@@ -443,7 +443,7 @@ function FishAndChips.Compendium.condensed_fish_page(page_number, left)
     end
 
     if page_number > 1 and (not last_page or left) then
-        table.insert(page.nodes, FishAndChips.Compendium.nav_button(page_number, left, 'condensed_fish_page'))
+        table.insert(page.nodes, FishAndChips.Compendium.nav_button(page_number, left, 'condensed_fish_page', 0.1))
     end
 
     return page
