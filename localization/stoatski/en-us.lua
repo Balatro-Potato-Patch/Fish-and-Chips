@@ -4,15 +4,20 @@ return {
             fish_fac_otter = {
                 name = "Otter",
                 text = {
-                    "At the start of a round,",
-                    "Eats the rightmost fish",
-                    "and creates a {C:spectral}Spectral{} card",
-                    "If this is the righmost fish,",
-                    "this otter runs away instead"
+                    {
+                        "When {C:attention}Blind{} is selected, {C:attention}eat{}",
+                        "rightmost destructible {C:fac_Fish}Fish{}",
+                        "and create a {C:spectral}Spectral{} card",
+                        "{C:inactive}(Must have room){}"
+                    },
+                    {
+                        "If this Fish would eat",
+                        "itself, it {C:attention}runs away{}"
+                    }
                 },
                 flavor = {
-                    "A hugry otter that eats fish",
-                    "and generates spectral cards."
+                    "A hungry otter that eats Fish",
+                    "and generates Spectral cards."
                 }
             }
         },
@@ -20,7 +25,7 @@ return {
     misc = {
         dictionary = {
             ph_otter_eat = "Chomp!",
-            ph_otter_run = "weaseled away!"
+            ph_otter_run = "Weaseled away!"
         }
     }
 }
