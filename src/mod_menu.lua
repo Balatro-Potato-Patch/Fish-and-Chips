@@ -357,7 +357,13 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
 
     local fish_caught = type(fish_data.times_caught) == 'number' and (fish_data.times_caught > 0)
 
-    local fish_name = fish_caught and localize({type = 'name_text', key = fish.key, set = 'fac_Fish'}) or localize('ph_fac_unknown_item')
+    local temp_area = FishAndChips.Compendium.compendium_area(nil, {2.25 * 71/95, 2.25})
+    local compendium_card = FishAndChips.Compendium.compendium_card(fish, temp_area, 0.85)
+    temp_area:emplace(compendium_card)
+
+    local locvars = fish.loc_vars and fish:loc_vars({}, compendium_card) or {}
+
+    local fish_name = fish_caught and localize({type = 'name_text', key = locvars.key or fish.key, set = 'fac_Fish', vars = locvars.vars or {}}) or localize('ph_fac_unknown_item')
     if string.len(fish_name) > 25 then fish_name = string.sub(fish_name, 1, 21) .. '...' end
     local caught = localize('ph_fac_first_caught')..(fish_caught and fish_data.first_catch or '')
     local rod = fish_caught and localize('ph_fac_with_rod')..localize({key = fish_data.rod, set = 'fac_Rod', type = 'name_text'}) or ' '
@@ -380,9 +386,6 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
         }}
     }}
     
-    local temp_area = FishAndChips.Compendium.compendium_area(nil, {2.25 * 71/95, 2.25})
-    local compendium_card = FishAndChips.Compendium.compendium_card(fish, temp_area, 0.85)
-    temp_area:emplace(compendium_card)
     table.insert(text.nodes, left and 1 or 2, {n=G.UIT.C, config = {align = 'cm'}, nodes = {{n=G.UIT.O, config={object=temp_area}}}})
     
     return text
@@ -1129,6 +1132,7 @@ function FishAndChips.Compendium.config_page(page_number, left)
         {n=G.UIT.R, config = {align = 'tm', minh = 3, minw = 5}, nodes = {
             FishAndChips.Compendium.toggle {text_key = 'b_fac_ambience_toggle', ref_value = "ambience", callback = G.FUNCS.fac_toggle_ambience},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_menu_toggle', ref_value = "menu"},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_family_friendly_toggle', ref_value = "family_friendly"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_condensed_fish', ref_value = "condensed_fish"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_flavour_text', ref_value = "disable_flavour"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_flashing_lights', ref_value = "disable_flashing"},

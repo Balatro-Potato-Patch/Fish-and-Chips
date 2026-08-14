@@ -203,7 +203,7 @@ if (context.joker_type_destroyed and context.card == card and card.ability.immut
                     scalar_value = "scaling",
                     operation = '+'
                 })
-                return nil, true, {no_destroy = true}
+                return {no_destroy = true}, true
 		end
 		if context.joker_main then return { mult = card.ability.extra.mult } end
 	end,

@@ -121,7 +121,7 @@ FishAndChips.Fish {
 	weight = 7,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'probability' },
+	attributes = { 'chance' },
 	environments = {
 		calm_pond = 6,
 		pier = 3,
@@ -136,43 +136,31 @@ FishAndChips.Fish {
 		}
 	},
 	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
 		return { vars = { card.ability.extra.mult } }
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main and context.scoring_hand then
-			local lucky_cards = fac_count_rank(context.scoring_hand, 3) + fac_count_rank(context.scoring_hand, 7)
-			if lucky_cards > 0 then
-				local function mark_lucky()
-					for _, scored_card in ipairs(context.scoring_hand) do
-						if scored_card and scored_card.get_id then
-							local id = scored_card:get_id()
-							if id == 3 or id == 7 then
-								scored_card.lucky_trigger = true
-								scored_card.lucky = true
-								scored_card.ability = scored_card.ability or {}
-								scored_card.ability.lucky = true
-								scored_card._fac_temporary_lucky = true
-							end
-						end
-					end
+		if context.joker_main then
+			return { mult = card.ability.extra.mult }
+		end
+
+		if context.individual and context.cardarea == G.play then
+			local id = context.other_card:get_id()
+			if id == 3 or id == 7 then
+				local effects = {}
+				-- Mult chance
+				if SMODS.pseudorandom_probability(context.other_card, "lucky_mult", 1, 5, "lucky_mult") then
+					effects["mult"] = 20
+					context.other_card.lucky_trigger = true
 				end
-				local function clear_lucky()
-					for _, scored_card in ipairs(context.scoring_hand) do
-						if scored_card and scored_card._fac_temporary_lucky then
-							scored_card.lucky_trigger = nil
-							scored_card.lucky = nil
-							if scored_card.ability and scored_card.ability.lucky then
-								scored_card.ability.lucky = nil
-							end
-							scored_card._fac_temporary_lucky = nil
-						end
-					end
+				-- Money chance
+				if SMODS.pseudorandom_probability(context.other_card, "lucky_money", 1, 15, "lucky_money") then
+					effects["dollars"] = 20
+					context.other_card.lucky_trigger = true
 				end
-				return {
-					func = mark_lucky,
-					mult = card.ability.extra.mult,
-					post = { source = card, func = clear_lucky }
-				}
+				if context.other_card.lucky_trigger then
+					return effects
+				end
 			end
 		end
 	end,

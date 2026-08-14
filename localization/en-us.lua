@@ -392,6 +392,7 @@ return {
             b_fac_go_fishing_2 = "Fishing",
             b_fac_ambience_toggle = "Enable Ambient Sounds",
             b_fac_menu_toggle = "Enable Custom Main Menu",
+            b_fac_family_friendly_toggle = "Family-Friendly Mode",
             b_fac_condensed_fish = "Enable Condensed Fish Collection",
             b_fac_flavour_text = 'Disable Flavour Text',
             b_fac_flashing_lights = 'Disable Flashing Effects',

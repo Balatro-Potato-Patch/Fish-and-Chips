@@ -1,4 +1,5 @@
 return {
     ambience = true,
-    menu = true
+    menu = true,
+    family_friendly = false,
 }
