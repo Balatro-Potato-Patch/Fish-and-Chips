@@ -378,12 +378,10 @@ FishAndChips.Fish {
 
     calculate = function(self, card, context)
         if context.fishing_profile then
-            print(context.fishing_profile)
             local fp = context.fishing_profile
             fp.treasure_gain = fp.treasure_gain * 3
             fp.vel_limit = fp.vel_limit * 2
             fp.decision_min = fp.decision_min / 2
-            print(context.fishing_profile)
         end
     end
 }
