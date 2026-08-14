@@ -1408,88 +1408,97 @@ FishAndChips.Fish {
 	pronouns = "it_its"
 }
 
+local appropriate_sounds = {
+	"button",
+	"cancel",
+	"card1",
+	"card3",
+	"cardFan2",
+	"cardSlide1",
+	"cardSlide2",
+	"chips1",
+	"chips2",
+	"coin1",
+	"coin2",
+	"coin3",
+	"coin4",
+	"coin5",
+	"coin6",
+	"coin7",
+	"crumple1",
+	"crumple2",
+	"crumple3",
+	"crumple4",
+	"crumple5",
+	"explosion_buildup1",
+	"explosion_release1",
+	"foil1",
+	"foil2",
+	"generic1",
+	"glass1",
+	"glass2",
+	"glass3",
+	"glass4",
+	"glass5",
+	"glass6",
+	"gold_seal",
+	"gong",
+	"highlight1",
+	"highlight2",
+	"holo1",
+	"multhit1",
+	"multhit2",
+	"negative",
+	"other1",
+	"paper1",
+	"polychrome1",
+	"slice1",
+	"tarot1",
+	"tarot2",
+	"timpani",
+	"whoosh",
+	"whoosh1",
+	"whoosh2",
+	"win",
+	"fac_fishwav_fish"
+}
+local appropriate_sounds_populated = false
+local sounds_seen = {}
+for i,v in ipairs(appropriate_sounds) do
+	sounds_seen[v] = true
+end
+
 local play_sound_ref = play_sound
 function play_sound(sound_code, per, vol)
 	local new_sound_code = sound_code
 	local new_per = per or 1
 	local new_vol = vol or 1
 	if next(SMODS.find_card("fish_fac_ghostsalt_fishwav")) then
-		local appropriate_sounds = {
-			"button",
-			"cancel",
-			"card1",
-			"card3",
-			"cardFan2",
-			"cardSlide1",
-			"cardSlide2",
-			"chips1",
-			"chips2",
-			"coin1",
-			"coin2",
-			"coin3",
-			"coin4",
-			"coin5",
-			"coin6",
-			"coin7",
-			"crumple1",
-			"crumple2",
-			"crumple3",
-			"crumple4",
-			"crumple5",
-			"explosion_buildup1",
-			"explosion_release1",
-			"foil1",
-			"foil2",
-			"generic1",
-			"glass1",
-			"glass2",
-			"glass3",
-			"glass4",
-			"glass5",
-			"glass6",
-			"gold_seal",
-			"gong",
-			"highlight1",
-			"highlight2",
-			"holo1",
-			"multhit1",
-			"multhit2",
-			"negative",
-			"other1",
-			"paper1",
-			"polychrome1",
-			"slice1",
-			"tarot1",
-			"tarot2",
-			"timpani",
-			"whoosh",
-			"whoosh1",
-			"whoosh2",
-			"win",
-			"fac_fishwav_fish"
-		}
-		for _, sound in ipairs(appropriate_sounds) do
-			if sound == new_sound_code then
-				local times = 0
-				while sound == new_sound_code and times < 10 do
-					new_sound_code = appropriate_sounds[math.random(#appropriate_sounds)]
-					times = times + 1
-					if times == 10 then new_sound_code = "fac_fishwav_fish" end
+		if not appropriate_sounds_populated then
+			appropriate_sounds_populated = true
+			for k,v in pairs(SMODS.Sounds) do
+				if v.original_mod and v.original_mod.id == "FishAndChips" and not sounds_seen[k] and not v.select_music_track then
+					appropriate_sounds[#appropriate_sounds+1] = k
+					sounds_seen[k] = true
 				end
-				if sound_code == "paper1" and per and not vol then -- Fixes one specific instance of this sound (Cash Out screen) being too loud.
-					new_vol = new_vol * 0.4
-				end
-				if new_sound_code ~= "fac_fishwav_fish" then
-					new_per = new_per * ((math.random() / 2) + 0.75)
-					new_vol = new_vol * 0.5
-				else
-					new_per = 1
-					new_vol = 0.4
-				end
-				break
+			end
+		end
+		if sounds_seen[new_sound_code] then
+			new_sound_code = appropriate_sounds[math.random(#appropriate_sounds)]
+			-- NOTE there is one sound that's way louder than the rest, someone find it and make it reduce its volume
+			if sound_code == "paper1" and per and not vol then -- Fixes one specific instance of this sound (Cash Out screen) being too loud.
+				new_vol = new_vol * 0.4
+			end
+			if new_sound_code ~= "fac_fishwav_fish" then
+				new_per = new_per * ((math.random() / 2) + 0.75)
+				new_vol = new_vol * 0.5
+			else
+				new_per = 1
+				new_vol = 0.4
 			end
 		end
 	end
+	--sendTraceMessage(new_sound_code, new_per, new_vol)
 	return play_sound_ref(new_sound_code, new_per, new_vol)
 end
 
