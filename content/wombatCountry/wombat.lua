@@ -63,7 +63,7 @@ FishAndChips.Fish({
 	pos = { x = 1, y = 0 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "usable", "suit" },
+	attributes = { "usable", "suit", "full_deck", "modify_card", },
 	environments = {
 		calm_pond = 1,
 		city_river = 0.25,
@@ -101,7 +101,7 @@ FishAndChips.Fish({
 	pos = { x = 2, y = 0 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "usable", "rank" },
+	attributes = { "usable", "rank", "modify_card", "full_deck" },
 	environments = {
 		pier = 1,
 		city_river = 0.5,
@@ -161,8 +161,16 @@ FishAndChips.Fish({
 	calculate = function(self, card, context)
 		if context.setting_blind and not context.blueprint and #G.fac_fish_area.cards >= 2 and not (G.fac_fish_area.cards[1] == card) then
 			--adds the weight of the leftmost fish to dylan's mult AND weight stat
-			card.ability.extra.mult = card.ability.extra.mult + G.fac_fish_area.cards[1].ability.stats.weight
-			card.ability.stats.weight = card.ability.stats.weight + G.fac_fish_area.cards[1].ability.stats.weight
+			card.ability.extra.scalar_weight = G.fac_fish_area.cards[1].ability.stats.weight
+			local did_scale = SMODS.scale_card (card, {
+			    ref_table = card.ability.extra,
+				ref_value = "mult",
+				scalar_value = "scalar_weight",
+				no_message = true,
+			})
+			card.ability.extra.scalar_weight = nil -- Surely there's a better way.. If there is then *PLEASE* tell me (mf)
+
+            card.ability.stats.weight = card.ability.stats.weight + G.fac_fish_area.cards[1].ability.stats.weight
 
 			SMODS.destroy_cards(G.fac_fish_area.cards[1], nil, nil, true)
 			return {
@@ -185,7 +193,7 @@ FishAndChips.Fish({
 	pos = { x = 1, y = 2 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "xmult", "destroy_card"},
+	attributes = { "xmult", "destroy_card" },
 	environments = {
 		wormhole = 1,
         pier = 0.25,
@@ -223,7 +231,7 @@ FishAndChips.Fish({
 	pos = { x = 2, y = 2 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "hand_level", "usable"},
+	attributes = { "hand_level", "usable", "hand_type" },
 	environments = {
 		city_river = 1,
         calm_pond = 0.75,
@@ -280,7 +288,7 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 1 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "chips" },
+	attributes = { "chips", "destroy_card", "generation" },
 	environments = {
 		city_river = 1,
 		chocolate_river = 0.5,
@@ -326,7 +334,7 @@ FishAndChips.Fish({
 	pos = { x = 1, y = 1 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "chips" },
+	attributes = { "chips", "destroy_card", "generation" },
 	environments = {
 		city_river = 1,
 		chocolate_river = 0.5,

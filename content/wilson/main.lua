@@ -31,7 +31,7 @@ SMODS.Atlas({
 FishAndChips.Fish {
 	key = "wilson_measuring_tape",
 	ppu_coder = { "wilson" },
-	attributes = { "xmult", "scaling" },
+	attributes = { "xmult", "scaling", "position", },
 	weight = 20,
 	atlas = "wilson_fish",
 	pos = { x = 1, y = 0 },
@@ -74,7 +74,7 @@ FishAndChips.Fish {
 				local weight_mod = 0
 				local length_mod = 0
 				if stats.weight > myStats.weight then
-					mod = mod + card.ability.extra.mod
+					mod = mod + 1
 					weight_mod = stats.weight * card.ability.extra.percent
 					if myStats.weight + weight_mod > stats.weight then
 						weight_mod = stats.weight - card.ability.stats.weight
@@ -82,7 +82,7 @@ FishAndChips.Fish {
 					extra = { message = "+" .. FishAndChips.format_measurement(weight_mod, 'weight', stats.units) }
 				end
 				if stats.length > myStats.length then
-					mod = mod + card.ability.extra.mod
+					mod = mod + 1
 					length_mod = stats.length * card.ability.extra.percent
 					if myStats.length + length_mod > stats.length then
 						length_mod = stats.length - card.ability.stats.length
@@ -95,14 +95,17 @@ FishAndChips.Fish {
 					end
 				end
 				if mod > 0 then
-					card.ability.extra.xmult = card.ability.extra.xmult + mod
+				    SMODS.scale_card (card, {
+						ref_table = card.ability.extra,
+						ref_value = "xmult",
+						scalar_value = "mod",
+						scalar_factor = mod,
+						message_key = 'a_xmult',
+						message_colour = G.C.RED,
+					})
 					myStats.weight = myStats.weight + weight_mod
 					myStats.length = myStats.length + length_mod
-					return {
-						message = localize { type = 'variable', key = 'a_xmult', vars = { mod } },
-						colour = G.C.RED,
-						extra = extra,
-					}
+					return extra
 				end
 			end
 		end
@@ -112,7 +115,7 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "wilson_mug",
 	ppu_coder = { "wilson" },
-	attributes = { "xmult", "scaling" },
+	attributes = { "passive" },
 	atlas = "wilson_fish",
 	pos = { x = 0, y = 0 },
 	pixel_size = { w = 69, h = 55 },
@@ -157,7 +160,7 @@ end
 FishAndChips.Fish {
 	key = "wilson_teddy",
 	ppu_coder = { "wilson" },
-	attributes = { "xmult", "scaling" },
+	attributes = { "xmult", "scaling", "usable", },
 	atlas = "wilson_fish",
 	pos = { x = 2, y = 0 },
 	pixel_size = { w = 62, h = 48 },
@@ -214,15 +217,18 @@ FishAndChips.Fish {
 			return { xmult = extra.xmult }
 		end
 		if not active and context.fac_fish_caught then
-			extra.xmult = extra.xmult + extra.mod
-			if extra.xmult == extra.max then
+            SMODS.scale_card (card, {
+                ref_table = card.ability.extra,
+                ref_value = "xmult",
+                scalar_value = "mod",
+                message_key = 'a_xmult',
+                message_colour = G.C.RED,
+            })
+			if extra.xmult >= extra.max then
 				extra.active = true
 			end
 			checkSprites(card)
-			return {
-				message = localize { type = 'variable', key = 'a_xmult', vars = { extra.mod } },
-				colour = G.C.RED,
-			}
+			return nil, true
 		end
 	end,
 	use = function(self, card)

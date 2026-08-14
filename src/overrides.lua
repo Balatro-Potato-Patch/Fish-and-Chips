@@ -2,24 +2,28 @@ G.FUNCS.toggle_shop = function(e)
     stop_use()
 	if G.CONTROLLER.locks.toggle_shop then return end
     G.CONTROLLER.locks.toggle_shop = true
+    G.fac_toggle_shop_lock_started = G.TIMERS.TOTAL
     if G.shop then
         SMODS.calculate_context({ ending_shop = true })
+        G.E_MANAGER.queues.fac_fishing_transition = G.E_MANAGER.queues.fac_fishing_transition or {}
         G.E_MANAGER:add_event(Event({
             trigger = 'immediate',
+            blockable = false,
             func = function()
-                G.shop.alignment.offset.y = G.ROOM.T.y + 29
-                G.SHOP_SIGN.alignment.offset.y = -15
+                if G.shop then G.shop.alignment.offset.y = G.ROOM.T.y + 29 end
+                if G.SHOP_SIGN then G.SHOP_SIGN.alignment.offset.y = -15 end
                 return true
             end
-        }))
+        }), 'fac_fishing_transition')
         G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.5,
+            blockable = false,
             func = function()
-                G.shop:remove()
-                G.shop = nil
-                G.SHOP_SIGN:remove()
-                G.SHOP_SIGN = nil
+                G.CONTROLLER.locks.toggle_shop = nil
+                G.fac_toggle_shop_lock_started = nil
+                if G.shop then G.shop:remove(); G.shop = nil end
+                if G.SHOP_SIGN then G.SHOP_SIGN:remove(); G.SHOP_SIGN = nil end
                 G.STATE_COMPLETE = false
                 if not G.GAME.fishing then
                     G.GAME.fishing = true
@@ -28,22 +32,31 @@ G.FUNCS.toggle_shop = function(e)
                     G.GAME.fishing = false
                     G.STATE = G.STATES.BLIND_SELECT
                 end
-                G.CONTROLLER.locks.toggle_shop = nil
                 return true
             end
-        }))
+        }), 'fac_fishing_transition')
+    else
+        G.CONTROLLER.locks.toggle_shop = nil
+        G.fac_toggle_shop_lock_started = nil
+        G.STATE_COMPLETE = false
+        G.GAME.fishing = true
+        G.STATE = G.STATES.FAC_FISHING
     end
 end
 
 G.FUNCS.fac_toggle_fishing = function(e)
     stop_use()
-	if G.CONTROLLER.locks.toggle_shop then return end
+	if not G.GAME.fishing or FishAndChips.in_tutorial or G.CONTROLLER.locks.toggle_shop then return end
     G.CONTROLLER.locks.toggle_shop = true
+    G.fac_toggle_shop_lock_started = G.TIMERS.TOTAL
     if G.GAME.fishing and not FishAndChips.in_tutorial then
         SMODS.calculate_context({ ending_fishing = true })
 		G.GAME.fac_snapper_dialogue_opt = nil	-- To let Snapper know your next visit will advance his dialogue count.
+        G.E_MANAGER.queues.fac_fishing_transition = G.E_MANAGER.queues.fac_fishing_transition or {}
+        if G.FISHING and G.FISHING.fishing then
         G.E_MANAGER:add_event(Event({
             trigger = 'immediate',
+            blockable = false,
             func = function()
                 G.FISHING.fishing.alignment.offset.y = G.ROOM.T.y + 29
                 G.fac_fishing_bucket_bottom.alignment.offset.y = -0.5 - G.CARD_H
@@ -57,21 +70,23 @@ G.FUNCS.fac_toggle_fishing = function(e)
                 ease_value(G.HUD.alignment.offset, "x", 10) -- for some reason this value changes instantly unlike others
                 return true
             end
-        }))
+        }), 'fac_fishing_transition')
+        end
         G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.5,
+            blockable = false,
             func = function()
-                G.FISHING.fishing:remove()
-                G.FISHING.fishing = nil
+                G.CONTROLLER.locks.toggle_shop = nil
+                G.fac_toggle_shop_lock_started = nil
+                if G.FISHING and G.FISHING.fishing then G.FISHING.fishing:remove(); G.FISHING.fishing = nil end
                 G.GAME.fishing = false
                 G.STATE_COMPLETE = false
                 G.STATE = G.STATES.BLIND_SELECT
-                G.CONTROLLER.locks.toggle_shop = nil
 				FishAndChips:stop_ambience()
                 return true
             end
-        }))
+        }), 'fac_fishing_transition')
     end
 end
 

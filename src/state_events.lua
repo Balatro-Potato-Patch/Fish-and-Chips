@@ -37,6 +37,10 @@ local g_update_ref = Game.update
 ---@diagnostic disable-next-line: duplicate-set-field
 function Game:update(dt)
 	g_update_ref(self, dt)
+	if G.CONTROLLER.locks.toggle_shop and G.fac_toggle_shop_lock_started and G.TIMERS.TOTAL - G.fac_toggle_shop_lock_started > 3 then
+		G.CONTROLLER.locks.toggle_shop = nil
+		G.fac_toggle_shop_lock_started = nil
+	end
 
 	-- shader fish logic
 

@@ -195,7 +195,7 @@ FishAndChips.Fish {
 	weight = 8,
 	ppu_coder = { "Jolyne" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "mult, ace, rank" },
+	attributes = { "mult", "ace", "rank" },
 	config = {
 		extra = {
 			mult = 1
@@ -230,7 +230,7 @@ FishAndChips.Fish {
 	weight = 8,
 	ppu_coder = { "Jolyne" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "mult, two, rank" },
+	attributes = { "mult", "two", "rank" },
 	config = {
 		extra = {
 			mult = 2
@@ -265,7 +265,7 @@ FishAndChips.Fish {
 	weight = 7,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "chips", "mult", "balance", "score" },
+	attributes = { "chips", "mult", "balance", "hand_type", },
 	config = {
 		extra = {
 			value = 10
@@ -303,7 +303,7 @@ FishAndChips.Fish {
 	weight = 7,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "chips", "mult", "balance", "score" },
+	attributes = { "chips", "mult", "balance", "hand_type", },
 	config = {
 		extra = {
 			value = 50
@@ -341,7 +341,7 @@ FishAndChips.Fish {
 	weight = 8,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "treasure", "usable", "generation", "deltarune" },
+	attributes = { "treasure", "usable", "generation", "deltarune", "utdr", },
 	config = {
 		extra = {
 		}
@@ -394,7 +394,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "xblindsize" },
+	attributes = { "xblindsize", "destroy_card", },
 	config = {
 		extra = {
 			blind = 1.5
@@ -481,7 +481,7 @@ FishAndChips.Fish {
 	weight = 4,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "hand_type, food" },
+	attributes = { "hand_type", "food", "hand_type", "destroy_card", },
 	config = {
 		extra = {
 			pear = 5,
@@ -493,6 +493,7 @@ FishAndChips.Fish {
 		pier = 5,
 		soup = 5,
 	},
+	eternal_compat = false,
 	stats = {
 		weight = { min = 0.16, max = 0.18 },
 		length = { min = 0.05, max = 0.10 }
@@ -567,7 +568,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "mult", "chips", "destroy_card", "sell_value", "scaling", "usable" },
+	attributes = { "mult", "chips", "destroy_card", "sell_value", "scaling", "usable", "rank", },
 	config = {
 		extra = {
 			attack = "Dismantle",
@@ -612,7 +613,14 @@ FishAndChips.Fish {
 				fish_sliced.getting_sliced = true
 				G.E_MANAGER:add_event(Event({
 					func = function()
-						card.ability.extra.mult = card.ability.extra.mult + fish_sliced.sell_cost * 2
+					    card.ability.extra.scalar_sell_cost = fish_sliced.sell_cost * 2
+    					SMODS.scale_card (card, {
+    					    ref_table = card.ability.extra,
+    						ref_value = "mult",
+    						scalar_value = "scalar_sell_cost",
+    						no_message = true,
+    					})
+                        card.ability.extra.scalar_sell_cost = nil
 						card:juice_up(0.8, 0.8)
 						play_sound('slice1', 0.96 + math.random() * 0.08)
 						fish_sliced:start_dissolve({ G.C.RED }, nil, 1.6)
@@ -625,7 +633,14 @@ FishAndChips.Fish {
 		elseif card.ability.extra.attack == "Cleave" then
 			G.E_MANAGER:add_event(Event({
 				func = function()
-					card.ability.extra.chips = card.ability.extra.chips + G.hand.highlighted[1].base.id * 3
+                    card.ability.extra.scalar_rank = G.hand.highlighted[1].base.id * 3
+   					SMODS.scale_card (card, {
+   					    ref_table = card.ability.extra,
+  						ref_value = "chips",
+  						scalar_value = "scalar_rank",
+  						no_message = true,
+   					})
+                    card.ability.extra.scalar_rank = nil
 					card:juice_up(0.8, 0.8)
 					play_sound('slice1', 0.96 + math.random() * 0.08)
 					SMODS.destroy_cards(G.hand.highlighted)
@@ -824,7 +839,7 @@ FishAndChips.Fish {
 				},
 				card.ability.extra.insert[1], card.ability.extra.insert[2], card.ability.extra.insert[3], card.ability.extra.insert[4], card.ability.extra.insert[5], card.ability.extra.insert[6],
 				ppu_bubbles = { card.ability.extra.attempts == 6 and "usable" or "inactive" }
-			} 
+			}
 		}
 	end,
 	calculate = function(self, card, context)
@@ -833,7 +848,7 @@ FishAndChips.Fish {
 		local verify = true
 		if card.ability.extra.attempts == 6 then
 			local correct = 0
-			for i = 1, 6 do 
+			for i = 1, 6 do
 				if card.ability.extra.insert[i] == card.ability.extra.code[i] then
 					correct = correct + 1
 				end
@@ -868,13 +883,13 @@ FishAndChips.Fish {
 			juice_card_until(card, eval, true)
 		else
 			local correct = 0
-			for i = 1, 6 do 
+			for i = 1, 6 do
 				if card.ability.extra.insert[i] == card.ability.extra.code[i] then
 					correct = correct + 1
 				end
 			end
 			if correct == 6 then
-				for i = 1, card.ability.extra.amount do 
+				for i = 1, card.ability.extra.amount do
 					G.E_MANAGER:add_event(Event({
 						trigger = 'after',
 						delay = 0.4,
@@ -887,7 +902,7 @@ FishAndChips.Fish {
 				SMODS.calculate_effect({ message = localize('k_correct_ex') }, card)
 			else
 				card.ability.extra.attempts = 0
-				for i = 1, 6 do 
+				for i = 1, 6 do
 					card.ability.extra.insert[i] = "#"
 					card.ability.extra.colour[i] = G.C.UI.TEXT_INACTIVE
 				end
@@ -952,7 +967,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = {},
+	attributes = { "economy", "lose_economy", "usable", },
 	config = {
 		extra = {
 		}
@@ -998,7 +1013,7 @@ FishAndChips.Fish {
 	weight = 6,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "generation", "deltarune" },
+	attributes = { "generation", "deltarune", "utdr", },
 	config = {
 		extra = {
 			f1 = true,
@@ -1088,7 +1103,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "sell_value", "scaling", "economy", "deltarune" },
+	attributes = { "sell_value", "scaling", "economy", "deltarune", "utdr", },
 	config = {
 		extra = {
 			price = 1
@@ -1108,12 +1123,17 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.fac_end_fishing then
-			card.ability.extra_value = card.ability.extra_value + card.ability.extra.price
-			card:set_cost()
-			return {
-				message = localize('k_val_up'),
-				colour = FishAndChips.C.SAND_DOLLAR
-			}
+    		SMODS.scale_card(self, {
+                ref_table = self.ability,
+                ref_value = "extra_value",
+                scalar_value = "extra",
+                scaling_message = {
+                    message = localize('k_val_up'),
+                    colour = G.C.MONEY
+                }
+            })
+            card:set_cost()
+            return nil, true
 		end
 	end
 }
@@ -1127,7 +1147,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "mult", "deltarune" },
+	attributes = { "mult", "deltarune", "position", "utdr", },
 	config = {
 		extra = {
 			mult = 5
@@ -1162,7 +1182,7 @@ FishAndChips.Fish {
 			even = true
 		end
 		local place = math.ceil(#G.fac_fish_area.cards / 2)
-		if context.joker_main and (G.fac_fish_area.cards[place] == card or (G.fac_fish_area.cards[place + 1] == card and even)) and #G.fac_fish_area.cards > 2 then 
+		if context.joker_main and (G.fac_fish_area.cards[place] == card or (G.fac_fish_area.cards[place + 1] == card and even)) and #G.fac_fish_area.cards > 2 then
 			return {
 				mult = card.ability.extra.mult
 			}
@@ -1179,7 +1199,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "economy", "usable", "deltarune" },
+	attributes = { "economy", "usable", "deltarune", "utdr", },
 	config = {
 		extra = {
 			dollar = 66
@@ -1222,7 +1242,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "destroy_card", "chance", "usable", "deltarune" },
+	attributes = { "destroy_card", "chance", "usable", "deltarune", "utdr", },
 	config = {
 		extra = {
 			max_highlighted = 3
@@ -1321,7 +1341,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "modify_card", "perma_bonus", "usable", "deltarune" },
+	attributes = { "modify_card", "perma_bonus", "usable", "deltarune", "utdr", },
 	config = {
 		extra = {
 			max_highlighted = 4,
@@ -1416,7 +1436,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "modify_card", "enhancements", "usable", "deltarune" },
+	attributes = { "modify_card", "enhancements", "usable", "deltarune", "utdr", },
 	config = {
 		extra = {
 			amount = 5,
@@ -1489,7 +1509,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "score", "xblindsize", "usable", "deltarune" },
+	attributes = { "score", "xblindsize", "usable", "deltarune", "utdr", },
 	config = {
 		extra = {
 			blind = 20
@@ -1537,7 +1557,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "economy", "xblindsize", "usable", "deltarune" },
+	attributes = { "lose_economy", "xblindsize", "usable", "deltarune" },
 	config = {
 		extra = {
 			blind = 50

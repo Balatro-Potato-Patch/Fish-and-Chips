@@ -1781,10 +1781,12 @@ FishAndChips.Fish {
 }
 
 -- Thrasher Shark
+--[[ --This sound file is missing
 SMODS.Sound {
 	key = "aureallu_trasher",
-	path = "aureallu/thrasher.ogg"
+	path = "aure-allu/thrasher.ogg"
 }
+]]
 
 FishAndChips.Fish {
 	key = "aureallu_thrasher_shark",
