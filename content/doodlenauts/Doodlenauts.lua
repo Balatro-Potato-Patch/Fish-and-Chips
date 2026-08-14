@@ -761,7 +761,7 @@ FishAndChips.Fish {
 	cost = 4,
 	config = {
 		extra = {
-			nun = 1,
+			num = 1,
 			denom = 6,
 			inc_per_round = 2
 		}

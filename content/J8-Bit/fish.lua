@@ -1027,13 +1027,13 @@ FishAndChips.Fish {
         end
     end,
     load = function(self, card, card_table, other_card)
-        if card.ability.extra.gender_presentation == "masc" then
+        if card_table.ability.extra.gender_presentation == "masc" then
             card.children.center:set_sprite_pos({ x = 4, y = 3 })
             card.T.w = G.CARD_W * (60 / 71)
             card.T.h = G.CARD_H * (95 / 95)
             card.children.center.scale.x = 60
             card.children.center.scale.y = 95
-        elseif card.ability.extra.gender_presentation == "femme" then
+        elseif card_table.ability.extra.gender_presentation == "femme" then
             card.children.center:set_sprite_pos({ x = 0, y = 4 })
             card.T.w = G.CARD_W * (53 / 71)
             card.T.h = G.CARD_H * (87 / 95)

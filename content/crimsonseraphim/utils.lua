@@ -136,6 +136,9 @@ function Card:transmute(seed, center)
     G.E_MANAGER:add_event(Event{
         blocking = false,
         func = function()
+            if not self.children.center.aeonfish_transmute then
+                return true
+            end
             if G.TIMERS.REAL - self.children.center.aeonfish_transmute.realtime_start > 0.6 then
                 self:set_ability(self.children.center.aeonfish_transmute.center)
                 self.children.center.aeonfish_transmute = nil
