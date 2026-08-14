@@ -363,7 +363,7 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
 
     local locvars = fish.loc_vars and fish:loc_vars({}, compendium_card) or {}
 
-    local fish_name = fish_caught and localize({type = 'name_text', key = fish.key, set = 'fac_Fish', vars = locvars.vars or {}}) or localize('ph_fac_unknown_item')
+    local fish_name = fish_caught and localize({type = 'name_text', key = locvars.key or fish.key, set = 'fac_Fish', vars = locvars.vars or {}}) or localize('ph_fac_unknown_item')
     if string.len(fish_name) > 25 then fish_name = string.sub(fish_name, 1, 21) .. '...' end
     local caught = localize('ph_fac_first_caught')..(fish_caught and fish_data.first_catch or '')
     local rod = fish_caught and localize('ph_fac_with_rod')..localize({key = fish_data.rod, set = 'fac_Rod', type = 'name_text'}) or ' '

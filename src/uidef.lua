@@ -530,7 +530,7 @@ function G.UIDEF.fac_fish_data(fish, show_full)
 					{
 						n = G.UIT.T,
 						config = {
-							text = localize({ type = "name_text", set = center.set, key = center.key, vars = locvars.vars or {} }),
+							text = localize({ type = "name_text", set = center.set, key = locvars.key or center.key, vars = locvars.vars or {} }),
 							scale = 0.5,
 							colour = G.C.UI.TEXT_LIGHT,
 						},
