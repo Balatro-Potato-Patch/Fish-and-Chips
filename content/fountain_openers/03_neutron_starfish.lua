@@ -8,6 +8,7 @@ FishAndChips.Fish {
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
 	attributes = { "destroy_card", "hand_level", "usable" },
+    requires_hand = true,
 	config = {
         levels = 1,
 	},
@@ -22,7 +23,14 @@ FishAndChips.Fish {
 	},
 	use = function(self, card, area)
         local amt = #G.hand.cards
+        local valid_hands = {}
         local hands = {}
+
+        for _, v in pairs(G.handlist) do
+            if SMODS.is_poker_hand_visible(v) then
+                table.insert(valid_hands, v)
+            end
+        end
 
         G.E_MANAGER:add_event(Event({
             trigger = 'after',
@@ -36,7 +44,7 @@ FishAndChips.Fish {
         SMODS.destroy_cards(G.hand.cards)
         delay(0.5)
         for i = 1, amt do
-            hands[#hands+1] = pseudorandom_element(G.handlist, "fac_fo_neutron_star")
+            hands[#hands+1] = pseudorandom_element(valid_hands, "fac_fo_neutron_star"..i)
         end
         if #hands > 0 then
             SMODS.upgrade_poker_hands{
