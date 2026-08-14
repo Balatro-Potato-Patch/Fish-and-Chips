@@ -792,18 +792,9 @@ function FishAndChips.Compendium.achievement_page(page_number, left)
     return page
 end
 
+local old_hover = Node.hover
 function Node:hover() 
-    if self.config and self.config.h_popup then
-        if not self.children.h_popup then 
-            self.config.h_popup_config.instance_type = 'POPUP'
-            self.children.h_popup = UIBox{
-                definition = self.config.h_popup,
-                config = self.config.h_popup_config,
-            }
-            self.children.h_popup.states.collide.can = false
-            self.children.h_popup.states.drag.can = true
-        end
-    end
+    old_hover(self)
     if self.config and self.config.h_popup_2 then
         if not self.children.h_popup_2 then 
             self.config.h_popup_2_config.instance_type = 'POPUP'
