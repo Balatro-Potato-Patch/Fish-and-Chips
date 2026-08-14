@@ -64,7 +64,7 @@ SMODS.Atlas({
 SMODS.Atlas({
 	key = "crimsonseraphim_ultimate_weapon",
 	path = "crimsonseraphim/ultimate_weapon.png",
-	px = 102,
+	px = 104,
 	py = 70,
     atlas_table = "ANIMATION_ATLAS",
     fps = 10,
