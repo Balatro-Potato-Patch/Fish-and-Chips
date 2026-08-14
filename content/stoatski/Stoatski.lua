@@ -44,6 +44,7 @@ FishAndChips.Fish {
 
 	-- Caculate function
 	calculate = function(self, card, context)
+	--[[ stoatski's original version
 		-- If the contexxt is the start of round/after selecting a blind
 		if context.setting_blind then
 			-- Checks to see if this fish is the rightmost fish
@@ -58,6 +59,40 @@ FishAndChips.Fish {
 					message = localize("ph_otter_run"),
 					SMODS.destroy_cards(G.fac_fish_area.cards[#G.fac_fish_area.cards])
 
+				}
+			end
+		end
+	]]
+	-- Cyan's playtesting revision (done with permission)
+		if
+			context.setting_blind
+		and
+			#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit
+		then
+			local fish
+			for i = #G.fac_fish_area.cards, 1, -1 do
+				if not SMODS.is_eternal(card, {destroy_cards = true}) then
+					fish = G.fac_fish_area.cards[i]
+					break
+				end
+			end
+			if not fish then return end
+			if fish ~= card then
+				G.E_MANAGER:add_event(Event{func = function()
+					SMODS.destroy_cards(fish, {immediate = true, pinch_anim = true})
+					SMODS.add_card{set = "Spectral", area = G.consumeables} -- I know it'd default to G.consumeables here anyway but we're checking that area in the if statement anyway so it just seems like good practice in case something were to change that
+					return true
+				end})
+				return {
+					message = localize("ph_otter_eat"),
+				}
+			else
+				G.E_MANAGER:add_event(Event{func = function()
+					SMODS.destroy_cards(fish, {immediate = true, pinch_anim = true})
+					return true
+				end})
+				return {
+					message = localize("ph_otter_run"),
 				}
 			end
 		end
