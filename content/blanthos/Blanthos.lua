@@ -105,8 +105,10 @@ ease_dollars(-card.ability.extra.food_cost)
                     ref_value = "happiness",
                     scalar_value = "food_happiness",
                     operation = '+',
-                    message_key = "blanth_yum",
-                    message_colour = G.C.SECONDARY_SET.Planet
+					scaling_message = {
+						message = localize("blanth_yum"),
+						colour = G.C.SECONDARY_SET.Planet
+					}
                 })
                 return nil, true
 		end,
@@ -141,8 +143,10 @@ ease_dollars(-card.ability.extra.food_cost)
                     ref_value = "happiness",
                     scalar_value = "boredom",
                     operation = '-',
-                    message_key = "blanth_bored",
-                    message_colour = G.C.SECONDARY_SET.Planet
+                    scaling_message = {
+						message = localize("blanth_bored"),
+						colour = G.C.SECONDARY_SET.Planet
+					}
                 })
                 return nil, true
 		end
