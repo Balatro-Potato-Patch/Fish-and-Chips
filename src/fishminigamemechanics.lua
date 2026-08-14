@@ -302,8 +302,10 @@ local function fac_set_caught_reward_box_shift(state, enable)
 end
 
 local function fac_recompute_reward_box_shift(state)
-    local both_stalled = state.treasure_type == "fish" and state.fac_main_fish_stalled and state.fac_treasure_fish_stalled
-    fac_set_caught_reward_box_shift(state, both_stalled)
+    local is_double_fish = state.treasure_type == "fish"
+    local main_needs_space = state.fac_main_fish_stalled or state.fac_main_fish_discovered_showing
+    local treasure_needs_space = state.fac_treasure_fish_stalled or state.fac_treasure_fish_discovered_showing
+    fac_set_caught_reward_box_shift(state, is_double_fish and main_needs_space and treasure_needs_space)
 end
 
 local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_catch)
@@ -333,12 +335,21 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     end
     local fish_stats = profile_data.fish_data[profile.key] or {}
     local first_catch = not (fish_stats.times_caught and fish_stats.times_caught > 0)
+    if first_catch and profile.fish then
+        if is_treasure_catch then
+            state.fac_treasure_fish_discovered_showing = true
+        else
+            state.fac_main_fish_discovered_showing = true
+        end
+        fac_recompute_reward_box_shift(state)
+    end
     profile.center.discovered = true
     play_sound('fac_fish_landed', math.random(0.8, 1.2))
     FishAndChips.create_card_stats = profile.stats
-    local added_card = SMODS.add_card({ area = reward_area, key = profile.key })
+    local added_card = SMODS.create_card({ area = reward_area, key = profile.key })
     FishAndChips.create_card_stats = nil
     if added_card then
+        reward_area:emplace(added_card)
         if profile.fish then FishAndChips.update_fish_records(fish_stats, profile.stats) end
         added_card:set_sprites(added_card.config.center)
         added_card.states.visible = false
@@ -584,15 +595,18 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
                 reward_area.config.highlighted_limit = 0
                 reward_area:remove_card(added_card)
                 area:emplace(added_card)
+                added_card:add_to_deck()
             end
             if is_treasure_catch then
                 state.fac_treasure_fish_stalled = false
+                state.fac_treasure_fish_discovered_showing = false
             else
                 state.fac_main_fish_stalled = false
+                state.fac_main_fish_discovered_showing = false
             end
-            fac_recompute_reward_box_shift(state)
             caught_box:remove()
             if discovery_text then discovery_text:remove() end
+            fac_recompute_reward_box_shift(state)
             if perfect_catch_text then perfect_catch_text:remove() end
             if treasure_catch_text then treasure_catch_text:remove() end
             if treasure_box then treasure_box:remove() end
