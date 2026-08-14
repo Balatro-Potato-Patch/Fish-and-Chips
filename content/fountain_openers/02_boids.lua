@@ -198,17 +198,19 @@ function FountainOpeners.Boid:update(dt)
 end
 
 function FountainOpeners.Boid:click()
-	play_sound("fac_fo_explosion", 2)
-	self.clicked = 0
+	if not G.SETTINGS.paused then
+		play_sound("fac_fo_explosion", 2)
+		self.clicked = 0
 
-	local card = get_by_sortid(self.card_id)
-	if card then
-		SMODS.scale_card(card, {
-			ref_table = card.ability.extra,
-			ref_value = "chips",
-			scalar_value = "chips_mod",
-		})
-		card.ability.immutable.fish_killed = card.ability.immutable.fish_killed + 1
+		local card = get_by_sortid(self.card_id)
+		if card then
+			SMODS.scale_card(card, {
+				ref_table = card.ability.extra,
+				ref_value = "chips",
+				scalar_value = "chips_mod",
+			})
+			card.ability.immutable.fish_killed = card.ability.immutable.fish_killed + 1
+		end
 	end
 end
 
@@ -285,7 +287,7 @@ SMODS.ScreenShader {
 		love.graphics.draw(canvas,0,0)
 
         local color = {love.graphics.getColor()}
-		if G.FISHING_STATE == G.FISHING_STATES.HOOKING then
+		if G.FISHING_STATE == G.FISHING_STATES.HOOKING and not G.SETTINGS.paused then
 			love.graphics.setColor(unpack(HEX("307fff")))
 		else
 			love.graphics.setColor(1, 1, 1, 1)
@@ -362,19 +364,17 @@ FishAndChips.Fish {
 			card.ability.immutable.fish_killed = 0 -- screaming
 		end
 	end,
-}
-
-local gsr = Game.start_run
-function Game:start_run(...)
-	local ret = gsr(self, ...)
-	for _, fish in ipairs(SMODS.find_card("fish_fac_fo_boids")) do
-		FountainOpeners.boids_game:add_boids(fish)
-		fish.ability.immutable = fish.ability.immutable or {}
-		fish.ability.immutable.fish_killed = 0 -- screaming
+	load = function(self, card, card_table, other_card)
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				FountainOpeners.boids_game:add_boids(card)
+				card.ability.immutable = card.ability.immutable or {}
+				card.ability.immutable.fish_killed = 0 -- screaming
+				return true;
+			end
+		}))
 	end
-
-	return ret
-end
+}
 
 -- reused from wormhole
 --[[if not Wormhole then

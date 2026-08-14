@@ -169,7 +169,7 @@ FishAndChips.ProdByProto.loadFih = function()
             if not ca.extra.storyActive then
                 G.ARGS.push.type = 'restart_music'
                 G.SOUND_MANAGER.channel:push(G.ARGS.push)
-                facp.q_music = "noir1"
+                G.GAME.proto_q_music = "noir1"
                 facp.noirProg({ flg = 1, lvl = 1})
                 ca.eternal = true
                 ca.extra.storyActive = true
@@ -188,7 +188,7 @@ FishAndChips.ProdByProto.loadFih = function()
         remove_from_deck = function (self, card, from_debuff)
             if not from_debuff then
                 G.GAME.proto_noirshade = nil
-                facp.q_music = "false"
+                G.GAME.proto_q_music = "false"
             end
         end,
 
@@ -261,7 +261,7 @@ FishAndChips.ProdByProto.loadFih = function()
                     end
                     auxFound = nil
                     if not (context.other_card.ability.noir_mark == "truedoor" or context.other_card.ability.noir_mark == "lockdoor") then
-                        if context.other_card.ability.noir_mark == "soda" and context.other_card.ability.noir_level then facp.q_music = "noir2" end
+                        if context.other_card.ability.noir_mark == "soda" and context.other_card.ability.noir_level then G.GAME.proto_q_music = "noir2" end
                         facp.noirProg({ flg = context.other_card.ability.noir_plot, lvl = context.other_card.ability.noir_level })
                     end
                     return ret
@@ -290,7 +290,7 @@ FishAndChips.ProdByProto.loadFih = function()
                 end
 
                 if context.hand_drawn then
-                    if SMODS.find_card("fish_proto_lockpick")[1] then
+                    if SMODS.find_card("fish_fac_proto_lockpick")[1] then
                         for _,card in ipairs(context.hand_drawn) do
                             if card.ability.noir_mark == "truedoor" then
                                 juice_card_until(card,(function() return context.using_consumeable and context.consumeable == self end))
@@ -324,11 +324,11 @@ FishAndChips.ProdByProto.loadFih = function()
                     end
                     if cae.hand_limit then
                         cae.hand_limit = cae.hand_limit - 1
-                        ret.message = cae.hand_limit..(not not cae.playing_true_end and (" / 10 "))..localize("proot_noir_hands")
+                        ret.message = cae.hand_limit..(not not cae.playing_true_end and (" / 10 ") or "")..localize("proot_noir_hands")
                         if cae.hand_limit > 9 then
                             cae.storyActive = false
                             cae.storyComplete = true
-                            cae.finalScore = G.GAME.noir_pts + 0
+                            cae.finalScore = G.GAME.noir_pts or 0
                             facp.noirProg({flg = 7, lvl = 14})
                         end
                         if cae.hand_limit < 1 then
@@ -344,11 +344,11 @@ FishAndChips.ProdByProto.loadFih = function()
 
                 if context.noir_level then
                     cae.level = context.noir_level
-                    if cae.level == 2 then facp.q_music = "noir2" end
+                    if cae.level == 2 then G.GAME.proto_q_music = "noir2" end
                     if cae.level == 6 then cae.final_investigation = 1 end
                     if cae.level == 12 then cae.final_court = 1 end
                     for _,item in ipairs(cae.noir_inv) do
-                        if item == "true_memo" then trueEnd = 1 end -- "trueEnd = true end"... absolute cinema
+                        if item == "true_memo" then trueEnd = true end -- "trueEnd = true end"... absolute cinema
                     end
                     if trueEnd then cae.playing_true_end = 1 end
                     if cae.final_court then 
@@ -366,7 +366,7 @@ FishAndChips.ProdByProto.loadFih = function()
 
             if cae.storyComplete then
                 if context.modify_final_cashout then
-                    local money = math.max(0, math.math.floor(cae.finalScore/10))
+                    local money = math.max(0, math.floor(cae.finalScore/10))
                     if money > 0 then
                         return { sand_dollars = money }
                     end

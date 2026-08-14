@@ -158,6 +158,7 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		return {}
 	end,
+	blueprint_compat = false,
 	calculate = function(self, card, context)
 		if context.before and not context.blueprint then
 			if G.hand and G.hand.cards and #G.hand.cards > 0 then
@@ -167,7 +168,7 @@ FishAndChips.Fish {
 						func = function()
 							play_sound('tarot1')
 							rightmost:juice_up(0.8, 0.8)
-							SMODS.destroy_cards(rightmost)
+							SMODS.destroy_cards(rightmost, {immediate = true})
 							return true
 						end
 					}))

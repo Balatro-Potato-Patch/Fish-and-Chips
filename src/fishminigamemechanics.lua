@@ -526,7 +526,8 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
         blocking = false,
         func = function()
             local area = FishAndChips.get_area_for_center(profile.center)
-            if #area.cards >= area.config.card_limit and not added_card.REMOVED then
+            local slots_used = (added_card.ability.extra_slots_used or 0) - (added_card.ability.card_limit or 0) + 1
+            if (#area.cards + slots_used) > area.config.card_limit and not added_card.REMOVED then
                 G.NOT_SAFE_TO_PRESS_BUTTONS = false
                 if not card_limit_stalled then
                     card_limit_stalled = true
@@ -600,6 +601,7 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
             elseif treasure_type == "sand_dollars" then
                 ease_sand_dollars(treasure_reward)
             end
+            save_run()
             return true
         end
     }, queue)
@@ -702,6 +704,7 @@ local function fac_finish_round(success, skip)
                 end
             }))
         end
+        G.E_MANAGER:add_event(Event({ func = function() save_run(); return true end }))
     end
     SMODS.calculate_context({fac_end_fishing = true, failed = not success, fish = success and state.profile.key or nil, fish_obj = fish_obj or nil, treasure = success and state.got_treasure or false, treasure_available = state.treasure_enabled or false, treasure_progress = state.treasure_meter or 0, missed_treasure = success and state.treasure_enabled and not state.got_treasure or false, attempted_treasure = state.treasure_enabled and not state.got_treasure and (state.treasure_meter or 0) > 0 or false, treasure_obj = treasure_obj, perfect = success and state.perfect or false})
     G.GAME.fac_forced_fish = nil

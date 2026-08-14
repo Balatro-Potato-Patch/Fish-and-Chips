@@ -140,7 +140,7 @@ FishAndChips.ProdByProto.loadFih = function()
 		func = function()
 			G.ARGS.push.type = 'restart_music'
 			G.SOUND_MANAGER.channel:push(G.ARGS.push)
-			FishAndChips.ProdByProto.q_music = false
+			G.GAME.proto_q_music = false
 			return true
 		end
 	}
@@ -220,7 +220,7 @@ FishAndChips.ProdByProto.loadFih = function()
 					return true
 				end
 			})
-			FishAndChips.ProdByProto.q_music = "jclub"
+			G.GAME.proto_q_music = "jclub"
 			G.E_MANAGER:add_event(Event(playlistEvent))
 		end,
 		can_use = function(self,card)

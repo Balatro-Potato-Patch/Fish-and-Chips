@@ -1480,7 +1480,6 @@ FishAndChips.Fish {
     config = {
         extra = {
             rank = "Queen",
-            shiny = false
         }
     },
     environments = {
@@ -1533,21 +1532,20 @@ FishAndChips.Fish {
             SMODS.recalc_debuff(playing_card)
         end
     end,
-    set_ability = function(self, card, initial, delay_sprites)
-        card.ability.extra.shiny = pseudorandom(
-            "J8-Bit_primarina_shiny", 1, 16) <= 1
-        if card.ability.extra.shiny then
-            card.children.center:set_sprite_pos({ x = 2, y = 4 })
-        else
-            card.children.center:set_sprite_pos({ x = 4, y = 2 })
-        end
-    end,
-    load = function(self, card, card_table, other_card)
-        if card.ability.extra.shiny then
-            card.children.center:set_sprite_pos({ x = 2, y = 4 })
-        else
-            card.children.center:set_sprite_pos({ x = 4, y = 2 })
-        end
+    set_sprites = function(self, card, front)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                if card.ability.extra.shiny == nil then
+                    card.ability.extra.shiny = pseudorandom("J8-Bit_primarina_shiny", 1, 16) <= 1
+                end
+                if card.ability.extra.shiny then
+                    card.children.center:set_sprite_pos({ x = 2, y = 4 })
+                else
+                    card.children.center:set_sprite_pos({ x = 4, y = 2 })
+                end
+                return true;
+            end
+        }))
     end
 }
 
