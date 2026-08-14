@@ -5,7 +5,7 @@ return {
                 name = "{f:fac_helvetica}no name",
                 text = {
                     "{f:fac_helvetica}Each played {V:1,f:fac_helvetica}#1#{}{f:fac_helvetica} has",
-                    "{f:fac_helvetica}a {C:green,E:1,fac_helvetica}#2# in #3#{}{f:fac_helvetica} chance",
+                    "{f:fac_helvetica}a {C:green,E:1,f:fac_helvetica}#2# in #3#{}{f:fac_helvetica} chance",
                     "{f:fac_helvetica}to give {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars,f:fac_helvetica}#4#{}",
                     "{f:fac_helvetica}when triggered",
                     "{f:fac_helvetica,s:0.8,c:inactive}(suit changes when exiting shop)"
