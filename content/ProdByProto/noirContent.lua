@@ -290,7 +290,7 @@ FishAndChips.ProdByProto.loadFih = function()
                 end
 
                 if context.hand_drawn then
-                    if SMODS.find_card("fish_proto_lockpick")[1] then
+                    if SMODS.find_card("fish_fac_proto_lockpick")[1] then
                         for _,card in ipairs(context.hand_drawn) do
                             if card.ability.noir_mark == "truedoor" then
                                 juice_card_until(card,(function() return context.using_consumeable and context.consumeable == self end))
