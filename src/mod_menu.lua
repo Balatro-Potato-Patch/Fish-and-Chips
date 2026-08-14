@@ -308,7 +308,7 @@ function FishAndChips.Compendium.compendium_area(amount, dim)
         for k, card in ipairs(self.cards) do
             card.states.drag.can = false
             if not card.states.drag.is then
-                card.T.x = self.T.x + 0.5*(self.T.w - (adjust or card.T.w)) + (adjust - card.T.w)/2 + (amount > 1 and ((k-2) * (adjust) * 1.2) or 0)
+                card.T.x = self.T.x + 0.5*(self.T.w - (adjust or card.T.w)) + (adjust and (adjust - card.T.w) or 0)/2 + (amount > 1 and ((k-2) * (adjust) * 1.2) or 0)
                 card.T.y = self.T.y + 0.5*(self.T.h - card.T.h)
             end
         end
