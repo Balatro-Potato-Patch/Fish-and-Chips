@@ -628,12 +628,13 @@ FishAndChips.Fish({
     can_use = function(self, card)
         for i, fish in ipairs(G.fac_fish_area.cards) do
             if fish == card and G.fac_fish_area.cards[i+1] then
+                local eternal = SMODS.is_eternal(G.fac_fish_area.cards[i+1])
                 for attribute, v in pairs(G.fac_fish_area.cards[i+1].config.center.attributes) do
-                    if v and self.scaling_types[attribute] then
+                    if v and self.scaling_types[attribute] and not eternal then
                         return true
                     end
                 end
-                return next(card.ability.extra.current_scaling)
+                return next(card.ability.extra.current_scaling) and not eternal
             end
         end
         return false
