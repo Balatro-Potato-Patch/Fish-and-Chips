@@ -25,7 +25,7 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         if context.fac_end_fishing and context.perfect and context.missed_treasure then
-            return {dollars = card.ability.extra.dollars}
+            return {dollars = card.ability.extra.money}
         end
     end
 }
