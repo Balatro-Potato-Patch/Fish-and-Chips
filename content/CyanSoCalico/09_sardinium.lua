@@ -25,6 +25,7 @@ FishAndChips.Fish {
 		wormhole = 1
 	},
 	
+	eternal_compat = false,
 	treasure = true,
 	requires_hand = true,
 

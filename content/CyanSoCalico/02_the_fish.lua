@@ -34,13 +34,14 @@ FishAndChips.Fish {
 		}
 	},
 
-    weight = 5,
+    weight = 10,
 	environments = {
-		wormhole = 5,
+		wormhole = 10,
 		styx = 0.1
 	},
 
 	blueprint_compat = false,
+	eternal_compat = false, -- ??? it's both a passive and usable Fish, not sure which to put here
 --	treasure = true,
 
 	loc_vars = function(self, info_queue, card)

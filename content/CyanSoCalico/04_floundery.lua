@@ -152,9 +152,9 @@ FishAndChips.Fish {
 		}
 	},
 
-    weight = 1,
+    weight = 5,
 	environments = {
-		garden = 1,
+		garden = 5,
 		swamp = 1,
 		backroom = 0.5,
 		wormhole = 0.1,
@@ -163,13 +163,12 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips_mod*(math.max(0, (G.fac_fish_area and #G.fac_fish_area.cards or 0) - (G.jokers and #G.jokers.cards or 0))) } }
 	end,
-	
+
 	add_to_deck = function(self,card, from_debuff)
 		if not from_debuff then
 			G.E_MANAGER:add_event(Event{
-				trigger = "after",
-				delay = 1.85,
 				blocking = false,
+				no_delete = true,
 				func = function()
 					play_sound("fac_floundery_heyguys")
 					return true

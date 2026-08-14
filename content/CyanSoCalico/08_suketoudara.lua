@@ -36,6 +36,7 @@ FishAndChips.Fish {
 	end,
 
 	blueprint_compat = false,
+	eternal_compat = false,
 	requires_hand = true,
 
 	-- Code based on get_flush() in misc_functions.lua
