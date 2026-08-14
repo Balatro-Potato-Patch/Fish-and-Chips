@@ -14,6 +14,25 @@ G.FISHING_STATES = {
 	LEAVING = 20,
 }
 
+local fac_save_run_ref = save_run
+function save_run()
+	if G.GAME then
+		G.GAME.fac_resume_fishing = (G.STATE == G.STATES.FAC_FISHING) or nil
+	end
+	return fac_save_run_ref()
+end
+
+local fac_start_run_resume_ref = Game.start_run
+function Game:start_run(...)
+	local ret = fac_start_run_resume_ref(self, ...)
+	if G.GAME.fac_resume_fishing then
+		G.GAME.fac_resume_fishing = nil
+		G.STATE = G.STATES.FAC_FISHING
+		G.STATE_COMPLETE = false
+	end
+	return ret
+end
+
 local g_update_ref = Game.update
 ---@diagnostic disable-next-line: duplicate-set-field
 function Game:update(dt)
