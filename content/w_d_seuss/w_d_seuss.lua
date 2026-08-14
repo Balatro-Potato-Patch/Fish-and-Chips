@@ -132,11 +132,10 @@ SMODS.Font({
 
 local nosell_hook = Card.can_sell_card -- Bad
 function Card:can_sell_card(context)
-	nosell_hook(self, context)
 	if self.config.center.key == 'fish_fac_bad' then
 		return false
 	else
-		return true
+		return nosell_hook(self, context)
 	end
 end
 
