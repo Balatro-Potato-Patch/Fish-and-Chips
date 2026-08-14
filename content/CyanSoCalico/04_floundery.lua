@@ -3,12 +3,22 @@ SMODS.Sound {
 	path = "CyanSoCalico/floundery_goodbye.wav"
 }
 
---[[
-
 SMODS.Sound {
 	key = "floundery_nonono",
 	path = "CyanSoCalico/floundery_nonono.wav"
 }
+
+SMODS.Sound {
+	key = "floundery_heyguys",
+	path = "CyanSoCalico/floundery_heyguys.wav"
+}
+
+SMODS.Sound {
+	key = "floundery_explosion",
+	path = "CyanSoCalico/floundery_explosion.wav"
+}
+
+--[[
 
 local alert_func = alert_no_space
 function alert_no_space(card, area)
@@ -145,18 +155,42 @@ FishAndChips.Fish {
     weight = 1,
 	environments = {
 		garden = 1,
-		wormhole = 0.1
+		swamp = 1,
+		backroom = 0.5,
+		wormhole = 0.1,
 	},
 
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips_mod*(math.max(0, (G.fac_fish_area and #G.fac_fish_area.cards or 0) - (G.jokers and #G.jokers.cards or 0))) } }
 	end,
 	
+	add_to_deck = function(self,card, from_debuff)
+		if not from_debuff then
+			G.E_MANAGER:add_event(Event{
+				trigger = "after",
+				delay = 1.85,
+				blocking = false,
+				func = function()
+					play_sound("fac_floundery_heyguys")
+					return true
+				end
+			})
+		end
+	end,
+
 	calculate = function(self, card, context)
 		if context.joker_main and #G.fac_fish_area.cards - #G.jokers.cards > 0 then
 			return {
-				chips = card.ability.extra.chips_mod * (#G.fac_fish_area.cards - #G.jokers.cards)
+				chips = card.ability.extra.chips_mod * (#G.fac_fish_area.cards - #G.jokers.cards),
+				card = context.blueprint and context.blueprint_card or card
 			}
+		end
+		if context.selling_self and not context.blueprint then
+			play_sound("fac_floundery_goodbye")
+		end
+		if context.joker_type_destroyed and context.card == card and not context.blueprint then
+			play_sound("fac_floundery_goodbye")
+			play_sound("fac_floundery_explosion", nil, 0.3)
 		end
 	end,
 }

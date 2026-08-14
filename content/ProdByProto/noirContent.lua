@@ -416,17 +416,17 @@ FishAndChips.ProdByProto.loadFih = function()
 		end,
 
         can_use = function (self, card)
-            for _,card in ipairs(context.hand_drawn) do
-                if card.ability.noir_mark == "truedoor" then
+            for _,held_card in ipairs(G.hand.cards) do
+                if held_card.ability.noir_mark == "truedoor" then
                     return true
                 end
             end
         end,
 
         use = function (self, card)
-            for _,card in ipairs(context.hand_drawn) do
-                if card.ability.noir_mark == "truedoor" then
-                    card.ability.noir_mark = "door"
+            for _,held_card in ipairs(G.hand.cards) do
+                if held_card.ability.noir_mark == "truedoor" then
+                    held_card.ability.noir_mark = "door"
                 end
             end
         end,
@@ -436,8 +436,8 @@ FishAndChips.ProdByProto.loadFih = function()
 			local cae = card.ability.extra
 
 			if context.hand_drawn then
-                for _,card in ipairs(context.hand_drawn) do
-                    if card.ability.noir_mark == "truedoor" then
+                for _,held_card in ipairs(context.hand_drawn) do
+                    if held_card.ability.noir_mark == "truedoor" then
                         juice_card_until(self,(function() return context.using_consumeable and context.consumeable == self end))
                     end
                 end

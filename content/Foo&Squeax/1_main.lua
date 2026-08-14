@@ -133,7 +133,7 @@ function FishAndChips.FooSqueax.sqx_credit_ui_fish()
 		"kawkaw",
 		"annoying_fish",
 		"isreal",
-		"super_bo_noise",
+		--"super_bo_noise",
 		"kine",
 		'tsundere',
 		'you',

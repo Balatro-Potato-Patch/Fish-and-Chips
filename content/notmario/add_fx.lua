@@ -71,7 +71,7 @@ end
 function PotatoPatchUtils.Developers.fac_notmario.add_extra_multiboxes(_c, info_queue, card, desc_nodes, specific_vars, full_UI_table, ability)
     if not G.fac_fish_area then return nil end
 
-    if ability and ability.fac_mf_sap_chips or ability.fac_mf_sap_mult then
+    if ability and (ability.fac_mf_sap_chips or ability.fac_mf_sap_mult) then
         local required_key = "fac_mf_sap_chult"
         if not ability.fac_mf_sap_chips then required_key = "fac_mf_sap_mult" end
         if not ability.fac_mf_sap_mult then required_key = "fac_mf_sap_chips" end
