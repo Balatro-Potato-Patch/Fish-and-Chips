@@ -239,7 +239,7 @@ FishAndChips.Fish {
 
     draw = function(self, card, layer)
         local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[card.key] or {}
-        if not card.area.config.fac_compendium or fish_data.times_caught and fish_data.times_caught > 0 then
+        if not (card.area and card.area.config and card.area.config.fac_compendium) or fish_data.times_caught and fish_data.times_caught > 0 then
             card.children.center:draw_shader("booster", nil, card.ARGS.send_to_shader)
         end
     end,
