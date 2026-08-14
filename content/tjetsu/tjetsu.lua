@@ -156,7 +156,13 @@ FishAndChips.Fish { -- Ineffa
 				ref_table = card.ability.extra,
 				ref_value = "ucount",
 				scalar_value = "pscale",
-				message_key = "a_remaining",
+				scaling_message = {
+					message = localize {
+						type = "variable",
+						key = "a_remaining",
+						vars = { card.ability.extra.ucount + card.ability.extra.pscale }
+					}
+				}
 			})
 		end
 		if context.repetition and context.cardarea == G.play and card.ability.extra.ucount > 0 then
