@@ -3,7 +3,7 @@ FishAndChips.Fish {
     weight = 5,
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
-    attributes = { "chips" },
+    attributes = { "chips", "sell_value", "lose_economy", },
     stats = { weight = { min = 1, max = 1 }, length = { min = 1, max = 1 } },
     atlas = 'fac_vv_fish',
     pos = { x = 5, y = 0 },
@@ -22,15 +22,14 @@ FishAndChips.Fish {
         wormhole = 1,
     }, -- you can find ts everywhere it will not be funny
     cost = 1,
-    config = { extra = { chips = 0 } },
+    config = { extra = { chips = 1 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.chips } }
+        return { vars = { card.ability.extra.chips * G.GAME.fac_sand_dollars } }
     end,
     calculate = function(self, card, context)
-        card.ability.extra.chips = (G.GAME.fac_sand_dollars)
         if context.joker_main then
             return {
-                chips = card.ability.extra.chips
+                chips = card.ability.extra.chips * G.GAME.fac_sand_dollars
             }
         end
     end
@@ -53,20 +52,9 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         if context.setting_blind then
-            G.E_MANAGER:add_event(Event({
-                trigger = 'after',
-                delay = 0.1,
-                func = function()
-                    G.GAME.blind.chips = math.floor(G.GAME.blind.chips * card.ability.extra.x_blind)
-                    G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
-
-                    local chips_UI = G.hand_text_area.blind_chips
-                    G.FUNCS.blind_chip_UI_scale(G.hand_text_area.blind_chips)
-                    G.HUD_blind:recalculate()
-                    chips_UI:juice_up()
-                    return true
-                end
-            }))
+            return {
+                xblindsize = card.ability.extra.x_blind
+            }
         end
     end,
 }
@@ -87,11 +75,11 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         if context.fac_end_fishing and not context.failed then
-            card.ability.extra.x_chips = card.ability.extra.x_chips + card.ability.extra.chipsmodifier
-            return {
-                message = "Upgraded!",
-                colour = G.C.ATTENTION
-            }
+            SMODS.scale_card(card, {
+				ref_table = card.ability.extra,
+				ref_value = "x_chips",
+				scalar_value = "chipsmodifier",
+			})
         end
         if context.joker_main then
             return {
@@ -130,7 +118,7 @@ FishAndChips.Fish {
     weight = 6,
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
-    attributes = { "chips" },
+    attributes = { "chips", "undertale", "utdr", },
     stats = { weight = { min = 66.6, max = 66.6 }, length = { min = 6, max = 6 } },
     environments = {
         styx = 6,
@@ -167,7 +155,7 @@ FishAndChips.Fish {
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
     stats = { weight = { min = 0.04, max = 0.1 }, length = { min = 1, max = 1 } },
-    attributes = {},
+    attributes = { "chips", "hands", },
     atlas = 'fac_vv_fish',
     pos = { x = 3, y = 0 },
     environments = { pier = 3, aquifer = 2, city_river = 0.9 },
@@ -177,13 +165,12 @@ FishAndChips.Fish {
         return { vars = { card.ability.extra.mult } }
     end,
     calculate = function(self, card, context)
-        if context.individual and context.cardarea == G.play then
-            for _, playing_card in ipairs(context.scoring_hand) do
-                if #context.scoring_hand == 5 then
-                    return {
-                        mult = card.ability.extra.mult
-                    }
-                end
+        -- Can i give myself code credit pretty please (mf)
+        if context.individual and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
+            if #context.scoring_hand == #G.play.cards then
+                return {
+                    mult = card.ability.extra.mult
+                }
             end
         end
     end
@@ -195,7 +182,7 @@ FishAndChips.Fish {
     stats = { weight = { min = 1, max = 3 }, length = { min = 1, max = 1 } },
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
-    attributes = { "xmult", "boss_blind" },
+    attributes = { "xmult", "boss_blind", "destroy_card", "scaling", },
     atlas = 'fac_vv_fish',
     pos = { x = 4, y = 0 },
     environments = { calm_pond = 3, pier = 2.2, backroom = 1, wormhole = 1 },
@@ -206,8 +193,15 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         if context.setting_blind and not context.blueprint and context.blind.boss then
-            -- See note about SMODS Scaling Manipulation on the wiki
-            card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_gain
+            -- Does Madness still gain XMult when it doesn't destroy a card? (mf)
+            SMODS.scale_card(card, {
+				ref_table = card.ability.extra,
+				ref_value = "xmult",
+				scalar_value = "xmult_gain",
+				message_key = "a_xmult",
+				message_colour = G.C.RED,
+			})
+
             local destructable_jokers = {}
             for i = 1, #G.fac_fish_area.cards do
                 if G.fac_fish_area.cards[i] ~= card and not SMODS.is_eternal(G.fac_fish_area.cards[i], card) and not G.fac_fish_area.cards[i].getting_sliced then
@@ -227,7 +221,7 @@ FishAndChips.Fish {
                     end
                 }))
             end
-            return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.xmult } } }
+            return nil, true
         end
         if context.joker_main then
             return {
@@ -243,7 +237,7 @@ FishAndChips.Fish {
     stats = { weight = { min = 1, max = 3 }, length = { min = 1, max = 1 } },
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
-    attributes = { 'suit', 'retrigger' },
+    attributes = { 'suit', 'retrigger', "debuff", },
     atlas = 'fac_vv_fish',
     pos = { x = 7, y = 0 },
     environments = { calm_pond = 3 },
@@ -255,15 +249,13 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         if context.cardarea == G.play and context.repetition and context.other_card:is_suit_shade('dark') then
             return {
-                message = 'Again!',
-                repetitions = 1,
-                card = context.other_card
+                repetitions = 1
             }
         end
         if context.individual and context.cardarea == G.play and context.other_card:is_suit_shade('light') then
             SMODS.debuff_card(card, true, 'sunlight')
             return {
-                message = "Zzzzz....",
+                message = "Zzzzz....", -- TODO: localize
                 colour = G.C.DARK_EDITION
             }
         end
@@ -296,7 +288,10 @@ FishAndChips.Fish {
         check_for_unlock({ type = 'have_edition' })
     end,
     can_use = function(self, card)
-        return next(SMODS.Edition:get_edition_cards(G.fac_fish_area, true))
+        local edition_cards = SMODS.Edition:get_edition_cards(G.fac_fish_area, true)
+        for _, other_card in ipairs(edition_cards) do
+            if other_card ~= card then return true end
+        end
     end
 }
 
@@ -332,14 +327,14 @@ FishAndChips.Fish {
     ppu_coder = { "FireIce" },
     ppu_artist = { "Willow" },
     stats = { weight = { min = 1, max = 1 }, length = { min = 1, max = 1 } },
-    attributes = { 'generation' },
+    attributes = { 'generation', "tarot", "planet", "spectral", },
     atlas = 'fac_vv_fish',
     pos = { x = 6, y = 0 },
     environments = { calm_pond = 1, pier = 1, city_river = 1 },
     cost = 4,
-    config = { extra = { sand_dollar = 1 } },
+    config = { extra = { } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.sand_dollar } }
+        return { vars = { } }
     end,
     use = function(self, card, area)
         for i = 1, math.min(1, G.consumeables.config.card_limit - #G.consumeables.cards) do

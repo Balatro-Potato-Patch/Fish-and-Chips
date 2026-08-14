@@ -161,7 +161,7 @@ FishAndChips.Fish { --Trust
 	weight = 6,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
-	attributes = { "mod_chance" }, 
+	attributes = { "mod_chance", "hands", },
 	config = {extra = {odds_add = 2}},
 	stats = { weight = { min = 20*2, max = 21*2 }, length = {min = 0.17*1.8, max = 0.251*1.9}},
 	environments = {
@@ -198,7 +198,7 @@ FishAndChips.Fish { --Manos
 	weight = 2,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
-	attributes = { "usable", "retrigger", "destroy_card", "self_eternal" },
+	attributes = { "usable", "retrigger", "destroy_card", "self_eternal", "hand_type", "hands", }, -- is self_eternal even an attribute like. anywhere (mf)
 	config = {
 		extra = {
 			active = false,
@@ -357,7 +357,7 @@ FishAndChips.Fish { --Necklace
 	weight = 3,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
-	attributes = { "editions" },
+	attributes = { "editions", "deltarune", "utdr", }, -- Flavour text (mf)
 	stats = { weight = { min = 0.01, max = 0.09 }, length = {min = 0.4, max = 0.6}},
 	environments = {
 		pier = 0.6, city_river = 1
@@ -433,9 +433,9 @@ FishAndChips.Fish { --Timothy
 	weight = 4,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
-	attributes = { "xmult", "reset", "usable" },
+	attributes = { "xmult", "reset", "usable", "scaling", },
 	pronouns = "he_him",
-	stats = { weight = { min = 21*6/2, max = 67*7/2 --[[i dont like 67 but it fits here]] }, length = {min = 0.17*4, max = 0.256*4}},
+	stats = { weight = { min = 21*6/2, max = 67*7/2 --[[i dont like 67 but it fits here]] --[[good for you (mf)]] }, length = {min = 0.17*4, max = 0.256*4}},
 	environments = {
 		calm_pond = 0.5, pier = 0.9
 	},
@@ -552,7 +552,7 @@ FishAndChips.Fish { --Navy Blade
 	weight = 4,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
-	attributes = { "xblindsize", "usable", "economy", "reset" }, 
+	attributes = { "xblindsize", "usable", "economy", "reset" },
 	config = {extra = {uses = 0, uses_max = 6, xblindsize = 1.2, dollars = 5}},
 	stats = { weight = { min = 580, max = 770 }, length = {min = 2.7, max = 3.451}},
 	environments = {
@@ -595,7 +595,7 @@ local fuck = FishAndChips.Fish { --fuck
 	weight = 7,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
-	attributes = { "usable" }, 
+	attributes = { "usable" },
 	config = {extra = 3, choose = 1},
 	stats = { weight = { min = 0.6*10, max = 0.6618*10.5 }, length = {min = 0.015*15, max = 0.0234*15.5}},
 	environments = {

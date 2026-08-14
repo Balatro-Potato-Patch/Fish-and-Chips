@@ -341,7 +341,7 @@ FishAndChips.Fish {
 	weight = 8,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "treasure", "usable", "generation", "deltarune" },
+	attributes = { "treasure", "usable", "generation", "deltarune", "utdr", },
 	config = {
 		extra = {
 		}
@@ -1013,7 +1013,7 @@ FishAndChips.Fish {
 	weight = 6,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "generation", "deltarune" },
+	attributes = { "generation", "deltarune", "utdr", },
 	config = {
 		extra = {
 			f1 = true,
@@ -1103,7 +1103,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "sell_value", "scaling", "economy", "deltarune" },
+	attributes = { "sell_value", "scaling", "economy", "deltarune", "utdr", },
 	config = {
 		extra = {
 			price = 1
@@ -1147,7 +1147,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "mult", "deltarune", "position", },
+	attributes = { "mult", "deltarune", "position", "utdr", },
 	config = {
 		extra = {
 			mult = 5
@@ -1199,7 +1199,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "economy", "usable", "deltarune" },
+	attributes = { "economy", "usable", "deltarune", "utdr", },
 	config = {
 		extra = {
 			dollar = 66
@@ -1242,7 +1242,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "destroy_card", "chance", "usable", "deltarune" },
+	attributes = { "destroy_card", "chance", "usable", "deltarune", "utdr", },
 	config = {
 		extra = {
 			max_highlighted = 3
@@ -1341,7 +1341,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "modify_card", "perma_bonus", "usable", "deltarune" },
+	attributes = { "modify_card", "perma_bonus", "usable", "deltarune", "utdr", },
 	config = {
 		extra = {
 			max_highlighted = 4,
@@ -1436,7 +1436,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "modify_card", "enhancements", "usable", "deltarune" },
+	attributes = { "modify_card", "enhancements", "usable", "deltarune", "utdr", },
 	config = {
 		extra = {
 			amount = 5,
@@ -1509,7 +1509,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Jolyne" },
-	attributes = { "score", "xblindsize", "usable", "deltarune" },
+	attributes = { "score", "xblindsize", "usable", "deltarune", "utdr", },
 	config = {
 		extra = {
 			blind = 20
