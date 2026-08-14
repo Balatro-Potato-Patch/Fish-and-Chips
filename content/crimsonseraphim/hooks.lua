@@ -373,7 +373,7 @@ FishAndChips.crimsonseraphim.omega_text = {
     },
     {
         face = 1,
-        "well, thats just pefect."
+        "well, thats just perfect."
     },
     {
         face = 0,
