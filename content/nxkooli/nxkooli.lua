@@ -407,7 +407,7 @@ FishAndChips.Fish {
 			end
 		end
 		
-		print(best_letter)
+		-- print(best_letter)
 		return best_letter
 	end,
 	
