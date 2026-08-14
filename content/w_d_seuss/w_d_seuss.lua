@@ -613,14 +613,14 @@ FishAndChips.Fish {
 				fish_sliced.getting_sliced = true
 				G.E_MANAGER:add_event(Event({
 					func = function()
-					    card.ability.extra.scalar_sell_cost = fish_sliced.sell_cost * 2
     					SMODS.scale_card (card, {
     					    ref_table = card.ability.extra,
     						ref_value = "mult",
-    						scalar_value = "scalar_sell_cost",
+                            scalar_table = fish_sliced,
+    						scalar_value = "sell_cost",
+                            scalar_factor = 2,
     						no_message = true,
     					})
-                        card.ability.extra.scalar_sell_cost = nil
 						card:juice_up(0.8, 0.8)
 						play_sound('slice1', 0.96 + math.random() * 0.08)
 						fish_sliced:start_dissolve({ G.C.RED }, nil, 1.6)
@@ -633,14 +633,14 @@ FishAndChips.Fish {
 		elseif card.ability.extra.attack == "Cleave" then
 			G.E_MANAGER:add_event(Event({
 				func = function()
-                    card.ability.extra.scalar_rank = G.hand.highlighted[1].base.id * 3
    					SMODS.scale_card (card, {
    					    ref_table = card.ability.extra,
   						ref_value = "chips",
-  						scalar_value = "scalar_rank",
+                        scalar_table = G.hand.highlighted[1].base,
+  						scalar_value = "id",
+                        scalar_factor = 3,
   						no_message = true,
    					})
-                    card.ability.extra.scalar_rank = nil
 					card:juice_up(0.8, 0.8)
 					play_sound('slice1', 0.96 + math.random() * 0.08)
 					SMODS.destroy_cards(G.hand.highlighted)
@@ -1123,13 +1123,14 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.fac_end_fishing then
-    		SMODS.scale_card(self, {
-                ref_table = self.ability,
+    		SMODS.scale_card(card, {
+                ref_table = card.ability,
                 ref_value = "extra_value",
-                scalar_value = "extra",
+                scalar_table = card.ability.extra,
+                scalar_value = "price",
                 scaling_message = {
                     message = localize('k_val_up'),
-                    colour = G.C.MONEY
+                    colour = G.C.SAND_DOLLAR
                 }
             })
             card:set_cost()

@@ -1,3 +1,4 @@
+-- TODO: Port all uses of set_card_type_badge to badge_key
 FishAndChips.Fish {
 	key = "tss_shadow_cryscarp",
 	atlas = "tss_azfish",
@@ -35,7 +36,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 200, max = 250}, length = {min = 2, max = 3}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
-	attributes = { "passive" },
+	attributes = { "passive", "hands", "destroy_card", },
 	config = { extra = { blu = false } },
 	blueprint_compat = false,
 	environments = {
@@ -46,7 +47,7 @@ FishAndChips.Fish {
 		if context.after and not context.blueprint and not context.retrigger_joker and G.GAME.current_round.hands_left <= 0 and G.GAME.chips < G.GAME.blind.chips and SMODS.find_card(card.config.center_key)[1]==card then
 			ease_hands_played(G.GAME.round_resets.hands)
 			G.E_MANAGER:add_event(Event{func = function()
-				SMODS.destroy_cards(card)	
+				SMODS.destroy_cards(card)
 			return true end})
 
 			return {
@@ -77,7 +78,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 2000, max = 2500}, length = {min = 7, max = 10}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
-	attributes = { "chips", "xmult", "generation" },
+	attributes = { "chips", "xmult", "generation", "on_sell", "destroy_card", "chance", },
 	config = { extra = { chips = 100, xmult = 2.5, count = 4, odds = 40 } },
 	environments = {
 		pier = 10,
@@ -128,7 +129,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 800, max = 1000}, length = {min = 5, max = 7}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
-	attributes = { "xchips" }, -- not a bait attribute but oh well
+	attributes = { "xchips", "chance", "destroy_card" }, -- not a bait attribute but oh well -- I have good news for you (mf)
 	config = { extra = { odds = 20, xchips = 1.5 } },
 	environments = {
 		pier = 10,
@@ -169,7 +170,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 3, max = 5}, length = {min = .8, max = 1.2}}, -- pls replace later
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
-	attributes = { "xmult", "active", "destroy_cards" },
+	attributes = { "xmult", "usable", "scaling", "destroy_card", "position" },
 	environments = {
 		styx = 10,
 		swamp = 2
@@ -181,7 +182,14 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if card.ability.extra.xmult ~= 1 then
 			if context.ante_change and context.ante_end and not card.ability.extra.antecheck then
-				card.ability.extra.xmult = math.max(card.ability.extra.xmult-card.ability.extra.lose, 1)
+				-- card.ability.extra.xmult = math.max(card.ability.extra.xmult-card.ability.extra.lose, 1)
+				SMODS.scale_card(card, {
+					ref_value = "xmult",
+					scalar_value = "lose",
+					no_message = true,
+					operation = "-",
+				})
+				if card.ability.extra.xmult <= 1 then card.ability.extra.xmult = 1 end
 				return {
 					message = localize("fac_tss_cult_fail")
 				}
@@ -197,10 +205,14 @@ FishAndChips.Fish {
 		for i = 1, #card.area.cards do
 			if card.area.cards[i] == card then self_pos = i break end
 		end
-		
+
 		local t = card.area.cards[self_pos+1]
 		SMODS.destroy_cards(t)
-		card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_mod
+		SMODS.scale_card(card, {
+			ref_value = "xmult",
+			scalar_value = "xmult_mod",
+			no_message = true,
+		})
 		G.E_MANAGER:add_event(Event({func = function()
 			card.ability.extra.triggering = false
 		return true end}))
@@ -210,7 +222,7 @@ FishAndChips.Fish {
 		for i = 1, #card.area.cards do
 			if card.area.cards[i] == card then self_pos = i break end
 		end
-		
+
 		return card.area.cards[self_pos+1] and not card.ability.extra.antecheck
 	end,
 	keep_on_use = function (self, card)
@@ -228,7 +240,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 0, max = 0}, length = {min = 0, max = 0}}, -- pls replace later
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
-	attributes = { "passive" },
+	attributes = { "passive", "chance", "editions" },
 	environments = {
 		garden = 10
 	},
@@ -254,7 +266,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 0, max = 0}, length = {min = 0, max = 0}}, -- pls replace later
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
-	attributes = { "mult", "suit" },
+	attributes = { "mult", "suit", "hearts", "modify_card", "perma_bonus", },
 	environments = {
 		city_river = 10,
 		calm_pond = 8

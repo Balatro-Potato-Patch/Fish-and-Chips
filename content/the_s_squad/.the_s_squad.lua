@@ -66,7 +66,7 @@ PotatoPatchUtils.Developer{
 
 			f.tss_cheshed = true
 			f.states.click.can = false
-			
+
 			if FishAndChips.TheShitSquad.force_swoon or pseudorandom("fac_tss_chesh_swoon",1,225)==1 or os.date("%m%d",os.time()) == "1225" then
 				FishAndChips.TheShitSquad.force_swoon = false
 				G.E_MANAGER:add_event(Event({func=function()
@@ -76,7 +76,7 @@ PotatoPatchUtils.Developer{
 					play_sound("fac_tss_swoon_knight_cut2", .12, 8)
 					play_sound("fac_tss_swoon_knight_cut2", .18, 8)
 					play_sound("fac_tss_swoon_knight_cut2", .24, 8)
-					
+
 					for _, v in ipairs(cheshlist) do
 						v.area:remove_card(v)
 						G.FISHING.fac_fish_reward_area:emplace(v)
@@ -95,7 +95,7 @@ PotatoPatchUtils.Developer{
 					play_sound("fac_tss_swoon_glassbreak", .3, .6)
 					FishAndChips.TheShitSquad.swoon_text_timer = 5
 				return true end}))
-				
+
 				G.E_MANAGER:add_event(Event({func=function()
 					for _, v in ipairs(cheshlist) do
 						v.ability.extra.xmult = v.ability.extra.xmult + v.ability.extra.xmult_mod
@@ -105,7 +105,7 @@ PotatoPatchUtils.Developer{
 						return true end}))
 					end
 				return true end}))
-				
+
 				return
 			end
 
@@ -153,7 +153,11 @@ PotatoPatchUtils.Developer{
 				SMODS.destroy_cards(f)
 				f:start_dissolve({HEX("917bad")})
 				for _, v in ipairs(cheshlist) do
-					v.ability.extra.xmult = v.ability.extra.xmult + v.ability.extra.xmult_mod
+				    SMODS.scale_card (v, {
+						ref_value = "xmult",
+						scalar_value = "xmult_mod",
+						no_message = true,
+					})
 				end
 			return true end}))
 
@@ -369,7 +373,7 @@ SMODS.ScreenShader {
 
 		love.graphics.setShader(encode)
 		jpeg_buffer:renderTo(jpeg_draw, canvas)
-		
+
 		love.graphics.setShader(decode)
 		love.graphics.draw(jpeg_buffer,0,0)
 	end

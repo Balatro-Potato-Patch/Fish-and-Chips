@@ -48,7 +48,7 @@ FishAndChips.Fish { -- Candy Blossom Cod
 	stats = {weight = {min = 5, max = 20}, length = {min = 1.8, max = 2}},
 	ppu_coder = { "Tjetsu" },
 	ppu_artist = { "Tjetsu" },
-	attributes = { "economy" },
+	attributes = { "sell_value", "passive", },
 	environments = {
 		chocolate_river = 15
 	},
@@ -102,7 +102,7 @@ FishAndChips.Fish { -- Candy Blossom Cod
 
 		local r = rangesw[tier]
 		local l = rangesl[tier]
-		
+
 		card.ability.stats.weight = round(pseudorandomdecimal("CBC_WEIGHT_A", r[1], r[2]) * pseudorandomdecimal("CBC_WEIGHT_B", r[3], r[4]), 2)
 		card.ability.stats.length = round(pseudorandomdecimal("CBC_LENGTH_A", l[1], l[2]) * pseudorandomdecimal("CBC_LENGTH_B", l[3], l[4]), 2)
 		-- Find Mutation
@@ -138,7 +138,7 @@ FishAndChips.Fish { -- Ineffa
 	weight = 15,
 	ppu_coder = { "Tjetsu" },
 	ppu_artist = { "Tjetsu" },
-	attributes = { "retrigger" },
+	attributes = { "retrigger", "fac_perfect_catch" },
 	environments = {
 		volcano = 11,
 		wormhole = 6
@@ -152,11 +152,12 @@ FishAndChips.Fish { -- Ineffa
 
 	calculate = function(self, card, context)
 		if context.perfect and context.fac_end_fishing then
-			print("+2")
-			card.ability.extra.ucount = card.ability.extra.ucount+card.ability.extra.pscale
-			return {
-				message = "+"..card.ability.extra.pscale
-            }
+		    SMODS.scale_card ( card, {
+				ref_table = card.ability.extra,
+				ref_value = "ucount",
+				scalar_value = "pscale",
+				message_key = "a_remaining",
+			})
 		end
 		if context.repetition and context.cardarea == G.play and card.ability.extra.ucount > 0 then
 			return {
@@ -167,7 +168,7 @@ FishAndChips.Fish { -- Ineffa
 		if context.end_of_round and context.main_eval and card.ability.extra.ucount > 0 then
 			card.ability.extra.ucount = card.ability.extra.ucount-1
 			return {
-				message = card.ability.extra.ucount.." Remaining",
+				message = card.ability.extra.ucount.." Remaining", -- TODO: Localize
 				card = card
             }
 		end
@@ -183,7 +184,7 @@ FishAndChips.Fish { --Sans
 	weight = 15,
 	ppu_coder = { "Tjetsu" },
 	ppu_artist = { "Tjetsu" },
-	attributes = { "chips" },
+	attributes = { "chips", "scaling", "rank", "ace", "reset", },
 	environments = {
 		styx = 13,
 		wormhole = 5
@@ -199,27 +200,21 @@ FishAndChips.Fish { --Sans
 			card.ability.extra.flag = true
 		end
 		if context.failed and context.fac_end_fishing then
-			card.ability.extra.chipscale = card.ability.extra.chipscale+card.ability.extra.chipfailscale
-			card_eval_status_text(card, 'extra', nil, nil, nil, {message = ("Upgrade!")})
+		SMODS.scale_card (card, {
+            ref_table = card.ability.extra,
+            ref_value = "chipscale",
+            scalar_value = "chipfailscale",
+        })
 		end
 		if context.hand_drawn then
 			for i, v in ipairs(context.hand_drawn) do
 				if context.hand_drawn[i]:get_id() == 14 then
-					G.E_MANAGER:add_event(Event({
-						trigger = 'after',
-						delay = 0.3,
-						func = function()
-							card.ability.extra.count = card.ability.extra.count+1
-							card.ability.extra.scorechips = card.ability.extra.scorechips+card.ability.extra.chipscale
-							
-							return true
-						end
-					}))
+				    SMODS.scale_card (card, {
+						ref_table = card.ability.extra,
+						ref_value = "scorechips",
+						scalar_value = "chipscale",
+					})
 				end
-			end
-			if card.ability.extra.count ~= 0 then
-				card_eval_status_text(card, 'extra', nil, nil, nil, {message = ("+"..card.ability.extra.chipscale*card.ability.extra.count)})
-				card.ability.extra.count = 0
 			end
 		end
 		if context.joker_main then
@@ -229,10 +224,13 @@ FishAndChips.Fish { --Sans
 		end
 		if context.end_of_round and card.ability.extra.flag == true then
 			card.ability.extra.flag = false
-			card.ability.extra.scorechips = card.ability.extra.defaultchips
-			card_eval_status_text(card, 'extra', nil, nil, nil, {message = ("Reset")})
+			SMODS.reset_card (card, {
+			    ref_table = card.ability.extra,
+				ref_value = "scorechips",
+				reset_value = card.ability.extra.defaultchips,
+			})
 		end
-	end			
+	end
 }
 
 -- Furina was scrapped, sorry...

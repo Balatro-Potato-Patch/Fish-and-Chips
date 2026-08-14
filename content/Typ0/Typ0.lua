@@ -69,7 +69,7 @@ FishAndChips.Fish {
     },
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "TigerThawk" },
-	attributes = { "retrigger" },
+	attributes = { "retrigger", "hands", "fac_fish_slot", },
 	config = {
 		card_limit = -1,
 		extra = {
@@ -170,7 +170,7 @@ FishAndChips.Fish {
     },
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
-	attributes = { "passive" },
+	attributes = { "passive" }, -- i guess this is technically a passive "it doesn't do anything" "no, it *does* nothing" (mf)
 	environments = {
 		wormhole = 1,
 		pier = 10,
@@ -196,7 +196,7 @@ FishAndChips.Fish {
     },
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
-	attributes = { "economy" },
+	attributes = { "economy", "fac_perfect_catch", },
 	environments = {
 		city_river = 10,
 	},
@@ -251,7 +251,7 @@ FishAndChips.Fish {
 	cost = 0,
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
-	attributes = { "xmult" },
+	attributes = { "on_sell", },
 	environments = {
 		city_river = 10,
 	},
@@ -311,7 +311,7 @@ FishAndChips.Fish {
 	cost = 0,
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
-	attributes = { "mult" },
+	attributes = { "mult", "face", },
 	environments = {
 		city_river = 10,
 	},
@@ -339,7 +339,7 @@ FishAndChips.Fish {
 					'fac_Klaus_help',
 					'fac_Klaus_regards',
 				}
-				local messages = {
+				local messages = { -- TODO: localize?
 					"Sit Your Ass On The Ground!",
 					"I want to be Balls Deep in Egg Salad!",
 					"That's Right Bitches!",

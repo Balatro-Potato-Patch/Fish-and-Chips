@@ -87,7 +87,7 @@ table.insert(fishregistry, {
 	flavour_vars = function(self, info_queue, card)
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 0.5, 0.5, 'fac_theonegoofali_thefish', { x = 0, y = 0 } ) } } }
 	end,
-	attributes = { "rank" },
+	attributes = { "rank", "destroy_card", "hands", },
 	environments = {
 		wormhole = 5,
 		soup = 5,
@@ -96,7 +96,7 @@ table.insert(fishregistry, {
 	blueprint_compat = true,
 	calculate = function(self, card, context)
 		if context.retrigger_joker then return end
-		
+
 		if context.after then
 			if not context.blueprint then card.ability.extra.cr = card.ability.extra.cr + 1 end
 			if card.ability.extra.cr < card.ability.extra.tr then
@@ -214,7 +214,7 @@ table.insert(fishregistry, {
 	end,
 	calculate = function(self, card, context)
 		if context.retrigger_joker then return end
-		
+
 		if context.fac_toga_modify_rank and tonumber(context.amount) then return { amount = 1 } end
 	end,
 	display_size = { w = 71, h = 84 },
@@ -303,9 +303,9 @@ table.insert(fishregistry, {
 	end,
 	calculate = function(self, card, context)
 		if context.initial_scoring_step then return { mult = card.ability.extra.mult } end
-		
+
 		if context.retrigger_joker or context.blueprint then return end
-		
+
 		if context.debuff_hand then
 			local db = true
 			for k, v in pairs(context.scoring_hand or {}) do
@@ -408,9 +408,9 @@ local getflushref = get_flush
 function get_flush(hand)
 	local ret = getflushref(hand)
 	if next(ret) then return ret end
-	
+
 	if not next(SMODS.find_card('fish_fac_theonegoofali_yellow_tang')) then return {} end
-	
+
 	ret = {}
 	local four_fingers = SMODS.four_fingers('flush')
 	if #hand < four_fingers then return ret

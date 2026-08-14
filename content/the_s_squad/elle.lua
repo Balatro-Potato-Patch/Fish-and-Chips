@@ -1,3 +1,4 @@
+-- TODO: Port all uses of set_card_type_badge to badge_key
 FishAndChips.Fish {
 	key = "tss_chesh",
 	atlas = "tss_ellefish",
@@ -6,7 +7,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 250, max = 350}, length = {min = 2.5, max = 3.5}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
-	attributes = { "xmult", "destroy_card" },
+	attributes = { "xmult", "destroy_card", "scaling", "chance", },
 	config = { extra = { xmult = 1, xmult_mod = .5, odds = 4 } },
 	environments = {
 		backroom = 5,
@@ -25,7 +26,7 @@ FishAndChips.Fish {
 		-- Chesh eating handled in dev calculate so they can all flock at once like hungry pirahnas
 		if context.joker_main and card.ability.extra.xmult ~= 1 then return { xmult = card.ability.extra.xmult } end
 	end,
-	set_card_type_badge = function(self, card, badges)
+	set_card_type_badge = function(self, card, badges) -- TODO: Make its own loc_key
 		badges[#badges + 1] = create_badge('"'..localize("k_fac_fish")..'"', FishAndChips.C.FISH, G.C.WHITE, 1.2)
 	end,
 	unlocked = false,
@@ -47,7 +48,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 75, max = 100}, length = {min = 1, max = 1.75}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
-	attributes = { "mult" },
+	attributes = { "mult", "scaling", },
 	config = { extra = { mult = 0, mult_mod = 2 } },
 	environments = {
 		city_river = 1,
@@ -59,9 +60,10 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and not context.blueprint then
-			card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-			
-			return { message = localize("k_upgrade_ex") }
+		    SMODS.scale_card(card, {
+				ref_value = "mult",
+				scalar_value = "mult_mod",
+			})
 		end
 
 		if context.joker_main then return { mult = card.ability.extra.mult } end
@@ -147,7 +149,7 @@ FishAndChips.Fish {
 	}}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
-	attributes = { "generation" },
+	attributes = { "generation", "position", },
 	environments = {
 		wormhole = 5,
 		backroom = 4
@@ -160,7 +162,7 @@ FishAndChips.Fish {
 			for i = 1, #card.area.cards do
 				if card.area.cards[i] == card then self_pos = i break end
 			end
-			
+
 			if card.area.cards[self_pos+1] then
 				devs[1] = PotatoPatchUtils.Developers["fac_"..card.area.cards[self_pos+1].config.center.ppu_coder[1] ]
 				devs[2] = devs[1].fac_partner and PotatoPatchUtils.Developers[devs[1].fac_partner] or nil
@@ -171,7 +173,7 @@ FishAndChips.Fish {
 				retvars.colours[#retvars.colours+1] = v.colour
 			end
 		end
-		
+
 		return {vars = retvars, key = #devs>0 and self.key..#devs or nil}
 	end,
 	calculate = function(self, card, context)
@@ -227,7 +229,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = .003, max = .02}, length = {min = .03, max = .07}}, -- average caviar servings. in case you haven't been able to tell by now, i'm doing my research
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
-	attributes = { "economy" },
+	attributes = { "economy", "sell_value", },
 	config = { extra = { mod = 2 } },
 	environments = {
 		city_river = 3,
@@ -238,12 +240,18 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-			card.ability.extra_value = card.ability.extra_value + card.ability.extra.mod
-			card:set_cost()
-			return {
-				message = localize('k_val_up'),
-				colour = G.C.SAND_DOLLAR
-			}
+    		SMODS.scale_card(card, {
+                ref_table = card.ability,
+                ref_value = "extra_value",
+                scalar_table = card.ability.extra,
+                scalar_value = "mod",
+                scaling_message = {
+                    message = localize('k_val_up'),
+                    colour = G.C.SAND_DOLLAR
+                }
+            })
+            card:set_cost()
+            return nil, true
 		end
 	end,
 	set_card_type_badge = function(self, card, badges)
@@ -259,7 +267,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 15, max = 25}, length = {min = .3, max = .5}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
-	attributes = { "rank" },
+	attributes = { "rank", "queen", "chance", "modify_card", },
 	config = { extra = { odds = 5 } },
 	environments = {
 		city_river = 4,
@@ -278,7 +286,7 @@ FishAndChips.Fish {
 					list[#list+1] = v
 				end
 			end
-			
+
 			for i, c in ipairs(list) do
 				G.E_MANAGER:add_event(Event({
 					trigger = 'immediate',
@@ -328,7 +336,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 5.6, max = 5.6}, length = {min = .15, max = .15}}, -- assuming, based off the sprite, that it's 3x longer than it's wide, these would be the correct dimensions
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
-	attributes = { "rank" },
+	attributes = { "rank", "modify_card" },
 	config = { extra = { pickup = 0 } },
 	environments = {
 		wormhole = 3,
@@ -366,7 +374,7 @@ SMODS.Shader {
 		local atlas = sprite.children.center.atlas
 		local w,h = atlas.image:getDimensions()
 		local w2,h2 = atlas.px,atlas.py
-		return { 
+		return {
 			col = HEX("50ff81"),
 			size = {w,h,math.sin(G.TIMERS.REAL)*2+5},
 			cardsize = {w2,h2}
@@ -393,7 +401,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 15, max = 25}, length = {min = .3, max = .5}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
-	attributes = { "passive" },
+	attributes = { "retrigger", "chance", },
 	config = { immutable = { num = 2, den = 3 } },
 	environments = {},
 	treasure = true,
@@ -402,6 +410,7 @@ FishAndChips.Fish {
 		return { vars = { num, den } }
 	end,
 	calculate = function(self, card, context)
+	    -- TODO: If a Joker somehow ends up in Fish area then this will retrigger it. Same for if a Fish ends up in a non-Fish area
 		if context.retrigger_joker_check and context.other_card.area == G.fac_fish_area and context.other_card.config.center_key ~= "fish_fac_tss_slop" then
 			local count = 0
 			while SMODS.pseudorandom_probability(card,"fac_tss_slop", card.ability.immutable.num, card.ability.immutable.den, nil, true) do

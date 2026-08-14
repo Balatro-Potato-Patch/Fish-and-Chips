@@ -161,14 +161,13 @@ FishAndChips.Fish({
 	calculate = function(self, card, context)
 		if context.setting_blind and not context.blueprint and #G.fac_fish_area.cards >= 2 and not (G.fac_fish_area.cards[1] == card) then
 			--adds the weight of the leftmost fish to dylan's mult AND weight stat
-			card.ability.extra.scalar_weight = G.fac_fish_area.cards[1].ability.stats.weight
 			local did_scale = SMODS.scale_card (card, {
 			    ref_table = card.ability.extra,
 				ref_value = "mult",
-				scalar_value = "scalar_weight",
+				scalar_table = G.fac_fish_area.cards[1].ability.stats,
+				scalar_value = "weight",
 				no_message = true,
 			})
-			card.ability.extra.scalar_weight = nil -- Surely there's a better way.. If there is then *PLEASE* tell me (mf)
 
             card.ability.stats.weight = card.ability.stats.weight + G.fac_fish_area.cards[1].ability.stats.weight
 
