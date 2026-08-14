@@ -292,9 +292,9 @@ end
 local ds = Sprite.draw_shader
 function Sprite:draw_shader(_shader, _shadow_height, _send, _no_tilt, other_obj, ms, mr, mx, my, custom_shader, tilt_shadow)
     local major = self.role and self.role.major
-    if major and major.area and major.area.config.fac_compendium then
+    if (major and major.area and major.area.config.fac_compendium) or (major and major.config and major.config.center and not major.config.center.discovered) then
         _no_tilt = true
-        if major.fac_compendium_silhouette and _shader ~= 'fac_hide_fish' then return end
+        if (major.fac_compendium_silhouette or not major.config.center.discovered) and _shader ~= 'fac_hide_fish' then return end
     end
     return ds(self, _shader, _shadow_height, _send, _no_tilt, other_obj, ms, mr, mx, my, custom_shader, tilt_shadow)
 end
