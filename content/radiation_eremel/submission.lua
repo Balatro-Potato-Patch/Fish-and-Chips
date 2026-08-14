@@ -328,18 +328,18 @@ FishAndChips.Fish({
     },
     config = {extra = {reduction = 1}},
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.reduction}}
+        return {vars = {SMODS.signed_dollars(-card.ability.extra.reduction)}}
     end,
     calculate = function(self, card, context)
         if context.fac_end_fishing and context.perfect then
             if G.GAME.fac_environment_reroll_cost > 0 then
                 G.GAME.fac_environment_reroll_cost = math.max(0, G.GAME.fac_environment_reroll_cost - card.ability.extra.reduction)
                 card.ability.extra.track = (card.ability.extra.track or 0) + 1
+                return {
+                    message = localize('fac_r_e_reduce'),
+                    colour = G.C.GOLD
+                }
             end
-            return {
-                message = localize('fac_r_e_reduce'),
-                colour = G.C.GOLD
-            }
         end
         if context.fac_environment_changed then 
             G.GAME.fac_environment_reroll_cost = G.GAME.fac_environment_reroll_cost + (card.ability.extra.track or 0)

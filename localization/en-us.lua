@@ -403,6 +403,7 @@ return {
             k_fac_view_baits = "View Baits",
             k_fac_fish = "Fish",
             b_fac_fish = "Fish",
+            k_fac_maybe_fish = "Fish?",
             k_fac_rod = "Rod",
             b_fac_rod = "Rods",
             k_fac_bait = "Bait",
