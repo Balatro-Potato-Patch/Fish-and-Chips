@@ -153,6 +153,9 @@ PotatoPatchUtils.Developer {
                             area
                         }}
                     }},
+                },
+                colours = {
+                    HEX("FF53A9")
                 }
             }
         }
@@ -346,11 +349,11 @@ G.E_MANAGER:add_event(Event({
     func = function()
         for _, dev in pairs(PotatoPatchUtils.Developers) do
             if dev.fac_dw_shader then
-                dev.extra_click = dev.click
+                dev.fac_extra_click = dev.click
                 dev.click = function(card)
                     FountainOpeners.dark_flip(card)
                     card:juice_up()
-                    dev.extra_click(card)
+                    if dev.fac_extra_click then dev.fac_extra_click(card) end
                 end
             end
         end

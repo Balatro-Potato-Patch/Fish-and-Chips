@@ -41,7 +41,8 @@ FishAndChips.Fish {
         if context.joker_main then
             return {
 			-- Yes this is supposed to be an exponent. It's supposed to be 1.1^n, not 1+n0.1. It is in fact supposed to multiply X1.1 once per Fish owned
-                xmult = card.ability.extra.xmult^#G.fac_fish_area.cards
+                xmult = card.ability.extra.xmult^#G.fac_fish_area.cards,
+				card = context.blueprint and context.blueprint_card or card
             }
         end
 	end,

@@ -42,7 +42,6 @@ FishAndChips.Fish {
 
 	calculate = function(self, card, context)
 		if context.joker_main and context.scoring_name == card.ability.extra.hand and #G.consumeables.cards + (G.GAME.consumeable_buffer or 0) < G.consumeables.config.card_limit then
-			local card = context.blueprint and context.blueprint_card or card
 			local anynonface = false
 			for k, v in pairs(context.poker_hands[card.ability.extra.hand][1]) do
 				if not v:is_face() then
@@ -60,7 +59,8 @@ FishAndChips.Fish {
 							G.GAME.consumeable_buffer = 0
 							return true
 						end }))
-					end
+					end,
+					card = context.blueprint and context.blueprint_card or card
 				}
 			end
 		end
