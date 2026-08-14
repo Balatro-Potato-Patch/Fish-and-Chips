@@ -291,8 +291,12 @@ end
 -- Hook to stop tilt on compendium fish
 local ds = Sprite.draw_shader
 function Sprite:draw_shader(_shader, _shadow_height, _send, _no_tilt, other_obj, ms, mr, mx, my, custom_shader, tilt_shadow)
-    if self.role.major and self.role.major.area and self.role.major.area.config.fac_compendium then _no_tilt = true end
-    ds(self, _shader, _shadow_height, _send, _no_tilt, other_obj, ms, mr, mx, my, custom_shader, tilt_shadow)
+    local major = self.role and self.role.major
+    if major and major.area and major.area.config.fac_compendium then
+        _no_tilt = true
+        if major.fac_compendium_silhouette and _shader ~= 'fac_hide_fish' then return end
+    end
+    return ds(self, _shader, _shadow_height, _send, _no_tilt, other_obj, ms, mr, mx, my, custom_shader, tilt_shadow)
 end
 
 function FishAndChips.Compendium.compendium_area(amount, dim)
@@ -323,7 +327,10 @@ function FishAndChips.Compendium.compendium_card(fish, area, scale)
     compendium_card.no_shadow = true
     local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {}
     local should_silhouette = fish.set == 'fac_Fish' and not (fish_data.times_caught and fish_data.times_caught > 0) or (fish.set == 'fac_Rod' or fish.set == 'fac_Bait') and not fish.discovered
-    if should_silhouette then compendium_card.ignore_base_shader = {compendium = true} end 
+    if should_silhouette then
+        compendium_card.fac_compendium_silhouette = true
+        compendium_card.ignore_base_shader = {compendium = true}
+    end
     compendium_card.hover = function(self) 
         self.ability_UIBox_table = self:generate_UIBox_ability_table()
         self.config.h_popup = G.UIDEF.card_h_popup(self)
