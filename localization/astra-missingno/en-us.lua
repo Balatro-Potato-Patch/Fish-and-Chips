@@ -136,8 +136,9 @@ return {
                         "every {C:attention}Boss Blind"
                     },
                     {
-                        "{C:green}#1# in #2#{} chance to {C:red,E:1}die{}",
-                        "at the end of the {C:attention}shop{}"
+                        "{C:green}#1# in #2#{} chance for",
+                        "this {C:fac_fish}Fish{} to {C:red,E:1}die{} at",
+                        "the end of the {C:attention}shop{}"
                     }
                 },
                 flavor = {
