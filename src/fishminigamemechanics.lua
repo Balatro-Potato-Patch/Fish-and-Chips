@@ -398,6 +398,7 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     local initial_area = FishAndChips.get_area_for_center(profile.center)
     local starts_full = #initial_area.cards >= initial_area.config.card_limit
     local caught_box = build_caught_box(starts_full)
+    local displayed_center_key = added_card.config.center_key
     caught_box.states.visible = false
     local treasure_box
     local treasure_catch_text
@@ -538,6 +539,26 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
         func = function()
             local area = FishAndChips.get_area_for_center(profile.center)
             local effective_area_limit = area.config.card_limit + (added_card.ability.card_limit or 0) - (added_card.ability.extra_slots_used or 0)
+            if displayed_center_key ~= added_card.config.center_key then
+                displayed_center_key = added_card.config.center_key
+                local was_visible = caught_box.states.visible
+                caught_box:remove()
+                caught_box = build_caught_box(#area.cards >= effective_area_limit)
+                caught_box.states.visible = was_visible
+                if was_visible then caught_box:juice_up() end
+                if discovery_text then
+                    discovery_text:remove()
+                    discovery_text = build_discovery_text()
+                end
+                if perfect_catch_text then
+                    perfect_catch_text:remove()
+                    perfect_catch_text = build_perfect_catch_text()
+                end
+                if treasure_catch_text then
+                    treasure_catch_text:remove()
+                    treasure_catch_text = build_treasure_catch_text()
+                end
+            end
             if #area.cards >= effective_area_limit and not added_card.REMOVED then
                 G.NOT_SAFE_TO_PRESS_BUTTONS = false
                 if not card_limit_stalled then
