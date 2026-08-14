@@ -1127,6 +1127,7 @@ FishAndChips.Fish {
 		extra = {
 			rerolls = 3,
 			free_rerolls_used_shop = 0,
+			free_rerolls_used_total = 0,
 			rerolls_this_ante = 0
 		}
 	},
@@ -1169,11 +1170,11 @@ FishAndChips.Fish {
 	end,
 	add_to_deck = function(self, card, from_debuff)
         SMODS.change_free_rerolls(card.ability.extra.rerolls)
-		print(card.ability.extra.rerolls)
+		--print(card.ability.extra.rerolls)
     end,
     remove_from_deck = function(self, card, from_debuff)
         SMODS.change_free_rerolls(card.ability.extra.rerolls - card.ability.extra.free_rerolls_used_total) -- -free rerolls remaining
-		print(card.ability.extra.rerolls)
+		--print(card.ability.extra.rerolls)
     end
 }
 
