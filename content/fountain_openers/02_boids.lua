@@ -364,19 +364,17 @@ FishAndChips.Fish {
 			card.ability.immutable.fish_killed = 0 -- screaming
 		end
 	end,
-}
-
-local gsr = Game.start_run
-function Game:start_run(...)
-	local ret = gsr(self, ...)
-	for _, fish in ipairs(SMODS.find_card("fish_fac_fo_boids")) do
-		FountainOpeners.boids_game:add_boids(fish)
-		fish.ability.immutable = fish.ability.immutable or {}
-		fish.ability.immutable.fish_killed = 0 -- screaming
+	load = function(self, card, card_table, other_card)
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				FountainOpeners.boids_game:add_boids(card)
+				card.ability.immutable = card.ability.immutable or {}
+				card.ability.immutable.fish_killed = 0 -- screaming
+				return true;
+			end
+		}))
 	end
-
-	return ret
-end
+}
 
 -- reused from wormhole
 --[[if not Wormhole then
