@@ -20,7 +20,7 @@ PotatoPatchUtils.Developer({
 	colour = HEX('3FC7EB'),
 	fac_partner = 'fac_radiation',
     loc_vars = function()
-        return {vars = {elements = {SMODS.create_sprite(0,0,0.4,0.4,SMODS.get_atlas('fac_galdur_grave'), {x=0, y=0})}}, scale = 1.2}
+        return {vars = {elements = {SMODS.create_sprite(0,0,0.4,0.4,SMODS.get_atlas('fac_galdur_grave'), {x=0, y=0})}}}
     end,
     calculate = function(self, context)
         if context.fac_fish_caught and G.P_CENTERS[context.fish].set == 'fac_Fish' then
@@ -57,7 +57,7 @@ PotatoPatchUtils.Developer({
 	colour = HEX('FF7C0A'),
 	fac_partner = 'fac_eremel',
     loc_vars = function()
-        return {vars = {}, scale = 1.2}
+        return {vars = {}}
     end,
 })
 
