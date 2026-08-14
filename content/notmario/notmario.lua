@@ -2077,7 +2077,7 @@ FishAndChips.Fish {
                 delay = 0.4,
                 func = function()
                     play_sound('timpani')
-                    local food = SMODS.add_card({ set = 'fac_Fish', attributes = {'fac_mf_pearl'}, key_append = "chest" })
+                    local food = SMODS.add_card({ set = 'fac_Fish', type = 'fac_Fish', attributes = {'fac_mf_pearl'}, key_append = "chest" })
                     card:juice_up(0.3, 0.5)
                     return true
                 end
