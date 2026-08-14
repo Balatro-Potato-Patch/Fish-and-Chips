@@ -621,7 +621,8 @@ FishAndChips.Fish({
             if string.len(att) == 0 then att = ' None' end
             return {vars = {att}}
         end
-        return {vars = type and {self.scaling_types[type].gain, self.scaling_types[type].gain * card.ability.extra.consumed + (self.scaling_types[type].base or 0)} or {card.ability.extra.consumed},
+        local dollarPrefix = card.ability.extra.current_scaling[1] == "economy" and localize('$') or '' -- Prepend $ to scaling value if scaling economy
+        return {vars = type and {dollarPrefix .. self.scaling_types[type].gain, dollarPrefix .. self.scaling_types[type].gain * card.ability.extra.consumed + (self.scaling_types[type].base or 0)} or {card.ability.extra.consumed},
                 key = next(card.ability.extra.current_scaling) and self.key..'_2'}
     end,
     can_use = function(self, card)
