@@ -360,9 +360,7 @@ FishAndChips.Fish {
 
         if context.scaling_card then
             return {
-                override_scalar_value = {
-                    value = scalar_value * card.ability.immutable.spec_scalar
-                }
+                override_scalar = context.scalar * card.ability.immutable.spec_scalar
             }
         end
 	end,
