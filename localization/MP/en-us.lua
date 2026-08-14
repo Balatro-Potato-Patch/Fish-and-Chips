@@ -22,8 +22,8 @@ return {
                 name = "Luck Statue",
                 text = {
                     "{C:mult}+#1#{} Mult",
-                    "Marks {C:attention}3s{} and {C:attention}7s{}",
-                    "as lucky in scoring hand"
+                    "Scored {C:attention}3s{} and {C:attention}7s",
+                    "act like {C:attention}Lucky Cards"
                 },
                 flavour = {
                     "Looks like Ehekatl took",
