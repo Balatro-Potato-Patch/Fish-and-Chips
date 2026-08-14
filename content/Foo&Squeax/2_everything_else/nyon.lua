@@ -194,7 +194,7 @@ function Card:click()
 	card_click_ref(self)
 	if self.config.center.key == "fish_fac_fas_kawkaw" then
 		if self.ability.immutable.timer >= 100 then
-			if not self.area.config.collection and not self.ability.immutable.slow then
+			if not (self.area.config.collection or self.area.config.fac_compendium) and not self.ability.immutable.slow then
 				G.GAME.fac_FooSqueax.nyon = G.GAME.fac_FooSqueax.nyon + 1
 				FishAndChips.FooSqueax.nyon.sticky()
 			end
