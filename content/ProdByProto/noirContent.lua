@@ -348,7 +348,7 @@ FishAndChips.ProdByProto.loadFih = function()
                     if cae.level == 6 then cae.final_investigation = 1 end
                     if cae.level == 12 then cae.final_court = 1 end
                     for _,item in ipairs(cae.noir_inv) do
-                        if item == "true_memo" then trueEnd = 1 end -- "trueEnd = true end"... absolute cinema
+                        if item == "true_memo" then trueEnd = true end -- "trueEnd = true end"... absolute cinema
                     end
                     if trueEnd then cae.playing_true_end = 1 end
                     if cae.final_court then 
