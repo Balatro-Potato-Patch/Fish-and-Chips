@@ -1,8 +1,4 @@
-local fac = SMODS.Mods["FishAndChips"]
-local loadFihHook = FishAndChips.ProdByProto.loadFih
-FishAndChips.ProdByProto.loadFih = function()
 
-	if loadFihHook then loadFihHook() end
 
 	local addEnvs = FishAndChips.ProdByProto.addEnvs
 
@@ -28,7 +24,7 @@ FishAndChips.ProdByProto.loadFih = function()
 	FishAndChips.Fish {
 		key = "fac_proto_noName",
 		atlas = "fac_proto_noName",
-		mod = fac,
+		
 		pos = { x = 0, y = 0 },
 		display_size = {w = 71, h = 47},
 
@@ -86,7 +82,7 @@ FishAndChips.ProdByProto.loadFih = function()
 	FishAndChips.Fish {
 		key = "fac_proto_eyedle",
 		atlas = "fac_proto_fish",
-		mod = fac,
+		
 		pos = { x = 0, y = 0 },
 
 		stats = {
@@ -148,7 +144,7 @@ FishAndChips.ProdByProto.loadFih = function()
 	FishAndChips.Fish {
 		key = "fac_proto_dj",
 		atlas = "fac_proto_fish",
-		mod = fac,
+		
 		pos = { x = 1, y = 0 },
 		pixel_size = {w = 71, h = 64},
 
@@ -229,4 +225,3 @@ FishAndChips.ProdByProto.loadFih = function()
 		end
 
 	}
-end

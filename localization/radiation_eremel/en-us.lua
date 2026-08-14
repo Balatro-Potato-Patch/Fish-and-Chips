@@ -169,7 +169,7 @@ return {
                     'Store the {C:fac_fish}Fish{} to the',
                     '{C:attention}right{} within this fish',
                     'and gain {C:attention}scaling types',
-                    'based on it\'s {C:attention}attributes',
+                    'based on its {C:attention}attributes',
                     '{C:inactive,s:0.8}(Will gain:#1#)',
                     '{ppu_bubble:usable}'
                 },

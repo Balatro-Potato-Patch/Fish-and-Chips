@@ -62,8 +62,8 @@ FishAndChips.Fish{
 	end,
 	update = function (self, card, dt)
 		if card.REMOVED then return end
-		if not G.SETTINGS.paused then
-			if card.area and not card.area.config.collection then
+		if not G.SETTINGS.paused and not G.OVERLAY_MENU then
+			if card.area == G.fac_fish_area then
 				if card.ability.immutable.slow then
 					local limit = 300 * G.real_dt
 					local px, py = G.CONTROLLER.cursor_position.x, G.CONTROLLER.cursor_position.y
@@ -192,7 +192,7 @@ local card_click_ref = Card.click
 ---@diagnostic disable-next-line: duplicate-set-field
 function Card:click()
 	card_click_ref(self)
-	if self.config.center.key == "fish_fac_fas_kawkaw" then
+	if self.config.center.key == "fish_fac_fas_kawkaw" and self.area == G.fac_fish_area and not G.OVERLAY_MENU then
 		if self.ability.immutable.timer >= 100 then
 			if not (self.area.config.collection or self.area.config.fac_compendium) and not self.ability.immutable.slow then
 				G.GAME.fac_FooSqueax.nyon = G.GAME.fac_FooSqueax.nyon + 1
@@ -256,7 +256,7 @@ local card_remove_ref = Card.remove
 function Card:remove()
 ---@diagnostic disable-next-line: undefined-field
 	if self.config.center.key == "fish_fac_fas_kawkaw" and not self.dont_nyon then
-		if (self.area and self.area.config.collection) or not self.area then
+		if G.OVERLAY_MENU or (self.area and (self.area.config.collection or self.area.config.fac_compendium)) or not self.area then
 			self.dont_nyon = true
 			self:remove()
 			return

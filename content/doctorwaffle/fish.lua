@@ -1400,13 +1400,23 @@ FishAndChips.Fish {
             func = function ()
                 play_sound('timpani')
                 card:juice_up(0.3, 0.5)
-                SMODS.add_card({set = "fac_waffle_self_finsert_spawns", area = G.fac_fish_area, edition = edition})
+                card.ability.stats = nil
+                local center = G.P_CENTERS[SMODS.poll_object({type = "fac_waffle_self_finsert_spawns"})]
+                center.discovered = true
+                card:set_ability(center)
+                card:set_edition(edition)
+                G:save_progress()
+                if card.area == G.fac_fish_area then save_run() end
                 return true
             end
         }))
         delay(0.6)
     end,
+    keep_on_use = function ()
+        return true
+    end,
     can_use = function (self, card)
-        return (card.area == G.fac_fish_area) or #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit
+        local caught = G.FISHING and (card.area == G.FISHING.fac_fish_reward_area or card.area == G.FISHING.fac_treasure_reward_area)
+        return card.area == G.fac_fish_area or caught or #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit
     end
 }
