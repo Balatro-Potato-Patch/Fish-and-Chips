@@ -526,7 +526,8 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
         blocking = false,
         func = function()
             local area = FishAndChips.get_area_for_center(profile.center)
-            if #area.cards >= area.config.card_limit and not added_card.REMOVED then
+            local slots_used = (added_card.ability.extra_slots_used or 0) - (added_card.ability.card_limit or 0) + 1
+            if (#area.cards + slots_used) > area.config.card_limit and not added_card.REMOVED then
                 G.NOT_SAFE_TO_PRESS_BUTTONS = false
                 if not card_limit_stalled then
                     card_limit_stalled = true
