@@ -1643,6 +1643,8 @@ SMODS.DrawStep({
 	func = function(self)
         local card = self.config.center_key
         if (card ~= "fish_fac_crimsonseraphim_sans_door") or not self.config.center.discovered  then return end
+        local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[self.config.center_key] or {}
+        if not (fish_data.times_caught and fish_data.times_caught > 0) and self.area and self.area.config.fac_compendium then return end
         if not self.children.crimsonseraphim_sans_door_canvas then 
             self.children.crimsonseraphim_sans_door_canvas = SMODS.CanvasSprite(
                 {X=0, Y=0, W=71, H=95, canvasW=71, canvasH=95, canvasScale=1}

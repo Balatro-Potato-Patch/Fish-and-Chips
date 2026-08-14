@@ -211,7 +211,9 @@ SMODS.DrawStep({
 	key = "omega_crimsonfang",
 	order = 25,
 	func = function(self)
-        if self.config.center.discovered and self.config.center.key == "fish_fac_omega_crimsonfang" then    
+        if self.config.center.discovered and self.config.center.key == "fish_fac_omega_crimsonfang" then
+            local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[self.config.center_key] or {}
+            if not (fish_data.times_caught and fish_data.times_caught > 0) and self.area and self.area.config.fac_compendium then return end
             self.children.omega_crimsonfang_tv_face = self.children.omega_crimsonfang_tv_face or SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H, "fac_crimsonseraphim_drawstep_faces", {x=0,y=0})
             self.children.omega_crimsonfang_tv_face.role.draw_major = self
             if self.area == G.fac_fish_area then
