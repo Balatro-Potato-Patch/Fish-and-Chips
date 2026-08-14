@@ -78,8 +78,8 @@ FishAndChips.Fish{
     calculate = function(self, card, context)
         if context.joker_main and card.ability.extra.xmult > 1 then
             return {xmult = card.ability.extra.xmult}
-        elseif context.fac_end_fishing then
-            if not context.blueprint and G.FAC_FISH_GAME.perfect then
+        elseif context.fac_fish_caught then
+            if not context.blueprint and context.perfect then
 
                 G.E_MANAGER:add_event(Event({
                     func = function()
@@ -122,16 +122,16 @@ FishAndChips.Fish{
                         G.fac_fish_area:emplace(card)
 
                         delay(1)
-
-                        SMODS.scale_card(card, {
-                            ref_table = card.ability.extra,
-                            ref_value = "xmult",
-                            scalar_value = "xmult_gain"
-                        })
                         
                         return true
                     end
                 }))
+
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "xmult",
+                    scalar_value = "xmult_gain"
+                })
             end
         end
     end
