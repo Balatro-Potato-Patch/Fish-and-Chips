@@ -282,7 +282,8 @@ return {
                     "Creates a random {C:fac_fish}Fish",
                     "made by {V:1}waffle{} with",
                     "a random {C:dark_edition}Edition",
-                    "{C:inactive}({C:dark_edition}Negative{C:inactive} excluded)",
+                    "{C:inactive}(Self-Finsert excluded,",
+                    "{C:inactive}{C:dark_edition}Negative{C:inactive} excluded)",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
