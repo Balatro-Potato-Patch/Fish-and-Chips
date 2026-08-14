@@ -215,7 +215,6 @@ return {
     misc = {
         dictionary = {
             k_inactive = "inactive",
-            ["k_fac_fish?"] = "Fish?",
             k_broken_ex = "Broken!",
             k_hee_hee_ex = "HEE HEE!",
             ph_thats_mine = "That's mine!",

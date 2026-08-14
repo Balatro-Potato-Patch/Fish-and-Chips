@@ -734,7 +734,7 @@ FishAndChips.Fish {
 	ppu_coder = { "HuyTheKiller" },
 	ppu_artist = { "HuyCorn" },
 	attributes = { "mult", "xmult" },
-	badge_key = "k_fac_fish?",
+	badge_key = "k_fac_maybe_fish",
 	config = {
 		extra = {
 			mult = 1,
