@@ -286,6 +286,7 @@ FishAndChips.Fish {
                         trigger = "before",
                         delay = 0.0,
                         func = (function()
+                            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer - 1
                             SMODS.add_card {
                                 set = "Spectral"
                             }
