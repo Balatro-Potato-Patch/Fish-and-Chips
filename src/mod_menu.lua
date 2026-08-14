@@ -494,16 +494,16 @@ function FishAndChips.Compendium.environment_page(page_number, left)
             table.insert(fish_pool, G.P_CENTERS[k])
         end
     end
-    table.sort(fish_pool, function(a, b) return a.environments[environment_key] < b.environments[environment_key] end)
+    table.sort(fish_pool, function(a, b) return a.environments[environment_key] > b.environments[environment_key] end)
 
-    local rows = page_number % 2 == 1 and 8 or 14
+    local rows = page_number % 2 == 1 and 8 or 15
     local fish_per_row = 9
-    local starting_index = page_number % 2 == 1 and 0 or 80
+    local starting_index = page_number % 2 == 1 and 0 or 72
 
     if starting_index < #fish_pool then
         local last_page = false
         for i=1, rows do
-            local row = {n=G.UIT.R, config = {align = 'cl', padding = 0.05}, nodes = {}}
+            local row = {n=G.UIT.R, config = {align = 'cl', padding = 0.04}, nodes = {}}
             for j = 1, fish_per_row do
                 if last_page then break end
                 local index = j + ((i-1)*fish_per_row) + starting_index
