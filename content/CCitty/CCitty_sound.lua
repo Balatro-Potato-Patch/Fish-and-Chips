@@ -147,7 +147,7 @@ SMODS.Sound({
 })
 SMODS.Sound({
 	key = "CCitty_HowDare",
-	path = "CCitty/Doc_.ogg"
+	path = "CCitty/Doc_HowDare.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_Interesting",

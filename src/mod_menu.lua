@@ -291,8 +291,12 @@ end
 -- Hook to stop tilt on compendium fish
 local ds = Sprite.draw_shader
 function Sprite:draw_shader(_shader, _shadow_height, _send, _no_tilt, other_obj, ms, mr, mx, my, custom_shader, tilt_shadow)
-    if self.role.major and self.role.major.area and self.role.major.area.config.fac_compendium then _no_tilt = true end
-    ds(self, _shader, _shadow_height, _send, _no_tilt, other_obj, ms, mr, mx, my, custom_shader, tilt_shadow)
+    local major = self.role and self.role.major
+    if major and major.area and major.area.config.fac_compendium then
+        _no_tilt = true
+        if major.fac_compendium_silhouette and _shader ~= 'fac_hide_fish' then return end
+    end
+    return ds(self, _shader, _shadow_height, _send, _no_tilt, other_obj, ms, mr, mx, my, custom_shader, tilt_shadow)
 end
 
 function FishAndChips.Compendium.compendium_area(amount, dim)
@@ -323,7 +327,10 @@ function FishAndChips.Compendium.compendium_card(fish, area, scale)
     compendium_card.no_shadow = true
     local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[fish.key] or {}
     local should_silhouette = fish.set == 'fac_Fish' and not (fish_data.times_caught and fish_data.times_caught > 0) or (fish.set == 'fac_Rod' or fish.set == 'fac_Bait') and not fish.discovered
-    if should_silhouette then compendium_card.ignore_base_shader = {compendium = true} end 
+    if should_silhouette then
+        compendium_card.fac_compendium_silhouette = true
+        compendium_card.ignore_base_shader = {compendium = true}
+    end
     compendium_card.hover = function(self) 
         self.ability_UIBox_table = self:generate_UIBox_ability_table()
         self.config.h_popup = G.UIDEF.card_h_popup(self)
@@ -970,6 +977,7 @@ function FishAndChips.Compendium.dev_card(dev)
     }}
 end
 
+FishAndChips.Compendium.credits_cache = {}
 local holding_partners = {}
 local partner_buffer = 0
 function FishAndChips.Compendium.credits_page(page_number, left)
@@ -977,8 +985,13 @@ function FishAndChips.Compendium.credits_page(page_number, left)
         FishAndChips.Compendium.page_title(page_number == 1 and 'credits_page' or 'credits_page_2', 1),
         {n=G.UIT.R, config = {align = 'tm', minh = 7, minw = 5}, nodes = {}}
     }}
-
+    
     if page_number > 1 then
+        local devs_per_page = 6
+        local start_index = (page_number - 2) * devs_per_page
+        local rows = 2
+        local devs_per_row = devs_per_page/rows
+        
         local mod_devs = {}
         for _, key in ipairs(PotatoPatchUtils.Developer.obj_buffer) do
             local dev = PotatoPatchUtils.Developers[key]
@@ -987,83 +1000,104 @@ function FishAndChips.Compendium.credits_page(page_number, left)
             end
         end
         local max = #mod_devs
-
-        local devs_per_page = 6
-        local start_index = (page_number - 2) * devs_per_page
-        local rows = 2
-        local devs_per_row = devs_per_page/rows
-        
-        if not next(holding_partners) or holding_partners[1] > start_index then
-            holding_partners = {}
-            partner_buffer = 0
-            if start_index > max then return {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {}} end
-            if mod_devs[start_index] and mod_devs[start_index].fac_partner then
-                holding_partners[#holding_partners+1] = start_index
-                local it = 1
-                while mod_devs[start_index + it] and mod_devs[start_index + it].fac_partner do
-                    holding_partners[#holding_partners+1] = start_index + it
-                    it = it + 1
-                end
-                it = 2
-                local offset = 0
-                while mod_devs[start_index - it] and mod_devs[start_index - it].fac_partner do
-                    if offset < 4 then
-                        table.insert(holding_partners, 1, start_index - it + 1)
-                        table.insert(holding_partners, 1, start_index - it)
+        if FishAndChips.Compendium.credits_cache[page_number] then
+            for i=1, rows do
+                local row = {n=G.UIT.R, config = {align = 'bm', minh = 6.8/2, minw = 5}, nodes = {}}
+                local j=1
+                local last_page = false
+                while j <= devs_per_row do
+                    if last_page then break end
+                    local index = FishAndChips.Compendium.credits_cache[page_number][i][j]
+                    
+                    table.insert(row.nodes, FishAndChips.Compendium.dev_card(mod_devs[index]))
+                    if mod_devs[index] and mod_devs[index].joint_credits then
+                        j = j + 1
+                    elseif mod_devs[index] and mod_devs[index].fac_partner then
+                        table.insert(row.nodes, FishAndChips.Compendium.dev_card(mod_devs[index + 1]))
+                        j = j + 1
                     end
-                    offset = offset + 2
-                    it = it + 2
+                    
+                    if start_index + (i-1)*devs_per_row + j >= max and not next(holding_partners) then last_page = true; break end
+                    j = j + 1
                 end
-                if #holding_partners%2 == 1 then holding_partners = {} else partner_buffer = #holding_partners/2 - 1 end
+                table.insert(page.nodes[2].nodes, row)
             end
-
-        end
-        local last_page = false
-        for i=1, rows do
-            local row = {n=G.UIT.R, config = {align = 'bm', minh = 6.8/2, minw = 5}, nodes = {}}
-            local j=1
-            while j <= devs_per_row do
+        else
+            FishAndChips.Compendium.credits_cache[page_number] = FishAndChips.Compendium.credits_cache[page_number] or {{}, {}}
+    
+            if not next(holding_partners) or holding_partners[1] > start_index then
+                holding_partners = {}
+                partner_buffer = 0
+                if start_index > max then return {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {}} end
+                if mod_devs[start_index] and mod_devs[start_index].fac_partner then
+                    holding_partners[#holding_partners+1] = start_index
+                    local it = 1
+                    while mod_devs[start_index + it] and mod_devs[start_index + it].fac_partner do
+                        holding_partners[#holding_partners+1] = start_index + it
+                        it = it + 1
+                    end
+                    it = 2
+                    local offset = 0
+                    while mod_devs[start_index - it] and mod_devs[start_index - it].fac_partner do
+                        if offset < 4 then
+                            table.insert(holding_partners, 1, start_index - it + 1)
+                            table.insert(holding_partners, 1, start_index - it)
+                        end
+                        offset = offset + 2
+                        it = it + 2
+                    end
+                    if #holding_partners%2 == 1 then holding_partners = {} else partner_buffer = #holding_partners/2 - 1 end
+                end
+    
+            end
+    
+            local last_page = false
+            for i=1, rows do
+                local row = {n=G.UIT.R, config = {align = 'bm', minh = 6.8/2, minw = 5}, nodes = {}}
+                local j=1
+                while j <= devs_per_row do
+                    if last_page then break end
+                    local index = start_index + (i-1)*devs_per_row + j
+                    if j == devs_per_row then
+                        if next(holding_partners) then
+                            index = index + #holding_partners
+                            partner_buffer = partner_buffer - 1
+                        end
+                        while mod_devs[index] and mod_devs[index].fac_partner do
+                            holding_partners[#holding_partners+1] = index
+                            index = index + 1
+                        end
+                        if partner_buffer == 0 and next(holding_partners) then partner_buffer = #holding_partners/2 - 1 end
+                    else
+                        if next(holding_partners) then index = holding_partners[1] end
+                    end
+                    if index <= #mod_devs then table.insert(FishAndChips.Compendium.credits_cache[page_number][i], j, index) end
+                    table.insert(row.nodes, FishAndChips.Compendium.dev_card(mod_devs[index]))
+                    if mod_devs[index] and mod_devs[index].joint_credits then
+                        j = j + 1
+                    elseif mod_devs[index] and mod_devs[index].fac_partner then
+                        table.insert(row.nodes, FishAndChips.Compendium.dev_card(mod_devs[index + 1]))
+                        j = j + 1
+                    end
+                    if next(holding_partners) and index == holding_partners[1] then
+                        table.remove(holding_partners, 1)
+                        table.remove(holding_partners, 1)
+                        index = start_index + (i-1)*devs_per_row + j
+                    end
+                    if start_index + (i-1)*devs_per_row + j >= max and not next(holding_partners) then last_page = true; break end
+                    j = j + 1
+                end
+                table.insert(page.nodes[2].nodes, row)
                 if last_page then break end
-                local index = start_index + (i-1)*devs_per_row + j
-                if j == devs_per_row then
-                    if next(holding_partners) then
-                        index = index + #holding_partners
-                        partner_buffer = partner_buffer - 1
-                    end
-                    while mod_devs[index] and mod_devs[index].fac_partner do
-                        holding_partners[#holding_partners+1] = index
-                        index = index + 1
-                    end
-                    if partner_buffer == 0 and next(holding_partners) then partner_buffer = #holding_partners/2 - 1 end
-                else
-                    if next(holding_partners) then index = holding_partners[1] end
-                end
-                table.insert(row.nodes, FishAndChips.Compendium.dev_card(mod_devs[index]))
-                if mod_devs[index] and mod_devs[index].joint_credits then
-                    j = j + 1
-                elseif mod_devs[index] and mod_devs[index].fac_partner then
-                    table.insert(row.nodes, FishAndChips.Compendium.dev_card(mod_devs[index + 1]))
-                    j = j + 1
-                end
-                if next(holding_partners) and index == holding_partners[1] then
-                    table.remove(holding_partners, 1)
-                    table.remove(holding_partners, 1)
-                    index = start_index + (i-1)*devs_per_row + j
-                end
-                if start_index + (i-1)*devs_per_row + j >= max then last_page = true; break end
-                j = j + 1
             end
-            table.insert(page.nodes[2].nodes, row)
-            if last_page then break end
         end
 
-        
-    if page_number > 1 and (not last_page or left) then
-        table.insert(page.nodes, FishAndChips.Compendium.nav_button(page_number, left, 'credits_page', 0.4))
-    end
+        local last_page = false
+        if page_number > 1 and (not last_page or left) then
+            table.insert(page.nodes, FishAndChips.Compendium.nav_button(page_number, left, 'credits_page', 0.4))
+        end
 
         return page
-        
     end
 
     local modNodes = {}
