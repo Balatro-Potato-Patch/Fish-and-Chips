@@ -1520,7 +1520,7 @@ FishAndChips.Fish {
 
         if context.debuff_card and context.debuff_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id then
             return {
-                prevent_debuff = "true"
+                prevent_debuff = true
             }
         end
     end,
