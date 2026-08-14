@@ -83,7 +83,7 @@ FishAndChips.Fish {
 	weight = 5,
 	ppu_coder = { "HuyTheKiller" },
 	ppu_artist = { "HuyCorn" },
-	attributes = { "retrigger" },
+	attributes = { "retrigger", "fac_perfect_catch" },
 	config = {
 		extra = {
 			active = false
@@ -213,7 +213,7 @@ FishAndChips.Fish {
 	weight = 5,
 	ppu_coder = { "HuyTheKiller" },
 	ppu_artist = { "HuyCorn" },
-	attributes = { "economy", "scaling", "sell_value" },
+	attributes = { "economy", "scaling", "sell_value", "hand_type", },
 	config = {
 		type = "Straight",
 		extra = {
@@ -288,7 +288,7 @@ FishAndChips.Fish {
 	weight = 5,
 	ppu_coder = { "HuyTheKiller" },
 	ppu_artist = { "HuyCorn" },
-	attributes = { "xmult", "destroy_card" },
+	attributes = { "xmult", "destroy_card", "hands", },
 	config = {
 		extra = {
 			xmult = 3,
@@ -340,7 +340,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "HuyTheKiller" },
 	ppu_artist = { "HuyCorn" },
-	attributes = { "xmult", "tarot" },
+	attributes = { "xmult", "tarot", "reset" },
 	config = {
 		extra = {
 			xmult = 5,
@@ -402,7 +402,7 @@ FishAndChips.Fish {
 	ppu_coder = { "HuyTheKiller" },
 	ppu_artist = { "HuyCorn" },
 	attributes = { "chance", "passive" },
-	badge_key = "k_fac_fish?",
+	badge_key = "k_fac_maybe_fish",
 	config = {
 		extra = {
 			odds = 3,
@@ -446,7 +446,7 @@ FishAndChips.Fish {
 	ppu_coder = { "HuyTheKiller" },
 	ppu_artist = { "HuyCorn" },
 	attributes = { "retrigger", "rank", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" },
-	badge_key = "k_fac_fish?",
+	badge_key = "k_fac_maybe_fish",
 	config = {
 		extra = {
 			rounds_left = 10,
@@ -620,7 +620,7 @@ FishAndChips.Fish {
 	weight = 5,
 	ppu_coder = { "HuyTheKiller" },
 	ppu_artist = { "HuyCorn" },
-	attributes = { "xmult", "economy", "mult", "chips", "suit", "hearts", "diamonds", "clubs", "spades" },
+	attributes = { "xmult", "economy", "mult", "chips", "suit", "hearts", "diamonds", "clubs", "spades", "hand_type" },
 	config = {
 		extra = {
 			xmult = 1.5,
@@ -790,7 +790,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "HuyTheKiller" },
 	ppu_artist = { "HuyCorn" },
-	attributes = { "generation" },
+	attributes = { "generation", "on_sell" },
 	config = {
 		extra = {
 			active = true,

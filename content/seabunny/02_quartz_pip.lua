@@ -43,7 +43,7 @@ FishAndChips.Fish {
         end
     end,
     weight = 4,
-    attributes = {"retrigger"},
+    attributes = {"retrigger", "chance", "enhancements",},
     environments = {
         pier = 20,
         aquifer = 80

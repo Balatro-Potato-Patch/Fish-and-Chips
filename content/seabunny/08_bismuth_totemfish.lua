@@ -60,7 +60,7 @@ FishAndChips.Fish {
         end
     end,
     weight = 4,
-    attributes = {"xmult"},
+    attributes = {"xmult", "full_deck", "modify_card", "enhancements", },
     environments = {
         pier = 20,
         aquifer = 80

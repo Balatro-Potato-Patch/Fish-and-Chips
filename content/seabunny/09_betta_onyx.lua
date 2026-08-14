@@ -86,7 +86,7 @@ FishAndChips.Fish {
         end
     end,
     weight = 4,
-    attributes = {"economy", "passive", "generation"},
+    attributes = {"consumable_slot", "generation", "consumable",},
     environments = {
         pier = 20,
         aquifer = 80

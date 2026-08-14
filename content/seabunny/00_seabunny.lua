@@ -37,6 +37,7 @@ SMODS.Sound {
     path = "seabunny/enchant.ogg"
 }
 
+-- TODO: Port to dev calculate
 local Scmc_ref = SMODS.current_mod.calculate
 SMODS.current_mod.calculate = function(self, context)
     if context.selling_card and context.card.ability.set == "fac_Fish" then

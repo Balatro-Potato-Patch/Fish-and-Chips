@@ -66,10 +66,10 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.mult } }
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main and G.GAME.current_round.hands_played == 0 then 
-			return { 
-				mult = card.ability.extra.mult 
-			} 
+		if context.joker_main and G.GAME.current_round.hands_played == 0 then
+			return {
+				mult = card.ability.extra.mult
+			}
 		end
 	end,
 }
@@ -81,10 +81,10 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "DoggFly" },
 	ppu_artist = { "DoggFly" },
-	attributes = { "retrigger", "destroy_card" },
+	attributes = { "retrigger", "destroy_card", "chance", "hands", },
 	config = {
 		extra = {
-			odds = 3 
+			odds = 3
 		}
 	},
 		stats = {
@@ -143,7 +143,7 @@ FishAndChips.Fish {
 	weight = 8,
 	ppu_coder = { "DoggFly" },
 	ppu_artist = { "DoggFly" },
-	attributes = { "hands", "destruction" },
+	attributes = { "hands", "destroy_card", "position", },
 	config = {
 		extra = {}
 	},
@@ -189,7 +189,7 @@ FishAndChips.Fish {
 	weight = 8,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "DoggFly" },
-	attributes = { 'economy' },
+	attributes = { 'economy', "fac_fish_slot", "deltarune", "utdr", },
 	stats = {
 		weight = {min = 10, max = 12},
 		length = {min = 1.2 , max = 1.4}
@@ -206,7 +206,7 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         return {vars = {(((G.fac_fish_area and G.fac_fish_area.config.card_limit or 0) - #(G.fac_fish_area and (G.fac_fish_area and G.fac_fish_area.cards or {}) or {}))) * 2}}
     end,
-    
+
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval  then
             card.ability.extra.mula = (((G.fac_fish_area.config.card_limit) - #(G.fac_fish_area.cards))) * 2
@@ -275,8 +275,8 @@ FishAndChips.Fish {
 }
 
 
-
--- Im gonna be honest, half of this wouldnt have been possible without Vanilla remade 
+-- TODO: There's a few things that need to be localized here
+-- Im gonna be honest, half of this wouldnt have been possible without Vanilla remade
 FishAndChips.Fish {
 	key = "bombfish",
 	atlas = pez,
@@ -284,7 +284,7 @@ FishAndChips.Fish {
 	weight = 4,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
-	attributes = { "economy", "generation" },
+	attributes = { "lose_economy", "generation", "tarot", "hand_type", "hands", "reset" },
 	config = {
 		extra = {
 			poker_hand = 'High Card',
@@ -314,8 +314,8 @@ FishAndChips.Fish {
 			card.ability.extra.defuse = card.ability.extra.defuse + 1
 			card.ability.extra.minplayed = true
 
-			if card.ability.extra.defuse == card.ability.extra.goal then 
-				
+			if card.ability.extra.defuse == card.ability.extra.goal then
+
 				for i = 1, math.min(card.ability.extra.tarot_amount, G.consumeables.config.card_limit - #G.consumeables.cards) do
             		G.E_MANAGER:add_event(Event({
                 		trigger = 'after',
@@ -330,7 +330,7 @@ FishAndChips.Fish {
                 	end
             		}))
         		end
-				
+
 				SMODS.destroy_cards(card)
 			end
 
@@ -349,7 +349,7 @@ FishAndChips.Fish {
         end
 
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-			
+
 			if card.ability.extra.minplayed == false then
 				card.ability.extra.attempts = card.ability.extra.attempts - 1
 
@@ -376,7 +376,7 @@ FishAndChips.Fish {
             	end
             	card.ability.extra.poker_hand = pseudorandom_element(_poker_hands, 'pezbombastico')
 
-				return {                
+				return {
 					message = "-1 Attempt",
 					colour = G.C.RED
 				}
@@ -410,6 +410,7 @@ FishAndChips.Fish {
     end
 }
 
+-- TODO: ditto
 FishAndChips.Fish {
 	key = "icbf",
 	atlas = pez,
@@ -420,15 +421,15 @@ FishAndChips.Fish {
 	vel_limit = 1.5,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
-	attributes = { "economy", "generation" },
+	attributes = { "lose_economy", "generation", "spectral", "hand_type", "hands", "reset" },
 	config = {
-		extra = { 
+		extra = {
 			poker_hand = 'Pair',
 			tarot_amount = 2,
 			defuse = 0,
 			goal = 6,
 			attempts = 10,
-		} 
+		}
 	},
 	stats = {
 		weight = {min = 15, max = 20},
@@ -442,14 +443,14 @@ FishAndChips.Fish {
 	treasure = true,
 	loc_vars = function(self, info_queue, card)
 	        info_queue[#info_queue+1] = {key = "fac_sepa_Spectral_infovar", set = "Other"}
-		return { vars = { card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, card.ability.extra.poker_hand, card.ability.extra.tarot_amount} } 
+		return { vars = { card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, card.ability.extra.poker_hand, card.ability.extra.tarot_amount} }
 	end,
 
     calculate = function(self, card, context)
         if context.before and context.scoring_name == card.ability.extra.poker_hand then
 			card.ability.extra.defuse = card.ability.extra.defuse + 1
 
-			if card.ability.extra.defuse == card.ability.extra.goal then 
+			if card.ability.extra.defuse == card.ability.extra.goal then
 				for i = 1, math.min(card.ability.extra.tarot_amount, G.consumeables.config.card_limit - #G.consumeables.cards) do
             		G.E_MANAGER:add_event(Event({
                 		trigger = 'after',
@@ -464,7 +465,7 @@ FishAndChips.Fish {
                 	end
             		}))
         		end
-				
+
 				SMODS.destroy_cards(card)
 			end
 
@@ -508,7 +509,7 @@ FishAndChips.Fish {
             	end
             	card.ability.extra.poker_hand = pseudorandom_element(_poker_hands, 'pezbombastico')
 
-				return {                
+				return {
 					message = "-1 Attempt",
 					colour = G.C.RED
 				}
@@ -534,7 +535,7 @@ FishAndChips.Fish {
 	weight = 8,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
-	attributes = { "economy", "destroy_card" },
+	attributes = { "economy", "destroy_card", "position", "sell_value", "scaling", },
 	config = {
 		extra = {
 			dollars = 0
@@ -567,7 +568,12 @@ FishAndChips.Fish {
                 sliced_card.getting_sliced = true
                 G.E_MANAGER:add_event(Event({
                     func = function()
-                        card.ability.extra.dollars = card.ability.extra.dollars + sliced_card.sell_cost
+                        SMODS.scale_card (card, {
+                            ref_value = dollars,
+                            scalar_table = sliced_card,
+                            scalar_value = sell_cost,
+                            no_message = true
+                        })
                         card:juice_up(0.3, 0.3)
                         sliced_card:start_dissolve({ HEX("57ecab") }, nil, 2)
                         play_sound('slice1')
@@ -586,8 +592,9 @@ FishAndChips.Fish {
     calc_dollar_bonus = function(self, card)
         return card.ability.extra.dollars
     end,
- 
+
  	set_badges = function(self, card, badges)
+        -- TODO: Localize. Halucination btw.
  		badges[#badges+1] = create_badge("Halucination...?", G.C.RED, G.C.WHITE, 1 )
  	end,
 
@@ -600,10 +607,10 @@ FishAndChips.Fish {
 	weight = 6,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "scaling", "hands", "deltarune", "utdr", },
 	config = {
 		extra = {
-        	xmult = 1, 
+        	xmult = 1,
         	gain = 0.05,
 			h_plays = -1
 		}
@@ -624,16 +631,16 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.before then
             SMODS.scale_card(card, {
-		    ref_table = card.ability.extra, 
-		    ref_value = "xmult",
-		    scalar_value = "gain", 
+    		    ref_table = card.ability.extra,
+    		    ref_value = "xmult",
+    		    scalar_value = "gain",
 		    })
 		end
 
         if context.joker_main then
             return {
                 xmult = card.ability.extra.xmult
-            } 
+            }
         end
 	end,
 
@@ -645,6 +652,7 @@ FishAndChips.Fish {
     end,
 
  	set_badges = function(self, card, badges)
+        -- TODO: localize
  		badges[#badges+1] = create_badge("Darkner", G.C.BLACK, G.C.WHITE, 1 )
  	end,
 
@@ -657,7 +665,7 @@ FishAndChips.Fish {
 	weight = 8,
 	ppu_coder = { "AbelSketch" },
 	ppu_artist = { "AbelSketch" },
-	attributes = { "hands" },
+	attributes = { "hands", "chance", "hand_level", "hand_type", },
 	config = {
 		extra = {
             odds = 2,
@@ -673,14 +681,14 @@ FishAndChips.Fish {
 	},
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'j_rom_cosmonautjester') 
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'j_rom_cosmonautjester')
         return {vars = {new_numerator, new_denominator}}
     end,
 
 	calculate = function(self, card, context)
 		if context.end_of_round and context.game_over == false and context.main_eval then
             if true then
-                if SMODS.pseudorandom_probability(card, 'randoseed', 1, card.ability.extra.odds, 'j_rom_cosmonautjester') then --Im to lazy to change the og name :p 
+                if SMODS.pseudorandom_probability(card, 'randoseed', 1, card.ability.extra.odds, 'j_rom_cosmonautjester') then --Im to lazy to change the og name :p -- TODO: Don't be lazy then (mf)
                     local hand, tally = nil, 0
                         for _, handname in ipairs(G.handlist) do
                             if SMODS.is_poker_hand_visible(handname) and G.GAME.hands[handname].played > tally then
@@ -695,7 +703,7 @@ FishAndChips.Fish {
             end
         end
 	end,
- 
+
  	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge("Smoke", G.C.BLACK, G.C.WHITE, 1 )
  	end,

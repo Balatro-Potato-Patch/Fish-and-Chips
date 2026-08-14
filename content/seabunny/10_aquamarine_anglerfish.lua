@@ -22,8 +22,13 @@ FishAndChips.Fish {
                 for k, v in ipairs(G.hand.cards) do
                     local reps = SMODS.calculate_repetitions(v, {repetition = true, cardarea = G.hand}, {})
                     for i = 1, #reps + 1 do
-                        card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.gain
-                        card_eval_status_text(card, "extra", nil, nil, nil, {message = localize{type = "variable", key = "a_xmult", vars = {card.ability.extra.xmult}}})
+                        SMODS.scale_card(card, {
+                            ref_value = "xmult",
+                            scalar_value = "gain",
+                            message_key = "a_xmult", -- left like this to preserve behaviour (mf)
+                        })
+                        -- card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.gain
+                        -- card_eval_status_text(card, "extra", nil, nil, nil, {message = localize{type = "variable", key = "a_xmult", vars = {card.ability.extra.xmult}}})
                         if card.ability.extra.enchant then
                             v.ability.perma_repetitions = (v.ability.perma_repetitions or 0) + 1
                             v.ability.temp_repetitions = (v.ability.temp_repetitions or 0) + 1
@@ -47,7 +52,7 @@ FishAndChips.Fish {
         end
     end,
     weight = 4,
-    attributes = {"xmult", "retrigger"},
+    attributes = {"xmult", "retrigger", "scaling", "perma_bonus", "discard",},
     environments = {
         pier = 20,
         aquifer = 80

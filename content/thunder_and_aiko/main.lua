@@ -941,7 +941,7 @@ FishAndChips.Fish({
 			max = 1.7,
 		},
 	},
-	attributes = { "xchips", "rank", "ace" },
+	attributes = { "xchips", "rank", "ace", "vocaloid", },
 	ppu_coder = { "thunderedge", "aikoyori"  },
 	ppu_artist = { "aikoyori" },
 	config = { extra = { xchips = 2 } },

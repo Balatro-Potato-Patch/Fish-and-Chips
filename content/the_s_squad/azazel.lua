@@ -9,7 +9,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 0, max = 0}, length = {min = .4, max = .6}}, -- i imagine shadow crystals being weightless
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
-	attributes = { "passive" },
+	attributes = { "passive", "deltarune", "utdr", },
 	config = { extra = { speed = 2 } },
 	environments = {
 		styx = 10,

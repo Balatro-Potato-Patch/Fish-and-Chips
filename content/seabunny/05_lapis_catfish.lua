@@ -65,7 +65,7 @@ FishAndChips.Fish {
         end
     end,
     weight = 4,
-    attributes = {"mult", "chips"},
+    attributes = {"balance", "scaling", "chance", "on_sell",},
     environments = {
         pier = 20,
         aquifer = 80

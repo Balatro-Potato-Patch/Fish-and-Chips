@@ -21,7 +21,7 @@ FishAndChips.Fish({
     ppu_artist = { "vevekhi" },
     blueprint_compat = false,
     attributes = {
-        "enhancements",
+        "enhancements", "hand_type",
     },
     config = {
         extra = {

@@ -56,7 +56,7 @@ FishAndChips.Fish {
         end
     end,
     weight = 4,
-    attributes = {"hand_level", "generation", "boss_blind"},
+    attributes = {"hand_level", "generation", "consumable", "planet", "boss_blind", "skip", },
     environments = {
         pier = 20,
         aquifer = 80

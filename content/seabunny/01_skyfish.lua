@@ -63,7 +63,7 @@ FishAndChips.Fish {
         return card.ability.stats.length >= 2 * card.ability.extra.shrink
     end,
     weight = 4,
-    attributes = {"economy", "usable", "generation"},
+    attributes = {"usable", "generation"},
     environments = {
         calm_pond = 20,
         swamp = 50,

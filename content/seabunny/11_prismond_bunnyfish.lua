@@ -75,7 +75,7 @@ FishAndChips.Fish {
         end
     end,
     weight = 1,
-    attributes = {"xmult"},
+    attributes = {"xmult", "editions", "suits", "hand_type", "discard", },
     treasure = true,
     environments = {
         volcano = 20,

@@ -13,7 +13,7 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 0 },
 	ppu_coder = { "sleepyg11" },
 	ppu_artist = { "vevekhi" },
-	attributes = { "mult" },
+	attributes = { "mult", "face_down", "full_deck", }, -- In practice this just ends up being a blue joker sidegrade right ? (mf)
 	config = {
 		extra = {
 			mult = 0.5,

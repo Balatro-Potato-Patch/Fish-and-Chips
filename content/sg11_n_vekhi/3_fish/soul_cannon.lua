@@ -43,7 +43,7 @@ FishAndChips.Fish({
     pos = { x = 0, y = 0 },
     ppu_coder = { "sleepyg11" },
     ppu_artist = { "vevekhi" },
-    attributes = { "prevents_death", "destroy_card" },
+    attributes = { "prevents_death", "destroy_card", "fac_fish_slot", },
     blueprint_compat = false,
     config = {
         extra = {

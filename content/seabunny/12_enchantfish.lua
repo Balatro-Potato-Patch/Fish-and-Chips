@@ -34,7 +34,7 @@ FishAndChips.Fish {
         end
     end,
     weight = 4,
-    attributes = {"economy"},
+    attributes = {"economy", "sell_value", "on_sell", },
     environments = {
         swamp = 20,
         garden = 80

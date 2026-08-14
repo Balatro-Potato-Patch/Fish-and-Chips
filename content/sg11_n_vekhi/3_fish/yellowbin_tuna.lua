@@ -11,7 +11,7 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 0 },
 	ppu_coder = { "sleepyg11" },
 	ppu_artist = { "vevekhi" },
-	attributes = { "generation" },
+	attributes = { "generation", "on_sell", }, -- on sell is kinda dubious here but oh well (mf)
 	config = {
 		extra = {
 			history_size = 5,

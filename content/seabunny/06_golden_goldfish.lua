@@ -48,7 +48,7 @@ FishAndChips.Fish {
         return false
     end,
     weight = 4,
-    attributes = {"economy", "destroy_card"},
+    attributes = {"economy", "lose_economy", "chance", "enhancements", "destroy_card"},
     environments = {
         pier = 20,
         aquifer = 80

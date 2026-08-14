@@ -150,10 +150,10 @@ FishAndChips.Fish {
 }
 
 FishAndChips.Fish {
-    key = "sophie_fishing_fear_hat", atlas = "sophie_fish", pos = { x = 
-    1, y = 0 }, weight = 3, stats = {weight = {min = 0.5, max = 0.5}, 
-    length = {min = 0.1, max = 0.1}}, ppu_coder = { "Sophie" }, 
-    ppu_artist = { "gfs" }, attributes = { "generation", "spectral" }, 
+    key = "sophie_fishing_fear_hat", atlas = "sophie_fish", pos = { x =
+    1, y = 0 }, weight = 3, stats = {weight = {min = 0.5, max = 0.5},
+    length = {min = 0.1, max = 0.1}}, ppu_coder = { "Sophie" },
+    ppu_artist = { "gfs" }, attributes = { "generation", "spectral", "chance", "consumable", },
     config = {
 		extra = {
 			odds = 5,
@@ -241,7 +241,7 @@ FishAndChips.Fish {
     stats = {weight = {min = 0.0001, max = 0.0008}, length = {min = 0.01, max = 0.2}},
 	ppu_coder = { "Sophie" },
 	ppu_artist = { "gfs" },
-	attributes = { "passive", "mod_chance" },
+	attributes = { "passive", "mod_chance", "scaling", "destroy_card", },
     blueprint_compat = false,
     eternal_compat = false,
 	config = {
@@ -287,7 +287,7 @@ FishAndChips.Fish {
     stats = {weight = {min = 0.8, max = 3}, length = {min = 0.1, max = 0.8}},
 	ppu_coder = { "Sophie" },
 	ppu_artist = { "gfs" },
-	attributes = { "rank", "suit" },
+	attributes = { "rank", "suit", "modify_card", "enhancements", "seal", "edition", },
 	config = {
 		extra = {
 		}
@@ -374,7 +374,7 @@ FishAndChips.Fish {
     stats = {weight = {min = 0.4, max = 0.7}, length = {min = 0.1, max = 0.3}},
 	ppu_coder = { "Sophie" },
 	ppu_artist = { "gfs" },
-	attributes = { "generation" },
+	attributes = { "generation", "consumable", },
 	config = {
 		extra = {
 		}
@@ -440,7 +440,7 @@ FishAndChips.Fish {
     stats = {weight = {min = 0.03, max = 4.5}, length = {min = 0.01, max = 1}},
 	ppu_coder = { "Sophie" },
 	ppu_artist = { "gfs" },
-	attributes = { "usable" },
+	attributes = { "usable", "economy", },
 	config = {
 		extra = {
             max = 20
@@ -512,7 +512,7 @@ FishAndChips.Fish {
     stats = {weight = {min = 0.01, max = 0.01}, length = {min = 0.04, max = 0.04}},
 	ppu_coder = { "Sophie" },
 	ppu_artist = { "gfs" },
-	attributes = { "economy" },
+	attributes = { "economy", "face_down", "boss_blind", },
 	config = {
 		extra = {
             dollars = 2,
@@ -562,7 +562,7 @@ FishAndChips.Fish {
     stats = {weight = {min = 0.2, max = 0.4}, length = {min = 0.07, max = 0.15}},
 	ppu_coder = { "Sophie" },
 	ppu_artist = { "gfs" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "scaling", },
 	config = {
 		extra = {
             xmult = 1,
@@ -588,7 +588,7 @@ FishAndChips.Fish {
                 ref_table = card.ability.extra,
                 ref_value = "xmult",
                 operation = function(ref_table, ref_value, initial, change)
-                    local amount = 0.10 + pseudorandom("sophie_glados") * 0.20
+                    local amount = ref_table.xmult_min + pseudorandom("sophie_glados") * (ref_table.xmult_max - ref_table.xmult_min)
                     ref_table[ref_value] = initial + amount
                 end,
                 message_key = 'a_xmult',
@@ -607,7 +607,7 @@ FishAndChips.Fish {
     stats = {weight = {min = 0.1, max = 0.2}, length = {min = 0.05, max = 0.15}},
 	ppu_coder = { "Sophie" },
 	ppu_artist = { "gfs" },
-	attributes = { "economy" },
+	attributes = { "economy", "seals", },
 	config = {
 		extra = {
             fish_dollars = 1
@@ -646,7 +646,7 @@ FishAndChips.Fish {
     stats = {weight = {min = 0.1, max = 0.3}, length = {min = 0.1, max = 0.15}},
 	ppu_coder = { "Sophie" },
 	ppu_artist = { "gfs" },
-	attributes = { "economy" },
+	attributes = { "economy", "hands", "consumables", },
 	config = {
 		extra = {
             consumables = 0,
@@ -687,7 +687,7 @@ FishAndChips.Fish {
     stats = {weight = {min = 40, max = 70}, length = {min = 1.5, max = 1.9}},
 	ppu_coder = { "Sophie" },
 	ppu_artist = { "gfs" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "rank", "king", "full_deck", },
 	config = {
 		extra = {
             xmult = 0.5
@@ -724,7 +724,7 @@ FishAndChips.Fish {
     stats = {weight = {min = 0.5, max = 3}, length = {min = 0.5, max = 1.2}},
 	ppu_coder = { "Sophie" },
 	ppu_artist = { "gfs" },
-	attributes = { },
+	attributes = { "modify_card", "enhancements", "hand_type", },
 	config = {
 		extra = {
 		}

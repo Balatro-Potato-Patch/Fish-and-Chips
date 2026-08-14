@@ -23,11 +23,11 @@ SMODS.Atlas({
 
 FishAndChips.Fish {
 	key = "otter",
-	weight = 10,
+	weight = 10, -- TODO: could this be 75 weight ?
 	atlas = "stoatskifish",
 	pos = { x = 0, y = 0 },
-	-- I belive this is correct but may need other attributes
-	attributes = { "generation" },
+	-- I belive this is correct but may need other attributes -- Yeah (mf)
+	attributes = { "generation", "destroy_card", "consumable", "spectral", "position", },
 	ppu_coder = { "stoatski" },
 	ppu_artist = { "stoatski" },
 	blueprint_compat = false,
@@ -61,7 +61,7 @@ FishAndChips.Fish {
 				}
 			end
 		end
-		
+
 	end
 
 }
