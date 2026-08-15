@@ -80,7 +80,7 @@ return {
                 name = "Plastic Chair",
                 text = {
                     {"{C:green}#1# in #2#{} chance of",
-                    "not comsuming {C:attention}bait{}",
+                    "not consuming {C:attention}bait{}",
                     "when caught"},
                     {"{C:green}Guaranteed{} if caught",
                     "with {C:attention}treasure"},
