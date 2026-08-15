@@ -54,7 +54,7 @@ return {
                 text = {
                     {
                         "{C:green}#1# in #2#{} chance to retrigger",
-                        "played Unenhanced cards"
+                        "played {C:attention}Unenhanced{} cards"
                     },
                     {
                         "{C:inactive}Enchanted: #3# in #4# chance",
@@ -62,7 +62,7 @@ return {
                     },
                     {
                         "To {C:dark_edition}Enchant{}: Score",
-                        "Unenhanced cards #5# times",
+                        "{C:attention}Unenhanced{} cards {C:attention}#5#{} times",
                         "{C:inactive}(Currently {C:attention}#6#{C:inactive}/#5#)"
                     }
                 },
