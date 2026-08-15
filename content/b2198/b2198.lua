@@ -4,7 +4,7 @@ PotatoPatchUtils.Developer({
 })
 
 SMODS.Atlas({
-	key = "b2198_fish", -- Please include your name/team name in your atlas keys
+	key = "b2198_fish",
 	path = "b2198/fish.png",
 	px = 71,
 	py = 95,
