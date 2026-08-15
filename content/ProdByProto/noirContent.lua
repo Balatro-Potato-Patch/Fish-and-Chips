@@ -401,15 +401,9 @@
 		attributes = { "usable" },
 		environments = facp.addEnvs(),
 
-		config = {
-			extra = {
-
-			}
-		},
-
-		loc_vars = function(self, info_queue, card)
-
-		end,
+		in_pool = function (self, args)
+            return #SMODS.find_card("fac_proto_noir") > 0
+        end,
 
         can_use = function (self, card)
             for _,held_card in ipairs(G.hand.cards) do
