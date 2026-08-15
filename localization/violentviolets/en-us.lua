@@ -16,8 +16,8 @@ return {
                     name = "Kai",
                     text = {
                         {
-                            "Gains {X:chips,C:white}X#2#{} Chips when a"
-                            "{C:blue}Fish{C:attention} caught{}",
+                            "Gains {X:chips,C:white}X#2#{} Chips for",
+                            "each {C:blue}Fish{C:attention} caught{}",
                             "{C:inactive}Currently {X:chips,C:white}X#1#{C:inactive} Chips"
                         }
                     },
@@ -41,10 +41,10 @@ return {
                     name = "Stinky Ol' Boot",
                     text = {
                         {
-                            "{C:chips}+1{} Chip for every Sand Dollar you have",
-                            "{C:inactive}Currently: {C:chips}+#1#{C:inactive} Chips"
+                            "{C:chips}+1{} Chip per {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}1{} owned",
+                            "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
                         },{
-                            "Sells for 0 {C:fac_sand_dollars}Sand Dollars{}"
+                            "Sells for {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}0{}"
                         }
                     },
                     flavour = {
