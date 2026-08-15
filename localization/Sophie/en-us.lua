@@ -124,7 +124,7 @@ return {
             fish_fac_sophie_fish_jenga = {
                 name = "Fish Jenga",
                 text = {
-                    "Other {C:attention}Fish{} scale at {C:attention}X#1#{}",
+                    "Other {C:attention}Fish{} scale at {X:attention,C:white}X#1#{}",
                     "the normal rate",
                 },
                 flavour = {
