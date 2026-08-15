@@ -604,8 +604,13 @@ FishAndChips.Fish {
                 it = it + 1
                 selected_tag = pseudorandom_element(tag_pool, 'fac_waffle_mudskipper_tag_resample' .. it)
             end
-            add_tag(Tag(selected_tag, false, 'Small'))
-            card.ability.extra.tag_created = true
+            add_tag(Tag(selected_tag))
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    card.ability.extra.tag_created = true
+                    return true
+                end
+            }))
             return {
                 message = localize('k_fac_waffle_tag')
             }
