@@ -24,8 +24,8 @@ return {
                     "At the start of the",
                     "round, {C:attention}eat{} the {C:attention}leftmost{}",
                     "fish and stores its",
-                    "weight as {C:mult}mult{}",
-                    "{C:inactive}(currently {C:mult}+#1#{}{C:inactive} mult){}"
+                    "weight as {C:mult}Mult{}",
+                    "{C:inactive}(Currently {C:mult}+#1#{}{C:inactive} Mult){}"
                 },
                 flavor = {
                     "\"I eat fishmin, like fishmin eat algae!\""
@@ -94,8 +94,8 @@ return {
             fish_fac_wombatCountry_yellow = {
                 name = "Yellowfish",
                 text = {
-                    "{X:mult,C:white,}x#1#{} mult.",
-                    "{C:red}self destructs{} when a",
+                    "{X:mult,C:white,}C#1#{} Mult",
+                    "{C:red}Self destructs{} when a",
                     "{C:attention}playing card{} is destroyed"
                 },
                 flavor = {
