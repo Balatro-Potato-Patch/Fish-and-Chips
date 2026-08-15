@@ -182,6 +182,9 @@ function SMODS.showman(card_key)
 	if G.P_CENTERS[card_key].set == "fac_Bait" then
 		return true
 	end
+	if G.P_CENTERS[card_key].set == "fac_Fish" then
+		return false
+	end
 	return showman_hook(card_key)
 end
 
