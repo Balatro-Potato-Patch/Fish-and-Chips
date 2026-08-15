@@ -316,7 +316,7 @@ FishAndChips.Fish {
             }
 		elseif context.first_hand_drawn and not context.blueprint_card then
 			return {
-				message = localize("k_aurall_blooper"),
+				message = localize("k_aureallu_blooper"),
 				colour = G.C.BLACK
 			}
         elseif context.joker_main then 

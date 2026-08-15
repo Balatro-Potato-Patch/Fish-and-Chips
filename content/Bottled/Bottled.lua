@@ -30,50 +30,6 @@ local function MB_attributes(attribute)
 	return { "usable", "modify_card", "perma_bonus", attribute }
 end
 
-local function MB_loc_key(card)
-	if not card.fac_Fish_Bottled_loc_key then
-		local new_key = card.config.center_key.."_"..card.ability.extra.mode
-		if card.ability.extra.mode ~= "ranked" and card.ability.extra.modify == 1 then
-			new_key = new_key.."_solo"
-		end
-		card.fac_Fish_Bottled_loc_key = new_key
-	end
-	return card.fac_Fish_Bottled_loc_key
-end
-local function MB_loc_vars(card)
-	if card.area and card.area.config.collection then
-		local bottle, min, max = card.ability.extra.bottle, nil, nil
-		if bottle.max then
-			if bottle.div then min = tostring(bottle.min/bottle.div); max = tostring(bottle.max/bottle.div)
-			else min = tostring(bottle.min); max = tostring(bottle.max) end
-		else min = tostring(bottle.min) end
-		return { vars = { "1", "4", min, max or "" } }
-	else
-		local modify
-		if card.ability.extra.mode == "ranked" then
-			modify = localize(card.ability.extra.modify.rank, "ranks")
-			-- Wiggles all affected Cards:
-			if G.hand and #G.hand.cards > 0 then
-				local mod_id = card.ability.extra.modify.id
-				for _, playing_card in ipairs(G.hand.cards) do
-					if playing_card:get_id() == mod_id then
-						playing_card:juice_up(0.1, 0.2)
-					end
-				end
-			end
-		else
-			modify = card.ability.extra.modify
-		end
-		return { key = MB_loc_key(card), vars = { modify, card.ability.extra.amount } }
-	end
-end
-local function MB_flavour_vars(card)
-	if not (card.area and card.area.config.collection) then
-		return { key = MB_loc_key(card) }
-	end
-	return { }
-end
-
 local function MB_get_texture(card)
 	if card then
 		if card.ability and card.ability.extra then
@@ -163,6 +119,51 @@ local function MB_setup(card, debuff)
 			end
 		}))
 	end
+end
+
+local function MB_loc_key(card)
+	if not card.fac_Fish_Bottled_loc_key then
+		local new_key = card.config.center_key.."_"..card.ability.extra.mode
+		if card.ability.extra.mode ~= "ranked" and card.ability.extra.modify == 1 then
+			new_key = new_key.."_solo"
+		end
+		card.fac_Fish_Bottled_loc_key = new_key
+	end
+	return card.fac_Fish_Bottled_loc_key
+end
+local function MB_loc_vars(card)
+	if not card.ability.extra.setup then MB_setup(card) end
+	if card.area and card.area.config.collection then
+		local bottle, min, max = card.ability.extra.bottle, nil, nil
+		if bottle.max then
+			if bottle.div then min = tostring(bottle.min/bottle.div); max = tostring(bottle.max/bottle.div)
+			else min = tostring(bottle.min); max = tostring(bottle.max) end
+		else min = tostring(bottle.min) end
+		return { vars = { "1", "4", min, max or "" } }
+	else
+		local modify
+		if card.ability.extra.mode == "ranked" then
+			modify = localize(card.ability.extra.modify.rank, "ranks")
+			-- Wiggles all affected Cards:
+			if G.hand and #G.hand.cards > 0 then
+				local mod_id = card.ability.extra.modify.id
+				for _, playing_card in ipairs(G.hand.cards) do
+					if playing_card:get_id() == mod_id then
+						playing_card:juice_up(0.1, 0.2)
+					end
+				end
+			end
+		else
+			modify = card.ability.extra.modify
+		end
+		return { key = MB_loc_key(card), vars = { modify, card.ability.extra.amount } }
+	end
+end
+local function MB_flavour_vars(card)
+	if not (card.area and card.area.config.collection) then
+		return { key = MB_loc_key(card) }
+	end
+	return { }
 end
 
 local function MB_can_use(card)

@@ -376,7 +376,7 @@ FishAndChips.Fish({
         end
         SMODS.destroy_cards(targets.low)
         for _, fish in ipairs(targets.high) do
-            SMODS.copy_card(fish)
+            SMODS.add_card{key = fish.config.center.key, no_edition = true, area = fish.area}
         end
     end
 })
