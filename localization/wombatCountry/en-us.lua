@@ -9,9 +9,7 @@ return {
             fish_fac_wombatCountry_dorphish = {
                 name = "The Dorphish",
                 text = {
-                    "earn between",
-                    "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#-#2#{}",
-                    "Sand dollars",
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#-#2#{}",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
