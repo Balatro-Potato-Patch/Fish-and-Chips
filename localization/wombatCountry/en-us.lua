@@ -34,7 +34,7 @@ return {
             fish_fac_wombatCountry_fishstick_1 = {
                 name = "One Fish Stick",
                 text = {
-                    "{C:chips}+#1# chips.",
+                    "{C:chips}+#1#{} Chips",
                     "If you have two after",
                     "fishing, then merge",
                     "them into {C:attention}Two Fish Sticks{}"
@@ -47,7 +47,7 @@ return {
             fish_fac_wombatCountry_fishstick_2 = {
                 name = "Two Fish Sticks",
                 text = {
-                    "{C:chips}+#1# chips.",
+                    "{C:chips}+#1#{} Chips",
                     "If you have two after",
                     "fishing, then merge",
                     "them into {C:attention}Three Fish Sticks{}"
@@ -59,7 +59,7 @@ return {
             fish_fac_wombatCountry_fishstick_3 = {
                 name = "Three Fish Sticks",
                 text = {
-                    "{C:chips}+#1# chips",
+                    "{C:chips}+#1#{} Chips",
                 },
                 flavor = {
                     "Upon this fine day, the gods doth",
