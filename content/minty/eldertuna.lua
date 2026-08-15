@@ -31,6 +31,8 @@ FishAndChips.Fish{
         weight = { min = 1, max = 1}, --In kilograms
         length = { min = 1, max = 2}, --In meters
     },
+    eternal_compat = false,
+    blueprint_compat = false,
     update = function (self, card, dt)
         PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
     end,
