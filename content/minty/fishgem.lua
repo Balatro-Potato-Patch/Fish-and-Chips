@@ -14,6 +14,7 @@ FishAndChips.Fish{
     attributes = {
         "economy"
     },
+    eternal_compat = false,
     stats = {
         weight = { min = 1, max = 200}, --In kilograms
         length = { min = 0.3, max = 25}, --In meters
