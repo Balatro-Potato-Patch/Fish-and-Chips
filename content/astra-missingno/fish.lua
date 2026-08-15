@@ -739,7 +739,8 @@ FishAndChips.Fish {
     config = {
         extra = {
             rerolls = 0,
-            percent = 100
+            percent = 100,
+            max = 5,
         }
     },
     environments = {
@@ -752,7 +753,7 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
 
-        return { vars = { stg.percent, stg.rerolls } }
+        return { vars = { stg.percent, stg.rerolls, stg.max } }
     end,
     calculate = function(self, card, context)
         local stg = card.ability.extra
@@ -767,7 +768,7 @@ FishAndChips.Fish {
         end
 
         if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
-            stg.rerolls = math.floor((G.GAME.chips / G.GAME.blind.chips) / (stg.percent / 100))
+            stg.rerolls = math.min(math.floor((G.GAME.chips / G.GAME.blind.chips) / (stg.percent / 100)), stg.max)
             if stg.rerolls > 0 then
                 return {
                     message = localize { type = 'variable', key = 'a_fac_am_rerolls', vars = { stg.rerolls } }
