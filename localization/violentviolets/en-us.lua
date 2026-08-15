@@ -124,8 +124,10 @@ return {
                     name = "The Fish",
                     text = {
                         {
-                            "On use, create a random {C:tarot}Tarot{}, {C:planet}Planet{} or {C:spectral}Spectral{} card",
-                            "{C:inactive,s:0.8}(Must have room)"
+                            "On use, create a random {C:tarot}Tarot{},",
+                            "{C:planet}Planet{} or {C:spectral}Spectral{} card",
+                            "{C:inactive,s:0.8}(Must have room)",
+                            "{ppu_bubble:usable}"
                         }
                     },
                     flavour = {
