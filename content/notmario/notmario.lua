@@ -352,7 +352,7 @@ SMODS.Attribute.post_inject_class = function(self, ...)
     post_attribute_hook(self, ...)
 
     for _, attr in ipairs(SMODS.Attribute.obj_buffer) do
-        if not G.FAC_ENVIRONMENTS[attribute] and attr ~= "fac_treasure" then
+        if not G.FAC_ENVIRONMENTS[attr] and attr ~= "fac_treasure" then
             FishAndChips.mf_redherring_attributes[#FishAndChips.mf_redherring_attributes + 1] = attr
         end
     end
