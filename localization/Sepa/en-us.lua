@@ -47,7 +47,7 @@ return {
                 name = "{f:fac_sepa_spongemeboy}Fred's Leg{}",
                 text = {
                     "When a hand is played,",
-                    "{C:red}destroys{} the {C:attention}leftmost{}",
+                    "{C:red}destroys{} the {C:attention}rightmost{}",
                     "card held in hand"
                 },
                 flavor = {
