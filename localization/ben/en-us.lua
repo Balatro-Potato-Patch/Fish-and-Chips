@@ -20,8 +20,8 @@ return {
                 },
                 text = {
                     "Earn interest on",
-                    "{C:fac_sand_dollars,f:fac_sand_dollars}$Sand Dollars{}",
-                    "{C:inactive,f:fac_sand_dollars,s:0.8}#1# interest per $5 (max #2#){}"
+                    "your {C:fac_sand_dollars,f:fac_sand_dollars}$Sand Dollars{}",
+                    "{C:inactive,f:fac_sand_dollars,s:0.8}$#1# interest per $5 (max $#2#){}"
                 }
             },
             fish_fac_benchameleon = {
@@ -31,8 +31,8 @@ return {
                 },
                 text = {
                     "Copies ability of {C:attention}Joker{}",
-                    "in slot {C:attention}#1#{}",
-                    "{C:inactive,s:0.8}Slot changes each round"
+                    "in slot {C:attention}#1#{}, slot changes",
+                    "at end of round"
                 }
             },
             fish_fac_benyapping = {
@@ -41,9 +41,10 @@ return {
                     "Going on a {C:edition,E:1}world tour{}!",
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benyapping_calm_pond = {
@@ -54,9 +55,10 @@ return {
                     "'Quite a sedate crowd'"
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benyapping_city_river = {
@@ -67,9 +69,10 @@ return {
                     "'This city is buzzing!'"
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benyapping_swamp = {
@@ -80,9 +83,10 @@ return {
                     "'Gonna play some grunge tonight!'"
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benyapping_volcano = {
@@ -93,9 +97,10 @@ return {
                     "'Hot hot hot!'"
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benyapping_aquifer = {
@@ -106,9 +111,10 @@ return {
                     "'The reverb is great!'"
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benyapping_styx = {
@@ -116,12 +122,13 @@ return {
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
                     "{s:0.2} ",
-                    "'Vibes are {C:red,E:2}dead{} here..'"
+                    "'Vibes are {C:red,E:2}dead{} here...'"
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benyapping_chocolate_river = {
@@ -133,9 +140,10 @@ return {
                     "This stuff is delicious!'"
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benyapping_pier = {
@@ -143,12 +151,13 @@ return {
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
                     "{s:0.2} ",
-                    "'Ah.. the open ocean.'"
+                    "'Ah... the open ocean.'"
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benyapping_soup = {
@@ -159,9 +168,10 @@ return {
                     "'Good soup!'"
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benyapping_garden = {
@@ -169,12 +179,13 @@ return {
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
                     "{s:0.2} ",
-                    "'Get me the gardeners number!'"
+                    "'Get me the gardener's number!'"
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benyapping_wormhole = {
@@ -182,12 +193,13 @@ return {
                 flavour = {
                     "Going on a {C:edition,E:1}world tour{}!",
                     "{s:0.2} ",
-                    "'Hold on.. I need some {C:dark_edition,E:1}space{}'"
+                    "'Hold on... I need some {C:dark_edition,E:1}space{}'"
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benyapping_backroom = {
@@ -199,9 +211,10 @@ return {
                     "I like being watched!'"
                 },
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round per unique",
-                    "{C:fac_environment}Environment{} visited since being caught",
-                    "{C:inactive,f:fac_sand_dollars}(Currently $#1#){}"
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
+                    "per unique {C:fac_environment}Environment{}",
+                    "visited since being caught",
+                    "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
             fish_fac_benseashell = {
@@ -212,8 +225,8 @@ return {
                 },
                 text = {
                     "Gives {X:mult,C:white}X#1#{} Mult",
-                    "per {C:fac_sand_dollars,f:fac_sand_dollars}$#2# Sand Dollars{}",
-                    "{C:inactive,s:0.8}(Currently {X:mult,C:white,s:0.8}X#3#{C:inactive,s:0.8} Mult)"
+                    "per {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{} you have",
+                    "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)"
                 }
             },
             fish_fac_benvoucher = {
@@ -223,7 +236,7 @@ return {
                     "fer a free bait"
                 },
                 text = {
-                    "Creates a random {C:fac_bait}Bait",
+                    "Creates a random {C:attention}Bait",
                     "at the end of the round"
                 }
             },
