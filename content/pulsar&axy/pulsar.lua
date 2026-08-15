@@ -5,7 +5,7 @@ FishAndChips.Fish {
 	pos = { x = 3, y = 3 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "xchips", "xmult", "chips", "suit" },
+	attributes = { "xchips", "chips", "suit", "clubs", }, -- used to have xmult attribute (mf)
 	environments = {
 		city_river = 1,
         wormhole = 0.2

@@ -158,7 +158,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
-    attributes = { "chips" },
+    attributes = { "chips", "scaling", "reset", },
     weight = 1,
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
     config = {
@@ -199,7 +199,13 @@ FishAndChips.Fish {
         end
         if context.after then
             if card.ability.extra.trigger then
-                card.ability.extra.scoring = card.ability.immutable.revert
+                SMODS.reset_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "scoring",
+                    reset_value = card.ability.immutable.revert,
+                    no_message = true,
+                })
+
                 card.ability.extra.trigger = false
                 return { message = localize("k_reset") }
             end
@@ -234,7 +240,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
-    attributes = { "mult" },
+    attributes = { "mult", "scaling", "reset" },
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
     config = {
         extra = {
@@ -255,7 +261,12 @@ FishAndChips.Fish {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.main_eval then
-            card.ability.extra.mult = card.ability.immutable.revert
+            SMODS.reset_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "mult",
+                reset_value = card.ability.immutable.revert,
+                no_message = true,
+            })
             return { message = localize("k_reset") }
         end
         if context.individual and context.cardarea == G.play then
@@ -269,7 +280,7 @@ FishAndChips.Fish {
                 }
             })
         end
-        if (context.joker_main and (to_big(card.ability.extra.mult) > 1)) or context.forcetrigger then
+        if (context.joker_main and (to_big(card.ability.extra.mult) > 0)) or context.forcetrigger then -- what is to_big doing here :chud: (mf)
             return {
                 mult = card.ability.extra.mult
             }
@@ -386,8 +397,8 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
-    attributes = { "chips", "destroy_card" },
-	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },	
+    attributes = { "chips", "destroy_card", "enhancements", "deltarune", "utdr", },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
     config = {
         extra = {
             xchips = 1,
@@ -436,7 +447,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
-    attributes = { "mult", "rank" },
+    attributes = { "mult", "rank", "hand_type", },
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
 	config = {
         extra = {
@@ -491,7 +502,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "Pixel" },
     ppu_artist = { "Pixel" },
-    attributes = { "destroy_card" },
+    attributes = { "destroy_card", "fac_fish_slot", },
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
 	environments = {
         city_river = 1,
@@ -532,7 +543,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "Pixel" },
     ppu_artist = { "Pixel" },
-    attributes = { "economy" },
+    attributes = { "economy", "mult", "chips", "suit", "diamonds", },
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
 	environments = {
         city_river = 1,
@@ -621,7 +632,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
-    attributes = { "destroy_card" },
+    attributes = { "destroy_card", "chance", "score", },
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
 	environments = {
         backroom = 0.1
@@ -639,7 +650,7 @@ FishAndChips.Fish {
         juice_card_until(card, eval, false)
         if context.setting_blind then
             if SMODS.pseudorandom_probability(card, "fish_fac_untitledfish3", 1, card.ability.odds, "fish_fac_untitledfish3") then
-                card.ability.trigger = true 
+                card.ability.trigger = true
             end
         end
         if context.after and G.GAME.current_round.hands_left == 1 then
@@ -691,8 +702,8 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
-    attributes = { "chips", "destroy_card" },
-	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },	
+    attributes = { "generation", "tag", "usable", },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
     config = {
         extra = {
             xchips = 1,

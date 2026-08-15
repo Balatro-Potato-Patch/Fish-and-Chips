@@ -5,7 +5,7 @@ FishAndChips.Fish {
 	pos = { x = 2, y = 2 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Pulsar" },
-	attributes = { "rank", "generation" },
+	attributes = { "rank", "generation", "chance", "spectral", "consumable", "deltarune", "utdr", }, -- i guess this is deltarune ???? (mf)
 	environments = {
 		styx = 1 --none of the 12 areas are vaugely similar to the Dark Sanctuary, go with this i guess????
 	},

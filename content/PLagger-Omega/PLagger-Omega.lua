@@ -71,7 +71,7 @@ FishAndChips.Fish{ --Hawaii Fish
     environments = {
       volcano = 1
     },
-    attributes = {'xmult'},
+    attributes = {'xmult', "hand_type", "discard",},
     stats = {
       weight = {min = 20, max = 50},
       length = {min = 1.2, max  = 5}
@@ -82,6 +82,7 @@ FishAndChips.Fish{ --Hawaii Fish
     blueprint_compat = true,
     config = {extra = {xmult = 3, housed = false, poker_hand = 'Full House'}},
 
+    -- TODO: ppu_bubble
     loc_vars = function (self, info_queue, card)
       local main_end = nil
       main_end = {
@@ -139,7 +140,7 @@ FishAndChips.Fish{ --Trout Earth Extinction
     environments = {
       wormhole = 0.67
     },
-    attributes = {'usable'},
+    attributes = {'usable', "ante", "destroy_card",},
     stats = {
       weight = {min = 67, max = 69},
       length = {min = 30, max  = 30}
@@ -183,7 +184,7 @@ FishAndChips.Fish{ --Xanax Sargo
   pos = {x=2,y=0},
   weight = 10,
   environments = {calm_pond = 5, garden = 10},
-  attributes = {'passive', 'economy'},
+  attributes = {'economy'}, -- was passive before (mf)
   stats = {
       weight = {min = 4, max = 5},
       length = {min = 0.25, max  = 0.70}
@@ -219,7 +220,7 @@ FishAndChips.Fish{ --Gurmag Angler
   pos = {x=3,y=0},
   weight = 8,
   environments = {styx = 0.4, swamp = 0.7},
-  attributes = {'xmult'},
+  attributes = {'xmult', "scaling", "joker",},
   stats = {
     weight = {min = 10.2, max = 25.4},
     length = {min = 3, max = 7}
@@ -241,10 +242,14 @@ FishAndChips.Fish{ --Gurmag Angler
 
   calculate = function (self, card, context)
     if context.joker_type_destroyed and context.card.config.center.set == 'Joker' and not context.blueprint then
-      card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_mod
-      return{
-        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.xmult_mod}}
-      }
+        SMODS.scale_card (card, {
+            ref_value = "xmult",
+            scalar_value = "xmult_mod",
+            no_message = true
+        })
+        return {
+          message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.xmult_mod}}
+        }
     end
 
     if context.joker_main then
@@ -261,7 +266,7 @@ FishAndChips.Fish{ --Stewfish
   pos = {x=4,y=0},
   weight = 9,
   environments = {soup = 0.6, chocolate_river = 0.1},
-  attributes = {'mult'},
+  attributes = {'mult', "scaling", "reset"},
   stats = {
     weight = {min = 7, max = 14},
     length = {min = 0.25, max = 0.72}
@@ -284,12 +289,20 @@ FishAndChips.Fish{ --Stewfish
   calculate = function (self, card, context)
     if context.fac_fish_caught then
       if FishAndChips.get_environment().key == 'soup' then
-        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+        SMODS.scale_card (card, {
+              ref_value = "mult",
+              scalar_value = "mult_mod",
+              no_message = true
+        })
         return{
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}
         }
       elseif card.ability.extra.mult > 0 then
-        card.ability.extra.mult = 0
+        SMODS.reset_card (card, {
+            ref_value = "mult",
+            reset_value = 0,
+            no_message = true
+        })
         return{
           message = localize('k_reset')
         }
@@ -310,7 +323,7 @@ FishAndChips.Fish{ --Docfish
   pos = {x=0,y=1},
   weight = 6,
   environments = {pier = 0.6, city_river = 0.8},
-  attributes = {'mult', 'chips'},
+  attributes = {'mult', 'chips', "rank", "ace", "modify_card", "perma_bonus",},
   stats = {
       weight = {min = 0.67, max = 3.5},
       length = {min = 1.20, max  = 2.25}
@@ -348,7 +361,7 @@ FishAndChips.Fish{ --Biblically Accurate Angelfish
   pos = {x=1,y=1},
   weight = 4,
   environments = {backroom = 0.77, garden = 0.022},
-  attributes = {'usable', 'generation'},
+  attributes = {'usable', 'generation', "rarity", "lose_economy", "joker",},
   stats = {
     weight = {min = 2222, max = 4444},
     length = {min = 2222, max = 9999}
@@ -397,7 +410,7 @@ FishAndChips.Fish{ --Relicanth
   pos = {x=2,y=1},
   weight = 8,
   environments = {aquifer = 1},
-  attributes = {'passive', 'modify_card'}, --if there's better attributes for this fish i missed feel free to add them
+  attributes = {'modify_card', "enhancements",}, --if there's better attributes for this fish i missed feel free to add them -- Sure (mf)
   stats = {
     weight = {min = 69, max = 420},
     length = {min = 2.01, max = 4.01}
@@ -495,7 +508,7 @@ FishAndChips.Fish{ --Frozen Chicken
   pos = {x=4,y=1},
   weight = 5,
   environments = {styx = 1},
-  attributes = {'chips', 'deltarune'},
+  attributes = {'chips', 'deltarune', "utdr",},
   stats = {
     weight = {min = 60, max = 90},
     length = {min = 130, max = 150},
@@ -550,7 +563,7 @@ FishAndChips.Fish{ --Mystic Remora
   pos = {x=0,y=2},
   weight = 4,
   environments = {pier = 1},
-  attributes = {'draw'}, --i couldnt think of any fitting attributes from base FAC so i just made this one up, feel free to change
+  attributes = {'lose_economy', "destroy_card"}, --i couldnt think of any fitting attributes from base FAC so i just made this one up, feel free to change -- Sure (mf)
   stats = {
     weight = {min = 0.42, max = 0.87},
     length = {min = 0.35, max = 0.58}
@@ -578,7 +591,7 @@ FishAndChips.Fish{ --Mystic Remora
   calculate = function (self, card, context)
     if context.setting_blind and not context.blueprint then
       card.ability.extra.upkeep = card.ability.extra.upkeep + card.ability.extra.cumulative_upkeep
-      --Create the cumulative upkeep choice menu 
+      --Create the cumulative upkeep choice menu
       G.E_MANAGER:add_event(Event({
             func = function()
                 delay(0.4)
@@ -613,7 +626,7 @@ FishAndChips.Fish{  --Chi-Yu
   pos = {x=1,y=2},
   weight = 3,
   environments = {volcano = 3, aquifer = 0.2},
-  attributes = {'hand_level'},
+  attributes = {'hand_level', "discard", "hand_type",},
   stats = {
     weight = {min = 3.8, max = 4.9},
     length = {min = 0.29, max = 0.4},
@@ -648,7 +661,7 @@ FishAndChips.Fish{  --Fish in a Birdcage
   weight = 2,
   treasure = true,
   environments = {},
-  attributes = {'xmult'},
+  attributes = {'xmult', "enhancements", "seals", "rank", "four", "full_deck",},
   stats = {
     weight = {min = 0.4, max = 0.4},
     length = {min = 0.44, max = 0.44}
@@ -659,7 +672,7 @@ FishAndChips.Fish{  --Fish in a Birdcage
   cost = 4,
   config = {extra = {xmult = 4}, freed = false},
 
-  loc_vars = function (self, info_queue, card)
+  loc_vars = function (self, info_queue, card) -- TODO: Do we need to specify what they are? It doesnt *give* them and they're vanilla anyways. Could be better used to specify what it does when unlocked (mf)
     info_queue[#info_queue + 1] = G.P_CENTERS.m_steel
     info_queue[#info_queue + 1] = G.P_SEALS.Blue
 

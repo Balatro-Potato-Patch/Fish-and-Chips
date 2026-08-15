@@ -28,7 +28,7 @@ PotatoPatchUtils.Developer({
         end
         if context.end_of_round and context.main_eval then
             for _, pcard in ipairs(G.playing_cards) do
-                if pcard.ability.fac_r_e_temp then 
+                if pcard.ability.fac_r_e_temp then
                     G.E_MANAGER:add_event(Event({
                         trigger = 'after', delay = 0.7,
                         func = function()
@@ -89,7 +89,7 @@ FishAndChips.Fish({
     config = {extra = {denom = 4, hand = 'Flush'}},
     loc_vars = function(self, info_queue, card)
         local n, d = SMODS.get_probability_vars(card, 1, card.ability.extra.denom, 'r_e_butterfly')
-        return {vars = {n, d, localize(card.ability.extra.hand, 'poker_hands'), 
+        return {vars = {n, d, localize(card.ability.extra.hand, 'poker_hands'),
            card.ability.extra.current and (card.ability.extra.current == 'Wild' and localize({set = 'Enhanced', type = 'name_text', key = 'm_wild'}) or localize(card.ability.extra.current, 'suits_plural')) or localize('fac_r_e_random_suits'),
            colours = {card.ability.extra.current and (G.C.SO_1[card.ability.extra.current] or G.ARGS.LOC_COLOURS.attention) or G.ARGS.LOC_COLOURS.inactive},
         ppu_bubbles = {'usable', 'toggle'}}}
@@ -321,7 +321,7 @@ FishAndChips.Fish({
         backroom = 4,
         styx = 2
     },
-    attributes = {'economy', 'passive'},
+    attributes = {'economy', 'passive', "fac_perfect_catch", "reroll"}, -- does this count as reroll ? (mf)
     stats = {
         weight = {min = 0.055, max = 0.140},
         length = {min = 0.10, max = 0.17},
@@ -341,7 +341,7 @@ FishAndChips.Fish({
                 }
             end
         end
-        if context.fac_environment_changed then 
+        if context.fac_environment_changed then
             G.GAME.fac_environment_reroll_cost = G.GAME.fac_environment_reroll_cost + (card.ability.extra.track or 0)
             card.ability.extra.track = 0
         end
@@ -464,7 +464,7 @@ FishAndChips.Fish({
         calm_pond = 2,
         aquifer = 2
     },
-    attributes = {'generation', 'passive'},
+    attributes = {'generation', 'passive', "enhancements"},
     stats = {
         weight = {min = 515, max = 2136},
         length = {min = 0.60, max = 0.90},
@@ -600,7 +600,7 @@ FishAndChips.Fish({
         xmult = {gain = 0.05, key = 'xmult', base = 1}
     },
     loc_vars = function(self, info_queue, card, type)
-        if card.ability and not next(card.ability.extra.current_scaling) then 
+        if card.ability and not next(card.ability.extra.current_scaling) then
             for type, _ in pairs(self.scaling_types) do
                 info_queue[#info_queue+1] = {set = 'Other', key = 'fac_r_e_'..type, vars = {(type=='economy' and localize('$') or '') .. _.gain, _.gain * card.ability.extra.consumed + (_.base or 0)}}
             end

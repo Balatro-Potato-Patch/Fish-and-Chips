@@ -5,7 +5,7 @@ FishAndChips.Fish {
 	pos = { x = 1, y = 0 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "economy", "planet" },
+	attributes = { "economy", "planet", "reroll", "consumable", },
 	environments = {
 		wormhole = 1,
 		pier = 0.3
@@ -36,7 +36,7 @@ FishAndChips.Fish {
                 scalar_value = "reroll_gain"
             })
         end
-		
+
 		if context.fac_environment_changed then
 			if card.ability.extra.rerolls > 0 then
 				SMODS.scale_card(card, {

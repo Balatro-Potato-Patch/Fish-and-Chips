@@ -14,7 +14,7 @@
 				end
 			end
 		end
-		if valid_idol_cards[1] then 
+		if valid_idol_cards[1] then
 			local idol_card = pseudorandom_element(valid_idol_cards, pseudoseed('proto_noName'..G.GAME.round_resets.ante))
 			suit = idol_card.base.suit
 		end
@@ -24,7 +24,7 @@
 	FishAndChips.Fish {
 		key = "fac_proto_noName",
 		atlas = "fac_proto_noName",
-		
+
 		pos = { x = 0, y = 0 },
 		display_size = {w = 71, h = 47},
 
@@ -34,7 +34,7 @@
 		},
 		weight = 10,
 		ppu_coder = {"ProdByProto"},
-		attributes = { "economy", "suits" },
+		attributes = { "economy", "suit", "chance" },
 		environments = addEnvs(),
 
 		config = {
@@ -82,7 +82,7 @@
 	FishAndChips.Fish {
 		key = "fac_proto_eyedle",
 		atlas = "fac_proto_fish",
-		
+
 		pos = { x = 0, y = 0 },
 
 		stats = {
@@ -144,7 +144,7 @@
 	FishAndChips.Fish {
 		key = "fac_proto_dj",
 		atlas = "fac_proto_fish",
-		
+
 		pos = { x = 1, y = 0 },
 		pixel_size = {w = 71, h = 64},
 

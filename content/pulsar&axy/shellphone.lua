@@ -5,7 +5,7 @@ FishAndChips.Fish {
 	pos = { x = 5, y = 1 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "economy", "rank", "scaling" },
+	attributes = { "economy", "rank", "scaling", "sell_value", },
 	environments = {
 		city_river = 0.5,
 		pier = 1,

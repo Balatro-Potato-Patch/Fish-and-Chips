@@ -17,6 +17,7 @@ FishAndChips.Fish {
 
     ppu_coder = {"Parsa"},
     ppu_artist = {"Parsa"},
+    attributes = { "lose_economy", "retrigger", "xchips", }
 
     atlas = 'fac_Parsa_atlas_dish',
     stats = {
@@ -105,21 +106,21 @@ FishAndChips.Fish {
         destroy_card = true,
         generation = true,
     },
- 
+
     ppu_coder = { 'Parsa' },
     ppu_artist = { 'Parsa' },
- 
+
     atlas = 'fac_Parsa_atlas_file',
     pos = { x = 0, y = 0 },
- 
+
     cost = 8,
     blueprint_compat = false,
- 
+
     stats = {
         weight = { min = 0.001, max = 0.009 },
         length = { min = 0.1, max = 0.5 },
     },
- 
+
     impulse_min = 0.2,
     impulse_max = 0.45,
     decision_min = 0.3,
@@ -127,22 +128,24 @@ FishAndChips.Fish {
     vel_limit = 0.5,
     requires_hand = false,
     treasure = false,
- 
+
+    attributes = {"destroy_card", "generation", "tag", "joker", }
+
     config = {
         extra = {
             rounds_played = 0,
         },
     },
- 
+
     loc_vars = function(self, info_queue, card)
         return {
             vars = { card.ability.extra.rounds_played },
         }
     end,
- 
+
 calculate = function(self, card, context)
     if context.setting_blind then
-        if card.ability.extra.rounds_played <= 2 then
+        if card.ability.extra.rounds_played <= 2 then -- TODO: This definitely seems wrong but i can't be bothered testing it rn (mf)
             card.ability.extra.rounds_played = 2
         else
             card.ability.extra.rounds_played = card.ability.extra.rounds_played + 1

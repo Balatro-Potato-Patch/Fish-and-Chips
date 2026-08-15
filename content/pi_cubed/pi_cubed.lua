@@ -22,8 +22,8 @@ SMODS.Atlas({
 
 --#region Fish
 
--- Smaller Wrapped Fish 
--- dev note for playtesters: i think this fish can create treasure fish. 
+-- Smaller Wrapped Fish
+-- dev note for playtesters: i think this fish can create treasure fish.
 -- this is not intended behaviour and i wouldn't mind if it was no longer able to
 FishAndChips.Fish {
 	key = "pi_cubed_smallerwrappedfish",
@@ -136,7 +136,7 @@ FishAndChips.Fish {
 		weight = {min = 30, max = 70},
 		length = {min = 0.3, max = 0.7}
 	},
-    attributes = { 'mult', 'chips', 'enhancements', 'modify_card' },
+    attributes = { 'enhancements', 'modify_card' }, -- previously had "mult" and "chips" (mf)
     config = {
 		extra = {
 			min_cards = 5,
@@ -153,7 +153,7 @@ FishAndChips.Fish {
             local triggered_enhancement = nil
             local unenhanced_list = {}
             for i = 1, #context.scoring_hand do
-                if context.scoring_hand[i].config.center.key == 'c_base' 
+                if context.scoring_hand[i].config.center.key == 'c_base'
                 and not context.scoring_hand[i].getting_enhanced then
                     unenhanced_list[#unenhanced_list+1] = context.scoring_hand[i]
                 end
@@ -247,13 +247,13 @@ FishAndChips.Fish {
                 local selected_card = pseudorandom_element(candidate_cards, 'squid')
                 selected_card.squid_highlighted = true
                 selected_cards[selected_card] = true
-                G.E_MANAGER:add_event(Event({ 
-                    func = function() 
+                G.E_MANAGER:add_event(Event({
+                    func = function()
                         G.hand:add_to_highlighted(selected_card, true)
                         selected_card.squid_highlighted = nil
                         play_sound('card1', percent)
-                        return true 
-                    end 
+                        return true
+                    end
                 }))
                 delay(0.1)
             end
@@ -302,16 +302,16 @@ FishAndChips.Fish {
                 }))
             end
         end
-        G.E_MANAGER:add_event(Event({ 
+        G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.2,
             func = function()
                 G.hand:unhighlight_all()
                 G.hand.config.highlighted_limit = saved_highlight
-                return true 
-            end 
+                return true
+            end
         }))
-        
+
         delay(0.5)
     end,
     can_use = function(self, card)
@@ -399,7 +399,7 @@ FishAndChips.Fish {
 						}
 					})
 				end
-			} 
+			}
         end
         if context.joker_main then
 			return {
@@ -431,7 +431,7 @@ FishAndChips.Fish {
 		weight = {min = 0.6, max = 15},
 		length = {min = 0.1, max = 2}
 	},
-    attributes = { "economy", "usable", "chance" },
+    attributes = { "economy", "usable", "chance", "lose_economy", }, -- TODO: is an empty can a Food card?
 	config = {
 		extra = {
 			odds = 10, eor_sand = 20, use_sand = 10, use_dollars = 20
@@ -443,7 +443,7 @@ FishAndChips.Fish {
         return { vars = { numerator, denominator, card.ability.extra.eor_sand, card.ability.extra.use_sand, card.ability.extra.use_dollars } }
     end,
     calculate = function(self, card, context)
-		if context.modify_final_cashout 
+		if context.modify_final_cashout
         and SMODS.pseudorandom_probability(card, 'mysteriouscanfish', 1, card.ability.extra.odds) then
 			return { sand_dollars = card.ability.extra.eor_sand }
 		end
@@ -588,7 +588,7 @@ FishAndChips.Fish {
                 local valid_list = {}
                 for i = 1, #context.scoring_hand do
                     if context.scoring_hand[i]:is_suit('Diamonds')
-                    and not context.scoring_hand[i].seal 
+                    and not context.scoring_hand[i].seal
                     and not context.scoring_hand[i].yellowtanged then
                         valid_list[#valid_list+1] = context.scoring_hand[i]
                     end
@@ -612,8 +612,8 @@ FishAndChips.Fish {
                 end
             end
         end
-        
-        if context.repetition and context.other_card:is_suit('Diamonds') 
+
+        if context.repetition and context.other_card:is_suit('Diamonds')
         and context.other_card.seal then
             return {
                 repetitions = card.ability.extra.repetitions

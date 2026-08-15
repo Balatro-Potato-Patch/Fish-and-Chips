@@ -6,7 +6,7 @@ FishAndChips.Fish {
 	pos = { x = 2, y = 0 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "usable" },
+	attributes = { "usable", "booster", "generation", },
 	environments = {
 		pier = 1,
 	},
@@ -70,21 +70,21 @@ FishAndChips.Fish {
 	end,
 	use = function(self, card)
 		local can_use_booster
-		-- if not G.STATE == 
+		-- if not G.STATE ==
 		for _, _card in ipairs(G.fac_pa_box_jellyfish_area.cards) do
 			if _card.ability.fac_pa_box_jellyfish == card.ability.immutable.id then
 				can_use_booster = true
 				break
 			end
 		end
-		
+
 		if can_use_booster then
 			for _, _card in ipairs(G.fac_pa_box_jellyfish_area.cards) do
 				if _card.ability.fac_pa_box_jellyfish == card.ability.immutable.id then
 					G.fac_fish_area:unhighlight_all()
 					G.GAME.fac_fish_expanded = false
 					G.fac_fishing_bucket_bottom.T.r = 0; ease_value(G.fac_fishing_bucket_bottom.T, "r", nil, nil, nil, true)
-					
+
 					G.E_MANAGER:add_event(Event({
 						trigger = 'after',
 						delay = 0.4,

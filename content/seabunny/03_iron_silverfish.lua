@@ -59,7 +59,7 @@ FishAndChips.Fish {
         return false
     end,
     weight = 4,
-    attributes = {"chips", "generation", "destroy_card", "enhancements", "perma_bonus", },
+    attributes = {"chips", "generation", "destroy_card", "enhancements", "modify_card", "perma_bonus", },
     environments = {
         pier = 20,
         aquifer = 80

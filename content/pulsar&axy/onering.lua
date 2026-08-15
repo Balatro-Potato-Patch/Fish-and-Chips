@@ -5,7 +5,7 @@ FishAndChips.Fish {
 	pos = { x = 3 , y = 1},
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "boss_blind", "scaling", "passive" },
+	attributes = { "boss_blind", "scaling", "passive", "xblindsize", },
 	treasure = true,
 	environments = {
 		aquifer = 1,
@@ -69,7 +69,7 @@ FishAndChips.Fish {
 				no_message = true
 			})
 		end
-		
+
 		if FishAndChips.get_environment().key == 'volcano' and not from_debuff then
 			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling / card.ability.extra.perma_xblind_size
 		elseif not from_debuff then

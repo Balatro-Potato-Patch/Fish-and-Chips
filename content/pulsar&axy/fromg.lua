@@ -6,7 +6,7 @@ FishAndChips.Fish {
 	pos = { x = 3, y = 0 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Axy" },
-	attributes = { "chips", "usable", "destroy_card" },
+	attributes = { "chips", "usable", "destroy_card", "consumable" },
 	environments = {
 		swamp = 1,
 		garden = 1,

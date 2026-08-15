@@ -52,7 +52,7 @@ FishAndChips.Fish {
         end
     end,
     weight = 4,
-    attributes = {"xmult", "retrigger", "scaling", "perma_bonus", "discard",},
+    attributes = {"xmult", "retrigger", "scaling", "modify_card", "perma_bonus", "discard",},
     environments = {
         pier = 20,
         aquifer = 80

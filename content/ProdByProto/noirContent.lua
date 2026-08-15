@@ -1,5 +1,5 @@
 
-	
+
     local facp = FishAndChips.ProdByProto
 
 
@@ -91,7 +91,7 @@
     FishAndChips.Fish {
         key = "fac_proto_noir",
         atlas = "fac_proto_fish",
-		
+
 		pos = { x = 2, y = 0 },
         pixel_size = { w,h = 61,32},
 
@@ -101,7 +101,7 @@
         },
         weight = 25,
         ppu_coder = {"ProdByProto"},
-        attributes = { "usable","generation","destroy_card" },
+        attributes = { "usable","generation","destroy_card" }, -- TODO: I don't have time to figure out what this does, can someone else check if this is correct (mf)
         environments = facp.addEnvs(),
 
         config = {
@@ -123,7 +123,7 @@
                     {"key","gun",{"door",false,7}},
                     {"key","ledger",{"door",false,7},{"lockdoor",false,10}},
                     {{"door",false,9},{"truedoor",false,11},"knife"},
-                    {{"door",false,10},"true_memo"}, -- plotFlag 6, level 12. 15 hands, find all except memo w/o lockpick, or find all w/ lockpick 
+                    {{"door",false,10},"true_memo"}, -- plotFlag 6, level 12. 15 hands, find all except memo w/o lockpick, or find all w/ lockpick
                     {false,false},
                     {false,false}
                 },
@@ -347,7 +347,7 @@
                         if item == "true_memo" then trueEnd = true end -- "trueEnd = true end"... absolute cinema
                     end
                     if trueEnd then cae.playing_true_end = 1 end
-                    if cae.final_court then 
+                    if cae.final_court then
                         for i,jtem in ipairs(cae.noir_inv) do
                             cae.noir_levels[cae.level][i] = jtem
                         end
@@ -388,7 +388,7 @@
     FishAndChips.Fish {
 		key = "fac_proto_lockpick",
 		atlas = "fac_proto_fish",
-		
+
 		pos = { x = 3, y = 0 },
         pixel_size = {w,h = 53,8},
 
@@ -408,7 +408,7 @@
 		},
 
 		loc_vars = function(self, info_queue, card)
-			
+
 		end,
 
         can_use = function (self, card)

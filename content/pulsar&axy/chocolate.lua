@@ -5,7 +5,7 @@ FishAndChips.Fish {
 	pos = { x = 4, y = 1 },
 	ppu_artist = { "Pulsar" },
 	ppu_coder = { "Pulsar" },
-	attributes = { "chips", 'usable', 'food' },
+	attributes = { "chips", 'usable', 'food', "perma_bonus", "modify_card" },
 	environments = {
 		chocolate_river = 1
 	},
@@ -37,14 +37,14 @@ FishAndChips.Fish {
                         play_sound("tarot1")
                         v:juice_up()
                         return true
-                        
+
                     end
                     }))
              end
     end,
 	can_use = function(self, card)
         if G.hand and G.hand.cards and #G.hand.cards > 0 then
-                return true 
+                return true
         else
             return false
         end
