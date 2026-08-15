@@ -1,3 +1,5 @@
+-- TODO: port stuff to badge_key
+
 -- Atlas
 SMODS.Atlas {
     key = "waffle_fish",
@@ -440,7 +442,7 @@ FishAndChips.Fish {
     decision_max = 0.24,
     decision_min = 0.1,
     treasure = true,
-    attributes = { "generation" }
+    attributes = { "generation", "consumable", }
 }
 
 -- Dead Fish
@@ -481,7 +483,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    attributes = { "economy", "destroy_card" }
+    attributes = { "economy", "destroy_card", "rank", "two", }
 }
 
 -- Squid Ink Cookie
@@ -556,7 +558,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    attributes = { "suit" },
+    attributes = { "suit", "spades", "full_deck", "lose_economy", "modify_card" },
     pronouns = "they_them",
     vel_limit = 0.6,
     impulse_max = 0.75,
@@ -594,7 +596,7 @@ FishAndChips.Fish {
     loc_vars = function (self, info_queue, card)
         return {vars = {ppu_bubbles = {card.ability.extra.tag_created and 'inactive' or 'active'}}}
     end,
-    attributes = { "generation" }, -- Doesn't really generate cards per se, but this is really the only fitting bait attribute I can think of
+    attributes = { "generation", "tag" }, -- Doesn't really generate cards per se, but this is really the only fitting bait attribute I can think of -- Tag generation *is* generation (mf)
     calculate = function(self, card, context)
         if context.fac_end_fishing and not context.failed and not card.ability.extra.tag_created then -- thanks eremel
             local tag_pool = get_current_pool('Tag')
@@ -730,7 +732,7 @@ FishAndChips.Fish {
         return {
             --main_end = main_end,
             vars = { card.ability.extra.boost, ppu_bubbles = {card.ability.extra.active and "active" or "inactive"} },
-            
+
         }
     end,
     blueprint_compat = false,
@@ -755,7 +757,7 @@ FishAndChips.Fish {
             end
         end
     end,
-    attributes = { "mod_chance", "passive" }
+    attributes = { "mod_chance", "passive", "fac_perfect_catch", }
 }
 
 -- Gossamer Worm
@@ -776,6 +778,7 @@ FishAndChips.Fish {
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     blueprint_compat = true,
+    attributes = { "fac_perfect_catch", "generation", "consumable", "spectral" },
     calculate = function(self, card, context)
         if context.fac_end_fishing and context.perfect and context.treasure then
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -973,7 +976,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    attributes = { "rank", "food" }
+    attributes = { "rank", "food", "modify_card", }
 }
 
 -- THE MAGNIFICENT FINCLAIR
@@ -1035,7 +1038,7 @@ FishAndChips.Fish {
             end
         end
     end,
-    attributes = { "copying" },
+    attributes = { "copying", "position", },
     vel_limit = 0.7,
     impulse_min = 0.42,
     impulse_max = 0.48,
@@ -1140,7 +1143,7 @@ FishAndChips.Fish {
             G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
             1.2)
     end,
-    attributes = { "generation", "usable" },
+    attributes = { "generation", "usable", "enhancements", },
     impulse_max = 0.18,
     vel_limit = 0.32
 }
@@ -1168,6 +1171,7 @@ FishAndChips.Fish {
             hands = 2
         }
     },
+    attributes = { "hands", },
     pixel_size = { w = 67, h = 73 },
     loc_vars = function(self, info_queue, card)
         return {
@@ -1232,7 +1236,7 @@ FishAndChips.Fish {
             G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
             1.2)
     end,
-    attributes = { "xmult" },
+    attributes = { "xmult", "lose_economy", "scaling", },
 }
 -- Unemployster hook
 local ease_sand_dollars_ref = ease_sand_dollars
@@ -1303,7 +1307,7 @@ FishAndChips.Fish {
             })
         end
     end,
-    attributes = { "boss_blind" },
+    attributes = { "boss_blind", "enhancements", },
     set_card_type_badge = function(self, card, badges)
         badges[#badges + 1] = create_badge(localize('k_fac_waffle_gastropod'),
             G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
@@ -1342,7 +1346,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         if context.before and #context.full_hand == 1 then
             context.full_hand[1].ability.perma_bonus = (context.full_hand[1].ability.perma_bonus or 0) +
-            card.ability.extra.chips_stored
+                card.ability.extra.chips_stored
             card.ability.extra.chips_stored = 0
             return {
                 message = localize('k_upgrade_ex'),
@@ -1369,7 +1373,7 @@ FishAndChips.Fish {
             card.children.center:set_sprite_pos({ x = 6, y = 1 })
         end
     end,
-    attributes = { "chips" },
+    attributes = { "chips", "perma_bonus", "modify_card", "reset", },
     set_card_type_badge = function(self, card, badges)
         badges[#badges + 1] = create_badge(localize('k_fac_waffle_pokemon'),
             G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
@@ -1390,6 +1394,7 @@ FishAndChips.Fish {
     pixel_size = {h = 69, w = 67},
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
+    attributes = { "generation", "editions" },
     stats = {
         weight = {min = 61.0, max = 68.0},
         length = {min = 1.75, max = 1.82},

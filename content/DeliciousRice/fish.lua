@@ -5,7 +5,7 @@ FishAndChips.Fish { -- Fring
 
 	key = "delrice_fringills",
 	pos = { x = 2, y = 1 },
-	attributes = { "xmult" },
+	attributes = { "xmult", "hands", },
 	config = {
 		extra = {
 			xmult = 3
@@ -31,14 +31,14 @@ FishAndChips.Fish { -- Fring
             return {xmult = card.ability.extra.xmult}
         elseif context.after
 		and SMODS.last_hand_oneshot
-		and G.GAME.current_round.hands_played == 0 
-		and not context.blueprint 
+		and G.GAME.current_round.hands_played == 0
+		and not context.blueprint
 		then
 			local middle_func = function()
 				FishAndChips.DeliciousRice.talk(card, 3, 0.2, "fac_delrice_instakill")
 				FishAndChips.DeliciousRice.explode_destroy(card)
 			end
-			
+
 			FishAndChips.DeliciousRice.fancy_death(card, nil, middle_func, false)
 		end
 	end,
@@ -52,7 +52,7 @@ FishAndChips.Fish { -- Spongebob
 
 	key = "delrice_spongebob",
 	pos = atlas_sponge[true],
-	attributes = { "scaling", "mult", "usable" },
+	attributes = { "scaling", "mult", "usable", "face_down", },
 	config = {
 		extra = {
 			mult = 0,
@@ -65,7 +65,7 @@ FishAndChips.Fish { -- Spongebob
 	blueprint_compat = true,
 	eternal_compat = false,
 	cost = 0,
-	
+
 	weight = 30,
 	environments = {
 		pier = 30
@@ -80,14 +80,14 @@ FishAndChips.Fish { -- Spongebob
 
 	add_to_deck = function(self, card, from_debuff)
 		FishAndChips.DeliciousRice.talk(card, 2, 0.2, "fac_delrice_imspongebob")
-		card.ability.extra.valid_env = FishAndChips.DeliciousRice.valid_SB_env(FishAndChips.get_environment().key)		
+		card.ability.extra.valid_env = FishAndChips.DeliciousRice.valid_SB_env(FishAndChips.get_environment().key)
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main then
             return {mult = card.ability.extra.mult}
 
-        elseif 
-			context.card_flipped 
+        elseif
+			context.card_flipped
 			and (
 				(not FishAndChips.DeliciousRice.emplacing
 				and not FishAndChips.DeliciousRice.bad_flip)
@@ -101,10 +101,10 @@ FishAndChips.Fish { -- Spongebob
 				ref_value = "mult",
 				scalar_value = "scalar",
 			})
-		
-			
+
+
 		elseif context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-			
+
 			G.E_MANAGER:add_event(Event({
 				func = function()
 					card:flip()
@@ -128,7 +128,7 @@ FishAndChips.Fish { -- Spongebob
 			card.ability.extra.valid_env = FishAndChips.DeliciousRice.valid_SB_env(context.fac_environment_changed)
 
 		elseif context.ending_fishing and not card.ability.extra.hydrated and not context.blueprint then
-			local middle_func = function() 
+			local middle_func = function()
 				G.E_MANAGER:add_event(Event({
 					trigger = "after",
 					timer = "REAL",
@@ -137,7 +137,7 @@ FishAndChips.Fish { -- Spongebob
 						return true
 					end
 				}))
-				
+
 				G.E_MANAGER:add_event(Event({
 					-- trigger = "after",
 					-- timer = "REAL",
@@ -148,7 +148,7 @@ FishAndChips.Fish { -- Spongebob
 						return true
 					end
 				}))
-				
+
 
 				G.E_MANAGER:add_event(Event({
 					-- trigger = "after",
@@ -178,7 +178,7 @@ FishAndChips.Fish { -- Spongebob
 				delay = 1
 			}))
 		end
-		
+
 	end,
 	can_use = function(self, card)
 		return card.ability.extra.valid_env and G.STATE == G.STATES.FAC_FISHING and (not card.ability.extra.hydrated)
@@ -225,7 +225,7 @@ FishAndChips.Fish { -- Spongecorpse
 	no_collection = true,
 	cost = 0,
 
-	weight = 0,
+	weight = 0, -- is this allowed ?? (mf)
 	environments = {
 	},
 	stats = {
@@ -234,7 +234,7 @@ FishAndChips.Fish { -- Spongecorpse
 	},
 	calculate = function(self, card, context)
 		if context.check_eternal then
-			if context.other_card == card then 
+			if context.other_card == card then
 				return {no_destroy = true}
 			end
 		end
@@ -252,7 +252,7 @@ FishAndChips.Fish { -- Blender
 
 	key = "delrice_blender",
 	pos = atlas_blender[false],
-	attributes = { "copying", "usable" },
+	attributes = { "copying", "usable", "chance", "destroy_card", },
 	config = {
 		extra = {
 			used = false,
@@ -261,7 +261,7 @@ FishAndChips.Fish { -- Blender
 			id = 0
 		}
 	},
-	
+
 	blueprint_compat = true,
 	eternal_compat = false,
 
@@ -287,7 +287,7 @@ FishAndChips.Fish { -- Blender
 	end,
 	remove_from_deck = function (self, card, from_debuff)
 		G.GAME.delrice_blenders = G.GAME.delrice_blenders - 1
-		
+
 		if G.delrice_blender_area.cards then
 			for i, v in ipairs(G.delrice_blender_area.cards) do
 				if v.ability.extra.blender_id == card.ability.extra.id then
@@ -297,16 +297,16 @@ FishAndChips.Fish { -- Blender
 		end
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint 
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint
 		and SMODS.pseudorandom_probability(card, 'blender_fcking_blow_up', card.ability.extra.num, card.ability.extra.denom) then
 			FishAndChips.DeliciousRice.fancy_death(card,
 				nil,
-				FishAndChips.DeliciousRice.explode_destroy, 
+				FishAndChips.DeliciousRice.explode_destroy,
 				false,
 				nil,
 				0.8
 			)
-			
+
 		elseif G.delrice_blender_area.cards then
 			for i, v in ipairs(G.delrice_blender_area.cards) do
 				if v.ability.extra.blender_id == card.ability.extra.id then
@@ -359,7 +359,7 @@ FishAndChips.Fish { -- Blender
 			end
 		}))
 	end,
-	
+
 	set_sprites = function(self, card, front)
 		local state = false
 		if card.ability and card.ability.extra and card.ability.extra.used ~= nil then
@@ -420,18 +420,18 @@ FishAndChips.Fish { -- Gambling
 								return true
 							end
 						}))
-						local length = 1.2 
+						local length = 1.2
 						FishAndChips.DeliciousRice.talk(card, length, 0.2, "fac_delrice_winning", 0.6)
 					end
 
-					local end_func = function() 
-						card.children.center:set_sprite_pos({x = 0, y = 0}) 
+					local end_func = function()
+						card.children.center:set_sprite_pos({x = 0, y = 0})
 						-- sendDebugMessage("reset")
 					end
-					
+
 					FishAndChips.DeliciousRice.fancy_death(card,
 						nil,
-						middle_func, 
+						middle_func,
 						false,
 						nil,
 						nil,
@@ -440,7 +440,7 @@ FishAndChips.Fish { -- Gambling
 				end
 
 				return {sand_dollars = card.ability.extra.money}
-			elseif not context.blueprint then				
+			elseif not context.blueprint then
 				local middle_func = function()
 					G.E_MANAGER:add_event(Event({
 						func = function()
@@ -451,16 +451,16 @@ FishAndChips.Fish { -- Gambling
 					FishAndChips.DeliciousRice.talk(card, 1, 0.2, "fac_delrice_dangit", 0.8)
 					FishAndChips.DeliciousRice.explode_destroy(card)
 				end
-				
+
 				FishAndChips.DeliciousRice.fancy_death(card,
 					nil,
-					middle_func, 
+					middle_func,
 					false
 				)
-				
+
 			end
-			
+
 		end
 	end
-	
+
 }

@@ -1,12 +1,12 @@
 SMODS.Atlas({
-	key = "DoodlenautsAvatar", 
+	key = "DoodlenautsAvatar",
 	path = "Doodlenauts/avatars.png",
 	px = 71,
 	py = 95,
 })
 
 SMODS.Atlas({
-	key = "DoodlenautsFish", 
+	key = "DoodlenautsFish",
 	path = "Doodlenauts/fish.png",
 	px = 71,
 	py = 95,
@@ -74,17 +74,16 @@ FishAndChips.Fish {
 			local triggered = false
 			for i, rank in ipairs(scoring_ranks) do
 				if context.other_card:get_id() == scoring_ranks[i] then
-					card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
 					triggered = true
 					break
 				end
 			end
 			if triggered then
-				return {
-					message = localize('k_upgrade_ex'),
-					colour = G.C.MULT,
-					message_card = card
-            	}
+			    SMODS.scale_card(card, {
+					ref_value = "mult",
+					scalar_value = "mult_gain",
+				})
+				return nil, true
 			end
 		end
 		if context.joker_main then
@@ -279,7 +278,7 @@ FishAndChips.Fish {
 	weight = 5, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'passive', 'enhancements' },
+	attributes = { 'passive', 'enhancements', "mod_chance", },
 	stats = {
 		weight = {
 			min = 0.9,
@@ -298,6 +297,7 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
     end,
+    -- TODO: Fix implementation this is as they say Horrible (mf)
 }
 
 -- Eyeless Fish
@@ -362,7 +362,7 @@ FishAndChips.Fish {
 	weight = 3, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'suit', 'clubs' },
+	attributes = { 'suit', "modify_card", "usable", },
 	stats = {
 		weight = {
 			min = 0.2,
@@ -387,7 +387,7 @@ FishAndChips.Fish {
 			vars = {
 				card.ability.extra.suit,
 				--localize(card.ability.extra.suit, 'suits_singular'),
-				colours = { 
+				colours = {
 					G.C.SUITS[card.ability.extra.suit]
 				}
 			}
@@ -437,7 +437,7 @@ FishAndChips.Fish {
 	weight = 3, --common/uncommon
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'economy', },
+	attributes = { 'economy', "lose_economy", "usable", },
 	stats = {
 		weight = {
 			min = 13,
@@ -515,7 +515,7 @@ FishAndChips.Fish {
 	weight = 4, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'hand_type' , 'editions' },
+	attributes = { 'hand_type' , 'editions' , "chance" , "modify_card" },
 	stats = {
 		weight = {
 			min = 0.1,
@@ -566,7 +566,7 @@ FishAndChips.Fish {
 	weight = 4, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'economy' , 'joker' , 'sell_value' },
+	attributes = { 'economy' , 'joker' , 'sell_value' , "rarity" , "on_sell" },
 	stats = {
 		weight = {
 			min = 0.7,
@@ -633,7 +633,7 @@ FishAndChips.Fish {
 	weight = 2, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'seals' },
+	attributes = { 'seals', "modify_card", "food", },
 	stats = {
 		weight = {
 			min = 0.2,
@@ -687,7 +687,7 @@ FishAndChips.Fish {
 	weight = 2, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'xmult', 'reroll', 'scaling' },
+	attributes = { 'xmult', 'reroll', 'scaling', "shop", },
 	stats = {
 		weight = {
 			min = 1,
@@ -719,16 +719,20 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.reroll_shop then
-			card.ability.extra.xmult_total = card.ability.extra.xmult_total + (card.ability.extra.xmult_per_dollar * context.cost)
-			return {
-                message = localize('k_upgrade_ex'),
-            }
+            SMODS.scale_card(card, {
+                ref_value = "xmult_total",
+                scalar_value = "xmult_per_dollar",
+                scalar_factor = context.cost
+            })
+            return nil, true
 		end
 		if context.fac_environment_changed then
-			card.ability.extra.xmult_total = card.ability.extra.xmult_total + (card.ability.extra.xmult_per_dollar * G.GAME.fac_environment_reroll_cost)
-			return {
-                message = localize('k_upgrade_ex'),
-            }
+		    SMODS.scale_card(card, {
+                ref_value = "xmult_total",
+                scalar_value = "xmult_per_dollar",
+                scalar_factor = G.GAME.fac_environment_reroll_cost
+            })
+            return nil, true
 		end
 		if context.joker_main then
             return {
@@ -886,7 +890,7 @@ FishAndChips.Fish {
 	weight = 4, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'usable', 'destroy_card', },
+	attributes = { 'usable', 'destroy_card', "lose_economy", },
 	stats = {
 		weight = {
 			min = 0.4,
@@ -1111,7 +1115,7 @@ FishAndChips.Fish {
 	weight = 4, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'rerolls', },
+	attributes = { 'reroll', "reset", },
 	stats = {
 		weight = {
 			min = 0.9,
@@ -1187,7 +1191,7 @@ FishAndChips.Fish {
 	weight = 3, --uncommon/rare
 	ppu_coder = { 'Buckaroodle'},
 	ppu_artist = { 'F404' },
-	attributes = { 'usable' },
+	attributes = { 'usable', "xblindsize", },
 	stats = {
 		weight = {
 			min = 0.1,
