@@ -69,8 +69,10 @@ return {
                     name = "The Immortal Snail",
                     text = {
                         {
-                            "On Boss Blind select, destroy a random {C:blue}Fish{} and gain {X:mult,C:white}X#2#{} Mult",
-                            "{C:inactive}Currently: {X:mult,C:white}X#1#{C:inactive} Mult"
+                            "On selecting the {C:attention}Boss Blind{},",
+                            "destroys a random {C:fac_fish}Fish{} and",
+                            "gains {X:mult,C:white}X#2#{} Mult",
+                            "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                         }
                     },
                     flavour = {
@@ -95,7 +97,9 @@ return {
                     name = "Blobfish",
                     text = {
                         {
-                            "Give a random {C:blue}Fish{} either {C:dark_edition}Foil{} or {C:dark_edition}Holographic{}",
+                            "Give a random {C:blue}Fish{} either",
+                            "{C:dark_edition}Foil{} or {C:dark_edition}Holographic{}",
+                            "{ppu_bubble:usable}"
                         }
                     },
                     flavour = {
