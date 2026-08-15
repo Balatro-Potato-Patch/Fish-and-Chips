@@ -22,6 +22,7 @@ FishAndChips.Fish{
     },
     cost = 0,
     blueprint_compat = false,
+    eternal_compat = false,
     config = {
         extra = {
             luck = 1,
