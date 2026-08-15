@@ -56,7 +56,7 @@ return {
                     "{X:red,C:white}X1{} Mult for each",
                     "empty {C:attention}Bucket{} slot",
                     "{s:0.8}Chalk Outline included{}",
-                    "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive}){}"
+                    "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult){}"
                 },
                 flavor = {
                     "I will find him, I will",
@@ -89,7 +89,7 @@ return {
             fish_fac_ghostsalt_whitewhale = {
                 name = "White Whale",
                 text = {
-                    "{C:red}Rare{} Jokers each",
+                    "{C:rare}Rare{C:attention} Jokers{} each",
                     "give {X:mult,C:white}X#1#{} Mult",
                 },
                 flavor = {
@@ -172,7 +172,7 @@ return {
             fish_fac_ghostsalt_mezepheles = {
                 name = "Mezepheles",
                 text = {
-                    "Other {C:attention}Fish{} with abilities",
+                    "Other {C:fac_fish}Fish{} with abilities",
                     "containing the word",
                     "\"{C:attention}#1#{}\" give {C:white,X:mult}X#2#{} Mult",
                     "{C:inactive}(Word must match exactly){}",
