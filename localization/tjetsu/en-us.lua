@@ -55,11 +55,11 @@ return {
             fish_fac_tje_sans = {
                 name = "Funny Bone-Fish",
                 text = {
-                    {"{C:chips}+#4# Chips{} for every {C:attention}Ace{} drawn",
+                    {"{C:chips}+#4#{} Chips for every {C:attention}Ace{} drawn",
                      "Resets at end of round",
-                     "{C:inactive}(Currently{} {C:chips}+#2# Chips{}{C:inactive}){}"},
+                     "{C:inactive}(Currently{} {C:chips}+#2#{}{C:inactive} Chips){}"},
                      {"Increase {C:chips}Chips{} per {C:attention}Ace{} by",
-                     "{C:chips}+#3# Chips{} when you {C:red}fail{}",
+                     "{C:chips}+#3#{} Chips when you {C:red}fail{}",
                      "to catch a fish"}
                 },
                 flavor = {
