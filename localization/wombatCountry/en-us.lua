@@ -94,7 +94,7 @@ return {
             fish_fac_wombatCountry_yellow = {
                 name = "Yellowfish",
                 text = {
-                    "{X:mult,C:white,}C#1#{} Mult",
+                    "{X:mult,C:white,}X#1#{} Mult",
                     "{C:red}Self destructs{} when a",
                     "{C:attention}playing card{} is destroyed"
                 },
