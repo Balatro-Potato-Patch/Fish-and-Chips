@@ -89,7 +89,7 @@ return {
             fish_fac_ghostsalt_whitewhale = {
                 name = "White Whale",
                 text = {
-                    "{C:rare}Rare{C:attention} Jokers{} each",
+                    "{C:rare}Rare{} {C:attention}Jokers{} each",
                     "give {X:mult,C:white}X#1#{} Mult",
                 },
                 flavor = {
