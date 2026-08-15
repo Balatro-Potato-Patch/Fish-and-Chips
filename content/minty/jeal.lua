@@ -216,7 +216,7 @@ FishAndChips.Fish{
             card.ability.extra.wish, card.ability.extra.set, card.ability.extra.cost = get_wish{}
 
             return {
-                message = localize("k_reset")
+                message = localize{type = "name_text", key = card.ability.extra.wish, set = card.ability.extra.set}.."!"
             }
         end
     end
