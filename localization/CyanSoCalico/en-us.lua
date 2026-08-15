@@ -16,7 +16,7 @@ return {
                     "When {C:attention}Blind{} is selected,",
                     "add a {C:attention}#1#{} to a",
                     "random {C:attention}playing card{}",
-                    "that has no {C:attention}seal{}"
+                    "in {C:attention}full deck{}"
                 }
             },
             fish_fac_csc_the_fish = {
@@ -35,7 +35,7 @@ return {
                         "Use this Fish before a",
                         "{C:attention}Boss Blind{} to replace",
                         "it with {C:attention}The Fish{}",
-                        "{C:inactive,s:0.8}Showdown Blind excluded{}",
+                        "{C:inactive,s:0.8}Showdown Blinds excluded{}",
                         "{ppu_bubble:usable}"
                     }
                 }
@@ -51,7 +51,7 @@ return {
                 },
                 text = {
                     "{C:white,X:mult}X#1#{} Mult for",
-                    "each {C:blue}Fish{} owned",
+                    "each {C:fac_fish}Fish{} owned",
                     "{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult){}"
                 },
             },
@@ -63,12 +63,12 @@ return {
                 },
                 --[[
                 text = {
-                    "{C:dark_edition}+#1#{} {C:blue}Fish{} slot per",
+                    "{C:dark_edition}+#1#{} {C:fac_fish}Fish{} slot per",
                     "empty {C:attention}Joker{} slot",
                 }
                     ]]
                 text = {
-                    "{C:chips}+#1#{} Chips per {C:blue}Fish",
+                    "{C:chips}+#1#{} Chips per {C:fac_fish}Fish",
                     "outnumbering {C:attention}Jokers{}",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips){}"
                 }
@@ -85,7 +85,7 @@ return {
                     "This Fish gains",
                     "{C:chips}+#1#{} Chips per",
                 --    "each {C:attention}card{} or",
-                    "{C:blue}Fish{} {C:red}destroyed{}",
+                    "{C:fac_fish}Fish{} {C:red}destroyed{}",
                 --    "or {C:red}used up{}",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips){}"
                 }
@@ -107,16 +107,17 @@ return {
             fish_fac_csc_luvdisc = {
                 name = "Luvdisc",
                 flavor = {
-                    "This Pokémon's sighting",
-                    "by couples is said to be",
-                    "an omen that their love",
-                    "shall last for eternity.",
+                    "This Pokémon is said to",
+                    "bless couples that spot",
+                    "it with eternal love.",
                 },
                 text = {
-                    "If played hand is a",
+                    "If poker hand is a",
                     "{C:attention}#1#{} of {C:attention}face{} cards,",
-                    "create a copy of",
-                    "{C:tarot}#2#{}",
+                --    "create a copy of",
+                --    "{C:tarot}#2#{}",
+                    "create {C:tarot}#2#{}",
+                    "{C:inactive}(Must have room){}"
                 },
             },
             fish_fac_csc_suketoudara = {
@@ -131,7 +132,7 @@ return {
                     "sharing a {C:attention}suit{}",
                     "Use this Fish to",
                     "{C:red}destroy{} them",
-                    "{ppu_bubble:usable}"
+                    "{ppu_bubble:usable}",
                 },
             },
             fish_fac_csc_sardinium = {
@@ -161,8 +162,8 @@ return {
                     "no {C:attention}#2#{} or {C:attention}#3#{}",
                     "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips){}"
                     ]]
-                    "{C:mult}+#1#{} Mult if played hand",
-                    "did not contain any",
+                    "{C:mult}+#1#{} Mult if poker hand",
+                    "does not contain a",
                     "{C:attention}#2#{} or {C:attention}#3#{}",
                 }
             },
