@@ -47,7 +47,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 0.008, max = 0.011}, length = {min = 0.1, max = 0.12}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
-	attributes = {"economy"},
+	attributes = {"economy", "chance",},
 
 	environments = {
 		city_river = 10,
@@ -205,7 +205,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 0.009, max = 0.015}, length = {min = 0.13, max = 0.15}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
-	attributes = {"generation","usable"},
+	attributes = {"generation","usable","tag","modify_card",},
 
 	environments = {
 		city_river = 10,
@@ -227,8 +227,8 @@ FishAndChips.Fish {
 
 	use = function(self, card)
 		add_tag({key = pseudorandom_element(G.P_TAGS, 'Markerel').key})
-		if G.GAME.fac_Breukel.OverTime >= 8 then 
-			add_tag({key = pseudorandom_element(G.P_TAGS, 'Markerel').key}) 
+		if G.GAME.fac_Breukel.OverTime >= 8 then
+			add_tag({key = pseudorandom_element(G.P_TAGS, 'Markerel').key})
 		end
 
 		local Joker = pseudorandom_element(G.jokers.cards, 'Markerel Eternal')
@@ -255,7 +255,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 0.3, max = 1.1}, length = {min = 0.3, max = 0.7}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
-	attributes = {"economy"},
+	attributes = {"economy","lose_economy"},
 
 	environments = {
 		city_river = 10,
@@ -300,7 +300,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 5, max = 12}, length = {min = 0.6, max = 1.2}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
-	attributes = {"mult"},
+	attributes = {"mult","generation",},
 
 	environments = {
 		city_river = 10,
@@ -334,7 +334,7 @@ FishAndChips.Fish {
 
 					if Overtime == 10 and #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
 						local fish = SMODS.add_card({key = context.fish})
-						fish.ability.stats = FishAndChips.create_fish_stats(fish.config.center)					
+						fish.ability.stats = FishAndChips.create_fish_stats(fish.config.center)
 					end
 				return true end
 			}))
@@ -350,7 +350,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 130, max = 150}, length = {min = 1, max = 1.2}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
-	attributes = {"destroy_card", "generation"},
+	attributes = {"destroy_card", "generation", "discard", "enhancements", "editions", "seals",},
 
 	environments = {
 		city_river = 10,
@@ -379,7 +379,7 @@ FishAndChips.Fish {
 				func = function()
 					local Overtime = G.fac_Breukel.GetOverTime()
             		local card_copied = SMODS.copy_card(_card)
-            
+
 					if Overtime > 6 and pseudorandom("pirinterseal") < Overtime/10 then
 						card_copied:set_seal(SMODS.poll_seal({guaranteed = true}))
 					end
@@ -406,7 +406,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 0.009, max = 0.015}, length = {min = 0.13, max = 0.15}},
 	ppu_coder = {"Breuhh"},
 	ppu_artist = {"Comykel"},
-	attributes = {"destroy_card", "generation"},
+	attributes = {"generation", "enhancements"},
 
 	environments = {
 		city_river = 10,

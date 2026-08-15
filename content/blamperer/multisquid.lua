@@ -60,7 +60,7 @@ FishAndChips.Fish {
     ppu_coder = { "blamperer" },
     ppu_artist = { "blamperer" },
     attributes = {
-        "suit", "usable"
+        "suit", "usable", "modify_card", "chance", "enhancements",
     },
     config = {
         extra = {

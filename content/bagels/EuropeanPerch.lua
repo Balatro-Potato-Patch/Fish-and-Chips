@@ -15,7 +15,7 @@ FishAndChips.Fish {
 	weight = 10,
 	environments = { swamp = 1, aquifer = 0.8, city_river = 0.1 },
 	stats = { weight = { min = 1.7, max = 2.9 }, length = { min = 0.2, max = 0.6 } },
-	attributes = { 'passive', 'boss_blind' },
+	attributes = { 'passive', 'boss_blind', 'skip' },
 	blueprint_compat = false,
 	cost = 8,
 	config = {

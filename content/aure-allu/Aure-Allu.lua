@@ -27,7 +27,7 @@ PotatoPatchUtils.Developer({
 	colour = G.C.ORANGE,
 	fac_partner = 'fac_AllUniversal',
 	loc = true,
-	loc_vars = function(self, info_queue, card) 
+	loc_vars = function(self, info_queue, card)
 		return {vars = { elements = { tiger2 }}}
 	end,
 })
@@ -39,7 +39,7 @@ PotatoPatchUtils.Developer({
 	colour = G.C.GREY,
 	fac_partner = 'fac_Aure',
 	loc = true,
-	loc_vars = function(self, info_queue, card) 
+	loc_vars = function(self, info_queue, card)
 		return {vars = { elements = { fishee2 }}}
 	end,
 })
@@ -113,7 +113,7 @@ local function table_find(t, value)
 end
 
 local function table_get_subfield(_table, key_string_or_keys)
-    if type(_table) ~= "table" then sendWarnMessage("table_get_subfield called with invalid table argument", "utils"); return end 
+    if type(_table) ~= "table" then sendWarnMessage("table_get_subfield called with invalid table argument", "utils"); return end
     if type(key_string_or_keys) ~= "string" and type(key_string_or_keys) ~= "table" then sendWarnMessage(string.format("table_get_subfield called with invalid key_string '%s'.", key_string_or_keys), "utils"); return end
     local _t = _table
     if type(key_string_or_keys) == "string" then
@@ -121,7 +121,7 @@ local function table_get_subfield(_table, key_string_or_keys)
             _t = _t[field]
             if not _t then return end
         end
-    else 
+    else
         for _, field in ipairs(key_string_or_keys) do
             _t = _t[field]
             if not _t then return end
@@ -137,7 +137,7 @@ end
 local function get_most_played_pokerhand()
 	local _handname, _played, _order = 'High Card', -1, 100
 	for k, v in pairs(G.GAME.hands) do
-		if v.played > _played or (v.played == _played and _order > v.order) then 
+		if v.played > _played or (v.played == _played and _order > v.order) then
 			_played = v.played
 			_handname = k
 		end
@@ -153,7 +153,7 @@ FishAndChips.Fish {
 	weight = 3,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable", "space", "hand_level" },
+	attributes = { "usable", "space", "hand_level", "hand_type", "deltarune", "utdr", },
 	stats = {weight = {min = 12, max = 25}, length = {min = 1.4, max = 1.6}},
 	blueprint_compat = false,
 	config = {
@@ -224,7 +224,7 @@ FishAndChips.Fish {
 				attention_text({
 					text = localize('k_aureallu_starfish_3'),
 					scale = 1.1,
-					hold = 0.7 * G.SETTINGS.GAMESPEED, 
+					hold = 0.7 * G.SETTINGS.GAMESPEED,
 					major = card,
 					backdrop_colour = starwalker_col,
 					align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and
@@ -318,7 +318,7 @@ FishAndChips.Fish {
 				message = localize("k_aureallu_blooper"),
 				colour = G.C.BLACK
 			}
-        elseif context.joker_main then 
+        elseif context.joker_main then
             local total = 1
             for _, pcard in ipairs(G.hand.cards) do
                 if pcard.facing == "back" then
@@ -340,7 +340,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "passive", "economy" },
+	attributes = { "passive", "economy", "sell_value", },
 	stats = {weight = {min = 0.4, max = 0.9}, length = {min = 0.05, max = 0.12}},
 	blueprint_compat = false,
 	config = {
@@ -358,12 +358,18 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.ending_fishing and not context.blueprint then
-			card.ability.extra_value = card.ability.extra_value + card.ability.extra.sand_dollars_gain
-			card:set_cost()
-			return {
-				message = localize('k_val_up'),
-				colour = FishAndChips.C.SAND_DOLLAR
-			}
+		    SMODS.scale_card(card, {
+                ref_table = card.ability,
+                ref_value = "extra_value",
+                scalar_table = card.ability.extra,
+                scalar_value = "sand_dollars_gain",
+                scaling_message = {
+                    message = localize('k_val_up'),
+                    colour = G.C.SAND_DOLLAR
+                }
+            })
+            card:set_cost()
+            return nil, true
 		end
 	end,
 }
@@ -395,7 +401,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "mult", "scaling" },
+	attributes = { "mult", }, -- used to have scaling (mf)
 	stats = {weight = {min = 0.3, max = 0.8}, length = {min = 0.04, max = 0.11}},
 	blueprint_compat = true,
 	config = {
@@ -430,7 +436,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "mult", "scaling", "position" },
+	attributes = { "mult", "position" },
 	stats = {weight = {min = 0.04, max = 0.20}, length = {min = 0.06, max = 0.09}},
 	blueprint_compat = true,
 	config = {
@@ -448,7 +454,7 @@ FishAndChips.Fish {
 		pier = 10,
 		backroom = 4,
 		soup = 5,
-		wormhole = 9, 
+		wormhole = 9,
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { zero_signed(card.ability.extra.mult_gain), card.ability.immutable.last_slots_max, zero_signed(card.ability.extra.total_mult) } }
@@ -492,7 +498,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "mult" },
+	attributes = { "mult", "fac_fish_slot", },
 	stats = {weight = {min = 0.5, max = 60}, length = {min = 0.07, max = 2.3}},
 	blueprint_compat = true,
 	config = {
@@ -529,7 +535,7 @@ FishAndChips.Fish {
 	weight = 3,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable", "chance", "modify_card" },
+	attributes = { "usable", "chance", "modify_card", "editions", },
 	stats = {weight = {min = 0.5, max = 9.9}, length = {min = 0.5, max = 3.4}},
 	blueprint_compat = false,
 	config = {
@@ -728,8 +734,8 @@ FishAndChips.Fish {
 	use = function (self, card)
 		--Thanks https://github.com/nh6574/VanillaRemade/blob/main/src/tarots.lua The Hanged Man
         G.E_MANAGER:add_event(Event({
-			trigger = "after", 
-			delay = 0.1, 
+			trigger = "after",
+			delay = 0.1,
 			func = function()
 				play_sound('tarot1')
 				card:juice_up(0.3, 0.5)
@@ -737,8 +743,8 @@ FishAndChips.Fish {
 			end
 		}))
         G.E_MANAGER:add_event(Event({
-			trigger = "after", 
-			delay = 0.1, 
+			trigger = "after",
+			delay = 0.1,
 			func = function()
 				SMODS.destroy_cards(G.hand.highlighted, {immediate = true})
 				return true
@@ -746,16 +752,16 @@ FishAndChips.Fish {
 		}))
         delay(0.1)
         G.E_MANAGER:add_event(Event({
-			trigger = "after", 
-			delay = 0.5, 
+			trigger = "after",
+			delay = 0.5,
 			func = function()
 				local count = G.hand.config.card_limit - #G.hand.cards
 				if count <= 0 then return true end
 				for i=1, count do
 					local percent = 1.15 - (i - 0.999) / (count - 0.998) * 0.3
 					G.E_MANAGER:add_event(Event({
-						trigger = "after", 
-						delay = 0.2, 
+						trigger = "after",
+						delay = 0.2,
 						func = function()
 							play_sound('card1', percent)
 							G.hand:draw_card_from(G.deck, false, false)
@@ -850,8 +856,8 @@ FishAndChips.Fish {
 		--Thanks https://github.com/nh6574/VanillaRemade/blob/main/src/tarots.lua The Hanged Man
 		card.ability.extra.remaining_uses = card.ability.extra.remaining_uses - 1
         G.E_MANAGER:add_event(Event({
-			trigger = "after", 
-			delay = 0.1, 
+			trigger = "after",
+			delay = 0.1,
 			func = function()
 				play_sound('tarot1')
 				card:juice_up(0.3, 0.5)
@@ -905,7 +911,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable", "spectral", "generation" },
+	attributes = { "usable", "spectral", "generation", "consumable", },
 	stats = {weight = {min = 0.9, max = 1.4}, length = {min = 0.08, max = 0.25}},
 	blueprint_compat = false,
 	config = {
@@ -941,8 +947,8 @@ FishAndChips.Fish {
 	use = function (self, card)
 		card.ability.extra.rounds_total = 0
 		G.E_MANAGER:add_event(Event({
-			trigger = "after", 
-			delay = 0.1, 
+			trigger = "after",
+			delay = 0.1,
 			func = function()
 				play_sound('tarot1')
 				card:juice_up(0.3, 0.5)
@@ -974,7 +980,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable" },
+	attributes = { "usable", "lose_economy" },
 	stats = {weight = {min = 1.0, max = 2.5}, length = {min = 0.2, max = 0.7}},
 	blueprint_compat = false,
 	requires_hand = true,
@@ -1003,8 +1009,8 @@ FishAndChips.Fish {
 		local was_used = card.ability.used_this_round
 		card.ability.used_this_round = true
         G.E_MANAGER:add_event(Event({
-			trigger = "after", 
-			delay = 0.1, 
+			trigger = "after",
+			delay = 0.1,
 			func = function()
 				play_sound('tarot1')
 				card:juice_up(0.3, 0.5)
@@ -1017,15 +1023,15 @@ FishAndChips.Fish {
 		}))
 		delay(0.1)
         G.E_MANAGER:add_event(Event({
-			trigger = "after", 
-			delay = 0.5, 
+			trigger = "after",
+			delay = 0.5,
 			func = function()
 				local count = math.max(G.hand.config.card_limit - #G.hand.cards, 0) + card.ability.extra.extra_draw
 				for i=1, count do
 					local percent = 1.15 - (i - 0.999) / (count - 0.998) * 0.3
 					G.E_MANAGER:add_event(Event({
-						trigger = "after", 
-						delay = 0.2, 
+						trigger = "after",
+						delay = 0.2,
 						func = function()
 							play_sound('card1', percent)
 							G.hand:draw_card_from(G.deck, false, false)
@@ -1053,7 +1059,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable", "tag", "chance" },
+	attributes = { "usable", "tag", "chance", "generation", "rarity" },
 	stats = {weight = {min = 0.9, max = 2.7}, length = {min = 0.1, max = 0.4}},
 	blueprint_compat = false,
 	config = {
@@ -1077,8 +1083,8 @@ FishAndChips.Fish {
 	use = function (self, card)
 		if SMODS.pseudorandom_probability(card, "fac_aureallu_unicorn_fish", 1, card.ability.extra.tag_odds) then
 			G.E_MANAGER:add_event(Event({
-				trigger = "after", 
-				delay = 0.1, 
+				trigger = "after",
+				delay = 0.1,
 				func = function()
 					play_sound('tarot1')
 					card:juice_up(0.3, 0.5)
@@ -1145,11 +1151,11 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "copy", "position", },
+	attributes = { "copy", "position", "joker", },
 	stats = {weight = {min = 0.06, max = 0.4}, length = {min = 0.05, max = 0.12}},
 	config = {
 		extra = {
-			
+
 		},
 	},
 	environments = {
@@ -1205,7 +1211,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "chips" },
+	attributes = { "chips", "sell_value", },
 	stats = {weight = {min = 1, max = 3}, length = {min = 0.15, max = 0.45}},
 	blueprint_compat = true,
 	config = {
@@ -1254,7 +1260,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "chance",  "tag", "destroy_card" },
+	attributes = { "chance",  "tag", "destroy_card", "enhancements" },
 	stats = {weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 0.4}},
 	blueprint_compat = true,
 	config = {
@@ -1341,7 +1347,7 @@ local pixel_distance_store_factor = 50
 function set_chimaera_morph_data(card, old_center, new_center, morph_time)
 	card.fac_aureallu_chimaera_morph_data = {}
 	local scale = G.SETTINGS.GRAPHICS.texture_scaling
-	
+
 	local old_atlas = SMODS.get_atlas(old_center.atlas)
 	local old_data = old_atlas.image_data
     local old_px = (old_center.pixel_size or {}).w or (old_center.display_size or {}).w or old_atlas.px
@@ -1387,7 +1393,7 @@ function set_chimaera_morph_data(card, old_center, new_center, morph_time)
 		if a > 0.0 then
 			if g <= 0.0 and b <= 0.0 or g > 0.0 and b > 0.0 then
 				r = 1.0 -- fade = 0.5
-			else 
+			else
 				local distance = get_pixel_distance(shader_data, x, y, rel_px, rel_py, g > 0.0)
 				if g > 0.0 then
 					g = distance / pixel_distance_store_factor
@@ -1446,7 +1452,7 @@ function morph_fish_into(card, new_center, time)
 	}
 	card.children.center = nil
 	card:set_ability(new_center)
-	local new_w, new_h = card.children.center.T.w, card.children.center.T.h 
+	local new_w, new_h = card.children.center.T.w, card.children.center.T.h
 	card.children.chimaera_old_center:set_role({major = card, role_type = 'Minor', draw_major = card, xy_bond = "Strong", wh_bond = "Weak", r_bond = "Strong", scale_bond = "Strong", offset = {x=(new_w-w)/2.0,y=(new_h-h)/2.0}})
 	card.children.chimaera_old_center.T.r = 0
 	card.children.chimaera_old_center.VT.r = 0
@@ -1489,7 +1495,7 @@ SMODS.DrawStep {
 				self.shadow_height = 0*(0.08 + 0.4*math.sqrt(self.velocity.x^2)) + ((((self.highlighted and self.area == G.play) or self.states.drag.is) and 0.35) or (self.area and self.area.config.type == 'title_2') and 0.04 or 0.1)
 				self.children.center:draw_shader('fac_aureallu_chimaera', self.shadow_height)
 				self.children.chimaera_old_center:draw_shader('fac_aureallu_chimaera', self.shadow_height)
-				
+
 			end
 			self.ignore_shadow.chimaera_morph = true
 
@@ -1500,7 +1506,7 @@ SMODS.DrawStep {
     conditions = { vortex = false, facing = 'front' },
 }
 
-local draw_step_edition_func_ref = SMODS.DrawSteps.edition.func 
+local draw_step_edition_func_ref = SMODS.DrawSteps.edition.func
 function SMODS.DrawSteps.edition.func(self, layer)
 	if not self.fac_aureallu_chimaera_morph_data then
 		return draw_step_edition_func_ref(self, layer)
@@ -1520,7 +1526,7 @@ FishAndChips.Fish {
 	weight = 3,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "passive", "usable" },
+	attributes = { "passive", "usable", "hand_type", "enhancements" },
 	stats = {weight = {min = 0.25, max = 30}, length = {min = 0.1, max = 1.5}},
 	blueprint_compat = false,
 	config = {
@@ -1601,7 +1607,7 @@ FishAndChips.Fish {
 				end
 			}))
 			delay(1.6*G.SETTINGS.GAMESPEED)
-		-- else 
+		-- else
 		-- 	SMODS.calculate_effect({
 		-- 		message = localize("k_aureallu_chimaera_confoozed"),
 		-- 		colour = G.C.BLACK,
@@ -1661,12 +1667,12 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "retrigger", },
+	attributes = { "retrigger", "rank", "nine", },
 	stats = {weight = {min = 0.5, max = 2.43}, length = {min = 0.15, max = 0.5}},
 	blueprint_compat = true,
 	config = {
 		extra = {
-			
+
 		},
 	},
 	environments = {
@@ -1712,7 +1718,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "destroy_card", "economy", "usable", "position", },
+	attributes = { "destroy_card", "economy", "usable", "position", "sell_value", },
 	stats = {weight = {min = 0.2, max = 0.7}, length = {min = 0.07, max = 0.16}},
 	blueprint_compat = false,
 	requires_jokers = true,
@@ -1752,8 +1758,8 @@ FishAndChips.Fish {
 		end
 		joker = G.jokers.cards[own_i]
         G.E_MANAGER:add_event(Event({
-			trigger = "after", 
-			delay = 0.1, 
+			trigger = "after",
+			delay = 0.1,
 			func = function()
 				play_sound('tarot1')
 				card:juice_up(0.3, 0.5)
@@ -1762,7 +1768,7 @@ FishAndChips.Fish {
 				return true
 			end
 		}))
-		
+
 	end,
 	keep_on_use = function (self, card)
 		return true
@@ -1794,7 +1800,7 @@ FishAndChips.Fish {
 	weight = 3,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "modify_card", "rank", "position", "economy" },
+	attributes = { "modify_card", "rank", "position", "lose_economy", "economy", "sell_value", },
 	stats = {weight = {min = 25, max = 500}, length = {min = 1.3, max = 6.1}},
 	blueprint_compat = true,
 	config = {
@@ -1849,7 +1855,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable", "suits", "modify_card" },
+	attributes = { "usable", "suits", "modify_card", "hearts", "diamonds", "clubs", "spades", },
 	stats = {weight = {min = 0.55, max = 1}, length = {min = 0.6, max = 3}},
 	blueprint_compat = false,
 	requires_hand = true,
@@ -1884,8 +1890,8 @@ FishAndChips.Fish {
 	use = function (self, card)
 		card.ability.extra.remaining_uses = card.ability.extra.remaining_uses - 1
         G.E_MANAGER:add_event(Event({
-			trigger = "after", 
-			delay = 0.1, 
+			trigger = "after",
+			delay = 0.1,
 			func = function()
 				play_sound('tarot1')
 				card:juice_up(0.3, 0.5)
@@ -1954,7 +1960,7 @@ FishAndChips.Fish {
 	weight = 3,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "generation", "spectral", "tarot" },
+	attributes = { "generation", "spectral", "tarot", "consumable", "boss_blind", },
 	stats = {weight = {min = 0.1, max = 0.7}, length = {min = 0.05, max = 0.1}},
 	blueprint_compat = true,
 	config = {
@@ -2014,7 +2020,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "xmult", },
+	attributes = { "xmult", "scaling", },
 	stats = {weight = {min = 0.1, max = 0.8}, length = {min = 0.07, max = 0.19}},
 	blueprint_compat = true,
 	config = {
@@ -2034,11 +2040,14 @@ FishAndChips.Fish {
 	end,
 	calculate = function (self, card, context)
 		if context.joker_type_destroyed and context.card ~= card and context.card.ability.set == "fac_Fish" and not context.blueprint then
-			card.ability.extra.x_mult_total = card.ability.extra.x_mult_total + card.ability.extra.x_mult_gain
-			return {
-				message = localize("k_upgrade_ex"),
-				colour = G.C.MULT
-			}
+    		SMODS.scale_card(card, {
+    			ref_table = card.ability.extra,
+    			ref_value = "x_mult_total",
+    			scalar_value = "x_mult_gain",
+    			-- message_key = "a_xmult",
+    			message_colour = G.C.MULT,
+    		})
+            return nil, true
 		elseif context.joker_main then
 			return {
 				x_mult = card.ability.extra.x_mult_total
@@ -2079,7 +2088,7 @@ FishAndChips.Fish {
 	weight = 3,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "usable", "chance", "boss_blind", "destroy_card" },
+	attributes = { "usable", "chance", "boss_blind", "destroy_card", "position", },
 	stats = {weight = {min = 0.001, max = 0.005}, length = {min = 0.02, max = 0.045}},
 	blueprint_compat = false,
 	config = {
@@ -2153,7 +2162,7 @@ FishAndChips.Fish {
 					end
 				}))
 			end
-			return 
+			return
 		end
 		SMODS.calculate_effect({
 			message_card = card,
@@ -2177,7 +2186,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "passive", "economy" },
+	attributes = { "passive", "economy", "sell_value", "scaling" },
 	stats = {weight = {min = 250, max = 888}, length = {min = 1.8, max = 4.4}},
 	blueprint_compat = false,
 	config = {
@@ -2200,7 +2209,7 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.ending_fishing and not context.blueprint then
 			local s_dollars = math.floor(math.min(G.GAME.fac_sand_dollars + (G.GAME.fac_sand_dollar_buffer or 0), card.ability.extra.sand_dollars_gain_cap * 2) / 2)
-			G.GAME.fac_sand_dollar_buffer = G.GAME.fac_sand_dollar_buffer or 0 
+			G.GAME.fac_sand_dollar_buffer = G.GAME.fac_sand_dollar_buffer or 0
 			G.GAME.fac_sand_dollar_buffer = G.GAME.fac_sand_dollar_buffer - s_dollars
 			G.E_MANAGER:add_event(Event{
 				func = function ()
@@ -2215,7 +2224,7 @@ FishAndChips.Fish {
 				message = localize('k_val_up'),
 				colour = FishAndChips.C.SAND_DOLLAR
 			}
-		elseif context.after and G.GAME.blind:is_type("Boss") then
+		elseif context.after and G.GAME.blind:is_type("Boss") then -- TODO: This context is probably wrong (mf). Also should use scale_card but i dont have the mental capacity to figure it out rn
 			local diff = card.sell_cost - card.ability.extra_value
 			local new_val = math.floor(math.min(card.sell_cost * card.ability.extra.x_sand_dollars, card.sell_cost + card.ability.extra.x_sand_dollars_gain_cap))
 			card.ability.extra_value = new_val - diff

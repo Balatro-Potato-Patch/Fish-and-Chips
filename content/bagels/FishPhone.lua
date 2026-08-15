@@ -22,7 +22,7 @@ FishAndChips.Fish {
 	weight = 10,
 	environments = { backroom = 1, pier = 1 },
 	stats = { weight = { min = 0.9, max = 1.4 }, length = { min = 0.18, max = 0.3 } },
-	attributes = { 'passive', 'destroy_card' },
+	attributes = { 'passive', 'destroy_card', 'shop', 'reroll', 'joker' },
 	blueprint_compat = false,
 	config = { extra = { slots = 4 } },
 	loc_vars = function(_, _, card)

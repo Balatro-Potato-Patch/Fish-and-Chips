@@ -5,7 +5,7 @@ FishAndChips.Fish {
     ppu_coder = { "blamperer" },
     ppu_artist = { "blamperer" },
     attributes = {
-        "usable"
+        "usable", "generation",
     },
     stats = {
         weight = { min = 0.0018, max = 0.0018 },

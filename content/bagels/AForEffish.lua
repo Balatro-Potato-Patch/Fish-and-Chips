@@ -54,7 +54,7 @@ FishAndChips.Fish {
 	weight = 10,
 	environments = { city_river = 1, aquifer = 1, chocolate_river = 0.5 },
 	stats = { weight = { min = 0.09, max = 0.25 }, length = { min = 0.01, max = 0.14 } },
-	attributes = { 'rank', 'passive' },
+	attributes = { 'rank', 'ace', 'passive' },
 	blueprint_compat = false,
 	flavour_vars = function()
 		return {

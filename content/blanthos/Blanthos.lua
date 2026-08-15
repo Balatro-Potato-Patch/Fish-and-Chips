@@ -53,7 +53,7 @@ SMODS.Sound({
 	key = "probably_copyright_free_backup_music",
 	path = "blanthos/mus_st_him.ogg",
 	select_music_track = function()
---if you are reading this i forgot to make a config setting 
+--if you are reading this i forgot to make a config setting
 		return false
 	end,
 })
@@ -67,7 +67,7 @@ FishAndChips.Fish {
 	weight = 25,
 	ppu_coder = { "Blanthos" },
 	ppu_artist = { "Hunter" },
-	attributes = { "hand_level", "scaling", "hand_type", "space", "usable", "economy" },
+	attributes = { "hand_level", "scaling", "hand_type", "space", "usable", "lose_economy" },
 	config = {
 		extra = {
 			happiness = 75,
@@ -126,7 +126,7 @@ ease_dollars(-card.ability.extra.food_cost)
                 end
             }
         end
-        if context.after then
+        if context.after then -- TODO: if this is destroyed during scoring somehow also remove given levels
             SMODS.upgrade_poker_hands({
                 hands = card.ability.immutable.hand,
                 level_up = math.ceil (-card.ability.extra.happiness / 15),
@@ -191,9 +191,9 @@ FishAndChips.Fish {
 		length = {min = 3, max = 8}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { 
-			vars = { card.ability.extra.mult, card.ability.extra.scaling, ppu_bubbles = {card.ability.immutable.active and "active" or "inactive"} }, 
-			 
+		return {
+			vars = { card.ability.extra.mult, card.ability.extra.scaling, ppu_bubbles = {card.ability.immutable.active and "active" or "inactive"} },
+
 }
 	end,
 	calculate = function(self, card, context)
@@ -221,7 +221,7 @@ FishAndChips.Fish {
 	weight = 6,
 	ppu_coder = { "Blanthos" },
 	ppu_artist = { "Blanthos" },
-	attributes = { "economy", "chance" },
+	attributes = { "economy", "chance", "on_sell", },
 	config = {
 		extra = {
 			odds = 4

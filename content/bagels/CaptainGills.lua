@@ -13,7 +13,7 @@ FishAndChips.Fish {
 	weight = 10,
 	environments = { wormhole = 1, volcano = 0.5 },
 	stats = { weight = { min = 0.3, max = 20 }, length = { min = 0.05, max = 1.2 } },
-	attributes = { 'generation' },
+	attributes = { 'generation', 'joker' },
 	blueprint_compat = false,
 	loc_vars = function(_, info_queue)
 		info_queue[#info_queue + 1] = G.P_CENTERS.e_negative

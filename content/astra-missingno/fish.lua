@@ -96,7 +96,7 @@ FishAndChips.Fish {
     weight = 1,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "xmult", "rank", "king" },
+    attributes = { "xmult", "rank", "king", "scaling", },
     perishable_compat = false,
     impulse_min = 0.3,
     impulse_max = 0.6,
@@ -161,7 +161,7 @@ FishAndChips.Fish {
     weight = 5,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "generation" },
+    attributes = { "generation", "consumable" },
     impulse_min = 0.5,
     impulse_max = 0.5,
     vel_limit = 0.3,
@@ -240,7 +240,7 @@ FishAndChips.Fish {
     weight = 9,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "mult", "scaling" },
+    attributes = { "mult", "scaling", "hand_type", "reset" },
     perishable_compat = false,
     config = {
         extra = {
@@ -289,16 +289,24 @@ FishAndChips.Fish {
                         })
                     end
                 else
-                    stg.times = 1
+                    SMODS.reset_card(card, {
+                        ref_table = stg,
+                        ref_value = "times",
+                        reset_value = 1,
+                    })
                     stg.hand = context.scoring_name
-                    SMODS.calculate_effect({ message = localize('k_reset'), colour = G.C.RED }, card)
+                    -- SMODS.calculate_effect({ message = localize('k_reset'), colour = G.C.RED }, card)
                     SMODS.calculate_effect(
                         { message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },
                         card)
                 end
             else
-                stg.times = 1
-                stg.hand = context.scoring_name
+                SMODS.reset_card(card, {
+                    ref_table = stg,
+                    ref_value = "times",
+                    reset_value = 1,
+                    no_message = true,
+                })
                 SMODS.calculate_effect(
                     { message = stg.times .. '!', colour = G.C.ATTENTION, sound = 'fac_am_shrimp_' .. stg.times, pitch = 1 },
                     card)
@@ -315,7 +323,7 @@ FishAndChips.Fish {
     weight = 5,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "retrigger" },
+    attributes = { "retrigger", "rank", },
     decision_min = 0.5,
     decision_max = 0.75,
     impulse_min = 0.24,
@@ -355,7 +363,7 @@ FishAndChips.Fish {
     weight = 5,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "usable", "economy" },
+    attributes = { "usable", "economy", "modify_card", "perma_bonus", },
     blueprint_compat = false,
     requires_hand = true,
     impulse_max = 0.12,
@@ -400,7 +408,7 @@ FishAndChips.Fish {
     weight = 9,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "economy", "destroy_card", "suit", "diamonds" },
+    attributes = { "economy", "destroy_card", "suit", "diamonds", "sell_value", },
     blueprint_compat = false,
     config = {
         extra = {
@@ -467,7 +475,7 @@ FishAndChips.Fish {
     weight = 5,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "copying" },
+    attributes = { "copying", "position", "joker", },
     environments = {
         wormhole = 5,
         city_river = 5,
@@ -522,7 +530,7 @@ FishAndChips.Fish {
     weight = 7,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "boss_blind" },
+    attributes = { "boss_blind", "chance" },
     blueprint_compat = false,
     eternal_compat = false,
     impulse_max = 0.2,
@@ -591,7 +599,7 @@ FishAndChips.Fish {
     weight = 7,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "destroy_cards", "xmult", "scaling" },
+    attributes = { "destroy_card", "xmult", "scaling", "position" },
     perishable_compat = false,
     config = {
         extra = {
@@ -669,7 +677,7 @@ FishAndChips.Fish {
     weight = 5,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "usable", "hand_level" },
+    attributes = { "usable", "hand_level", "hand_type", },
     blueprint_compat = false,
     treasure = true,
     config = {
@@ -734,7 +742,7 @@ FishAndChips.Fish {
     weight = 3,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "passive" },
+    attributes = { "passive", "reroll", "shop", "economy", },
     blueprint_compat = false,
     config = {
         extra = {
@@ -795,7 +803,7 @@ FishAndChips.Fish {
     weight = 5,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "passive", "food", "modify_card", "edition" },
+    attributes = { "passive", "food", "modify_card", "edition", "fac_perfect_catch", },
     blueprint_compat = false,
     eternal_compat = false,
     config = {

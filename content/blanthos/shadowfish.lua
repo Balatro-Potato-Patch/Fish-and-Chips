@@ -84,6 +84,7 @@ FishAndChips.Fish {
 			attrthree = "economy"
 		}
 	},
+	-- TODO: Someone else please actually give this attributes (mf)
 	loc_vars = function(self, info_queue, center)
 		info_queue[#info_queue + 1] = { set = 'fac_Fish', key = center.ability.attributes.attrone, vars = { "First", center.ability.extra.hand_level_one } }
 		info_queue[#info_queue + 1] = { set = 'fac_Fish', key = center.ability.attributes.attrtwo, vars = { "Second", center.ability.extra.hand_level_two } }
