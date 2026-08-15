@@ -569,9 +569,10 @@ FishAndChips.Fish {
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         SMODS.scale_card (card, {
-                            ref_value = dollars,
+							ref_table = card.ability.extra,
+                            ref_value = "dollars",
                             scalar_table = sliced_card,
-                            scalar_value = sell_cost,
+                            scalar_value = "sell_cost",
                             no_message = true
                         })
                         card:juice_up(0.3, 0.3)
