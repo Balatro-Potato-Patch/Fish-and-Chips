@@ -64,7 +64,7 @@ FishAndChips.Fish{
 
             for i,v in ipairs{othername, othercenter.original_key, localize{type = "name_text", key = otherkey, set = "fac_Fish"}} do
                 print(v)
-                if string.find(v:lower(), "fish") then
+                if string.find(v:lower(), "fish") then -- TODO: potentially localize "fish"? so that other languages don't get screwed over. That implies the mod will get localized at all though so :shrug: (mf)
                     PotatoPatchUtils.Developers.fac_minty.fish_named_fish[otherkey] = true
                     return {
                         xmult = card.ability.extra.xmult

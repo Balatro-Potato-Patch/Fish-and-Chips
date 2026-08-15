@@ -12,7 +12,7 @@ FishAndChips.Fish{
     treasure = true,
     environments = {},
     attributes = {
-        "economy"
+        "economy", "sell_value",
     },
     eternal_compat = false,
     stats = {

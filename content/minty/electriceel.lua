@@ -27,7 +27,7 @@ FishAndChips.Fish{
         --]]
     },
     attributes = {
-        "usable", "retrigger"
+        "usable", "retrigger", "boss_blind",
     },
     stats = {
         weight = { min = 3, max = 20}, --In kilograms
@@ -61,7 +61,7 @@ FishAndChips.Fish{
                 end
             end
         end
-        
+
         return {
             key = key,
             vars = {

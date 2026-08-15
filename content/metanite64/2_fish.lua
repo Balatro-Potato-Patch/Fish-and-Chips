@@ -16,7 +16,7 @@ FishAndChips.Fish {
         weight = { min = 0.0005, max = 0.0015 },
         length = { min = 0.008, max = 0.016 }
     },
-    attributes = { "chips", "scaling" },
+    attributes = { "chips", "scaling", "position", },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
 
@@ -76,7 +76,7 @@ FishAndChips.Fish {
         weight = { min = 0.02, max = 1 },
         length = { min = 0.01, max = 0.05 }
     },
-    attributes = { "xmult" },
+    attributes = { "xmult", "chance", "destroy_card", },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
 
@@ -133,7 +133,7 @@ FishAndChips.Fish {
         weight = { min = 0.8, max = 1.4 },
         length = { min = 0.20, max = 0.45 }
     },
-    attributes = { "generation" },
+    attributes = { "generation", "hand_type", "enhancements", "editions", "seals", },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
 
@@ -192,7 +192,7 @@ FishAndChips.Fish {
         weight = { min = 18, max = 30 },
         length = { min = 1.3, max = 1.7 }
     },
-    attributes = { "xmult" },
+    attributes = { "xmult", "fac_fish_slot", },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
 
@@ -301,7 +301,7 @@ FishAndChips.Fish {
         weight = { min = 2, max = 3.8 },
         length = { min = 0.4, max = 0.76 }
     },
-    attributes = { "rank" },
+    attributes = { "rank", "king", "queen", "enhancements", },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
 
@@ -534,7 +534,7 @@ FishAndChips.Fish {
         length = { min = 0.3, max = 0.8 }
     },
     treasure = true,
-    attributes = { "usable" },
+    attributes = { "usable", "economy", },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
 

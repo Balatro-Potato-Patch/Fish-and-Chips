@@ -25,7 +25,7 @@ FishAndChips.Fish{
         --]]
     },
     attributes = {
-        "economy"
+        "economy", "sell_value",
     },
     stats = {
         weight = { min = 0.05, max = 0.2},

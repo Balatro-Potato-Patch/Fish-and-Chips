@@ -72,7 +72,7 @@ FishAndChips.Fish({
 		"inky",
 	},
 	attributes = {
-		"economy",
+		"suit", "hearts", "modify_card",
 	},
 	environments = {
 		styx = 1,
@@ -121,6 +121,7 @@ FishAndChips.Fish({
 	attributes = {
 		"economy",
 		"rank",
+		"four",
 	},
 	environments = {
 		calm_pond = 1,
@@ -216,8 +217,8 @@ FishAndChips.Fish({
 		"inky",
 	},
 	attributes = {
-		"rank",
-		"mult",
+		"rank", "ace", "three", "seven",
+		"mult", "perma_bonus", "modify_card",
 	},
 	environments = {
 		pier = 1,
@@ -294,7 +295,7 @@ FishAndChips.Fish({
 		"inky",
 	},
 	attributes = {
-		"rank",
+		"rank", "four", "eight",
 		"score",
 	},
 	environments = {
@@ -365,7 +366,7 @@ FishAndChips.Fish({
 		"inky",
 	},
 	attributes = {
-		"xmult",
+		"xmult", "debuff", "position",
 	},
 	environments = {
 		backroom = 1,
@@ -445,7 +446,7 @@ FishAndChips.Fish({
 		"inky",
 	},
 	attributes = {
-		"rank",
+		"rank", "economy",
 	},
 	environments = {
 		aquifer = 1,
@@ -501,7 +502,7 @@ FishAndChips.Fish({
 		"inky",
 	},
 	attributes = {
-		"rank",
+		"rank", "modify_card",
 	},
 	environments = {
 		styx = 1,
@@ -623,7 +624,7 @@ FishAndChips.Fish({
 	},
 	attributes = {
 		"discards",
-		"useable",
+		"usable",
 		"food",
 	},
 	environments = {

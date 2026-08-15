@@ -1,7 +1,7 @@
-if SMODS.current_mod.optional_features then 
-    SMODS.current_mod.optional_features.post_trigger = true 
-else 
-    SMODS.current_mod.optional_features = { post_trigger = true } 
+if SMODS.current_mod.optional_features then
+    SMODS.current_mod.optional_features.post_trigger = true
+else
+    SMODS.current_mod.optional_features = { post_trigger = true }
 end
 SMODS.Atlas {
     key = "pangaea47_bladetongue",
@@ -32,6 +32,7 @@ SMODS.Atlas {
     py = 95
 }
 
+-- woah i wonder who implemented this :chud: (mf)
 FAC_lizzie = {}
 FAC_lizzie.animations = {
     ["toxikarp_bubble"] = {
@@ -40,7 +41,7 @@ FAC_lizzie.animations = {
         fps = 12,
         scale = 2,
     },
-    
+
     ["toxikarp_bubble_idle"] = {
         atlas = "fac_lizie_toxikarp_bubble_idle",
         frames = 2,
@@ -70,7 +71,7 @@ SMODS.DrawStep {
             local duration = frame_length * animation.frames
             local current_progress = G.TIMERS.REAL - self.fac_lizzie_animation_timer
 
-            if current_progress >= duration then 
+            if current_progress >= duration then
                 if not animation.loop then
                     if self.fac_lizzie_animation == "toxikarp_bubble" then
                         self.fac_lizzie_animation = "toxikarp_bubble_idle"
@@ -79,7 +80,7 @@ SMODS.DrawStep {
                         frame_length = 1.0 / animation.fps
                         duration = frame_length * animation.frames
                         current_progress = G.TIMERS.REAL - self.fac_lizzie_animation_timer
-                    else 
+                    else
                         return
                     end
                 else
@@ -191,7 +192,7 @@ FishAndChips.Fish {
 	weight = 5,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "lanedarushpy" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "scaling", },
 	config = {
         anim = {
             fps = 6,
@@ -251,7 +252,7 @@ FishAndChips.Fish {
                         card.ability.immutable.time_until_flop = pseudorandom("lizzie_floppy_fih", card.ability.extra.min_flop_time, card.ability.extra.max_flop_time)
                         card.ability.immutable.flop_at = G.TIMERS.REAL + card.ability.immutable.time_until_flop
                         card.ability.immutable.flopping = false;
-                        
+
                         card.children.center:set_sprite_pos({ x = 4, y = 0 })
                         SMODS.scale_card(card, {
                             ref_table = card.ability.extra,
@@ -271,7 +272,7 @@ FishAndChips.Fish {
             -- time to escape vro
             card.ability.immutable.flopping = false;
             card.ability.immutable.cant_flop = true;
-            
+
             play_sound("fac_laneda_escape", 1.0);
             G.E_MANAGER:add_event(Event({
                 trigger = 'after',
@@ -279,8 +280,8 @@ FishAndChips.Fish {
                 delay = 0,
                 func = function()
                     if FishAndChips and FishAndChips.laneda_floppy_escape then
-                        local min_rad = math.pi / 4     
-                        local max_rad = 1.67 * math.pi / 4 
+                        local min_rad = math.pi / 4
+                        local max_rad = 1.67 * math.pi / 4
                         local direction_thing = min_rad + (math.random() * (max_rad - min_rad))
                         card.children.center:set_sprite_pos({ x = 5, y = 0 })
                         FishAndChips.laneda_floppy_escape[#FishAndChips.laneda_floppy_escape + 1] = {
@@ -316,8 +317,8 @@ FishAndChips.Fish {
         if card.ability.immutable.flopping then
             if card.ability.anim.delay >= 60 / card.ability.anim.fps then
                 card.ability.anim.x_pos = (card.ability.anim.x_pos + 1) % card.ability.anim.frames;
-                
-                if card.ability.anim.x_pos == 0 then 
+
+                if card.ability.anim.x_pos == 0 then
                     play_sound("fac_laneda_flop", 1.0);
                 end
 
@@ -419,7 +420,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.divide, card.ability.extra.cap } }
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main then 
+		if context.joker_main then
             local xmult = math.min(card.ability.extra.divide / hand_chips, 4)
             if xmult > 1 then
                 return { Xmult = xmult };
@@ -519,7 +520,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "chips", "mult", "economy" },
+	attributes = { "chips", "mult", "economy", "lose_economy", },
     badge_key = 'k_fac_lizie_windows',
 	config = {
 		extra = {
@@ -575,7 +576,7 @@ FishAndChips.Fish {
         -- print(loc_choices)
 
         local main_start = {
-            { n = G.UIT.O, config = { object = DynaText({ string = { 
+            { n = G.UIT.O, config = { object = DynaText({ string = {
                 { string = "All Jokers ", colour = loc_colors["jokers"] },
                 { string = "All Fish ", colour = loc_colors["fish"] },
                 { string = "Consumables ", colour = loc_colors["consumables"] },
@@ -608,7 +609,7 @@ FishAndChips.Fish {
         return { main_start = main_start }
 	end,
 	calculate = function(self, card, context)
-		if context.other_joker then 
+		if context.other_joker then
             local rand_mult = pseudorandom("fac_findows_mult", card.ability.extra.min_mult, card.ability.extra.max_mult)
             if rand_mult ~= 0 then
                 return {
@@ -656,7 +657,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "economy" },
+	attributes = { "economy", "position", },
     badge_key = 'k_fac_lizie_blow',
 	config = {
 		extra = {
@@ -677,15 +678,15 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.sands } }
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main then 
+		if context.joker_main then
             local current_pos = 0
             for index, value in ipairs(G.fac_fish_area.cards) do
                 if value == card then current_pos = index end
             end
 
             if current_pos > 2 then
-                return { 
-                    sand_dollars = current_pos - 2, 
+                return {
+                    sand_dollars = current_pos - 2,
                     pre_func = function()
                         G.E_MANAGER.add_event(Event({
                             func = function(e)
@@ -697,7 +698,7 @@ FishAndChips.Fish {
                             end
                         }))
                     end
-                } 
+                }
             end
         end
 	end,
@@ -710,7 +711,7 @@ FishAndChips.Fish {
 	weight = 5,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "economy", "destroy_card" },
+	attributes = { "economy", "sell_value", "usable", "destroy_card" },
     badge_key = 'k_fac_lizie_thing',
 	config = {
 		extra = {
@@ -736,7 +737,7 @@ FishAndChips.Fish {
 		return { vars = { 1, card.ability.extra.cap } }
 	end,
 	calculate = function(self, card, context)
-        if context.setting_blind then 
+        if context.setting_blind then
             G.E_MANAGER:add_event(Event({
                 func = function(e)
                     card.ability.immutable.usable = true
@@ -751,7 +752,7 @@ FishAndChips.Fish {
         for _, fish in ipairs(G.fac_fish_area.cards) do
             if (fish ~= card) and not SMODS.is_eternal(fish) then fih[#fih+1] = fish end
         end
-        
+
         return card.ability.immutable.usable and (#fih > 0)
     end,
     keep_on_use = function ()
@@ -797,7 +798,7 @@ FishAndChips.Fish {
 			odds = 4
 		}
 	},
-    
+
     stats = {
         weight = { min = 1, max = 15 },
         length = { min = 0.8, max = 2.4}
@@ -856,14 +857,14 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "chance", "food", "destroy_card", },
 	config = {
 		extra = {
 			odds = 67,
             Xmult = 1.3
 		}
 	},
-    
+
     stats = {
         weight = { min = 0.4, max = 2 },
         length = { min = 0.1, max = 0.6}
@@ -901,7 +902,7 @@ FishAndChips.Fish {
 
         if context.end_of_round and context.main_eval and context.cardarea == G.fac_fish_area then
             local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizie_cafindish")
-		    if SMODS.pseudorandom_probability(card, "lizie_cafindish", num, denom) then 
+		    if SMODS.pseudorandom_probability(card, "lizie_cafindish", num, denom) then
                 SMODS.destroy_cards(card, nil, nil, true)
                 return {
                     message = localize('k_extinct_ex')
@@ -926,7 +927,7 @@ FishAndChips.Fish {
 	weight = 5,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "economy" },
+	attributes = { "economy", "chance", },
     badge_key = 'k_fac_lizie_jelly',
 	config = {
 		extra = {
@@ -950,7 +951,7 @@ FishAndChips.Fish {
             }
         }
 	},
-    
+
     stats = {
         weight = { min = 1.2, max = 4 },
         length = { min = 0.4, max = 1.2}
@@ -1024,7 +1025,7 @@ FishAndChips.Fish {
                             aged = true
                         elseif card.ability.immutable.state == "polyp" then
                             local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds_pregnant, "lizzie_jellyfish")
-                            
+
                             if SMODS.pseudorandom_probability(card, "lizzie_jellyfish_babybirthies", num, denom) then
                                 local fih = SMODS.add_card({ key = "fish_fac_lizzie_jellyfish" })
                                 fih.ability.immutable.state = "larva"
@@ -1049,12 +1050,12 @@ FishAndChips.Fish {
                                 message_card = card
                             })
                         end
-                        return true    
+                        return true
                     end
                 }))
             end
 
-            if #fx > 0 then 
+            if #fx > 0 then
             return SMODS.merge_effects(fx) end
         end
     end
@@ -1067,7 +1068,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "joker", },
     badge_key = 'k_fac_lizie_terria',
 	config = {
 		extra = {
@@ -1077,7 +1078,7 @@ FishAndChips.Fish {
             current_bubble_joker = -1
         }
 	},
-    
+
     stats = {
         weight = { min = 0.4, max = 2 },
         length = { min = 0.1, max = 0.6}
@@ -1097,7 +1098,7 @@ FishAndChips.Fish {
             if card.ability.immutable.current_bubble_joker < 0 then
                 local picked_joker = pseudorandom_element(G.jokers.cards, "fac_lizie_toxikarp_choice")
                 for k, v in ipairs(G.jokers.cards) do
-                    if v == picked_joker then 
+                    if v == picked_joker then
                         card.ability.immutable.current_bubble_joker = k
                         G.E_MANAGER:add_event(Event({
                             func = function(e)
@@ -1113,7 +1114,7 @@ FishAndChips.Fish {
             end
         end
 
-        if context.after then 
+        if context.after then
             if card.ability.immutable.current_bubble_joker >= 0 then
                 local jokie = G.jokers.cards[card.ability.immutable.current_bubble_joker]
                 G.E_MANAGER:add_event(Event({
@@ -1124,7 +1125,7 @@ FishAndChips.Fish {
                         jokie.fac_lizzie_animation = "toxikarp_bubble_pop"
                         jokie.fac_lizzie_animation_timer = G.TIMERS.REAL
                         card.ability.immutable.current_bubble_joker = -1
-                
+
                         return true
                     end
                 }))
@@ -1165,7 +1166,7 @@ FishAndChips.Fish {
                         play_sound("fac_laneda_toxikarp_pop", 1.0)
                         jokie.fac_lizzie_animation = "toxikarp_bubble_pop"
                         jokie.fac_lizzie_animation_timer = G.TIMERS.REAL
-                
+
                         return true
                     end
                 }))
@@ -1185,7 +1186,7 @@ FishAndChips.Fish {
 	weight = 5,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "blindsize", "destroy_cards" },
+	attributes = { "xblindsize", "destroy_card", "suit", "hearts", "usable", },
     badge_key = 'k_fac_lizie_terria',
 	config = {
 		extra = {
@@ -1196,7 +1197,7 @@ FishAndChips.Fish {
             used_this_round = true
         }
 	},
-    
+
     stats = {
         weight = { min = 0.4, max = 2 },
         length = { min = 0.1, max = 0.6}
@@ -1208,7 +1209,7 @@ FishAndChips.Fish {
 
     update = function (self, card, dt)
         if card.ability.immutable.active then
-            card.children.center:set_sprite_pos({ x = 1, y = 0 }) 
+            card.children.center:set_sprite_pos({ x = 1, y = 0 })
         else
             card.children.center:set_sprite_pos({ x = 0, y = 0 })
         end

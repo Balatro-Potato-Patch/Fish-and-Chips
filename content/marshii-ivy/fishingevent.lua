@@ -117,7 +117,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    attributes = { "joker_slot", "xmult" }
+    attributes = { "fac_fish_slot", "xmult" }
 }
 
 FishAndChips.Fish {
@@ -282,5 +282,5 @@ FishAndChips.Fish {
             }
         end
     end,
-    attributes = { "scaling", "chips", "destroy_card" }
+    attributes = { "scaling", "chips", "destroy_card", "sell_value", }
 }

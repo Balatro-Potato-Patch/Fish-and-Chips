@@ -23,7 +23,7 @@ FishAndChips.Fish{
         --]]
     },
     attributes = {
-        "xblindsize"
+        "xblindsize", "hands",
     },
     stats = {
         weight = { min = 0.02, max = 0.05},

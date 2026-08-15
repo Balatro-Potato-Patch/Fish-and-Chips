@@ -87,7 +87,7 @@ FishAndChips.Fish {
 	weight = 22,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'economy' },
+	attributes = { 'economy', "rank", "ace", },
 	environments = {
 		pier = 10,
 		city_river = 4,
@@ -121,7 +121,7 @@ FishAndChips.Fish {
 	weight = 7,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'chance' },
+	attributes = { "chance", 'mult', "economy", "rank", "three", "seven", }, -- This is notably *not* quantum enhancements :pray: (mf)
 	environments = {
 		calm_pond = 6,
 		pier = 3,
@@ -173,7 +173,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'chips' },
+	attributes = { 'xblindsize', "face", },
 	environments = {
 		styx = 5,
 		volcano = 3,
@@ -212,7 +212,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'mult' },
+	attributes = { 'xmult', "rank", "two", },
 	environments = {
 		calm_pond = 3,
 		pier = 1,
@@ -250,7 +250,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'chance' },
+	attributes = { 'chance', "chips", },
 	environments = {
 		pier = 4,
 		city_river = 2,
@@ -284,7 +284,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'blind' },
+	attributes = { 'xblindsize', "suit", },
 	environments = {
 		volcano = 2,
 		styx = 1,
@@ -306,7 +306,7 @@ FishAndChips.Fish {
 			local unique_suits = {}
 			for _, scored_card in ipairs(context.scoring_hand) do
 				if scored_card then
-					local suit = scored_card.base and scored_card.base.suit
+					local suit = scored_card.base and scored_card.base.suit -- TODO: Wild cards ?
 					if suit then
 						unique_suits[suit] = true
 					end
@@ -328,7 +328,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'chips' },
+	attributes = { 'chips', "face", },
 	environments = {
 		pier = 3,
 		swamp = 2,
@@ -415,7 +415,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'chips', 'suits' },
+	attributes = { 'chips', 'suit', "spades", "scaling", },
 	environments = {
 		pier = 4,
 		swamp = 2,
@@ -427,19 +427,20 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			chips = 1,
+			chips_mod = 1,
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips } }
+		return { vars = { card.ability.extra.chips_mod } } -- Change with loc rewrite
 	end,
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.hand and context.other_card and context.other_card:is_suit('Spades') then
-			local next_bonus = (card._trash_crab_spade_bonus or 0) + 1
+		    SMODS.scale_card(card, {
+				ref_value = "chips",
+				scalar_value = "chips_mod",
+			})
 			return {
-				pre_func = function()
-					card._trash_crab_spade_bonus = next_bonus
-				end,
-				chips = next_bonus * card.ability.extra.chips,
+				chips = card.ability.extra.chips,
 			}
 		end
 	end,
@@ -452,7 +453,7 @@ FishAndChips.Fish {
 	weight = 0.5,
 	ppu_coder = { 'MP' },
 	ppu_artist = { 'MP' },
-	attributes = { 'boss_blind' },
+	attributes = { 'xblindsize', "ante", },
 	environments = {
 		volcano = 3,
 		styx = 2,
@@ -509,6 +510,3 @@ FishAndChips.Fish {
 	end,
 }
 ]]
-
-
-

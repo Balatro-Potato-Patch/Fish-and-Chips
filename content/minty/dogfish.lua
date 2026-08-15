@@ -25,7 +25,7 @@ FishAndChips.Fish{
         --]]
     },
     attributes = {
-
+        "destroy_card", "xmult", "scaling", "enhancements",
     },
     stats = {
         weight = { min = 1, max = 1}, --In kilograms

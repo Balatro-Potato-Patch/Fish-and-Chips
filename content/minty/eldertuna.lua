@@ -25,7 +25,7 @@ FishAndChips.Fish{
         --]]
     },
     attributes = {
-        "level_up", "chance"
+        "hand_level", "hand_type",
     },
     stats = {
         weight = { min = 1, max = 1}, --In kilograms
