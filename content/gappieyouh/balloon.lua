@@ -33,6 +33,7 @@ FishAndChips.Fish {
                     scalar_value = "chips_mod",
                     message_colour = G.C.CHIPS,
                 })
+                return nil, true
                 -- return {message = 'Upgrade!', colour = G.C.CHIPS}
             end
             if context.selling_card and context.card.ability.set == 'fac_Fish' then
@@ -41,6 +42,7 @@ FishAndChips.Fish {
                     scalar_value = "chips_mod",
                     message_colour = G.C.CHIPS,
                 })
+                return nil, true
             end
         end
         if context.joker_main then return {chips = card.ability.extra.chips} end

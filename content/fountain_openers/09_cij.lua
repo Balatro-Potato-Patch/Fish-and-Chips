@@ -8,7 +8,7 @@ FishAndChips.Fish {
     blueprint_compat = false,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_alexi" },
-	attributes = { "passive", "hand_type" },
+	attributes = { "passive", "hand_type", "rank", "two", "four", "jack", },
 	config = {
 		extra = {
 			rerolls = 4,

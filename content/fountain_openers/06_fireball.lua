@@ -5,7 +5,7 @@ FishAndChips.Fish {
 	weight = 11,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
-	attributes = { "xmult", "usable" },
+	attributes = { "xmult", "usable", "food", },
     disable_visual_scaling = true,
 	config = {
         extra = {

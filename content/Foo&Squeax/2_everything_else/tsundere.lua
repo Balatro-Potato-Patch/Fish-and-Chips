@@ -78,6 +78,7 @@ function G.FUNCS.fac_fas_tsunderfish_button (e)
 		do_progress = true
 		if card.ability.immutable.progress > #progress then
 			card.ability.immutable.active = true
+			-- TODO: we have functions for this don't we ? (mf)
 			G.hand.config.highlighted_limit = G.hand.config.highlighted_limit + card.ability.extra.selection
 			G.GAME.starting_params.play_limit = G.GAME.starting_params.play_limit + card.ability.extra.selection
 			G.GAME.starting_params.discard_limit = G.GAME.starting_params.discard_limit + card.ability.extra.selection
@@ -113,7 +114,7 @@ function FishAndChips.FooSqueax.tsunderfish.create_act_uibox (card)
 		end
 		added_ui = {
 			{n = G.UIT.R, nodes = {
-				{n = G.UIT.O, config = {object = 
+				{n = G.UIT.O, config = {object =
 					DynaText{
 						string = {localize("ph_fac_fas_tsunderfish_" .. key .. "_1")},
 						colours = {G.C.WHITE},
@@ -124,7 +125,7 @@ function FishAndChips.FooSqueax.tsunderfish.create_act_uibox (card)
 				}}
 			}},
 			{n = G.UIT.R, nodes = {
-				{n = G.UIT.O, config = {object = 
+				{n = G.UIT.O, config = {object =
 					DynaText{
 						string = {localize("ph_fac_fas_tsunderfish_" .. key .. "_2")},
 						colours = {G.C.WHITE},
@@ -135,7 +136,7 @@ function FishAndChips.FooSqueax.tsunderfish.create_act_uibox (card)
 				}}
 			}},
 			key == "check" and {n = G.UIT.R, nodes = {
-				{n = G.UIT.O, config = {object = 
+				{n = G.UIT.O, config = {object =
 					DynaText{
 						string = {localize("ph_fac_fas_tsunderfish_" .. key .. "_3")},
 						colours = {G.C.WHITE},

@@ -35,7 +35,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "Equi" },
     ppu_artist = { "Equi" },
-    attributes = { "chips", "rank" },
+    attributes = { "chips", "rank", "perma_bonus", "modify_card", },
     stats = {
         weight = { min = 0.75, max = 0.9 },
         length = { min = 0.55, max = 0.75 }
@@ -77,7 +77,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "Equi" },
     ppu_artist = { "Equi" },
-    attributes = { "generation" },
+    attributes = { "generation", "joker", "rarity", },
     stats = {
         weight = { min = 0.0016, max = 0.0025 },
         length = { min = 0.05, max = 0.07 }
@@ -129,7 +129,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "Equi" },
     ppu_artist = { "Equi" },
-    attributes = { "xmult", "passive" }, --passive definitely applies here right?
+    attributes = { "xmult" }, --passive definitely applies here right? -- no (mf)
     stats = {
         weight = { min = 0.003, max = 0.004 },
         length = { min = 0.07, max = 0.11 }
@@ -230,7 +230,7 @@ FishAndChips.Fish {
                     message = localize {
                         type = "variable",
                         key = "k_fac_equi_plus_bait",
-                        vars = { card.ability.extra.bait_given } 
+                        vars = { card.ability.extra.bait_given }
                     }
                 }
             else
@@ -258,15 +258,15 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "Equi" },
     ppu_artist = { "Equi" },
-    attributes = { "generation" },
+    attributes = { "generation", "spectral", "consumable", },
     stats = {
         weight = { min = 0.0001, max = 0.0001 },
         length = { min = 99, max = 99 }
     },
-    config = { 
-        extra = { 
-            chosen_bait = 2 
-        } 
+    config = {
+        extra = {
+            chosen_bait = 2
+        }
     },
     environments = {
         backroom = 1,
@@ -347,10 +347,10 @@ FishAndChips.Fish {
         weight = { min = 15, max = 30 },
         length = { min = 2.5, max = 3.5 }
     },
-    config = { 
-        extra = { 
+    config = {
+        extra = {
             xmult = 1
-        } 
+        }
     },
     environments = {
         aquifer = 1,
@@ -387,17 +387,17 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "Equi" },
     ppu_artist = { "Equi" },
-    attributes = { "xmult, rank, destroy_card" },
+    attributes = { "xmult", "rank", "destroy_card", "scaling", },
     stats = {
         weight = { min = 0.0015, max = 0.0025 },
         length = { min = 0.085, max = 0.095 }
     },
-    config = { 
-        extra = { 
+    config = {
+        extra = {
             current_rank = "Ace",
             xmult = 1,
             xmult_gain = 0.1
-        } 
+        }
     },
     environments = {
         calm_pond = 0.8,
@@ -433,9 +433,14 @@ FishAndChips.Fish {
             end
 
             if rank_check == true then
+                SMODS.scale_card(card, {
+                    ref_value = "xmult",
+                    scalar_value = "xmult_gain",
+                    scalar_factor = #context.full_hand,
+                    no_message = true,
+                })
                 for i = 1, #context.full_hand do
                     SMODS.destroy_cards(context.full_hand[i])
-                    card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_gain
                 end
                 return {
                     message = localize("k_fac_equi_go_fish_response")
@@ -542,18 +547,18 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "Equi" },
     ppu_artist = { "Equi" },
-    attributes = { "xmult, mult, chips, generation, hand_level" },
+    attributes = { "xmult", "mult", "chips", "generation", "planet", "tarot", "consumable", "joker", "position", },
     stats = {
         weight = { min = 0.007, max = 0.009 },
         length = { min = 0.06, max = 0.08 }
     },
-    config = { 
-        extra = { 
+    config = {
+        extra = {
             chips = 60,
             mult = 15,
             xmult = 2,
             cards = 1,
-        } 
+        }
     },
     environments = {
         pier = 1,
@@ -564,7 +569,7 @@ FishAndChips.Fish {
             { n = G.UIT.R, config = { align = "cm", padding = 0.02 }, nodes = {
                 { n = G.UIT.T, config = { text = "The ", colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
                 { n = G.UIT.O, config = { object = DynaText({
-                    string = FishAndChips.equi.mutekimaru_desc["target"], 
+                    string = FishAndChips.equi.mutekimaru_desc["target"],
                     colours = { G.C.UI.TEXT_DARK },
                     pop_in_rate = 9999999,
                     silent = true,
@@ -573,7 +578,7 @@ FishAndChips.Fish {
                     scale = 0.32,
                     min_cycle_time = 0 })} },
                 { n = G.UIT.O, config = { object = DynaText({
-                    string = FishAndChips.equi.mutekimaru_desc["other_target"], 
+                    string = FishAndChips.equi.mutekimaru_desc["other_target"],
                     colours = { G.C.IMPORTANT },
                     pop_in_rate = 9999999,
                     silent = true,
@@ -585,7 +590,7 @@ FishAndChips.Fish {
             } },
             { n = G.UIT.R, config = { align = "cm", padding = 0.02 }, nodes = {
                 { n = G.UIT.O, config = { object = DynaText({
-                    string = FishAndChips.equi.mutekimaru_desc["score"], 
+                    string = FishAndChips.equi.mutekimaru_desc["score"],
                     colours = { G.C.CHIPS, G.C.MULT },
                     pop_in_rate = 9999999,
                     silent = true,
@@ -595,7 +600,7 @@ FishAndChips.Fish {
                     min_cycle_time = 0 })} },
                 { n = G.UIT.T, config = { text = " and a ", colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
                 { n = G.UIT.O, config = { object = DynaText({
-                    string = FishAndChips.equi.mutekimaru_desc["cards"], 
+                    string = FishAndChips.equi.mutekimaru_desc["cards"],
                     colours = { G.C.SECONDARY_SET.Tarot, G.C.SECONDARY_SET.Planet },
                     pop_in_rate = 9999999,
                     silent = true,
@@ -609,7 +614,7 @@ FishAndChips.Fish {
             } }
         }
 
-        return { 
+        return {
             vars = { card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.xmult, card.ability.extra.cards },
             main_start = main_start
         }
@@ -617,7 +622,7 @@ FishAndChips.Fish {
 
     flavour_vars = function(self, info_queue, card)
         return {
-            vars = { 
+            vars = {
                 elements = {
                     FishAndChips.equi.update_mutekimaru_flavour()
                 }

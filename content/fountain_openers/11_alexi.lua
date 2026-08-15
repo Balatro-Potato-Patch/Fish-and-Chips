@@ -20,7 +20,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_alexi" },
-	attributes = { "copying" },
+	attributes = { "copying", "position", "joker", },
     disable_visual_scaling = true,
     blueprint_compat = true,
 

@@ -22,7 +22,7 @@ FishAndChips.Fish{
 			used = false
 		}
 	},
-	attributes = {"useable", "deltarune", "utdr"},
+	attributes = {"usable", "deltarune", "utdr", "editions",},
 	blueprint_compat = false,
 	calculate = function(self, card, context)
 		if context.fac_fish_caught and not context.blueprint then

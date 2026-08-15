@@ -23,7 +23,7 @@ FishAndChips.Fish{
 		weight = {min = 0.7, max = 1.7}
 	},
 	disable_visual_scaling = true,
-	attributes = {"chips", "vocaloid"},
+	attributes = {"chips", "vocaloid", "scaling",},
 	loc_vars = function(self, info_queue, card)
 ---@diagnostic disable-next-line: undefined-global
 		if SynthB then SynthB.song_info(info_queue, card, "kyu_kurarin") end

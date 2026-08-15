@@ -27,7 +27,7 @@ FishAndChips.Fish {
 	weight = 6,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_alexi" },
-	attributes = { "rank", "jack", "king", "queen", "mult", "xmult" },
+	attributes = { "rank", "jack", "king", "queen", "mult", "xmult", "modify_card", "deltarune", "utdr", },
     disable_visual_scaling = true,
 	config = {
         extra = {

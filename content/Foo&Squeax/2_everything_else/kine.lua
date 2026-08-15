@@ -19,7 +19,7 @@ FishAndChips.Fish{
 		length = {min = 5, max = 5},
 		weight = {min = 5, max = 5}
 	},
-	attributes = {"copying", "useable"},
+	attributes = {"copying", "usable"},
 	disable_visual_scaling = true,
 	loc_vars = function(self, info_queue, card)
 		local joker = ""

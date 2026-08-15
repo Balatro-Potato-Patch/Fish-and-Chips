@@ -106,7 +106,7 @@ SMODS.ScreenShader {
 --#region utility
 
 local function fly_away(card)
-	
+
 	local start = copy_table(card.T)
 
 	local time_start = G.TIMERS.REAL
@@ -137,7 +137,7 @@ function fac_awoo(card, yuge)
 	else
 		math.randomseed(os.time())
 		local name = "fac_segg_flea_"..math.random(1, 5)
-	
+
 		play_sound(name)
 	end
 
@@ -236,7 +236,7 @@ function fac_ease_dollars_void(mod)
     --Popup text next to the chips in UI showing number of chips gained/lost
     attention_text({
       text = text..tostring(math.abs(mod)),
-      scale = 0.8, 
+      scale = 0.8,
       hold = 0.7,
       cover = dollar_UI.parent,
       cover_colour = col,
@@ -267,7 +267,7 @@ FishAndChips.Fish {
 	treasure = true, -- Our only treasure :)
 	blueprint_compat = false,
 
-	attributes = { "usable", "function" },
+	attributes = { "usable", "function", "editions" },
 	config = {
 	},
 	stats = {
@@ -299,7 +299,7 @@ FishAndChips.Fish {
 	end
 }
 
--- Void Fish 
+-- Void Fish
 -- Retriggers all played cards but lose money
 FishAndChips.Fish {
 	key = "segg_void_fish",
@@ -310,7 +310,7 @@ FishAndChips.Fish {
 
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
-	attributes = { "retrigger" },
+	attributes = { "retrigger", "lose_economy", },
 	config = {
 		extra = {
 			money = 0
@@ -337,9 +337,9 @@ FishAndChips.Fish {
 			if abs(muhnee) > 0.001 then
 				G.custom_ed_colour = G.C.BLACK
 				fac_ease_dollars_void(-muhnee)
-	
+
 				card:juice_up()
-		
+
 				return {
 					message = localize('b_fac_segg_void_fish'),
 					colour = G.C.BLACK
@@ -367,7 +367,7 @@ FishAndChips.Fish {
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
 
-	attributes = { "xmult" },
+	attributes = { "xmult", "sell_value", "lose_economy", "scaling", "joker", },
 	config = {
 		extra = {
 			dollars = 1,
@@ -387,7 +387,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.dollars, card.ability.extra.xmult_mod, card.ability.extra.xmult, } }
 	end,
 	calculate = function(self, card, context)
-		
+
         if context.setting_blind and not context.blueprint then
 			local xmult_gained = 0
 			for _, joker in pairs(G.jokers.cards) do
@@ -400,12 +400,13 @@ FishAndChips.Fish {
 			end
 
 			if xmult_gained > 0 then
-				card.ability.extra.xmult = card.ability.extra.xmult + xmult_gained
+			    SMODS.scale_card(card, {
+					ref_value = "xmult",
+					scalar_value = "xmult_mod",
+					message_colour = G.C.MULT,
+				})
 
-				return {
-					message = localize('k_upgrade_ex'),
-                	colour = G.C.MULT,
-				}
+				return nil, true
 			end
 		end
 
@@ -432,7 +433,7 @@ FishAndChips.Fish {
 	ppu_artist = { "egg_node" },
 
 	blueprint_compat = false,
-	attributes = { "usable", "function" },
+	attributes = { "usable", "function", "hands", },
 
 	config = {
 		extra = {
@@ -492,7 +493,7 @@ FishAndChips.Fish {
 	ppu_artist = { "egg_node" },
 
 	blueprint_compat = false,
-	attributes = { "usable", "function" },
+	attributes = { "usable", "function", "generation", "consumable", "spectral", "tarot", "planet", },
 
 	config = {
 	},
@@ -536,7 +537,7 @@ FishAndChips.Fish {
 	ppu_artist = { "egg_node" },
 
 	blueprint_compat = false,
-	attributes = { "usable", "function" },
+	attributes = { "usable", "function", "generation", "consumable", "spectral", "tarot", "planet", },
 
 	config = {
 	},
@@ -582,7 +583,7 @@ FishAndChips.Fish {
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
 
-	attributes = { "chips", "food" },
+	attributes = { "chips", "food", "scaling", },
 	config = {
 		extra = {
 			chips = 100,
@@ -602,7 +603,12 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-			card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chips_mod
+            SMODS.scale_card(card, {
+                ref_value = "chips",
+                scalar_value = "chips_mod",
+                no_message = true,
+                operation = '-'
+            })
 
 			if card.ability.extra.chips <= 0 then
 				-- bye bye
@@ -640,7 +646,7 @@ FishAndChips.Fish {
 	ppu_artist = { "egg_node" },
 
 	blueprint_compat = false,
-	attributes = { "passive", "food", "hand_size" },
+	attributes = { "passive", "food", "hand_size", "disard", },
 	config = {
 		extra = {
 			hand_size = 1,
@@ -658,7 +664,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.hand_size } }
 	end,
 
-	
+
     draw = function(self, card, layer)
         if (layer == 'card' or layer == 'both') and (card.config.center.discovered or card.bypass_discovery_center) then
             if G.GAME.current_round.discards_left > 0 or G.OVERLAY_MENU then
@@ -699,7 +705,7 @@ FishAndChips.Fish {
 
 	requires_hand = true,
 	blueprint_compat = false,
-	attributes = { "usable", "function", "generation" },
+	attributes = { "usable", "function", "generation", "enhancements", "rank", },
 
     config = { max_highlighted = 1, extra = { cards = 3 } },
 	stats = {
@@ -730,7 +736,7 @@ FishAndChips.Fish {
 
 				-- Support multiple highlighted for crossmod nonsense
 				for _, target in ipairs(G.hand.highlighted) do
-					
+
 					local rank_name = target.config.card.value
 					if rank_name then
 						print("adding cards: "..card.ability.extra.cards)
@@ -757,4 +763,3 @@ FishAndChips.Fish {
 
 
 --#endregion
-

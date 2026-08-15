@@ -173,7 +173,7 @@ FishAndChips.Fish {
 	disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
-	attributes = { "mult", "destroy_card" },
+	attributes = { "mult", "destroy_card", "scaling", },
 	config = {
 		extra = {
 			mult = 0,

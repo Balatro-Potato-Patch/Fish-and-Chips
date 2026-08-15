@@ -27,7 +27,7 @@ FishAndChips.Fish {
 	weight = 20,
 	ppu_coder = { "FurretWalk" },
 	ppu_artist = { "FurretWalk" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "scaling", },
 	config = {
 		extra = {
 			xMult = 1, xMultmod = 0.05
@@ -52,11 +52,16 @@ FishAndChips.Fish {
             }
         end
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-             card.ability.extra.xMult = card.ability.extra.xMult + card.ability.extra.xMultmod
-            return {
-                message = localize('k_upgrade_ex'),
-                colour = G.C.MULT,
-            }
+            SMODS.scale_card(card, {
+                ref_value = "xMult",
+                scalar_value = "xMultmod",
+                message_colour = G.C.MULT,
+            })
+            return nil, true
+            -- return {
+            --     message = localize('k_upgrade_ex'),
+            --     colour = G.C.MULT,
+            -- }
         end
 	end,
 }
@@ -87,12 +92,16 @@ FishAndChips.Fish {
         return { vars = { card.ability.extra.chips, card.ability.extra.chipmod, card.ability.extra.suit} }
     end,
     calculate = function(self, card, context)
-        if context.joker_main then 
-			return 
+        if context.joker_main then
+			return
 			{chips = card.ability.extra.chips}
 		end
 		if context.destroying_card and not context.blueprint and context.destroying_card:is_suit(card.ability.extra.suit) then
-				card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chipmod
+		        SMODS.scale_card(card, {
+										ref_value = "chips",
+							scalar_value = "chipmod",
+						no_message = true,
+										})
 				return {
                     remove = true,
                     message = "Harpooned!",

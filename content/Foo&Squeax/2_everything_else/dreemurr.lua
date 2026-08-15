@@ -32,7 +32,7 @@ FishAndChips.Fish{
 			card.fac_last_stored = G.TIMERS.REAL
 		end
 	end,
- attributes = {"mult", "scaling", "undertale", "utdr"},
+ attributes = {"mult", "undertale", "utdr"},
 	loc_vars = function(self, info_queue, card)
 		return {vars = {card.ability.extra.mult, card.ability.extra.mult * SMODS.table_size(G.GAME.fac_FooSqueax and G.GAME.fac_FooSqueax.fish_caught or {})}}
 	end,
@@ -83,4 +83,3 @@ SMODS.DrawStep {
 	end,
 	conditions = { vortex = false, facing = 'front' },
 }
-

@@ -9,7 +9,7 @@ FishAndChips.Fish {
     disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
-	attributes = { "economy" },
+	attributes = { "economy", "food", },
 	config = {
         extra = {
             amt = 5,

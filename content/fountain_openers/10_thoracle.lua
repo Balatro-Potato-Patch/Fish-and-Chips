@@ -17,7 +17,7 @@ FishAndChips.Fish {
 	disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
-	attributes = { "suit", "clubs", "xblindsize", "usable" },
+	attributes = { "suit", "clubs", "xblindsize", "usable", "rank", },
 	config = {
 		extra = {
 			active = true,

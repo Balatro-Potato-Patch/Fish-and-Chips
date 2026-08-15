@@ -5,7 +5,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_alexi" },
-	attributes = { "retrigger" },
+	attributes = { "retrigger", "joker", },
 	blueprint_compat = true,
 	config = {
 		extra = {

@@ -35,7 +35,7 @@ FishAndChips.Fish{
 		wormhole = 1,
 		backroom = 1,
 	},
-	attributes = {"scaling", "food", "xmult", "destroy_card", "vocaloid"},
+	attributes = {"scaling", "xmult", "destroy_card", "vocaloid"},
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS[card.ability.immutable.fish]
 		return {vars = {localize{type = "name_text", key = card.ability.immutable.fish, set = "fac_Fish"}, card.ability.extra.rate, card.ability.extra.scaling, card.ability.extra.xmult}}

@@ -58,7 +58,7 @@ FishAndChips.Fish{
 			mult = 1
 		}
 	},
-	attributes = {"chips", "mult", "xchips", "xmult", "score", "xscore", "blindsize", "passive", "economy", "undertale", "deltarune", "utdr"},
+	attributes = {"chips", "mult", "xchips", "xmult", "score", "xscore", "blindsize", "lose_economy", "sell_value", "undertale", "deltarune", "utdr"},
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval then
 			card.ability.extra_cost = (card.ability.extra_cost or 0) - 1
@@ -94,7 +94,7 @@ FishAndChips.Fish{
 local desc_from_rows_ref = desc_from_rows
 ---@diagnostic disable-next-line: lowercase-global
 function desc_from_rows(desc_nodes, empty, maxw)
-	if FishAndChips.FooSqueax.toby_fish.no_desc == true then 
+	if FishAndChips.FooSqueax.toby_fish.no_desc == true then
 		FishAndChips.FooSqueax.toby_fish.no_desc = nil
 		return {n=G.UIT.R, config={main_box_flag = desc_nodes.main_box_flag and true or nil}, nodes={}}
 	end
@@ -110,7 +110,7 @@ function G.UIDEF.card_h_popup(card)
 		if search then
 			search.table.text = localize("ph_fac_fas_atk")
 		end
-		
+
 		local search2 = SMODS.deepfind(ret.nodes[1].nodes, "  " .. localize("ph_fac_length"), nil, true)[1]
 		if search2 then
 			search2.table.text = "  " .. localize("ph_fac_fas_def")
@@ -119,14 +119,14 @@ function G.UIDEF.card_h_popup(card)
 	if card.config and card.config.center and card.config.center.key == "fish_fac_fas_annoying_fish" then
 		FishAndChips.FooSqueax.toby_fish.no_desc = true
 		ret = g_uidef_card_h_popup_ref(card)
-		
+
 		local search = SMODS.deepfind(ret.nodes[1].nodes, "Foo54", nil, true)[1]
 		if search then
 			local config = search.objtree[#search.objtree - 2]
 			config.object:remove()
 			config.object = SMODS.create_sprite(0, 0, 0.5, 0.5 / 22 * 17, "fac_fas_toby_sona", {x = 1, y = 0})
 		end
-		
+
 		local search2 = SMODS.deepfind(ret.nodes[1].nodes, "squeax09", nil, true)[1]
 		if search2 then
 			local config2 = search2.objtree[#search2.objtree - 2]
@@ -163,7 +163,7 @@ function G.UIDEF.card_h_popup(card)
 							}
 						}
 					}
-					
+
 					local card_children_h_popup_remove_ref = card.children.h_popup.remove
 					function card.children.h_popup:remove()
 						card_children_h_popup_remove_ref(self)
