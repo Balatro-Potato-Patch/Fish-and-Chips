@@ -736,6 +736,9 @@ FishAndChips.Fish {
         styx = 1
 	},
 	loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS["m_bonus"]
+        info_queue[#info_queue+1] = G.P_CENTERS["m_mult"]
+        info_queue[#info_queue+1] = G.P_CENTERS["m_gold"]
 		return { vars = { } }
 	end,
     blueprint_compat = false,
