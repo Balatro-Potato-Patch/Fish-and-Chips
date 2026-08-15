@@ -82,9 +82,9 @@ return {
 				},
 				text = {
 					"Instantly {C:attention}win",
-					"current non-boss blind",
+					"current non-{C:attention}Boss Blind{}",
 					"or gain {X:purple,C:white}#1#%{} of",
-					"required chips",
+					"requirement as Score",
 					"{ppu_bubble:usable}"
 				}
 			},
@@ -97,7 +97,7 @@ return {
 				},
 				text = {
 					{
-						"This {C:fac_fish}Fish{} gains {X:mult,C:white}X#1#{} Mult",
+						"This {C:fac_fish}Fish{} gains {X:mult,C:white}X#1#{} Mult", -- decided to keep this due to how vanilla wording handles this - gabby
 						"when a {C:fac_fish}Fish{} made by {C:attention}#2#{} is caught",
 						"{C:inactive}[Currently {X:mult,C:white}X#3#{C:inactive} Mult]",
 						"{C:inactive}[Target changes every round]"
@@ -151,10 +151,13 @@ return {
 				},
 				text = {
 					{
-						"Held Joker is treated as if it was a {C:fac_fish}Fish"
+						"Held {C:attention}Joker{} is treated",
+						"as if it was a {C:fac_fish}Fish",
+						"{C:attention}Currently holding: {C:attention}#1#{}{C:inactive} ){}"
 					},
 					{
-						"{C:red}Consumes{} held Joker",
+						"Use to {C:red}consume{}",
+						"any held Joker",
 						"and then {C:attention}grabs{} leftmost Joker",
 						"{ppu_bubble:usable}"
 					},
