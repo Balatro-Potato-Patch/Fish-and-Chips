@@ -50,7 +50,7 @@ FishAndChips.Fish {
 			end,
 		})
 	end,
-	calculate = function(_, _, context)
+	calculate = function(_, card, context)
 		if context.reroll_shop and not context.blueprint then
 			local cards = {}
 			for _, v in ipairs(G.jokers.cards) do
@@ -60,7 +60,9 @@ FishAndChips.Fish {
 				cards[#cards + 1] = v
 			end
 			local gone = pseudorandom_element(cards, 'fac_fish_bagels_fish_phone')
-			play_sound 'fac_bagels_phone_remove'
+			if gone ~= card then
+				play_sound 'fac_bagels_phone_remove'
+			end
 			SMODS.destroy_cards { gone }
 		end
 	end,

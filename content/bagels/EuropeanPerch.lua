@@ -17,6 +17,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 1.7, max = 2.9 }, length = { min = 0.2, max = 0.6 } },
 	attributes = { 'passive', 'boss_blind', 'skip' },
 	blueprint_compat = false,
+	eternal_compat = false,
 	cost = 8,
 	config = {
 		extra = {

@@ -15,6 +15,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.3, max = 20 }, length = { min = 0.05, max = 1.2 } },
 	attributes = { 'generation', 'joker' },
 	blueprint_compat = false,
+	eternal_compat = false,
 	loc_vars = function(_, info_queue)
 		info_queue[#info_queue + 1] = G.P_CENTERS.e_negative
 		info_queue[#info_queue + 1] = G.P_CENTERS.j_space
