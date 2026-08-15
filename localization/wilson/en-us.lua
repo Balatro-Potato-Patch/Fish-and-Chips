@@ -28,7 +28,7 @@ return {
                 text = {
                     "When {C:attention}Blind{} is selected",
                     "attempts to increase size",
-                    "to match fish on the right.",
+                    "to match {C:fac_fish}Fish{} on the right.",
                     "Permanently add {X:mult,C:white} X#2# {} to this",
                     " Fish for each stat increased",
                     "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
@@ -58,8 +58,8 @@ return {
                 name = "Adandoned Teddy",
                 text = {
                     {
-                        "When a fish is {C:attention}caught",
-                        "{C:attention}increase{} stored mult",
+                        "When a {C:fac_fish}Fish{} is {C:attention}caught",
+                        "{C:attention}increase{} stored Mult",
                         "by {X:mult,C:white} X#2#",
                     },
                     {
@@ -68,7 +68,7 @@ return {
                     },
                     {
                         "You may {C:dark_edition}force it{} to",
-                        "come out of it's shell.",
+                        "come out of its shell.",
                         "It will {C:attention}not{} forgive you",
                         "{ppu_bubble:usable}",
                     },
