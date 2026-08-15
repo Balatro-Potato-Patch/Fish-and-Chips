@@ -64,7 +64,8 @@ return {
             fish_fac_Magikarp = {
                 name = "Magikarp",
                 text = {
-                    "After 3 rounds sell this fish toevolve into Gyarados",
+                    "After 3 rounds, sell this {C:fac_fish}Fish{}",
+                    "to evolve it into {C:attention}Gyarados{}",
                     "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#)",
                 },
                 flavor = {
@@ -77,7 +78,7 @@ return {
             fish_fac_Gary = {
                 name = "Gyarados",
                 text = {
-                    "{X:mult,C:white}X#1#{} mult"
+                    "{X:mult,C:white}X#1#{} Mult"
                 },
                 flavor = {
                     "Once it appears, it goes on a rampage.",
