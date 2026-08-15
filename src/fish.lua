@@ -298,22 +298,46 @@ function Card:highlight(is_higlighted)
 		if G.STATE == G.STATES.FAC_FISHING then
 			if self.config.center.requires_jokers then
 				if self.highlighted then
-					G.jokers.T.y = G.jokers.T.y + 15.25
+
+					if self.area == G.FISHING.fac_fish_reward_area then
+						G.fac_fish_area:unhighlight_all()
+						G.FISHING.fac_treasure_reward_area:unhighlight_all()
+					elseif self.area == G.FISHING.fac_treasure_reward_area then
+						G.fac_fish_area:unhighlight_all()
+						G.FISHING.fac_fish_reward_area:unhighlight_all()
+					elseif self.area == G.fac_fish_area then
+						G.FISHING.fac_treasure_reward_area:unhighlight_all()
+						G.FISHING.fac_fish_reward_area:unhighlight_all()
+					end
+
+					G.jokers.T.y = G.jokers.T.y + 15.25 + ((self.area == G.FISHING.fac_fish_reward_area or self.area == G.FISHING.fac_treasure_reward_area) and 3 or 0)
 					G.jokers.T.x = G.jokers.T.x + 1.5 - (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
 				else
-					G.jokers.T.y = G.jokers.T.y - 15.25
+					G.jokers.T.y = -10
 					G.jokers.T.x = G.jokers.T.x - 1.5 + (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
 				end
 			end
 			if self.config.center.requires_consumables then
 				if self.highlighted then
-					G.consumeables.T.y = G.consumeables.T.y + 15.25
+					
+					if self.area == G.FISHING.fac_fish_reward_area then
+						G.fac_fish_area:unhighlight_all()
+						G.FISHING.fac_treasure_reward_area:unhighlight_all()
+					elseif self.area == G.FISHING.fac_treasure_reward_area then
+						G.fac_fish_area:unhighlight_all()
+						G.FISHING.fac_fish_reward_area:unhighlight_all()
+					elseif self.area == G.fac_fish_area then
+						G.FISHING.fac_treasure_reward_area:unhighlight_all()
+						G.FISHING.fac_fish_reward_area:unhighlight_all()
+					end
+
+					
+					G.consumeables.T.y = G.consumeables.T.y + 15.25 + ((self.area == G.FISHING.fac_fish_reward_area or self.area == G.FISHING.fac_treasure_reward_area) and 3 or 0)
 					G.consumeables.T.x = G.consumeables.T.x - 3.5
 				else
-					G.consumeables.T.y = G.consumeables.T.y - 15.25
+					G.consumeables.T.y = -10
 					G.consumeables.T.x = G.consumeables.T.x + 3.5
 				end
-		
 			end
 		end
 	else
