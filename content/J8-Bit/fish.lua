@@ -1374,11 +1374,15 @@ FishAndChips.Fish {
         for attribute, __ in pairs(attributes) do
             attribute_list[#attribute_list + 1] = attribute
         end
+        local my_xmult = 1.0 + card.ability.extra.xmult_inc * #attribute_list
+        if next(SMODS.find_card("fish_fac_mf_red_herring")) then
+            attribute_list = {"all_attributes"}
+        end
         -- main end
         local main_end = {}
         local columns = 4
         if card.area and (card.area == G.fac_fish_area) then
-            for i = 0, math.floor(#attribute_list / columns) - 1 do
+            for i = 0, math.floor(#attribute_list / columns) do
                 local row = {
                     n = G.UIT.R,
                     config = { align = "bm", minh = 0.4, colour = G.C.CLEAR },
@@ -1406,7 +1410,7 @@ FishAndChips.Fish {
         return {
             vars = {
                 card.ability.extra.xmult_inc,
-                1.0 + card.ability.extra.xmult_inc * #attribute_list
+                my_xmult,
             },
             main_end = main_end
         }

@@ -543,7 +543,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "Pixel" },
     ppu_artist = { "Pixel" },
-    attributes = { "economy", "mult", "chips", "suit", "diamonds", },
+    attributes = { "economy", "mult", "chips", "suit", "diamonds", "deltarune", "utdr", },
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
 	environments = {
         city_river = 1,

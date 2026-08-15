@@ -345,6 +345,19 @@ end
 -- 	end,
 -- }
 
+FishAndChips.mf_redherring_attributes = {}
+
+local post_attribute_hook = SMODS.Attribute.post_inject_class
+SMODS.Attribute.post_inject_class = function(self, ...)
+    post_attribute_hook(self, ...)
+
+    for _, attr in ipairs(SMODS.Attribute.obj_buffer) do
+        if not G.FAC_ENVIRONMENTS[attribute] and attr ~= "fac_treasure" then
+            FishAndChips.mf_redherring_attributes[#FishAndChips.mf_redherring_attributes + 1] = attr
+        end
+    end
+end
+
 FishAndChips.Fish {
 	key = "mf_red_herring",
 	atlas = "notmario_fish",
@@ -352,7 +365,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	-- attributes = SMODS.Attribute.obj_buffer,
+	attributes = FishAndChips.mf_redherring_attributes,
 	config = {
 		extra = { fish_slot = 1, },
 	},
@@ -414,7 +427,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { "passive" },
+	attributes = { "passive", "editions", },
 	badge_key = "k_fac_mf_relic",
 	config = {
 		extra = { },
@@ -891,7 +904,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { "hand_level", "chips", "mult", "modify_card", },
+	attributes = { "hand_level", "chips", "mult", "modify_card", "perma_bonus", },
 	config = {
 		extra = { perma_chips = 3, perma_mult = 1, }
 	},
@@ -944,7 +957,7 @@ FishAndChips.Fish {
 	weight = 4,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { "retrigger", "modify_card", "chance", },
+	attributes = { "retrigger", "modify_card", "chance", "perma_bonus", },
 	badge_key = "k_fac_mf_relic_qu",
 	config = {
 		extra = { odds = 7, }
@@ -995,7 +1008,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { "destroy_card", },
+	attributes = { "destroy_card", "full_deck", },
 	config = {
 		extra = { cards = 7, }
 	},
@@ -1138,7 +1151,7 @@ FishAndChips.Fish {
 	weight = 3,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { "xchips", "mult", "scaling", },
+	attributes = { "xchips", "mult", "scaling", "lose_economy", },
 	config = {
 		extra = { multiplier = 0.01 }
 	},
@@ -1336,7 +1349,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { "generation", "chance", "usable", "reset", },
+	attributes = { "generation", "chance", "usable", "reset", "perma_bonus", },
 	config = {
 		extra = { destroy_odds = 3, available = true }
 	},
@@ -1647,7 +1660,7 @@ FishAndChips.Fish {
 	weight = 4,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { "generation", "modify_card", "joker" },
+	attributes = { "generation", "modify_card", "joker", "retrigger", "perma_bonus", },
 	config = {
 		extra = {}
 	},
@@ -1882,7 +1895,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { "usable", "generation", "rarity", "chance", },
+	attributes = { "usable", "generation", "rarity", "chance", "perma_bonus", },
 	config = {
 		extra = {
 			odds = 6,

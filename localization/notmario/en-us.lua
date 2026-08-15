@@ -75,7 +75,8 @@ return {
             fish_fac_mf_wa = {
                 name = ":Wa:",
                 text = {
-                    "Retriggers leftmost played",
+                    "Retriggers cards in",
+                    "first half of hand",
                     "card one time"
                 },
                 flavour = {

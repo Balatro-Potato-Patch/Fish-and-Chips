@@ -35,15 +35,15 @@ local nxkooli_pick = function(pool, roll)
 	if type(pool) == "table" then
 		roll = roll or pseudorandom(pseudoseed('poolroll'))
 		local total = 0
-		
+
 		for _, v in ipairs(pool) do
 			local w = v.weight or v[2] or 1
 			total = total + w
 		end
-		
+
 		local _roll = roll * total
 		local w_sum = 0
-		
+
 		for _, v in ipairs(pool) do
 			local w = v.weight or v[2] or 1
 			w_sum = w_sum + w
@@ -103,7 +103,7 @@ FishAndChips.Fish {
 		return true
 	end,
 
-	
+
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.xblind } }
 	end,
@@ -135,7 +135,7 @@ FishAndChips.Fish {
 		calm_pond = 1,
 		wormhole = 10
 	},
-	
+
 	add_to_deck = function(self, card, from_debuff)
 		local half = math.floor(math.abs(G.GAME.fac_sand_dollars/2))
 		ease_sand_dollars(-half)
@@ -180,16 +180,16 @@ FishAndChips.Fish {
 					})
 		end
 
-		
+
 	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main then 
-			return { 
-				mult = card.ability.extra.mult 
-			} 
+		if context.joker_main then
+			return {
+				mult = card.ability.extra.mult
+			}
 		end
 	end,
 }
@@ -225,17 +225,17 @@ FishAndChips.Fish {
 		chocolate_river = 10,
 		soup = 10,
 	},
-	
+
 	loc_vars = function(self, info_queue, card)
-		return { vars = { 
+		return { vars = {
 			card.ability.extra.sand_dollars, card.ability.extra.sand_dollars_perf
 		} }
 	end,
 	calculate = function(self, card, context)
-		if context.fac_end_fishing then 
-			return { 
+		if context.fac_end_fishing then
+			return {
 				sand_dollars = (context.perfect and card.ability.extra.sand_dollars_perf) or card.ability.extra.sand_dollars
-			} 
+			}
 		end
 	end,
 }
@@ -336,7 +336,7 @@ FishAndChips.Fish {
 	cost = 5,
 	ppu_coder = { "LasagnaFelidae", "Nxkoo" },
 	ppu_artist = { "LasagnaFelidae", "Nxkoo" },
-	attributes = { "mult", "chips", "xchips", "xmult" },
+	attributes = { "mult", "chips", "xchips", "xmult", "position", },
 	config = {
 		extra = {
 			wood = 1,
@@ -351,21 +351,21 @@ FishAndChips.Fish {
 		city_river = 5,
 		wormhole = 5,
 	},
-	
+
 	locCount = function(self, field)
 		if not field then return "" end
 
 		local text = ""
-		
+
 		if type(field) == "string" then
 			text = text .. " " .. field
 			return text
 		end
-		
+
 		if type(field) ~= "table" then
 			return ""
 		end
-		
+
 		for _, line in ipairs(field) do
 			if type(line) == "table" then
 				for _, segment in ipairs(line) do
@@ -382,52 +382,52 @@ FishAndChips.Fish {
 	wildcard = function(self, key)
 		local localization = G.localization.descriptions["fac_Fish"] and G.localization.descriptions["fac_Fish"][key]
 		if not localization then return "a" end
-		
+
 		local text = ""
-		
+
 		text = text .. self:locCount(localization.name)
 		text = text .. self:locCount(localization.flavor or localization.flavour)
-		
+
 		if text == "" then return "a" end
-		
+
 		local ctext = text:gsub("[^%a]", ""):lower()
-		
+
 		local counts = {}
 		for char in ctext:gmatch("%a") do
 			counts[char] = (counts[char] or 0) + 1
 		end
-		
+
 		local best_letter = "a"
 		local best_count = 0
-		
+
 		for letter, count in pairs(counts) do
 			if count > best_count then
 				best_count = count
 				best_letter = letter
 			end
 		end
-		
+
 		-- print(best_letter)
 		return best_letter
 	end,
-	
+
 	countLetters = function(self, key, letter)
 		local localization = G.localization.descriptions["fac_Fish"] and G.localization.descriptions["fac_Fish"][key]
 		if not localization then return 0 end
-		
+
 		local text = ""
-		
-		
+
+
 		text = text .. self:locCount(localization.name)
 		text = text .. self:locCount(localization.flavor or localization.flavour)
-		
-		
-		
+
+
+
 		if text == "" then return 0 end
-		
+
 		local ctext = text:gsub("[^%a]", ""):lower()
-		
-		
+
+
 		local count = 0
 		if letter == "*" then
 			letter = self:wildcard(key)
@@ -437,14 +437,14 @@ FishAndChips.Fish {
 				count = count + 1
 			end
 		end
-		
+
 		return count
 	end,
-	
+
 	load = function (self,card)
 		local y = 0
 		G.E_MANAGER:add_event(Event({
-			func = function() 
+			func = function()
 				if card.ability.is_plastic then
 					if card.ability.is_crit then
 						y = type_y["crit_plastic"]
@@ -460,14 +460,14 @@ FishAndChips.Fish {
 					x = letter_value[card.ability.letter] and letter_value[card.ability.letter].x or 26,
 					y = y,
 				})
-				return true 
+				return true
 			end
 		}))
 	end,
-	
+
 	loc_vars = function(self, info_queue, card)
-		
-		
+
+
 		local color = card.ability.is_plastic and G.C.CHIPS or G.C.MULT
 		local value = card.ability.is_plastic and card.ability.extra.plastic or card.ability.extra.wood
 		local type = card.ability.is_plastic and "Chips" or "Mult"
@@ -482,17 +482,17 @@ FishAndChips.Fish {
 				if G.fac_fish_area.cards[i] == card then other_fish = G.fac_fish_area.cards[i + 1] end
 			end
 		end
-			
+
 		if not other_fish or not other_fish.config or not other_fish.config.center or not other_fish.config.center.key then other_fish = nil end
 
 		local count = other_fish and self:countLetters(other_fish.config.center.key, card.ability.letter) or 0
 		local total_value = value * count
 		local total_value_x = 1 + (card.ability.extra.xval * count)
-		
+
 		local ret = {}
 		ret.key = _key
 		ret.vars = {
-			card.ability.letter, 
+			card.ability.letter,
 			letter_value[card.ability.letter].value or 1,
 			value * (letter_value[card.ability.letter].value or 1),
 			type,
@@ -501,17 +501,17 @@ FishAndChips.Fish {
 			every,
 			total_value, total_value_x,
 			material,crit,
-			
+
 			colours = {color}
 		}
 		return ret
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main then 
+		if context.joker_main then
 			local ret = {}
 			local letter = card.ability.letter
 			local value = letter_value[letter].value or 1
-			
+
 			local is_plastic = card.ability.is_plastic
 			local is_crit = card.ability.is_crit
 
@@ -519,24 +519,24 @@ FishAndChips.Fish {
 			for i = 1, #G.fac_fish_area.cards do
 				if G.fac_fish_area.cards[i] == card then other_fish = G.fac_fish_area.cards[i + 1] end
 			end
-			
+
 			if not other_fish or not other_fish.config or not other_fish.config.center or not other_fish.config.center.key then return {} end
-			
-			
+
+
 			fish_key = other_fish.config.center.key
 			local count = self:countLetters(fish_key, letter)
-			
-			
+
+
 			local base = is_plastic and card.ability.extra.plastic or card.ability.extra.wood
-			
+
 			local is_crit = card.ability.is_crit
-			
+
 			if is_plastic then
 				ret.chips = base * count
 			else
 				ret.mult = base * count
 			end
-			
+
 			if is_crit then
 				if is_plastic then
 					ret.xchips = 1 + (card.ability.extra.xval * count)
@@ -544,13 +544,13 @@ FishAndChips.Fish {
 					ret.xmult = 1 + (card.ability.extra.xval * count)
 				end
 			end
-			
+
 			return ret
 		end
-		
-		if context.after then 
+
+		if context.after then
 			G.E_MANAGER:add_event(Event({
-			func = function() 
+			func = function()
 				local back = nxkooli_pick(types, pseudorandom(pseudoseed("nxkooli_pp_tile_after")))
 				if back == "plastic" or back == "crit_plastic" then
 					card.ability.is_plastic = true
@@ -564,20 +564,20 @@ FishAndChips.Fish {
 				end
 				local letter = nxkooli_pick(letters, pseudorandom(pseudoseed("nxkooli_pp_tile_after")))
 				card.ability.letter = letter
-				
+
 				card.children.center:set_sprite_pos({
 					x = letter_value[letter] and letter_value[letter].x or 26,
 					y = type_y[back] and type_y[back] or 0,
 				})
-				return true 
+				return true
 				end
 			}))
 		end
-		
-		
-		
+
+
+
 	end,
-	
+
 }
 
 

@@ -467,6 +467,43 @@ return {
             ["k_J8-Bit_attribute_space"] = "Space-themed",
             ["k_J8-Bit_attribute_hand_type"] = "Poker Hands",
             ["k_J8-Bit_attribute_scaling"] = "Scaling",
+
+            -- Missing attribute keys? (mf)
+            ["k_J8-Bit_attribute_ante"] = "Ante",
+            ["k_J8-Bit_attribute_booster"] = "Booster packs",
+            ["k_J8-Bit_attribute_shop"] = "Shop-related",
+            ["k_J8-Bit_attribute_rarity"] = "Rarity-related",
+            ["k_J8-Bit_attribute_playing_card"] = "Playing card-related",
+            ["k_J8-Bit_attribute_fac_treasure"] = "Treasure Fish",
+            ["k_J8-Bit_attribute_position"] = "Position-based effect",
+            ["k_J8-Bit_attribute_hand_size"] = "Hand size",
+            ["k_J8-Bit_attribute_face_down"] = "Face down",
+            ["k_J8-Bit_attribute_debuff"] = "Debuff",
+            ["k_J8-Bit_attribute_full_deck"] = "Checks full deck",
+            ["k_J8-Bit_attribute_sell_value"] = "Sell value",
+            ["k_J8-Bit_attribute_lose_economy"] = "-Economy",
+            ["k_J8-Bit_attribute_xblindsize"] = "XBlind Size",
+            ["k_J8-Bit_attribute_consumable"] = "Consumable-related",
+            ["k_J8-Bit_attribute_consumable_slot"] = "Affected by Consumable slots",
+
+            -- Should these really be applied to a fish? (mf)
+            ["k_J8-Bit_attribute_large_blind"] = "Is a Large Blind",
+            ["k_J8-Bit_attribute_normal"] = "Is a Normal Booster Pack",
+            ["k_J8-Bit_attribute_jumbo"] = "Is a Jumbo Booster Pack",
+            ["k_J8-Bit_attribute_mega"] = "Is a Mega Booster Pack",
+
+            -- Attributes from other contributors (mf)
+            ["k_J8-Bit_attribute_undertale"] = "Undertale-themed",
+            ["k_J8-Bit_attribute_deltarune"] = "Deltarune-themed",
+            ["k_J8-Bit_attribute_utdr"] = "UTDR-themed",
+            ["k_J8-Bit_attribute_fac_mf_pearl"] = "Pearl",
+            ["k_J8-Bit_attribute_fac_fish_slot"] = "Bucket slot",
+            ["k_J8-Bit_attribute_fac_perfect_catch"] = "Perfect catch-based",
+            ["k_J8-Bit_attribute_afterdark"] = "As seen in After Dark 4.0 Deluxe",
+            ["k_J8-Bit_attribute_vocaloid"] = "Vocaloid-themed",
+            ["k_J8-Bit_attribute_nothing"] = "Does nothing",
+
+            ["k_J8-Bit_attribute_all_attributes"] = "All of them!",
         },
     }
 }

@@ -82,6 +82,13 @@ SMODS.DynaTextEffect {
     end,
 }
 
+local all_attributes_gradient = SMODS.Gradient({
+	key = "fac_all_attributes",
+	colours = rainbow_colors,
+	cycle = 4,
+	update = update_exp_colour,
+})
+
 FishAndChips.AttributeColorTable = {
     mult = G.C.MULT,
     chips = G.C.CHIPS,
@@ -121,12 +128,35 @@ FishAndChips.AttributeColorTable = {
     tarot = G.C.SECONDARY_SET.Tarot,
     planet = G.C.SECONDARY_SET.Planet,
     spectral = G.C.SECONDARY_SET.Spectral,
-    enhancement = G.C.SECONDARY_SET.Enhanced,
+    enhancements = G.C.SECONDARY_SET.Enhanced,
     editions = G.C.DARK_EDITION,
     seals = G.C.DARK_EDITION,
     tags = G.C.FILTER,
     reroll = G.C.GREEN,
-    on_sell = G.C.MONEY
+    on_sell = G.C.MONEY,
+
+    -- additional attributes (mf),
+    large_blind = G.C.PURPLE, -- the vanilla ones are both purple,
+    scaling = G.C.SECONDARY_SET.Spectral,
+    fac_fish_slot = FishAndChips.C.FISH,
+    food = G.C.GREEN,
+    booster = G.C.SECONDARY_SET.Booster,
+    prevents_death = G.C.RED,
+    reset = G.C.RED,
+    fac_perfect_catch = G.C.MONEY,
+    fac_mf_pearl = FishAndChips.C.FISH,
+    consumable_slot = G.C.FILTER,
+    hand_size = G.C.FILTER,
+    face_down = G.C.RED,
+    debuff = G.C.RED,
+    sell_value = G.C.MONEY,
+    lose_economy = G.C.RED,
+    space_themed = G.C.SECONDARY_SET.Planet,
+    xblindsize = G.C.DYN_UI.LIGHT or G.C.DYN_UI.DARK,
+    consumable = G.C.FILTER,
+    swap = G.C.PURPLE,
+
+    all_attributes = all_attributes_gradient,
 }
 
 -- ## DEVELOPERS ##

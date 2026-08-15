@@ -170,7 +170,7 @@ FishAndChips.Fish {
     },
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
-	attributes = { "passive" }, -- i guess this is technically a passive "it doesn't do anything" "no, it *does* nothing" (mf)
+	attributes = { "nothing" },
 	environments = {
 		wormhole = 1,
 		pier = 10,
