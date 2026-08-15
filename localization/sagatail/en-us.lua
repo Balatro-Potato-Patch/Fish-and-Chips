@@ -56,7 +56,7 @@ return {
                 name = "Lava Cat-Fish",
                 text = {
                     "{X:mult,C:white}X#1#{} Mult",
-                    "{C:attention}destroy{} a random",
+                    "{C:attention}Destroys{} a random",
                     "played card every hand",
                 },
                 flavor = {
@@ -106,12 +106,13 @@ return {
             fish_fac_sagatail_sunfish = {
                 name = "Sun-Fish",
                 text = {
-                    {"{V:3}[{B:1}  {B:2}  {B:3}  {V:3}]{ppu_bubble:usable}{ppu_bubble:1}",
+                    {"{V:3}[{B:1}  {B:2}  {B:3}  {V:3}]{ppu_bubble:usable}",
                     "Use this fish to consume {C:attention}3{} charges",
                     "and enable the {C:attention}following effects{} this round",
                     "Gain {C:attention}1{} charge at end of round"},
                     {"All played cards {C:attention}score{}, give {X:mult,C:white}X#1#{} Mult",
-                    "when scored and {C:attention}destroyed{} after scoring"},
+                    "when scored and {C:attention}destroyed{} after scoring",
+                    "{ppu_bubble:1}"},
                 },
                 flavor = {
                     "Feel the scorching heat of a pocket sun.",
