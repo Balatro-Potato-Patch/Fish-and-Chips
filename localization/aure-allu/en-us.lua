@@ -197,7 +197,8 @@ return {
                     "Every {C:attention}#1#{C:inactive}/#2#{} rounds,",
                     "{C:attention}milk{} this {C:fac_fish}Fish{} to create",
                     "a random {C:spectral}Spectral{} card",
-                    "{C:inactive}(Must have room){}"
+                    "{C:inactive}(Must have room){}",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Moo."
@@ -274,7 +275,7 @@ return {
                     "and a {C:enhanced}Wild {C:attention}card{}, {C:attention}using",
                     "this {C:fac_fish}Fish {C:dark_edition,E:1}morphs{} it into",
                     "the {C:attention}last{} used {C:fac_fish}Fish",
-                    "{ppu_bubble:usable}"
+                    "{ppu_bubble:usable}{ppu_bubble:1}"
                 },
                 flavor = {
                     "This Chimaera ain't arced."
@@ -448,7 +449,7 @@ return {
     misc = {
         dictionary = {
             k_aureallu_blooper = "Ink'd!",
-            k_aureallu_milk_button = "Milk",
+            k_aureallu_milk_button = "MILK",
             k_aureallu_unicorn = "Nyaeigh!",
             k_aureallu_cookiecutter = "Cookie'd",
             k_aureallu_trasher = "#&%@",

@@ -198,9 +198,8 @@ return {
                     "{C:inactive,s:0.8}suit changes at end of round{}"
                 },
                 flavour = {
-                    "WARNING: Do NOT eat",
-                    "milkfin roe! It is",
-                    "incredibly toxic!"
+                    "WARNING: Do NOT eat milkfin",
+                    "roe! It is incredibly toxic!"
                 }
             }
         },

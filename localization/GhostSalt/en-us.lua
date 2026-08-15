@@ -5,7 +5,7 @@ return {
                 name = "Ghostfish",
                 text = {
                     "At the end of the shop, if",
-                    "all consumable slots contain",
+                    "all {C:attention}consumable slots{} contain",
                     "{C:tarot}Tarot{} cards, one of them",
                     "becomes a random {C:spectral}Spectral{} card"
                 },
