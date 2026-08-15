@@ -41,6 +41,7 @@ return {
 						"Creates up to {C:attention}#1#{}",
 						"random {C:tarot}Tarot{} cards",
 						"{C:inactive}(Must have room)",
+						"{ppu_bubble:usable}",
 					},
 					{
 						"{C:inactive,s:0.8}Wait a minute, this is just{}",
