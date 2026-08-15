@@ -38,7 +38,8 @@ return {
                     },
                     {
                         "{C:attention}Use{}: -#2# cm length,",
-                        "{C:attention}+1{} Classic Bait"
+                        "{C:attention}+1 Classic Canned{}", -- intentional bleed here but could be adjusted - gabby
+                        "{ppu_bubble:usable}",
                     }
                 },
                 flavor = {
