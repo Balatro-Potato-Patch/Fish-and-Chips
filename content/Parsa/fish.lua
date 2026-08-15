@@ -17,7 +17,7 @@ FishAndChips.Fish {
 
     ppu_coder = {"Parsa"},
     ppu_artist = {"Parsa"},
-    attributes = { "lose_economy", "retrigger", "xchips", }
+    attributes = { "lose_economy", "retrigger", "xchips", },
 
     atlas = 'fac_Parsa_atlas_dish',
     stats = {
@@ -129,7 +129,7 @@ FishAndChips.Fish {
     requires_hand = false,
     treasure = false,
 
-    attributes = {"destroy_card", "generation", "tag", "joker", }
+    attributes = {"destroy_card", "generation", "tag", "joker", },
 
     config = {
         extra = {
