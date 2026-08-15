@@ -181,6 +181,21 @@ function Sprite:draw(...)
 end
 
 local align_cards_hook = CardArea.align_cards
+
+local function fac_scale_unglued_card_layers(card, scale)
+	for _, child in pairs(card.children) do
+		if child.T and child.VT and child.role and child.role.draw_major == card and child.T ~= card.T then
+			child.T.w = child.T.w * scale
+			child.T.h = child.T.h * scale
+			child.VT.w = child.VT.w * scale
+			child.VT.h = child.VT.h * scale
+		end
+		if child.T and child.scale then
+			child.scale_mag = math.min(child.scale.x / child.T.w, child.scale.y / child.T.h)
+		end
+	end
+end
+
 ---@diagnostic disable-next-line: duplicate-set-field
 function CardArea:align_cards(...)
 	if self == G.fac_fish_area then
@@ -196,8 +211,8 @@ function CardArea:align_cards(...)
 					card.states.drag.can = true
 					card.T.w = card.T.w / 0.7
 					card.T.h = card.T.h / 0.7
-					card:set_sprites(card.config.center)
-          card._fac_bucketed = false
+					fac_scale_unglued_card_layers(card, 1 / 0.7)
+					card._fac_bucketed = false
 				end
 			elseif not card._fac_bucketed then
 				card.states.click.can = false
@@ -205,8 +220,8 @@ function CardArea:align_cards(...)
 				card.states.drag.can = false
 				card.T.w = card.T.w * 0.7
 				card.T.h = card.T.h * 0.7
-				card:set_sprites(card.config.center)
-        card._fac_bucketed = true
+				fac_scale_unglued_card_layers(card, 0.7)
+				card._fac_bucketed = true
 			end
 			if not card.states.drag.is and not card.disable_align then
 				card.T.r = (G.GAME.fac_fish_expanded and 0.1 or 1) * (-#self.cards / 2 + k) / #self.cards
@@ -250,10 +265,12 @@ function CardArea:align_cards(...)
 			self.T.w = self.T.w / 5
 			self.T.x = self.T.x + G.CARD_W * 6
 		end
-		table.sort(self.cards, function(a, b)
-			return a.T.x + a.T.w / 2 - 100 * ((a.pinned and not a.ignore_pinned) and a.sort_id or 0)
-				< b.T.x + b.T.w / 2 - 100 * ((b.pinned and not b.ignore_pinned) and b.sort_id or 0)
-		end)
+		if G.GAME.fac_fish_expanded then
+			table.sort(self.cards, function(a, b)
+				return a.T.x + a.T.w / 2 - 100 * ((a.pinned and not a.ignore_pinned) and a.sort_id or 0)
+					< b.T.x + b.T.w / 2 - 100 * ((b.pinned and not b.ignore_pinned) and b.sort_id or 0)
+			end)
+		end
 	else
 		align_cards_hook(self, ...)
 	end
