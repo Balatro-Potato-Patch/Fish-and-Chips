@@ -25,7 +25,7 @@ FishAndChips.Fish{
 	},
 	disable_visual_scaling = true,
 	badge_key = "k_fac_fas_worm",
-	attributes = {"xmult", "useble", "scaling", "generation"},
+	attributes = {"xmult", "usable", "scaling", "generation"},
 	loc_vars = function(self, info_queue, card)
 		return {vars = {
 			card.ability.extra.scale,
