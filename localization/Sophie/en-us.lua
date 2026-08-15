@@ -54,7 +54,6 @@ return {
                     "During the boss blind,",
                     "all cards are {C:attention}scored{} as",
                     "all suits",
-                    "{C:inactive}(Must have room)"
                 },
                 flavour = {
                     "Ummmm...",
