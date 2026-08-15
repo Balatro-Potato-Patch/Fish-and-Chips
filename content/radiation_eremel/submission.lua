@@ -469,6 +469,7 @@ FishAndChips.Fish({
         weight = {min = 515, max = 2136},
         length = {min = 0.60, max = 0.90},
     },
+    blueprint_compat = false,
     config = {extra = {enhancement = 'm_gold', amount = 3, reset = 3, current = 0, active = true}},
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = {set='Other',key='fac_r_e_temp'}
