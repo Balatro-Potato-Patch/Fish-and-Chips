@@ -21,6 +21,16 @@ FishAndChips.Fish{
 	},
 	attributes = {"copying", "useable"},
 	disable_visual_scaling = true,
+	loc_vars = function(self, info_queue, card)
+		local joker = ""
+		if G.fac_fas_kine_area and G.fac_fas_kine_area.cards and G.fac_fas_kine_area.cards[1] then -- i probably dont need all three checks here but
+			joker = G.P_CENTERS[G.fac_fas_kine_area.cards[1].config.center_key].name
+			info_queue[#info_queue+1] = G.P_CENTERS[G.fac_fas_kine_area.cards[1].config.center_key]
+		else
+			joker = "None"
+		end
+		return {vars = {joker}}
+	end,
 	load = function (self, card, card_table, other_card)
 		G.E_MANAGER:add_event(Event{
 			func = function ()
