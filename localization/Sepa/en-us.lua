@@ -4,7 +4,7 @@ return {
             fac_sepa_Tarot_infovar ={
                 name = "Specific Tarots",
                 text = {
-                    "Talisman",
+                    "The Fool",
                     "The Emperor",
                     "The Hermit",
                     "The Hanged Man",
