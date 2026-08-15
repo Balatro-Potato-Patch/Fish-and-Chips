@@ -249,7 +249,6 @@ FishAndChips.Fish {
 	ppu_artist = { "AllUniversal" },
 	attributes = { "chance", "economy" },
 	stats = {weight = {min = 7, max = 140}, length = {min = 0.8, max = 4.5}},
-	blueprint_compat = false,
 	config = {
 		extra = {
 			refund_sand_dollars = 2,
@@ -267,7 +266,7 @@ FishAndChips.Fish {
 		return { vars = { numerator_cheap, denominator_cheap, card.ability.extra.refund_sand_dollars } }
 	end,
 	calculate = function(self, card, context)
-		if context.fac_buy_bait and not context.blueprint_card and SMODS.pseudorandom_probability(card, "fac_aureallu_cheap_cheep", 1, card.ability.extra.refund_odds) then
+		if context.fac_buy_bait and SMODS.pseudorandom_probability(card, "fac_aureallu_cheap_cheep", 1, card.ability.extra.refund_odds) then
 			return {
 				sand_dollars = card.ability.extra.refund_sand_dollars
 			}
@@ -310,11 +309,11 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.face_down_x_chips, total } }
 	end,
 	calculate = function(self, card, context)
-		if context.stay_flipped and not context.blueprint_card and context.from_area == G.deck and context.to_area == G.hand and G.GAME.current_round.hands_played == 0 then
+		if context.stay_flipped and not context.blueprint and context.from_area == G.deck and context.to_area == G.hand and G.GAME.current_round.hands_played == 0 then
             return {
                 stay_flipped = true,
             }
-		elseif context.first_hand_drawn and not context.blueprint_card then
+		elseif context.first_hand_drawn and not context.blueprint then
 			return {
 				message = localize("k_aureallu_blooper"),
 				colour = G.C.BLACK
@@ -358,7 +357,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.sand_dollars_gain } }
 	end,
 	calculate = function(self, card, context)
-		if context.ending_fishing and not context.blueprint_card then
+		if context.ending_fishing and not context.blueprint then
 			card.ability.extra_value = card.ability.extra_value + card.ability.extra.sand_dollars_gain
 			card:set_cost()
 			return {
@@ -431,7 +430,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "mult", "scaling", "position", },
+	attributes = { "mult", "scaling", "position" },
 	stats = {weight = {min = 0.04, max = 0.20}, length = {min = 0.06, max = 0.09}},
 	blueprint_compat = true,
 	config = {
@@ -455,7 +454,7 @@ FishAndChips.Fish {
 		return { vars = { zero_signed(card.ability.extra.mult_gain), card.ability.immutable.last_slots_max, zero_signed(card.ability.extra.total_mult) } }
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint_card then
+		if context.before and not context.blueprint then
             local same_slot = false
 			local slot = table_find(G.fac_fish_area.cards, card)
 			for _, prev_slot in ipairs(card.ability.immutable.last_slots) do
@@ -514,7 +513,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main then
-			local empty = G.fac_fish_area.config.card_limits.base - #G.fac_fish_area.cards
+			local empty = math.max(G.fac_fish_area.config.card_limits.base - #G.fac_fish_area.cards, 0)
 			return {
 				mult = empty * card.ability.extra.mult_per_slot
 			}
@@ -626,7 +625,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		-- Thanks once more, Vanillaremade !!
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint_card then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
             if SMODS.pseudorandom_probability(card, 'fac_aureallu_gouramichel', 1, card.ability.extra.michel_odds) then
                 SMODS.destroy_cards(card, nil, nil, true)
                 G.GAME.pool_flags.fac_aureallu_gouramichel = true
@@ -678,7 +677,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		-- Thanks once more, Vanillaremade !!
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint_card then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
             if SMODS.pseudorandom_probability(card, 'fac_aureallu_cavenfish', 1, card.ability.extra.cavenfish_odds) then
                 SMODS.destroy_cards(card, nil, nil, true)
                 return {
@@ -728,7 +727,6 @@ FishAndChips.Fish {
 	end,
 	use = function (self, card)
 		--Thanks https://github.com/nh6574/VanillaRemade/blob/main/src/tarots.lua The Hanged Man
-		local number = #G.hand.highlighted
         G.E_MANAGER:add_event(Event({
 			trigger = "after", 
 			delay = 0.1, 
@@ -751,8 +749,8 @@ FishAndChips.Fish {
 			trigger = "after", 
 			delay = 0.5, 
 			func = function()
-				local count = G.hand.config.card_limit - #G.hand.cards + number
-				if count <= 0 then return end
+				local count = G.hand.config.card_limit - #G.hand.cards
+				if count <= 0 then return true end
 				for i=1, count do
 					local percent = 1.15 - (i - 0.999) / (count - 0.998) * 0.3
 					G.E_MANAGER:add_event(Event({
@@ -1270,6 +1268,7 @@ FishAndChips.Fish {
 		soup = 2,
 	},
 	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
 		info_queue[#info_queue+1] = G.P_TAGS.tag_d_six
 		local numerator_cookie, denominator_cookie = SMODS.get_probability_vars(card, 1, card.ability.extra.lucky_d6_odds, "fac_aureallu_cookiecutter_shark")
 		return { vars = { numerator_cookie, denominator_cookie } }
@@ -2034,7 +2033,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.x_mult_gain, card.ability.extra.x_mult_total } }
 	end,
 	calculate = function (self, card, context)
-		if context.joker_type_destroyed and context.card ~= card and context.card.ability.set == "fac_Fish" and not context.blueprint_card then
+		if context.joker_type_destroyed and context.card ~= card and context.card.ability.set == "fac_Fish" and not context.blueprint then
 			card.ability.extra.x_mult_total = card.ability.extra.x_mult_total + card.ability.extra.x_mult_gain
 			return {
 				message = localize("k_upgrade_ex"),
@@ -2199,7 +2198,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.sand_dollars_gain_cap, card.ability.extra.x_sand_dollars, card.ability.extra.x_sand_dollars_gain_cap } }
 	end,
 	calculate = function(self, card, context)
-		if context.ending_fishing and not context.blueprint_card then
+		if context.ending_fishing and not context.blueprint then
 			local s_dollars = math.floor(math.min(G.GAME.fac_sand_dollars + (G.GAME.fac_sand_dollar_buffer or 0), card.ability.extra.sand_dollars_gain_cap * 2) / 2)
 			G.GAME.fac_sand_dollar_buffer = G.GAME.fac_sand_dollar_buffer or 0 
 			G.GAME.fac_sand_dollar_buffer = G.GAME.fac_sand_dollar_buffer - s_dollars
