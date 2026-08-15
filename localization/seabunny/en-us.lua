@@ -57,7 +57,7 @@ return {
                         "played Unenhanced cards"
                     },
                     {
-                        "{C:inactive}Enchanted: {C:green}#3# in #4#{} chance",
+                        "{C:inactive}Enchanted: #3# in #4# chance",
                         "{C:inactive}for a separate retrigger"
                     },
                     {
@@ -79,7 +79,7 @@ return {
                         "played Unenhanced cards"
                     },
                     {
-                        "{C:dark_edition}Enchanted{}: {C:green}#3# in #4# chance",
+                        "{C:dark_edition}Enchanted{}: {C:green}#3# in #4#{} chance",
                         "for a separate retrigger"
                     }
                 },
@@ -102,7 +102,7 @@ return {
                     },
                     {
                         "To {C:dark_edition}Enchant{}: Score a card with",
-                        "{C:chips}#2#{} or more chips #3# times",
+                        "{C:chips}#2#{} or more Chips #3# times",
                         "{C:inactive}(Currently {C:attention}#4#{C:inactive}/#3#)"
                     }
                 },
@@ -120,7 +120,7 @@ return {
                         "deck with permanent {C:chips}+#1#{} Chips"
                     },
                     {
-                        "{C:dark_edition}Enchanted{}: {C:attention}Stone{} cards",
+                        "{C:dark_edition}Enchanted{}: {C:purple}Stone{} cards",
                         "are destroyed when scored"
                     }
                 },
@@ -134,14 +134,14 @@ return {
                 text = {
                     {
                         "Gains {C:attention}sell value{} of first",
-                        "fish sold each round"
+                        "{C:fac_fish}Fish{} sold each round"
                     },
                     {
                         "{C:inactive}Enchanted: Double",
                         "{C:inactive}sell value when sold"
                     },
                     {
-                        "To {C:dark_edition}Enchant{}: Sell #1# {C:attention}Fishes",
+                        "To {C:dark_edition}Enchant{}: Sell #1# {C:fac_fish}Fish",
                         "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#)"
                     }
                 },
@@ -171,8 +171,8 @@ return {
                 name = "Lapis Catfish",
                 text = {
                     {
-                        "Balance {C:attention}#1#%{} of {C:chips}Chips{} and {C:mult}Mult",
-                        "{C:attention}-#2#%{} per round played"
+                        "Balance {C:purple}#1#%{} of {C:chips}Chips{} and {C:mult}Mult",
+                        "{C:purple}-#2#%{} per round played"
                     },
                     {
                         "{C:inactive}Enchanted: +#2#% per round instead",
