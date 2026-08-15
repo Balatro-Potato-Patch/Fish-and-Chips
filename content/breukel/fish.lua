@@ -281,7 +281,7 @@ FishAndChips.Fish {
 		if context.end_of_round and context.main_eval then
 			G.fac_Breukel.AddOverTime(card, card.ability.extra.Overtime)
 
-			local amount = pseudorandom('stockfish', 0, card.ability.extra.Sand_dollars)/2
+			local amount = math.ceil(pseudorandom('stockfish', 0, card.ability.extra.Sand_dollars)/2)
 			local Overtime, Max = G.fac_Breukel.GetOverTime()
 			if pseudorandom('chessfish') < 0.25 + (Overtime/Max)/(4/3) then
 				return {sand_dollars = amount}
