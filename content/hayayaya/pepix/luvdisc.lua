@@ -38,7 +38,12 @@ FishAndChips.Fish({
 					scalar_value = "xmult_add",
 				})
 			elseif card.ability.extra.xmult > 1 then
-				card.ability.extra.xmult = 1
+			    SMODS.reset_card(card, {
+					ref_table = card.ability.extra,
+					ref_value = "xmult",
+					reset_value = 1,
+					no_message = true,
+				})
 				return {
 					message = localize("k_reset"),
 				}

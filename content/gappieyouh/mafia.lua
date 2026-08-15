@@ -5,7 +5,7 @@ FishAndChips.Fish {
     pos = {x=0,y=0},
     ppu_coder = { 'Youh' },
     ppu_artist = { 'Gappie' },
-    attributes = { 'xmult', 'usable' },
+    attributes = { 'xmult', 'usable', "reset", },
     stats = {
         weight = {min = 0.5, max = 1},
         length = {min = 0.4, max = 0.9}
@@ -47,16 +47,16 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         -- main functionality
-        if context.joker_main and card.ability.extra.usable == -1 then 
-            return {xmult = card.ability.extra.xmult + (card.ability.extra.xmult_mod * card.ability.extra.rounds_slept)} 
+        if context.joker_main and card.ability.extra.usable == -1 then
+            return {xmult = card.ability.extra.xmult + (card.ability.extra.xmult_mod * card.ability.extra.rounds_slept)}
         end
 
         -- sleep logic
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-            if card.ability.extra.usable == 1 then 
+            if card.ability.extra.usable == 1 then
                 card.ability.extra.rounds_slept = card.ability.extra.rounds_slept + 1
                 return {message = localize('k_fac_fish_mafia_mod'), colour = G.C.RED}
-            else 
+            else
                 card.ability.extra.rounds_slept = 0
                 card.ability.extra.usable = -1
                 return {message = localize('k_fac_fish_mafia_reset'), colour = G.C.RED}

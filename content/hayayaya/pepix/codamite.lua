@@ -10,6 +10,7 @@ FishAndChips.Fish({
 	attributes = {
 		"boss_blind",
 		"usable",
+		"xblindsize",
 	},
 	atlas = "hayayaya_fih",
 	pos = { x = 1, y = 0 },

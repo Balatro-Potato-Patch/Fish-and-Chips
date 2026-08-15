@@ -5,7 +5,7 @@ FishAndChips.Fish {
     pos = {x=5,y=0},
     ppu_coder = { 'Youh' },
     ppu_artist = { 'Gappie' },
-    attributes = { 'economy', 'boss_blind' },
+    attributes = { 'economy', 'boss_blind', "generation", },
     stats = {
         weight = {min = 0.001, max = 0.01},
         length = {min = 0.1, max = 0.15}

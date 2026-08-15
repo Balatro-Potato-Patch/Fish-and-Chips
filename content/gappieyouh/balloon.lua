@@ -5,7 +5,7 @@ FishAndChips.Fish {
     pos = {x=3,y=0},
     ppu_coder = { 'Youh' },
     ppu_artist = { 'Gappie' },
-    attributes = { 'chips', 'destroy_card' },
+    attributes = { 'chips', 'on_sell', "scaling", },
     stats = {
         weight = {min = 0.01, max = 0.02},
         length = {min = 0.3, max = 0.6}
@@ -27,12 +27,20 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         if not context.blueprint then
             if context.fac_use_fish then
-                card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
-                return {message = 'Upgrade!', colour = G.C.CHIPS}
+                -- card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
+                SMODS.scale_card(card, {
+                    ref_value = "chips",
+                    scalar_value = "chips_mod",
+                    message_colour = G.C.CHIPS,
+                })
+                -- return {message = 'Upgrade!', colour = G.C.CHIPS}
             end
             if context.selling_card and context.card.ability.set == 'fac_Fish' then
-                card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
-                return {message = 'Upgrade!', colour = G.C.CHIPS}
+                SMODS.scale_card(card, {
+                    ref_value = "chips",
+                    scalar_value = "chips_mod",
+                    message_colour = G.C.CHIPS,
+                })
             end
         end
         if context.joker_main then return {chips = card.ability.extra.chips} end

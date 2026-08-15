@@ -7,7 +7,7 @@ FishAndChips.Fish({
 	ppu_coder = { "Ellen (Haya)" },
 	ppu_artist = { "Pepix" },
 	attributes = {
-		"chance",
+		"chance", "generation", "fac_perfect_catch",
 	},
 	atlas = "hayayaya_fih",
 	pos = { x = 1, y = 1 },

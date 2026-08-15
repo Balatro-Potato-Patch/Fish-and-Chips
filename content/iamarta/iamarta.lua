@@ -53,7 +53,7 @@ FishAndChips.Fish{
     atlas = "iamarta_100_gar",
     ppu_coder = {"iamarta"},
     ppu_artist = {"iamarta"},
-    attributes = {"xmult", "passive"},
+    attributes = {"xmult", "fac_perfect_catch", "scaling"},
     display_size = {w = 186, h = 149},
     stats = {
 		weight = {min = 100, max = 700},
@@ -122,7 +122,7 @@ FishAndChips.Fish{
                         G.fac_fish_area:emplace(card)
 
                         delay(1)
-                        
+
                         return true
                     end
                 }))
@@ -144,7 +144,7 @@ FishAndChips.Fish{
     pos = {x = 1, y = 0},
     ppu_coder = {"iamarta"},
     ppu_artist = {"iamarta"},
-    attributes = {"economy", "passive"},
+    attributes = {"economy"},
     stats = {
 		weight = {min = 0.18, max = 0.30},
 		length = {min = 0.2, max = 0.3}
@@ -155,7 +155,7 @@ FishAndChips.Fish{
         swamp = 1,
         aquifer = 1,
         city_river = 1.5,
-        backroom = 1.5, 
+        backroom = 1.5,
     },
     config = {
         extra = {
@@ -276,7 +276,7 @@ FishAndChips.Fish{
         }
     },
     calculate = function(self, card, context)
-        if not context.blueprint then 
+        if not context.blueprint then
             if context.fac_cast_rod then
                 card.ability.extra.target = nil
                 for i = 1, #G.fac_fish_area.cards do
@@ -377,7 +377,7 @@ FishAndChips.Fish{
     atlas = "iamarta_glider",
     ppu_coder = {"iamarta"},
     ppu_artist = {"iamarta"},
-    attributes = {"passive", "rank"},
+    attributes = {"rank", "modify_card",},
     display_size = {w = 71, h = 71},
     stats = {
 		weight = {min = 0, max = 0},
@@ -422,7 +422,7 @@ FishAndChips.Fish{
     pos = {x = 3, y = 1},
     ppu_coder = {"iamarta"},
     ppu_artist = {"iamarta"},
-    attributes = {"blind", "usable"},
+    attributes = {"usable", "xblindsize", "ante",},
     blueprint_compat = false,
     stats = {
 		weight = {min = 0.18, max = 0.3},
@@ -480,7 +480,7 @@ FishAndChips.Fish{
     display_size = {w = 34, h = 115},
     ppu_coder = {"iamarta"},
     ppu_artist = {"iamarta"},
-    attributes = {"generation", "passive"},
+    attributes = {"generation", "fac_perfect_catch"},
     stats = {
 		weight = {min = 0.05, max = 0.07},
 		length = {min = 0.17, max = 0.18}

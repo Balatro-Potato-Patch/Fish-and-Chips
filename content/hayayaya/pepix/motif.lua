@@ -9,6 +9,8 @@ FishAndChips.Fish({
 	attributes = {
 		"on_sell",
 		"sell_value",
+		"generation",
+		"fac_perfect_catch",
 	},
 	atlas = "hayayaya_fih",
 	pos = { x = 2, y = 1 },

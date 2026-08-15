@@ -27,7 +27,7 @@ FishAndChips.Fish {
             delay = 0.4,
             func = function()
                 play_sound('timpani')
-                
+
                 -- logic for defining compass
                 local envirotable = {
                     calm_pond = 0,

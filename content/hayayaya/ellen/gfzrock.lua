@@ -7,7 +7,7 @@ FishAndChips.Fish({
 	},
 	ppu_coder = { "Ellen (Haya)" },
 	ppu_artist = { "Ellen (Haya)" },
-	attributes = {},
+	attributes = { "xmult", },
 	atlas = "hayayaya_fih",
 	pos = { x = 1, y = 2 },
 	stats = {

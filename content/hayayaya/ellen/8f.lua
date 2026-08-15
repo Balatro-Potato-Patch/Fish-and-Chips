@@ -127,7 +127,7 @@ FishAndChips.Fish({
 	ppu_coder = { "Ellen (Haya)" },
 	ppu_artist = { "Ellen (Haya)" },
 	attributes = {
-		"usable",
+		"usable", "economy",
 	},
 	decision_min = math.huge,
 	decision_max = math.huge,

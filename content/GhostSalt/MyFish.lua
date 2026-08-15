@@ -100,7 +100,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0, max = 0 }, length = { min = 0.50, max = 1.00 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "modify_card" },
+	attributes = { "modify_card", "tarot", "spectral", "consumable_slot", "consumable", },
 	environments = {
 		styx = 10,
 		swamp = 5,
@@ -205,7 +205,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.40, max = 0.60 }, length = { min = 0.20, max = 0.50 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "generation" },
+	attributes = { "generation", "planet", "consumable", "on_sell", },
 	environments = {
 		wormhole = 10,
 		soup = 5
@@ -257,7 +257,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 1.30, max = 4.00 }, length = { min = 0.20, max = 0.45 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "generation" },
+	attributes = { "generation", "consumable", },
 	environments = {
 		city_river = 10,
 		aquifer = 4,
@@ -737,7 +737,7 @@ FishAndChips.Fish {
 	weight = fac_ghostsalt_common_weight,
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "fac_fish_slot", },
 	environments = {
 		styx = 10,
 		city_river = 8,
@@ -768,7 +768,7 @@ FishAndChips.Fish {
 	weight = fac_ghostsalt_common_weight,
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "modify_card", "suit", "clubs" },
+	attributes = { "modify_card", "suit", "clubs", "position", },
 	environments = {
 		calm_pond = 10,
 		garden = 10,
@@ -827,7 +827,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0, max = 0 }, length = { min = 0.20, max = 0.45 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "face", },
 	environments = {
 		styx = 10,
 		wormhole = 5
@@ -869,7 +869,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 1450, max = 1550 }, length = { min = 5.00, max = 6.00 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "xmult" },
+	attributes = { "xmult", "rarity", "joker", },
 	environments = {
 		pier = 1,
 		city_river = 1,
@@ -902,7 +902,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 1.00, max = 2.00 }, length = { min = 0.50, max = 0.60 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "economy" },
+	attributes = { "economy", "reroll", "shop", },
 	environments = {
 		garden = 10,
 		calm_pond = 3,
@@ -933,7 +933,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.10, max = 0.20 }, length = { min = 3.00, max = 4.00 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "economy", "usable" },
+	attributes = { "economy", "usable", "lose_economy", },
 	environments = {
 		city_river = 10,
 		volcano = 2,
@@ -971,7 +971,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.02, max = 0.02 }, length = { min = 0.1, max = 0.1 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "modify_card", "usable" },
+	attributes = { "modify_card", "usable", "rank", },
 	environments = {
 		chocolate_river = 10
 	},
@@ -1075,7 +1075,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.80, max = 1.20 }, length = { min = 0.40, max = 0.60 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "economy", "usable" },
+	attributes = { "economy", "usable", "rank", "suit", "spades", },
 	environments = {
 		volcano = 10,
 		garden = 8,
@@ -1162,7 +1162,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 30.00, max = 40.00 }, length = { min = 0.80, max = 1.20 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "passive" },
+	attributes = { "passive", "skip", },
 	environments = {
 		pier = 10,
 		city_river = 10,
@@ -1387,7 +1387,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0, max = 0 }, length = { min = 0.01, max = 0.05 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "generation" },
+	attributes = { "discard", "economy", },
 	environments = {
 		wormhole = 10
 	},
@@ -1514,7 +1514,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.50, max = 0.70 }, length = { min = 0.40, max = 0.60 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "modify_card", "destroy_card" },
+	attributes = { "modify_card", "destroy_card", "seals", "enhancements", },
 	environments = {
 		chocolate_river = 10,
 		soup = 10,

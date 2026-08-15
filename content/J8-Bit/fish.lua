@@ -179,7 +179,7 @@ FishAndChips.Fish {
     },
     attributes = {
         "passive",
-        "reset",
+        "hands",
         "mod_chance"
     },
     loc_vars = function(self, info_queue, card)
@@ -337,6 +337,8 @@ FishAndChips.Fish {
     },
     attributes = {
         "generation",
+        "consumable",
+        "planet",
         "space"
     },
     loc_vars = function(self, info_queue, card)
@@ -624,6 +626,8 @@ FishAndChips.Fish {
     attributes = {
         "passive",
         "generation",
+        "booster",
+        "shop",
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -1049,6 +1053,7 @@ FishAndChips.Fish {
     end
 }
 
+-- TODO: Dynatext appears in top left (mf)
 FishAndChips.Fish {
     key = "J8-Bit_poppup",
     badge_key = "k_J8-Bit_fishbadge_darkner",
@@ -1170,6 +1175,7 @@ FishAndChips.Fish {
     attributes = {
         "usable",
         "generation",
+        "consumable",
         "spectral"
     },
     draw = function(self, card, layer)
@@ -1497,7 +1503,8 @@ FishAndChips.Fish {
         "rank",
         "suit",
         "queen",
-        "boss_blind",
+        -- "boss_blind",
+        "debuff",
         "modify_card"
     },
     loc_vars = function(self, info_queue, card)
@@ -1583,7 +1590,8 @@ FishAndChips.Fish {
         "usable",
         "destroy_card",
         "generation",
-        "tag"
+        "tag",
+        "editions",
     },
     loc_vars = function(self, info_queue, card)
         for i, edition in ipairs(G.P_CENTER_POOLS.Edition) do
@@ -1807,6 +1815,7 @@ FishAndChips.Fish {
     attributes = {
         "retrigger",
         "hand_type",
+        "consumable",
         "planet",
         "space"
     },

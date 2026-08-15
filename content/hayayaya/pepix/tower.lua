@@ -14,7 +14,7 @@ FishAndChips.Fish({
 	},
 	ppu_coder = { "Ellen (Haya)" },
 	ppu_artist = { "Pepix" },
-	attributes = {},
+	attributes = { "xmult", "suit", },
 	atlas = "hayayaya_babel",
 	pos = { x = 0, y = 0 },
 	stats = {
