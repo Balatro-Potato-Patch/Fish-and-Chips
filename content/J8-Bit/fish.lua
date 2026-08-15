@@ -1090,43 +1090,44 @@ FishAndChips.Fish {
         "economy",
     },
     loc_vars = function(self, info_queue, card)
-        local poppup_sprite = AnimatedSprite(0.0, 0.0, 1.0, 1.0 * 112 / 88, G.ANIMATION_ATLAS['fac_j8bit_poppup'])
         return {
             vars = {
                 card.ability.extra.fish_cocaine,
                 card.ability.extra.treasure_reward,
                 elements = {
-                    poppup_sprite
+                    fac_j8bit_poppup_sprite
                 }
             }
         }
     end,
     flavour_vars = function(self, info_queue, card)
-        local possible_popups = {}
-        table.insert(possible_popups, SMODS.create_sprite(0, 0, 1.5, 1.5 * 332 / 460, "fac_j8bit_trustmeimadolphin"))
-        local popup_quotes = {}
-        for i = 1, 6 do
-            table.insert(popup_quotes, localize("k_J8-Bit_poppup_quote_" .. tostring(i)))
-        end
-        table.insert(possible_popups, {
-            n = G.UIT.O,
-            config = {
-                object = DynaText({
-                    string = popup_quotes,
-                    colours = { G.C.JOKER_GREY },
-                    pop_in_rate = 9999999,
-                    silent = true,
-                    random_element = true,
-                    pop_delay = 0.2011,
-                    scale = 0.25,
-                    min_cycle_time = 0
-                })
+        local possible_popups = {fac_j8bit_trustmeimadolphin_sprite, "dyna"}
+        local elem = possible_popups[math.random(#possible_popups)]
+        if elem == "dyna" then 
+            local popup_quotes = {}
+            for i = 1, 6 do
+                table.insert(popup_quotes, localize("k_J8-Bit_poppup_quote_" .. tostring(i)))
+            end
+            elem = {
+                n = G.UIT.O,
+                config = {
+                    object = DynaText({
+                        string = popup_quotes,
+                        colours = { G.C.JOKER_GREY },
+                        pop_in_rate = 9999999,
+                        silent = true,
+                        random_element = true,
+                        pop_delay = 0.2011,
+                        scale = 0.25,
+                        min_cycle_time = 0
+                    })
+                }
             }
-        })
+        end
         return {
             vars = {
                 elements = {
-                    possible_popups[math.random(#possible_popups)],
+                    elem,
                 }
             }
         }

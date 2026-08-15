@@ -19,6 +19,10 @@ SMODS.Atlas({
     path = "J8-Bit/trustmeimadolphin.png",
     px = 460,
     py = 332,
+    inject = function(...)
+        SMODS.Atlas.inject(...)
+        fac_j8bit_trustmeimadolphin_sprite = SMODS.create_sprite(0, 0, 1.5, 1.5 * 332 / 460, "fac_j8bit_trustmeimadolphin")
+    end
 })
 
 SMODS.Atlas({
@@ -28,7 +32,11 @@ SMODS.Atlas({
     py = 112,
     atlas_table = 'ANIMATION_ATLAS',
     fps = 8,
-    frames = 6
+    frames = 6,
+    inject = function(...)
+        SMODS.Atlas.inject(...)
+        fac_j8bit_poppup_sprite = SMODS.create_sprite(0.0, 0.0, 1.0, 1.0 * 112 / 88, "fac_j8bit_poppup")
+    end
 })
 
 -- ## COLORS ##
