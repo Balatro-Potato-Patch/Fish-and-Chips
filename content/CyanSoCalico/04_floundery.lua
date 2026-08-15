@@ -27,7 +27,7 @@ function alert_no_space(card, area)
 		for k, v in pairs(G.fac_fish_area.cards) do
 			if v.config.center.key == "fish_fac_csc_floundery" and v.ability.immutable.extra_fish > 0 then
 				flounderies[#flounderies+1] = v
-			end 
+			end
 		end
 		for k, v in pairs(flounderies) do
 			v:juice_up()
@@ -43,7 +43,7 @@ FishAndChips.Fish {
 	key = "csc_floundery",
 	atlas = "csc_fish",
 	pos = { x = 7, y = 10 },
-	
+
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
 
@@ -130,11 +130,11 @@ FishAndChips.Fish {
 	key = "csc_floundery",
 	atlas = "csc_fish",
 	pos = { x = 7, y = 10 },
-	
+
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
 
-	attributes = { "chips" },
+	attributes = { "chips", "deltarune", "utdr", "joker", },
 	config = {
 		extra = {
 			chips_mod = 99,

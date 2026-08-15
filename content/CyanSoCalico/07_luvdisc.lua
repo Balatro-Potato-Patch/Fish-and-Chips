@@ -2,11 +2,11 @@ FishAndChips.Fish {
 	key = "csc_luvdisc",
 	atlas = "csc_fish",
 	pos = { x = 7, y = 1 },
-	
+
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
 
-	attributes = { "rank", "generation" },
+	attributes = { "face", "hand_type", "generation", "consumable", "tarot", },
 	config = {
 		extra = {
 			hand = "Pair",

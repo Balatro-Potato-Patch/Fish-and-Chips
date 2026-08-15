@@ -2,11 +2,11 @@ FishAndChips.Fish {
 	key = "csc_sardinium",
 	atlas = "csc_fish",
 	pos = { x = 7, y = 2 },
-	
+
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
 
-	attributes = { "hand_level", "usable" },
+	attributes = { "hand_level", "usable", "hand_type", },
 
 	stats = {
 		weight = {
@@ -21,10 +21,10 @@ FishAndChips.Fish {
 
     weight = 8,
 	environments = {
-		styx = 8,   
+		styx = 8,
 		wormhole = 1
 	},
-	
+
 	eternal_compat = false,
 	treasure = true,
 	requires_hand = true,

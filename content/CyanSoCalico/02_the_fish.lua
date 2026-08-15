@@ -12,11 +12,11 @@ FishAndChips.Fish {
 	key = "csc_the_fish",
 	atlas = "csc_fish",
 	pos = { x = 6, y = 15},
-	
+
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
 
-	attributes = { "passive", "usable", "boss_blind" },
+	attributes = { "usable", "boss_blind" },
 	config = {
 		extra = {
 			blind = "bl_fish"
@@ -41,7 +41,7 @@ FishAndChips.Fish {
 	},
 
 	blueprint_compat = false,
-	eternal_compat = false, -- ??? it's both a passive and usable Fish, not sure which to put here
+	eternal_compat = false,
 --	treasure = true,
 
 	loc_vars = function(self, info_queue, card)

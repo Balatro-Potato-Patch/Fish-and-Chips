@@ -2,11 +2,11 @@ FishAndChips.Fish {
 	key = "csc_basculegion",
 	atlas = "csc_fish",
 	pos = { x = 0, y = 12 },
-	
+
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
 
-	attributes = { "chips" },
+	attributes = { "chips", "scaling", },
 	config = {
 		extra = {
 			chips_mod = 50,
@@ -55,7 +55,7 @@ FishAndChips.Fish {
             }
         end
         ]]
-        if 
+        if
     --        (context.fac_use_fish and not context.kept_on_use)
     --    or
             (context.joker_type_destroyed and context.card and context.card.ability and context.card.ability.set == "fac_Fish")

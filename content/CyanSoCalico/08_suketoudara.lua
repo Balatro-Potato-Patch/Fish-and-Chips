@@ -2,11 +2,11 @@ FishAndChips.Fish {
 	key = "csc_suketoudara",
 	atlas = "csc_fish",
 	pos = { x = 5, y = 7 },
-	
+
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
 
-	attributes = { "usable", "suit", "suits", "destroy_card" },
+	attributes = { "usable", "suit", "destroy_card" },
 	config = {
 		extra = {
 			destroy = 4

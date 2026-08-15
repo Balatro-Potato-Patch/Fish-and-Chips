@@ -1,17 +1,17 @@
 SMODS.Atlas({
-	key = "Kittyfire", 
+	key = "Kittyfire",
 	path = "CCitty/Kittyfire.png",
 	px = 142,
 	py = 95,
 })
 SMODS.Atlas({
-	key = "We_fishing_it", 
+	key = "We_fishing_it",
 	path = "CCitty/We_fishing_it.png",
 	px = 128,
 	py = 64,
 })
 SMODS.Atlas({
-	key = "mybeautifulandwonderfulfish", 
+	key = "mybeautifulandwonderfulfish",
 	path = "CCitty/mybeautifulandwonderfulfish.png",
 	px = 3024,
 	py = 4032,
@@ -42,7 +42,7 @@ PotatoPatchUtils.Developer({
 })
 
 SMODS.Atlas({
-	key = "CCittyfish", 
+	key = "CCittyfish",
 	path = "CCitty/CCittyfish.png",
 	px = 71,
 	py = 95,
@@ -56,7 +56,7 @@ FishAndChips.Fish { --perkoio
 	weight = 1,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { 'generation','copying'},
+	attributes = { 'generation','joker',},
 	config = {
 		extra = {
 			rounds = 4,
@@ -75,7 +75,7 @@ FishAndChips.Fish { --perkoio
 		return { vars = { card.ability.extra.rounds,card.ability.extra.remaining } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval and not context.blueprint then 
+		if context.end_of_round and context.main_eval and not context.blueprint then
             card.ability.extra.remaining = card.ability.extra.remaining - 1
             if card.ability.extra.remaining <= 0 then
                 if #G.jokers.cards > 0 then
@@ -100,7 +100,7 @@ FishAndChips.Fish { --yoray
 	weight = 1,
 	ppu_coder = {"CampfireCollective"},
 	ppu_artist = {"DottyKitty"},
-	attributes = {'xmult'},
+	attributes = {'xmult', "discard", "modify_card", "perma_bonus",},
 	config = {
 		extra = {
             Xmult = .23
@@ -129,14 +129,14 @@ FishAndChips.Fish { --yoray
 	end,
 }
 
-FishAndChips.Fish { --canioctopus 
+FishAndChips.Fish { --canioctopus
 	key = "canioctopus",
 	atlas = "CCittyfish",
 	pos = { x = 0, y = 1 },
 	weight = 1,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { 'economy','destroy_card'},
+	attributes = { 'destroy_card',"generation",},
 	config = {
 		extra = {
             bait = 1
@@ -256,7 +256,7 @@ FishAndChips.Fish { --troutulet
 	weight = 1,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { 'economy'},
+	attributes = { 'economy', "rank", "king", "queen", },
 	config = {
 		extra = {
             sand = 1,
@@ -299,7 +299,7 @@ FishAndChips.Fish { --chicod
 	weight = 1,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { 'boss_blind'},
+	attributes = { "xblindsize", "on_sell",},
 	config = {
 		extra = {
             reduce = 0.75
@@ -329,7 +329,7 @@ FishAndChips.Fish { --chicod
 function Card:CCitty_dialogue_say_stuff(n, sound, not_first, pitch)
     self.talking = true
     local pitch = pitch or 1
-    if not not_first then 
+    if not not_first then
         G.E_MANAGER:add_event(Event({trigger = "after", delay = 0.1, func = function()
             if self.children.speech_bubble then self.children.speech_bubble.states.visible = true end
             self:CCitty_dialogue_say_stuff(n, sound, true, pitch)
@@ -360,7 +360,7 @@ end
 function Card:CCitty_add_dialogue(text_key, sound, align, yap_amount, baba_pitch)
     if self.children.speech_bubble then self.children.speech_bubble:remove() end
     self.config.speech_bubble_align = {align=align or 'bm', offset = {x=-1,y=-4},parent = self}
-    self.children.speech_bubble = 
+    self.children.speech_bubble =
     UIBox{
         definition = G.UIDEF.speech_bubble(text_key, {quip = true}),
         config = self.config.speech_bubble_align
@@ -388,7 +388,7 @@ FishAndChips.Fish { --Doctor Sharktred
 	weight = 20,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { },
+	attributes = { "nothing" },
 	config = {
 		extra = {
 		}
@@ -458,7 +458,7 @@ FishAndChips.Fish { --Doctor Sharktred
 					card:CCitty_add_dialogue('CCitty_ThatsYikes',{2,'fac_CCitty_ThatsYikes'})
 					card:CCitty_remove_dialogue(5)
 				end
-				
+
 
 			elseif context.money_altered then																	--money changes
 				if context.amount <= -11 then																		--big loss
@@ -476,13 +476,13 @@ FishAndChips.Fish { --Doctor Sharktred
 				elseif G.GAME.blind.boss and pseudorandom('doc_boss') < 1 / 3 then
 					card:CCitty_add_dialogue('CCitty_StinkyBoss',{3,'fac_CCitty_StinkyBoss'})
 					card:CCitty_remove_dialogue(5)
-				else 
+				else
 					local outofcontext = pseudorandom_element({'ForbiddenYaoi','Ball','Buttons','Cooking','LaughPanic','PlayThose','RIPRoffle','ShuffleSigh','Straight','uhhhh','WorkedOut','Worm','YourNew'},pseudoseed('doc_tips'))
 					local vol = ((outofcontext == 'Straight' or outofcontext == 'Worm') and 1) or 3
 					card:CCitty_add_dialogue('CCitty_'..outofcontext,{vol,'fac_CCitty_'..outofcontext})
 					card:CCitty_remove_dialogue(5)
 				end
-				
+
 
 			elseif context.starting_shop or context.reroll_shop then																	--enter shop
 				local shopping = {michel = false,ball = false, swash = false,egg=false,mask=false,blue=false,vamp=false,wee=false,square=false,neg=false}
@@ -620,7 +620,7 @@ function G.UIDEF.card_h_popup(card)
 	if card.ability and card.ability.set == 'fac_Fish' and card.config.center_key == 'fish_fac_seiunsky' and card.area and not (card.area.config.collection or card.area.config.fac_compendium) then
 		local name = SMODS.deepfind(ret, 'main_box_flag', 'i')[1]
         local name_node = name.objtree
-        name_node[#name_node-3][5].nodes[2].config.text = "Undeclared" 
+        name_node[#name_node-3][5].nodes[2].config.text = "Undeclared"
     end
 	return ret
 end
@@ -635,7 +635,7 @@ FishAndChips.Fish { --Seiun Sky seahorse
     impulse_max = .18,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = {'passive','usable'},
+	attributes = {'usable', "reroll", "hands", "prevents_death",},
 	config = {
 		extra = {
             freeroll = 1
@@ -655,7 +655,7 @@ FishAndChips.Fish { --Seiun Sky seahorse
 	end,
 
     use = function(self, card)
-		card.ability.extra.freeroll = card.ability.extra.freeroll - 1 
+		card.ability.extra.freeroll = card.ability.extra.freeroll - 1
         G.TAROT_INTERRUPT = nil
         FishAndChips:stop_ambience()
 		local old_env = G.GAME.fac_fishing_environment
@@ -730,7 +730,7 @@ FishAndChips.Fish { --sweet bro and hella jeff fish
 	weight = 10,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "CampfireCollective" },
-	attributes = {'mult'},
+	attributes = {'mult',"usable",},
 	config = {
 		extra = {
 			lines = {
@@ -744,7 +744,7 @@ FishAndChips.Fish { --sweet bro and hella jeff fish
 				"not all fishs are the same",
 				"NANCHO PARTY",
 				"who were you expecting.... the easter fish>",
-				"WHAT'S IS that fishs even his PROBLEM?", 	
+				"WHAT'S IS that fishs even his PROBLEM?",
 				"dude, open then drawer FIRST!!! THAN punt the fish in.",
 				"everyboby all yall hold up",
 				"100# garganted to be you're new friend..........",
@@ -1009,7 +1009,7 @@ FishAndChips.Fish { --Bluebell Angler
 						v.ability.bluebell_choice = true
 					end
 				end
-				if not any_forced then 
+				if not any_forced then
 					G.hand:unhighlight_all()
 					local forced_card = pseudorandom_element(G.hand.cards, pseudoseed('blue_bell'))
 					forced_card.ability.forced_selection = true
@@ -1032,7 +1032,7 @@ FishAndChips.Fish { --Bluebell Angler
 						v.ability.perma_repetition = (v.ability.perma_repetition or 0) + 1
 					elseif choice < 1 / 15 then --perma money
 						choice = pseudorandom('bluebell')
-						if choice < 1 / 3 then 
+						if choice < 1 / 3 then
 							v.ability.perma_p_dollars = (v.ability.perma_p_dollars or 0) + 1
 						else
 							v.ability.perma_h_dollars = (v.ability.perma_h_dollars or 0) + 1
@@ -1106,7 +1106,7 @@ FishAndChips.Fish { --Solin the Sea Slug
 			if card.ability.extra.chosen >= 17 then
 				card.ability.extra.dollars = 3
 				card.children.center:set_sprite_pos{x = 2, y = 3}
-			else 
+			else
 				card.ability.extra.dollars = 4
 			end
 		end

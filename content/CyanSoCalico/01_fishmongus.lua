@@ -2,11 +2,11 @@ FishAndChips.Fish {
 	key = "csc_fishmongus",
 	atlas = "csc_fish",
 	pos = { x = 8, y = 12 },
-	
+
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
 
-	attributes = { --[[idk which attributes would fit honestly lol]] },
+	attributes = { --[[idk which attributes would fit honestly lol]] "full_deck", "seals", "modify_card", --[[i do (mf)]] },
 	config = {
 		extra = {
 			seal = "Red"

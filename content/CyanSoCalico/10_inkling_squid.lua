@@ -2,11 +2,11 @@ FishAndChips.Fish {
 	key = "csc_inkling_squid",
 	atlas = "csc_fish",
 	pos = { x = 3, y = 15 },
-	
+
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
 
-	attributes = { "mult" },
+	attributes = { "mult", "hand_type", },
 	config = {
 		extra = {
 			mult = 10,

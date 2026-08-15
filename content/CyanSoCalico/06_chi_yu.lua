@@ -2,11 +2,11 @@ FishAndChips.Fish {
 	key = "csc_chi_yu",
 	atlas = "csc_fish",
 	pos = { x = 3, y = 7 },
-	
+
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
 
-	attributes = { "passive" },
+	attributes = { "xblindsize" },
 	config = {
 		extra = {
 			blind_multiplier = 0.75
