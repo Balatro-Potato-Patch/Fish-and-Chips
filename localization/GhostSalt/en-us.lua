@@ -5,7 +5,7 @@ return {
                 name = "Ghostfish",
                 text = {
                     "At the end of the shop, if",
-                    "all consumable slots contain",
+                    "all {C:attention}consumable slots{} contain",
                     "{C:tarot}Tarot{} cards, one of them",
                     "becomes a random {C:spectral}Spectral{} card"
                 },
@@ -89,7 +89,7 @@ return {
             fish_fac_ghostsalt_whitewhale = {
                 name = "White Whale",
                 text = {
-                    "{C:rare}Rare{C:attention} Jokers{} each",
+                    "{C:rare}Rare{} {C:attention}Jokers{} each",
                     "give {X:mult,C:white}X#1#{} Mult",
                 },
                 flavor = {
