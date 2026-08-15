@@ -5,7 +5,7 @@ return {
                     name = "FireIce",
                     text = {
                         {
-                            "{X:attention,C:white}X#1#{} Blind Requirement"
+                            "{X:blind,C:white}X#1#{} Blind Requirement" -- this could probably be swapped for ourple but im used to this one for blindsize - gabby
                         }
                     },
                     flavour = {
@@ -16,8 +16,8 @@ return {
                     name = "Kai",
                     text = {
                         {
-                            "Gains {X:chips,C:white}X#2#{} Chips per {C:blue}Fish{C:attention} caught{} this run",
-                            "{C:inactive}Will only increment if {C:attention}Kai {C:inactive}is present",
+                            "Gains {X:chips,C:white}X#2#{} Chips when a"
+                            "{C:blue}Fish{C:attention} caught{}",
                             "{C:inactive}Currently {X:chips,C:white}X#1#{C:inactive} Chips"
                         }
                     },
