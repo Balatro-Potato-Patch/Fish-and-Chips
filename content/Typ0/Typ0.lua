@@ -266,6 +266,7 @@ FishAndChips.Fish {
         length = {min = 0.5, max = 1}
     },
 	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue+1] = G.P_CENTERS["fish_fac_Gary"]
 		return { vars = { card.ability.extra.total_rounds, card.ability.extra.gary_rounds } }
 	end,
 	calculate = function(self, card, context)

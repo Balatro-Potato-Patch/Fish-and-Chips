@@ -64,7 +64,7 @@ return {
             fish_fac_Magikarp = {
                 name = "Magikarp",
                 text = {
-                    "After 3 rounds, sell this {C:fac_fish}Fish{}",
+                    "After {C:attention}#1#{} rounds, sell this {C:fac_fish}Fish{}",
                     "to evolve it into {C:attention}Gyarados{}",
                     "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#)",
                 },
