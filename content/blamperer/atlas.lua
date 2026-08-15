@@ -11,7 +11,7 @@ FishAndChips.Fish {
         extra = {
             -- BALANCE: Adjust this. I think 10 chips per 5 dollars and possibly 1 bait is reasonable,
             -- but with the right economy and skill this can scale ridiculously fast. Could add a limit per round?
-            chip_gain = 10,
+            chip_gain = 8,
             chips = 0,
             last_catch_environment = ""
         }
@@ -31,6 +31,7 @@ FishAndChips.Fish {
         backroom = 5,
         swamp = 2
     },
+    perishable_compat = false,
     badge_key = "k_fac_blamperer_junk",
     calculate = function(self, card, context)
         if context.joker_main then

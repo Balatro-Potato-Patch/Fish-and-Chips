@@ -22,9 +22,8 @@ return {
                     "{C:inactive}(Highest streak: {C:gold}#2#{C:inactive} in a row)"
                 },
                 flavor = {
-                    "This Fish only rewards those",
-                    "who can perform with",
-                    "neither err or hesitation.",
+                    "This Fish only rewards those who can",
+                    "perform with neither err or hesitation.",
                     "Go for a Perfish!"
                 }
             },
@@ -56,8 +55,9 @@ return {
                 name = "Washed-out Voucher",
                 text = {
                     "Use this {C:fac_fish}Fish{} to add a",
-                    "{C:voucher}Voucher{} to the shop",
-                    "{C:inactive}(Defeat {C:attention}Boss Blind {C:inactive}to restock)"
+                    "{C:attention}Voucher{} to the shop",
+                    "{C:inactive}(Defeat {C:attention}Boss Blind {C:inactive}to restock)",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Maybe you can still exchange it",
@@ -117,7 +117,8 @@ return {
                     "Convert up to {C:attention}#1#{} selected cards",
                     "into a {C:fac_suits}suit{} that {C:attention}isn't{} selected,",
                     "{C:green}#2# in #3#{} chance each",
-                    "card becomes {C:attention}Wild"
+                    "card becomes {C:attention}Wild",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Normal squids use their ink",

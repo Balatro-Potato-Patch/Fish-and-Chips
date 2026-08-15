@@ -25,6 +25,7 @@ FishAndChips.Fish {
     environments = {
         soup = 1
     },
+    eternal_compat = false,
     badge_key = "k_fac_maybe_fish",
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
@@ -35,7 +36,7 @@ FishAndChips.Fish {
                 operation = '-',
                 no_message = true
             })
-            if card.ability.extra.cards_left <= 0 then
+            if card.ability.extra.cards_left <= 0 and not context.blueprint then
                 SMODS.destroy_cards(card, { pinch_anim = true })
             end
 
