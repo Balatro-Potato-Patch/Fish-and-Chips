@@ -114,14 +114,14 @@ return {
             fish_fac_r_e_flowerhorn = {
                 name = 'Infectious Flowerhorn',
                 text = {
-                    'When used, {C:red}destroy{} all {C:fac_fish}Fish{} that',
-                    'weigh less than this Fish and',
-                    '{C:attention}create copies{} of {C:fac_fish}Fish{} that weigh more',
+                    '{C:red}Destroy{} all owned {C:fac_fish}Fish{} lighter',
+                    'than this one and add a',
+                    '{C:attention}new copy{} of each heavier one',
                     '{ppu_bubble:usable}'
                 },
                 flavour = {
                     "Be careful or you'll",
-                    "catch it's disease, too"
+                    "catch its disease, too"
                 }
             },
             fish_fac_r_e_tempura = {
