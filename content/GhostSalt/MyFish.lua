@@ -1196,7 +1196,6 @@ FishAndChips.Fish {
 			table.sort(G.GAME.fac_bait_shop_items, fac_sort_bait_shop)
 
 			if G.blind_select then
-				G.GAME.facing_blind = true
 				G.blind_prompt_box:get_UIE_by_ID("prompt_dynatext1").config.object.pop_delay = 0
 				G.blind_prompt_box:get_UIE_by_ID("prompt_dynatext1").config.object:pop_out(5)
 				G.blind_prompt_box:get_UIE_by_ID("prompt_dynatext2").config.object.pop_delay = 0
@@ -1208,7 +1207,7 @@ FishAndChips.Fish {
 					func = function()
 						G.fac_skipper_skipping = false
 						G.blind_prompt_box.alignment.offset.y = -10
-						G.blind_select.alignment.offset.y = 40
+						G.blind_select.alignment.offset.y = G.ROOM.T.y + 39
 						G.blind_select.alignment.offset.x = 0
 						return true
 					end
@@ -1219,13 +1218,12 @@ FishAndChips.Fish {
 						G.blind_select:remove()
 						G.blind_prompt_box:remove()
 						G.blind_select = nil
-						delay(0.2)
 						return true
 					end
 				}))
 				G.E_MANAGER:add_event(Event({
 					trigger = "after",
-					delay = 0.5,
+					delay = 0.7,
 					func = function()
 						G.STATE_COMPLETE = false
 						G.GAME.fishing = true
