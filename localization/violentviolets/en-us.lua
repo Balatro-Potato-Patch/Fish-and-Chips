@@ -70,8 +70,7 @@ return {
                     text = {
                         {
                             "On selecting the {C:attention}Boss Blind{},",
-                            "destroys a random {C:fac_fish}Fish{} and",
-                            "gains {X:mult,C:white}X#2#{} Mult",
+                            "destroys a random {C:fac_fish}Fish{} and gains {X:mult,C:white}X#2#{} Mult",
                             "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                         }
                     },
@@ -111,8 +110,9 @@ return {
                     name = "The Leviathan",
                     text = {
                         {
-                            "{C:red}Destroy{} all playing cards on {C:attention}last scored hand{}",
-                            'Gain {C:fac_sand_dollars,f:fac_sand_dollars}+$1{} for each card destroyed'
+                            "{C:red}Destroy{} all scoring cards",
+                            "on {C:attention}final hand{} of round",
+                            "Gain {C:fac_sand_dollars,f:fac_sand_dollars}+$1{} for each card destroyed"
                         }
                     },
                     flavour = {
