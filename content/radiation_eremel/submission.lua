@@ -524,13 +524,14 @@ FishAndChips.Fish({
         end
         if context.fac_end_fishing and not card.ability.extra.active and context.treasure then
             card.ability.extra.current = card.ability.extra.current + 1
-            if card.ability.extra.current == card.ability.extra.reset then
+            if card.ability.extra.current >= card.ability.extra.reset then
                 draw_card(G.fac_fish_area, G.play, nil, nil, nil, card)
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after', delay = 0.7,
                     func = function()
                         card:juice_up()
                         card.children.center:set_sprite_pos({x=3, y=1})
+                        card.ability.extra.current = 0
                         card.ability.extra.active = true
                         return true
                     end
