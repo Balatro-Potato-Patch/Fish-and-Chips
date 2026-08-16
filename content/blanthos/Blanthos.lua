@@ -43,8 +43,7 @@ SMODS.Sound({
 	key = "pirate_music",
 	path = "blanthos/pirate_zone.ogg",
 	select_music_track = function()
-		return (next(SMODS.find_card("fish_fac_gaster_hat"))
-		)
+		return (next(SMODS.find_card("fish_fac_gaster_hat")))
 	end,
 })
 

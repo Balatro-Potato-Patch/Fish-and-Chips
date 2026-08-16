@@ -1,29 +1,30 @@
 SMODS.Sound {
 	key = "sax1",
-	path = 'blanthos/snd_shadowman_sax_1.wav',
+	path = 'blanthos/snd_shadowman_sax_1.ogg',
 	volume = 0.8
 }
 
 
 SMODS.Sound {
 	key = "sax2",
-	path = 'blanthos/snd_shadowman_sax_2.wav',
+	path = 'blanthos/snd_shadowman_sax_2.ogg',
 	volume = 0.8
 }
 
 
 SMODS.Sound {
 	key = "sax3",
-	path = 'blanthos/snd_shadowman_sax_3.wav',
+	path = 'blanthos/snd_shadowman_sax_3.ogg',
 	volume = 0.8
 }
 
-
+--[[
 SMODS.Sound {
 	key = "sax4",
 	path = 'blanthos/snd_shadowman_sax_long.wav',
 	volume = 0.8
 }
+]]--
 
 local function reroll_shadowfish_attributes(card)
 	card.ability.extra.attributes = {}
