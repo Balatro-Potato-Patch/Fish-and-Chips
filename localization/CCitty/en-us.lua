@@ -96,9 +96,9 @@ return {
              fish_fac_chicod = {
                 name = "Chicod",
                 text = {
-                    "When any card is {C:attention}sold",
-                    "during a {C:attention}blind{}, reduce",
-                    "blind requirement by {C:red}X#1#"
+                    "{X:blind,C:white}X#1#{} Blind size",
+                    "when any card is sold",
+                    "during a {C:attention}" -- this change could probably be reverted but i thought it would help with clarity ;w; - gabby
                 },
                 flavor = {
                     "A legendary fish. Fishermen often struggle to catch them",
