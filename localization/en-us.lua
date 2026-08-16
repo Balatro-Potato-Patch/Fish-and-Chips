@@ -786,9 +786,9 @@ return {
                 "{C:attention}1{} Bait every time you fish."
             },
             fac_fishing_2c = {
-                "That is... unless you catch",
-                "the fish {C:gold}PERFECTLY{}! Then you",
-                "save the {C:attention}Bait{} you used."
+                "If ya catch the fish",
+                "{C:gold}PERFECTLY{}, it'll be worth",
+                "{C:attention}more{} when ya sell it."
             },
             fac_fishing_2d = {
                 "You can check out",
