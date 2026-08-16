@@ -72,6 +72,7 @@ FishAndChips.Fish { --perkoio
 	},
     blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue+1] = G.P_CENTERS["e_negative"]
 		return { vars = { card.ability.extra.rounds,card.ability.extra.remaining } }
 	end,
 	calculate = function(self, card, context)
