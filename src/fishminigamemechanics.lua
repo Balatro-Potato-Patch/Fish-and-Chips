@@ -502,7 +502,12 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
                     return true;
                 end
             }), queue)
-            SMODS.calculate_effect({ message = localize('k_saved_ex'), colour = G.C.ATTENTION }, G.fac_bait_area.cards[1])
+                        -- (waffle) remove the bait preservation on perfect catches, instead increase sell value of caught fish by 2 sand dollars 
+            -- SMODS.calculate_effect({ message = localize('k_saved_ex'), colour = G.C.ATTENTION }, G.fac_bait_area.cards[1])
+            FishAndChips.remove_bait_from_inventory(G.GAME.fac_active_bait)
+            added_card.ability.extra_value = added_card.ability.extra_value + 2
+            added_card:set_cost()
+            SMODS.calculate_effect({ message = localize('k_val_up'), colour = FishAndChips.C.SAND_DOLLAR }, added_card)
             delay(G.SETTINGS.GAMESPEED * 2, queue)
         else
             FishAndChips.remove_bait_from_inventory(G.GAME.fac_active_bait)
