@@ -545,10 +545,14 @@ FishAndChips.Fish {
 
     can_use = function() return true end,
     use = function(self, card, area)
-        G.GAME.fac_meta.tsuchi_bonus = G.GAME.fac_meta.tsuchi_bonus + 1
+        G.GAME.fac_meta.tsuchi_bonus = G.GAME.fac_meta.tsuchi_bonus + 1,
+        SMODS.destroy_cards(card, {pinch_anim = true})
         SMODS.calculate_effect( {
             message = "Yum!",
             colour = FishAndChips.C.SAND_DOLLAR
         }, card)
+    end,
+    keep_on_use = function (self, card) -- this is just so it doesn't play the dissolve sound when used, the SMODS.destroy_cards call handles removing the card when used
+        return true
     end
 }
