@@ -34,8 +34,8 @@ return {
                 name = "Blowfish",
                 text = {
                     "{C:attention}Blows{} the fish to the",
-                    "left to the {C:attention}other side",
-                    "of the area, and gives",
+                    "left to the {C:attention}end",
+                    "of the area, and earns",
                     "{C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} for each fish",
                     "passed on the way"
                 },
