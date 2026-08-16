@@ -147,15 +147,14 @@
             local cae = card.ability.extra
             local vars_ = {}
             if cae.storyComplete then
-                vars_[#vars_+1] = localize({type = "variable", key = "proot_sanddoller", vars = {math.floor(cae.finalScore/10)}})
-                if cae.finalScore > 144 then vars_[#vars_+1] = "{C:chips}"..localize({type = "variable", key = "a_chips", vars = {cae.finalScore*2}}) else vars_[#vars_+1] = " " end
-                if cae.finalScore > 184 then vars_[#vars_+1] = "{C:white,X:mult}"..localize({type = "variable", key = "a_xmult", vars = {cae.finalScore/100}}) else vars_[#vars_+1] = " " end
-            else
-                vars_[#vars_+1] = " "
-                vars_[#vars_+1] = localize("proot_noir_desc")
-                vars_[#vars_+1] = " "
+                vars_[#vars_+1] = math.floor(cae.finalScore/10)
+                if cae.finalScore > 144 then vars_[#vars_+1] = cae.finalScore*2 end
+                if cae.finalScore > 184 then vars_[#vars_+1] = cae.finalScore/100 end
             end
-            return({vars = vars_})
+            return({
+                key = self.key .. (cae.storyComplete and '_complete_' .. #vars_ or ''),
+                vars = vars_,
+            })
         end,
 
 
