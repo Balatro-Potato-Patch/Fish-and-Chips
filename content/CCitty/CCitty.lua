@@ -137,7 +137,7 @@ FishAndChips.Fish { --canioctopus
 	weight = 1,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { 'destroy_card', "generation", },
+	attributes = { "generation", },
 	config = {
 		extra = {
 			bait = 1

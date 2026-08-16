@@ -812,7 +812,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { "rank", "two", "xblindsize", "destroy_card", "chance" },
+	attributes = { "rank", "two", "xblindsize", "chance" },
 	config = {
 		extra = { x_blind_size = 0.9, odds = 7 }
 	},
@@ -1209,7 +1209,7 @@ FishAndChips.Fish {
 	weight = 4,
 	ppu_coder = { "notmario" },
 	ppu_artist = { "notmario" },
-	attributes = { "xblindsize", "destroy_card", },
+	attributes = { "xblindsize", },
 	config = {
 		extra = { xblindsize = 0.8 }
 	},

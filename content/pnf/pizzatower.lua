@@ -632,7 +632,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
     ppu_coder = { "FirstTry" },
     ppu_artist = { "FirstTry" },
-    attributes = { "destroy_card", "chance", "score", },
+    attributes = { "chance", "score", },
 	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
 	environments = {
         backroom = 0.1

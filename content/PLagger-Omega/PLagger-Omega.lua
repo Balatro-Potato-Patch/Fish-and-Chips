@@ -563,7 +563,7 @@ FishAndChips.Fish{ --Mystic Remora
   pos = {x=0,y=2},
   weight = 4,
   environments = {pier = 1},
-  attributes = {'lose_economy', "destroy_card"}, --i couldnt think of any fitting attributes from base FAC so i just made this one up, feel free to change -- Sure (mf)
+  attributes = {'lose_economy', "passive"}, --i couldnt think of any fitting attributes from base FAC so i just made this one up, feel free to change -- Sure (mf)
   stats = {
     weight = {min = 0.42, max = 0.87},
     length = {min = 0.35, max = 0.58}

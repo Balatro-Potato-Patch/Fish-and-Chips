@@ -857,7 +857,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "xmult", "chance", "food", "destroy_card", },
+	attributes = { "xmult", "chance", "food", },
 	config = {
 		extra = {
 			odds = 67,

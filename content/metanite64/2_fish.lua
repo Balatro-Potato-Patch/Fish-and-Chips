@@ -76,7 +76,7 @@ FishAndChips.Fish {
         weight = { min = 0.02, max = 1 },
         length = { min = 0.01, max = 0.05 }
     },
-    attributes = { "xmult", "chance", "destroy_card", },
+    attributes = { "xmult", "chance", },
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
 

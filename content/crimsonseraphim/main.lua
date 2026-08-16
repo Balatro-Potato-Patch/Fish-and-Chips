@@ -486,7 +486,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "passive", "editions", "usable", "destroy_card", "fac_perfect_catch", },
+	attributes = { "passive", "editions", "usable", "fac_perfect_catch", },
 	config = {
 		extra = {
             charged = nil

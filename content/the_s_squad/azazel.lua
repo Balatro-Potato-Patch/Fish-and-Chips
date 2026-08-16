@@ -36,7 +36,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 200, max = 250}, length = {min = 2, max = 3}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
-	attributes = { "passive", "hands", "destroy_card", },
+	attributes = { "passive", "hands", "prevents_death", },
 	config = { extra = { blu = false } },
 	blueprint_compat = false,
 	environments = {
@@ -78,7 +78,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 2000, max = 2500}, length = {min = 7, max = 10}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
-	attributes = { "chips", "xmult", "generation", "on_sell", "destroy_card", "chance", },
+	attributes = { "chips", "xmult", "generation", "on_sell", "chance", },
 	config = { extra = { chips = 100, xmult = 2.5, count = 4, odds = 40 } },
 	environments = {
 		pier = 10,
@@ -129,7 +129,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 800, max = 1000}, length = {min = 5, max = 7}},
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "azazel" },
-	attributes = { "xchips", "chance", "destroy_card" }, -- not a bait attribute but oh well -- I have good news for you (mf)
+	attributes = { "xchips", "chance", }, -- not a bait attribute but oh well -- I have good news for you (mf) -- I actually have bad news for you (removed destroy_card because it was inaccurate) (mf) -- Actually aren't we gonna make the Chips bait Chips instead of +Chips (mf)
 	config = { extra = { odds = 20, xchips = 1.5 } },
 	environments = {
 		pier = 10,
