@@ -170,7 +170,7 @@ SMODS.Sound {
 }
 SMODS.Sound {
 	key = 'laneda_chips',
-	path = 'lanedarushpy/chips.mp3',
+	path = 'lanedarushpy/chips.ogg',
 	volume = 1
 }
 SMODS.Sound {
