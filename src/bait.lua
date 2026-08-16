@@ -215,7 +215,8 @@ FishAndChips.Bait{
 	pixel_size = {w = 63, h = 91},
 	cost = 1,
 	in_pool = function(self, args)
-		return not args.source == 'fac_bait_shop'
+		args = args or {}
+		return args.source ~= 'fac_bait_shop'
 	end
 }
 FishAndChips.Bait{
