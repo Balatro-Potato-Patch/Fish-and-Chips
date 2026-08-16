@@ -51,7 +51,7 @@ end
 
 SMODS.Sound({key = "toga_fish", path = "theonegoofali/fish.ogg"})
 SMODS.Sound({key = "toga_fishreverse", path = "theonegoofali/fishreverse.ogg"})
-SMODS.Sound({key = "toga_spidersolitairehint", path = "theonegoofali/126.wav"})
+SMODS.Sound({key = "toga_spidersolitairehint", path = "theonegoofali/126.ogg"})
 SMODS.Sound({key = "toga_sonicspecialtext", path = "theonegoofali/s3k68.ogg"})
 SMODS.Sound({
 	key = "music_toga_shhh",

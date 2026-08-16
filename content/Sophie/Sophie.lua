@@ -12,12 +12,12 @@ local sound = nil
 
 SMODS.Sound {
     key = "sophie_egg",
-    path = "sophie/snd_egg.wav"
+    path = "sophie/snd_egg.ogg"
 }
 
 SMODS.Sound {
     key = "sophie_dumbvictory",
-    path = "sophie/snd_won.wav"
+    path = "sophie/snd_won.ogg"
 }
 
 -- I had to ditch your funny OS stuff sorry Sophie
