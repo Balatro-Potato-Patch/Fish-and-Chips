@@ -83,14 +83,15 @@ FishAndChips.Fish {
     config = {
         extra = {
             xmult = 1,
-            xmult_gain = 1
+            xmult_gain = 1,
+            denominator = 9
         }
     },
 
     blueprint_compat = true,
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult } }
+        return { vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult, card.ability.extra.xmult - 1, card.ability.extra.denominator } }
     end,
 
     calculate = function(self, card, context)
@@ -99,7 +100,7 @@ FishAndChips.Fish {
         end
 
         if context.end_of_round and context.main_eval and not context.blueprint then
-            if SMODS.pseudorandom_probability(card, "froggy_wander", card.ability.extra.xmult - 1, 9, "fac_froggy_wander") then
+            if SMODS.pseudorandom_probability(card, "froggy_wander", card.ability.extra.xmult - 1, card.ability.extra.denominator, "fac_froggy_wander") then
                 SMODS.destroy_cards(card, { skip_anim = true })
                 return {
                     message = localize("fac_froggy_croak"),
