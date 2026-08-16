@@ -28,13 +28,13 @@ SMODS.Atlas {
 
 SMODS.Sound {
     key = 'vv_mysterygo',
-    path = 'violentviolets/snd_mysterygo.wav',
+    path = 'violentviolets/snd_mysterygo.ogg',
     volume = 1,
     pitch = 1
 }
 SMODS.Sound {
     key = 'vv_fish',
-    path = 'violentviolets/fish.mp3',
+    path = 'violentviolets/fish.ogg',
     volume = 1,
     pitch = 1
 }
