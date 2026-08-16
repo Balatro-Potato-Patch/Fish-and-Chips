@@ -27,15 +27,15 @@ SMODS.Atlas({
 })
 
 SMODS.Gradient {
-    key = 'happy_gradient',
-    colours = {G.C.FILTER, G.C.GREEN},
-    cycle = 1
+	key = 'happy_gradient',
+	colours = { G.C.FILTER, G.C.GREEN },
+	cycle = 1
 }
 
 SMODS.Gradient {
-    key = 'bored_gradient',
-    colours = {G.C.SECONDARY_SET.Spectral, G.C.SECONDARY_SET.Planet},
-    cycle = 1
+	key = 'bored_gradient',
+	colours = { G.C.SECONDARY_SET.Spectral, G.C.SECONDARY_SET.Planet },
+	cycle = 1
 }
 
 
@@ -44,7 +44,7 @@ SMODS.Sound({
 	path = "blanthos/pirate_zone.ogg",
 	select_music_track = function()
 		return (next(SMODS.find_card("fish_fac_gaster_hat"))
-)
+		)
 	end,
 })
 
@@ -53,7 +53,7 @@ SMODS.Sound({
 	key = "probably_copyright_free_backup_music",
 	path = "blanthos/mus_st_him.ogg",
 	select_music_track = function()
---if you are reading this i forgot to make a config setting
+		--if you are reading this i forgot to make a config setting
 		return false
 	end,
 })
@@ -76,7 +76,7 @@ FishAndChips.Fish {
 			food_happiness = 5
 		},
 		immutable = {
-			hand = "HighCard"
+			hand = "High Card"
 		}
 	},
 	decision_min = 0,
@@ -86,81 +86,96 @@ FishAndChips.Fish {
 		wormhole = 1,
 		soup = 1
 	},
+	blueprint_compat = false, -- If someone can figure out a way to get the blueprint effect to copy the remove_from_deck or otherwise, then this should be true.
+	eternal_compat = false,
+	perishable_compat = false,
 	stats = {
-		weight = {min = 3.6, max = 5.4},
-		length = {min = 0.4, max = 0.46}
+		weight = { min = 3.6, max = 5.4 },
+		length = { min = 0.4, max = 0.46 }
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.happiness, card.ability.extra.boredom, card.ability.extra.food_cost, card.ability.extra.food_happiness, math.floor (card.ability.extra.happiness / 15), localize(card.ability.immutable.hand, "poker_hands") } }
+		return { vars = { card.ability.extra.happiness, card.ability.extra.boredom, card.ability.extra.food_cost, card.ability.extra.food_happiness, math.floor(card.ability.extra.happiness / 15), localize(card.ability.immutable.hand, "poker_hands") } }
 	end,
+	button_key = 'k_fac_blanthos_feed',
 	can_use = function(self, card)
-		return G.GAME.dollars >= card.ability.extra.food_cost
+		return G.GAME.dollars - G.GAME.bankrupt_at >= card.ability.extra.food_cost
 	end,
-    keep_on_use = function()
-        return true
-    end,
+	keep_on_use = function()
+		return true
+	end,
 	use = function(self, card)
-ease_dollars(-card.ability.extra.food_cost)
-            SMODS.scale_card(card, {
-                    ref_value = "happiness",
-                    scalar_value = "food_happiness",
-                    operation = '+',
-					scaling_message = {
-						message = localize("blanth_yum"),
-						colour = G.C.SECONDARY_SET.Planet
-					}
-                })
-                return nil, true
-		end,
-  calculate = function(self, card, context)
-        if context.before then
-            return {
-                message = localize("blanth_placeholder"),
-                colour = G.C.SECONDARY_SET.Planet,
-                func = function()
-                    SMODS.upgrade_poker_hands({
-                        hands = card.ability.immutable.hand,
-                        level_up = math.floor (card.ability.extra.happiness / 15),
-                        from = context.blueprint and context.blueprint_card or card
-                    })
-                end
-            }
-        end
-        if context.after then -- TODO: if this is destroyed during scoring somehow also remove given levels
-            SMODS.upgrade_poker_hands({
-                hands = card.ability.immutable.hand,
-                level_up = math.ceil (-card.ability.extra.happiness / 15),
-                from = context.blueprint and context.blueprint_card or card
-            })
-            return nil, true
-        end
+		ease_dollars(-card.ability.extra.food_cost)
+		SMODS.scale_card(card, {
+			ref_value = "happiness",
+			scalar_value = "food_happiness",
+			operation = '+',
+			scaling_message = {
+				message = localize("blanth_yum"),
+				colour = G.C.SECONDARY_SET.Planet
+			}
+		})
+		return nil, true
+	end,
+	calculate = function(self, card, context)
+		if context.before and not context.blueprint then
+			card.ability.immutable.has_upgraded = true
+			return {
+				message = localize("k_upgrade_ex"),
+				colour = G.C.SECONDARY_SET.Planet,
+				func = function()
+					SMODS.upgrade_poker_hands({
+						hands = card.ability.immutable.hand,
+						level_up = math.floor(card.ability.extra.happiness / 15),
+						from = context.blueprint and context.blueprint_card or card
+					})
+				end
+			}
+		end
+		if context.after and not context.blueprint then
+			card.ability.immutable.has_upgraded = nil
+			SMODS.upgrade_poker_hands({
+				hands = card.ability.immutable.hand,
+				level_up = math.ceil(-card.ability.extra.happiness / 15),
+				from = context.blueprint and context.blueprint_card or card
+			})
+			return nil, true
+		end
 
-        if context.end_of_round and context.main_eval then
-         if card.ability.extra.happiness - card.ability.extra.boredom <= 0 then
-                SMODS.destroy_cards(card, {pinch_anim = true})
-            else
-                SMODS.scale_card(card, {
-                    ref_value = "happiness",
-                    scalar_value = "boredom",
-                    operation = '-',
-                    scaling_message = {
+		if context.end_of_round and context.main_eval and not context.blueprint then
+			if card.ability.extra.happiness - card.ability.extra.boredom <= 0 then
+				SMODS.destroy_cards(card, { pinch_anim = true })
+			else
+				SMODS.scale_card(card, {
+					ref_value = "happiness",
+					scalar_value = "boredom",
+					operation = '-',
+					scaling_message = {
 						message = localize("blanth_bored"),
 						colour = G.C.SECONDARY_SET.Planet
 					}
-                })
-                return nil, true
+				})
+				return nil, true
+			end
+		end
+	end,
+	set_ability = function(self, card, initial, delay_sprites)
+		local _poker_hands = {}
+		for handname, _ in pairs(G.GAME.hands) do
+			if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand then
+				_poker_hands[#_poker_hands + 1] = handname
+			end
+		end
+		card.ability.immutable.hand = pseudorandom_element(_poker_hands, 'fac_gneep_gnarp')
+	end,
+	remove_from_deck = function(self, card, from_debuff)
+		if card.ability.immutable.has_upgraded then
+			SMODS.upgrade_poker_hands({
+				hands = card.ability.immutable.hand,
+				level_up = math.ceil(-card.ability.extra.happiness / 15),
+				from = card
+			})
 		end
 	end
-end,
-    set_ability = function(self, card, initial, delay_sprites)
-        local _poker_hands = {}
-        for handname, _ in pairs(G.GAME.hands) do
-            if SMODS.is_poker_hand_visible(handname) and handname ~= card.ability.extra.poker_hand then
-                _poker_hands[#_poker_hands + 1] = handname
-            end
-        end
-        card.ability.immutable.hand = pseudorandom_element(_poker_hands, 'fac_gneep_gnarp')
-    end
 }
 
 FishAndChips.Fish {
@@ -186,28 +201,29 @@ FishAndChips.Fish {
 		styx = 1,
 		aquifer = 0.5
 	},
+	eternal_compat = false,
+	perishable_compat = false,
 	stats = {
-		weight = {min = 0, max = 0},
-		length = {min = 3, max = 8}
+		weight = { min = 0, max = 0 },
+		length = { min = 3, max = 8 }
 	},
 	loc_vars = function(self, info_queue, card)
 		return {
-			vars = { card.ability.extra.mult, card.ability.extra.scaling, ppu_bubbles = {card.ability.immutable.active and "active" or "inactive"} },
-
-}
+			vars = { card.ability.extra.mult, card.ability.extra.scaling, ppu_bubbles = { card.ability.immutable.active and "active" or "inactive" } },
+		}
 	end,
 	calculate = function(self, card, context)
-        if context.end_of_round then
-            card.ability.immutable.active = true
-        end
-if (context.joker_type_destroyed and context.card == card and card.ability.immutable.active == true) then
-            card.ability.immutable.active = false
-                SMODS.scale_card(card, {
-                    ref_value = "mult",
-                    scalar_value = "scaling",
-                    operation = '+'
-                })
-                return {no_destroy = true}, true
+		if context.end_of_round and not context.blueprint then
+			card.ability.immutable.active = true
+		end
+		if context.joker_type_destroyed and context.card == card and card.ability.immutable.active and not context.blueprint then
+			card.ability.immutable.active = false
+			SMODS.scale_card(card, {
+				ref_value = "mult",
+				scalar_value = "scaling",
+				operation = '+'
+			})
+			return { no_destroy = true }, true
 		end
 		if context.joker_main then return { mult = card.ability.extra.mult } end
 	end,
@@ -224,7 +240,9 @@ FishAndChips.Fish {
 	attributes = { "economy", "chance", "on_sell", },
 	config = {
 		extra = {
-			odds = 4
+			odds = 4,
+			min_money = 1,
+			max_money = 4
 		}
 	},
 	decision_min = 3,
@@ -235,20 +253,18 @@ FishAndChips.Fish {
 		garden = 0.1
 	},
 	stats = {
-		weight = {min = 0.5, max = 0.5},
-		length = {min = 0.62, max = 0.62}
+		weight = { min = 0.5, max = 0.5 },
+		length = { min = 0.62, max = 0.62 }
 	},
 	loc_vars = function(self, info_queue, card)
-        local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'fac_gaster_fish')
-        return { vars = { numerator, denominator } }
+		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'fac_gaster_fish')
+		return { vars = { numerator, denominator, card.ability.extra.min_money, card.ability.extra.max_money } }
 	end,
 	calculate = function(self, card, context)
-if context.selling_card and context.card.ability.set == 'Joker' and SMODS.pseudorandom_probability(card, 'fac_gaster_hat', 1, card.ability.extra.odds) then
-return {
-sand_dollars = math.random(5)
-}
-end
-end,
+		if context.selling_card and context.card.ability.set == 'Joker' and SMODS.pseudorandom_probability(card, 'fac_gaster_hat', 1, card.ability.extra.odds) then
+			return { sand_dollars = pseudorandom('fac_gaster_hat_money', card.ability.extra.min_money, card.ability.extra.max_money) }
+		end
+	end,
 }
 
 --#endregion
