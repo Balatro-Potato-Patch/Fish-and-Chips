@@ -227,9 +227,11 @@ return {
             rod_fac_wooden = {
                 name = "Wooden Rod",
                 text = {
-                    "An aspiring fisherman's",
+                    {"An aspiring fisherman's",
                     "first fishing rod.",
-                    "What wonders will you catch?"
+                    "What wonders will you catch?"},
+                    {"Start run with {C:attention}+1",
+                    "random {C:attention}Bait"}
                 }
             },
             rod_fac_fiberglass = {
