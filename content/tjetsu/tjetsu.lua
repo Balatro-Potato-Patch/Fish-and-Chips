@@ -190,7 +190,7 @@ FishAndChips.Fish { --Sans
 	weight = 15,
 	ppu_coder = { "Tjetsu" },
 	ppu_artist = { "Tjetsu" },
-	attributes = { "chips", "scaling", "rank", "ace", "reset", },
+	attributes = { "chips", "scaling", "rank", "ace", "reset", "undertale", "deltarune", "utdr", },
 	environments = {
 		styx = 13,
 		wormhole = 5

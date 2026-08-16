@@ -236,7 +236,7 @@ FishAndChips.Fish {
 	weight = 6,
 	ppu_coder = { "Blanthos" },
 	ppu_artist = { "Blanthos" },
-	attributes = { "economy", "chance", "on_sell", },
+	attributes = { "economy", "chance", "on_sell", "deltarune", "utdr", },
 	config = {
 		extra = {
 			odds = 4,

@@ -11,6 +11,8 @@ FishAndChips.Fish({
 		"sell_value",
 		"generation",
 		"fac_perfect_catch",
+		"deltarune",
+		"utdr",
 	},
 	atlas = "hayayaya_fih",
 	pos = { x = 2, y = 1 },

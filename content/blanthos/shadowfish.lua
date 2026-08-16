@@ -54,7 +54,7 @@ local function reroll_shadowfish_attributes(card)
 			card.ability.extra.attributes[i].hand = hand
 		end
 	end
-	card.attributes = { card.ability.extra.attributes[1].key, card.ability.extra.attributes[2].key, card.ability.extra.attributes[3].key }
+	card.attributes = { card.ability.extra.attributes[1].key, card.ability.extra.attributes[2].key, card.ability.extra.attributes[3].key, "deltarune", "utdr", }
 end
 
 --#region Fish

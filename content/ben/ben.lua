@@ -32,7 +32,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "Ben" },
 	ppu_artist = { "Ben" },
-	attributes = { "economy" },
+	attributes = { "economy", "passive", },
 	config = {
 	},
 	environments = {
@@ -54,7 +54,7 @@ FishAndChips.Fish {
 	end,
 	stats = {weight = {min = 2, max = 2}, length = {min = 0.3, max = 0.3}},
 	calculate = function(self, card, context)
-		if context.modify_final_cashout then 
+		if context.modify_final_cashout then
 			local interest = math.min(math.floor(G.GAME.fac_sand_dollars / 5), G.GAME.interest_cap / 5)
 			if interest <= 0 then return end
 			local vars = {
@@ -75,7 +75,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "Ben" },
 	ppu_artist = { "Ben" },
-	attributes = { "copying" },
+	attributes = { "copying", "joker", "position", },
 	config = {
 		extra = {
 			slot = 1
@@ -98,8 +98,8 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
         if card.area and card.area == G.fac_fish_area then
             local joker
-            if card.ability.extra.slot > #G.jokers.cards then 
-				joker = false 
+            if card.ability.extra.slot > #G.jokers.cards then
+				joker = false
 			else
 				joker = G.jokers.cards[card.ability.extra.slot]
 			end
@@ -125,7 +125,7 @@ FishAndChips.Fish {
     end,
 	stats = {weight = {min = 0.0008, max = 0.002}, length = {min = 0.05, max = 0.08}},
 	calculate = function(self, card, context)
-		 
+
 		if context.end_of_round and context.main_eval then
 			local old_slot = card.ability.extra.slot
 			repeat
@@ -134,7 +134,7 @@ FishAndChips.Fish {
 			return
 		end
 
-        if card.ability.extra.slot <= #G.jokers.cards then  
+        if card.ability.extra.slot <= #G.jokers.cards then
 			local joker = G.jokers.cards[card.ability.extra.slot]
 
 			local ret = SMODS.blueprint_effect(card, joker, context)
@@ -157,7 +157,7 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			calm_pond = false,
-			city_river = false, 
+			city_river = false,
 			swamp = false,
 			volcano = false,
 			aquifer = false,
@@ -173,7 +173,7 @@ FishAndChips.Fish {
 	},
 	environments = {
 		calm_pond = 10,
-		city_river = 10, 
+		city_river = 10,
 		swamp = 10,
 		--volcano = 10,
 		aquifer = 10,
@@ -211,7 +211,7 @@ FishAndChips.Fish {
 				card.ability.extra.visited = card.ability.extra.visited + 1
 			end
 		end
-		if context.modify_final_cashout then 
+		if context.modify_final_cashout then
 			local vars = {
 				name = "joker_yapping",
 				sand_dollars = card.ability.extra.visited,
@@ -230,9 +230,8 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "Ben" },
 	ppu_artist = { "Ben" },
-	attributes = { 
-		"scaling",
-		"xmult" 
+	attributes = {
+		"xmult"
 	},
 	config = {
 		extra = {
@@ -296,7 +295,7 @@ FishAndChips.Fish {
 	attributes = { "generation" },
 	config = {
 		extra = {
-			
+
 		}
 	},
 	environments = {
@@ -340,7 +339,7 @@ FishAndChips.Fish {
 	attributes = { "" },
 	config = {
 		extra = {
-			
+
 		}
 	},
 	environments = {
@@ -362,7 +361,7 @@ FishAndChips.Fish {
 	end,
 	stats = {weight = {min = 0.0008, max = 0.002}, length = {min = 0.05, max = 0.08}},
 	calculate = function(self, card, context)
-		
+
 	end,
 }
 --]]

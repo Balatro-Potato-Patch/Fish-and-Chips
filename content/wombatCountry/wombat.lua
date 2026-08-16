@@ -192,7 +192,7 @@ FishAndChips.Fish({
 	pos = { x = 1, y = 2 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "xmult", "destroy_card" },
+	attributes = { "xmult", "destroy_card", "deltarune", "utdr", },
 	environments = {
 		wormhole = 1,
         pier = 0.25,

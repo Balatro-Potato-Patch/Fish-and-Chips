@@ -992,7 +992,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "economy", },
+	attributes = { "economy", "deltarune", "utdr", },
 	environments = {
         wormhole = 5
 	},
@@ -1573,7 +1573,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "useable", "lose_economy", "reroll", "reset", "scaling", },
+	attributes = { "useable", "lose_economy", "reroll", "reset", "scaling", "undertale", "deltarune", "utdr", }, -- It appears in both games, right ? (mf)
 
 	environments = {
         wormhole = 5,
@@ -1685,7 +1685,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "destroy_card", "editions", "modify_card", },
+	attributes = { "destroy_card", "editions", "modify_card", "deltarune", "utdr", },
 
 	environments = {
         wormhole = 5,
