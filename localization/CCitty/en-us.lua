@@ -60,7 +60,7 @@ return {
              fish_fac_yoray = {
                 name = "Yoray Eel",
                 text = {
-                    "each card in {C:attention}last{} discard",
+                    "Each card in {C:attention}final{} discard",
                     "of round gains {C:white,X:red}X#1#{} Mult"
                 },
                 flavor = {
