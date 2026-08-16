@@ -37,6 +37,7 @@ function G.FUNCS.fac_reroll_location (e)
 		if G.GAME.fac_next_environment then G.GAME.fac_next_environment = nil end
 		G.FISHING_STATE = G.FISHING_STATES.MOVING
 		G.FISHING_STATE_COMPLETE = false
+		save_run()
 	end
 end
 
