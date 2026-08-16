@@ -688,7 +688,7 @@ FishAndChips.Fish {
                 return {
                     sand_dollars = current_pos - 2,
                     pre_func = function()
-                        G.E_MANAGER.add_event(Event({
+                        G.E_MANAGER:add_event(Event({
                             func = function(e)
                                 play_sound("fac_laneda_blowfish", 1.0)
                                 local left = G.fac_fish_area.cards[current_pos - 1]
