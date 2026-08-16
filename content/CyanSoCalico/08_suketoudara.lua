@@ -1,7 +1,7 @@
 FishAndChips.Fish {
 	key = "csc_suketoudara",
 	atlas = "csc_fish",
-	pos = { x = 5, y = 7 },
+	pos = { x = 1, y = 2 },
 
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
