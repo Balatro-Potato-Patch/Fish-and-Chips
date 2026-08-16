@@ -42,7 +42,7 @@ FishAndChips.Fish{
         }
     end,
     calculate = function (self, card, context)
-        if context.setting_blind or context.after then
+        if (context.setting_blind or context.after) and not card.getting_sliced then
             return {
                 xblindsize = card.ability.extra.xbs,
                 sound = "fac_minty_slash",
