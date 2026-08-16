@@ -155,7 +155,7 @@ return {
             fish_fac_bluebell_angler = {
                 name = "Bluebell Angler",
                 text = {{
-                    "Forces 1 card to always be selected",
+                    "Forces {C:attention}1{} card to always be selected",
                     "until first hand played each round"
                 },
                 {
