@@ -2093,7 +2093,7 @@ FishAndChips.Fish {
                     local food = SMODS.add_card({ set = 'fac_Fish', type = 'fac_Fish', attributes = {'fac_mf_pearl'}, key_append = "chest", filter = function(pool)
                         local new_pool = {}
 						for k, v in pairs(pool) do
-							if v.key ~= "fish_fac_red_herring" then
+							if v.key ~= "fish_fac_mf_red_herring" then
 								table.insert(new_pool, v)
 							end
 						end
