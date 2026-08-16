@@ -346,6 +346,9 @@ FishAndChips.Fish({
             card.ability.extra.track = 0
         end
     end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.GAME.fac_environment_reroll_cost = G.GAME.fac_environment_reroll_cost + (card.ability.extra.track or 0)
+    end,
 })
 
 FishAndChips.Fish({
