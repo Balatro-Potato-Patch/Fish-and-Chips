@@ -39,7 +39,7 @@ return {
                     },
                     {
                         "{C:green}#3# in #4#{} chance to {C:red}wander away{}",
-                        "at the end of a round"
+                        "at the end of a round",
                         "{C:inactive}(Chance based on current XMult)",
                     }
                 },
