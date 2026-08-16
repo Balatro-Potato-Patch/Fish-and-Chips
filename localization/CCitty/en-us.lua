@@ -189,11 +189,11 @@ return {
             },
             CCitty_tip1 = {
                 "Did you know? The legendary",
-                "Troutulet can be found in the City!"
+                "Troutulet can be found in the city!"
             },
             CCitty_tip2 = {
                 "Did you know? The legendary",
-                "Perkoio can be found in the Soup!",
+                "Perkoio can be found in the soup!",
             },
             CCitty_tip3 = {
                 "Did you know? The legendary",
@@ -289,7 +289,10 @@ return {
                 "Ohh yeah! I forgot about that"
             },
             CCitty_GoSmash = {
-                "Lets go smash"
+                "Let's go smash"
+            },
+            CCitty_gonext = {
+                "Go next"
             },
             CCitty_HowDare = {
                 "How dare you?"
@@ -311,10 +314,10 @@ return {
                 "a little bit of lubrication"
             },
             CCitty_MidVibes = {
-                "Pretty mid.. vibes, yeah"
+                "Pretty mid... vibes, yeah"
             },
             CCitty_Money = {
-                "As much as I love a hung man",
+                "As much as I love a hung man,",
                 "I think we take the money here"
             },
             CCitty_Nice = {
@@ -330,7 +333,7 @@ return {
                 "we can hold on to it"
             },
             CCitty_OhOkay = {
-                "Ohh, okay"
+                "Oh, okay"
             },
             CCitty_PlayThose = {
                 "Maybe play those. Maybe",
@@ -348,7 +351,7 @@ return {
                 "not. I would rather die"
             },
             CCitty_RIPRoffle = {
-                "Pour one out for Roffle....",
+                "Pour one out for Roffle...",
                 "He was a good chap"
             },
             CCitty_Risky = {
@@ -360,7 +363,7 @@ return {
             },
             CCitty_ShuffleSigh = {
                 "Now I'm gonna have to shuffle",
-                "me jimbos? ...... Sighh"
+                "me jimbos? ...... Sighhh"
             },
             CCitty_StinkyBoss = {
                 "This boss is pretty stinky"
@@ -398,7 +401,7 @@ return {
                 "Uh oh!"
             },
             CCitty_Uranus = {
-                "Uhh I think it's worth",
+                "Uhhh I think it's worth",
                 "losing a little bit of",
                 "interest for the guaranteed",
                 "peek at Uranus"
