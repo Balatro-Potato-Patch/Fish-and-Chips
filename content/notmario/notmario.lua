@@ -2090,7 +2090,16 @@ FishAndChips.Fish {
                 delay = 0.4,
                 func = function()
                     play_sound('timpani')
-                    local food = SMODS.add_card({ set = 'fac_Fish', type = 'fac_Fish', attributes = {'fac_mf_pearl'}, key_append = "chest" })
+                    local food = SMODS.add_card({ set = 'fac_Fish', type = 'fac_Fish', attributes = {'fac_mf_pearl'}, key_append = "chest", filter = function(pool)
+                        local new_pool = {}
+						for k, v in pairs(pool) do
+							if v.key ~= "fish_fac_red_herring" then
+								table.insert(new_pool, v)
+							end
+						end
+						if #new_pool == 0 then return pool end
+						return new_pool
+                    end })
                     card:juice_up(0.3, 0.5)
                     return true
                 end
@@ -2108,7 +2117,7 @@ FishAndChips.Fish {
 
 SMODS.Attribute {
     key = "fac_mf_pearl",
-    -- todo : add a loc thing :p
+    -- todo : add a loc thing :p -- I did this (mf) -- Woah who's that (mf) -- Hiiiii (mf)
 }
 
 FishAndChips.Fish {
