@@ -327,7 +327,8 @@ FishAndChips.Fish { --chicod
 }
 
 --shoutout balatrostuck dialogue functions vvv (with minor edits)
-function Card:CCitty_dialogue_say_stuff(n, sound, not_first, pitch)
+function Card:CCitty_dialogue_say_stuff(n, sound, not_first, pitch, dialogue_id)
+	if dialogue_id ~= self.CCitty_dialogue_id then return end
 	self.talking = true
 	local pitch = pitch or 1
 	if not not_first then
@@ -335,6 +336,7 @@ function Card:CCitty_dialogue_say_stuff(n, sound, not_first, pitch)
 			trigger = "after",
 			delay = 0.1,
 			func = function()
+				if dialogue_id ~= self.CCitty_dialogue_id then return true end
 				if self.children.speech_bubble then self.children.speech_bubble.states.visible = true end
 
 				if sound then
@@ -349,7 +351,7 @@ function Card:CCitty_dialogue_say_stuff(n, sound, not_first, pitch)
 				return true
 			end
 		}))
-		self:CCitty_dialogue_say_stuff(n - 1, sound, true, pitch)
+		self:CCitty_dialogue_say_stuff(n - 1, sound, true, pitch, dialogue_id)
 	else
 		if n <= 0 then
 			self.talking = false; return
@@ -358,6 +360,7 @@ function Card:CCitty_dialogue_say_stuff(n, sound, not_first, pitch)
 			trigger = "after",
 			delay = 0.13,
 			func = function()
+				if dialogue_id ~= self.CCitty_dialogue_id then return true end
 				if not sound then
 					play_sound('voice' .. math.random(1, 11), pitch * (math.random() * 0.2 + 1), 0.5)
 				end
@@ -365,12 +368,13 @@ function Card:CCitty_dialogue_say_stuff(n, sound, not_first, pitch)
 				return true
 			end
 		}))
-		self:CCitty_dialogue_say_stuff(n - 1, sound, true, pitch)
+		self:CCitty_dialogue_say_stuff(n - 1, sound, true, pitch, dialogue_id)
 	end
 end
 
 function Card:CCitty_add_dialogue(text_key, sound, align, yap_amount, baba_pitch)
 	if self.children.speech_bubble then self.children.speech_bubble:remove() end
+	self.CCitty_dialogue_id = (self.CCitty_dialogue_id or 0) + 1
 	self.config.speech_bubble_align = { align = align or 'bm', offset = { x = -1, y = -4 }, parent = self }
 	self.children.speech_bubble =
 		UIBox {
@@ -381,10 +385,11 @@ function Card:CCitty_add_dialogue(text_key, sound, align, yap_amount, baba_pitch
 	self.children.speech_bubble.states.visible = false
 	local yap_amount = yap_amount or 5
 	local baba_pitch = baba_pitch or 1
-	self:CCitty_dialogue_say_stuff(yap_amount, sound, nil, baba_pitch)
+	self:CCitty_dialogue_say_stuff(yap_amount, sound, nil, baba_pitch, self.CCitty_dialogue_id)
 end
 
 function Card:CCitty_remove_dialogue(timer)
+	local dialogue_id = self.CCitty_dialogue_id
 	G.E_MANAGER:add_event(Event({
 		trigger = "after",
 		timer = "REAL",
@@ -392,7 +397,7 @@ function Card:CCitty_remove_dialogue(timer)
 		blocking = false,
 		delay = timer,
 		func = function()
-			if self.children.speech_bubble then
+			if dialogue_id == self.CCitty_dialogue_id and self.children.speech_bubble then
 				self.children.speech_bubble:remove(); self.children.speech_bubble = nil
 			end
 			return true
@@ -466,10 +471,12 @@ FishAndChips.Fish { --Doctor Sharktred
 				end
 
 			elseif context.after then
-				if math.floor(mult * hand_chips) < 100 then
+				local hand_score = SMODS.calculate_round_score()
+				local total_chips = G.GAME.chips + hand_score
+				if hand_score < 100 then
 					card:CCitty_add_dialogue('CCitty_Amount', { 'fac_CCitty_Amount' })
 					card:CCitty_remove_dialogue(5)
-				elseif G.GAME.chips / G.GAME.blind.chips > 0.98 and G.GAME.chips < G.GAME.blind.chips then	-- TODO: this sound isn't being played properly (ghostsalt)
+				elseif total_chips / G.GAME.blind.chips > 0.98 and total_chips < G.GAME.blind.chips then
 					card:CCitty_add_dialogue('CCitty_NotEnough', { 'fac_CCitty_NotEnough' })
 					card:CCitty_remove_dialogue(5)
 				end

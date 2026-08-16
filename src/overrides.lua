@@ -1,3 +1,15 @@
+local fac_set_cost_value = Card.set_cost_value
+function Card:set_cost_value(...)
+    if self.ability and (self.ability.set == 'fac_Fish' or self.ability.set == 'fac_Bait') then
+        local discount_percent = G.GAME.discount_percent
+        G.GAME.discount_percent = 0
+        local ret = fac_set_cost_value(self, ...)
+        G.GAME.discount_percent = discount_percent
+        return ret
+    end
+    return fac_set_cost_value(self, ...)
+end
+
 G.FUNCS.toggle_shop = function(e)
     stop_use()
 	if G.CONTROLLER.locks.toggle_shop then return end
@@ -190,7 +202,7 @@ local function fac_scale_unglued_card_layers(card, scale)
 			child.VT.w = child.VT.w * scale
 			child.VT.h = child.VT.h * scale
 		end
-		if child.T and child.scale then
+		if child.T and type(child.scale) == 'table' and child.scale.x and child.scale.y then
 			child.scale_mag = math.min(child.scale.x / child.T.w, child.scale.y / child.T.h)
 		end
 	end

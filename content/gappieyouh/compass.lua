@@ -19,7 +19,7 @@ FishAndChips.Fish {
         wormhole = 0.25
     },
     can_use = function(self, card)
-        return G.fac_fish_area.cards and #G.fac_fish_area.cards > 0
+        return G.fac_fish_area and G.fac_fish_area.cards and #G.fac_fish_area.cards > 0
     end,
     use = function(self, card, area, copier)
         G.E_MANAGER:add_event(Event{
@@ -43,10 +43,10 @@ FishAndChips.Fish {
                     backroom = 0,
                     wormhole = 0
                 }
-                local fish_table = G.fac_fish_area.cards
-                for i,v in pairs(fish_table) do
-                    if v.config.center.key == 'fish_fac_gappieyouh_obsession' then
-                        fish_table:remove(i)
+                local fish_table = {}
+                for _, fish in pairs(G.fac_fish_area.cards) do
+                    if fish.config.center.key ~= 'fish_fac_gappieyouh_obsession' then
+                        table.insert(fish_table, fish)
                     end
                 end
                 for envs,_ in pairs(envirotable) do
