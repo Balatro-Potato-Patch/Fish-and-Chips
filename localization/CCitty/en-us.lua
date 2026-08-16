@@ -72,7 +72,7 @@ return {
              fish_fac_canioctopus = {
                 name = "Canioctopus",
                 text = {
-                    "Create a random Bait when",
+                    "Create a random {C:attention}Bait{} when",
                     "any card is destroyed"
                 },
                 flavor = {
