@@ -14,10 +14,10 @@ PotatoPatchUtils.Developer({
 				G.GAME.consumeable_usage_this_ante[k] = 0
 			end
 		end
-		if context.fac_fish_caught and context.fac_fish_caught.config.center_key == "fish_fac_sagatail_plastic_chair" then
-			local chair = context.fac_fish_caught
-			if not context.perfect and (context.treasure or SMODS.pseudorandom_probability(chair, "plastic_chair_no_bait", 1, chair.ability.extra.odds, "plastic_chair")) then
-				local bait_key = G.GAME.fac_active_bait
+		if context.fac_end_fishing and context.fish == "fish_fac_sagatail_plastic_chair" then
+			local chair = context.fish_obj
+			if context.treasure or SMODS.pseudorandom_probability(chair, "plastic_chair_no_bait", 1, chair.ability.extra.odds, "plastic_chair") then
+				local bait_key = G.GAME.fac_last_used_bait
 				G.E_MANAGER:add_event(Event({
 					func = function()
 						FishAndChips.add_bait_to_inventory(bait_key)

@@ -878,6 +878,7 @@ function G:update_fac_fishing_casting(dt)
         state.bite_timer = fac_clamp(fac_rand(0.75, 1.95) - state.cast_power * 0.55, 0.35, 1.95)
         G.FISHING_STATE_COMPLETE = true
         FishAndChips.update_jimbo_state(FishAndChips.JIMBO_ANIMATION_STATES.CAST)
+        G.GAME.fac_last_used_bait = G.GAME.fac_active_bait
         SMODS.calculate_context{fac_cast_rod = true}
     end
     if G.FAC_JIMBO_ANIMATION_STATE == FishAndChips.JIMBO_ANIMATION_STATES.WAIT then

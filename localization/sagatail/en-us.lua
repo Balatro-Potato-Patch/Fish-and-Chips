@@ -81,7 +81,7 @@ return {
                 text = {
                     {"{C:green}#1# in #2#{} chance of",
                     "not consuming {C:attention}bait{}",
-                    "when caught"},
+                    "when this {C:fac_fish}Fish{} is caught"},
                     {"{C:green}Guaranteed{} if caught",
                     "with {C:attention}treasure"},
                 },
