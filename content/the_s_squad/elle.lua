@@ -229,7 +229,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = .003, max = .02}, length = {min = .03, max = .07}}, -- average caviar servings. in case you haven't been able to tell by now, i'm doing my research
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
-	attributes = { "economy", "sell_value", },
+	attributes = { "economy", "sell_value", "food", },
 	config = { extra = { mod = 2 } },
 	environments = {
 		city_river = 3,

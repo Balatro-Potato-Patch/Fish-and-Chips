@@ -1499,7 +1499,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.50, max = 0.70 }, length = { min = 0.40, max = 0.60 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "modify_card", "destroy_card", "seals", "enhancements" },
+	attributes = { "modify_card", "destroy_card", "seals", "enhancements", "food" },
 	environments = {
 		chocolate_river = 10,
 		soup = 10,

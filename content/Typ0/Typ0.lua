@@ -170,7 +170,7 @@ FishAndChips.Fish {
     },
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
-	attributes = { "nothing" },
+	attributes = { "nothing", "food" },
 	environments = {
 		wormhole = 1,
 		pier = 10,

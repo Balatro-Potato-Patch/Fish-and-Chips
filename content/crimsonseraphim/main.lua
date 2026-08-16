@@ -116,7 +116,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "economy", "sell_value", "destroy_card", },
+	attributes = { "economy", "sell_value", "destroy_card", "food", },
 	environments = {
 		calm_pond = 4,
 		soup = 10,

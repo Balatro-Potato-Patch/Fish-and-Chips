@@ -235,7 +235,7 @@ FishAndChips.Fish({
         chocolate_river = 3,
         garden = 2
     },
-    attributes = {'on_sell',},
+    attributes = {'on_sell', "food",},
     stats = {
         weight = {min = 0.010, max = 0.014},
         length = {min = 0.115, max = 0.115},
@@ -262,7 +262,7 @@ FishAndChips.Fish({
         city_river = 4,
         pier = 2
     },
-    attributes = {'scaling', 'xmult'},
+    attributes = {'scaling', 'xmult', "food"},
     stats = {
         weight = {min = 3.8, max = 4.3},
         length = {min = 0.56, max = 0.91},

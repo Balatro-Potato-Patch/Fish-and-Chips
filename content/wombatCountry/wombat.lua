@@ -101,7 +101,7 @@ FishAndChips.Fish({
 	pos = { x = 2, y = 0 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "usable", "rank", "modify_card", "full_deck" },
+	attributes = { "usable", "rank", "modify_card", "full_deck", "food" },
 	environments = {
 		pier = 1,
 		city_river = 0.5,
@@ -287,7 +287,7 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 1 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "chips", "generation" },
+	attributes = { "chips", "generation", "food", },
 	environments = {
 		city_river = 1,
 		chocolate_river = 0.5,
@@ -333,7 +333,7 @@ FishAndChips.Fish({
 	pos = { x = 1, y = 1 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "chips", "generation" },
+	attributes = { "chips", "generation", "food", },
 	environments = {
 		city_river = 1,
 		chocolate_river = 0.5,
@@ -379,7 +379,7 @@ FishAndChips.Fish({
 	pos = { x = 2, y = 1 },
 	ppu_artist = { "wombatCountry" },
 	ppu_coder = { "wombatCountry" },
-	attributes = { "chips" },
+	attributes = { "chips", "food" },
 	environments = {
 		city_river = 1,
 		chocolate_river = 0.5,

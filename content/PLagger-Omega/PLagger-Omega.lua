@@ -266,7 +266,7 @@ FishAndChips.Fish{ --Stewfish
   pos = {x=4,y=0},
   weight = 9,
   environments = {soup = 0.6, chocolate_river = 0.1},
-  attributes = {'mult', "scaling", "reset"},
+  attributes = {'mult', "scaling", "reset", "food"},
   stats = {
     weight = {min = 7, max = 14},
     length = {min = 0.25, max = 0.72}
