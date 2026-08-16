@@ -24,7 +24,7 @@ SMODS.Atlas({
 
 SMODS.Sound({
 	key = "hayayaya_explosion",
-	path = "hayayaya/snd_badexplosion.wav",
+	path = "hayayaya/snd_badexplosion.ogg",
 })
 
 SMODS.Sound({

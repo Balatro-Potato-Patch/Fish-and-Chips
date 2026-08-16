@@ -54,7 +54,7 @@ SMODS.Font({
 
 SMODS.Sound{
     key = "music_jersey",
-    path = "ProdByProto/music_jersey.wav",
+    path = "ProdByProto/music_jersey.ogg",
     pitch = 1,
     volume = 0.8,
     select_music_track = function (self)
@@ -66,7 +66,7 @@ SMODS.Sound{
 
 SMODS.Sound{
     key = "music_noir1",
-    path = "ProdByProto/music_noir1.wav",
+    path = "ProdByProto/music_noir1.ogg",
     pitch = 1,
     volume = 0.8,
     select_music_track = function (self)
@@ -78,7 +78,7 @@ SMODS.Sound{
 
 SMODS.Sound{
     key = "music_noir2",
-    path = "ProdByProto/music_noir2.wav",
+    path = "ProdByProto/music_noir2.ogg",
     pitch = 1,
     volume = 0.8,
     select_music_track = function (self)
