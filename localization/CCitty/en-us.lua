@@ -84,9 +84,9 @@ return {
              fish_fac_troutulet = {
                 name = "Troutulet",
                 text = {
-                    "Played Kings and Queens",
-                    "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} when scored",
-                    "and are retriggered"
+                    "Played {C:attention}Kings{} and {C:attention}Queens{}",
+                    "earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} when scored",
+                    "and are {C:attention}retriggered{}"
                 },
                 flavor = {
                     "A legendary fish. Not much is known about this species,",
