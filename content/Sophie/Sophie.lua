@@ -667,13 +667,15 @@ FishAndChips.Fish {
         end
         if context.starting_shop then
             for i = 1, card.ability.extra.consumables do
-                local consumable = create_card('Consumeables', G.shop_jokers)
+                local consumable = create_card('Consumeables', G.shop_jokers, nil, nil, true)
                 consumable.states.visible = false
                 G.shop_jokers:emplace(consumable)
                 consumable:start_materialize()
                 consumable:set_cost()
                 create_shop_card_ui(consumable)
             end
+            -- G.shop_jokers.T.w = math.min(#G.shop_jokers.cards*1.02*G.CARD_W,4.08*G.CARD_W) -- Commented this out because I think it might be worth implementing something like this SMODS-side
+            -- G.shop:recalculate()
             card.ability.extra.consumables = 0
         end
 	end,
