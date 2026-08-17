@@ -96,7 +96,7 @@ local function wrapText(text, maxChars)
 end
 
 G.FUNCS.compendium_nav_button = function(e)
-    play_sound("fac_flip_page")
+    play_sound("fac_flip_page", 1, 0.5)
     local back_func = G.OVERLAY_MENU:get_UIE_by_ID("overlay_menu_back_button").config.button
     SMODS.save_mod_config(FishAndChips.mod)
     if e.config.type == 'condensed_fish_page' or e.config.type == 'extended_fish_page' then
@@ -112,7 +112,7 @@ G.FUNCS.compendium_nav_button = function(e)
 end
 
 G.FUNCS.fac_return_to_mods = function(e)
-    play_sound("fac_book_close")
+    play_sound("fac_book_close", 1, 0.7)
     G.FUNCS.mods_button(e)
 end
 
