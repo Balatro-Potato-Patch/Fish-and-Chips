@@ -173,8 +173,8 @@ FishAndChips.Rod {
 	config = {
 		extra = {
 			num = 1,
-			dem = 2,
-			money = 3
+			dem = 3,
+			money = 2
 		}
 	},
 	loc_vars = function(self, info_queue, card)
