@@ -425,7 +425,7 @@ FishAndChips.Fish { -- Gambling
 					end
 
 					local end_func = function()
-						card.children.center:set_sprite_pos({x = 0, y = 0})
+						card.children.center:set_sprite_pos({x = 0, y = 2})
 						-- sendDebugMessage("reset")
 					end
 
