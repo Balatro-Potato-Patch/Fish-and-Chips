@@ -54,7 +54,12 @@ local function MB_get_texture(card)
 	end
 end
 local function MB_set_texture(card)
-	card.children.center:set_sprite_pos(MB_get_texture(card))
+	G.E_MANAGER:add_event(Event({
+		func = function()
+			card.children.center:set_sprite_pos(MB_get_texture(card))
+			return true;
+		end
+	}))
 end
 
 local function MB_get_mode(seed)
