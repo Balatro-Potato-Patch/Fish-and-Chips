@@ -253,3 +253,12 @@ SMODS.RunSelectPage({
 		return choice and G.P_CENTERS[choice].unlocked and choice or 'rod_fac_wooden'
 	end,
 })
+
+FishAndChips.mod.menu_cards = function()
+	if FishAndChips.mod.config.menu then
+		return {
+			remove_original = true,
+			{ key = 'fish_fac_test' }
+		}
+	end
+end
