@@ -1132,6 +1132,7 @@ function FishAndChips.Compendium.config_page(page_number, left)
         {n=G.UIT.R, config = {minh = 0.4}},
         {n=G.UIT.R, config = {align = 'tm', minh = 3, minw = 5}, nodes = {
             FishAndChips.Compendium.toggle {text_key = 'b_fac_ambience_toggle', ref_value = "ambience", callback = G.FUNCS.fac_toggle_ambience},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_noir_music', ref_value = "noir_music"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_menu_toggle', ref_value = "menu"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_family_friendly_toggle', ref_value = "family_friendly"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_condensed_fish', ref_value = "condensed_fish"},

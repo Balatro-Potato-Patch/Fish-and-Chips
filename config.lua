@@ -1,5 +1,5 @@
 return {
     ambience = true,
+    noir_music = true,
     menu = true,
-    family_friendly = false,
 }
