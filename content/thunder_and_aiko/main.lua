@@ -95,10 +95,18 @@ FishAndChips.Fish({
 			and context.main_eval
 			and not context.game_over
 			and not context.blueprint
+			and (#G.jokers.cards + G.GAME.joker_buffer) < G.jokers.config.card_limit
 			and SMODS.pseudorandom_probability(card, "fac_trojan_fish", 1, card.ability.extra.odds)
 		then
+			G.GAME.joker_buffer = G.GAME.joker_buffer + 1
 			SMODS.destroy_cards(card, nil, nil, true)
 			SMODS.add_card({ set = "Joker" })
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					G.GAME.joker_buffer = 0
+					return true
+				end
+			}))
 			return {
 				message = localize("k_fac_boom_ex"),
 				colour = G.C.RED,
