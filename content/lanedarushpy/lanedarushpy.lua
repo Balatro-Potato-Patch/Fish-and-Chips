@@ -575,7 +575,7 @@ FishAndChips.Fish {
 
         -- print(loc_choices)
 
-        local main_start = {
+        local main_start = not card.name_only and {
             { n = G.UIT.O, config = { object = DynaText({ string = {
                 { string = "All Jokers ", colour = loc_colors["jokers"] },
                 { string = "All Fish ", colour = loc_colors["fish"] },

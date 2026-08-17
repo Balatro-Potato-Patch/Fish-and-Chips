@@ -565,7 +565,7 @@ FishAndChips.Fish {
         city_river = 1
     },
     loc_vars = function(self, info_queue, card)
-        local main_start = {
+        local main_start = not card.name_only and {
             { n = G.UIT.R, config = { align = "cm", padding = 0.02 }, nodes = {
                 { n = G.UIT.T, config = { text = "The ", colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
                 { n = G.UIT.O, config = { object = DynaText({
