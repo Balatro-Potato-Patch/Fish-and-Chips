@@ -69,19 +69,19 @@ position = "at"
 payload = '''
 local card
 if FishAndChips and FishAndChips.mod.config.menu then
-    local fish = pseudorandom_element(G.P_CENTER_POOLS.fac_Fish)
+    local fish = G.P_CENTER_POOLS.fac_Fish[math.random(1,#G.P_CENTER_POOLS.fac_Fish)]
 
     card = Card(  card_pos.x + G.ROOM.T.w/2 - G.CARD_W*card_size/2,
                         card_pos.y + G.ROOM.T.h/2 - G.CARD_H*card_size/2,
                         card_size*G.CARD_W, card_size*G.CARD_H, G.P_CARDS.empty, G.P_CENTERS.c_base)
 
     card.children.center:remove()
-    card.children.center = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, fish.atlas, fish.pos or {x = 0, y = 0})
+    card.children.center = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, fish.atlas, fish.pos or {x = 0, y = 0}, fish.sprite_args)
     card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
 
     -- Check for card soul
     if fish.soul_pos then
-        card.children.front = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, fish.soul_atlas or fish.atlas, fish.soul_pos)
+        card.children.front = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, fish.soul_atlas or fish.atlas, fish.soul_pos, fish.sprite_args)
         card.children.front.states.hover = card.states.hover
         card.children.front.states.click = card.states.click
         card.children.front.states.drag = card.states.drag
