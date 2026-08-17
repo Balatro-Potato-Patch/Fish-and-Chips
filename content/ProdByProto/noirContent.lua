@@ -195,7 +195,7 @@
 
             if cae.storyActive then
                 if context.individual and context.cardarea == G.play then
-                    if context.other_card.ability.noir_mark then
+                    if context.other_card.ability.noir_mark and not context.other_card.ability.noir_triggered then
                         if cae.playing_true_end then cae.hand_limit = cae.hand_limit + 2 end
                         if not context.other_card.ability.aux then
                             cae.noir_inv[#cae.noir_inv+1] = context.other_card.ability.noir_mark
@@ -205,6 +205,7 @@
                                     break
                                 end
                             end
+                            context.other_card.ability.noir_triggered = true
                             context.other_card.ability.noir_mark = nil
                         end
                         if context.other_card.ability.noir_mark == "key" then
@@ -215,11 +216,13 @@
                                     break
                                 end
                             end
+                            context.other_card.ability.noir_triggered = true
                             context.other_card.ability.noir_mark = nil
                         end
                         if context.other_card.ability.noir_mark == "lockdoor" then
                             if cae.noir_keys - 1 > -1 then
                                 juice_card(context.other_card)
+                                context.other_card.ability.noir_triggered = true
                                 context.other_card.ability.noir_mark = "door"
                                 for i,item in pairs(cae.noir_levels[cae.level]) do
                                     if context.other_card.ability.noir_mark == item[1] and ((context.other_card.ability.noir_plot and item[2] and context.other_card.ability.noir_plot == item[2]) or (context.other_card.ability.noir_level and item[3] and context.other_card.ability.noir_level == item[3])) then
@@ -256,8 +259,19 @@
                         if context.other_card.ability.noir_mark == "truedoor" then ret.message = (localize("proot_noir_locked")) end
                     end
                     if not (context.other_card.ability.noir_mark == "truedoor" or context.other_card.ability.noir_mark == "lockdoor") then
-                        if context.other_card.ability.noir_mark == "soda" and context.other_card.ability.noir_level then G.GAME.proto_q_music = "noir2" end
+                        if context.other_card.ability.noir_mark == "soda" and context.other_card.ability.noir_level then
+                             G.GAME.proto_q_music = "noir2"
+                            context.other_card.ability.noir_triggered = true
+                        end
                         facp.noirProg({ flg = context.other_card.ability.noir_plot, lvl = context.other_card.ability.noir_level })
+                    end
+                    if context.other_card.ability.noir_triggered then
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                context.other_card.ability.noir_triggered = nil
+                                return true;
+                            end
+                        }))
                     end
                     return ret
                 end
