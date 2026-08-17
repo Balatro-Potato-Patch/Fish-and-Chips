@@ -481,6 +481,7 @@ FishAndChips.Fish({
     end,
     calculate = function(self, card, context)
         if context.first_hand_drawn and card.ability.extra.active then
+            G.fac_fish_area:buffer(1)
             draw_card(G.fac_fish_area, G.play, nil, nil, nil, card)
             for i=1, card.ability.extra.amount do
                 G.E_MANAGER:add_event(Event({
@@ -511,6 +512,7 @@ FishAndChips.Fish({
             }))
             delay(1.4)
             draw_card(G.play, G.fac_fish_area, nil, nil, nil, card, 0.6)
+            G.fac_fish_area:buffer(-1, true)
             for i=1, card.ability.extra.amount do
                 draw_card(G.play, G.hand, nil, nil, nil, nil, 0.6)
             end
@@ -529,6 +531,7 @@ FishAndChips.Fish({
         if context.fac_end_fishing and not card.ability.extra.active and context.treasure then
             card.ability.extra.current = card.ability.extra.current + 1
             if card.ability.extra.current >= card.ability.extra.reset then
+                G.fac_fish_area:buffer(1)
                 draw_card(G.fac_fish_area, G.play, nil, nil, nil, card)
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after', delay = 0.7,
@@ -542,6 +545,7 @@ FishAndChips.Fish({
                 }))
                 delay(1.4)
                 draw_card(G.play, G.fac_fish_area, nil, nil, nil, card)
+                G.fac_fish_area:buffer(-1, true)
             end
         end
     end,
