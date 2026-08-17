@@ -270,9 +270,8 @@ return {
             rod_fac_extradimensional = {
                 name = "Extradimensional Rod",
                 text = {
-                        "{C:attention}Fixed {C:green}1 in 8{} chance to",
-                        "catch {C:attention}Jokers{} or {C:attention}consumables{}",
-                        "instead of {C:fac_fish}Fish{}"
+                        "{C:attention}Jokers{} and {C:attention}consumables{} may",
+                        "be caught during fishing"
                 },
                 unlock = {
                     "Catch {C:attention}50{} Fish"
@@ -306,7 +305,7 @@ return {
                 text = {
                     "Sweet spot is {C:attention}Tiny",
                     "and moves on its own",
-                    "Click while its over",
+                    "Click while it's over",
                     "the fish to catch it",
                     "{C:red}Cannot catch treasure"
                 },
