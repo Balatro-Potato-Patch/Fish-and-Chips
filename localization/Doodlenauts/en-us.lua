@@ -6,7 +6,7 @@ return {
                 text = {
                     'This Fish gains {C:mult}+#2#{} Mult',
                     'when a {C:attention}2{}, {C:attention}3{}, {C:attention}4{}, or {C:attention}5{} is scored',
-                    "{C:inactive}Currently {C:mult}+#1#{} {C:inactive}chips"                 
+                    "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)"                
                 },
                 flavour = {
                     'Quite frankly, I never knew',
