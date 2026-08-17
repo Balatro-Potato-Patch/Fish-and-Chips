@@ -160,7 +160,6 @@ return {
 					"{C:green}#1# in #2#{} chance of",
 					"getting the bait {C:attention}back{}",
 					"after a successful fish",
-					"{C:inactive,s:0.8}Doesn't apply to perfect fishes{}",
 				},
 				flavor = {
 					"Excuse me sir! There must be",
