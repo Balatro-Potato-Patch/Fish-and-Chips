@@ -872,6 +872,23 @@ FishAndChips.Fish {
     end,
 }
 
+local shark_partner_sprites = {
+    masc = { pos = { x = 4, y = 3 }, w = 60, h = 95 },
+    femme = { pos = { x = 0, y = 4 }, w = 53, h = 87 },
+    gnc = { pos = { x = 1, y = 4 }, w = 47, h = 87 },
+}
+
+local function set_shark_partner_sprite(card, gender_presentation, set_size)
+    local sprite = shark_partner_sprites[gender_presentation] or shark_partner_sprites.gnc
+    card.children.center:set_sprite_pos(sprite.pos)
+    card.children.center.scale.x = sprite.w
+    card.children.center.scale.y = sprite.h
+    if set_size then
+        card.T.w = G.CARD_W * (sprite.w / 71)
+        card.T.h = G.CARD_H * (sprite.h / 95)
+    end
+end
+
 FishAndChips.Fish {
     key = "J8-Bit_hot_gamer_shark_partner",
     atlas = "fac_j8bit_fish",
@@ -1008,32 +1025,17 @@ FishAndChips.Fish {
     end,
     set_ability = function(self, card, initial, delay_sprites)
         card.ability.extra.gender_presentation = pseudorandom_element({ "masc", "femme", "gnc" }, "J8-Bit gives you a shark waifu")
+        set_shark_partner_sprite(card, card.ability.extra.gender_presentation, true)
     end,
     set_sprites = function(self, card, front)
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                if card.ability.extra.gender_presentation == "masc" then
-                    card.children.center:set_sprite_pos({ x = 4, y = 3 })
-                    card.T.w = G.CARD_W * (60 / 71)
-                    card.T.h = G.CARD_H * (95 / 95)
-                    card.children.center.scale.x = 60
-                    card.children.center.scale.y = 95
-                elseif card.ability.extra.gender_presentation == "femme" then
-                    card.children.center:set_sprite_pos({ x = 0, y = 4 })
-                    card.T.w = G.CARD_W * (53 / 71)
-                    card.T.h = G.CARD_H * (87 / 95)
-                    card.children.center.scale.x = 53
-                    card.children.center.scale.y = 87
-                else
-                    card.children.center:set_sprite_pos({ x = 1, y = 4 })
-                    card.T.w = G.CARD_W * (47 / 71)
-                    card.T.h = G.CARD_H * (87 / 95)
-                    card.children.center.scale.x = 47
-                    card.children.center.scale.y = 87
-                end
-                return true;
-            end
-        }))
+        local extra = card.ability and card.ability.extra
+        if extra and extra.gender_presentation then
+            set_shark_partner_sprite(card, extra.gender_presentation)
+        end
+    end,
+    load = function(self, card, card_table, other_card)
+        local extra = card_table.ability and card_table.ability.extra
+        set_shark_partner_sprite(card, extra and extra.gender_presentation, true)
     end
 }
 
