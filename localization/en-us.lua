@@ -263,7 +263,7 @@ return {
                     "as effective"
                 },
                 unlock = {
-                    "Catch a Fish with",
+                    "Catch a {C:fac_fish}Fish{} with",
                     "each {C:attention}Bait{} at least once"
                 }
             },
@@ -274,7 +274,7 @@ return {
                         "be caught during fishing"
                 },
                 unlock = {
-                    "Catch {C:attention}50{} Fish"
+                    "Catch {C:attention}50 {C:fac_fish}Fish"
                 }
             },
             rod_fac_lucky = {
@@ -284,20 +284,20 @@ return {
                     "earn {C:money}$#3#{} per catch"
                 },
                 unlock = {
-                    "Collect 10 {C:money}Treasures{}",
+                    "Collect 10 {C:money}Treasures",
                     "in a single run"
                 }
             },
             rod_fac_distortion = {
                 name = "Distortion Rod",
                 text = {
-                    "Chance to catch Fish",
+                    "Chance to catch {C:fac_fish}Fish",
                     "native to other",
-                    "fishing spots"
+                    "{C:fac_environment}Environments"
                 },
                 unlock = {
-                    "Catch a Fish in",
-                    "every {C:attention}Environment{}"
+                    "Catch a {C:fac_fish}Fish{} in",
+                    "every {C:fac_environment}Environment"
                 }
             },
             rod_fac_harpoon = {
@@ -307,7 +307,6 @@ return {
                     "and moves on its own",
                     "Click while it's over",
                     "the fish to catch it",
-                    "{C:red}Cannot catch treasure"
                 },
                 unlock = {
                     "Get 5 {C:attention}Perfect Catches{}",

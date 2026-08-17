@@ -433,9 +433,10 @@ return {
                         "When {C:attention}Blind{} is selected,",
                         "{E:1,C:red}eats{} {C:fac_fish}Fish{} to the right",
                         "and gains its {C:attention}weight",
+                        "{C:inactive,s:0.8}(weight gain is capped at current weight)"
                     },
                     {
-                        "This Shark gives {X:mult,C:white}X#1#{} Mult",
+                        "This {C:fac_fish}Shark{} gives {X:mult,C:white}X#1#{} Mult",
                         "per {C:tarot}#2#kg{} it {C:attention}weighs",
                         "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)"
                     }
