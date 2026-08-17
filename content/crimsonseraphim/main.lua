@@ -116,7 +116,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "economy", "sell_value", "destroy_card", },
+	attributes = { "economy", "sell_value", "destroy_card", "food", },
 	environments = {
 		calm_pond = 4,
 		soup = 10,
@@ -486,7 +486,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "passive", "editions", "usable", "destroy_card", "fac_perfect_catch", },
+	attributes = { "passive", "editions", "usable", "fac_perfect_catch", },
 	config = {
 		extra = {
             charged = nil
@@ -992,7 +992,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "economy", },
+	attributes = { "economy", "deltarune", "utdr", },
 	environments = {
         wormhole = 5
 	},
@@ -1573,7 +1573,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "useable", "lose_economy", "reroll", "reset", "scaling", },
+	attributes = { "useable", "lose_economy", "reroll", "reset", "scaling", "undertale", "deltarune", "utdr", }, -- It appears in both games, right ? (mf)
 
 	environments = {
         wormhole = 5,
@@ -1685,7 +1685,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "destroy_card", "editions", "modify_card", },
+	attributes = { "destroy_card", "editions", "modify_card", "deltarune", "utdr", },
 
 	environments = {
         wormhole = 5,

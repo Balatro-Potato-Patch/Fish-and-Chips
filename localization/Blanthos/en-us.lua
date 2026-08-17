@@ -13,15 +13,15 @@ return {
                 name = "Gneep Gnarp",
                 text = {
                     {
-                        "Gives temporary {C:planet}Hand Levels{} to {C:attention}#6#{}",
-                        "based on current {C:fac_happy_gradient}Happiness{}",
-                        "{C:inactive}Currently{} {C:fac_happy_gradient}#1# Happiness{} {C:inactive}/{} {C:planet}#5# Levels{}",
+                        "Gives temporary {C:planet}hand levels{}",
+                        "to {C:attention}#6#{} based",
+                        "on current {C:fac_happy_gradient}Happiness{}",
+                        "{C:inactive}(Currently {C:fac_happy_gradient}#1# Happiness{C:inactive} / {C:planet}#5#{C:inactive} levels){}",
                     },
                     {
-                        "{C:fac_bored_gradient}-#2# Happiness{} from {C:fac_bored_gradient}Boredom{} at end of round",
-                    },
-                    {
-                        "{C:attention}Feed{} {C:money}$#3#{} to increase {C:fac_happy_gradient}Happiness{} by {C:fac_happy_gradient}#4#{}",
+                        "{C:fac_happy_gradient}-#2# Happiness{} from {C:fac_bored_gradient}Boredom{}",
+                        "at end of round, {C:attention}feed{}",
+                        "{C:money}$#3#{} to gain {C:fac_happy_gradient}+#4# Happiness{}",
                         "{ppu_bubble:usable}"
                     }
                 },
@@ -34,21 +34,22 @@ return {
             fish_fac_spectre_fish = {
                 name = "Spectre Fish",
                 text = {
-                    "The first time this would be {C:attention}destroyed{} each round",
-                    "instead gain {C:mult}+#2# Mult{}",
-                    "{C:inactive}Currently{} {C:mult}+#1# Mult{} {C:inactive}",
-                    --not enough time to figure out how to make this work so its your problem i guess
+                    "The first time this {C:fac_fish}Fish{}",
+                    "would be {C:red}destroyed{} each round,",
+                    "it gains {C:mult}+#2#{} Mult instead",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult){}",
                     "{ppu_bubble:1}"
                 },
                 flavor = {
-                    "It’s a little bit… {C:attention}OFF{}-putting."
+                    "It's a little bit... {C:attention}OFF{}-putting."
                 }
             },
             fish_fac_gaster_hat = {
                 name = "{C:dark_edition}Green Pirate Hat{}",
                 text = {
-                    "Whenever ye sell a {C:attention}Joker{}, ye 'ave a {C:green}#1#/#2#{} chance to",
-                    "plunder a random amount o' {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}Sand Dollars{}"
+                    "Whenever ye sell a {C:attention}Joker{},",
+                    "ye 'ave a {C:green}#1# in #2#{} chance to",
+                    "plunder between {C:fac_sand_dollars,f:fac_sand_dollars}$#3#{} an' {C:fac_sand_dollars,f:fac_sand_dollars}$#4#{}"
                 },
                 flavor = {
                     "{C:green}CHIPS AHOY, LANDMAGGOTS{}"
@@ -57,84 +58,85 @@ return {
             fish_fac_shadowfish = {
                 name = "Shadowfish",
                 text = {
-                    "Has 3 random Attributes",
-                    "and corresponding effects",
-                    "while held"
+                    "Has {C:attention}3{} random {C:attention}Attributes{}",
+                    "and corresponding {C:attention}effects{}"
                 },
                 flavor = {
                     "We {C:fac_bored_gradient}sadly{} did not implement Pluey"
                 }
-            },
-
-
-            mult = {
-                name = "#1# Attribute | {C:mult}Mult{}",
+            }
+        },
+        Other = {
+            fac_blanthos_shadowfish_mult = {
+                name = "Mult",
                 text = {
-                    "{C:mult}+4{} Mult"
+                    "{C:mult}+#1#{} Mult"
                 }
             },
 
-            chips = {
-                name = "#1# Attribute | {C:chips}Chips{}",
+            fac_blanthos_shadowfish_chips = {
+                name = "Chips",
                 text = {
-                    "{C:chips}+30{} Chips"
+                    "{C:chips}+#1#{} Chips"
                 }
             },
 
-            xmult = {
-                name = "#1# Attribute | {X:mult,C:white}XMult{}",
+            fac_blanthos_shadowfish_xmult = {
+                name = "XMult",
                 text = {
-                    "{X:mult,C:white}X1.5{} Mult"
+                    "{X:mult,C:white}X#1#{} Mult"
                 }
             },
 
-            economy = {
-                name = "#1# Attribute | {C:money}Economy{}",
+            fac_blanthos_shadowfish_economy = {
+                name = "Economy",
                 text = {
-                    "Earn {C:money}$1{}",
-                    "when you sell a card"
+                    "Earn {C:money}$#1#{} when",
+                    "you sell a card"
                 }
             },
 
-            retrigger = {
-                name = "#1# Attribute | {C:attention}Retrigger{}",
+            fac_blanthos_shadowfish_retrigger = {
+                name = "Retrigger",
                 text = {
-                    "Retrigger #2# scored card 1 time"
+                    "Retrigger scored",
+                    "card in position {C:attention}#2#{}",
+                    "{C:attention}#1#{} additional time"
                 }
             },
 
-            hand_level = {
-                name = "#1# Attribute | {C:planet}Hand Level{}",
+            fac_blanthos_shadowfish_hand_level = {
+                name = "Hand Level",
                 text = {
-                    "Level up {C:attention}#2#{}",
+                    "Level up {C:attention}#1#{}",
                     "at end of round"
                 }
             },
 
-            usable = {
-                name = "#1# Attribute | {C:planet}Usable{}",
+            fac_blanthos_shadowfish_usable = {
+                name = "Usable",
                 text = {
-                    "On use, create a {C:attention}Shadowfish{}",
+                    "Use to {C:green}reroll{} this",
+                    "{C:fac_fish}Fish's{} {C:attention}Attributes{}",
                     "{ppu_bubble:usable}"
                 }
             },
 
-            generation = {
-                name = "#1# Attribute | Generation",
+            fac_blanthos_shadowfish_generation = {
+                name = "Generation",
                 text = {
-                    "Create a random consumable",
-                    "whenever you skip a Blind"
+                    "Create a random",
+                    "{C:attention}consumable{} when",
+                    "skipping any {C:attention}Blind{}"
                 }
-            },
-
-        },
-
+            }
+        }
     },
     misc = {
         dictionary = {
+            k_fac_blanthos_feed = "FEED",
             blanth_yum = "Yummy!",
-            blanth_bored = "Bored...",
-            blanth_placeholder = "YUFGTYUITWEYU"
+            blanth_bored = "Bored..."
         },
     }
 }

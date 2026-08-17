@@ -16,6 +16,8 @@ FishAndChips.Fish {
         city_river = 10,
         pier = 3
     },
+    blueprint_compat = false,
+    eternal_compat = false,
     can_use = function(self, card)
         return G.STATE == G.STATES.SHOP
     end,

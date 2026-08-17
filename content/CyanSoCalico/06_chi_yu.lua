@@ -1,10 +1,11 @@
 FishAndChips.Fish {
 	key = "csc_chi_yu",
 	atlas = "csc_fish",
-	pos = { x = 3, y = 7 },
+	pos = { x = 2, y = 1 },
 
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
+	badge_key = "k_fac_csc_pokemon",
 
 	attributes = { "xblindsize" },
 	config = {

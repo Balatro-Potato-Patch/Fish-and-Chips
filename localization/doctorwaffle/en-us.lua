@@ -73,7 +73,7 @@ return {
             fish_fac_waffle_squid_ink_cookie = {
                 name = "Squid Ink Cookie",
                 text = {
-                    "When hand is played, spend {C:money}$#1#{}",
+                    "When hand is played, spend {C:money}#1#{}",
                     "to convert {C:attention}#2#{} random card#3#",
                     "in deck into {V:1}#4#{} suit"
                 },

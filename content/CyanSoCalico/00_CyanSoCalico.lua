@@ -5,14 +5,26 @@ SMODS.Atlas({
 	py = 95,
 })
 
-G.ARGS.LOC_COLOURS["CyanSoCalico"] = HEX("7AC7AC")
-G.C["CyanSoCalico"] = HEX("7AC7AC")
+local loc_colours = {
+	CSC = "7AC7AC",
+	MLM1 = "078D70",
+	MLM2 = "98E8C1",
+	MLM3 = "FFFFFF",
+	MLM4 = "7BADE2",
+	MLM5 = "3D1A78"
+}
+
+for k, v in pairs(loc_colours) do
+	G.ARGS.LOC_COLOURS["fac_csc_"..k] = HEX(v)
+	G.C["fac_csc_"..k] = HEX(v)
+end
 
 PotatoPatchUtils.Developer({
 	name = 'CyanSoCalico',
 	atlas = 'fac_csc_fish',
-	pos = { x = 5, y = 14 },
-	colour = G.C.CyanSoCalico,
+	pos = { x = 1, y = 3 },
+	colour = G.C.fac_csc_CSC,
+	loc = true
 })
 --[[
 FishAndChips.Fish {

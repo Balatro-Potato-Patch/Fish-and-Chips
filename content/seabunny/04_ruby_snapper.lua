@@ -3,7 +3,7 @@ FishAndChips.Fish {
     key = "ruby_snapper",
     atlas = "seabunny",
     pos = {x = 3, y = 0},
-    config = {extra = {times = 5, count = 5}},
+    config = {extra = {times = 5, count = 0}},
     blueprint_compat = true,
     badge_key = "k_fac_seabunny_mineral_fish",
     loc_vars = function(self, info_queue, card)
@@ -16,7 +16,7 @@ FishAndChips.Fish {
         if context.selling_card and context.card.ability.set == "fac_Fish" then
             if not context.blueprint and not card.ability.extra.enchant then
                 card.ability.extra.count = card.ability.extra.count + 1
-                if card.ability.extra.count < card.ability.extra.times then
+                if card.ability.extra.count <= card.ability.extra.times then
                     return {
                         message = card.ability.extra.count .. "/" .. card.ability.extra.times
                     }

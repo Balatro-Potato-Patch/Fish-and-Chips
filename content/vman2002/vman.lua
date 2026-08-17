@@ -198,7 +198,7 @@ FishAndChips.Fish { --Manos
 	weight = 2,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
-	attributes = { "usable", "retrigger", "destroy_card", "self_eternal", "hand_type", "hands", }, -- is self_eternal even an attribute like. anywhere (mf)
+	attributes = { "usable", "retrigger", "self_eternal", "hand_type", "hands", }, -- is self_eternal even an attribute like. anywhere (mf)
 	config = {
 		extra = {
 			active = false,

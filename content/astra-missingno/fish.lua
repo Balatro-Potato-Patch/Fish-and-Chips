@@ -363,7 +363,7 @@ FishAndChips.Fish {
     weight = 5,
     ppu_coder = { "theAstra" },
     ppu_artist = { "MissingNo" },
-    attributes = { "usable", "economy", "modify_card", "perma_bonus", },
+    attributes = { "usable", "economy", "modify_card", "perma_bonus", "food", },
     blueprint_compat = false,
     requires_hand = true,
     impulse_max = 0.12,

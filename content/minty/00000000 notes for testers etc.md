@@ -4,5 +4,4 @@
 - Electric Eel's description doesn't match its effect (it also retriggers playing cards) and I can't remember which one was the original intent, pick whichever balances better ig
 - here is a picture of patchy being a cute little eepy baby
 
-[cat removed to aid repo size, sorry for the inconvenice]
-- noooooooo wtf.... (mf)
+![A calico cat curled up napping on a paper bag placed on a blue-lidded bin. There are a few small cat toys nearby.](https://imagehosting.troublecube.net/cpg/albums/userpics/10001/48/kbity.jpg)

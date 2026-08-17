@@ -12,12 +12,12 @@ local sound = nil
 
 SMODS.Sound {
     key = "sophie_egg",
-    path = "sophie/snd_egg.wav"
+    path = "sophie/snd_egg.ogg"
 }
 
 SMODS.Sound {
     key = "sophie_dumbvictory",
-    path = "sophie/snd_won.wav"
+    path = "sophie/snd_won.ogg"
 }
 
 -- I had to ditch your funny OS stuff sorry Sophie
@@ -241,7 +241,7 @@ FishAndChips.Fish {
     stats = {weight = {min = 0.0001, max = 0.0008}, length = {min = 0.01, max = 0.2}},
 	ppu_coder = { "Sophie" },
 	ppu_artist = { "gfs" },
-	attributes = { "passive", "mod_chance", "scaling", "destroy_card", },
+	attributes = { "passive", "mod_chance", "scaling", },
     blueprint_compat = false,
     eternal_compat = false,
 	config = {

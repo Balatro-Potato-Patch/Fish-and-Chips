@@ -525,7 +525,7 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                card.ability.extra.dollars,
+                localize('$') .. card.ability.extra.dollars,
                 card.ability.extra.conv_amount,
                 card.ability.extra.conv_amount > 1 and "s" or "",
                 card.ability.extra.conv_suit,
@@ -1428,5 +1428,6 @@ FishAndChips.Fish {
     can_use = function (self, card)
         local caught = G.FISHING and (card.area == G.FISHING.fac_fish_reward_area or card.area == G.FISHING.fac_treasure_reward_area)
         return card.area == G.fac_fish_area or caught or #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit
-    end
+    end,
+    pronouns = "they_them"
 }

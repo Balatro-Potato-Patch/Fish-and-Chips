@@ -60,7 +60,7 @@ return {
              fish_fac_yoray = {
                 name = "Yoray Eel",
                 text = {
-                    "each card in {C:attention}last{} discard",
+                    "Each card in {C:attention}final{} discard",
                     "of round gains {C:white,X:red}X#1#{} Mult"
                 },
                 flavor = {
@@ -72,7 +72,7 @@ return {
              fish_fac_canioctopus = {
                 name = "Canioctopus",
                 text = {
-                    "Create a random Bait when",
+                    "Create a random {C:attention}Bait{} when",
                     "any card is destroyed"
                 },
                 flavor = {
@@ -84,9 +84,9 @@ return {
              fish_fac_troutulet = {
                 name = "Troutulet",
                 text = {
-                    "Played Kings and Queens",
-                    "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} when scored",
-                    "and are retriggered"
+                    "Played {C:attention}Kings{} and {C:attention}Queens{}",
+                    "earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} when scored",
+                    "and are {C:attention}retriggered{}"
                 },
                 flavor = {
                     "A legendary fish. Not much is known about this species,",
@@ -96,9 +96,9 @@ return {
              fish_fac_chicod = {
                 name = "Chicod",
                 text = {
-                    "When any card is {C:attention}sold",
-                    "during a {C:attention}blind{}, reduce",
-                    "blind requirement by {C:red}X#1#"
+                    "{X:blind,C:white}X#1#{} Blind size",
+                    "when any card is sold",
+                    "during a {C:attention}Blind{}" -- this change could probably be reverted but i thought it would help with clarity ;w; - gabby
                 },
                 flavor = {
                     "A legendary fish. Fishermen often struggle to catch them",
@@ -155,7 +155,7 @@ return {
             fish_fac_bluebell_angler = {
                 name = "Bluebell Angler",
                 text = {{
-                    "Forces 1 card to always be selected",
+                    "Forces {C:attention}1{} card to always be selected",
                     "until first hand played each round"
                 },
                 {
@@ -189,11 +189,11 @@ return {
             },
             CCitty_tip1 = {
                 "Did you know? The legendary",
-                "Troutulet can be found in the City!"
+                "Troutulet can be found in the city!"
             },
             CCitty_tip2 = {
                 "Did you know? The legendary",
-                "Perkoio can be found in the Soup!",
+                "Perkoio can be found in the soup!",
             },
             CCitty_tip3 = {
                 "Did you know? The legendary",
@@ -289,7 +289,10 @@ return {
                 "Ohh yeah! I forgot about that"
             },
             CCitty_GoSmash = {
-                "Lets go smash"
+                "Let's go smash"
+            },
+            CCitty_gonext = {
+                "Go next"
             },
             CCitty_HowDare = {
                 "How dare you?"
@@ -311,10 +314,10 @@ return {
                 "a little bit of lubrication"
             },
             CCitty_MidVibes = {
-                "Pretty mid.. vibes, yeah"
+                "Pretty mid... vibes, yeah"
             },
             CCitty_Money = {
-                "As much as I love a hung man",
+                "As much as I love a hung man,",
                 "I think we take the money here"
             },
             CCitty_Nice = {
@@ -330,7 +333,7 @@ return {
                 "we can hold on to it"
             },
             CCitty_OhOkay = {
-                "Ohh, okay"
+                "Oh, okay"
             },
             CCitty_PlayThose = {
                 "Maybe play those. Maybe",
@@ -348,7 +351,7 @@ return {
                 "not. I would rather die"
             },
             CCitty_RIPRoffle = {
-                "Pour one out for Roffle....",
+                "Pour one out for Roffle...",
                 "He was a good chap"
             },
             CCitty_Risky = {
@@ -360,7 +363,7 @@ return {
             },
             CCitty_ShuffleSigh = {
                 "Now I'm gonna have to shuffle",
-                "me jimbos? ...... Sighh"
+                "me jimbos? ...... Sighhh"
             },
             CCitty_StinkyBoss = {
                 "This boss is pretty stinky"
@@ -398,7 +401,7 @@ return {
                 "Uh oh!"
             },
             CCitty_Uranus = {
-                "Uhh I think it's worth",
+                "Uhhh I think it's worth",
                 "losing a little bit of",
                 "interest for the guaranteed",
                 "peek at Uranus"

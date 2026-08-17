@@ -9,7 +9,7 @@ SMODS.Atlas{
 
 function FishAndChips.FooSqueax.link_kebab_and_top(args)
 	local kebab = args.kebab
-	if not args.kebab then
+	if (not args.kebab) and G.fac_fish_area then
 		for _, card in ipairs(G.fac_fish_area.cards) do
 			if card.config.center.key == "fish_fac_fas_fish_kebab" and card.ability.immutable.id == args.id then
 				kebab = card
@@ -96,10 +96,12 @@ FishAndChips.Fish{
 	end,
 	update = function (self, card, dt)
 		local kebab
-		for _, _card in ipairs(G.fac_fish_area.cards) do
-			if _card.config.center.key == "fish_fac_fas_fish_kebab" and _card.ability.immutable.id == card.ability.fac_fas_kebab.id then
-				kebab = _card
-				break
+		if G.fac_fish_area then
+			for _, _card in ipairs(G.fac_fish_area.cards) do
+				if _card.config.center.key == "fish_fac_fas_fish_kebab" and _card.ability.immutable.id == card.ability.fac_fas_kebab.id then
+					kebab = _card
+					break
+				end
 			end
 		end
 		if kebab then
@@ -167,7 +169,7 @@ FishAndChips.Fish{
 		})
 	end,
 	can_use = function (self, card)
-		if card.ability.immutable.fish > 0 then return true end
+		if (card.ability.immutable.fish > 0) or (not G.fac_fish_area) then return true end
 		for i, _card in ipairs(G.fac_fish_area.cards) do
 			if _card == card then return i ~= #G.fac_fish_area.cards end
 		end
@@ -177,17 +179,19 @@ FishAndChips.Fish{
 		if card.ability.immutable.fish == 0 then
 			local found = false
 			local free = {}
-			for _, _card in ipairs(G.fac_fish_area.cards) do
-				if found and _card.config.center.key ~= "fac_fas_fish_kebab" then
-					free[#free+1] = _card
-					_card.ability.fac_fas_kebab = {
-						id = card.ability.immutable.id,
-						order = card.ability.immutable.fish
-					}
-					card.ability.immutable.fish = card.ability.immutable.fish + 1
-					FishAndChips.FooSqueax.link_kebab(card, _card)
+			if G.fac_fish_area then
+				for _, _card in ipairs(G.fac_fish_area.cards) do
+					if found and _card.config.center.key ~= "fac_fas_fish_kebab" then
+						free[#free+1] = _card
+						_card.ability.fac_fas_kebab = {
+							id = card.ability.immutable.id,
+							order = card.ability.immutable.fish
+						}
+						card.ability.immutable.fish = card.ability.immutable.fish + 1
+						FishAndChips.FooSqueax.link_kebab(card, _card)
+					end
+					if _card == card then found = true end
 				end
-				if _card == card then found = true end
 			end
 			for _, _card in ipairs(free) do
 				_card.area:remove_card(_card)

@@ -32,10 +32,16 @@ return {
             fish_fac_froggy = {
                 name = "Froggy",
                 text = {
-                    "{X:mult,C:white}X#1#{} Mult for every",
-                    "round this {C:attention}Fish{} is owned.",
-                    "{C:red}May wander away.",
-                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
+                    {
+                        "{X:mult,C:white}X#1#{} Mult for every",
+                        "round this {C:attention}Fish{} is owned",
+                        "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
+                    },
+                    {
+                        "{C:green}#3# in #4#{} chance to {C:red}wander away{}",
+                        "at the end of a round",
+                        "{C:inactive}(Chance based on current XMult)",
+                    }
                 },
                 flavour = {
                     "Hold on Froggy,",

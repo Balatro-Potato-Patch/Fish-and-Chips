@@ -11,7 +11,7 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 0 },
 	ppu_coder = { "sleepyg11" },
 	ppu_artist = { "vevekhi" },
-	attributes = { "chips", "economy" },
+	attributes = { "chips", "economy", "food" }, -- Considering it's in a can I feel this fits (mf)
 	config = {
 		extra = {
 			chips = 10,

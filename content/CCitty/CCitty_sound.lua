@@ -1,23 +1,23 @@
 --garfield
 SMODS.Sound({
 	key = "CCitty_garf1",
-	path = "CCitty/garf1.mp3"
+	path = "CCitty/garf1.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_garf2",
-	path = "CCitty/garf2.mp3"
+	path = "CCitty/garf2.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_garf3",
-	path = "CCitty/garf3.mp3"
+	path = "CCitty/garf3.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_garf4",
-	path = "CCitty/garf4.mp3"
+	path = "CCitty/garf4.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_garf5",
-	path = "CCitty/garf5.mp3"
+	path = "CCitty/garf5.ogg"
 })
 
 
@@ -25,51 +25,51 @@ SMODS.Sound({
 --doc
 SMODS.Sound({
 	key = "CCitty_drewitup",
-	path = "CCitty/drewitup.mp3"
+	path = "CCitty/drewitup.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_ecstasy",
-	path = "CCitty/ecstasy.mp3"
+	path = "CCitty/ecstasy.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_gonext",
-	path = "CCitty/gonext.mp3"
+	path = "CCitty/gonext.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_laugh",
-	path = "CCitty/laugh.mp3"
+	path = "CCitty/laugh.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_lightemup",
-	path = "CCitty/lightemup.mp3"
+	path = "CCitty/lightemup.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_michelle",
-	path = "CCitty/michelle.mp3"
+	path = "CCitty/michelle.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_muhnee",
-	path = "CCitty/muhnee.mp3"
+	path = "CCitty/muhnee.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_nooo",
-	path = "CCitty/nooo.mp3"
+	path = "CCitty/nooo.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_sadmuhnee",
-	path = "CCitty/sadmuhnee.mp3"
+	path = "CCitty/sadmuhnee.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_stinky",
-	path = "CCitty/stinky.mp3"
+	path = "CCitty/stinky.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_welcomeback",
-	path = "CCitty/welcomeback.mp3"
+	path = "CCitty/welcomeback.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_yass",
-	path = "CCitty/yass.mp3"
+	path = "CCitty/yass.ogg"
 })
 
 --doc oggs
@@ -84,10 +84,6 @@ SMODS.Sound({
 SMODS.Sound({
 	key = "CCitty_Amount",
 	path = "CCitty/Doc_Amount.ogg"
-})
-SMODS.Sound({
-	key = "CCitty_Anything",
-	path = "CCitty/Doc_Anything.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_Ao3",
@@ -112,10 +108,6 @@ SMODS.Sound({
 SMODS.Sound({
 	key = "CCitty_Buttons",
 	path = "CCitty/Doc_Buttons.ogg"
-})
-SMODS.Sound({
-	key = "CCitty_CheckyDeck",
-	path = "CCitty/Doc_CheckyDeck.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_ChickenJoker",
@@ -152,6 +144,10 @@ SMODS.Sound({
 SMODS.Sound({
 	key = "CCitty_Interesting",
 	path = "CCitty/Doc_Interesting.ogg"
+})
+SMODS.Sound({
+	key = "CCitty_IsThatYou",
+	path = "CCitty/Doc_IsThatYou.ogg"
 })
 SMODS.Sound({
 	key = "CCitty_Kachow",
@@ -316,8 +312,4 @@ SMODS.Sound({
 SMODS.Sound({
 	key = "CCitty_3Cards",
 	path = "CCitty/Doc_3Cards.ogg"
-})
-SMODS.Sound({
-	key = "CCitty_IsThatYou",
-	path = "CCitty/Doc_IsThatYou.ogg"
 })

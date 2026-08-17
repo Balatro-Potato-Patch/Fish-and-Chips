@@ -170,7 +170,7 @@ SMODS.Sound {
 }
 SMODS.Sound {
 	key = 'laneda_chips',
-	path = 'lanedarushpy/chips.mp3',
+	path = 'lanedarushpy/chips.ogg',
 	volume = 1
 }
 SMODS.Sound {
@@ -688,7 +688,7 @@ FishAndChips.Fish {
                 return {
                     sand_dollars = current_pos - 2,
                     pre_func = function()
-                        G.E_MANAGER.add_event(Event({
+                        G.E_MANAGER:add_event(Event({
                             func = function(e)
                                 play_sound("fac_laneda_blowfish", 1.0)
                                 local left = G.fac_fish_area.cards[current_pos - 1]
@@ -857,7 +857,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
-	attributes = { "xmult", "chance", "food", "destroy_card", },
+	attributes = { "xmult", "chance", "food", },
 	config = {
 		extra = {
 			odds = 67,

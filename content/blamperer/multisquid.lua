@@ -87,6 +87,8 @@ FishAndChips.Fish {
         pier = 10,
         calm_pond = 4
     },
+    blueprint_compat = false,
+    eternal_compat = false,
     requires_hand = true,
     can_use = function(self, card)
         return #G.hand.highlighted <= card.ability.extra.select

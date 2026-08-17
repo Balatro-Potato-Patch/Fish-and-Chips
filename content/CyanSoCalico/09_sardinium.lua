@@ -1,10 +1,11 @@
 FishAndChips.Fish {
 	key = "csc_sardinium",
 	atlas = "csc_fish",
-	pos = { x = 7, y = 2 },
+	pos = { x = 2, y = 2 },
 
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
+	badge_key = "k_fac_maybe_fish",
 
 	attributes = { "hand_level", "usable", "hand_type", },
 

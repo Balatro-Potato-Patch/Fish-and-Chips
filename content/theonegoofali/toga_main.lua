@@ -51,7 +51,7 @@ end
 
 SMODS.Sound({key = "toga_fish", path = "theonegoofali/fish.ogg"})
 SMODS.Sound({key = "toga_fishreverse", path = "theonegoofali/fishreverse.ogg"})
-SMODS.Sound({key = "toga_spidersolitairehint", path = "theonegoofali/126.wav"})
+SMODS.Sound({key = "toga_spidersolitairehint", path = "theonegoofali/126.ogg"})
 SMODS.Sound({key = "toga_sonicspecialtext", path = "theonegoofali/s3k68.ogg"})
 SMODS.Sound({
 	key = "music_toga_shhh",
@@ -87,7 +87,7 @@ table.insert(fishregistry, {
 	flavour_vars = function(self, info_queue, card)
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 0.5, 0.5, 'fac_theonegoofali_thefish', { x = 0, y = 0 } ) } } }
 	end,
-	attributes = { "rank", "destroy_card", "hands", },
+	attributes = { "rank", "modify_card", "hands", },
 	environments = {
 		wormhole = 5,
 		soup = 5,

@@ -394,7 +394,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "xblindsize", "destroy_card", },
+	attributes = { "xblindsize", },
 	config = {
 		extra = {
 			blind = 1.5
@@ -481,7 +481,7 @@ FishAndChips.Fish {
 	weight = 4,
 	ppu_coder = { "Nick" },
 	ppu_artist = { "Nick" },
-	attributes = { "hand_type", "food", "hand_type", "destroy_card", },
+	attributes = { "hand_type", "food", "hand_type", },
 	config = {
 		extra = {
 			pear = 5,

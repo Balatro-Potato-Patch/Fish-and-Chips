@@ -4,6 +4,66 @@ local event = function (data)
 end
 local once = true
 
+---@param args table I forget how to spell this shit out lmao. not that anything uses it i'm just future-proofing
+---@return string wish_key Key in G.P_CENTERS of the available item
+---@return string wish_set Set of the available item
+---@return integer wish_cost Cost in sand dollars to buy the item
+local function get_wish(args)
+    if G.SETTINGS.paused then -- prevent rng advancement in collection and atp crash in main menu
+        return "j_joker", "Joker", 8
+    end
+
+    args = args or {}
+    local append = args.append or ""
+
+    if args.pool then
+        local any_available
+        for i,v in ipairs(args.pool) do
+            local succ, res = pcall(SMODS.add_to_pool, G.P_CENTERS[v], { source = "fac_minty_jeal" .. append })
+            if not (succ and res) then
+                args.pool[i] = "UNAVAILABLE"
+            else
+                any_available = true
+            end
+        end
+        if not any_available then args.pool = {"j_joker"} end
+        local wish
+        local iter = 0
+        repeat
+            wish = pseudorandom_element(args.pool, "fac_minty_jeal_choose_card" .. append .. iter)
+            iter = iter+1
+        until wish ~= "UNAVAILABLE"
+        return wish, args.force_set or G.P_CENTERS[wish].set, G.P_CENTERS[wish].cost * (args.cost_multiplier or 2)
+    end
+
+    local jokers, vouchers, etc = {}, {}, {}
+
+    for k, v in pairs(G.P_CENTERS) do
+        local atp = false
+        if (v.set == "Joker" or v.set == "Voucher" or v.set == args.force_set) and SMODS.add_to_pool(v, { source = "fac_minty_jeal" .. append }) then
+            atp = true
+        end
+        if v.set == "Joker" then
+            jokers[#jokers + 1] = atp and k or "UNAVAILABLE"
+        elseif v.set == "Voucher" then
+            vouchers[#vouchers + 1] = atp and k or "UNAVAILABLE"
+        elseif v.set == args.force_set then
+            etc[#etc + 1] = atp and k or "UNAVAILABLE"
+        end
+    end
+
+    if args.force_set == "Voucher" or pseudorandom("fac_minty_jeal_choose_set", 1, 10) == 10 then
+        local wish = pseudorandom_element(vouchers, "fac_minty_jeal_choose_card" .. append)
+        return wish, "Voucher", G.P_CENTERS[wish].cost * 1.5
+    elseif args.force_set and args.force_set ~= "Joker" then
+        local wish = pseudorandom_element(etc, "fac_minty_jeal_choose_card" .. append)
+        return wish, args.force_set, G.P_CENTERS[wish].cost * (args.cost_multiplier or 2)
+    else
+        local wish = pseudorandom_element(jokers, "fac_minty_jeal_choose_card" .. append)
+        return wish, "Joker", G.P_CENTERS[wish].cost * 2
+    end
+end
+
 FishAndChips.Fish{
     key = "minty_jeal",
     pronouns = "he_him",
@@ -133,32 +193,8 @@ FishAndChips.Fish{
         end)
     end,
     set_ability = function (self, card, initial, delay_sprites)
-        local jokers, vouchers = {}, {}
-
-        for k,v in pairs(G.P_CENTERS) do
-            local atp = false
-            -- This is causing a crash when viewing this page on the title screen collection due to polling if the fish
-            -- is in the pool or not. Not sure best way to fix - WilsontheWolf
-            if SMODS.add_to_pool(v, {source = "fac_minty_jeal"}) then
-                atp = true
-            end
-            if v.set == "Joker" then
-                jokers[#jokers+1] = atp and k or "UNAVAILABLE"
-            elseif v.set == "Voucher" then
-                vouchers[#vouchers+1] = atp and k or "UNAVAILABLE"
-            end
-        end
-
-        if pseudorandom("fac_minty_jeal_choose_set", 1, 10) == 10 then
-            local wish = pseudorandom_element(vouchers, "fac_minty_jeal_choose_card")
-            card.ability.extra.wish = wish
-            card.ability.extra.set = "Voucher"
-            card.ability.extra.cost = G.P_CENTERS[wish].cost * 1.5
-        else
-            local wish = pseudorandom_element(jokers, "fac_minty_jeal_choose_card")
-            card.ability.extra.wish = wish
-            card.ability.extra.set = "Joker"
-            card.ability.extra.cost = G.P_CENTERS[wish].cost * 2
+        if not G.SETTINGS.paused then
+            card.ability.extra.wish, card.ability.extra.set, card.ability.extra.cost = get_wish{}
         end
 
         event(function ()
@@ -177,34 +213,10 @@ FishAndChips.Fish{
     end,
     calculate = function (self, card, context)
         if context.after then
-            local jokers, vouchers = {}, {}
-
-            for k,v in pairs(G.P_CENTERS) do
-                local atp = false
-                if SMODS.add_to_pool(v, {source = "fac_minty_jeal"}) then
-                    atp = true
-                end
-                if v.set == "Joker" then
-                    jokers[#jokers+1] = atp and k or "UNAVAILABLE"
-                elseif v.set == "Voucher" then
-                    vouchers[#vouchers+1] = atp and k or "UNAVAILABLE"
-                end
-            end
-
-            if pseudorandom("fac_minty_jeal_choose_set", 1, 10) == 10 then
-                local wish = pseudorandom_element(vouchers, "fac_minty_jeal_choose_card")
-                card.ability.extra.wish = wish
-                card.ability.extra.set = "Voucher"
-                card.ability.extra.cost = G.P_CENTERS[wish].cost * 1.5
-            else
-                local wish = pseudorandom_element(jokers, "fac_minty_jeal_choose_card")
-                card.ability.extra.wish = wish
-                card.ability.extra.set = "Joker"
-                card.ability.extra.cost = G.P_CENTERS[wish].cost * 2
-            end
+            card.ability.extra.wish, card.ability.extra.set, card.ability.extra.cost = get_wish{}
 
             return {
-                message = localize("k_reset")
+                message = localize{type = "name_text", key = card.ability.extra.wish, set = card.ability.extra.set}.."!"
             }
         end
     end

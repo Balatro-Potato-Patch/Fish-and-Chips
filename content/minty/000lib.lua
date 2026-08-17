@@ -1,26 +1,26 @@
 SMODS.Sound{
     key = "minty_meow",
-    path = "minty/meow.wav"
+    path = "minty/meow.ogg"
 }
 
 SMODS.Sound{
     key = "minty_good",
-    path = "minty/tc good.wav"
+    path = "minty/tc good.ogg"
 }
 
 SMODS.Sound{
     key = "minty_cool",
-    path = "minty/tc cool.wav"
+    path = "minty/tc cool.ogg"
 }
 
 SMODS.Sound{
     key = "minty_slash",
-    path = "minty/tc slash.wav"
+    path = "minty/tc slash.ogg"
 }
 
 SMODS.Sound{
     key = "minty_defeat",
-    path = "minty/tc defeat.wav"
+    path = "minty/tc defeat.ogg"
 }
 
 SMODS.Sound{

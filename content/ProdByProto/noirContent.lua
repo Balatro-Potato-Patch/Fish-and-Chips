@@ -93,7 +93,7 @@
         atlas = "fac_proto_fish",
 
 		pos = { x = 2, y = 0 },
-        pixel_size = { w,h = 61,32},
+        pixel_size = { w = 61, h = 32},
 
         stats = {
             weight = { min = 3.75, max = 4.5 },
@@ -144,18 +144,17 @@
         blueprint_compat = false,
 
         loc_vars = function(self, info_queue, card)
-            cae = card.ability.extra
+            local cae = card.ability.extra
             local vars_ = {}
             if cae.storyComplete then
-                vars_[#vars_+1] = localize({type = "variable", key = "proot_sanddoller", vars = {math.floor(cae.finalScore/10)}})
-                if cae.finalScore > 144 then vars_[#vars_+1] = "{C:chips}"..localize({type = "variable", key = "a_chips", vars = {cae.finalScore*2}}) else vars_[#vars_+1] = " " end
-                if cae.finalScore > 184 then vars_[#vars_+1] = "{C:white,X:mult}"..localize({type = "variable", key = "a_xmult", vars = {cae.finalScore/100}}) else vars_[#vars_+1] = " " end
-            else
-                vars_[#vars_+1] = " "
-                vars_[#vars_+1] = localize("proot_noir_desc")
-                vars_[#vars_+1] = " "
+                vars_[#vars_+1] = math.floor(cae.finalScore/10)
+                if cae.finalScore > 144 then vars_[#vars_+1] = cae.finalScore*2 end
+                if cae.finalScore > 184 then vars_[#vars_+1] = cae.finalScore/100 end
             end
-            return({vars = vars_})
+            return({
+                key = self.key .. (cae.storyComplete and '_complete_' .. #vars_ or ''),
+                vars = vars_,
+            })
         end,
 
 
@@ -255,7 +254,6 @@
                         end
                         if context.other_card.ability.noir_mark == "truedoor" then ret.message = (localize("proot_noir_locked")) end
                     end
-                    auxFound = nil
                     if not (context.other_card.ability.noir_mark == "truedoor" or context.other_card.ability.noir_mark == "lockdoor") then
                         if context.other_card.ability.noir_mark == "soda" and context.other_card.ability.noir_level then G.GAME.proto_q_music = "noir2" end
                         facp.noirProg({ flg = context.other_card.ability.noir_plot, lvl = context.other_card.ability.noir_level })
@@ -281,7 +279,7 @@
                     G.GAME.noir_popup = false
                 end
 
-                if context.end_of_round and cae.level == 4 and not G.GAME.noir_popup then
+                if context.end_of_round and context.main_eval and cae.level == 4 and not G.GAME.noir_popup then
                     facp.noirProg({ flg = 4, lvl = 5 })
                 end
 
@@ -390,7 +388,7 @@
 		atlas = "fac_proto_fish",
 
 		pos = { x = 3, y = 0 },
-        pixel_size = {w,h = 53,8},
+        pixel_size = {w = 53, h = 8},
 
 		stats = {
 			weight = { min = 0.015, max = 0.020 },
@@ -401,15 +399,9 @@
 		attributes = { "usable" },
 		environments = facp.addEnvs(),
 
-		config = {
-			extra = {
-
-			}
-		},
-
-		loc_vars = function(self, info_queue, card)
-
-		end,
+		in_pool = function (self, args)
+            return #SMODS.find_card("fac_proto_noir") > 0
+        end,
 
         can_use = function (self, card)
             for _,held_card in ipairs(G.hand.cards) do

@@ -110,6 +110,12 @@ FishAndChips.Fish {
         end
 		if context.joker_main then return { chips = card.ability.extra.chips } end
 	end,
+    in_pool = function()
+        for i = 0, 4 do
+            if next(SMODS.find_card("fish_fac_" .. i .. "dgreenfish")) then return false end
+        end
+        return true
+    end
 }
 
 FishAndChips.Fish {
@@ -169,6 +175,12 @@ FishAndChips.Fish {
         end
 		if context.joker_main then return { mult = card.ability.extra.mult } end
 	end,
+    in_pool = function()
+        for i = 0, 4 do
+            if next(SMODS.find_card("fish_fac_" .. i .. "dgreenfish")) then return false end
+        end
+        return true
+    end
 }
 
 FishAndChips.Fish {
@@ -230,6 +242,12 @@ FishAndChips.Fish {
         end
 		if context.joker_main then return { xmult = card.ability.extra.xmult } end
 	end,
+    in_pool = function()
+        for i = 0, 4 do
+            if next(SMODS.find_card("fish_fac_" .. i .. "dgreenfish")) then return false end
+        end
+        return true
+    end
 }
 
 FishAndChips.Fish {
@@ -299,7 +317,13 @@ FishAndChips.Fish {
             end
         end
 		if context.joker_main then return { xmult = card.ability.extra.xmult } end
-	end
+	end,
+    in_pool = function()
+        for i = 0, 4 do
+            if next(SMODS.find_card("fish_fac_" .. i .. "dgreenfish")) then return false end
+        end
+        return true
+    end
 }
 
 FishAndChips.Fish {
@@ -364,6 +388,12 @@ FishAndChips.Fish {
             }
         end
 	end,
+    in_pool = function()
+        for i = 0, 4 do
+            if next(SMODS.find_card("fish_fac_" .. i .. "dgreenfish")) then return false end
+        end
+        return true
+    end
 }
 
 --#endregion

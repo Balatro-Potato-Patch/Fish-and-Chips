@@ -5,7 +5,7 @@ FishAndChips.Fish {
     pos = {x=4,y=0},
     ppu_coder = { 'Youh' },
     ppu_artist = { 'Gappie' },
-    attributes = { 'chips', 'destroy_card', "editions", },
+    attributes = { 'chips', 'food', "editions", },
     stats = {
         weight = {min = 1, max = 2},
         length = {min = 0.45, max = 0.65}

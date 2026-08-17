@@ -415,7 +415,7 @@ SMODS.Sound {
 
 SMODS.Sound {
 	key = 'tss_swoon_bageldefeat',
-	path = 'the_s_squad/swoon/bageldefeat.wav'
+	path = 'the_s_squad/swoon/bageldefeat.ogg'
 }
 
 SMODS.Sound {
@@ -425,20 +425,20 @@ SMODS.Sound {
 
 SMODS.Sound {
 	key = 'tss_swoon_damage',
-	path = 'the_s_squad/swoon/damage.wav'
+	path = 'the_s_squad/swoon/damage.ogg'
 }
 
 SMODS.Sound {
 	key = 'tss_swoon_glassbreak',
-	path = 'the_s_squad/swoon/glassbreak.wav'
+	path = 'the_s_squad/swoon/glassbreak.ogg'
 }
 
 SMODS.Sound {
 	key = 'tss_swoon_impact',
-	path = 'the_s_squad/swoon/impact.wav'
+	path = 'the_s_squad/swoon/impact.ogg'
 }
 
 SMODS.Sound {
 	key = 'tss_swoon_knight_cut2',
-	path = 'the_s_squad/swoon/knight_cut2.wav'
+	path = 'the_s_squad/swoon/knight_cut2.ogg'
 }

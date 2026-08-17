@@ -207,13 +207,16 @@ SMODS.RunSelectPage({
 	end,
 	start_run = function(self, choice)
 		choice = G.P_CENTERS[choice].unlocked and choice or 'rod_fac_wooden'
-		SMODS.add_card{area = G.fac_rod_area, key = choice}
+		local rod = SMODS.add_card{area = G.fac_rod_area, key = choice}
 		G.PROFILES[G.SETTINGS.profile].fac_fishing.rod_data[choice] = G.PROFILES[G.SETTINGS.profile].fac_fishing.rod_data[choice] or {
 			fish_caught = 0,
 			fish_lost = 0,
 			perfect_catch = 0,
 			treasure = 0
 		}
+		if rod.config.center.apply and type(rod.config.center.apply) == 'function' then
+			rod.config.center:apply(rod)
+		end
 	end,
 	set_default = function(self, choice)
 		return choice and G.P_CENTERS[choice].unlocked and choice or 'rod_fac_wooden'

@@ -86,12 +86,12 @@ SMODS.Sound {
 
 SMODS.Sound {
     key = "fac_fo_splat",
-    path = "fountain_openers/fac_fo_splat.wav"
+    path = "fountain_openers/fac_fo_splat.ogg"
 }
 
 SMODS.Sound {
     key = "fac_fo_knight_cut2",
-    path = "fountain_openers/fac_fo_knight_cut2.wav"
+    path = "fountain_openers/fac_fo_knight_cut2.ogg"
 }
 
 SMODS.Sound {

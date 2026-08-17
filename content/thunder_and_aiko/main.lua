@@ -26,7 +26,7 @@ FishAndChips.Fish({
 		wormhole = 1,
 		styx = 2,
 	},
-	attributes = { "copying", "chance", "position", "generation", "joker", "destroy_card", },
+	attributes = { "copying", "chance", "position", "generation", "joker", },
 	ppu_coder = { "thunderedge" },
 	ppu_artist = { "aikoyori" },
 	config = { extra = { odds = 6 } },

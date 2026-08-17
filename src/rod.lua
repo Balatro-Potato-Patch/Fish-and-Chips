@@ -78,6 +78,15 @@ FishAndChips.Rod {
 	key = "wooden",
 	discovered = true,
 	ppu_artist = { "DottyKitty" },
+	apply = function(self, rod)
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				local key = pseudorandom_element(G.P_CENTER_POOLS["fac_Bait"], "wooden_rod").key
+				FishAndChips.add_bait_to_inventory(key, 1)
+				return true;
+			end
+		}))
+	end
 }
 
 FishAndChips.Rod {

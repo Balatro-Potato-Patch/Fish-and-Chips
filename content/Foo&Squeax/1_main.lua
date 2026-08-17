@@ -71,6 +71,15 @@ PotatoPatchUtils.Developer{
 		if context.fac_end_fishing and context.fish then
 			G.GAME.fac_FooSqueax.fish_caught[context.fish] = true
 		end
+
+		if context.end_of_round and context.main_eval then
+			if G.GAME.fac_FooSqueax.tobies > 0 then
+				local gobies = #SMODS.find_card('fish_fac_fas_annoying_fish')
+				if G.GAME.fac_FooSqueax.tobies > gobies * 3 then
+					G.GAME.fac_FooSqueax.tobies = G.GAME.fac_FooSqueax.tobies - 1
+				end
+			end
+		end
 	end,
 	click = function(self)
 		FishAndChips.FooSqueax.undertale:init(self)
@@ -133,7 +142,7 @@ function FishAndChips.FooSqueax.sqx_credit_ui_fish()
 		"kawkaw",
 		"annoying_fish",
 		"isreal",
-		--"super_bo_noise",
+		"super_bo_noise",
 		"kine",
 		'tsundere',
 		'you',

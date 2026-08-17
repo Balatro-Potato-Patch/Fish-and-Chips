@@ -1,21 +1,21 @@
 SMODS.Sound {
 	key = "floundery_goodbye",
-	path = "CyanSoCalico/floundery_goodbye.wav"
+	path = "CyanSoCalico/floundery_goodbye.ogg"
 }
 
 SMODS.Sound {
 	key = "floundery_nonono",
-	path = "CyanSoCalico/floundery_nonono.wav"
+	path = "CyanSoCalico/floundery_nonono.ogg"
 }
 
 SMODS.Sound {
 	key = "floundery_heyguys",
-	path = "CyanSoCalico/floundery_heyguys.wav"
+	path = "CyanSoCalico/floundery_heyguys.ogg"
 }
 
 SMODS.Sound {
 	key = "floundery_explosion",
-	path = "CyanSoCalico/floundery_explosion.wav"
+	path = "CyanSoCalico/floundery_explosion.ogg"
 }
 
 --[[
@@ -129,7 +129,8 @@ FishAndChips.Fish {
 FishAndChips.Fish {
 	key = "csc_floundery",
 	atlas = "csc_fish",
-	pos = { x = 7, y = 10 },
+	pos = { x = 0, y = 1 },
+	badge_key = "k_fac_maybe_fish",
 
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },

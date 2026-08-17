@@ -32,7 +32,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "Ben" },
 	ppu_artist = { "Ben" },
-	attributes = { "economy" },
+	attributes = { "economy", "passive", },
 	config = {
 	},
 	environments = {
@@ -76,7 +76,7 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "Ben" },
 	ppu_artist = { "Ben" },
-	attributes = { "copying" },
+	attributes = { "copying", "joker", "position", },
 	config = {
 		extra = {
 			slot = 1
@@ -99,8 +99,8 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
         if card.area and card.area == G.fac_fish_area then
             local joker
-            if card.ability.extra.slot > #G.jokers.cards then 
-				joker = false 
+            if card.ability.extra.slot > #G.jokers.cards then
+				joker = false
 			else
 				joker = G.jokers.cards[card.ability.extra.slot]
 			end
@@ -127,7 +127,7 @@ FishAndChips.Fish {
 	stats = {weight = {min = 0.0008, max = 0.002}, length = {min = 0.05, max = 0.08}},
 	calculate = function(self, card, context)
 		local ret
-        if card.ability.extra.slot <= #G.jokers.cards then  
+	        if card.ability.extra.slot <= #G.jokers.cards then  
 			local joker = G.jokers.cards[card.ability.extra.slot]
 			ret = SMODS.blueprint_effect(card, joker, context)
 		end
@@ -157,7 +157,7 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			calm_pond = false,
-			city_river = false, 
+			city_river = false,
 			swamp = false,
 			volcano = false,
 			aquifer = false,
@@ -173,7 +173,7 @@ FishAndChips.Fish {
 	},
 	environments = {
 		calm_pond = 10,
-		city_river = 10, 
+		city_river = 10,
 		swamp = 10,
 		--volcano = 10,
 		aquifer = 10,
@@ -230,9 +230,8 @@ FishAndChips.Fish {
 	weight = 10,
 	ppu_coder = { "Ben" },
 	ppu_artist = { "Ben" },
-	attributes = { 
-		"scaling",
-		"xmult" 
+	attributes = {
+		"xmult"
 	},
 	config = {
 		extra = {
@@ -268,24 +267,6 @@ FishAndChips.Fish {
 	end,
 }
 
-baitpool = {	-- TO DO: change use of this table to polling the bait pool (ghostsalt :3 hai)
-	"bait_fac_normal",
-	"bait_fac_mult",
-	"bait_fac_chips",
-	"bait_fac_economy",
-	"bait_fac_xmult",
-	"bait_fac_retrigger",
-	"bait_fac_space",
-	"bait_fac_function",
-	"bait_fac_suit",
-	"bait_fac_passive",
-	"bait_fac_rank",
-	"bait_fac_copy",
-	"bait_fac_generation",
-	"bait_fac_boss",
-	"bait_fac_destroy"
-}
-
 FishAndChips.Fish {
 	key = "benvoucher",
 	atlas = "fac_benfish",
@@ -296,7 +277,7 @@ FishAndChips.Fish {
 	attributes = { "generation" },
 	config = {
 		extra = {
-			
+
 		}
 	},
 	environments = {
@@ -319,10 +300,11 @@ FishAndChips.Fish {
 	stats = {weight = {min = 0.001, max = 0.002}, length = {min = 0.1, max = 0.1}},
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval then
-			--key = pseudorandom_element(G.P_CENTER_POOLS["fac_Bait"], "benvoucher").key	--This is the optimal way, but breaks because of bait.lua 217
-																							--args.source indexes a nil value on pseudorandom_element
-			local key = pseudorandom_element(baitpool, "benvoucher")
+			local key = pseudorandom_element(G.P_CENTER_POOLS["fac_Bait"], "benvoucher").key
 			FishAndChips.add_bait_to_inventory(key, 1)
+			return {
+				message = '+1 ' .. localize { set = 'fac_Bait', key = key, type = 'name_text' }
+			}
 		end
 	end,
 }
@@ -340,7 +322,7 @@ FishAndChips.Fish {
 	attributes = { "" },
 	config = {
 		extra = {
-			
+
 		}
 	},
 	environments = {
@@ -362,7 +344,7 @@ FishAndChips.Fish {
 	end,
 	stats = {weight = {min = 0.0008, max = 0.002}, length = {min = 0.05, max = 0.08}},
 	calculate = function(self, card, context)
-		
+
 	end,
 }
 --]]

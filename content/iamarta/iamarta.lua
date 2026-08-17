@@ -65,7 +65,7 @@ FishAndChips.Fish{
     },
     config = {
         extra = {
-            xmult_gain = 0.25,
+            xmult_gain = 0.5,
             xmult = 1
         }
     },
@@ -79,7 +79,7 @@ FishAndChips.Fish{
         if context.joker_main and card.ability.extra.xmult > 1 then
             return {xmult = card.ability.extra.xmult}
         elseif context.fac_fish_caught then
-            if not context.blueprint and context.perfect then
+            if not context.blueprint and context.perfect and FishAndChips.get_bait_inventory_item(G.GAME.fac_active_bait).amt > 1 then
 
                 G.E_MANAGER:add_event(Event({
                     func = function()

@@ -235,7 +235,7 @@ FishAndChips.Fish({
         chocolate_river = 3,
         garden = 2
     },
-    attributes = {'on_sell',},
+    attributes = {'on_sell', "food",},
     stats = {
         weight = {min = 0.010, max = 0.014},
         length = {min = 0.115, max = 0.115},
@@ -262,7 +262,7 @@ FishAndChips.Fish({
         city_river = 4,
         pier = 2
     },
-    attributes = {'scaling', 'xmult'},
+    attributes = {'scaling', 'xmult', "food"},
     stats = {
         weight = {min = 3.8, max = 4.3},
         length = {min = 0.56, max = 0.91},
@@ -345,6 +345,9 @@ FishAndChips.Fish({
             G.GAME.fac_environment_reroll_cost = G.GAME.fac_environment_reroll_cost + (card.ability.extra.track or 0)
             card.ability.extra.track = 0
         end
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.GAME.fac_environment_reroll_cost = G.GAME.fac_environment_reroll_cost + (card.ability.extra.track or 0)
     end,
 })
 
@@ -469,6 +472,7 @@ FishAndChips.Fish({
         weight = {min = 515, max = 2136},
         length = {min = 0.60, max = 0.90},
     },
+    blueprint_compat = false,
     config = {extra = {enhancement = 'm_gold', amount = 3, reset = 3, current = 0, active = true}},
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = {set='Other',key='fac_r_e_temp'}
@@ -524,13 +528,14 @@ FishAndChips.Fish({
         end
         if context.fac_end_fishing and not card.ability.extra.active and context.treasure then
             card.ability.extra.current = card.ability.extra.current + 1
-            if card.ability.extra.current == card.ability.extra.reset then
+            if card.ability.extra.current >= card.ability.extra.reset then
                 draw_card(G.fac_fish_area, G.play, nil, nil, nil, card)
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after', delay = 0.7,
                     func = function()
                         card:juice_up()
                         card.children.center:set_sprite_pos({x=3, y=1})
+                        card.ability.extra.current = 0
                         card.ability.extra.active = true
                         return true
                     end

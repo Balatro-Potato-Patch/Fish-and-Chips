@@ -112,7 +112,7 @@ return {
                 name = 'Neon Tetra',
                 text = {
                     'If played hand is a {C:attention}Four of a Kind{},',
-                    'scoring cards have a {C:green}1 in 4 chance{}',
+                    'scoring cards have a {C:green}#1# in #2# chance{}',
                     'to gain {C:dark_edition}Polychrome{} edition'
                 },
                 flavour = {

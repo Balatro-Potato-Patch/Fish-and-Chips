@@ -1,3 +1,22 @@
+local name = function(fish)
+    return localize { type = "name_text", set = "fac_Fish", key = fish.config.center_key }
+end
+
+local is_one_word = function(fish)
+    for char in name(fish):gmatch('.') do
+        if char == ' ' then return false end
+    end
+    return true
+end
+
+local one_word_count = function()
+    local c = 0
+    for _, fish in pairs(G.fac_fish_area.cards) do
+        c = c + (is_one_word(fish) and 1 or 0)
+    end
+    return c
+end
+
 FishAndChips.Fish {
     key = "blamperer_kala",
     atlas = "blamperer_fitch",
@@ -9,8 +28,7 @@ FishAndChips.Fish {
     },
     config = {
         extra = {
-            -- BALANCE: Balanced around otherwise empty bucket = 2X (1/5 slots filled)
-            slot_mult = 0.25
+            slot_mult = 0.5
         }
     },
     stats = {
@@ -23,16 +41,12 @@ FishAndChips.Fish {
         garden = 10
     },
     loc_vars = function(self, info_queue, card)
-        local fish_slots_open = math.max(G.fac_fish_area and (G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) or 0, 0)
-        local total_mult = 1 + (fish_slots_open * card.ability.extra.slot_mult)
-        return { vars = { card.ability.extra.slot_mult, total_mult } }
+        local one_word_fish = G.fac_fish_area and one_word_count() or 0
+        return { vars = { card.ability.extra.slot_mult, 1 + (one_word_fish * card.ability.extra.slot_mult) } }
     end,
     calculate = function(self, card, context)
         if context.joker_main then
-            local fish_slots_open = math.max(G.fac_fish_area and (G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) or 0, 0)
-            return {
-                xmult = 1 + (fish_slots_open * card.ability.extra.slot_mult)
-            }
+            return { xmult = 1 + (one_word_count() * card.ability.extra.slot_mult) }
         end
     end
 }

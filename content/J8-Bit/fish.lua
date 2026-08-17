@@ -987,7 +987,7 @@ FishAndChips.Fish {
                     for i = 1, card.ability.extra.bait do
                         G.E_MANAGER:add_event(Event {
                             func = function()
-                                G.fac_shark_bait_area.cards[i]:start_dissolve()
+                                G.fac_shark_bait_area.cards[1]:start_dissolve()
                                 return true
                             end
                         })
@@ -1088,6 +1088,8 @@ FishAndChips.Fish {
     attributes = {
         "passive",
         "economy",
+        "deltarune",
+        "utdr",
     },
     loc_vars = function(self, info_queue, card)
         return {
@@ -1103,7 +1105,7 @@ FishAndChips.Fish {
     flavour_vars = function(self, info_queue, card)
         local possible_popups = {fac_j8bit_trustmeimadolphin_sprite, "dyna"}
         local elem = possible_popups[math.random(#possible_popups)]
-        if elem == "dyna" then 
+        if elem == "dyna" then
             local popup_quotes = {}
             for i = 1, 6 do
                 table.insert(popup_quotes, localize("k_J8-Bit_poppup_quote_" .. tostring(i)))
@@ -1884,7 +1886,9 @@ FishAndChips.Fish {
     attributes = {
         "passive",
         "generation",
-        "editions"
+        "editions",
+        "deltarune", -- Flavour text is a reference
+        "utdr",
     },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_generic', set = 'Edition', config = { extra = 1 } }

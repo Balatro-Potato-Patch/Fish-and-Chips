@@ -39,6 +39,11 @@ FishAndChips.Fish {
 				end
 				return {
 					xmult = 0,
+					xmult_message = {
+						message = localize{type='variable',key='a_xmult',vars={0}},
+						sound_override = 'multhit2',
+						colour = G.C.MULT
+					}
 				}
 			end
 		end

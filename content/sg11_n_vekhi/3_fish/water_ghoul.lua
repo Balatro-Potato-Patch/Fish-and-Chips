@@ -11,7 +11,7 @@ FishAndChips.Fish({
     pos = { x = 0, y = 0 },
     ppu_coder = { "sleepyg11" },
     ppu_artist = { "vevekhi" },
-    attributes = { "usable", "editions", "destroy_card", },
+    attributes = { "usable", "editions", },
     blueprint_compat = false,
     eternal_compat = false,
     config = {

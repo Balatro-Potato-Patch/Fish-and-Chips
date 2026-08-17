@@ -44,10 +44,42 @@ return {
             fish_fac_proto_noir = {
                 name = "Noir Fish",
                 text = {
-                "#1#","#2#","#3#"
+                "Use this fish to",
+                "play a {C:dark_edition}Noir Storyline",
+                "{C:red,s:0.8}Warning:{s:0.8} Requires lots of reading"
                 },
                 flavor = {
-                    "A mysterious detective, looking to re-enter the PI scene..."
+                    "A mysterious detective,", "looking to re-enter the PI scene..."
+                }
+            },
+            fish_fac_proto_noir_complete_1 = {
+                name = "Noir Fish",
+                text = {
+                "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} at end of round",
+                },
+                flavor = {
+                    "A mysterious detective,", "looking to re-enter the PI scene..."
+                }
+            },
+            fish_fac_proto_noir_complete_2 = {
+                name = "Noir Fish",
+                text = {
+                "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} at end of round",
+                "{C:chips}+#2#{} Chips"
+                },
+                flavor = {
+                    "A mysterious detective,", "looking to re-enter the PI scene..."
+                }
+            },
+            fish_fac_proto_noir_complete_3 = {
+                name = "Noir Fish",
+                text = {
+                "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} at end of round",
+                "{C:chips}+#2#{} Chips",
+                "{X:mult,C:white}X#3#{} Mult"
+                },
+                flavor = {
+                    "A mysterious detective,", "looking to re-enter the PI scene..."
                 }
             },
             fish_fac_proto_lockpick = {
@@ -202,7 +234,6 @@ return {
             proot_noir_finalitems = "Items Presented: ",
             proot_noir_finalscore = "Final Score: ",
             proot_noir_credits = "Music, Writing, and Gameplay by the Proto System, Proofreading and Writing Feedback by AllUniversal",
-            proot_noir_desc = "Use this fish to play a noir storyline. warning: lots of reading"
 
         },
         v_dictionary = {
@@ -214,7 +245,6 @@ return {
             proot_noir6 = "Two weeks later...\n \nI sit at a small table in a waiting room, prepared to present my findings to the court.\nThe authorities had put together this hearing very quickly, all things considered, although I suppose thats par for the course, given this criminal group\'s track record of murder and burning the evidence, not to mention those illegal drugs, likely including grade A orange soda.\nI don\'t touch that stuff, just standard grocery store grade stuff for me, thank you very much...\n \nAs the serious, official looking guy in a suit that every building ought to have calls my name, I feel a sense of accomplishment.\nIt is time to #1# after years of silence#2#...\n \n[Objective: Find and play whichever evidence you think is most likely to win the case.\nNoir Fish won\'t make you lose here, but its ability will change depending on how good the evidence is!\nYou have 7 hands to play 3 evidence cards.]#3#",
             proot_noir7 = "#1#",
             proot_noir8 = "While I didn\'t have time to read that memo during my investigation,\nI made sure to take time for that after the fact. It was an order to- to...\n \n...murder my wife by any means necessary, and it stated that we\'d be conducting an investigation at the\nlocal soda production line. How they knew that was beyond me... Another... Another note- noteworthy detail i- is that...\n \nit was in the same handwriting as the address that Janice gave me. Of course,\nthe address for the first place I was to investigate was in different handwriting; the second address was only written at a moment\'s notice.\nN- no time to think about disguising her handwriting...\n \nI\'m in the room with a wife killer.\n \nThe judge notices my distraught expression, and calls for a recess from the ongoing trial.\nJanice likely noticed my expression too, and I can neither let her get away from the hearing, nor with what she has done.\nI swallow the lump in my throat, and attempt to stay only a few paces from the killer at any given moment. It will know justice.\n \nThe malefactor transitions into a brisk walk before I can form a contingency plan to prevent its escape. \nI subtly pick up the pace, too; before I know it, the reprobate escalates its escape attempt into a run.\nI follow suit, prepared to apprehend by any means necessary.\n \n[Play marked cards to close the distance between The Detective and The Killer.\nIf the counter goes below 0, the Noir Fish will be destroyed. Reach 10 to win.]",
-            proot_sanddoller = "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} at end of round."
         }
     }
 }

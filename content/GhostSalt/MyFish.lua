@@ -100,7 +100,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0, max = 0 }, length = { min = 0.50, max = 1.00 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "modify_card", "tarot", "spectral", "consumable_slot", "consumable", },
+	attributes = { "modify_card", "tarot", "spectral", "consumable_slot", "consumable" },
 	environments = {
 		styx = 10,
 		swamp = 5,
@@ -205,7 +205,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.40, max = 0.60 }, length = { min = 0.20, max = 0.50 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "generation", "planet", "consumable", "on_sell", },
+	attributes = { "generation", "planet", "consumable", "on_sell" },
 	environments = {
 		wormhole = 10,
 		soup = 5
@@ -257,7 +257,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 1.30, max = 4.00 }, length = { min = 0.20, max = 0.45 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "generation", "consumable", },
+	attributes = { "generation", "consumable" },
 	environments = {
 		city_river = 10,
 		aquifer = 4,
@@ -737,7 +737,7 @@ FishAndChips.Fish {
 	weight = fac_ghostsalt_common_weight,
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "xmult", "fac_fish_slot", },
+	attributes = { "xmult", "fac_fish_slot" },
 	environments = {
 		styx = 10,
 		city_river = 8,
@@ -768,7 +768,7 @@ FishAndChips.Fish {
 	weight = fac_ghostsalt_common_weight,
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "modify_card", "suit", "clubs", "position", },
+	attributes = { "modify_card", "suit", "clubs", "position" },
 	environments = {
 		calm_pond = 10,
 		garden = 10,
@@ -827,7 +827,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0, max = 0 }, length = { min = 0.20, max = 0.45 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "xmult", "face", },
+	attributes = { "xmult", "face" },
 	environments = {
 		styx = 10,
 		wormhole = 5
@@ -869,7 +869,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 1450, max = 1550 }, length = { min = 5.00, max = 6.00 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "xmult", "rarity", "joker", },
+	attributes = { "xmult", "rarity", "joker" },
 	environments = {
 		pier = 1,
 		city_river = 1,
@@ -902,7 +902,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 1.00, max = 2.00 }, length = { min = 0.50, max = 0.60 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "economy", "reroll", "shop", },
+	attributes = { "economy", "reroll", "shop" },
 	environments = {
 		garden = 10,
 		calm_pond = 3,
@@ -933,7 +933,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.10, max = 0.20 }, length = { min = 3.00, max = 4.00 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "economy", "usable", "lose_economy", },
+	attributes = { "economy", "usable", "lose_economy" },
 	environments = {
 		city_river = 10,
 		volcano = 2,
@@ -971,7 +971,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.02, max = 0.02 }, length = { min = 0.1, max = 0.1 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "modify_card", "usable", "rank", },
+	attributes = { "modify_card", "usable", "rank" },
 	environments = {
 		chocolate_river = 10
 	},
@@ -1075,7 +1075,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.80, max = 1.20 }, length = { min = 0.40, max = 0.60 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "economy", "usable", "rank", "suit", "spades", },
+	attributes = { "economy", "usable", "rank", "suit", "spades" },
 	environments = {
 		volcano = 10,
 		garden = 8,
@@ -1162,7 +1162,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 30.00, max = 40.00 }, length = { min = 0.80, max = 1.20 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "passive", "skip", },
+	attributes = { "passive", "skip" },
 	environments = {
 		pier = 10,
 		city_river = 10,
@@ -1196,7 +1196,6 @@ FishAndChips.Fish {
 			table.sort(G.GAME.fac_bait_shop_items, fac_sort_bait_shop)
 
 			if G.blind_select then
-				G.GAME.facing_blind = true
 				G.blind_prompt_box:get_UIE_by_ID("prompt_dynatext1").config.object.pop_delay = 0
 				G.blind_prompt_box:get_UIE_by_ID("prompt_dynatext1").config.object:pop_out(5)
 				G.blind_prompt_box:get_UIE_by_ID("prompt_dynatext2").config.object.pop_delay = 0
@@ -1208,7 +1207,7 @@ FishAndChips.Fish {
 					func = function()
 						G.fac_skipper_skipping = false
 						G.blind_prompt_box.alignment.offset.y = -10
-						G.blind_select.alignment.offset.y = 40
+						G.blind_select.alignment.offset.y = G.ROOM.T.y + 39
 						G.blind_select.alignment.offset.x = 0
 						return true
 					end
@@ -1219,13 +1218,12 @@ FishAndChips.Fish {
 						G.blind_select:remove()
 						G.blind_prompt_box:remove()
 						G.blind_select = nil
-						delay(0.2)
 						return true
 					end
 				}))
 				G.E_MANAGER:add_event(Event({
 					trigger = "after",
-					delay = 0.5,
+					delay = 0.7,
 					func = function()
 						G.STATE_COMPLETE = false
 						G.GAME.fishing = true
@@ -1387,7 +1385,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0, max = 0 }, length = { min = 0.01, max = 0.05 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "discard", "economy", },
+	attributes = { "discard", "economy" },
 	environments = {
 		wormhole = 10
 	},
@@ -1408,101 +1406,88 @@ FishAndChips.Fish {
 	pronouns = "it_its"
 }
 
-local appropriate_sounds = {
-	"button",
-	"cancel",
-	"card1",
-	"card3",
-	"cardFan2",
-	"cardSlide1",
-	"cardSlide2",
-	"chips1",
-	"chips2",
-	"coin1",
-	"coin2",
-	"coin3",
-	"coin4",
-	"coin5",
-	"coin6",
-	"coin7",
-	"crumple1",
-	"crumple2",
-	"crumple3",
-	"crumple4",
-	"crumple5",
-	"explosion_buildup1",
-	"explosion_release1",
-	"foil1",
-	"foil2",
-	"generic1",
-	"glass1",
-	"glass2",
-	"glass3",
-	"glass4",
-	"glass5",
-	"glass6",
-	"gold_seal",
-	"gong",
-	"highlight1",
-	"highlight2",
-	"holo1",
-	"multhit1",
-	"multhit2",
-	"negative",
-	"other1",
-	"paper1",
-	"polychrome1",
-	"slice1",
-	"tarot1",
-	"tarot2",
-	"timpani",
-	"whoosh",
-	"whoosh1",
-	"whoosh2",
-	"win",
-	"fac_fishwav_fish"
-}
-local appropriate_sounds_populated = false
-local sounds_seen = {}
-for i,v in ipairs(appropriate_sounds) do
-	sounds_seen[v] = true
-end
-
-local blacklisted_sounds = {
-
-}
-
 local play_sound_ref = play_sound
 function play_sound(sound_code, per, vol)
 	local new_sound_code = sound_code
 	local new_per = per or 1
 	local new_vol = vol or 1
 	if next(SMODS.find_card("fish_fac_ghostsalt_fishwav")) then
-		if not appropriate_sounds_populated then
-			appropriate_sounds_populated = true
-			for k,v in pairs(SMODS.Sounds) do
-				if not blacklisted_sounds[k] and v.original_mod and v.original_mod.id == "FishAndChips" and not sounds_seen[k] and not v.select_music_track then
-					appropriate_sounds[#appropriate_sounds+1] = k
-					sounds_seen[k] = true
+		local appropriate_sounds = {
+			"button",
+			"cancel",
+			"card1",
+			"card3",
+			"cardFan2",
+			"cardSlide1",
+			"cardSlide2",
+			"chips1",
+			"chips2",
+			"coin1",
+			"coin2",
+			"coin3",
+			"coin4",
+			"coin5",
+			"coin6",
+			"coin7",
+			"crumple1",
+			"crumple2",
+			"crumple3",
+			"crumple4",
+			"crumple5",
+			"explosion_buildup1",
+			"explosion_release1",
+			"foil1",
+			"foil2",
+			"generic1",
+			"glass1",
+			"glass2",
+			"glass3",
+			"glass4",
+			"glass5",
+			"glass6",
+			"gold_seal",
+			"gong",
+			"highlight1",
+			"highlight2",
+			"holo1",
+			"multhit1",
+			"multhit2",
+			"negative",
+			"other1",
+			"paper1",
+			"polychrome1",
+			"slice1",
+			"tarot1",
+			"tarot2",
+			"timpani",
+			"whoosh",
+			"whoosh1",
+			"whoosh2",
+			"win",
+			"fac_fishwav_fish"
+		}
+		for _, sound in ipairs(appropriate_sounds) do
+			if sound == new_sound_code then
+				local times = 0
+				while sound == new_sound_code and times < 10 do
+					new_sound_code = appropriate_sounds[math.random(#appropriate_sounds)]
+					times = times + 1
+					if times == 10 then new_sound_code = "fac_fishwav_fish" end
 				end
-			end
-		end
-		if sounds_seen[new_sound_code] then
-			new_sound_code = appropriate_sounds[math.random(#appropriate_sounds)]
-			-- NOTE there is one sound that's way louder than the rest, someone find it and make it reduce its volume
-			if sound_code == "paper1" and per and not vol then -- Fixes one specific instance of this sound (Cash Out screen) being too loud.
-				new_vol = new_vol * 0.4
-			end
-			if new_sound_code ~= "fac_fishwav_fish" then
-				new_per = new_per * ((math.random() / 2) + 0.75)
-				new_vol = new_vol * 0.5
-			else
-				new_per = 1
-				new_vol = 0.4
+				if sound_code == "paper1" and per and not vol then -- Fixes one specific instance of this sound (Cash Out screen) being too loud.
+					new_vol = new_vol * 0.4
+				end
+				if new_sound_code ~= "fac_fishwav_fish" then
+					new_per = new_per * ((math.random() / 2) + 0.75)
+					new_vol = new_vol * 0.5
+				else
+					new_per = 1
+					new_vol = 0.4
+				end
+				break
 			end
 		end
 	end
-	--sendTraceMessage(new_sound_code, new_per, new_vol)
 	return play_sound_ref(new_sound_code, new_per, new_vol)
 end
 
@@ -1514,7 +1499,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.50, max = 0.70 }, length = { min = 0.40, max = 0.60 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "modify_card", "destroy_card", "seals", "enhancements", },
+	attributes = { "modify_card", "destroy_card", "seals", "enhancements", "food" },
 	environments = {
 		chocolate_river = 10,
 		soup = 10,

@@ -2,7 +2,35 @@ return {
     descriptions = {
         PotatoPatch = {
             PotatoPatchDev_CyanSoCalico = {
-                name = "Cyan"
+                name = "{C:green}Cyan{}",
+                text = {
+                    {
+                        "{C:fac_csc_CSC,E:2}CyanSoCalico{}! Nervous catboy, digital artist,",
+                        "and pixel artist! 21yo and happily {X:fac_csc_MLM1,C:white}t{X:fac_csc_MLM2}a{X:fac_csc_MLM3}k{X:fac_csc_MLM4}e{X:fac_csc_MLM5,C:white}n{} for 7y {C:fac_csc_CSC}:3{}",
+                    },
+                    {
+                        "{C:fac_csc_CSC,E:2,u:fac_csc_CSC}My Time on Fish and Chips{}",
+                        "Ooh boy, was this event rough for me, generally",
+                        "being swamped for time and my art laptop going",
+                        "out of commission for the whole event... {C:fac_csc_CSC}>>{} It's",
+                        "definitely not my best showing, but I hope what",
+                        "I squeaked out still brings you some enjoyment!"
+                    },
+                    {
+                        "{C:fac_csc_CSC,E:2,u:fac_csc_CSC}My Upcoming Mod{}",
+                        "What {C:fac_csc_CSC}is{} my best showing is my breakout mod I'm",
+                        "developing as a fledgling solo Balatro mod dev!",
+                        "Whether 11 hours or 11 years, look forward",
+                        "to my one-man vanilla+ mod {C:fac_csc_CSC,E:1}Steady Hand{}!",
+                        "I'm putting all of my love and effort into it {C:fac_csc_CSC}^w^{}"
+                    },
+                    {
+                        "{C:fac_csc_CSC,E:2,u:fac_csc_CSC}Thanks for Playing!{}",
+                        "I'm also a full-on superfan of everything I've",
+                        "referenced in my Fish! Find me on {C:blue}Bluesky{} and",
+                        "{C:enhanced}Discord{} and I'd love to bond over it all {C:fac_csc_CSC}>:3{}"
+                    }
+                }
             }
         },
         fac_Fish = {
@@ -168,45 +196,13 @@ return {
                 }
             },
         },
-        PotatoPatch = {
-            PotatoPatchDev_Cyan = {
-                name = "Cyan",
-                text = {
-                    {
-                        "CyanSoCalico, neurotic catboy! :3",
-                        "I love digital art and pixel art!",
-                        "I'm a fledgeling Balatro mod dev;",
-                        "please look out for {C:CyanSoCalico}Steady Hand{}!"
-                    },
-                    {
-                        "Oh boy, between being absolutely",
-                        "inundated in other matters and",
-                        "being out of my art laptop, my",
-                        "circumstances here were ROUGH >>"
-                    },
-                    {
-                        "I tried my best despite it all,",
-                        "but this still is definiely not",
-                        "my best showing ^^\" I hope you",
-                        "can nonetheless find enjoyment",
-                        "in what I was able to cook up!"
-                    },
-                    {
-                        "You can bet on every reference",
-                        "in my Fish being to something",
-                        "I'm a superfan of! If you can",
-                        "relate, then, while I'm not too",
-                        "chatty, I'd love to make new",
-                        "friends over our shared loves!",
-                        "Find me on {C:blue}Bluesky & {C:enhanced}Discord{}!"
-                    }
-                }
-            }
-        }
     },
     misc = {
         dictionary = {
-            k_fac_csc_add_seal = "+Seal"
+            k_fac_csc_add_seal = "+Seal",
+            k_fac_csc_pokemon = "Pokémon",
+            k_fac_csc_blind = "Boss Blind",
+            k_fac_csc_squid = "Squid"
         }
     }
 }

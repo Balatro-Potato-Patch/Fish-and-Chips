@@ -227,9 +227,11 @@ return {
             rod_fac_wooden = {
                 name = "Wooden Rod",
                 text = {
-                    "An aspiring fisherman's",
+                    {"An aspiring fisherman's",
                     "first fishing rod.",
-                    "What wonders will you catch?"
+                    "What wonders will you catch?"},
+                    {"Start run with {C:attention}+1",
+                    "random {C:attention}Bait"}
                 }
             },
             rod_fac_fiberglass = {
@@ -268,8 +270,8 @@ return {
             rod_fac_extradimensional = {
                 name = "Extradimensional Rod",
                 text = {
-                    "Chance to catch {C:attention}Cards",
-                    "instead of fish"
+                        "{C:attention}Jokers{} and {C:attention}consumables{} may",
+                        "be caught during fishing"
                 },
                 unlock = {
                     "Catch {C:attention}50{} Fish"
@@ -303,7 +305,7 @@ return {
                 text = {
                     "Sweet spot is {C:attention}Tiny",
                     "and moves on its own",
-                    "Click while its over",
+                    "Click while it's over",
                     "the fish to catch it",
                     "{C:red}Cannot catch treasure"
                 },
@@ -786,9 +788,9 @@ return {
                 "{C:attention}1{} Bait every time you fish."
             },
             fac_fishing_2c = {
-                "That is... unless you catch",
-                "the fish {C:gold}PERFECTLY{}! Then you",
-                "save the {C:attention}Bait{} you used."
+                "If ya catch the fish",
+                "{C:gold}PERFECTLY{}, it'll be worth",
+                "{C:attention}more{} when ya sell it."
             },
             fac_fishing_2d = {
                 "You can check out",

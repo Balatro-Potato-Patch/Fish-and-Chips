@@ -170,7 +170,7 @@ FishAndChips.Fish {
     },
 	ppu_coder = { "SLDTyp0" },
 	ppu_artist = { "SLDTyp0" },
-	attributes = { "nothing" },
+	attributes = { "nothing", "food" },
 	environments = {
 		wormhole = 1,
 		pier = 10,
@@ -296,13 +296,13 @@ FishAndChips.Fish {
 	end,
 }
 
-SMODS.Sound({key = "Klaus_ass", path = "./Typ0/ass.wav",})
-SMODS.Sound({key = "Klaus_balls", path = "./Typ0/balls deep.wav",})
-SMODS.Sound({key = "Klaus_bitches", path = "./Typ0/Bitches.wav",})
-SMODS.Sound({key = "Klaus_getout", path = "./Typ0/Get Out.wav",})
-SMODS.Sound({key = "Klaus_later", path = "./Typ0/later.wav",})
-SMODS.Sound({key = "Klaus_help", path = "./Typ0/may i help you.wav",})
-SMODS.Sound({key = "Klaus_regards", path = "./Typ0/regards.wav",})
+SMODS.Sound({key = "Klaus_ass", path = "./Typ0/ass.ogg",})
+SMODS.Sound({key = "Klaus_balls", path = "./Typ0/balls deep.ogg",})
+SMODS.Sound({key = "Klaus_bitches", path = "./Typ0/Bitches.ogg",})
+SMODS.Sound({key = "Klaus_getout", path = "./Typ0/Get Out.ogg",})
+SMODS.Sound({key = "Klaus_later", path = "./Typ0/later.ogg",})
+SMODS.Sound({key = "Klaus_help", path = "./Typ0/may i help you.ogg",})
+SMODS.Sound({key = "Klaus_regards", path = "./Typ0/regards.ogg",})
 
 FishAndChips.Fish {
 	key = "Klaus",
