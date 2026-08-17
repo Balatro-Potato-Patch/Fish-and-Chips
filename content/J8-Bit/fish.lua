@@ -1007,49 +1007,33 @@ FishAndChips.Fish {
         end
     end,
     set_ability = function(self, card, initial, delay_sprites)
-        card.ability.extra.gender_presentation = pseudorandom_element({ "masc", "femme", "gnc" },
-            "J8-Bit gives you a shark waifu")
-        -- TODO: set sprites later
-        if card.ability.extra.gender_presentation == "masc" then
-            card.children.center:set_sprite_pos({ x = 4, y = 3 })
-            card.T.w = G.CARD_W * (60 / 71)
-            card.T.h = G.CARD_H * (95 / 95)
-            card.children.center.scale.x = 60
-            card.children.center.scale.y = 95
-        elseif card.ability.extra.gender_presentation == "femme" then
-            card.children.center:set_sprite_pos({ x = 0, y = 4 })
-            card.T.w = G.CARD_W * (53 / 71)
-            card.T.h = G.CARD_H * (87 / 95)
-            card.children.center.scale.x = 53
-            card.children.center.scale.y = 87
-        else
-            card.children.center:set_sprite_pos({ x = 1, y = 4 })
-            card.T.w = G.CARD_W * (47 / 71)
-            card.T.h = G.CARD_H * (87 / 95)
-            card.children.center.scale.x = 47
-            card.children.center.scale.y = 87
-        end
+        card.ability.extra.gender_presentation = pseudorandom_element({ "masc", "femme", "gnc" }, "J8-Bit gives you a shark waifu")
     end,
-    load = function(self, card, card_table, other_card)
-        if card_table.ability.extra.gender_presentation == "masc" then
-            card.children.center:set_sprite_pos({ x = 4, y = 3 })
-            card.T.w = G.CARD_W * (60 / 71)
-            card.T.h = G.CARD_H * (95 / 95)
-            card.children.center.scale.x = 60
-            card.children.center.scale.y = 95
-        elseif card_table.ability.extra.gender_presentation == "femme" then
-            card.children.center:set_sprite_pos({ x = 0, y = 4 })
-            card.T.w = G.CARD_W * (53 / 71)
-            card.T.h = G.CARD_H * (87 / 95)
-            card.children.center.scale.x = 53
-            card.children.center.scale.y = 87
-        else
-            card.children.center:set_sprite_pos({ x = 1, y = 4 })
-            card.T.w = G.CARD_W * (47 / 71)
-            card.T.h = G.CARD_H * (87 / 95)
-            card.children.center.scale.x = 47
-            card.children.center.scale.y = 87
-        end
+    set_sprites = function(self, card, front)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                if card.ability.extra.gender_presentation == "masc" then
+                    card.children.center:set_sprite_pos({ x = 4, y = 3 })
+                    card.T.w = G.CARD_W * (60 / 71)
+                    card.T.h = G.CARD_H * (95 / 95)
+                    card.children.center.scale.x = 60
+                    card.children.center.scale.y = 95
+                elseif card.ability.extra.gender_presentation == "femme" then
+                    card.children.center:set_sprite_pos({ x = 0, y = 4 })
+                    card.T.w = G.CARD_W * (53 / 71)
+                    card.T.h = G.CARD_H * (87 / 95)
+                    card.children.center.scale.x = 53
+                    card.children.center.scale.y = 87
+                else
+                    card.children.center:set_sprite_pos({ x = 1, y = 4 })
+                    card.T.w = G.CARD_W * (47 / 71)
+                    card.T.h = G.CARD_H * (87 / 95)
+                    card.children.center.scale.x = 47
+                    card.children.center.scale.y = 87
+                end
+                return true;
+            end
+        }))
     end
 }
 
