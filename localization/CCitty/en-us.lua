@@ -98,7 +98,7 @@ return {
                 text = {
                     "{X:blind,C:white}X#1#{} Blind size",
                     "when any card is sold",
-                    "during a {C:attention}" -- this change could probably be reverted but i thought it would help with clarity ;w; - gabby
+                    "during a {C:attention}Blind{}" -- this change could probably be reverted but i thought it would help with clarity ;w; - gabby
                 },
                 flavor = {
                     "A legendary fish. Fishermen often struggle to catch them",
