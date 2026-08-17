@@ -8,9 +8,8 @@ PotatoPatchUtils.Developer({
 	name = "Flowire",
 	colour = HEX("FF8FA9"),
 	atlas = "fac_Bottled_dev",
-	pos = { x = 0, y = 0},
-	loc = true,
-	ignore_limits = false
+	pos = { x = 0, y = 0 },
+	loc = true
 })
 
 --# ### # ### # ### # ### # ### # ### # ### # ### # ### #
@@ -133,7 +132,7 @@ local function MB_loc_key(card)
 end
 local function MB_loc_vars(card)
 	if not card.ability.extra.setup then MB_setup(card) end
-	if card.area and card.area.config.collection then
+	if card.area and (card.area.config.collection or card.area.config.fac_compendium) then
 		local bottle, min, max = card.ability.extra.bottle, nil, nil
 		if bottle.max then
 			if bottle.div then min = tostring(bottle.min/bottle.div); max = tostring(bottle.max/bottle.div)
@@ -160,7 +159,7 @@ local function MB_loc_vars(card)
 	end
 end
 local function MB_flavour_vars(card)
-	if not (card.area and card.area.config.collection) then
+	if not (card.area and (card.area.config.collection or card.area.config.fac_compendium)) then
 		return { key = MB_loc_key(card) }
 	end
 	return { }
@@ -262,14 +261,14 @@ local function MB_use(card)
 		else
 			delay(0.5)
 		end
-		G.E_MANAGER:add_event(Event({
-			trigger = "after",
-			func = function()
-				card:shatter()
-				return true
-			end
-		}))
 	end
+	G.E_MANAGER:add_event(Event({
+		trigger = "after",
+		func = function()
+			card:shatter()
+			return true
+		end
+	}))
 end
 
 --# ### # ### # ### # ### # ### # ### # ### # ### # ### #
@@ -286,6 +285,7 @@ FishAndChips.Fish {
 	soul_pos = { x = 0, y = 1 },
 	-- Fish Base
 	blueprint_compat = false,
+	eternal_compat = false,
 	requires_hand = true,
 	environments = {
 		calm_pond = 3, city_river = 3, swamp = 1,
@@ -324,6 +324,7 @@ FishAndChips.Fish {
 	soul_pos = { x = 2, y = 1 },
 	-- Fish Base
 	blueprint_compat = false,
+	eternal_compat = false,
 	requires_hand = true,
 	environments = {
 		calm_pond = 3, city_river = 3, volcano = 1,
@@ -362,6 +363,7 @@ FishAndChips.Fish {
 	soul_pos = { x = 1, y = 1 },
 	-- Fish Base
 	blueprint_compat = false,
+	eternal_compat = false,
 	requires_hand = true,
 	environments = {
 		city_river = 0.5, swamp = 1, pier = 3,
@@ -400,6 +402,7 @@ FishAndChips.Fish {
 	soul_pos = { x = 3, y = 1 },
 	-- Fish Base
 	blueprint_compat = false,
+	eternal_compat = false,
 	requires_hand = true,
 	environments = {
 		city_river = 0.5, volcano = 1, pier = 3,
@@ -438,6 +441,7 @@ FishAndChips.Fish {
 	soul_pos = { x = 4, y = 1 },
 	-- Fish Base
 	blueprint_compat = false,
+	eternal_compat = false,
 	requires_hand = true,
 	environments = {
 		city_river = 1, aquifer = 2, pier = 1.5,
@@ -476,6 +480,7 @@ FishAndChips.Fish {
 	soul_pos = { x = 5, y = 1 },
 	-- Fish Base
 	blueprint_compat = false,
+	eternal_compat = false,
 	requires_hand = true,
 	treasure = true,
 	environments = {
@@ -515,6 +520,7 @@ FishAndChips.Fish {
 	soul_pos = { x = 6, y = 1 },
 	-- Fish Base
 	blueprint_compat = false,
+	eternal_compat = false,
 	requires_hand = true,
 	environments = {
 		volcano = 0.25, styx = 0.5, soup = 0.5,

@@ -77,7 +77,7 @@ return {
             fish_fac_Bottled_CHIPS_select = {
                 name = "Bottled{s:0.25} {C:chips}Chips{}",
                 text = {
-                    "{C:attention}#1#{} selected",
+                    "Up to {C:attention}#1#{} selected",
                     "cards permanently",
                     "gain {C:chips}+#2#{} Chips",
                     "{ppu_bubble:usable}"
