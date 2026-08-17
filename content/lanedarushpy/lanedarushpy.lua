@@ -1177,12 +1177,15 @@ FishAndChips.Fish {
 }
 
 
+local bladetongue_scale = 0.7
+
 FishAndChips.Fish {
 	key = "lizie_bladetongue",
 	atlas = "pangaea47_bladetongue",
 	pos = { x = 0, y = 0 },
-    display_size = { w = 135, h = 285 },
-    pixel_size = { w = 135, h = 285 },
+    display_size = { w = (135*bladetongue_scale), h = 152 * ((135*bladetongue_scale)/135) },
+    alt_d_size = {w = (135*bladetongue_scale), h = 285 * ((135*bladetongue_scale)/135)},
+    pixel_size = { w = 135, h = 152 },
 	weight = 5,
 	ppu_coder = { "lanedarushpy" },
 	ppu_artist = { "pangaea47" },
@@ -1207,14 +1210,6 @@ FishAndChips.Fish {
         wormhole = 0.15
 	},
 
-    update = function (self, card, dt)
-        if card.ability.immutable.active then
-            card.children.center:set_sprite_pos({ x = 1, y = 0 })
-        else
-            card.children.center:set_sprite_pos({ x = 0, y = 0 })
-        end
-    end,
-
     keep_on_use = function (self, card)
         return true
     end,
@@ -1225,6 +1220,12 @@ FishAndChips.Fish {
 
     use = function (self, card)
         card.ability.immutable.active = true
+        card.T.h = (card.T.h / (self.display_size.h/95)) * (self.alt_d_size.h/95)
+        card.children.center:remove()
+        card.children.center = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, self.atlas, {x=1,y=0}, {})
+        card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
+        card:highlight(false)
+        card:highlight(true)
         card.ability.immutable.used_this_round = true
     end,
 
@@ -1248,6 +1249,11 @@ FishAndChips.Fish {
                             play_sound('slice1', 0.96 + math.random() * 0.08)
                             SMODS.destroy_cards(v, { immediate = true })
                             card.ability.immutable.active = false
+                            card.T.h = (card.T.h / (self.alt_d_size.h/95)) * (self.display_size.h/95)
+                            card.children.center:remove()
+                            card.children.center = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, self.atlas, {x=0,y=0}, {})
+                            card.children.center.scale.y = 152
+                            card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
                             return true;
                         end
                     }))
