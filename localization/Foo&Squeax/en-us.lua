@@ -238,10 +238,7 @@ return {
 			fish_fac_fas_you = {
 				name = "YOU",
 				flavour = {
-					"I, YOU the Frog, declare that",
-					"I MAY in fact be a Sonic OC!",
-					"- Everyname"
-					-- tldr everyname's a shapeshifting entity 
+					"Yes, that's my name"
 				},
 				text = {
 					"Once per {C:attention}Ante",
