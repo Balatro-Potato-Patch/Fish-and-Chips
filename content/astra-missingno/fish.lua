@@ -199,7 +199,7 @@ FishAndChips.Fish {
         local loc_cards = ' ' .. localize('k_fac_am_card') .. ' '
         local colour = SMODS.ConsumableTypes[stg.ctype].secondary_colour
         return {
-            main_end = {
+            main_end = not card.name_only and {
                 { n = G.UIT.O, config = { object = DynaText({ string = loc_ctypes, colours = { colour }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0 }) } },
                 { n = G.UIT.T, config = { text = loc_cards, colour = G.C.JOKER_GREY, scale = 0.32 } },
             }

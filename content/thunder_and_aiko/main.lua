@@ -229,7 +229,7 @@ FishAndChips.Fish({
 		end
 		local loc_sv = localize("k_fac_nft_sell_value1") .. " "
 		local loc_sv2 = localize("k_fac_nft_sell_value1_alt") .. " "
-		local main_start = {
+		local main_start = not card.name_only and {
 			{
 				n = G.UIT.O,
 				config = {

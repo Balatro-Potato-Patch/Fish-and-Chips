@@ -2,6 +2,7 @@ FishAndChips.Fish {
 	key = "csc_fishmongus",
 	atlas = "csc_fish",
 	pos = { x = 0, y = 0 },
+	badge_key = "k_fac_maybe_fish",
 
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },

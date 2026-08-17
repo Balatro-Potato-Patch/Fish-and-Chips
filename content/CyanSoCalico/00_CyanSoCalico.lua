@@ -23,7 +23,7 @@ PotatoPatchUtils.Developer({
 	name = 'CyanSoCalico',
 	atlas = 'fac_csc_fish',
 	pos = { x = 1, y = 3 },
-	colour = G.C.CyanSoCalico,
+	colour = G.C.fac_csc_CSC,
 	loc = true
 })
 --[[

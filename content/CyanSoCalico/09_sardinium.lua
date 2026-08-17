@@ -5,6 +5,7 @@ FishAndChips.Fish {
 
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
+	badge_key = "k_fac_maybe_fish",
 
 	attributes = { "hand_level", "usable", "hand_type", },
 

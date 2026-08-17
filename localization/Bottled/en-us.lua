@@ -17,10 +17,17 @@ return {
             fish_fac_Bottled_CHIPS = {
                 name = "Bottled{s:0.25} {C:chips}Chips{}",
                 text = {
-                    "{C:attention}#1#{} to {C:attention}#2#{} Cards",
-                    "permanently gain",
-                    "between {C:chips}+#3#{} and {C:chips}+#4#{}",
-                    "Chips when scored",
+                    {
+                        "Between {C:attention}#1#{} and {C:attention}#2#{} {C:attention}playing{}",
+                        "{C:attention}cards{} permanently gain",
+                        "between {C:chips}+#3#{} and {C:chips}+#4#{}",
+                        "Chips when scored",
+                        "{ppu_bubble:usable}"
+                    },
+                    {
+                        "Requirements to {C:attention}use{}",
+                        "this {C:fac_fish}Bottle{} are {C:attention}random{}",
+                    }
                 },
                 flavor = {
                     '"This fish, isn\'t Fish."',
@@ -33,6 +40,7 @@ return {
                     "Each {C:attention}#1#{} held in",
                     "hand permanently",
                     "gains {C:chips}+#2#{} Chips",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"It\'s a useless',
@@ -46,6 +54,7 @@ return {
                     "{C:attention}#1# {E:2}random{} cards held",
                     "in hand permanently",
                     "gain {C:chips}+#2#{} Chips",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"crap, they\'ve found out"',
@@ -58,6 +67,7 @@ return {
                     "{C:attention}#1# {E:2}random{} card held",
                     "in hand permanently",
                     "gains {C:chips}+#2#{} Chips",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"Send {E:1,C:white}Nood{}les"',
@@ -67,9 +77,10 @@ return {
             fish_fac_Bottled_CHIPS_select = {
                 name = "Bottled{s:0.25} {C:chips}Chips{}",
                 text = {
-                    "{C:attention}#1#{} selected",
+                    "Up to {C:attention}#1#{} selected",
                     "cards permanently",
                     "gain {C:chips}+#2#{} Chips",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"This fish, isn\'t Fish."',
@@ -82,6 +93,7 @@ return {
                     "{C:attention}#1#{} selected",
                     "card permanently",
                     "gains {C:chips}+#2#{} Chips",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"My head is a city,',
@@ -95,10 +107,17 @@ return {
             fish_fac_Bottled_MULT = {
                 name = "Bottled{s:0.25} {C:mult}Mult{}",
                 text = {
-                    "{C:attention}#1#{} to {C:attention}#2#{} Cards",
-                    "permanently gain",
-                    "between {C:mult}+#3#{} and {C:mult}+#4#{}",
-                    "Mult when scored",
+                    {
+                        "Between {C:attention}#1#{} and {C:attention}#2#{} {C:attention}playing{}",
+                        "{C:attention}cards{} permanently gain",
+                        "between {C:mult}+#3#{} and {C:mult}+#4#{}",
+                        "Mult when scored",
+                        "{ppu_bubble:usable}"
+                    },
+                    {
+                        "Requirements to {C:attention}use{}",
+                        "this {C:fac_fish}Bottle{} are {C:attention}random{}",
+                    }
                 },
                 flavor = {
                     '"my brain stopped worky,,"',
@@ -111,6 +130,7 @@ return {
                     "Each {C:attention}#1#{} held in",
                     "hand permanently",
                     "gains {C:mult}+#2#{} Mult",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"Long time lover of',
@@ -124,6 +144,7 @@ return {
                     "{C:attention}#1# {E:2}random{} cards held",
                     "in hand permanently",
                     "gain {C:mult}+#2#{} Mult",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"Sorry, my Bird had',
@@ -137,6 +158,7 @@ return {
                     "{C:attention}#1# {E:2}random{} card held",
                     "in hand permanently",
                     "gains {C:mult}+#2#{} Mult",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"Augh"',
@@ -149,6 +171,7 @@ return {
                     "{C:attention}#1#{} selected",
                     "cards permanently",
                     "gain {C:mult}+#2#{} Mult",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"my brain stopped worky,,"',
@@ -161,6 +184,7 @@ return {
                     "{C:attention}#1#{} selected",
                     "card permanently",
                     "gains {C:mult}+#2#{} Mult",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"Cheese :)',
@@ -172,12 +196,19 @@ return {
 --# X-Chips												#
 --# ### # ### # ### # ### # ### # ### # ### # ### # ### #
             fish_fac_Bottled_XCHIPS = {
-                name = "Bottled{s:0.25} {X:chips,C:white}Chips{}",
+                name = "Bottled{s:0.25} {X:chips,C:white}XChips{}",
                 text = {
-                    "{C:attention}#1#{} to {C:attention}#2#{} Cards",
-                    "permanently gain",
-                    "between {X:chips,C:white}X#3#{} & {X:chips,C:white}X#4#{}",
-                    "Chips when scored",
+                    {
+                        "Between {C:attention}#1#{} and {C:attention}#2#{} {C:attention}playing{}",
+                        "{C:attention}cards{} permanently gain",
+                        "between {X:chips,C:white}X#3#{} and {X:chips,C:white}X#4#{}",
+                        "Chips when scored",
+                        "{ppu_bubble:usable}"
+                    },
+                    {
+                        "Requirements to {C:attention}use{}",
+                        "this {C:fac_fish}Bottle{} are {C:attention}random{}",
+                    }
                 },
                 flavor = {
                     '"Noting that for Fishtory"',
@@ -185,11 +216,12 @@ return {
                 }
             },
             fish_fac_Bottled_XCHIPS_ranked = {
-                name = "Bottled{s:0.25} {X:chips,C:white}Chips{}",
+                name = "Bottled{s:0.25} {X:chips,C:white}XChips{}",
                 text = {
                     "Each {C:attention}#1#{} held in",
                     "hand permanently",
                     "gains {X:chips,C:white}X#2#{} Chips",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"I crave chocolate, uhm..',
@@ -199,11 +231,12 @@ return {
                 }
             },
             fish_fac_Bottled_XCHIPS_random = {
-                name = "Bottled{s:0.25} {X:chips,C:white}Chips{}",
+                name = "Bottled{s:0.25} {X:chips,C:white}XChips{}",
                 text = {
                     "{C:attention}#1# {E:2}random{} cards held",
                     "in hand permanently",
                     "gain {X:chips,C:white}X#2#{} Chips",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"You\'re being e-fish-ent :3"',
@@ -211,11 +244,12 @@ return {
                 }
             },
             fish_fac_Bottled_XCHIPS_random_solo = {
-                name = "Bottled{s:0.25} {X:chips,C:white}Chips{}",
+                name = "Bottled{s:0.25} {X:chips,C:white}XChips{}",
                 text = {
                     "{C:attention}#1# {E:2}random{} card held",
                     "in hand permanently",
                     "gains {X:chips,C:white}X#2#{} Chips",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"*Explodes you with mind*"',
@@ -223,11 +257,12 @@ return {
                 }
             },
             fish_fac_Bottled_XCHIPS_select = {
-                name = "Bottled{s:0.25} {X:chips,C:white}Chips{}",
+                name = "Bottled{s:0.25} {X:chips,C:white}XChips{}",
                 text = {
                     "{C:attention}#1#{} selected",
                     "cards permanently",
                     "gain {X:chips,C:white}X#2#{} Chips",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"Noting that for Fishtory"',
@@ -235,11 +270,12 @@ return {
                 }
             },
             fish_fac_Bottled_XCHIPS_select_solo = {
-                name = "Bottled{s:0.25} {X:chips,C:white}Chips{}",
+                name = "Bottled{s:0.25} {X:chips,C:white}XChips{}",
                 text = {
                     "{C:attention}#1#{} selected",
                     "card permanently",
                     "gains {X:chips,C:white}X#2#{} Chips",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     'You can\'t make out the',
@@ -252,12 +288,19 @@ return {
 --# X-Mult												#
 --# ### # ### # ### # ### # ### # ### # ### # ### # ### #
             fish_fac_Bottled_XMULT = {
-                name = "Bottled{s:0.25} {X:mult,C:white}Mult{}",
+                name = "Bottled{s:0.25} {X:mult,C:white}XMult{}",
                 text = {
-                    "{C:attention}#1#{} to {C:attention}#2#{} Cards",
-                    "permanently gain",
-                    "between {X:mult,C:white}X#3#{} & {X:mult,C:white}X#4#{}",
-                    "Mult when scored",
+                    {
+                        "Between {C:attention}#1#{} and {C:attention}#2#{} {C:attention}playing{}",
+                        "{C:attention}cards{} permanently gain",
+                        "between {X:mult,C:white}X#3#{} and {X:mult,C:white}X#4#{}",
+                        "Mult when scored",
+                        "{ppu_bubble:usable}"
+                    },
+                    {
+                        "Requirements to {C:attention}use{}",
+                        "this {C:fac_fish}Bottle{} are {C:attention}random{}",
+                    }
                 },
                 flavor = {
                     '"I wish people had the',
@@ -267,11 +310,12 @@ return {
                 }
             },
             fish_fac_Bottled_XMULT_ranked = {
-                name = "Bottled{s:0.25} {X:mult,C:white}Mult{}",
+                name = "Bottled{s:0.25} {X:mult,C:white}XMult{}",
                 text = {
                     "Each {C:attention}#1#{} held in",
                     "hand permanently",
                     "gains {X:mult,C:white}X#2#{} Mult",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"I find comfort in Nightmares,',
@@ -281,11 +325,12 @@ return {
                 }
             },
             fish_fac_Bottled_XMULT_random = {
-                name = "Bottled{s:0.25} {X:mult,C:white}Mult{}",
+                name = "Bottled{s:0.25} {X:mult,C:white}XMult{}",
                 text = {
                     "{C:attention}#1# {E:2}random{} cards held",
                     "in hand permanently",
                     "gain {X:mult,C:white}X#2#{} Mult",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"You\'ll only grow when you',
@@ -296,11 +341,12 @@ return {
                 }
             },
             fish_fac_Bottled_XMULT_random_solo = {
-                name = "Bottled{s:0.25} {X:mult,C:white}Mult{}",
+                name = "Bottled{s:0.25} {X:mult,C:white}XMult{}",
                 text = {
                     "{C:attention}#1# {E:2}random{} card held",
                     "in hand permanently",
                     "gains {X:mult,C:white}X#2#{} Mult",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"Find joy in being bored,',
@@ -310,11 +356,12 @@ return {
                 }
             },
             fish_fac_Bottled_XMULT_select = {
-                name = "Bottled{s:0.25} {X:mult,C:white}Mult{}",
+                name = "Bottled{s:0.25} {X:mult,C:white}XMult{}",
                 text = {
                     "{C:attention}#1#{} selected",
                     "cards permanently",
                     "gain {X:mult,C:white}X#2#{} Mult",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"I wish people had the',
@@ -324,11 +371,12 @@ return {
                 }
             },
             fish_fac_Bottled_XMULT_select_solo = {
-                name = "Bottled{s:0.25} {X:mult,C:white}Mult{}",
+                name = "Bottled{s:0.25} {X:mult,C:white}XMult{}",
                 text = {
                     "{C:attention}#1#{} selected",
                     "card permanently",
                     "gains {X:mult,C:white}X#2#{} Mult",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"Go do it now, don\'t',
@@ -342,10 +390,17 @@ return {
             fish_fac_Bottled_MONEY = {
                 name = "Bottled{s:0.25} {C:money}Money{}",
                 text = {
-                    "{C:attention}#1#{} to {C:attention}#2#{} Cards",
-                    "permanently give",
-                    "between {C:money}$#3#{} and {C:money}$#4#{}",
-                    "when scored",
+                    {
+                        "Between {C:attention}#1#{} and {C:attention}#2#{} {C:attention}playing{}",
+                        "{C:attention}cards{} permanently gain",
+                        "between {C:money}$#3#{} and {C:money}$#4#{}",
+                        "when scored",
+                        "{ppu_bubble:usable}"
+                    },
+                    {
+                        "Requirements to {C:attention}use{}",
+                        "this {C:fac_fish}Bottle{} are {C:attention}random{}",
+                    }
                 },
                 flavor = {
                     '"This is just a  ',
@@ -359,6 +414,7 @@ return {
                     "Each {C:attention}#1#{} held in",
                     "hand permanently",
                     "gives {C:money}$#2#{} when scored",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"Just what I wanted, a',
@@ -372,6 +428,7 @@ return {
                     "{C:attention}#1# {E:2}random{} cards held",
                     "in hand permanently",
                     "give {C:money}$#2#{} when scored",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"This is just a  ',
@@ -385,6 +442,7 @@ return {
                     "{C:attention}#1# {E:2}random{} card held",
                     "in hand permanently",
                     "gives {C:money}$#2#{} when scored",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"All text, if there\'s any, is',
@@ -398,6 +456,7 @@ return {
                     "{C:attention}#1#{} selected cards",
                     "permanently give",
                     "{C:money}$#2#{} when scored",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"You\'re manually breathing."',
@@ -410,6 +469,7 @@ return {
                     "{C:attention}#1#{} selected card",
                     "permanently gives",
                     "{C:money}$#2#{} when scored",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"Lose hope and',
@@ -423,9 +483,16 @@ return {
             fish_fac_Bottled_SAND = {
                 name = "Bottled{s:0.25} {C:fac_sand_dollars}Sand{}",
                 text = {
-                    "{C:attention}#1#{} to {C:attention}#2#{} Cards",
-                    "permanently give",
-                    "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{} when scored",
+                    {
+                        "Between {C:attention}#1#{} and {C:attention}#2#{} {C:attention}playing{}",
+                        "{C:attention}cards{} permanently gain",
+                        "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{} when scored",
+                        "{ppu_bubble:usable}"
+                    },
+                    {
+                        "Requirements to {C:attention}use{}",
+                        "this {C:fac_fish}Bottle{} are {C:attention}random{}",
+                    }
                 },
                 flavor = {
                     '"It\'s coarse, it\'s rough,',
@@ -439,6 +506,7 @@ return {
                     "Each {C:attention}#1#{} held in",
                     "hand permanently",
                     "gives {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"If you found this, then you',
@@ -452,6 +520,7 @@ return {
                     "{C:attention}#1# {E:2}random{} cards held",
                     "in hand permanently",
                     "give {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"I want to see the System',
@@ -465,6 +534,7 @@ return {
                     "{C:attention}#1# {E:2}random{} card held",
                     "in hand permanently",
                     "gives {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"It\'s coarse, it\'s rough,',
@@ -478,6 +548,7 @@ return {
                     "{C:attention}#1#{} selected cards",
                     "permanently give",
                     "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"We\'ve been trying to',
@@ -492,6 +563,7 @@ return {
                     "{C:attention}#1#{} selected card",
                     "permanently gives",
                     "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"  "',
@@ -504,9 +576,16 @@ return {
             fish_fac_Bottled_REPEAT = {
                 name = "Bottled{s:0.25} {C:legendary}Loop{}",
                 text = {
-                    "{C:attention}#1#{} to {C:attention}#2#{} Cards",
-                    "permanently gain",
-                    "{C:legendary}#3#{} Retrigger",
+                    {
+                        "Between {C:attention}#1#{} and {C:attention}#2#{} {C:attention}playing{}",
+                        "{C:attention}cards{} permanently gain",
+                        "{C:legendary}#3#{} retrigger",
+                        "{ppu_bubble:usable}"
+                    },
+                    {
+                        "Requirements to {C:attention}use{}",
+                        "this {C:fac_fish}Bottle{} are {C:attention}random{}",
+                    }
                 },
                 flavor = {
                     '"To the stars!"',
@@ -519,6 +598,7 @@ return {
                     "Each {C:attention}#1#{} held in",
                     "hand permanently",
                     "gains {C:legendary}#2#{} Retrigger",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"you\'re cute and valid',
@@ -532,6 +612,7 @@ return {
                     "{C:attention}#1# {E:2}random{} cards held",
                     "in hand permanently",
                     "gain {C:legendary}#2#{} Retrigger",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"Your honor, I drop kicked',
@@ -545,6 +626,7 @@ return {
                     "{C:attention}#1# {E:2}random{} card held",
                     "in hand permanently",
                     "gains {C:legendary}#2#{} Retrigger",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"To the stars!"',
@@ -557,6 +639,7 @@ return {
                     "{C:attention}#1#{} selected",
                     "cards permanently",
                     "gain {C:legendary}#2#{} Retrigger",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"If it has legs',
@@ -571,6 +654,7 @@ return {
                     "{C:attention}#1#{} selected",
                     "card permanently",
                     "gains {C:legendary}#2#{} Retrigger",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     '"Congrats! You just',

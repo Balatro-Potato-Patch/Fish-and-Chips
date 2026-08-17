@@ -96,7 +96,7 @@ local function wrapText(text, maxChars)
 end
 
 G.FUNCS.compendium_nav_button = function(e)
-    play_sound("fac_flip_page")
+    play_sound("fac_flip_page", 1, 0.5)
     local back_func = G.OVERLAY_MENU:get_UIE_by_ID("overlay_menu_back_button").config.button
     SMODS.save_mod_config(FishAndChips.mod)
     if e.config.type == 'condensed_fish_page' or e.config.type == 'extended_fish_page' then
@@ -112,7 +112,7 @@ G.FUNCS.compendium_nav_button = function(e)
 end
 
 G.FUNCS.fac_return_to_mods = function(e)
-    play_sound("fac_book_close")
+    play_sound("fac_book_close", 1, 0.7)
     G.FUNCS.mods_button(e)
 end
 
@@ -360,11 +360,12 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
     local temp_area = FishAndChips.Compendium.compendium_area(nil, {2.25 * 71/95, 2.25})
     local compendium_card = FishAndChips.Compendium.compendium_card(fish, temp_area, 0.85)
     temp_area:emplace(compendium_card)
-
-    local locvars = fish.loc_vars and fish:loc_vars({}, compendium_card) or {}
-
+    
+    compendium_card.name_only = true
+    local locvars = fish_caught and fish.loc_vars and fish:loc_vars({}, compendium_card) or {}
+    compendium_card.name_only = nil
     local fish_name = fish_caught and localize({type = 'name_text', key = locvars.key or fish.key, set = 'fac_Fish', vars = locvars.vars or {}}) or localize('ph_fac_unknown_item')
-    if string.len(fish_name) > 25 then fish_name = string.sub(fish_name, 1, 21) .. '...' end
+    if string.len(fish_name) > 21 then fish_name = string.sub(fish_name, 1, 17) .. '...' end
     local caught = localize('ph_fac_first_caught')..(fish_caught and fish_data.first_catch or '')
     local rod = fish_caught and localize('ph_fac_with_rod')..localize({key = fish_data.rod, set = 'fac_Rod', type = 'name_text'}) or ' '
     local count = localize('ph_fac_times_caught')..(fish_caught and fish_data.times_caught or '')

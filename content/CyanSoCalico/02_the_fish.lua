@@ -12,6 +12,7 @@ FishAndChips.Fish {
 	key = "csc_the_fish",
 	atlas = "csc_fish",
 	pos = { x = 1, y = 0},
+	badge_key = "k_fac_csc_blind",
 
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },

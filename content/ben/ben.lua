@@ -49,12 +49,13 @@ FishAndChips.Fish {
 		--wormhole = 0,
 		--backroom = 0
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { G.GAME.interest_amount, G.GAME.interest_cap / 5 } }
 	end,
 	stats = {weight = {min = 2, max = 2}, length = {min = 0.3, max = 0.3}},
 	calculate = function(self, card, context)
-		if context.modify_final_cashout then
+		if context.modify_final_cashout and not context.blueprint then 
 			local interest = math.min(math.floor(G.GAME.fac_sand_dollars / 5), G.GAME.interest_cap / 5)
 			if interest <= 0 then return end
 			local vars = {
@@ -125,21 +126,20 @@ FishAndChips.Fish {
     end,
 	stats = {weight = {min = 0.0008, max = 0.002}, length = {min = 0.05, max = 0.08}},
 	calculate = function(self, card, context)
+		local ret
+	        if card.ability.extra.slot <= #G.jokers.cards then  
+			local joker = G.jokers.cards[card.ability.extra.slot]
+			ret = SMODS.blueprint_effect(card, joker, context)
+		end
 
 		if context.end_of_round and context.main_eval then
 			local old_slot = card.ability.extra.slot
 			repeat
 				card.ability.extra.slot = pseudorandom("chameleon", 1, G.jokers.config.card_limit)
 			until card.ability.extra.slot ~= old_slot
-			return
 		end
-
-        if card.ability.extra.slot <= #G.jokers.cards then
-			local joker = G.jokers.cards[card.ability.extra.slot]
-
-			local ret = SMODS.blueprint_effect(card, joker, context)
-			return ret
-		end
+		
+		return ret
 	end,
 	on_catch = function(self, card)
 		card.ability.extra.slot = pseudorandom("chameleon", 1, G.jokers.config.card_limit)
@@ -204,14 +204,14 @@ FishAndChips.Fish {
 		end
 	end,
 	calculate = function(self, card, context)
-		if context.fac_environment_changed then
+		if context.fac_environment_changed and not context.blueprint then
 			local environment = G.GAME.fac_fishing_environment
 			if card.ability.extra[environment] == false then
 				card.ability.extra[environment] = true
 				card.ability.extra.visited = card.ability.extra.visited + 1
 			end
 		end
-		if context.modify_final_cashout then
+		if context.modify_final_cashout and not context.blueprint then 
 			local vars = {
 				name = "joker_yapping",
 				sand_dollars = card.ability.extra.visited,

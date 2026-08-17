@@ -199,7 +199,10 @@ return {
     },
     misc = {
         dictionary = {
-            k_fac_csc_add_seal = "+Seal"
+            k_fac_csc_add_seal = "+Seal",
+            k_fac_csc_pokemon = "Pokémon",
+            k_fac_csc_blind = "Boss Blind",
+            k_fac_csc_squid = "Squid"
         }
     }
 }

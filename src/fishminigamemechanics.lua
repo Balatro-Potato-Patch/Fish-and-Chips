@@ -182,6 +182,7 @@ local function fac_ensure_state()
             reel_rumbling = false,
             harpoon_dir = true,
             harpoon_treasure = false,
+            harpoon_both = false,
             reel_buffer = false,
         }
     end
@@ -713,9 +714,10 @@ local function fac_finish_round(success, skip)
     end
     local fish_obj
     local treasure_obj
+    local harpoon_treasure = success and state.profile.rod_key == "rod_fac_harpoon" and state.harpoon_treasure
+    local harpoon_treasure_only = harpoon_treasure and not state.harpoon_both
     if success then
-        local harpoon_treasure = state.profile.rod_key == "rod_fac_harpoon" and state.harpoon_treasure
-        state.result_message = localize(harpoon_treasure and "ph_fac_treasure_catch"
+        state.result_message = localize(harpoon_treasure_only and "ph_fac_treasure_catch"
             or state.perfect and "ph_fac_perfect_catch" or "ph_fac_good_catch")
         state.celebrate_t = FAC_CELEBRATE_DURATION
         fac_rumble(1, 0.4)
@@ -747,12 +749,12 @@ local function fac_finish_round(success, skip)
             G.GAME.fac_treasure_earned = G.GAME.fac_treasure_earned + 1
             check_for_unlock({type = 'fac_treasure', value = G.GAME.fac_treasure_earned})
         end
-        if not harpoon_treasure then
+        if not harpoon_treasure_only then
             FishAndChips.rod_function("on_catch", state.profile.key)
         end
         state.fac_main_fish_stalled = false
         state.fac_treasure_fish_stalled = false
-        if state.treasure_type == "fish" and not harpoon_treasure then
+        if state.treasure_type == "fish" and not harpoon_treasure_only then
             local bucket_area = FishAndChips.get_area_for_center(state.profile.center)
             if bucket_area.config.card_limit - #bucket_area.cards <= 0 then
                 state.fac_main_fish_stalled = true
@@ -760,18 +762,18 @@ local function fac_finish_round(success, skip)
                 fac_recompute_reward_box_shift(state)
             end
         end
-        if not harpoon_treasure then
+        if not harpoon_treasure_only then
             fish_obj = fac_reveal_catch(state, state.profile)
         end
         if treasure_profile then
             FishAndChips.rod_function("on_catch", treasure_profile.key)
             G.E_MANAGER.queues.fac_treasure_reveal = G.E_MANAGER.queues.fac_treasure_reveal or {}
-            local treasure_area = harpoon_treasure and G.FISHING.fac_fish_reward_area or G.FISHING.fac_treasure_reward_area
+            local treasure_area = harpoon_treasure_only and G.FISHING.fac_fish_reward_area or G.FISHING.fac_treasure_reward_area
             treasure_obj = fac_reveal_catch(state, treasure_profile, "fac_treasure_reveal", treasure_area, true)
-        elseif harpoon_treasure then
+        elseif harpoon_treasure_only then
             fac_reveal_treasure_reward(state)
         end
-        if harpoon_treasure then
+        if harpoon_treasure_only then
             local profile_data, rod_stats, bait_stats = fac_get_fishing_stats(FishAndChips.get_rod().key, G.GAME.fac_active_bait)
             profile_data.career_treasure_caught = (profile_data.career_treasure_caught or 0) + 1
             rod_stats.treasure = rod_stats.treasure + 1
@@ -832,7 +834,7 @@ local function fac_finish_round(success, skip)
         end
         G.E_MANAGER:add_event(Event({ func = function() save_run(); return true end }))
     end
-    SMODS.calculate_context({fac_end_fishing = true, failed = not success, fish = success and not state.harpoon_treasure and state.profile.key or nil, fish_obj = fish_obj or nil, treasure = success and state.got_treasure or false, treasure_available = state.treasure_enabled or false, treasure_progress = state.treasure_meter or 0, missed_treasure = success and state.treasure_enabled and not state.got_treasure or false, attempted_treasure = state.treasure_enabled and not state.got_treasure and (state.treasure_meter or 0) > 0 or false, treasure_obj = treasure_obj, perfect = success and state.perfect or false})
+    SMODS.calculate_context({fac_end_fishing = true, failed = not success, fish = success and not harpoon_treasure_only and state.profile.key or nil, fish_obj = fish_obj or nil, treasure = success and state.got_treasure or false, treasure_available = state.treasure_enabled or false, treasure_progress = state.treasure_meter or 0, missed_treasure = success and state.treasure_enabled and not state.got_treasure or false, attempted_treasure = state.treasure_enabled and not state.got_treasure and (state.treasure_meter or 0) > 0 or false, treasure_obj = treasure_obj, perfect = success and state.perfect or false})
     G.GAME.fac_forced_fish = nil
 end
 local function fac_begin_hooking_round()
@@ -858,6 +860,7 @@ local function fac_begin_hooking_round()
     state.treasure_meter = 0
     state.got_treasure = false
     state.harpoon_treasure = false
+    state.harpoon_both = false
     state.fac_treasure_reward_showing = false
     state.splash_t = FAC_SPLASH_DURATION
     state.perfect = true
@@ -1162,8 +1165,9 @@ function G:update_fac_fishing_hooking(dt)
             if chest_in_bar then
                 state.got_treasure = true
                 state.harpoon_treasure = true
+                state.harpoon_both = in_bar
                 state.treasure_meter = 1
-                state.perfect = false
+                state.perfect = in_bar
                 state.meter = 1
             elseif in_bar then
                 state.meter = 1

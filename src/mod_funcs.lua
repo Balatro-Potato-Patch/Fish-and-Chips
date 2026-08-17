@@ -22,6 +22,37 @@ function FishAndChips.mod.custom_card_areas(game)
 		highlighted_limit = 1,
 		align_buttons = true
 	})
+	getmetatable(game.fac_fish_area.config).__index = function(t, key)
+		if key == "card_limit" then
+			return (t.card_limits.total_slots or 0) - (t.card_limits.extra_slots_used or 0) - (t.buffer or 0)
+		end
+	end
+	game.fac_fish_area.load = function(self, cat)
+		CardArea.load(self, cat)
+		getmetatable(game.fac_fish_area.config).__index = function(t, key)
+			if key == "card_limit" then
+				return (t.card_limits.total_slots or 0) - (t.card_limits.extra_slots_used or 0) - (t.buffer or 0)
+			end
+		end
+	end
+	game.fac_fish_area.buffer = function(self, value, event)
+		if event then
+			event = type(event) == 'table' and event or {}
+			G.E_MANAGER:add_event(Event({
+				trigger = event.trigger or 'immediate', delay = event.delay or 0,
+				func = function()
+					self.config.buffer = (self.config.buffer or 0) + value
+					return true
+				end
+			}))
+		else
+			self.config.buffer = (self.config.buffer or 0) + value
+		end
+	end
+	game.fac_fish_area.has_space = function(self, value)
+		value = value or 1
+		return #self.cards + value <= self.config.card_limit
+	end
 	game.fac_fishing_bucket_bottom = UIBox({
 		definition = G.UIDEF.fac_fishing_bucket_bottom(),
 		config = {
