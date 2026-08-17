@@ -181,6 +181,7 @@ local function fac_ensure_state()
             round_success = false,
             reel_rumbling = false,
             harpoon_dir = true,
+            harpoon_treasure = false,
             reel_buffer = false,
         }
     end
@@ -306,6 +307,49 @@ local function fac_recompute_reward_box_shift(state)
     local main_needs_space = state.fac_main_fish_stalled or state.fac_main_fish_discovered_showing
     local treasure_needs_space = state.fac_treasure_fish_stalled or state.fac_treasure_fish_discovered_showing
     fac_set_caught_reward_box_shift(state, is_double_fish and main_needs_space and treasure_needs_space)
+end
+
+local function fac_reveal_treasure_reward(state)
+    local treasure_type = state.treasure_type
+    local treasure_reward = treasure_type == "dollars"
+        and state.result_dollars_reward or state.result_reward
+    state.fac_treasure_reward_showing = true
+
+    local treasure_box = UIBox {
+        definition = G.UIDEF.fac_treasure_reward(treasure_reward, treasure_type),
+        config = {
+            align = "cm",
+            major = G.FISHING.fishing,
+            offset = {x = 0, y = 0},
+            bond = "Weak",
+        }
+    }
+    local treasure_catch_text = UIBox {
+        definition = G.UIDEF.fac_treasure_catch(),
+        config = {
+            align = "tm",
+            major = treasure_box,
+            offset = {x = 0, y = 0.4},
+            r_bond = "Weak"
+        }
+    }
+    treasure_box:juice_up()
+    play_sound('fac_treasure_get')
+    delay(G.SETTINGS.GAMESPEED * 2)
+    G.E_MANAGER:add_event(Event {
+        func = function()
+            treasure_catch_text:remove()
+            treasure_box:remove()
+            if treasure_type == "dollars" then
+                ease_dollars(treasure_reward)
+            else
+                ease_sand_dollars(treasure_reward)
+            end
+            state.fac_treasure_reward_showing = false
+            save_run()
+            return true
+        end
+    })
 end
 
 local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_catch)
@@ -670,7 +714,9 @@ local function fac_finish_round(success, skip)
     local fish_obj
     local treasure_obj
     if success then
-        state.result_message = localize(state.perfect and "ph_fac_perfect_catch" or "ph_fac_good_catch")
+        local harpoon_treasure = state.profile.rod_key == "rod_fac_harpoon" and state.harpoon_treasure
+        state.result_message = localize(harpoon_treasure and "ph_fac_treasure_catch"
+            or state.perfect and "ph_fac_perfect_catch" or "ph_fac_good_catch")
         state.celebrate_t = FAC_CELEBRATE_DURATION
         fac_rumble(1, 0.4)
         state.result_reward = 0
@@ -701,10 +747,12 @@ local function fac_finish_round(success, skip)
             G.GAME.fac_treasure_earned = G.GAME.fac_treasure_earned + 1
             check_for_unlock({type = 'fac_treasure', value = G.GAME.fac_treasure_earned})
         end
-        FishAndChips.rod_function("on_catch", state.profile.key)
+        if not harpoon_treasure then
+            FishAndChips.rod_function("on_catch", state.profile.key)
+        end
         state.fac_main_fish_stalled = false
         state.fac_treasure_fish_stalled = false
-        if state.treasure_type == "fish" then
+        if state.treasure_type == "fish" and not harpoon_treasure then
             local bucket_area = FishAndChips.get_area_for_center(state.profile.center)
             if bucket_area.config.card_limit - #bucket_area.cards <= 0 then
                 state.fac_main_fish_stalled = true
@@ -712,11 +760,49 @@ local function fac_finish_round(success, skip)
                 fac_recompute_reward_box_shift(state)
             end
         end
-        fish_obj = fac_reveal_catch(state, state.profile)
+        if not harpoon_treasure then
+            fish_obj = fac_reveal_catch(state, state.profile)
+        end
         if treasure_profile then
             FishAndChips.rod_function("on_catch", treasure_profile.key)
             G.E_MANAGER.queues.fac_treasure_reveal = G.E_MANAGER.queues.fac_treasure_reveal or {}
-            treasure_obj = fac_reveal_catch(state, treasure_profile, "fac_treasure_reveal", G.FISHING.fac_treasure_reward_area, true)
+            local treasure_area = harpoon_treasure and G.FISHING.fac_fish_reward_area or G.FISHING.fac_treasure_reward_area
+            treasure_obj = fac_reveal_catch(state, treasure_profile, "fac_treasure_reveal", treasure_area, true)
+        elseif harpoon_treasure then
+            fac_reveal_treasure_reward(state)
+        end
+        if harpoon_treasure then
+            local profile_data, rod_stats, bait_stats = fac_get_fishing_stats(FishAndChips.get_rod().key, G.GAME.fac_active_bait)
+            profile_data.career_treasure_caught = (profile_data.career_treasure_caught or 0) + 1
+            rod_stats.treasure = rod_stats.treasure + 1
+            if bait_stats then bait_stats.treasure = bait_stats.treasure + 1 end
+            profile_data.environments_fished = profile_data.environments_fished or {}
+            profile_data.environments_fished[FishAndChips.get_environment().key] = true
+            if G.GAME.fac_active_bait then
+                profile_data.baits_used = profile_data.baits_used or {}
+                profile_data.baits_used[G.GAME.fac_active_bait] = true
+            end
+            if not treasure_profile then
+                check_for_unlock({
+                    type = 'fac_fish_caught',
+                    rod = FishAndChips.get_rod().key,
+                    bait = G.GAME.fac_active_bait,
+                    treasure = true,
+                    perfect = false,
+                    [FishAndChips.get_environment().key] = true,
+                })
+            end
+            FishAndChips.remove_bait_from_inventory(G.GAME.fac_active_bait)
+            if G.GAME.fac_active_bait then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        G.fac_bait_area.cards[1]:juice_up()
+                        play_sound('generic1')
+                        return true
+                    end
+                }))
+            end
+            G:save_progress()
         end
     else
         play_sound('fac_line_snap', 1.2)
@@ -746,7 +832,7 @@ local function fac_finish_round(success, skip)
         end
         G.E_MANAGER:add_event(Event({ func = function() save_run(); return true end }))
     end
-    SMODS.calculate_context({fac_end_fishing = true, failed = not success, fish = success and state.profile.key or nil, fish_obj = fish_obj or nil, treasure = success and state.got_treasure or false, treasure_available = state.treasure_enabled or false, treasure_progress = state.treasure_meter or 0, missed_treasure = success and state.treasure_enabled and not state.got_treasure or false, attempted_treasure = state.treasure_enabled and not state.got_treasure and (state.treasure_meter or 0) > 0 or false, treasure_obj = treasure_obj, perfect = success and state.perfect or false})
+    SMODS.calculate_context({fac_end_fishing = true, failed = not success, fish = success and not state.harpoon_treasure and state.profile.key or nil, fish_obj = fish_obj or nil, treasure = success and state.got_treasure or false, treasure_available = state.treasure_enabled or false, treasure_progress = state.treasure_meter or 0, missed_treasure = success and state.treasure_enabled and not state.got_treasure or false, attempted_treasure = state.treasure_enabled and not state.got_treasure and (state.treasure_meter or 0) > 0 or false, treasure_obj = treasure_obj, perfect = success and state.perfect or false})
     G.GAME.fac_forced_fish = nil
 end
 local function fac_begin_hooking_round()
@@ -767,10 +853,12 @@ local function fac_begin_hooking_round()
     state.fish_vel = 0
     state.fish_goal_vel = fac_rand(-0.12, 0.12)
     state.fish_decision_timer = fac_rand(profile.decision_min, profile.decision_max)
-    state.treasure_enabled = profile.rod_key ~= "rod_fac_harpoon" and math.random() < 0.66 or false
+    state.treasure_enabled = math.random() < 0.66
     state.treasure_pos = fac_rand(0.14, 0.86)
     state.treasure_meter = 0
     state.got_treasure = false
+    state.harpoon_treasure = false
+    state.fac_treasure_reward_showing = false
     state.splash_t = FAC_SPLASH_DURATION
     state.perfect = true
     state.has_reeled = false
@@ -1070,7 +1158,14 @@ function G:update_fac_fishing_hooking(dt)
             state.reel_buffer = true
         end
         if reeling and state.reel_buffer then
-            if in_bar then
+            local chest_in_bar = state.treasure_enabled and math.abs(state.treasure_pos - state.bar_pos) <= (state.bar_size * 0.5)
+            if chest_in_bar then
+                state.got_treasure = true
+                state.harpoon_treasure = true
+                state.treasure_meter = 1
+                state.perfect = false
+                state.meter = 1
+            elseif in_bar then
                 state.meter = 1
             else
                 state.meter = 0
@@ -1092,7 +1187,7 @@ function G:update_fac_fishing_hooking(dt)
         fac_rumble_release()
     end
 
-    if state.treasure_enabled and not state.got_treasure then
+    if state.profile.rod_key ~= "rod_fac_harpoon" and state.treasure_enabled and not state.got_treasure then
         local chest_in_bar = math.abs(state.treasure_pos - state.bar_pos) <= (state.bar_size * 0.5)
         if chest_in_bar then
             state.treasure_meter = fac_clamp(state.treasure_meter + profile.treasure_gain * dt, 0, 1)
@@ -1122,7 +1217,8 @@ function G:update_fac_fishing_results(dt)
     end
     state.result_timer = state.result_timer + dt
     if state.result_timer > 0.2 and not next(G.FISHING.fac_fish_reward_area.cards)
-        and not next(G.FISHING.fac_treasure_reward_area.cards) then
+        and not next(G.FISHING.fac_treasure_reward_area.cards)
+        and not state.fac_treasure_reward_showing then
         fac_set_fishing_state(state, G.FISHING_STATES.LOBBY)
         FishAndChips.show_fishing_buttons()
     end
