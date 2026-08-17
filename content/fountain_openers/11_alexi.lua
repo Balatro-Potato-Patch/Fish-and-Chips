@@ -54,34 +54,17 @@ FishAndChips.Fish {
             local tfish = G.fac_fish_area.cards[3]
             local tjoker = G.jokers.cards[3]
 
-            local elements = {}
+            local bubbles = {}
             for _, pair in ipairs({{lfish, rfish}, {ljoker, rjoker}, {tfish, tjoker}}) do
-                local nodes = {}
                 for i = 1, 2 do
                     local compatible = pair[i] and pair[i] ~= card and pair[i].config.center.blueprint_compat
-                    nodes[#nodes+1] = {n=G.UIT.C, config={
-                        ref_table = card,
-                        align = "m",
-                        colour = mix_colours(compatible and G.C.GREEN or G.C.RED, G.C.JOKER_GREY, 0.8),
-                        r = 0.05,
-                        padding = 0.06,
-                    }, nodes={
-                        {n=G.UIT.T, config={
-                            text = compatible and localize("k_compatible") or localize("k_incompatible"),
-                            colour = G.C.UI.TEXT_LIGHT,
-                            scale = 0.32*0.8
-                        }},
-                    }}
-
-                    -- create a spacer node if we aren't on the last node
-                    if i ~= 2 then nodes[#nodes+1] = {n=G.UIT.B, config={align = "m", h = 0.4, w = 0.5}} end
+                    bubbles[#bubbles+1] = compatible and "compatible" or "incompatible"
                 end
-                elements[#elements+1] = {n=G.UIT.C, config={align = "bm", mh = 0.4}, nodes=nodes}
             end
 
             return {
                 vars = {
-                    elements = elements
+                    ppu_bubbles = bubbles,
                 }
             }
         end

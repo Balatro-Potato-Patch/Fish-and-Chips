@@ -127,17 +127,17 @@ return {
                     {
                         "Copies the ability of the leftmost",
                         "or rightmost {C:fac_fish}Fish{} at random",
-                        "{element:1}"
+                        "{ppu_bubble:1}{ppu_bubble:2}"
                     },
                     {
                         "Copies the ability of the leftmost",
                         "or rightmost {C:attention}Joker{} at random",
-                        "{element:2}"
+                        "{ppu_bubble:3}{ppu_bubble:4}"
                     },
                     {
                         "Copies the ability of the third {C:attention}Joker",
                         "or {C:fac_fish}Fish{} from the left at random",
-                        "{element:3}"
+                        "{ppu_bubble:5}{ppu_bubble:6}"
                     },
                 },
                 flavor = {
