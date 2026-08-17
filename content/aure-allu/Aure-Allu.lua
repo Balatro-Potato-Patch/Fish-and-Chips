@@ -2283,6 +2283,9 @@ FishAndChips.Fish {
 					scalar_table = { weight = weight },
 					scalar_value = 'weight',
 					no_message = true,
+					operation = function(ref_table, ref_value, initial_value, change)
+						ref_table[ref_value] = initial_value + math.min(change, initial_value)
+					end,
 				})
 				SMODS.destroy_cards(sliced_card)
 				return {
