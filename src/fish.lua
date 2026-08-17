@@ -310,7 +310,7 @@ function Card:highlight(is_higlighted)
 						G.FISHING.fac_fish_reward_area:unhighlight_all()
 					end
 
-					G.jokers.T.y = G.jokers.T.y + 15.25 + ((self.area == G.FISHING.fac_fish_reward_area or self.area == G.FISHING.fac_treasure_reward_area) and 3 or 0)
+					G.jokers.T.y = G.jokers.T.y + 15.25 + ((self.area and self.area.config.fac_catch_area) and 3 or 0)
 					G.jokers.T.x = G.jokers.T.x + 1.5 - (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
 				else
 					G.jokers.T.y = -10
@@ -332,7 +332,7 @@ function Card:highlight(is_higlighted)
 					end
 
 					
-					G.consumeables.T.y = G.consumeables.T.y + 15.25 + ((self.area == G.FISHING.fac_fish_reward_area or self.area == G.FISHING.fac_treasure_reward_area) and 3 or 0)
+					G.consumeables.T.y = G.consumeables.T.y + 15.25 + ((self.area and self.area.config.fac_catch_area) and 3 or 0)
 					G.consumeables.T.x = G.consumeables.T.x - 3.5
 				else
 					G.consumeables.T.y = -10

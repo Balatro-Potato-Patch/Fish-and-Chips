@@ -238,6 +238,7 @@ function FishAndChips.create_fishing_UI()
 		align_buttons = true,
 		bg_colour = G.C.CLEAR,
 		no_card_count = true,
+		fac_catch_area = true,
 	})
 	G.FISHING.fac_fishing_reward_box = UIBox({
 		definition = {
@@ -262,6 +263,7 @@ function FishAndChips.create_fishing_UI()
 		align_buttons = true,
 		bg_colour = G.C.CLEAR,
 		no_card_count = true,
+		fac_catch_area = true,
 	})
 	G.FISHING.fac_treasure_reward_box = UIBox({
 		definition = {
