@@ -6,7 +6,7 @@ FishAndChips.Bait = SMODS.Center:extend{
 	obj_buffer = {},
 	pos = { x = 0, y = 0 },
 	atlas = "fac_bait",
-	cost = 3,
+	cost = 4,
 	boost = 3,
 	config = {},
 	set = 'fac_Bait',
