@@ -26,7 +26,7 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.fac_end_fishing and not context.failed and not context.perfect then
+		if context.fac_end_fishing and not context.failed then
 			local bait = G.GAME.fac_active_bait
 			if
 				SMODS.pseudorandom_probability(
