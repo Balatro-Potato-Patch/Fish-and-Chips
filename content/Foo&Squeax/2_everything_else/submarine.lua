@@ -103,7 +103,7 @@ FishAndChips.Fish{
 					SMODS.debuff_card(context.card, true, "fac_fas_submarine")
 				end
 			end
-			if context.retrigger_joker_check and context.other_card.config.center.set == "fac_Fish" then
+			if context.retrigger_joker_check and context.other_card and context.other_card.config.center.set == "fac_Fish" then
 				return {
 					repetitions = card.ability.extra.repetitions
 				}
