@@ -266,9 +266,10 @@
                         facp.noirProg({ flg = context.other_card.ability.noir_plot, lvl = context.other_card.ability.noir_level })
                     end
                     if context.other_card.ability.noir_triggered then
+                        local noir_card = context.other_card
                         G.E_MANAGER:add_event(Event({
                             func = function()
-                                context.other_card.ability.noir_triggered = nil
+                                noir_card.ability.noir_triggered = nil
                                 return true;
                             end
                         }))
