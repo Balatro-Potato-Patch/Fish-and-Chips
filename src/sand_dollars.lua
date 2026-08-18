@@ -209,7 +209,7 @@ function G.UIDEF.use_and_sell_buttons(card)
                 local left_text = {}
                 if config.name == 'sand_dollars' then
                   table.insert(left_text, {n=G.UIT.T, config={text = config.sand_dollars, font = config.font, scale = 0.8*scale, colour = FishAndChips.C.SAND_DOLLAR, shadow = true, juice = true}})
-                  table.insert(left_text, {n=G.UIT.O, config={object = DynaText({string = {" "..localize('k_fac_sand_dollar_cashout')}, colours = {G.C.UI.TEXT_LIGHT}, shadow = true, pop_in = 0, scale = 0.4*scale, silent = true})}})
+                  table.insert(left_text, {n=G.UIT.O, config={object = DynaText({string = {" "..localize('k_fac_sand_dollar_cashout').." ("..G.GAME.blind_on_deck.." Blind)"}, colours = {G.C.UI.TEXT_LIGHT}, shadow = true, pop_in = 0, scale = 0.4*scale, silent = true})}})
                 elseif string.find(config.name, 'joker') then
                   table.insert(left_text, {n=G.UIT.O, config={object = DynaText({string = localize{type = 'name_text', set = config.card.config.center.set, key = config.card.config.center.key}, colours = {G.C.FILTER}, shadow = true, pop_in = 0, scale = 0.6*scale, silent = true})}})
                 elseif string.find(config.name, 'tag') then
