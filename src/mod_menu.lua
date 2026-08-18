@@ -456,8 +456,7 @@ end
 G.FUNCS.open_compendium_to_env = function(e)
     play_sound("fac_flip_page")
 
-    local page_to_turn = FishAndChips.Environments[G.GAME.fac_fishing_environment].order
-    page_to_turn = page_to_turn%2 == 0 and page_to_turn - 1 or page_to_turn
+    local page_to_turn = (FishAndChips.Environments[G.GAME.fac_fishing_environment].order * 2) - 1
     G.OVERLAY_MENU = UIBox{
         definition = FishAndChips.Compendium.page({type = 'environment_page', left = page_to_turn, right = page_to_turn + 1}),
         config =  {align = "cm", offset = {x=0,y=0}, major = G.ROOM_ATTACH, bond = 'Weak'}
