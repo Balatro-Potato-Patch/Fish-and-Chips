@@ -84,7 +84,7 @@ FishAndChips.Fish {
         end
 	end,
     can_use = function(self, card)
-        return (card.ability.extra.count_cards <= 0) and (#G.fac_fish_area.cards - 1 < G.fac_fish_area.config.card_limit)
+        return (card.ability.extra.count_cards <= 0) and G.fac_fish_area:has_space(0)
     end,
     use = function(self, card, area, copier)
         for i = 1, math.min(card.ability.extra.amt_create, G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards + 1) do
@@ -92,7 +92,7 @@ FishAndChips.Fish {
                 trigger = 'after',
                 delay = 0.4,
                 func = function()
-                    if G.fac_fish_area.config.card_limit > #G.fac_fish_area.cards - 1 then
+                    if G.fac_fish_area:has_space(0) then
                         play_sound('timpani')
                         local new_fish = SMODS.add_card({ set = 'fac_Fish', key_append = "smaller_wrapped_present" })
                         new_fish.ability.stats = {}

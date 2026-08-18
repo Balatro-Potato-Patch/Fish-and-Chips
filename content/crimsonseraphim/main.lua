@@ -623,7 +623,7 @@ FishAndChips.Fish {
 	},
     use = function(self, card)
         if card.ability.saved_card then
-            if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
+            if G.fac_fish_area:has_space() then
                 card.ability.saved_card.card.states.collide.can = true
                 card.ability.saved_card.card.states.hover.can = true
                 card.ability.saved_card.card.states.click.can = true
@@ -912,13 +912,21 @@ FishAndChips.Fish {
                 end
             end
             for i = 1, card.ability.extra.copies do
-                if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
-                    local c = copy_card(pseudorandom_element(cards, pseudoseed("crimsonseraphim_starblight_eel")), nil)
-                    G.fac_fish_area:emplace(c)
-                    c:add_to_deck()
-                    c:start_materialize()
-                    c.ability.crimsonseraphim_starblighted = true
-                    c.ability.crimsonseraphim_starblighted_mult = 1
+                if G.fac_fish_area:has_space() then
+                    G.fac_fish_area:buffer(1)
+                    G.E_MANAGER:add_event(Event({
+                        type = 'after', delay = 1.4,
+                        func = function()
+                            local c = copy_card(pseudorandom_element(cards, pseudoseed("crimsonseraphim_starblight_eel")), nil)
+                            G.fac_fish_area:emplace(c)
+                            c:add_to_deck()
+                            c:start_materialize()
+                            c.ability.crimsonseraphim_starblighted = true
+                            c.ability.crimsonseraphim_starblighted_mult = 1
+                            G.fac_fish_area:buffer(-1)
+                            return true
+                        end
+                    }))
                 end
             end
         end
@@ -963,7 +971,7 @@ FishAndChips.Fish {
         }
     end,
     use = function(self, card)
-        if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
+        if G.fac_fish_area:has_space() then
             for i = 1, math.min(card.ability.extra.fish, G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) do
                 local c = G.GAME.crimsonseraphim_obtained_fish[#G.GAME.crimsonseraphim_obtained_fish]
                 if c then
@@ -1095,7 +1103,7 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card ,context)
         if context.fac_use_fish and not context.fac_use_fish.ability.perishable then
-            if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
+            if G.fac_fish_area:has_space() then
                 local c = SMODS.add_card{key=context.fac_use_fish.config.center.key, area = G.fac_fish_area}
                 c.ability.perishable = true
                 c.ability.perish_tally = 5
@@ -1240,11 +1248,20 @@ FishAndChips.Fish {
     blueprint_compat = false,
     calculate = function(self, card, context)
         if context.setting_blind then
-            for i = 1, G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards do
-                local card = SMODS.add_card{set = "fac_Fish", area = G.fac_fish_area}
-                card:start_materialize()
-                card.ability.crimsonseraphim_temporary = true
-            end
+            local space = G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards
+            G.fac_fish_area:buffer(space)
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after', delay = 0.7,
+                func = function()
+                    for i = 1, space do
+                        local card = SMODS.add_card{set = "fac_Fish", area = G.fac_fish_area}
+                        card:start_materialize()
+                        card.ability.crimsonseraphim_temporary = true
+                        G.fac_fish_area:buffer(-1)
+                    end
+                    return true
+                end
+            }))
         end
     end
 }

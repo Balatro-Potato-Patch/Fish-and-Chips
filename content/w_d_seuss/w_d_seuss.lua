@@ -359,21 +359,24 @@ FishAndChips.Fish {
 		return { vars = {} }
 	end,
 	use = function(self, card, area)
+		G.fac_fish_area:buffer(1)
 		G.E_MANAGER:add_event(Event({
 			trigger = 'after',
 			delay = 0.4,
 			func = function()
 				play_sound('fac_gerson_laugh')
-				local cen_pool = {}
-				for _, deltarune_fish_center in pairs(G.P_CENTER_POOLS["fac_Fish"]) do
-					if deltarune_fish_center.attributes.deltarune and deltarune_fish_center.key ~= 'fish_fac_old' then
-						cen_pool[#cen_pool + 1] = deltarune_fish_center
-					end
-				end
-				local deltarune_fish = pseudorandom_element(cen_pool, 'gerson').key
+				local deltarune_fish = SMODS.poll_object({type = 'fac_Fish', attributes = {'deltarune'}})
 				if deltarune_fish then
-					SMODS.add_card({ key = deltarune_fish, area = G.fac_fish_area })
+					G.E_MANAGER:add_event(Event({
+						trigger = 'after', delay = 0.7,
+						func = function()
+							local c = SMODS.add_card({ key = deltarune_fish, area = G.fac_fish_area, skip_materialize = true })
+							c:start_materialize()
+							return true
+						end
+					}))
 				end
+				G.fac_fish_area:buffer(-1)
 				card:juice_up(0.3, 0.5)
 				return true
 			end
@@ -381,7 +384,7 @@ FishAndChips.Fish {
 		delay(0.6)
 	end,
 	can_use = function(self, card)
-		return G.fac_fish_area and #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit
+		return G.fac_fish_area and G.fac_fish_area:has_space()
 	end
 }
 

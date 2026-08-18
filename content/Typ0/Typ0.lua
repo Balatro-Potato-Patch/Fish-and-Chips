@@ -271,10 +271,23 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.selling_self and (card.ability.extra.gary_rounds >= card.ability.extra.total_rounds) and not context.blueprint then
-			if #G.fac_fish_area.cards <= G.fac_fish_area.config.card_limit then
-				local new_card = create_card('fac_Fish', G.fac_fish_area, nil, nil, nil, nil, 'fish_fac_Gary')
-				new_card:add_to_deck()
-				G.fac_fish_area:emplace(new_card)
+			if G.fac_fish_area:has_space(0) then
+				G.fac_fish_area:buffer(1)
+				G.E_MANAGER:add_event(Event({
+					trigger = 'after', delay = 0.7,
+					func = function()
+						G.E_MANAGER:add_event(Event({
+							trigger = 'after', delay = 0.7,
+							func = function()
+								local c = SMODS.add_card({area = G.fac_fish_area, key = 'fish_fac_Gary', skip_materialize = true})
+								c:start_materialize()
+								G.fac_fish_area:buffer(-1)
+								return true
+							end
+						}))
+						return true
+					end
+				}))
 				return { message = localize('k_duplicated_ex') }
 			else
 				return { message = localize('k_no_room_ex') }

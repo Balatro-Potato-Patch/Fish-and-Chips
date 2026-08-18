@@ -2084,7 +2084,8 @@ FishAndChips.Fish {
 	end,
 	use = function(self, card, area, copier)
 	    card.ability.extra.available = false
-	    if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
+	    if G.fac_fish_area:has_space() then
+			G.fac_fish_area:buffer(1)
     		G.E_MANAGER:add_event(Event({
                 trigger = 'after',
                 delay = 0.4,
@@ -2101,6 +2102,7 @@ FishAndChips.Fish {
 						return new_pool
                     end })
                     card:juice_up(0.3, 0.5)
+					G.fac_fish_area:buffer(-1)
                     return true
                 end
             }))

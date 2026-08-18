@@ -485,12 +485,12 @@ FishAndChips.Fish({
 	calculate = function(self, card, context)
 		if context.fac_end_fishing and context.fish then
 			local count = #G.fac_fish_area.cards
-			if count + 1 + (G.GAME.fac_fish_buffer or 0) < G.fac_fish_area.config.card_limit then
-				G.GAME.fac_fish_buffer = (G.GAME.fac_fish_buffer or 0) + 1
+			if G.fac_fish_area:has_space() then
+				G.fac_fish_area:buffer(1)
 				G.E_MANAGER:add_event(Event({
 					func = function()
-						G.GAME.fac_fish_buffer = 0
 						SMODS.add_card({ set = "fac_Fish" })
+						G.fac_fish_area:buffer(-1)
 						return true
 					end,
 				}))
