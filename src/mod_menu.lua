@@ -113,6 +113,10 @@ end
 
 G.FUNCS.fac_return_to_mods = function(e)
     play_sound("fac_book_close", 1, 0.7)
+    if SMODS.full_restart then
+        SMODS.restart_game()
+        return
+    end
     G.FUNCS.mods_button(e)
 end
 
@@ -1124,29 +1128,47 @@ end
 
 FishAndChips.mod.config_tab = true
 
+function FishAndChips.Compendium.config_page_inner(page_number)
+    if page_number == 1 then
+        return {
+            {n=G.UIT.R, config={align='cl'}, nodes={{n=G.UIT.T, config={text='Accessibility', underline = FishAndChips.C.COMPENDIUM_COLOUR, underline_scale = 0.04, scale = 0.5, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}}},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_family_friendly_toggle', ref_value = "family_friendly"},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_performance_mode', ref_value = "performance_mode"},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_flashing_lights', ref_value = "disable_flashing"},
+            {n=G.UIT.R, config={align='cl'}, nodes={{n=G.UIT.T, config={text='Menus', underline = FishAndChips.C.COMPENDIUM_COLOUR, underline_scale = 0.04, scale = 0.5, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}}},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_menu_toggle', ref_value = "menu"},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_condensed_fish', ref_value = "condensed_fish"},
+        }
+    end
+    return {
+        {n=G.UIT.R, config={align='cl'}, nodes={{n=G.UIT.T, config={text='Visual', underline = FishAndChips.C.COMPENDIUM_COLOUR, underline_scale = 0.04, scale = 0.5, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}}},
+        FishAndChips.Compendium.toggle {text_key = 'b_fac_flavour_text', ref_value = "disable_flavour"},
+        FishAndChips.Compendium.toggle {text_key = 'b_fac_fish_resize', ref_value = "shrink_sprites", callback = G.FUNCS.fac_toggle_sprite_scale},
+        FishAndChips.Compendium.toggle {text_key = 'b_fac_fish_scaling', ref_value = "disable_fish_scaling"},
+        {n=G.UIT.R, config={align='cl'}, nodes={{n=G.UIT.T, config={text='Audio', underline = FishAndChips.C.COMPENDIUM_COLOUR, underline_scale = 0.04, scale = 0.5, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}}},
+        FishAndChips.Compendium.toggle {text_key = 'b_fac_ambience_toggle', ref_value = "ambience", callback = G.FUNCS.fac_toggle_ambience},
+        FishAndChips.Compendium.toggle {text_key = 'b_fac_noir_music', ref_value = "noir_music"},
+    }
+end
+
+function G.FUNCS.fac_toggle_sprite_scale()
+    SMODS.full_restart = (SMODS.full_restart or 0) + 1
+    SMODS.save_mod_config(FishAndChips.mod)
+end
+
 function FishAndChips.Compendium.config_page(page_number, left)
-    if page_number > 1 then return end -- TODO: add artwork to page 2
+    -- if page_number > 1 then return end -- TODO: add artwork to page 2
     FishAndChips.Compendium.reset_warning = G.STAGE ~= G.STAGES.RUN and localize('ph_fac_reset_all') or localize('ph_fac_cannot_reset')
     
     local page = {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {
-        FishAndChips.Compendium.page_title('config_page', page_number),
+        FishAndChips.Compendium.page_title('config_page', 1),
         {n=G.UIT.R, config = {minh = 0.4}},
-        {n=G.UIT.R, config = {align = 'tm', minh = 3, minw = 5}, nodes = {
-            FishAndChips.Compendium.toggle {text_key = 'b_fac_ambience_toggle', ref_value = "ambience", callback = G.FUNCS.fac_toggle_ambience},
-            FishAndChips.Compendium.toggle {text_key = 'b_fac_noir_music', ref_value = "noir_music"},
-            FishAndChips.Compendium.toggle {text_key = 'b_fac_menu_toggle', ref_value = "menu"},
-            FishAndChips.Compendium.toggle {text_key = 'b_fac_family_friendly_toggle', ref_value = "family_friendly"},
-            FishAndChips.Compendium.toggle {text_key = 'b_fac_condensed_fish', ref_value = "condensed_fish"},
-            FishAndChips.Compendium.toggle {text_key = 'b_fac_flavour_text', ref_value = "disable_flavour"},
-            FishAndChips.Compendium.toggle {text_key = 'b_fac_flashing_lights', ref_value = "disable_flashing"},
-            FishAndChips.Compendium.toggle {text_key = 'b_fac_fish_scaling', ref_value = "disable_fish_scaling"},
-            FishAndChips.Compendium.toggle {text_key = 'b_fac_performance_mode', ref_value = "performance_mode"},
-        }},
-        {n=G.UIT.R, config = {align = 'cm', minh = 2}, nodes = {
+        {n=G.UIT.R, config = {align = 'tm', minh = 3, minw = 5}, nodes = FishAndChips.Compendium.config_page_inner(page_number)},
+        page_number == 2 and {n=G.UIT.R, config = {align = 'cm', minh = 2}, nodes = {
             {n=G.UIT.R, config = {align = 'cm', colour = FishAndChips.C.COMPENDIUM_COLOUR, r = 0.1, hover = true, button = 'fac_reset_all_progress', func = 'fac_can_reset_progress', minw = 3.2, minh = 0.8, padding = 0.05}, nodes = {
                 {n=G.UIT.T, config = {ref_table = FishAndChips.Compendium, ref_value = 'reset_warning', font = SMODS.Fonts.fac_collection, colour = FishAndChips.C.COMPENDIUM_TEXT, scale = 0.5}}
             }}
-        }}
+        }} or nil
     }}
 
     return page

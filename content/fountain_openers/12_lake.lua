@@ -1,3 +1,5 @@
+local lake_scale = FishAndChips.mod.config.shrink_sprites and 0.3 or 0.5
+
 FishAndChips.Fish {
 	key = "fo_lake",
 	atlas = "fo_lake",
@@ -12,7 +14,7 @@ FishAndChips.Fish {
 			retriggers = 3
 		},
 	},
-	display_size = { w = 321 * 0.5, h = 347 * 0.5 },
+	display_size = { w = 321 * lake_scale, h = 347 * lake_scale },
     pixel_size = { w = 321, h = 347 },
 
 	decision_min = 0.18,

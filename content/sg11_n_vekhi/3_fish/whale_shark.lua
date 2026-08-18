@@ -5,6 +5,8 @@ SMODS.Atlas({
     py = 95 * 2,
 })
 
+local whale_shark_scale = FishAndChips.mod.config.shrink_sprites and 1 or 1.75
+
 FishAndChips.Fish({
     key = "sg11_n_vekhi_whale_shark",
     atlas = "fac_sg11_n_vekhi_whale_shark",
@@ -37,8 +39,8 @@ FishAndChips.Fish({
         styx = 1,
     },
     display_size = {
-        w = 71 * 1.75,
-        h = 95 * 1.75,
+        w = 71 * whale_shark_scale,
+        h = 95 * whale_shark_scale,
     },
     -- pixel_size = {
     -- 	w = 71 * 2,

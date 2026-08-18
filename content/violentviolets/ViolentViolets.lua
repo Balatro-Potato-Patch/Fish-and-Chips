@@ -295,6 +295,8 @@ FishAndChips.Fish {
     end
 }
 
+local leviathan_scale = FishAndChips.mod.config.shrink_sprites and 0.7 or 1
+
 FishAndChips.Fish {
     key = "vv_leviathan",
     weight = 2,
@@ -304,7 +306,7 @@ FishAndChips.Fish {
     attributes = { 'destroy_card', 'economy' },
     atlas = 'fac_vv_leviathan',
     pos = { x = 0, y = 0 },
-    display_size = { w = 71, h = 198 },
+    display_size = { w = 71 * leviathan_scale, h = 198 * leviathan_scale },
     environments = { pier = 2, city_river = 1 },
     cost = 1,
     config = { extra = { sand_dollar = 1 } },

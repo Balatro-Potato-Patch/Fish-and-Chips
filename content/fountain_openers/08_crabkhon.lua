@@ -1,8 +1,10 @@
+local crabkhon_scale = FishAndChips.mod.config.shrink_sprites and 0.4 or 0.55
+
 FishAndChips.Fish {
 	key = "fo_crabkhon",
 	atlas = "fo_crabkhon",
 	pos = { x = 0, y = 0 },
-	display_size = { w = 234 * 0.55, h = 240 * 0.55 },
+	display_size = { w = 234 * crabkhon_scale, h = 240 * crabkhon_scale },
     pixel_size = { w = 234, h = 240 },
 	weight = 12,
 	ppu_coder = { "fo_alexi" },

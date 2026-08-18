@@ -388,6 +388,8 @@ SMODS.Atlas {
     py = 285
 }
 
+local flying_fih_scale = FishAndChips.mod.config.shrink_sprites and 0.4 or 1
+
 FishAndChips.Fish {
 	key = "flying_fih",
 	atlas = "lanedarushpy_flying",
@@ -414,7 +416,7 @@ FishAndChips.Fish {
         length = { min = 45, max = 55}
     },
 
-    display_size = { w = 142, h = 285 },
+    display_size = { w = 142 * flying_fih_scale, h = 285 * flying_fih_scale },
     pixel_size = { w = 142, h = 285 },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.divide, card.ability.extra.cap } }
@@ -1177,14 +1179,14 @@ FishAndChips.Fish {
 }
 
 
-local bladetongue_scale = 0.7
+local bladetongue_scale = FishAndChips.mod.config.shrink_sprites and 0.7 or 1
 
 FishAndChips.Fish {
 	key = "lizie_bladetongue",
 	atlas = "pangaea47_bladetongue",
 	pos = { x = 0, y = 0 },
-    display_size = { w = (135*bladetongue_scale), h = 152 * ((135*bladetongue_scale)/135) },
-    alt_d_size = {w = (135*bladetongue_scale), h = 285 * ((135*bladetongue_scale)/135)},
+    display_size = { w = 135 * bladetongue_scale, h = 152 * bladetongue_scale },
+    alt_d_size = {w = 135 * bladetongue_scale, h = 285 * bladetongue_scale},
     pixel_size = { w = 135, h = 152 },
 	weight = 5,
 	ppu_coder = { "lanedarushpy" },

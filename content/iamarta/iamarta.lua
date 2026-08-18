@@ -47,6 +47,8 @@ SMODS.Atlas({
     py = 115
 })
 
+local hun_gar_scale = FishAndChips.mod.config.shrink_sprites and 0.5 or 1
+
 FishAndChips.Fish{
     key = "iamarta_100_gar",
     weight = 8,
@@ -54,7 +56,7 @@ FishAndChips.Fish{
     ppu_coder = {"iamarta"},
     ppu_artist = {"iamarta"},
     attributes = {"xmult", "fac_perfect_catch", "scaling"},
-    display_size = {w = 186, h = 149},
+    display_size = {w = 186 * hun_gar_scale, h = 149 * hun_gar_scale},
     stats = {
 		weight = {min = 100, max = 700},
 		length = {min = 1.2, max = 0.4}

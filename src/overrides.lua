@@ -428,6 +428,7 @@ function Game:main_menu(change_context)
 
         G.FUNCS.exit_overlay_menu_mxms = function()
             play_sound("fac_book_close")
+			if SMODS.full_restart then return SMODS.restart_game() end
             G.ACTIVE_MOD_UI = nil
             G.FUNCS.exit_overlay_menu()
         end

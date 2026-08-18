@@ -10,11 +10,13 @@ if CardPronouns then
     }
 end
 
+local alexi_scale = FishAndChips.mod.config.shrink_sprites and 0.4 or 0.69
+
 FishAndChips.Fish {
 	key = "fo_alexi",
     pronouns = Lemniscate and "lem_alexi_pronouns" or "fo_alexi_pronouns",
 	atlas = "fo_alexi",
-    display_size = { w = 234 * 0.69, h = 240 * 0.69 },
+    display_size = { w = 234 * alexi_scale, h = 240 * alexi_scale },
     pixel_size = { w = 234, h = 240 },
 	pos = { x = 0, y = 0 },
 	weight = 2,
