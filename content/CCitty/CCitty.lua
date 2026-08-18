@@ -125,7 +125,7 @@ FishAndChips.Fish { --yoray
 			context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult + card.ability.extra.Xmult
 			return {
 				message = 'Yoray!',
-				card = context.other_card,
+				message_card = context.other_card,
 				delay = 0.1
 			}
 		end
