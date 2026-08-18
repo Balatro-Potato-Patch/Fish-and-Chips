@@ -73,32 +73,18 @@ G.fac_Breukel.AddOverTime = function(card, val, func) -- adds val to OverTime if
     end
         
 	local check = G.GAME.fac_Breukel.OverTime
-    G.GAME.fac_Breukel.OverTime = G.GAME.fac_Breukel.OverTime % (G.GAME.fac_Breukel.MaxOverTime + 1)
+    if G.GAME.fac_Breukel.OverTime > G.GAME.fac_Breukel.MaxOverTime then
+		G.GAME.fac_Breukel.OverTime = G.GAME.fac_Breukel.OverTime % G.GAME.fac_Breukel.MaxOverTime
+	end
 
-	if func and func.display then
-		G.E_MANAGER:add_event(Event({
-			trigger = "immediate",
-			func = function()
+			if func and func.display then
 				card_eval_status_text(card, 'extra', nil, nil, nil, {message = func.display, colour = G.C.FAC_BREUKEL_OVERTIME})
-			return true end,
-		}))
-	else
-		G.E_MANAGER:add_event(Event({
-			trigger = "immediate",
-			func = function()
+			else
 				card_eval_status_text(card, 'extra', nil, nil, nil, {message = "+" .. val .. " OT!" , colour = G.C.FAC_BREUKEL_OVERTIME})
-			return true end,
-		}))
-	end
-
-	if check ~= G.GAME.fac_Breukel.OverTime then
-		G.E_MANAGER:add_event(Event({
-			trigger = "immediate",
-			func = function()
+			end
+			if check ~= G.GAME.fac_Breukel.OverTime then
 				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset'), colour = G.C.FAC_BREUKEL_OVERTIME})
-			return true end,
-		}))	
-	end
+			end
 end
 
 G.fac_Breukel.GetOverTime = function(val)

@@ -147,12 +147,14 @@ FishAndChips.Fish {
 					return true
 				end
 			}))
+
 			local times = math.random(3) + 1
+			local should_do_real = #SMODS.find_card("fish_fac_ghostsalt_ghostfish") <= 1
 			for i = 1, times do
 				G.E_MANAGER:add_event(Event({
 					trigger = "before",
-					timer = "REAL",
-					delay = 0.60,
+					timer = should_do_real and "REAL",
+					delay = 0.5,
 					func = function()
 						selected_tarot:juice_up()
 						play_sound("cancel", 1.20 + (math.random() / 5), 0.5)
@@ -160,10 +162,10 @@ FishAndChips.Fish {
 					end
 				}))
 			end
-			local delay_time = math.random(0.50, 1)
+			local delay_time = math.random(0.4, 0.8)
 			G.E_MANAGER:add_event(Event({
 				trigger = "before",
-				timer = "REAL",
+				timer = should_do_real and "REAL",
 				delay = delay_time,
 				func = function()
 					return true
@@ -171,7 +173,7 @@ FishAndChips.Fish {
 			}))
 			G.E_MANAGER:add_event(Event({
 				trigger = "before",
-				timer = "REAL",
+				timer = should_do_real and "REAL",
 				delay = 0.4,
 				func = function()
 					selected_tarot:flip(); play_sound("fac_ghostfish_2", 0.90 + (math.random() / 5), 0.4); selected_tarot:juice_up(0.30, 0.3);
@@ -1475,7 +1477,7 @@ function play_sound(sound_code, per, vol)
 					if times == 10 then new_sound_code = "fac_fishwav_fish" end
 				end
 				if sound_code == "paper1" and per and not vol then -- Fixes one specific instance of this sound (Cash Out screen) being too loud.
-					new_vol = new_vol * 0.4
+					new_vol = new_vol * 0.3
 				end
 				if new_sound_code ~= "fac_fishwav_fish" then
 					new_per = new_per * ((math.random() / 2) + 0.75)

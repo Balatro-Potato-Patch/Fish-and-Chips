@@ -168,7 +168,7 @@ return {
             fish_fac_Bottled_MULT_select = {
                 name = "Bottled{s:0.25} {C:mult}Mult{}",
                 text = {
-                    "{C:attention}#1#{} selected",
+                    "Up to {C:attention}#1#{} selected",
                     "cards permanently",
                     "gain {C:mult}+#2#{} Mult",
                     "{ppu_bubble:usable}"
@@ -259,7 +259,7 @@ return {
             fish_fac_Bottled_XCHIPS_select = {
                 name = "Bottled{s:0.25} {X:chips,C:white}XChips{}",
                 text = {
-                    "{C:attention}#1#{} selected",
+                    "Up to {C:attention}#1#{} selected",
                     "cards permanently",
                     "gain {X:chips,C:white}X#2#{} Chips",
                     "{ppu_bubble:usable}"
@@ -358,7 +358,7 @@ return {
             fish_fac_Bottled_XMULT_select = {
                 name = "Bottled{s:0.25} {X:mult,C:white}XMult{}",
                 text = {
-                    "{C:attention}#1#{} selected",
+                    "Up to {C:attention}#1#{} selected",
                     "cards permanently",
                     "gain {X:mult,C:white}X#2#{} Mult",
                     "{ppu_bubble:usable}"
@@ -413,7 +413,7 @@ return {
                 text = {
                     "Each {C:attention}#1#{} held in",
                     "hand permanently",
-                    "gives {C:money}$#2#{} when scored",
+                    "gains {C:money}$#2#{} when scored",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -427,7 +427,7 @@ return {
                 text = {
                     "{C:attention}#1# {E:2}random{} cards held",
                     "in hand permanently",
-                    "give {C:money}$#2#{} when scored",
+                    "gain {C:money}$#2#{} when scored",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -441,7 +441,7 @@ return {
                 text = {
                     "{C:attention}#1# {E:2}random{} card held",
                     "in hand permanently",
-                    "gives {C:money}$#2#{} when scored",
+                    "gains {C:money}$#2#{} when scored",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -453,8 +453,8 @@ return {
             fish_fac_Bottled_MONEY_select = {
                 name = "Bottled{s:0.25} {C:money}Money{}",
                 text = {
-                    "{C:attention}#1#{} selected cards",
-                    "permanently give",
+                    "Up to {C:attention}#1#{} selected",
+                    "cards permanently gain",
                     "{C:money}$#2#{} when scored",
                     "{ppu_bubble:usable}"
                 },
@@ -467,7 +467,7 @@ return {
                 name = "Bottled{s:0.25} {C:money}Money{}",
                 text = {
                     "{C:attention}#1#{} selected card",
-                    "permanently gives",
+                    "permanently gains",
                     "{C:money}$#2#{} when scored",
                     "{ppu_bubble:usable}"
                 },
@@ -485,7 +485,7 @@ return {
                 text = {
                     {
                         "Between {C:attention}#1#{} and {C:attention}#2#{} {C:attention}playing{}",
-                        "{C:attention}cards{} permanently gain",
+                        "{C:attention}cards{} permanently gains",
                         "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{} when scored",
                         "{ppu_bubble:usable}"
                     },
@@ -505,7 +505,7 @@ return {
                 text = {
                     "Each {C:attention}#1#{} held in",
                     "hand permanently",
-                    "gives {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
+                    "gains {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -519,7 +519,7 @@ return {
                 text = {
                     "{C:attention}#1# {E:2}random{} cards held",
                     "in hand permanently",
-                    "give {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
+                    "gain {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -533,7 +533,7 @@ return {
                 text = {
                     "{C:attention}#1# {E:2}random{} card held",
                     "in hand permanently",
-                    "gives {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
+                    "gains {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -545,8 +545,8 @@ return {
             fish_fac_Bottled_SAND_select = {
                 name = "Bottled{s:0.25} {C:fac_sand_dollars}Sand{}",
                 text = {
-                    "{C:attention}#1#{} selected cards",
-                    "permanently give",
+                    "Up to {C:attention}#1#{} selected",
+                    "cards permanently gain",
                     "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
                     "{ppu_bubble:usable}"
                 },
@@ -561,7 +561,7 @@ return {
                 name = "Bottled{s:0.25} {C:fac_sand_dollars}Sand{}",
                 text = {
                     "{C:attention}#1#{} selected card",
-                    "permanently gives",
+                    "permanently gains",
                     "{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{} when scored",
                     "{ppu_bubble:usable}"
                 },
@@ -597,7 +597,7 @@ return {
                 text = {
                     "Each {C:attention}#1#{} held in",
                     "hand permanently",
-                    "gains {C:legendary}#2#{} Retrigger",
+                    "gains {C:legendary}#2#{} retrigger",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -611,7 +611,7 @@ return {
                 text = {
                     "{C:attention}#1# {E:2}random{} cards held",
                     "in hand permanently",
-                    "gain {C:legendary}#2#{} Retrigger",
+                    "gain {C:legendary}#2#{} retrigger",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -625,7 +625,7 @@ return {
                 text = {
                     "{C:attention}#1# {E:2}random{} card held",
                     "in hand permanently",
-                    "gains {C:legendary}#2#{} Retrigger",
+                    "gains {C:legendary}#2#{} retrigger",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -636,9 +636,9 @@ return {
             fish_fac_Bottled_REPEAT_select = {
                 name = "Bottled{s:0.25} {C:legendary}Loop{}",
                 text = {
-                    "{C:attention}#1#{} selected",
+                    "Up to {C:attention}#1#{} selected",
                     "cards permanently",
-                    "gain {C:legendary}#2#{} Retrigger",
+                    "gain {C:legendary}#2#{} retrigger",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -653,7 +653,7 @@ return {
                 text = {
                     "{C:attention}#1#{} selected",
                     "card permanently",
-                    "gains {C:legendary}#2#{} Retrigger",
+                    "gains {C:legendary}#2#{} retrigger",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
