@@ -170,10 +170,12 @@ FishAndChips.Fish {
                     end
                 end
 
-                local forced_card = pseudorandom_element(unselected_cards, "equi_webfishing")
-                if not forced_card.ability.forced_selection then
-                    forced_card.ability.forced_selection = true
-                    G.hand:add_to_highlighted(forced_card)
+                if next(unselected_cards) then
+                    local forced_card = pseudorandom_element(unselected_cards, "equi_webfishing")
+                    if not forced_card.ability.forced_selection then
+                        forced_card.ability.forced_selection = true
+                        G.hand:add_to_highlighted(forced_card)
+                    end
                 end
             end
         end
