@@ -111,7 +111,7 @@ FishAndChips.Fish{
 		end
 
 		if context.starting_shop and G.GAME.fac_FooSqueax.bucket.on then
-			card.ability.extra.should_resume_bucket = true
+			card.ability.extra.should_resume_debuff = true
 			FishAndChips.FooSqueax.toggle_bucket_shader()
 			SMODS.calculate_effect({message = localize(G.GAME.fac_FooSqueax.bucket.on and "k_fac_fas_dive" or "k_fac_fas_resurface"), colour = G.C.BLUE}, card)
 			for _, _card in ipairs(G.jokers.cards) do
@@ -119,8 +119,8 @@ FishAndChips.Fish{
 			end
 		end
 
-		if context.ending_shop and card.ability.extra.should_resume_bucket then
-			card.ability.extra.should_resume_bucket = nil
+		if context.ending_shop and card.ability.extra.should_resume_debuff then
+			card.ability.extra.should_resume_debuff = nil
 			FishAndChips.FooSqueax.toggle_bucket_shader()
 			SMODS.calculate_effect({message = localize(G.GAME.fac_FooSqueax.bucket.on and "k_fac_fas_dive" or "k_fac_fas_resurface"), colour = G.C.BLUE}, card)
 			for _, _card in ipairs(G.jokers.cards) do
