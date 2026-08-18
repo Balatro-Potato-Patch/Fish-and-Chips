@@ -90,7 +90,9 @@ return {
             fish_fac_test = {
                 name = "Carpboard Cutout",
                 text = {
-                    "Placeholder"
+                    "Does Nothing...",
+                    "You've caught everything here,",
+                    "try fishing elsewhere!"
                 }
             },
         },
