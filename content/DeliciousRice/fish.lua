@@ -71,8 +71,8 @@ FishAndChips.Fish { -- Spongebob
 		pier = 30
 	},
 	stats = {
-		weight = {min = 10, max = 10},
-		length = {min = 0.028, max = 0.028}
+		length = {min = 0.10, max = 0.10},
+		weight = {min = 0.028, max = 0.028}
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult, card.ability.extra.scalar } }
@@ -229,8 +229,8 @@ FishAndChips.Fish { -- Spongecorpse
 	environments = {
 	},
 	stats = {
-		weight = {min = 10, max = 10},
-		length = {min = 0.028, max = 0.028}
+		length = {min = 0.10, max = 0.10},
+		weight = {min = 0.028, max = 0.028}
 	},
 	calculate = function(self, card, context)
 		if context.check_eternal then
@@ -299,9 +299,10 @@ FishAndChips.Fish { -- Blender
 	calculate = function(self, card, context)
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint
 		and SMODS.pseudorandom_probability(card, 'blender_fcking_blow_up', card.ability.extra.num, card.ability.extra.denom) then
+			local middle_func = function() FishAndChips.DeliciousRice.explode_destroy(card) end
 			FishAndChips.DeliciousRice.fancy_death(card,
 				nil,
-				FishAndChips.DeliciousRice.explode_destroy,
+				middle_func, 
 				false,
 				nil,
 				0.8
