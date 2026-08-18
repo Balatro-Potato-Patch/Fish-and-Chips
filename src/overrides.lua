@@ -130,6 +130,12 @@ function Game:init_game_object()
     ret.fac_treasure_earned = 0
     ret.fac_perfect_catches = 0
 	ret.fac_no_jokers = true
+
+	local envs_used = {}
+	for k, _ in pairs(FishAndChips.Environments) do
+		envs_used[k] = 0
+	end
+	ret.fac_envs_used = envs_used
     return ret
 end
 
