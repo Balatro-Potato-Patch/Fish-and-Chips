@@ -334,7 +334,7 @@ FishAndChips.Fish {
 			local muhnee = G.GAME.dollars
 
 			-- Only update if money isn't zero
-			if abs(muhnee) > 0.001 then
+			if math.abs(muhnee) > 0.001 then
 				G.custom_ed_colour = G.C.BLACK
 				fac_ease_dollars_void(-muhnee)
 
