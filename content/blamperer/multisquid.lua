@@ -91,7 +91,7 @@ FishAndChips.Fish {
     eternal_compat = false,
     requires_hand = true,
     can_use = function(self, card)
-        return #G.hand.highlighted <= card.ability.extra.select
+        return #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.select
     end,
     use = function(self, card)
         local selected_suits = {}
