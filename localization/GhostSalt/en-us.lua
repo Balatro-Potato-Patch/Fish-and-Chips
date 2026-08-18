@@ -175,7 +175,7 @@ return {
                     "Other {C:fac_fish}Fish{} with abilities",
                     "containing the word",
                     "\"{C:attention}#1#{}\" give {C:white,X:mult}X#2#{} Mult",
-                    "{C:inactive}(Word must match exactly){}",
+                    "{C:inactive,s:0.8}(Word must match exactly, ignoring case){}",
                     "{C:inactive}(Ignores other Mezepheles){}"
                 },
                 flavor = {

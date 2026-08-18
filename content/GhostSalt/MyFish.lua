@@ -275,7 +275,7 @@ FishAndChips.Fish {
 		}
 		info_queue[#info_queue + 1] = { key = "fac_ghostsalt_tap_code", set = "Other", vars = { elements = {} } }
 		info_queue[#info_queue + 1] = { key = "fac_ghostsalt_tap_code_table", set = "Other", vars = { elements = { n } } }
-		return { vars = { ppu_bubbles = { card.ability.fac_ghostsalt_tap_cod_used and "inactive" or "active" } } }
+		return { vars = { ppu_bubbles = { card.ability.fac_ghostsalt_tap_cod_used and "usable" or "used" } } }
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and not context.invididual and not context.repetition and not context.game_over and not context.blueprint then
@@ -1281,6 +1281,12 @@ FishAndChips.Fish {
 		end
 	end,
 	set_ability = function(self, card, initial, delay_sprites)
+		if not G.fac_ghostsalt_mezepheles_words then
+			fac_ghostsalt_mezepheles_recalc_wordlist()
+		end
+		if not G.fac_ghostsalt_mezepheles_words or not next(G.fac_ghostsalt_mezepheles_words) then
+			return
+		end
 		card.ability.extra.word = pseudorandom_element(G.fac_ghostsalt_mezepheles_words, "fac_ghostsalt_mezepheles_word")
 	end,
 	pronouns = "it_its"

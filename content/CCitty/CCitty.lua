@@ -84,11 +84,13 @@ FishAndChips.Fish { --perkoio
 					_card:add_to_deck()
 					G.jokers:emplace(_card)
 					_card:set_edition { negative = true }
-					card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_duplicated_ex') })
+					card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, { message = localize('k_duplicated_ex') })
 				else
-					card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_no_other_jokers') })
+					card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, { message = localize('k_fac_no_jokers') })
 				end
 				card.ability.extra.remaining = card.ability.extra.rounds
+			else
+				return { message = card.ability.extra.remaining.."" }
 			end
 		end
 	end,
@@ -101,7 +103,7 @@ FishAndChips.Fish { --yoray
 	weight = 1,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { 'xmult', "discard", "modify_card", "perma_bonus", },
+	attributes = { 'xmult', 'discard', 'modify_card', 'perma_bonus', },
 	config = {
 		extra = {
 			Xmult = .23
@@ -137,7 +139,7 @@ FishAndChips.Fish { --canioctopus
 	weight = 1,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { "generation", },
+	attributes = { 'generation', },
 	config = {
 		extra = {
 			bait = 1
@@ -154,40 +156,45 @@ FishAndChips.Fish { --canioctopus
 		return { vars = {} }
 	end,
 	calculate = function(self, card, context)
-		if context.remove_playing_cards then
-			local w = (G.CARD_W + 0.1) * card.ability.extra.bait * #context.removed * 2 - 0.1
+		if context.remove_playing_cards or context.joker_type_destroyed then
+			local removed = context.removed and #context.removed or 1
+			local w = (G.CARD_W + 0.1) * card.ability.extra.bait * math.min(removed, 2) * 2 - 0.1
 			local h = G.CARD_H
-			G.fac_temp_bait_area = CardArea(
-				card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h,
-				w, h,
-				{
-					type = "joker",
-					card_limit = card.ability.extra.bait * #context.removed,
-					highlight_limit = 1,
-					highlighted_limit = 1,
-					align_buttons = true,
-					bg_colour = G.C.CLEAR,
-					fixed_limit = true,
-					no_card_count = true,
-				}
-			)
+			local created_bait = {}
 			delay(1)
-			for i = 1, card.ability.extra.bait * #context.removed do
+			for i = 1, card.ability.extra.bait * removed do
 				G.E_MANAGER:add_event(Event {
 					func = function()
-						local card = SMODS.create_card { set = "fac_Bait" }
-						G.fac_temp_bait_area:emplace(card)
-						FishAndChips.add_bait_to_inventory(card.config.center.key)
+						local _card = SMODS.create_card { set = "fac_Bait" }
+						if not G.fac_temp_bait_area then
+							G.fac_temp_bait_area = CardArea(
+								card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h,
+								w, h,
+								{
+									type = "joker",
+									card_limit = card.ability.extra.bait * removed,
+									highlight_limit = 1,
+									highlighted_limit = 1,
+									align_buttons = true,
+									bg_colour = G.C.CLEAR,
+									fixed_limit = true,
+									no_card_count = true,
+								}
+							)
+						end
+						G.fac_temp_bait_area:emplace(_card)
+						created_bait[#created_bait + 1] = _card
+						FishAndChips.add_bait_to_inventory(_card.config.center.key)
 						return true
 					end
 				})
 				delay(0.2)
 			end
 			delay(1)
-			for i = 1, card.ability.extra.bait * #context.removed do
+			for i = 1, card.ability.extra.bait * removed do
 				G.E_MANAGER:add_event(Event {
 					func = function()
-						G.fac_temp_bait_area.cards[1]:start_dissolve()
+						created_bait[i]:start_dissolve()
 						return true
 					end
 				})
@@ -197,52 +204,7 @@ FishAndChips.Fish { --canioctopus
 			G.E_MANAGER:add_event(Event {
 				func = function()
 					G.fac_temp_bait_area:remove()
-					return true
-				end
-			})
-		elseif context.joker_type_destroyed then
-			local w = (G.CARD_W + 0.1) * card.ability.extra.bait * 2 - 0.1
-			local h = G.CARD_H
-			G.fac_temp_bait_area = CardArea(
-				card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h,
-				w, h,
-				{
-					type = "joker",
-					card_limit = card.ability.extra.bait,
-					highlight_limit = 1,
-					highlighted_limit = 1,
-					align_buttons = true,
-					bg_colour = G.C.CLEAR,
-					fixed_limit = true,
-					no_card_count = true,
-				}
-			)
-			delay(1)
-			for i = 1, card.ability.extra.bait do
-				G.E_MANAGER:add_event(Event {
-					func = function()
-						local card = SMODS.create_card { set = "fac_Bait" }
-						G.fac_temp_bait_area:emplace(card)
-						FishAndChips.add_bait_to_inventory(card.config.center.key)
-						return true
-					end
-				})
-				delay(0.2)
-			end
-			delay(1)
-			for i = 1, card.ability.extra.bait do
-				G.E_MANAGER:add_event(Event {
-					func = function()
-						G.fac_temp_bait_area.cards[1]:start_dissolve()
-						return true
-					end
-				})
-				delay(0.2)
-			end
-			delay(0.5)
-			G.E_MANAGER:add_event(Event {
-				func = function()
-					G.fac_temp_bait_area:remove()
+					G.fac_temp_bait_area = nil
 					return true
 				end
 			})
@@ -257,7 +219,7 @@ FishAndChips.Fish { --troutulet
 	weight = 1,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { 'economy', "rank", "king", "queen", },
+	attributes = { 'economy', 'rank', 'king', 'queen', },
 	config = {
 		extra = {
 			sand = 1,
@@ -276,13 +238,13 @@ FishAndChips.Fish { --troutulet
 	end,
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play then
-			if (context.other_card:get_id() == 12 or context.other_card:get_id() == 13) then
+			if context.other_card:get_id() == 12 or context.other_card:get_id() == 13 then
 				return {
 					sand_dollars = card.ability.extra.sand
 				}
 			end
 		elseif context.repetition and context.cardarea == G.play then
-			if (context.other_card:get_id() == 12 or context.other_card:get_id() == 13) then
+			if context.other_card:get_id() == 12 or context.other_card:get_id() == 13 then
 				return {
 					repetitions = card.ability.extra.rep,
 					message = localize('k_again_ex'),
@@ -300,7 +262,7 @@ FishAndChips.Fish { --chicod
 	weight = 1,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { "xblindsize", "on_sell", },
+	attributes = { 'xblindsize', 'on_sell', },
 	config = {
 		extra = {
 			reduce = 0.75
@@ -317,7 +279,7 @@ FishAndChips.Fish { --chicod
 		return { vars = { card.ability.extra.reduce } }
 	end,
 	calculate = function(self, card, context)
-		if context.selling_card and G.STATE == G.STATES.SELECTING_HAND then
+		if context.selling_card and context.card ~= card and G.STATE == G.STATES.SELECTING_HAND then
 			return {
 				xblindsize = card.ability.extra.reduce,
 				colour = G.C.RED
@@ -417,7 +379,7 @@ FishAndChips.Fish { --Doctor Sharktred
 	weight = 20,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { "nothing" },
+	attributes = { 'nothing' },
 	config = {
 		extra = {
 		}
@@ -662,7 +624,7 @@ FishAndChips.Fish { --Seiun Sky seahorse
 	impulse_max = .18,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { 'usable', "reroll", "hands", "prevents_death", },
+	attributes = { 'usable', 'reroll', 'hands', 'prevents_death', },
 	config = {
 		extra = {
 			freeroll = 1
@@ -706,7 +668,7 @@ FishAndChips.Fish { --Seiun Sky seahorse
 		if context.after and G.GAME.current_round.hands_left == 0 then
 			if card.ability.extra.freeroll > 0 and (G.GAME.chips + math.floor(mult * hand_chips)) - G.GAME.blind.chips < 0 then
 				ease_hands_played(1)
-				card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, { message = localize { type = 'variable', key = 'a_hands', vars = { 1 } } })
+				card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, { message = localize { type = 'variable', key = 'a_hand', vars = { 1 } } })
 				if not context.blueprint then
 					card.ability.extra.freeroll = card.ability.extra.freeroll - 1
 				end
@@ -758,26 +720,9 @@ FishAndChips.Fish { --sweet bro and hella jeff fish
 	weight = 10,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "CampfireCollective" },
-	attributes = { 'mult', "usable", },
+	attributes = { 'mult', 'usable', },
 	config = {
 		extra = {
-			lines = {
-				"i warned you about stairs fish!!!! i told you fish!",
-				"today i put......... JELLY on this fish",
-				"maybe there right ..... that some times video games, DOES cause violence",
-				"that is SO SWEET man how about a fish hug bump",
-				"fish........ i AM SO JEALOUS you KNOW i love the big game.",
-				"AGAIN with the socks what IS it even with you and SOCKS FISH",
-				"i could tell you but then i'd would have to kill you",
-				"not all fishs are the same",
-				"NANCHO PARTY",
-				"who were you expecting.... the easter fish>",
-				"WHAT'S IS that fishs even his PROBLEM?",
-				"dude, open then drawer FIRST!!! THAN punt the fish in.",
-				"everyboby all yall hold up",
-				"100# garganted to be you're new friend..........",
-				"deudly"
-			},
 			chosen = 1
 		}
 	},
@@ -789,10 +734,10 @@ FishAndChips.Fish { --sweet bro and hella jeff fish
 		backroom = 1
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 250 / 500, "fac_fihs_CCitty_desc") }, card.ability.extra.lines[card.ability.extra.chosen] } }
+		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 250 / 500, "fac_fihs_CCitty_desc") } } }
 	end,
 	flavour_vars = function(self, info_queue, card)
-		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 250 / 500, "fac_fihs_CCitty_desc") }, card.ability.extra.lines[card.ability.extra.chosen] } }
+		return { vars = { localize("CCitty_fihs_"..card.ability.extra.chosen) } }
 	end,
 	in_pool = function(self, args)
 		return pseudorandom('howhighdoyouevenhavetobe') < 1 / 4
@@ -804,14 +749,13 @@ FishAndChips.Fish { --sweet bro and hella jeff fish
 		card.ability.extra.chosen = pseudorandom('keepitreal', 1, 15)
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main then
+		if context.joker_main and not context.blueprint then
 			G.GAME.distaction = G.GAME.distaction + 0.04
 			card.ability.extra.chosen = pseudorandom('keepitreal', 1, 15)
-		elseif context.final_scoring_step and not context.blueprint then
-			mult = mult + (pseudorandom('hehastheball', 8, 13) + pseudorandom('hehastheball')) * (pseudorandom('aids', -1, 10) * .5)
+		elseif context.final_scoring_step then
 			return {
-				message = "+10 mult..........",
-				colour = G.C.FILTER
+				mult = (pseudorandom('hehastheball', 8, 13) + pseudorandom('hehastheball')) * (pseudorandom('aids', -1, 10) * .5),
+				mult_message = { message = "+10 mult..........", colour = G.C.FILTER }
 			}
 		end
 	end,
@@ -823,38 +767,19 @@ FishAndChips.Fish { --sweet bro and hella jeff fish
 	end,
 	can_use = function(self, card)
 		return true
-	end,
-	keep_on_use = function(self, card)
-		return false
-	end,
+	end
 }
 
 local garf_change = end_round
 function end_round()
 	garf_change()
-	if G.GAME.garfield_day then
-		if G.GAME.garfield_day == "Monday" then
-			G.GAME.garfield_day = "Tuesday"
-		elseif G.GAME.garfield_day == "Tuesday" then
-			G.GAME.garfield_day = "Wednesday"
-		elseif G.GAME.garfield_day == "Wednesday" then
-			G.GAME.garfield_day = "Thursday"
-		elseif G.GAME.garfield_day == "Thursday" then
-			G.GAME.garfield_day = "Friday"
-		elseif G.GAME.garfield_day == "Friday" then
-			G.GAME.garfield_day = "Saturday"
-		elseif G.GAME.garfield_day == "Saturday" then
-			G.GAME.garfield_day = "Sunday"
-		elseif G.GAME.garfield_day == "Sunday" then
-			G.GAME.garfield_day = "Monday"
-		end
-	end
+	G.GAME.garfield_day = ((G.GAME.garfield_day or 0) % 7) + 1
 end
 
 local garf_start = Game.start_run
 function Game:start_run(args)
 	garf_start(self, args)
-	G.GAME.garfield_day = G.GAME.garfield_day or pseudorandom_element({ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }, pseudoseed('ihatemondays'))
+	G.GAME.garfield_day = G.GAME.garfield_day or pseudorandom('ihatemondays', 1, 7)
 end
 
 FishAndChips.Fish { --Garfield Phone
@@ -880,56 +805,42 @@ FishAndChips.Fish { --Garfield Phone
 		backroom = 3,
 		wormhole = 2
 	},
+	blueprint_compat = false,
 	in_pool = function(self, args)
-		return G.GAME.garfield_day ~= 'Monday'
+		return G.GAME.garfield_day > 1
 	end,
 	loc_vars = function(self, info_queue, card)
-		if card.area and card.area == G.fac_fish_area then
-			local colour = G.C.BLACK
-			if G.GAME.garfield_day == "Monday" then
-				colour = G.C.RED
-			elseif G.GAME.garfield_day == "Tuesday" then
-				colour = G.C.BLUE
-			elseif G.GAME.garfield_day == "Wednesday" then
-				colour = G.C.PURPLE
-			elseif G.GAME.garfield_day == "Thursday" then
-				colour = G.C.BLACK
-			elseif G.GAME.garfield_day == "Friday" then
-				colour = G.C.GREEN
-			elseif G.GAME.garfield_day == "Saturday" then
-				colour = G.C.MONEY
-			elseif G.GAME.garfield_day == "Sunday" then
-				colour = G.C.ETERNAL
-			end
-			local main_end = {
-				{
-					n = G.UIT.C,
-					config = { align = "bm", minh = 0.4 },
-					nodes = {
-						{
-							n = G.UIT.C,
-							config = { ref_table = card, align = "m", colour = colour, r = 0.05, padding = 0.06 },
-							nodes = {
-								{ n = G.UIT.T, config = { text = " " .. G.GAME.garfield_day .. " ", colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
-							}
+		local day = G.GAME and G.GAME.garfield_day or 1
+		local all_colours = { G.C.RED, G.C.BLUE, G.C.PURPLE, G.C.BLACK, G.C.GREEN, G.C.MONEY, G.C.ETERNAL }
+		local colour = all_colours[day]
+		local main_end = {
+			{
+				n = G.UIT.C,
+				config = { align = "bm", minh = 0.4 },
+				nodes = {
+					{
+						n = G.UIT.C,
+						config = { ref_table = card, align = "m", colour = colour, r = 0.05, padding = 0.06 },
+						nodes = {
+							{ n = G.UIT.T, config = { text = " " .. localize("fac_garfield_day"..day) .. " ", colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
 						}
 					}
 				}
 			}
-			return { main_end = main_end }
-		end
+		}
+		return { main_end = main_end, vars = { ppu_bubbles = { card.ability.extra.can_call and "usable" or "used" } } }
 	end,
 
 	use = function(self, card)
 		local actually_used = false
-		if G.GAME.garfield_day == "Monday" then
-			play_sound('fac_CCitty_garf' .. pseudorandom('ihatemondays', 1, 5))
+		if G.GAME.garfield_day == 1 then
+			play_sound('fac_CCitty_garf' .. pseudorandom('ihatemondayssound', 1, 5))
 			card_eval_status_text(card, 'extra', nil, nil, nil, { message = "No answer...", colour = G.C.ORANGE })
 			actually_used = true
-		elseif G.GAME.garfield_day == "Tuesday" then
+		elseif G.GAME.garfield_day == 2 then
 			SMODS.upgrade_poker_hands { hands = G.GAME.current_round.most_played_poker_hand, level_up = 3, from = card }
 			actually_used = true
-		elseif G.GAME.garfield_day == "Wednesday" then
+		elseif G.GAME.garfield_day == 3 then
 			for i = 1, (G.consumeables.config.card_limit) do
 				if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
 					G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
@@ -948,42 +859,42 @@ FishAndChips.Fish { --Garfield Phone
 			if not actually_used then
 				card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_no_room_ex') })
 			end
-		elseif G.GAME.garfield_day == "Thursday" then
+		elseif G.GAME.garfield_day == 4 then
 			G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base + 2
 			card_eval_status_text(card, 'extra', nil, nil, nil, { colour = G.C.ORANGE, message = localize { type = "variable", key = "ph_fac_upgrade_increase", vars = { G.fac_fish_area.config.card_limits.base - 2, G.fac_fish_area.config.card_limits.base } } })
 			actually_used = true
-		elseif G.GAME.garfield_day == "Friday" then
+		elseif G.GAME.garfield_day == 5 then
 			if #G.jokers.cards < G.jokers.config.card_limit then
-				SMODS.add_card { set = 'Joker', rarity = 'Rare', key_append = 'garfybaby' }
+				SMODS.add_card { set = 'Joker', rarity = 'Rare', key_append = 'garfybaby5' }
 				actually_used = true
 			else
 				card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_no_room_ex') })
 			end
-		elseif G.GAME.garfield_day == "Saturday" then
+		elseif G.GAME.garfield_day == 6 then
 			local available = {}
 			for k, v in pairs(G.fac_fish_area.cards) do
 				if v ~= card and not v.ability.eternal then
 					available[#available + 1] = v
 				end
 			end
-			if available[1] then
+			if next(available) then
 				actually_used = true
-				SMODS.destroy_cards(pseudorandom_element(available, pseudoseed('garfybaby')))
+				SMODS.destroy_cards(pseudorandom_element(available, pseudoseed('garfybaby6')))
 				ease_sand_dollars(9)
 				ease_dollars(20)
 			else
 				card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_nope_ex'), colour = G.C.ORANGE })
 			end
-		elseif G.GAME.garfield_day == "Sunday" then
+		elseif G.GAME.garfield_day == 7 then
 			local available = {}
 			for k, v in pairs(G.fac_fish_area.cards) do
 				if v ~= card and not v.edition then
 					available[#available + 1] = v
 				end
 			end
-			if available[1] then
+			if next(available) then
 				actually_used = true
-				pseudorandom_element(available, pseudoseed('garfybaby')):set_edition('e_polychrome')
+				pseudorandom_element(available, pseudoseed('garfybaby7')):set_edition('e_polychrome')
 			else
 				card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize('k_nope_ex'), colour = G.C.ORANGE })
 			end
@@ -1029,7 +940,7 @@ FishAndChips.Fish { --Bluebell Angler
 		length = { min = .02, max = .18 }
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = {} }
+		return { vars = {'modify_card','perma_bonus'} }
 	end,
 	calculate = function(self, card, context)
 		if (context.first_hand_drawn or context.hand_drawn) and G.GAME.current_round.hands_played == 0 then
@@ -1054,12 +965,6 @@ FishAndChips.Fish { --Bluebell Angler
 			for _, v in pairs(context.scoring_hand) do
 				if v.ability.bluebell_choice then
 					bluebell = true
-					break
-				end
-			end
-			for _, v in pairs(context.full_hand) do
-				if v.ability.bluebell_choice then
-					v.ability.bluebell_choice = nil
 					break
 				end
 			end
@@ -1095,15 +1000,28 @@ FishAndChips.Fish { --Bluebell Angler
 							elseif choice < 2 / 6 then
 								v.ability.perma_h_mult = (v.ability.perma_h_mult or 0) + 1
 							elseif choice < 4 / 6 then
-								v.ability.perma_chips = (v.ability.perma_chips or 0) + 1
+								v.ability.perma_bonus = (v.ability.perma_bonus or 0) + 1
 							else
 								v.ability.perma_mult = (v.ability.perma_mult or 0) + 1
 							end
 						end
 					end
-					v:juice_up()
 				end
-				card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, { message = localize('k_upgrade_ex'), colour = G.C.SECONDARY_SET.Spectral })
+				G.E_MANAGER:add_event(Event({
+                	func = function()
+						for _, v in ipairs(context.scoring_hand) do
+							v:juice_up()
+						end
+						return true
+					end
+				}))
+				return { message = localize('k_upgrade_ex'), colour = G.C.SECONDARY_SET.Spectral }
+			elseif context.after then
+				for _, v in pairs(G.playing_card) do
+					if v.ability.bluebell_choice then
+						v.ability.bluebell_choice = nil
+					end
+				end
 			end
 		end
 	end,
@@ -1133,16 +1051,12 @@ FishAndChips.Fish { --Solin the Sea Slug
 		chocolate_river = 1
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.dollars, card.ability.extra.remaining, card.ability.extra.names[card.ability.extra.chosen],
-		card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_1") or localize("CCitty_sompostseaslug_1"),
-		card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_2") or localize("CCitty_sompostseaslug_2"),
-		card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_3") or localize("CCitty_sompostseaslug_3") } }
+		return { vars = { card.ability.extra.dollars, card.ability.extra.remaining, card.ability.extra.names[card.ability.extra.chosen] } }
 	end,
 	flavour_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.dollars, card.ability.extra.remaining, card.ability.extra.names[card.ability.extra.chosen],
-		card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_1") or localize("CCitty_sompostseaslug_1"),
-		card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_2") or localize("CCitty_sompostseaslug_2"),
-		card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_3") or localize("CCitty_sompostseaslug_3") } }
+		return { vars = { card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_1") or localize("CCitty_sompostseaslug_1"),
+						  card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_2") or localize("CCitty_sompostseaslug_2"),
+						  card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_3") or localize("CCitty_sompostseaslug_3") } }
 	end,
 	on_catch = function(self, card)
 		card.ability.extra.chosen = pseudorandom('solin', 1, 20)
@@ -1159,9 +1073,11 @@ FishAndChips.Fish { --Solin the Sea Slug
 	calculate = function(self, card, context)
 		if context.selling_card and context.card ~= card then
 			if context.card.ability.set == 'fac_Fish' then
-				card.ability.extra.remaining = card.ability.extra.remaining - 1
-				if card.ability.extra.remaining <= 0 then
-					SMODS.destroy_cards(card)
+				if not context.blueprint then
+					card.ability.extra.remaining = card.ability.extra.remaining - 1
+					if card.ability.extra.remaining <= 0 then
+						SMODS.destroy_cards(card)
+					end
 				end
 				return {
 					dollars = card.ability.extra.dollars,

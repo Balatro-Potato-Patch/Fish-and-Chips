@@ -37,7 +37,8 @@ return {
             fish_fac_fihs_CCitty = {
                 name = "fihs.....",
                 text = {
-                    "{element:1}"
+                    "{element:1}",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "#1#"
@@ -64,8 +65,8 @@ return {
                 },
                 flavor = {
                     "A legendary fish. Despite their infinite jest",
-                    "and flashes of merriment, these creatures often",
-                    "fail to live for more than 23 years."
+                    "and flashes of merriment, these creatures",
+                    "often fail to live for more than 23 years."
                 }
             },
              fish_fac_canioctopus = {
@@ -75,9 +76,9 @@ return {
                     "any card is {C:red}destroyed{}"
                 },
                 flavor = {
-                    "A legendary fish. It struggles to",
-                    "look at other fish, perhaps in jealousy",
-                    "or in shame. It would explain it's pale appearance..."
+                    "A legendary fish. It struggles to look at",
+                    "other fish, perhaps in jealousy or in shame.",
+                    "It would explain its pale appearance..."
                 }
             },
              fish_fac_troutulet = {
@@ -96,13 +97,12 @@ return {
              fish_fac_chicod = {
                 name = "Chicod",
                 text = {
-                    "{X:blind,C:white}X#1#{} Blind size",
-                    "when any card is sold",
-                    "during a {C:attention}Blind{}" -- this change could probably be reverted but i thought it would help with clarity ;w; - gabby
+                    "{X:blind,C:white}X#1#{} Blind size when any",
+                    "card is sold during a {C:attention}Blind{}"
                 },
                 flavor = {
                     "A legendary fish. Fishermen often struggle",
-                    "to catch them due to their sharp wit",
+                    "to catch them due to their sharp wit,",
                     "cooperative hunting and rapier-like rostrum."
                 }
             },
@@ -115,7 +115,7 @@ return {
                     "{C:inactive}Might do something more?"
                 }},
                 flavor = {
-                    "This one lost it's tail during a",
+                    "This one lost its tail during a",
                     "fight in a Cracker Barrel parking lot.",
                     "A group of these is called a University."
                 }
@@ -128,10 +128,11 @@ return {
                     "{C:inactive}(Currently {C:attention}#1#{C:inactive})"
                 },
                 {
-                    "{C:attention}Use{} 1 to reroll the Environment",
-                    "for free, or {C:attention}automatically{} use 1",
+                    "Use {C:attention}1{} to reroll the {C:attention}Environment{}",
+                    "for free, or {C:red}automatically{} use {C:attention}1{}",
                     "to gain {C:blue}+1 Hand{} if you run out",
-                    "and haven't won the round yet"
+                    "and haven't won the round yet",
+                    "{ppu_bubble:usable}"
                 },},
                 flavor = {
                     "Free as a drifting cloud... don't be",
@@ -146,7 +147,7 @@ return {
                     "{C:attention}call for help{} and get",
                     "a {C:attention}helpful effect{} based",
                     "on the {C:attention}day of the week",
-                    "{ppu_bubble:usable}"
+                    "{ppu_bubble:1}"
                 },
                 flavor = {
                     "Rumors are that a lost shipping container",
@@ -167,8 +168,9 @@ return {
                     "the forced card is in scoring hand"
                 },},
                 flavor = {
-                    "Whilst the seven frolick in the sunset, this one lurks in the depths",
-                    "of the ocean, hoping to someday witness the golden one."
+                    "Whilst the seven frolick in the sunset,",
+                    "this one lurks in the depths of the ocean,",
+                    "hoping to someday witness the golden one."
                 }
             },
             fish_fac_solinseaslug = {
@@ -178,12 +180,12 @@ return {
                     "{C:red,E:2}self destructs{} after {C:attention}#2#{} {C:fac_fish}Fish{} sold"
                 },
                 flavor = {
-                    "#4#",
-                    "#5#",
-                    "#6#"
+                    "#1#",
+                    "#2#",
+                    "#3#"
                 }
             },
-        },
+        }
     },
     misc = {
         dictionary = {
@@ -193,7 +195,34 @@ return {
 
             CCitty_sompostseaslug_1 = "You could say he is... pogging through",
             CCitty_sompostseaslug_2 = "the pain. It attempts to roll on the ocean",
-            CCitty_sompostseaslug_3 = "floor, though typically gets stuck on it."
+            CCitty_sompostseaslug_3 = "floor, though typically gets stuck on it.",
+
+            CCitty_fihs_1 = "i warned you about stairs fish!!!! i told you fish!",
+			CCitty_fihs_2 = "today i put......... JELLY on this fish",
+			CCitty_fihs_3 = "maybe there right ..... that some times video games, DOES cause violence",
+			CCitty_fihs_4 = "that is SO SWEET man how about a fish hug bump",
+			CCitty_fihs_5 = "fish........ i AM SO JEALOUS you KNOW i love the big game.",
+			CCitty_fihs_6 = "AGAIN with the socks what IS it even with you and SOCKS FISH",
+			CCitty_fihs_7 = "i could tell you but then i'd would have to kill you",
+			CCitty_fihs_8 = "not all fishs are the same",
+			CCitty_fihs_9 = "NANCHO PARTY",
+			CCitty_fihs_10 = "who were you expecting.... the easter fish>",
+			CCitty_fihs_11 = "WHAT'S IS that fishs even his PROBLEM?",
+			CCitty_fihs_12 = "dude, open then drawer FIRST!!! THAN punt the fish in.",
+			CCitty_fihs_13 = "everyboby all yall hold up",
+			CCitty_fihs_14 = "100# garganted to be you're new friend..........",
+			CCitty_fihs_15 = "deudly",
+
+            fac_garfield_day1 = "Monday",
+            fac_garfield_day2 = "Tuesday",
+            fac_garfield_day3 = "Wednesday",
+            fac_garfield_day4 = "Thursday",
+            fac_garfield_day5 = "Friday",
+            fac_garfield_day6 = "Saturday",
+            fac_garfield_day7 = "Sunday",
+
+            k_fac_no_jokers = "No Jokers!",
+            a_hand = "+#1# Hand",
         },
         quips = {
             CCitty_sbahj = {

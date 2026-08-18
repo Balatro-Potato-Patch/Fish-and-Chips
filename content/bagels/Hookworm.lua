@@ -24,32 +24,30 @@ FishAndChips.Fish {
 	end,
 	calculate = function(_, card, context)
 		if context.open_booster then
-			if G.fac_temp_bait_area then
-				G.fac_temp_bait_area.T.w = G.fac_temp_bait_area.T.w + G.CARD_W + 0.1
-				G.fac_temp_bait_area.buffer = (G.fac_temp_bait_area.buffer or 0) + 1
-			else
-				local w = (G.CARD_W + 0.1) * card.ability.extra.bait * 2 - 0.1
-				local h = G.CARD_H
-				G.fac_temp_bait_area = G.fac_temp_bait_area
-					or CardArea(card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h, w, h, {
-						type = 'joker',
-						card_limit = card.ability.extra.bait,
-						highlight_limit = 1,
-						highlighted_limit = 1,
-						align_buttons = true,
-						bg_colour = G.C.CLEAR,
-						fixed_limit = true,
-						no_card_count = true,
-					})
-				G.fac_temp_bait_area.buffer = 1
-			end
+			local created_bait = {}
 			delay(1)
 			for _ = 1, card.ability.extra.bait do
 				G.E_MANAGER:add_event(Event {
 					func = function()
-						local card = SMODS.create_card { set = 'fac_Bait' }
-						G.fac_temp_bait_area:emplace(card)
-						FishAndChips.add_bait_to_inventory(card.config.center.key)
+						local _card = SMODS.create_card { set = 'fac_Bait' }
+						if not G.fac_temp_bait_area then
+							local w = (G.CARD_W + 0.1) * card.ability.extra.bait * 2 - 0.1
+							local h = G.CARD_H
+							G.fac_temp_bait_area = G.fac_temp_bait_area
+								or CardArea(card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h, w, h, {
+									type = 'joker',
+									card_limit = card.ability.extra.bait,
+									highlight_limit = 1,
+									highlighted_limit = 1,
+									align_buttons = true,
+									bg_colour = G.C.CLEAR,
+									fixed_limit = true,
+									no_card_count = true,
+								})
+						end
+						G.fac_temp_bait_area:emplace(_card)
+						created_bait[#created_bait + 1] = _card
+						FishAndChips.add_bait_to_inventory(_card.config.center.key)
 						return true
 					end,
 				})
@@ -59,7 +57,7 @@ FishAndChips.Fish {
 			for i = 1, card.ability.extra.bait do
 				G.E_MANAGER:add_event(Event {
 					func = function()
-						G.fac_temp_bait_area.cards[i]:start_dissolve()
+						created_bait[i]:start_dissolve()
 						return true
 					end,
 				})
@@ -68,11 +66,8 @@ FishAndChips.Fish {
 			delay(0.5)
 			G.E_MANAGER:add_event(Event {
 				func = function()
-					G.fac_temp_bait_area.buffer = G.fac_temp_bait_area.buffer - 1
-					if G.fac_temp_bait_area.buffer < 1 then
-						G.fac_temp_bait_area:remove()
-						G.fac_temp_bait_area = nil
-					end
+					G.fac_temp_bait_area:remove()
+					G.fac_temp_bait_area = nil
 					return true
 				end,
 			})
