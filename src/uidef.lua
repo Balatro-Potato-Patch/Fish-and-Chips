@@ -519,25 +519,19 @@ end
 function G.UIDEF.fac_fish_data(fish, show_full)
 	local center = fish.config.center
 	local locvars = center.loc_vars and center:loc_vars({}, fish) or {}
+	local name = localize({
+		type = "name",
+		set = center.set,
+		key = locvars.key or center.key,
+		nodes = {},
+		vars = locvars.vars or {},
+		text_colour = G.C.UI.TEXT_LIGHT,
+		no_pop_in = true,
+	})
 	local t = {
 		n = G.UIT.ROOT,
 		config = { emboss = 0.1, r = 0.2, padding = 0.2 },
-		nodes = {
-			{
-				n = G.UIT.R,
-				config = { align = "cm" },
-				nodes = {
-					{
-						n = G.UIT.T,
-						config = {
-							text = localize({ type = "name_text", set = center.set, key = locvars.key or center.key, vars = locvars.vars or {} }),
-							scale = 0.5,
-							colour = G.C.UI.TEXT_LIGHT,
-						},
-					},
-				},
-			},
-		},
+		nodes = name,
 	}
 	if show_full then
 		t.nodes[#t.nodes + 1] = fac_cardarea_full_row(center)

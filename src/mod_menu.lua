@@ -365,7 +365,9 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
     local locvars = fish_caught and fish.loc_vars and fish:loc_vars({}, compendium_card) or {}
     compendium_card.name_only = nil
     local fish_name = fish_caught and localize({type = 'name_text', key = locvars.key or fish.key, set = 'fac_Fish', vars = locvars.vars or {}}) or localize('ph_fac_unknown_item')
-    if string.len(fish_name) > 21 then fish_name = string.sub(fish_name, 1, 17) .. '...' end
+    local fish_name_chars = {}
+    for _, char in utf8.chars(fish_name) do fish_name_chars[#fish_name_chars + 1] = char end
+    if #fish_name_chars > 21 then fish_name = table.concat(fish_name_chars, '', 1, 17) .. '...' end
     local caught = localize('ph_fac_first_caught')..(fish_caught and fish_data.first_catch or '')
     local rod = fish_caught and localize('ph_fac_with_rod')..localize({key = fish_data.rod, set = 'fac_Rod', type = 'name_text'}) or ' '
     local count = localize('ph_fac_times_caught')..(fish_caught and fish_data.times_caught or '')
@@ -376,7 +378,7 @@ function FishAndChips.Compendium.extended_fish_entry(fish, left)
         {n = G.UIT.C, config = {align = 'cl', padding = 0.03, minw = 3.2}, nodes = {
             {n=G.UIT.R, nodes = {
                 {n=G.UIT.R, config = {underline = FishAndChips.C.COMPENDIUM_COLOUR, underline_scale = 0.04, padding = -0.08}, nodes = {
-                    {n=G.UIT.T, config = {text = fish_name, scale = 0.5, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}
+                    {n=G.UIT.O, config={object = DynaText({string = fish_name, colours = {FishAndChips.C.COMPENDIUM_TEXT}, font = SMODS.Fonts.fac_collection, maxw = 3.2, pop_in_rate = 0, scale = 0.5, silent = true})}}
                 }}    
             }},
             {n=G.UIT.R, nodes = {{n=G.UIT.T, config = {text = caught, scale = 0.4, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}}},
