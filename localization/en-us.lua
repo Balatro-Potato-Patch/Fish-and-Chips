@@ -479,6 +479,9 @@ return {
             ph_fac_upgrade = "Increase Bucket Slots",
             ph_fac_shop_title = "Snapper's Shop",
             k_fac_treasure_catch = 'Treasure',
+            k_fac_cashout_blind_display_small = '(Small Blind)',
+            k_fac_cashout_blind_display_big = '(Big Blind)',
+            k_fac_cashout_blind_display_boss = '(Boss Blind)',
         },
         achievement_names = {
             ach_fac_catch_1 = 'Rookie Rodder',
