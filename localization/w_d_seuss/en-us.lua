@@ -96,7 +96,7 @@ return {
                 text = {
                     "Creates a Fish with",
                     "a {C:blind}Deltarune{} attribute",
-                    "{C:inactive}(Must have room)",
+                    "and {C:red}self-destructs",
                     "{ppu_bubble:usable}"
                 },
                 flavour = {
