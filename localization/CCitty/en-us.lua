@@ -46,9 +46,8 @@ return {
             fish_fac_perkoio = {
                 name = "Perkoio",
                 text = {
-                    "Create a {C:dark_edition}Negative{} copy",
-                    "of a random {C:attention}Joker{} every",
-                    "{C:attention}#1#{} rounds",
+                    "Create a {C:dark_edition}Negative{} copy of a",
+                    "random {C:attention}Joker{} every {C:attention}#1#{} rounds",
                     "{C:inactive}(Currently{C:attention} #2#{C:inactive} remaining)"
                 },
                 flavor = {
@@ -73,7 +72,7 @@ return {
                 name = "Canioctopus",
                 text = {
                     "Create a random {C:attention}Bait{} when",
-                    "any card is destroyed"
+                    "any card is {C:red}destroyed{}"
                 },
                 flavor = {
                     "A legendary fish. It struggles to",
@@ -89,8 +88,9 @@ return {
                     "and are {C:attention}retriggered{}"
                 },
                 flavor = {
-                    "A legendary fish. Not much is known about this species,",
-                    "though it's often associated with stories of mischief and mayhem."
+                    "A legendary fish. Not much is known about",
+                    "this species, though it's often associated",
+                    "with stories of mischief and mayhem."
                 }
             },
              fish_fac_chicod = {
@@ -101,8 +101,9 @@ return {
                     "during a {C:attention}Blind{}" -- this change could probably be reverted but i thought it would help with clarity ;w; - gabby
                 },
                 flavor = {
-                    "A legendary fish. Fishermen often struggle to catch them",
-                    "due to their sharp wit, cooperative hunting and rapier-like rostrum."
+                    "A legendary fish. Fishermen often struggle",
+                    "to catch them due to their sharp wit",
+                    "cooperative hunting and rapier-like rostrum."
                 }
             },
              fish_fac_drspectred = {
@@ -114,8 +115,9 @@ return {
                     "{C:inactive}Might do something more?"
                 }},
                 flavor = {
-                    "This one lost it's tail during a fight in a Cracker Barrel",
-                    "parking lot. A group of these is called a University."
+                    "This one lost it's tail during a",
+                    "fight in a Cracker Barrel parking lot.",
+                    "A group of these is called a University."
                 }
             },
              fish_fac_seiunsky = {
@@ -132,18 +134,19 @@ return {
                     "and haven't won the round yet"
                 },},
                 flavor = {
-                    "Free as a drifting cloud... don't be fooled by",
-                    "her laziness, she is capable of winning through",
-                    "tricky strategies."
+                    "Free as a drifting cloud... don't be",
+                    "fooled by her laziness, she is capable",
+                    "of winning through tricky strategies."
                 }
             },
              fish_fac_garfieldphone = {
                 name = "Garfield Phone",
                 text = {
-                    "Once each ante, {C:attention}use{} to",
+                    "Once each {C:attention}Ante{}, {C:attention}use{} to",
                     "{C:attention}call for help{} and get",
                     "a {C:attention}helpful effect{} based",
-                    "on the {C:attention}day of the week"
+                    "on the {C:attention}day of the week",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "Rumors are that a lost shipping container",
@@ -171,17 +174,27 @@ return {
             fish_fac_solinseaslug = {
                 name = "#3# the Sea Slug",
                 text = {
-                    "Earn {C:money}$#1#{} when any Fish is sold,",
-                    "destroyed after {C:attention}#2#{} Fish sold"
+                    "Earn {C:money}$#1#{} when any {C:fac_fish}Fish{} is sold,",
+                    "{C:red,E:2}self destructs{} after {C:attention}#2#{} {C:fac_fish}Fish{} sold"
                 },
                 flavor = {
                     "#4#",
-                    "#5#"
+                    "#5#",
+                    "#6#"
                 }
             },
         },
     },
     misc = {
+        dictionary = {
+            CCitty_solinseaslug_1 = "This delectable Slug goes by numerous",
+            CCitty_solinseaslug_2 = "names. It often rolls on the ocean floor,",
+            CCitty_solinseaslug_3 = "picking up chocolate beans in the process.",
+
+            CCitty_sompostseaslug_1 = "You could say he is... pogging through",
+            CCitty_sompostseaslug_2 = "the pain. It attempts to roll on the ocean",
+            CCitty_sompostseaslug_3 = "floor, though typically gets stuck on it."
+        },
         quips = {
             CCitty_sbahj = {
                 "just HOW HIGH do you even have to BE just to DO something like that........",

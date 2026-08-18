@@ -1133,10 +1133,16 @@ FishAndChips.Fish { --Solin the Sea Slug
 		chocolate_river = 1
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.dollars, card.ability.extra.remaining, card.ability.extra.names[card.ability.extra.chosen], card.ability.extra.chosen < 17 and "This delectable Slug goes by numerous names. It often rolls on" or "You could say he is... pogging through the pain. It attempts to", card.ability.extra.chosen < 17 and "the ocean floor, picking up chocolate beans in the process." or "roll on the ocean floor, though typically gets stuck on it." } }
+		return { vars = { card.ability.extra.dollars, card.ability.extra.remaining, card.ability.extra.names[card.ability.extra.chosen],
+		card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_1") or localize("CCitty_sompostseaslug_1"),
+		card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_2") or localize("CCitty_sompostseaslug_2"),
+		card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_3") or localize("CCitty_sompostseaslug_3") } }
 	end,
 	flavour_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.dollars, card.ability.extra.remaining, card.ability.extra.names[card.ability.extra.chosen], card.ability.extra.chosen < 17 and "This delectable Slug goes by numerous names. It often rolls on" or "You could say he is... pogging through the pain. It attempts to", card.ability.extra.chosen < 17 and "the ocean floor, picking up chocolate beans in the process." or "roll on the ocean floor, though typically gets stuck on it." } }
+		return { vars = { card.ability.extra.dollars, card.ability.extra.remaining, card.ability.extra.names[card.ability.extra.chosen],
+		card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_1") or localize("CCitty_sompostseaslug_1"),
+		card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_2") or localize("CCitty_sompostseaslug_2"),
+		card.ability.extra.chosen < 17 and localize("CCitty_solinseaslug_3") or localize("CCitty_sompostseaslug_3") } }
 	end,
 	on_catch = function(self, card)
 		card.ability.extra.chosen = pseudorandom('solin', 1, 20)
@@ -1151,7 +1157,7 @@ FishAndChips.Fish { --Solin the Sea Slug
 	end,
 
 	calculate = function(self, card, context)
-		if context.selling_card then
+		if context.selling_card and context.card ~= card then
 			if context.card.ability.set == 'fac_Fish' then
 				card.ability.extra.remaining = card.ability.extra.remaining - 1
 				if card.ability.extra.remaining <= 0 then
