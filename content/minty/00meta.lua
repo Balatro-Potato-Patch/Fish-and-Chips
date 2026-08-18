@@ -44,7 +44,7 @@ PotatoPatchUtils.Developer({
         if (not G.SETTINGS.reduced_motion or force == false) and (card.nomotion ~= false) then
             card.nomotion = false
             center.atlas = "fac_minty_lineboilfish"
-            center.pos = {y=row}
+            center.pos = {x=0,y=row}
             card:set_sprites(center)
         end
     end,
