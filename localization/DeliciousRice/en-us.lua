@@ -47,7 +47,8 @@ return {
                 text = {
                     {
                         "Does nothing, a reminder",
-                        "of your negligence."
+                        "of your negligence.",
+                        "{s:0.8,C:inactive}(Cannot be sold or destroyed)"
                     }
                 },
                 flavor = {

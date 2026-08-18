@@ -62,7 +62,6 @@ G.FUNCS.fac_toggle_fishing = function(e)
     G.CONTROLLER.locks.toggle_shop = true
     G.fac_toggle_shop_lock_started = G.TIMERS.TOTAL
     if G.GAME.fishing and not FishAndChips.in_tutorial then
-        SMODS.calculate_context({ ending_fishing = true })
 		G.GAME.fac_snapper_dialogue_opt = nil	-- To let Snapper know your next visit will advance his dialogue count.
         G.E_MANAGER.queues.fac_fishing_transition = G.E_MANAGER.queues.fac_fishing_transition or {}
         if G.FISHING and G.FISHING.fishing then
@@ -96,6 +95,7 @@ G.FUNCS.fac_toggle_fishing = function(e)
                 G.STATE_COMPLETE = false
                 G.STATE = G.STATES.BLIND_SELECT
 				FishAndChips:stop_ambience()
+				SMODS.calculate_context({ ending_fishing = true })
                 return true
             end
         }), 'fac_fishing_transition')
