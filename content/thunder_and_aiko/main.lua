@@ -176,7 +176,7 @@ FishAndChips.Fish({
 		delay(0.8 * G.SETTINGS.GAMESPEED)
 		G.E_MANAGER:add_event(Event({
 			func = function()
-				play_sound("fac_moai_catch", nil, 0.8)
+				play_sound("fac_moai_catch", nil, 0.3)
 				return true
 			end,
 		}))
@@ -189,7 +189,7 @@ function play_sound(sound_code, per, vol, ...)
 	if
 		sound_code == "multhit2"
 		and G.STATE == G.STATES.HAND_PLAYED
-		and next(SMODS.find_card("fish_fac_moai_statue"))
+		and next(SMODS.find_card("fish_fac_ta_moai_statue"))
 	then
 		play_sound_hook("fac_bruh", per + 0.1, vol, ...)
 	else
