@@ -308,6 +308,7 @@ FishAndChips.Fish {
 	key = "Klaus",
 	atlas = "typ0",
 	pos = { x = 1, y = 2 },
+	pixel_size = { w = 71, h = 54 },
 	weight = 10,
 	cost = 0,
 	ppu_coder = { "SLDTyp0" },
