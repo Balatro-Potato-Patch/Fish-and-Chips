@@ -1,8 +1,8 @@
 SMODS.Atlas({
 	key = "proto_dev",
 	path = "ProdByProto/pfp.png",
-	px = 684,
-	py = 684,
+	px = 71,
+	py = 95,
 })
 
 PotatoPatchUtils.Developer({
@@ -10,7 +10,8 @@ PotatoPatchUtils.Developer({
     colour = HEX("d66b1c"),
     loc = true,
     atlas = "fac_proto_dev",
-    display_size = {w,h = 684,684},
+    pos = { x = 0, y = 0 },
+    soul_pos = { x = 1, y = 1 },
     click = function ()
         love.system.openURL("https://ko-fi.com/foxgirlproto/")
     end
