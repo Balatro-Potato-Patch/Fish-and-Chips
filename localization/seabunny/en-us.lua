@@ -19,7 +19,9 @@ return {
                         "play Ghost trick, Peglin, Mother 3",
                         'and my balatro mod "LushedUp"!',
                         "except you can't because",
-                        "it's not finished!! (idk how to code)"
+                        "it's not finished!! (idk how to code)",
+                        "{C:inactive,s:0.8}click on me to check my stuff if interested!",
+                        "{C:blue,s:0.8}https://lushabun.carrd.co/"
                     },
                     {
                         "{element:1}"

@@ -134,5 +134,8 @@ PotatoPatchUtils.Developer {
         return {vars = {colours = {HEX("f96932")}, elements = {
             SMODS.create_sprite(0, 0, G.CARD_H * 2 / 3, G.CARD_H * 2 / 3, "fac_rabbit" .. pseudorandom("fac_rabbit", 1, 4), {y = 0})
         }}}
+    end,
+    click = function ()
+        love.system.openURL("https://lushabun.carrd.co/")
     end
 }

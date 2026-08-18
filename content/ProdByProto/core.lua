@@ -10,7 +10,10 @@ PotatoPatchUtils.Developer({
     colour = HEX("d66b1c"),
     loc = true,
     atlas = "fac_proto_dev",
-    display_size = {w,h = 684,684}
+    display_size = {w,h = 684,684},
+    click = function ()
+        love.system.openURL("https://ko-fi.com/foxgirlproto/")
+    end
 })
 
 
