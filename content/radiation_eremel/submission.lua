@@ -690,7 +690,7 @@ FishAndChips.Fish({
             self:set_sprites(card)
         end
         card.ability.extra.consumed = card.ability.extra.consumed + 1
-        SMODS.destroy_cards(target, {pinch_anim = true})
+        SMODS.destroy_cards(target, {pinch_anim = true, skip_calc = true})
         SMODS.calculate_effect({message = localize('fac_r_e_stored')}, card)
     end,
     keep_on_use = function() return true end,

@@ -86,18 +86,18 @@ function FishAndChips.format_measurement(value, measurement, units)
 		return string.format(localize(units[measurement].format), strip_decimals(nil, value/units[measurement].scale, units[measurement].precision or 2))
 	end
 	if measurement == 'weight' then
-		if value > 10000 then
+		if math.abs(value) > 10000 then
 			return strip_decimals(nil, value / 1000, 1) .. 't'
-		elseif value < 1 then
+		elseif math.abs(value) < 1 then
 			return value*1000 .. 'g'
 		else
 			return value .. 'kg'
 		end
 	end
 	if measurement == 'length' then
-		if value > 10000 then
+		if math.abs(value) > 10000 then
 			return strip_decimals(nil, value / 1000, 1) .. 'km'
-		elseif value < 1 then
+		elseif math.abs(value) < 1 then
 			return value*100 .. 'cm'
 		else
 			return value .. 'm'

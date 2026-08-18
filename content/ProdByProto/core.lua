@@ -58,7 +58,7 @@ SMODS.Sound{
     pitch = 1,
     volume = 0.8,
     select_music_track = function (self)
-        if G.GAME and not G.screenwipe and G.GAME.proto_q_music == "jclub" then
+        if G.GAME and not G.screenwipe and G.GAME.proto_q_music == "jclub" and FishAndChips.mod.config.noir_music then
             return 1.7e308
         end
     end
@@ -70,7 +70,7 @@ SMODS.Sound{
     pitch = 1,
     volume = 0.8,
     select_music_track = function (self)
-        if G.GAME and not G.screenwipe and G.GAME.proto_q_music == "noir1" then
+        if G.GAME and not G.screenwipe and G.GAME.proto_q_music == "noir1" and FishAndChips.mod.config.noir_music then
             return 1.7e308
         end
     end
@@ -82,7 +82,7 @@ SMODS.Sound{
     pitch = 1,
     volume = 0.8,
     select_music_track = function (self)
-        if G.GAME and not G.screenwipe and G.GAME.proto_q_music == "noir2" then
+        if G.GAME and not G.screenwipe and G.GAME.proto_q_music == "noir2" and FishAndChips.mod.config.noir_music then
             return 1.7e308
         end
     end

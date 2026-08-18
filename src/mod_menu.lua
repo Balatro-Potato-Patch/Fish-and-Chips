@@ -456,8 +456,7 @@ end
 G.FUNCS.open_compendium_to_env = function(e)
     play_sound("fac_flip_page")
 
-    local page_to_turn = FishAndChips.Environments[G.GAME.fac_fishing_environment].order
-    page_to_turn = page_to_turn%2 == 0 and page_to_turn - 1 or page_to_turn
+    local page_to_turn = (FishAndChips.Environments[G.GAME.fac_fishing_environment].order * 2) - 1
     G.OVERLAY_MENU = UIBox{
         definition = FishAndChips.Compendium.page({type = 'environment_page', left = page_to_turn, right = page_to_turn + 1}),
         config =  {align = "cm", offset = {x=0,y=0}, major = G.ROOM_ATTACH, bond = 'Weak'}
@@ -1132,6 +1131,7 @@ function FishAndChips.Compendium.config_page(page_number, left)
         {n=G.UIT.R, config = {minh = 0.4}},
         {n=G.UIT.R, config = {align = 'tm', minh = 3, minw = 5}, nodes = {
             FishAndChips.Compendium.toggle {text_key = 'b_fac_ambience_toggle', ref_value = "ambience", callback = G.FUNCS.fac_toggle_ambience},
+            FishAndChips.Compendium.toggle {text_key = 'b_fac_noir_music', ref_value = "noir_music"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_menu_toggle', ref_value = "menu"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_family_friendly_toggle', ref_value = "family_friendly"},
             FishAndChips.Compendium.toggle {text_key = 'b_fac_condensed_fish', ref_value = "condensed_fish"},

@@ -6,7 +6,7 @@ FishAndChips.Bait = SMODS.Center:extend{
 	obj_buffer = {},
 	pos = { x = 0, y = 0 },
 	atlas = "fac_bait",
-	cost = 3,
+	cost = 4,
 	boost = 3,
 	config = {},
 	set = 'fac_Bait',
@@ -160,7 +160,7 @@ function FishAndChips.remove_bait_from_inventory(key, amt)
 	if zeroed then
 		FishAndChips.clean_up_bait_inventory()
 		if key == G.GAME.fac_active_bait then
-			SMODS.destroy_cards(G.fac_bait_area.cards[1], { pinch_anim = true })
+			SMODS.destroy_cards(G.fac_bait_area.cards[1], { pinch_anim = true, skip_calc = true })
 			G.GAME.fac_active_bait = nil
 			if G.FISHING.fishing_bait_count then
 				G.E_MANAGER:add_event(Event({

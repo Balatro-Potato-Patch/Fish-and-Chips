@@ -66,7 +66,9 @@
 			if context.individual and context.cardarea == G.play then
 				if context.other_card:is_suit(cae.suit) then
 					if SMODS.pseudorandom_probability(self,"fish for fishing",cae.num,cae.denom,"proto_noName") then
-						ease_sand_dollars(cae.dollhairs)
+						return {
+							sand_dollars = cae.dollhairs
+						}
 					end
 				end
 			end
