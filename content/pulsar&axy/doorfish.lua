@@ -48,6 +48,10 @@ FishAndChips.Fish {
 			if toggle > 0 then
 				card_status.colours[toggle] = FishAndChips.C.FISH
 			end
+		else
+			for i=1,3 do
+				card_status[#card_status+1] = "'" .. localize('k_none') .. "' "
+			end
 		end
 		return { vars = card_status }
 	end,
