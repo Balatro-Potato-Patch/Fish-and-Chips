@@ -69,7 +69,7 @@ FishAndChips.Fish{
 		return {vars = {card.ability.extra.repetitions, localize(G.GAME.fac_FooSqueax and G.GAME.fac_FooSqueax.bucket.on and "k_fac_fas_submerged" or "k_fac_fas_unsubmerged")}}
 	end,
 	can_use = function (self, card)
-		return true
+		return G.STATE ~= G.STATES.SHOP
 	end,
 	keep_on_use = function (self, card)
 		return true
@@ -107,6 +107,24 @@ FishAndChips.Fish{
 				return {
 					repetitions = card.ability.extra.repetitions
 				}
+			end
+		end
+
+		if context.starting_shop and G.GAME.fac_FooSqueax.bucket.on then
+			card.ability.extra.should_resume_bucket = true
+			FishAndChips.FooSqueax.toggle_bucket_shader()
+			SMODS.calculate_effect({message = localize(G.GAME.fac_FooSqueax.bucket.on and "k_fac_fas_dive" or "k_fac_fas_resurface"), colour = G.C.BLUE}, card)
+			for _, _card in ipairs(G.jokers.cards) do
+				SMODS.debuff_card(_card, G.GAME.fac_FooSqueax.bucket.on, "fac_fas_submarine")
+			end
+		end
+
+		if context.ending_shop and card.ability.extra.should_resume_bucket then
+			card.ability.extra.should_resume_bucket = nil
+			FishAndChips.FooSqueax.toggle_bucket_shader()
+			SMODS.calculate_effect({message = localize(G.GAME.fac_FooSqueax.bucket.on and "k_fac_fas_dive" or "k_fac_fas_resurface"), colour = G.C.BLUE}, card)
+			for _, _card in ipairs(G.jokers.cards) do
+				SMODS.debuff_card(_card, G.GAME.fac_FooSqueax.bucket.on, "fac_fas_submarine")
 			end
 		end
 	end,
