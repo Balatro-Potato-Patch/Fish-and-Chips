@@ -113,7 +113,7 @@ end
 
 G.FUNCS.fac_return_to_mods = function(e)
     play_sound("fac_book_close", 1, 0.7)
-    if SMODS.full_restart then
+    if SMODS.full_restart > 0 then
         SMODS.restart_game()
         return
     end
