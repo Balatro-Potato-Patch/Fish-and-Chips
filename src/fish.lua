@@ -243,6 +243,9 @@ SMODS.Shader {
 	key = "hide_fish",
 	path = "core/hide_fish.fs",
 	send_vars = function(self, card)
+		if self.role and self.role.draw_major then
+			card = self.role.draw_major
+		end
 		return {
 			mask_colour = card and card.area and card.area.config.fac_compendium and FishAndChips.C.COMPENDIUM_COLOUR or {0,0,0,1}
 		}
@@ -254,7 +257,7 @@ SMODS.DrawStep {
 	key = "fac_hidden",
 	order = 25,
 	func = function(card, layer)
-		if not card.config.center.discovered and (card.config.center.unlocked or card.area and card.area.config.fac_compendium) then
+		if not (card.config.center.discovered or card.bypass_discovery_center) and (card.config.center.unlocked or card.area and card.area.config.fac_compendium) then
 			if card.config.center.set == "fac_Fish" or card.config.center.set == "fac_Bait" or card.area and card.area.config.fac_compendium then
 				card.children.center:draw_shader("fac_hide_fish", nil, card.ARGS.send_to_shader)
 			end
@@ -266,6 +269,24 @@ SMODS.DrawStep {
 		end
 	end
 }
+
+local floating_sprite_ref = SMODS.DrawSteps['floating_sprite'].func
+function SMODS.DrawSteps.floating_sprite.func(card)
+	if card.config.center.soul_pos and (card.config.center.set == "fac_Fish" or card.config.center.set == "fac_Bait") then
+		local scale_mod = 0.07 + 0.02*math.sin(1.8*G.TIMERS.REAL) + 0.00*math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL))*math.pi*14)*(1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL)))^3
+        local rotate_mod = 0.05*math.sin(1.219*G.TIMERS.REAL) + 0.00*math.sin((G.TIMERS.REAL)*math.pi*5)*(1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL)))^2
+		local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[card.config.center_key] or {}
+		if not (card.config.center.discovered or card.bypass_discovery_center) and (card.config.center.unlocked or card.area and card.area.config.fac_compendium) then
+			card.children.floating_sprite:draw_shader('fac_hide_fish', nil, card.ARGS.send_to_shader, nil, card.children.center, scale_mod, rotate_mod)
+		elseif not (fish_data.times_caught and fish_data.times_caught > 0) and card.area and card.area.config.fac_compendium then
+			card.children.floating_sprite:draw_shader('fac_hide_fish', nil, card.ARGS.send_to_shader, nil, card.children.center, scale_mod, rotate_mod)
+		else
+			floating_sprite_ref(card)
+		end
+	else
+		floating_sprite_ref(card)
+	end
+end
 
 --#endregion
 
