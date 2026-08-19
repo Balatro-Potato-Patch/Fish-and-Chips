@@ -18,37 +18,37 @@ return {
             fish_fac_crimsonseraphim_aeonfish = {
                 name = "Aeonfish",
                 text = {
-                    "Once per round you may",
-                    "use this {C:attention}Fish{} to {C:fac_spectral_gradient}Transmute{}",
-                    "the rightmost {C:attention}Fish{}."
+                    "Once per round, {C:attention}use{}",
+                    "this {C:fac_fish}Fish{} to {C:fac_spectral_gradient}Transmute{}",
+                    "the rightmost {C:fac_fish}Fish{}",
+                    "{ppu_bubble:1}"
                 },
                 flavor = {
-                    "Typically found in moments of",
-                    "extreme lucidity. It is reported",
-                    "that it may whisper if you get",
-                    "too close."
+                    "Typically found in moments",
+                    "of extreme lucidity. It is",
+                    "reported that it may whisper",
+                    "if you get too close."
                 }
             },
             fish_fac_crimsonseraphim_hammerhead_shark = {
                 name = "Hammerhead Shark",
                 text = {
-                    "When a {C:attention}Fish{} is caught",
-                    "{C:red}Forge{} a {C:blue}Common{} Joker",
-                    "with a random added effect."
+                    "When a {C:fac_fish}Fish{} is caught,",
+                    "{C:red}Forge{} a {C:blue}Common{} {C:attention}Joker{}"
                 },
                 flavor = {
-                    "Usually found near anvils",
-                    "and circuses. for some reason..."
+                    "Usually found near anvils and",
+                    "circuses, for some reason..."
                 }
             },
 
             fish_fac_crimsonseraphim_mealy_apple = {
                 name = "Mealy Apple",
                 text = {
-                    "When a {C:attention}Fish{} is caught",
-                    "Destroy it and this {C:attention}Fish{}",
-                    "and give 3X their combined",
-                    "sell values"
+                    "When a {C:fac_fish}Fish{} is caught,",
+                    "{C:red}destroy{} it and this {C:fac_fish}Fish{},",
+                    "then earn {C:white,X:fac_sand_dollars}3X{} their",
+                    "combined {C:attention}sell values{}"
                 },
                 flavour = {
                     "{element:1}"
@@ -59,18 +59,18 @@ return {
                 name = {"Crystalfish", "(Al{s:0.5}2{}O{s:0.5}3{}:Cr)"},
                 text = {
                     {
-                        "All other {C:attention}Fish{} have",
-                        "random Suits and ranks and contribute",
-                        "to poker hand formation"
+                        "All other {C:fac_fish}Fish{} have random",
+                        "{C:fac_suits}suits{} and {C:attention}ranks{} and they count",
+                        "in {C:attention}poker hand{} formation"
                     },
                     {
                         "{C:green}#1# in #2#{} chance to turn into",
                         "{C:attention}#3#{}",
-                        "at the end of round."
+                        "at the end of the round"
                     }
                 },
                 flavor = {
-                    "It looks like its {C:green}shifting{}",
+                    "It looks like it's {C:green}shifting{}",
                     "under the light..."
                 }
             },
@@ -78,18 +78,18 @@ return {
                 name = {"Crystalfish", "(Ca{s:0.5}2{}[Mg,Fe]{s:0.5}5{}Si{s:0.5}8{}O{s:0.5}22{}[OH]{s:0.5}2{})"},
                 text = {
                     {
-                        "Caught {C:attention}Fish{} have a ",
+                        "Caught {C:fac_fish}Fish{} have a",
                         "{C:green}#1# in #2#{} chance to",
-                        "have a random Seal"
+                        "have a random {C:attention}Seal{}"
                     },
                     {
                         "{C:green}#3# in #4#{} chance to turn into",
                         "{C:attention}#5#{}",
-                        "at the end of round."
+                        "at the end of the round"
                     }
                 },
                 flavor = {
-                    "It looks like its {C:red}shifting{}",
+                    "It looks like it's {C:red}shifting{}",
                     "under the light..."
                 }
             },
@@ -98,20 +98,20 @@ return {
                 name = "Phantom Chaosfish",
                 text = {
                     {
-                        "When this {C:attention}Fish{} is caught",
+                        "When this {C:fac_fish}Fish{} is caught,",
                         "forcibly start fishing again",
-                        "regardless of current bait",
+                        "regardless of current {C:attention}Bait{}",
                     },
                     {
-                        "You have a chance to",
-                        "catch {C:attention}Fish{} from any",
-                        "environment"
+                        "You have a chance",
+                        "to catch {C:fac_fish}Fish{} from",
+                        "any {C:attention}environment{}"
                     }
                 },
                 flavor = {
-                    "A long lost cousin of the",
-                    "Ghost Catfish. Probably not",
-                    "a good idea to eat."
+                    "A long lost cousin of",
+                    "the Ghost Catfish. Probably",
+                    "not a good idea to eat."
                 }
             },
 
@@ -123,9 +123,9 @@ return {
                         "{C:blue}+#2#{} Chips"
                     },
                     {
-                        "When a {C:attention}Fish{} is sold average its",
-                        "Length with this {C:attention}Fish's{} Mult and",
-                        "its Weight with this {C:attention}Fish's{} Chips"
+                        "When a {C:fac_fish}Fish{} is sold, average its",
+                        "{C:attention}length{} with this {C:fac_fish}Fish's{} {C:mult}Mult{} and",
+                        "its {C:attention}weight{} with this {C:fac_fish}Fish's{} {C:chips}Chips{}"
                     }
                 },
                 flavor = {
@@ -138,14 +138,14 @@ return {
                 name = "Gungir",
                 text = {
                     {
-                        "Use this {C:attention}Fish{} to",
-                        "charge or uncharge the Spear",
-                        "{C:inactive}(Currently: #1#)"
+                        "Use this {C:fac_fish}Fish{} to {C:attention}charge{}",
+                        "or {C:red}uncharge{} the {C:fac_fish}Spear{}",
+                        "{ppu_bubble:1}"
                     },
                     {
-                        "When charged: All caught {C:attention}Fish{} will",
-                        "have an edition, {C:red}self-destructs{} if",
-                        "catch is not perfect."
+                        "When {C:attention}charged{}: All caught {C:fac_fish}Fish{} will",
+                        "have an {C:dark_edition}edition{}, but {C:red,E:2}self destructs{}",
+                        "if the catch wasn't {C:gold}perfect{}"
                     }
                 },
                 flavor = {
@@ -158,8 +158,8 @@ return {
                 name = "Trout Population",
                 text = {
                     {
-                        "Randomly Give {C:red}+#1#{} Mult",
-                        "or {C:blue}+#2#{} Chips ten times."
+                        "Randomly give {C:red}+#1#{} Mult",
+                        "or {C:blue}+#2#{} Chips {C:attention}10{} times"
                     },
                 },
                 flavor = {
@@ -171,16 +171,16 @@ return {
                 name = "Another Bucket",
                 text = {
                     {
-                        "Use this {C:attention}Fish{}",
-                        "to store or release the",
-                        "rightmost {C:attention}Fish{}"
+                        "Use this {C:fac_fish}Fish{} to",
+                        "store or release",
+                        "the rightmost {C:fac_fish}Fish{}"
                     },
                 },
                 flavor = {
                     "it's just a bucket! you know,",
-                    "for putting soapy water in and",
-                    "cleaning stuff with. why, what do",
-                    "trolls use them for?"
+                    "for putting soapy water in",
+                    "and cleaning stuff with. why,",
+                    "what do trolls use them for?"
                 }
             },
 
@@ -188,14 +188,15 @@ return {
                 name = "Rusty Revolver",
                 text = {
                     {
-                        "Shoot the next {C:attention}Fish{}",
-                        "#2# Times moving twice as slow",
-                        "for each shot when caught"
+                        "{C:attention}Use{} this {C:fac_fish}Fish{} to",
+                        "load one {C:attention}bullet{}",
+                        "{C:inactive}(Bullets remaining: #1#)",
+                        "{ppu_bubble:1}"
                     },
                     {
-                        "Use this {C:attention}Fish{} to load",
-                        "up one Shot",
-                        "{C:inactive}(Remaining: #1#)"
+                        "{C:attention}Shoot{} the next {C:fac_fish}Fish{} {C:white,X:attention}#2#X{},",
+                        "it moves {C:attention}twice{} as slow",
+                        "for each time it was {C:attention}shot{}"
                     }
                 },
                 flavor = {
@@ -206,37 +207,37 @@ return {
             fish_fac_crimsonseraphim_larp = {
                 name = "Larp",
                 text = {
-                    "Larps the ability of a",
-                    "random {C:attention}Fish{} from the collection",
-                    "{C:red}Randomizes{} when entering the shop",
+                    "{C:attention}Larps{} as a random",
+                    "{C:fac_fish}Fish{} from the {C:attention}collection{},",
+                    "{C:fac_fish}Fish{} changes when",
+                    "entering the {C:money}shop{}",
                 },
                 flavor = {
-                    "Theres no limit",
-                    "to the carp."
+                    "Theres no limit to the carp."
                 }
             },
             fish_fac_crimsonseraphim_still_life = {
-                name = "BaaaS͚icc baasS",
+                name = "BaaaSSicc baasS",
                 text = {
                     "{C:red}+#1#{} MMulT",
-                    "{C:purple}dEsttrOy{} a randOM {C:spectral}Fish{} aaN̶d ggaiN",
-                    "{C:red}+#2#{} MuLt wHeen a BlIN̵d iS seleeCted"
+                    "{C:red}dEsttrOy{} a randOM {C:spectral}Fish{}",
+                    "aaNNd ggaiN {C:red}+#2#{} MuLt",
+                    "wHeen {C:attention}BlINd{} iS seleeCted"
                 },
                 flavor = {
-                    "ThiS fffisH iiiss oFtteeN",
-                    "ssseeeeeN at ThhE̗ ḆAcK̊ ỌF",
-                    "TH̵E $Tring sssectIoN̴̚ iN",
-                    "mmost orC̶heestraas. ......WWait",
-                    "No, wwroNG̊͒ bass..."
+                    "ThiS fffisH iiiss oFtteeN ssseeeeeN",
+                    "at ThhE BAcK OF THE $Tring",
+                    "sssectIoN iN mmost orCheestraas.",
+                    "......WWait No, wwroNG bass..."
                 }
             },
             fish_fac_crimsonseraphim_starblight_eel = {
                 name = "Starblight Eel",
                 text = {
-                    "When caught create a",
+                    "When caught, create a",
                     "{C:purple}Starblighted{} copy of",
-                    "{C:attention}#1#{} random {C:attention}Fish{}",
-                    "{C:inactive}(Must Have Room)"
+                    "up to {C:attention}#1#{} random {C:fac_fish}Fish{}",
+                    "{C:inactive}(Must have room)"
                 },
                 flavor = {
                     "It is unclear to Modern Science",
@@ -249,9 +250,8 @@ return {
             fish_fac_crimsonseraphim_ultimate_weapon = {
                 name = "The Ultimate Weapon",
                 text = {
-                    "Use this {C:attention}Fish{} to",
-                    "create a copy of the last",
-                    "{C:attention}#1#{} obtained {C:attention}Fish{}",
+                    "Use this {C:fac_fish}Fish{} to create a {C:attention}copy{}",
+                    "of the last {C:attention}#1#{} obtained {C:fac_fish}Fish{}",
                     "{C:inactive}(Must have room)"
                 },
                 flavor = {
@@ -264,17 +264,35 @@ return {
                 }
             },
 
+            fish_fac_crimsonseraphim_ultimate_weapon_ff = {
+                name = "The Ultimate Weapon",
+                text = {
+                    "Use this {C:fac_fish}Fish{} to create a {C:attention}copy{}",
+                    "of the last {C:attention}#1#{} obtained {C:fac_fish}Fish{}",
+                    "{C:inactive}(Must have room)"
+                },
+                flavor = {
+                    "W8W WILL YOU LOOK AT TH8T!",
+                    "IT'S THE F***8NG TREASURE!",
+                    "LOOKS LIKE SOME K8ND OF HUMAN HOUSE SHAPED THING!",
+                    "H8LY S***, DIDN'T SEE THAT C8MING!!!!!!!!",
+                    "NOW EVERYONE HOLD YOUR F***ING H8RSES WHILE I",
+                    "ARTLESSLY EXPLAIN SOME MORE S*** A8OUT IT!"
+                }
+            },
+
             fish_fac_crimsonseraphim_jack_o_lantern = {
                 name = "Jack O' Lantern",
                 text = {
                     {
-                        "Your vision is constricted"
+                        "Your vision",
+                        "is {C:red}constricted{}"
                     },
                     {
-                        "Earn {C:money}$#1#{} Every",
-                        "{C:attention}#3#{} times a {C:attention}Fish{} leaves",
-                        "your sweet spot.",
-                        "{C:inactive}(Currently: [{C:attention}#2#{C:inactive}/{C:attention}#3#{C:inactive}] times)"
+                        "Earn {C:money}$#1#{} every",
+                        "{C:attention}#3#{} times a {C:fac_fish}Fish{} leaves",
+                        "your {C:green}sweet spot{}",
+                        "{C:inactive}(Currently {C:attention}#2#/#3#{C:inactive} times)"
                     }
                 },
                 flavor = {
@@ -283,7 +301,7 @@ return {
             },
 
             fish_fac_crimsonseraphim_piranha_cruenta = {
-                name = "Piranha cruenta",
+                name = "Piranha Cruenta",
                 text = {
                     "{C:hearts}Hearts{} held in hand",
                     "give {X:mult,C:white}X#1#{} Mult"
@@ -347,9 +365,9 @@ return {
             fish_fac_crimsonseraphim_squalus_aeternus = {
                 name = "Squalus aeternus",
                 text = {
-                    "Use this {C:attention}Fish{} to remove",
-                    "{C:attention}Eternal{} from a selected {C:attention}Fish{}",
-                    "or {C:attention}Joker{} then add {C:attention}Eternal{} to this {C:attention}Fish{}",
+                    "Use this {C:fac_fish}Fish{} to remove",
+                    "{C:attention}Eternal{} from a selected {C:fac_fish}Fish{}",
+                    "or {C:attention}Joker{} then add {C:attention}Eternal{} to this {C:fac_fish}Fish{}",
                 },
                 flavor = {
                     "And when the entire mountain is",
@@ -362,7 +380,7 @@ return {
                 text = {
                     "When blind is selected",
                     "fill {C:attention}Bucket{} slots with",
-                    "{C:attention}Temporary{} random {C:attention}Fish{}"
+                    "{C:attention}Temporary{} random {C:fac_fish}Fish{}"
                 },
                 flavor = {
                     "Silence will fall when the",
@@ -386,7 +404,7 @@ return {
                 name = "Ronald Reagan II",
                 text = {
                     "At the end of round the listed",
-                    "probabilites of all held {C:attention}Fish{}",
+                    "probabilites of all held {C:fac_fish}Fish{}",
                     "increase by {X:green,C:white}20%{} permanently."
                 },
                 flavor = {
@@ -399,8 +417,8 @@ return {
             fish_fac_crimsonseraphim_picayune_cursedfish = {
                 name = "Tier 1 Fish (Cursed)",
                 text = {
-                    "Use this {C:attention}Fish{} to select",
-                    "{C:attention}1{} of {C:attention}3{} random {C:attention}Fish{}",
+                    "Use this {C:fac_fish}Fish{} to select",
+                    "{C:attention}1{} of {C:attention}3{} random {C:fac_fish}Fish{}",
                     "to either obtain or banish."
                 },
                 flavor = {
@@ -413,7 +431,7 @@ return {
             fish_fac_crimsonseraphim_miniaturized_exoplanet = {
                 name = "Miniaturized Exoplanet",
                 text = {
-                    "Use this {C:attention}Fish{} to",
+                    "Use this {C:fac_fish}Fish{} to",
                     "instantly use {C:attention}#1#{}",
                     "{C:planet}Planet{} cards"
                 },
@@ -442,7 +460,7 @@ return {
                 name = "Mysterious Door.",
                 text = {
                     {
-                        "Use this {C:attention}Fish{} for {C:money}$#1#{} to change",
+                        "Use this {C:fac_fish}Fish{} for {C:money}$#1#{} to change",
                         "the current {C:attention}Environment{} to {C:attention}#2#{}",
                         "then increase the cost by {C:money}$1{} and",
                         "randomize the selected {C:attention}Environment{}",
@@ -465,7 +483,7 @@ return {
                         "At the end of the shop",
                         "{C:red}Destroy{} a random {C:attention}Fish",
                         "and apply {C:dark_edition}Negative{} to a",
-                        "random {C:attention}Fish{}"
+                        "random {C:fac_fish}Fish{}"
                     },
 
                 },
@@ -482,12 +500,12 @@ return {
                 },
                 text = {
                     {
-                        "Use this {C:attention}Fish{} to",
-                        "{C:red}destroy{} the rightmost {C:attention}Fish{}"
+                        "Use this {C:fac_fish}Fish{} to",
+                        "{C:red}destroy{} the rightmost {C:fac_fish}Fish{}"
                     },
                     {
-                        "The next caught {C:attention}Fish{} will",
-                        "be a completely random {C:attention}Fish{}",
+                        "The next caught {C:fac_fish}Fish{} will",
+                        "be a completely random {C:fac_fish}Fish{}",
                         "from the same {C:attention}Developer/Artist{}"
                     }
 
@@ -501,8 +519,15 @@ return {
             fac_crimsonseraphim_transmute = {
                 name = "Transmute",
                 text = {
-                    "This Fish becomes another",
-                    "Fish with similar effects."
+                    "Becomes another Fish",
+                    "with similar effects"
+                }
+            },
+            fac_crimsonseraphim_forge = {
+                name = "Forge",
+                text = {
+                    "Create a card with",
+                    "an additional effect"
                 }
             },
 
@@ -588,8 +613,8 @@ return {
             gold_fish_seal = "Gold Seal"
         },
         dictionary = {
-            k_charged = "Charged",
-            k_uncharged = "Uncharged",
+            ppu_bubble_crimsonseraphim_charged = ' charged ',
+            ppu_bubble_crimsonseraphim_uncharged = ' uncharged ',
             k_switch_ex = "Switch!",
             k_banish_cursefish = "BANISH",
             k_obtain_cursefish = "OBTAIN",

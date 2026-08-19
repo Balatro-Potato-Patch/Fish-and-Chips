@@ -86,19 +86,25 @@ FishAndChips.Fish {
         backroom = 7,
         wormhole = 5,
 	},
+    blueprint_compat = false,
     stats = {
 		weight = {min = 20, max = 100},
 		length = {min = 0.3, max = 0.9}
 	},
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = {set = "Other", key = "fac_crimsonseraphim_transmute"}
+        return { vars = { ppu_bubbles = { card.ability.extra.used and "used" or "usable" } } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval then card.ability.extra.used = nil end
+		if context.end_of_round and context.main_eval and not context.blueprint then
+            card.ability.extra.used = nil
+        end
 	end,
     use = function(self, card)
-        G.fac_fish_area.cards[#G.fac_fish_area.cards]:transmute("crimsonseraphim_aeonfish")
-		card.ability.extra.used = true
+        if not card.ability.extra.used then
+            G.fac_fish_area.cards[#G.fac_fish_area.cards]:transmute("crimsonseraphim_aeonfish")
+            card.ability.extra.used = true
+        end
 	end,
 	can_use = function(self, card)
 		return not card.ability.extra.used
@@ -178,6 +184,9 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds_seal, "fac_crimsonseraphim_jade_crystalfish_seal")
         local num2, dem2 = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_crimsonseraphim_jade_crystalfish")
+        if not card.fake_card then
+            info_queue[#info_queue + 1] = G.P_CENTERS.fish_fac_crimsonseraphim_ruby_crystalfish
+        end
 		return { vars = { num, dem, num2, dem2, localize{type = "name_text", set = "fac_Fish", key = "fish_fac_crimsonseraphim_ruby_crystalfish"} } }
 	end,
 	calculate = function(self, card, context)
@@ -306,6 +315,9 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
 		local num, dem = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_crimsonseraphim_ruby_crystalfish")
+        if not card.fake_card then
+            info_queue[#info_queue + 1] = G.P_CENTERS.fish_fac_crimsonseraphim_jade_crystalfish
+        end
         return {vars = {num, dem, localize{type = "name_text", set = "fac_Fish", key = "fish_fac_crimsonseraphim_jade_crystalfish"}}}
 	end,
 	calculate = function(self, card, context)
@@ -357,7 +369,8 @@ FishAndChips.Fish {
 		length = {min = 0.9, max = 6.1}
 	},
 	loc_vars = function(self, info_queue, card)
-
+        info_queue[#info_queue+1] = {set = "Other", key = "fac_crimsonseraphim_forge"}
+        return {}
 	end,
 	calculate = function(self, card, context)
         if context.fac_end_fishing and context.fish then
@@ -479,6 +492,9 @@ FishAndChips.Fish {
 	end,
 }
 
+PotatoPatchUtils.Bubble_Colours["crimsonseraphim_charged"] = G.C.ETERNAL
+PotatoPatchUtils.Bubble_Colours["crimsonseraphim_uncharged"] = adjust_alpha(G.C.ETERNAL, 0.6)
+
 FishAndChips.Fish {
 	key = "crimsonseraphim_gungir",
 	atlas = "crimsonseraphim_aeonfish",
@@ -502,11 +518,7 @@ FishAndChips.Fish {
 		length = {min = 2.2, max = 2.2}
 	},
 	loc_vars = function(self, info_queue, card)
-    return {
-        vars = {
-            localize(card.ability.extra.charged and "k_charged" or "k_uncharged")
-        }
-    }
+        return { vars = { ppu_bubbles = { card.ability.extra.charged and "crimsonseraphim_charged" or "crimsonseraphim_uncharged" } } }
 	end,
 	use = function(self, card)
         if card.ability.extra.charged then
@@ -695,7 +707,8 @@ FishAndChips.Fish {
         return {
             vars = {
                 card.ability.extra.shots,
-                card.ability.extra.primed or 0
+                card.ability.extra.primed or 0,
+                ppu_bubbles = { card.ability.extra.shots <= 0 and "used" or "usable" }
             }
         }
     end,
@@ -747,7 +760,7 @@ FishAndChips.Fish {
 		weight = {min = 2.6, max = 20},
 		length = {min = 0.4, max = 1.2}
 	},
-    loc_vars = function(self, q, card)
+    loc_vars = function(self, info_queue, card)
         return {
             vars = {
                 localize{type = "name_text", key = card.ability.extra.joker, set = "fac_Fish"}
@@ -766,11 +779,25 @@ FishAndChips.Fish {
         return G.P_CENTERS[card.ability.extra.joker].keep_on_use and G.P_CENTERS[card.ability.extra.joker]:keep_on_use(card.dummy) or nil
     end,
     calculate = function(self, card, context)
-        if context.starting_shop then
+        if context.starting_shop and not context.blueprint then
             G.E_MANAGER:add_event(Event{
                 trigger = "after",
                 func = function()
-                    card.ability.extra.joker = SMODS.poll_object{type = "fac_Fish"}
+                    local blacklist = {
+                        fish_fac_crimsonseraphim_larp = true
+                    }
+                    card.ability.extra.joker = SMODS.poll_object({
+                        type = "fac_Fish",
+                        filter = function(pool)
+                            local filtered_pool = {}
+                            for _, fish in ipairs(pool) do
+                                if not blacklist[fish.key] then
+                                    table.insert(filtered_pool, fish)
+                                end
+                            end
+                            return #filtered_pool > 0 and filtered_pool or pool
+                        end
+                    })
                     Card.remove_from_deck(card.dummy)
                     card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
                     card.dummy.added_to_deck = nil
@@ -790,7 +817,7 @@ FishAndChips.Fish {
                 end
             })
         end
-        if not card.dummy then
+        if not card.dummy and not context.blueprint then
             card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
             card.dummy.added_to_deck = true
             if card.ability.extra.dummy_abil then card.dummy.ability = card.ability.extra.dummy_abil end
@@ -960,6 +987,15 @@ FishAndChips.Fish {
             vars = {
                 card.ability.extra.fish
             }
+        }
+    end,
+    flavour_vars = function(self, info_queue, card)
+        local key = self.key
+        if FishAndChips.mod.config.family_friendly then
+            key = key.."_ff"
+        end
+        return {
+            key = key
         }
     end,
     use = function(self, card)
