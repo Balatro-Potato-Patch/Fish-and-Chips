@@ -95,7 +95,7 @@ return {
             fish_fac_dogfish = {
                 name = "Dirty Dogfish",
                 text = {
-                    "Use this fish to",
+                    "Use this {C:fac_fish}Fish{} to",
                     "create {C:attention}#1#{} Baits",
                 },
                 flavour = {

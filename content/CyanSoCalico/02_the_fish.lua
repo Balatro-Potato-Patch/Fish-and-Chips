@@ -88,9 +88,6 @@ FishAndChips.Fish {
                     func = function()
                         G.CONTROLLER.locks[lock] = nil
 						G.FAC_csc_force_fish = nil
-		-- Known issue: if you reload the run right after using this Fish, the reroll will be saved but the Fish being used up won't.
-		-- I don't know if there's anything I can do about this?
-						save_run()
                         return true
                     end
                 }))

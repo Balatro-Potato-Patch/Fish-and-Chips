@@ -37,14 +37,13 @@ return {
             fish_fac_csc_fishmongus = {
                 name = "Fishmongus",
                 flavor = {
-                    "Did you mean",
-                    "\"fishmonger\"?"
+                    "Did you mean \"fishmonger\"?"
                 },
                 text = {
                     "When {C:attention}Blind{} is selected,",
                     "add a {C:attention}#1#{} to a",
                     "random {C:attention}playing card{}",
-                    "in {C:attention}full deck{}"
+                    "in your {C:attention}full deck{}"
                 }
             },
             fish_fac_csc_the_fish = {
@@ -56,11 +55,11 @@ return {
                 text = {
                     {
                         "{C:attention}The Fish{} (Boss Blind)",
-                        "cannot appear while",
-                        "this Fish is owned"
+                        "{C:red}cannot appear{} while",
+                        "this {C:fac_fish}Fish{} is owned"
                     },
                     {
-                        "Use this Fish before a",
+                        "Use this {C:fac_fish}Fish{} before a",
                         "{C:attention}Boss Blind{} to replace",
                         "it with {C:attention}The Fish{}",
                         "{C:inactive,s:0.8}Showdown Blinds excluded{}",
@@ -78,8 +77,8 @@ return {
                     "power of exponentiation!"
                 },
                 text = {
-                    "{C:white,X:mult}X#1#{} Mult for",
-                    "each {C:fac_fish}Fish{} owned",
+                    "{C:white,X:mult}X#1#{} Mult once",
+                    "per {C:fac_fish}Fish{} owned",
                     "{C:inactive}(Currently {C:white,X:mult}X#2#{C:inactive} Mult){}"
                 },
             },
@@ -110,7 +109,7 @@ return {
                     "hard journey upstream..."
                 },
                 text = {
-                    "This Fish gains",
+                    "This {C:fac_fish}Fish{} gains",
                     "{C:chips}+#1#{} Chips per",
                 --    "each {C:attention}card{} or",
                     "{C:fac_fish}Fish{} {C:red}destroyed{}",
@@ -156,10 +155,9 @@ return {
                     "Cue the music!"
                 },
                 text = {
-                    "Select {C:attention}#1#+{} cards",
-                    "sharing a {C:attention}suit{}",
-                    "Use this Fish to",
-                    "{C:red}destroy{} them",
+                    "{C:red}Destroy{} at least",
+                    "{C:attention}#1#{} selected cards",
+                    "of the same {C:fac_suits}suit{}",
                     "{ppu_bubble:usable}",
                 },
             },
@@ -170,9 +168,9 @@ return {
                     "this could upgrade 'em!"
                 },
                 text = {
-                    "Use this Fish to",
-                    "upgrade selected",
+                    "Upgrade selected",
                     "cards' {C:attention}poker hand{}",
+                    "by {C:attention}#1#{} level",
                     "{ppu_bubble:usable}"
                 }
             },

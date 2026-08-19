@@ -53,11 +53,9 @@ FishAndChips.Fish {
 				end
 			end
 		end
-		local finalsuit
 		local finalcount = 0
 		for k, v in pairs(counts) do
 			if v > finalcount then
-				finalsuit = k
 				finalcount = v
 			end
 		end

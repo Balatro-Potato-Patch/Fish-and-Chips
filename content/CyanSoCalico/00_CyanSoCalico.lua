@@ -31,7 +31,23 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_csc_fish',
 	pos = { x = 1, y = 3 },
 	colour = G.C.fac_csc_CSC,
-	loc = true
+	loc = true,
+	calculate = function(self, context)
+		-- The Fish (saves after use, as without this, you could use it, savescum, then get it back) (ghostsalt)
+		if context.fac_use_fish and context.fac_use_fish.config.center.key == "fish_fac_csc_the_fish" then
+        	G.E_MANAGER:add_event(Event({
+				func = function()
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							save_run()
+							return true
+						end
+					}))
+					return true
+				end
+			}))
+		end
+	end,
 })
 --[[
 FishAndChips.Fish {

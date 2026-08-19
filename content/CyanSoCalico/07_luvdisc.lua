@@ -50,11 +50,11 @@ FishAndChips.Fish {
 				end
 			end
 			if not anynonface then
+				G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
 				return {
 					message = localize("k_plus_tarot"),
 					colour = G.C.PURPLE,
 					func = function()
-						G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
 						G.E_MANAGER:add_event(Event({func = function()
 							SMODS.add_card{ key = card.ability.extra.card }
 							G.GAME.consumeable_buffer = 0

@@ -8,6 +8,11 @@ FishAndChips.Fish {
 	badge_key = "k_fac_maybe_fish",
 
 	attributes = { "hand_level", "usable", "hand_type", },
+	config = {
+		extra = {
+			levels = 1
+		}
+	},
 
 	stats = {
 		weight = {
@@ -26,6 +31,11 @@ FishAndChips.Fish {
 		wormhole = 1
 	},
 
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.levels } }
+	end,
+
+	blueprint_compat = false,
 	eternal_compat = false,
 	treasure = true,
 	requires_hand = true,

@@ -7,7 +7,7 @@ FishAndChips.Fish {
 	ppu_coder = { "CyanSoCalico" },
 	ppu_artist = { "CyanSoCalico" },
 
-	attributes = { --[[idk which attributes would fit honestly lol]] "full_deck", "seals", "modify_card", --[[i do (mf)]] },
+	attributes = { --[[idk which attributes would fit honestly lol]] "full_deck", "seals", "modify_card", --[[i do (mf)]] --[[i was also here hello! colon three! (ghostsalt)]] },
 	config = {
 		extra = {
 			seal = "Red"
@@ -62,16 +62,18 @@ FishAndChips.Fish {
 			new less bad version ]]
 			local candidates = {}
 			for k, v in ipairs(G.deck.cards) do
-				candidates[#candidates+1] = (not v.seal) and v or nil
+				candidates[#candidates+1] = (not v.seal) and not v.fac_chosen_by_fishmongus and v or nil
 			end
 			if next(candidates) then
 				local playing_card = pseudorandom_element(candidates, pseudoseed("fishmongus"))
+				playing_card.fac_chosen_by_fishmongus = true
 				return {
                     message = localize("k_fac_csc_add_seal"),
                     colour = G.C.RED,
                     effect = true,
 					func = function()
 						playing_card:set_seal(card.ability.extra.seal)
+						playing_card.fac_chosen_by_fishmongus = nil
 					end,
 					card = context.blueprint and context.blueprint_card or card,
                 }
