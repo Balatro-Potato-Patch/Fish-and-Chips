@@ -1542,7 +1542,7 @@ FishAndChips.Fish {
 		end
 		if context.pseudorandom_result and not context.blueprint then
 			if context.result then
-				card.ability.mod_chance = card.ability.mod_mod_chance
+				card.ability.extra.mod_chance = card.ability.extra.mod_mod_chance
 				return {
 					message = localize "k_reset",
 					colour = G.C.RED
