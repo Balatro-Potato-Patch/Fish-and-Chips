@@ -77,7 +77,7 @@ return {
                 text = {
                     "Retriggers cards in",
                     "first half of hand",
-                    "card one time"
+                    "once"
                 },
                 flavour = {
                     ":hoo:"

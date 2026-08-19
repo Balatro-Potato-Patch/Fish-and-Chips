@@ -522,18 +522,20 @@ FishAndChips.Fish {
 		return { vars = { } }
 	end,
 	calculate = function(self, card, context)
-		local first_half = math.floor(#context.scoring_hand)
-		local in_first_half = false
-		for i = 1, first_half do
-			if context.other_card == context.scoring_hand[1] then
-				in_first_half = true
-				break
-			end
-		end
-        if context.repetition and context.cardarea == G.play and in_first_half then
-            return {
-                repetitions = 1
-            }
+        if context.repetition and context.cardarea == G.play then
+            local first_half = math.ceil(#G.play.cards / 2)
+    		local in_first_half = false
+    		for i = 1, first_half do
+    			if context.other_card == G.play.cards[i] then
+    				in_first_half = true
+    				break
+    			end
+    		end
+            if in_first_half then
+                return {
+                    repetitions = 1
+                }
+            end
         end
 	end,
 }
