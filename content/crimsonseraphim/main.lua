@@ -128,6 +128,7 @@ FishAndChips.Fish {
 		soup = 10,
         chocolate_river = 7,
 	},
+    eternal_compat = false,
     stats = {
 		weight = {min = 0.15, max = 0.182},
 		length = {min = 0.07, max = 0.08}
@@ -138,14 +139,16 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.fac_fish_caught then
             local money = card.sell_cost + context.fac_fish_caught.sell_cost
-            G.E_MANAGER:add_event(Event{
-                trigger = "after",
-                blocking = false,
-                func = function()
-                    SMODS.destroy_cards({card, context.fac_fish_caught}, nil, true)
-                    return true
-                end
-            })
+            if not context.blueprint then
+                G.E_MANAGER:add_event(Event{
+                    trigger = "after",
+                    blocking = false,
+                    func = function()
+                        SMODS.destroy_cards({card, context.fac_fish_caught}, nil, true)
+                        return true
+                    end
+                })
+            end
             if money ~= 0 then
                 return {
                     sand_dollars = money * 3
@@ -177,6 +180,7 @@ FishAndChips.Fish {
 		styx = 7,
         aquifer = 7
 	},
+    blueprint_compat = false,
     stats = {
 		weight = {min = 61, max = 61},
 		length = {min = 1.8, max = 1.8}
@@ -191,13 +195,13 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(
-            card, "fac_crimsonseraphim_jade_crystalfish", 1, card.ability.extra.odds
-        ) then
+            card, "fac_crimsonseraphim_jade_crystalfish", 1, card.ability.extra.odds)
+            and not context.blueprint then
             card:transmute(nil, G.P_CENTERS.fish_fac_crimsonseraphim_ruby_crystalfish)
         end
         if context.fac_fish_caught and SMODS.pseudorandom_probability(
-            card, "fac_crimsonseraphim_jade_crystalfish_seal", 1, card.ability.extra.odds_seal
-        ) then
+            card, "fac_crimsonseraphim_jade_crystalfish_seal", 1, card.ability.extra.odds_seal)
+            and not context.blueprint then
             context.fac_fish_caught:set_fish_seal(pseudorandom_element(SMODS.Seals, pseudoseed("jadefish_seal")).key)
         end
 	end,
@@ -309,6 +313,7 @@ FishAndChips.Fish {
 		styx = 8,
         aquifer = 8
 	},
+    blueprint_compat = false,
     stats = {
 		weight = {min = 61, max = 61},
 		length = {min = 1.8, max = 1.8}
@@ -322,11 +327,11 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(
-            card, "fac_crimsonseraphim_ruby_crystalfish", 1, card.ability.extra.odds
-        ) then
+            card, "fac_crimsonseraphim_ruby_crystalfish", 1, card.ability.extra.odds)
+            and not context.blueprint then
             card:transmute(nil, G.P_CENTERS.fish_fac_crimsonseraphim_jade_crystalfish)
         end
-        if context.fac_fish_caught then
+        if context.fac_fish_caught and not context.blueprint then
             SMODS.change_base(context.fac_fish_caught,
                 pseudorandom_element(SMODS.Suits, pseudoseed("ruby_crystalfish_suit")).key,
                 pseudorandom_element(SMODS.Ranks, pseudoseed("ruby_crystalfish_rank")).key,
@@ -410,6 +415,7 @@ FishAndChips.Fish {
 		garden = 5,
         wormhole = 5
 	},
+    blueprint_compat = false,
     stats = {
 		weight = {min = 1000, max = 2000},
 		length = {min = 67, max = 110}
@@ -453,7 +459,7 @@ FishAndChips.Fish {
 	weight = 2,
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
-	attributes = { "mult", "chips", "on_sell", },
+	attributes = { "mult", "chips", "on_sell", "scaling" },
 	config = {
 		extra = {
             mult = 1,
@@ -479,7 +485,7 @@ FishAndChips.Fish {
     }
 	end,
 	calculate = function(self, card, context)
-        if context.selling_card and context.card.ability.set == "fac_Fish" then
+        if context.selling_card and context.card.ability.set == "fac_Fish" and context.card ~= card and not context.blueprint then
             card.ability.extra.mult = (card.ability.extra.mult + context.card.ability.stats.length) / 2
             card.ability.extra.chips = (card.ability.extra.chips + context.card.ability.stats.weight) / 2
         end
@@ -513,6 +519,7 @@ FishAndChips.Fish {
         garden = 5,
         aquifer = 5,
 	},
+    blueprint_compat = false,
     stats = {
 		weight = {min = 20, max = 20},
 		length = {min = 2.2, max = 2.2}
@@ -535,7 +542,7 @@ FishAndChips.Fish {
         return true
     end,
     calculate = function(self, card, context)
-        if card.ability.extra.charged then
+        if card.ability.extra.charged and not context.blueprint then
             if context.fac_fish_caught then
                 context.fac_fish_caught:set_edition(SMODS.poll_object{type = "Edition", guaranteed = true})
             end
@@ -626,6 +633,7 @@ FishAndChips.Fish {
         city_river = 5,
         pier = 5,
 	},
+    blueprint_compat = false,
     config = {
         extra = {}
     },
@@ -694,6 +702,7 @@ FishAndChips.Fish {
 	environments = {
         city_river = 5,
 	},
+    blueprint_compat = false,
     config = {
         extra = {
             shots = 4
@@ -713,7 +722,6 @@ FishAndChips.Fish {
         }
     end,
     use = function(self, card)
-        play_sound()
         if card.ability.extra.shots <= 0 then
             play_sound("fac_crimsonseraphim_revolver_empty")
         else
@@ -723,7 +731,7 @@ FishAndChips.Fish {
         end
 	end,
 	can_use = function(self, card)
-		return card.ability.extra.shots > 0
+		return true
 	end,
     keep_on_use = function()
         return true
@@ -877,15 +885,17 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.setting_blind then
+        if context.setting_blind and not card.getting_sliced and not context.blueprint then
             local fih = {}
             for i, v in pairs(G.fac_fish_area.cards) do
-                if not SMODS.is_eternal(v) and v ~= card then
+                if not SMODS.is_eternal(v) and v ~= card and not v.getting_sliced then
                     fih[#fih+1] = v
                 end
             end
             if #fih > 0 then
-                SMODS.destroy_cards(pseudorandom_element(fih, pseudoseed("stilllife_card")), nil, true)
+                local destroy_card = pseudorandom_element(fih, pseudoseed("stilllife_card"))
+                destroy_card.getting_sliced = true
+                SMODS.destroy_cards(destroy_card, nil, true)
             end
             SMODS.scale_card(card, {
                 ref_table = card.ability.extra,
@@ -913,6 +923,7 @@ FishAndChips.Fish {
 	environments = {
         wormhole = 5
 	},
+    blueprint_compat = false,
     config = {
         extra = {
             copies = 2
@@ -931,14 +942,14 @@ FishAndChips.Fish {
         }
     end,
     on_catch = function(self, card)
-        if #G.fac_fish_area.cards > 1 then
+        if #G.fac_fish_area.cards > 0 then
             local cards = {}
             for i, v in pairs(G.fac_fish_area.cards) do
                 if v ~= card then
                     cards[#cards+1] = v
                 end
             end
-            for i = 1, card.ability.extra.copies do
+            for i = 1, math.min(card.ability.extra.copies, #cards) do
                 if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
                     local c = copy_card(pseudorandom_element(cards, pseudoseed("crimsonseraphim_starblight_eel")), nil)
                     G.fac_fish_area:emplace(c)
@@ -973,6 +984,8 @@ FishAndChips.Fish {
         backroom = 5,
         city_river = 5
 	},
+    blueprint_compat = false,
+    eternal_compat = false,
     config = {
         extra = {
             fish = 3
@@ -1003,7 +1016,7 @@ FishAndChips.Fish {
             for i = 1, math.min(card.ability.extra.fish, G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) do
                 local c = G.GAME.crimsonseraphim_obtained_fish[#G.GAME.crimsonseraphim_obtained_fish]
                 if c then
-                    local car = SMODS.create_card{key = "j_joker", area = G.fac_fish_are}
+                    local car = SMODS.create_card{key = "j_joker", area = G.fac_fish_area}
                     car:load(c.card and type(c.card) ~= "number" and c.card:save() or c.savetable)
                     G.GAME.crimsonseraphim_obtained_fish[#G.GAME.crimsonseraphim_obtained_fish] = nil
                     G.fac_fish_area:emplace(car)
@@ -1054,9 +1067,9 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card ,context)
         if context.crimsonseraphim_fish_leaving_sweet_spot then
-            card.ability.extra.times_done = card.ability.extra.times_done + 1
+            if not context.blueprint then card.ability.extra.times_done = card.ability.extra.times_done + 1 end
             if card.ability.extra.times_done >= card.ability.extra.times then
-                card.ability.extra.times_done = 0
+                if not context.blueprint then card.ability.extra.times_done = 0 end
                 return {
                     dollars = card.ability.extra.money
                 }
@@ -1122,6 +1135,8 @@ FishAndChips.Fish {
         garden = 5,
         pier = 5
 	},
+    blueprint_compat = false,
+    eternal_compat = false,
     stats = {
 		weight = {min = 40, max = 90},
 		length = {min = 1.2, max = 4}
@@ -1130,14 +1145,14 @@ FishAndChips.Fish {
         info_queue[#info_queue+1] = {set = "Other", key = "perishable", vars = {5,5}}
     end,
     calculate = function(self, card ,context)
-        if context.fac_use_fish and not context.fac_use_fish.ability.perishable then
-            if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
+        if context.fac_use_fish and not context.fac_use_fish.ability.perishable and not context.blueprint then  -- i made this incompatible because it isn't self destructing sometimes, when copied by Flounder (ghostsalt)
+            if #G.fac_fish_area.cards - (context.fac_use_fish.config.center.keep_on_use and context.fac_use_fish.config.center.keep_on_use() and 0 or 1) < G.fac_fish_area.config.card_limit then
                 local c = SMODS.add_card{key=context.fac_use_fish.config.center.key, area = G.fac_fish_area}
                 c.ability.perishable = true
                 c.ability.perish_tally = 5
                 SMODS.destroy_cards(card, nil, true)
+                return nil, true
             end
-            return nil, true
         end
     end
 }
@@ -1155,6 +1170,7 @@ FishAndChips.Fish {
         garden = 5,
         pier = 5
 	},
+    blueprint_compat = false,
     stats = {
 		weight = {min = 2.7, max = 6},
 		length = {min = 0.6, max = 0.9}
@@ -1180,17 +1196,24 @@ FishAndChips.Fish {
 	},
     calculate = function(self, card, context)
         if context.crimsonseraphim_before_hightlighted_moved and #G.hand.highlighted > 1 then
-            local c = pseudorandom_element(G.hand.highlighted, pseudoseed("crimsonseraphim_falx_sulphurata_card"))
-            if c then
-                c.area:remove_card(c)
-                SMODS.destroy_cards(c, nil, true)
-                G.E_MANAGER:add_event(Event{
-                    func = function()
-                        play_sound("fac_crimsonseraphim_sulfur_slash")
-                        return true
-                    end
-                })
-                delay(0.75)
+            local candidates = {}
+            for _, v in ipairs(G.hand.highlighted) do
+                if not v.getting_sliced then candidates[#candidates+1] = v end
+            end
+            if next(candidates) then
+            local c = pseudorandom_element(candidates, pseudoseed("crimsonseraphim_falx_sulphurata_card"))
+                if c then
+                    c.getting_sliced = true
+                    G.E_MANAGER:add_event(Event{
+                        func = function()
+                            c.area:remove_card(c)
+                            SMODS.destroy_cards(c, nil, true)
+                            play_sound("fac_crimsonseraphim_sulfur_slash")
+                            return true
+                        end
+                    })
+                    delay(0.75)
+                end
             end
             return nil, true
         end
@@ -1210,6 +1233,7 @@ FishAndChips.Fish {
         styx = 5,
         swamp = 5
 	},
+    blueprint_compat = false,
     stats = {
 		weight = {min = 0.3, max = 1.5},
 		length = {min = 0.25, max = 0.5}
@@ -1306,8 +1330,7 @@ FishAndChips.Fish {
 	},
     blueprint_compat = false,
     calculate = function(self, card, context)
-        if context.crimsonseraphim_before_hightlighted_moved then
-            local xmult = 1
+        if context.crimsonseraphim_before_hightlighted_moved and not context.blueprint then
             if #G.fac_fish_area.cards > 1 then
                 local self_pos = 1
                 for i, v in pairs(G.fac_fish_area.cards) do
@@ -1318,7 +1341,6 @@ FishAndChips.Fish {
                 G.fac_fish_area.cards[position] = card
                 G.fac_fish_area.cards[self_pos] = other
                 play_sound("fac_crimsonseraphim_bounce")
-                xmult = self_pos
             end
         end
         if context.joker_main then
@@ -1361,7 +1383,7 @@ FishAndChips.Fish {
             end
         end
         if context.mod_probability and context.trigger_obj and context.trigger_obj.ability
-        and context.trigger_obj.ability.crimsonseraphim_ronald_reagan_is_my_saviour then
+        and context.trigger_obj.ability.crimsonseraphim_ronald_reagan_is_my_saviour and not context.blueprint then
             return {
                 numerator = context.numerator * context.trigger_obj.ability.crimsonseraphim_ronald_reagan_is_my_saviour
             }
@@ -1385,6 +1407,7 @@ FishAndChips.Fish {
 		length = {min = 0.4, max = .70}
 	},
     blueprint_compat = false,
+    eternal_compat = false,
     use = function()
         G.FUNCS.overlay_menu {
             definition = create_UIBox_crimsonseraphim_cursedfish()
@@ -1423,6 +1446,7 @@ FishAndChips.Fish {
         }
     end,
     blueprint_compat = false,
+    eternal_compat = false,
     use = function(self, card)
         if G.GAME.fac_fish_expanded then
             G.FUNCS.fac_open_fishing_menu()
@@ -1615,6 +1639,7 @@ FishAndChips.Fish {
         wormhole = 5,
         garden = 5,
 	},
+    blueprint_compat = false,
     stats = {
 		weight = {min = 5, max = 5},
 		length = {min = 1.9, max = 1.9}
@@ -1653,17 +1678,17 @@ FishAndChips.Fish {
 		}).key
     end,
     can_use = function(self, card)
-        return G.GAME.dollars + G.GAME.bankrupt_at > card.ability.extra.cost
+        return G.GAME.dollars - G.GAME.bankrupt_at >= card.ability.extra.cost
     end,
     keep_on_use = function()
         return true
     end,
     no_rotation = true,
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval then
+        if context.end_of_round and context.main_eval and not context.blueprint then
             card.ability.extra.cost = 3
             return {
-                message = localize("k_reset_ex")
+                message = localize("k_reset")
             }
         end
     end,
@@ -1738,21 +1763,30 @@ FishAndChips.Fish {
         if context.ending_shop then
             local cards = {}
             for i, v in pairs(G.fac_fish_area.cards) do
-                if not SMODS.is_eternal(v) then
+                if not SMODS.is_eternal(v) and not v.getting_sliced and v ~= card then
                     cards[#cards+1] = v
                 end
             end
-            FishAndChips.crimsonseraphim.swoon()
-            G.E_MANAGER:add_event(Event{
-                func = function()
-                    pseudoshuffle(cards, pseudoseed("fac_fish_crimsonseraphim_roaring_fish"))
-                    cards[1]:start_dissolve()
-                    pseudoshuffle(cards, pseudoseed("fac_fish_crimsonseraphim_roaring_fish"))
-                    cards[1]:set_edition("e_negative")
-                    return true
+            local destroy_card = pseudorandom_element(cards, pseudoseed("fac_fish_crimsonseraphim_roaring_fish"))
+            cards = {}
+            for i, v in pairs(G.fac_fish_area.cards) do
+                if not v.getting_sliced and not v.edition and v ~= destroy_card then
+                    cards[#cards+1] = v
                 end
-            })
-            return nil, true
+            end
+            if next(cards) then
+                destroy_card.getting_sliced = true
+                FishAndChips.crimsonseraphim.swoon()
+                G.E_MANAGER:add_event(Event{
+                    func = function()
+                        destroy_card:start_dissolve()
+                        local negative_card = pseudorandom_element(cards, pseudoseed("fac_fish_crimsonseraphim_roaring_fish_negative"))
+                        negative_card:set_edition("e_negative")
+                        return true
+                    end
+                })
+                return nil, true
+            end
         end
     end
 }
@@ -1799,6 +1833,7 @@ FishAndChips.Fish {
         backroom = 5,
         styx = 5
 	},
+    blueprint_compat = false,
     stats = {
 		weight = {min = 0.1, max = 0.2},
 		length = {min = 0.15, max = 0.2}
@@ -1815,7 +1850,17 @@ FishAndChips.Fish {
         if num == 29 then
             elem = SMODS.create_sprite(0, 0, 3, 3 * 233/374, "fac_omega_crimsonfang_lore_iq")
         end
+        if FishAndChips.mod.config.family_friendly and (num == 3 or num == 10 or num == 14 or num == 18) then
+            num = num.."_ff"
+        end
         return num, elem
+    end,
+    loc_vars = function(self, info_queue, card)
+        local key = self.key
+        if FishAndChips.mod.config.family_friendly then
+            key = key.."_ff"
+        end
+        return { key = key }
     end,
     flavour_vars = function(self, info_queue, card)
         local s, e = self:select_flavor_text(card)

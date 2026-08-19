@@ -430,7 +430,7 @@ SMODS.ScreenShader {
         }
     end,
     should_apply = function(self)
-        return next(SMODS.find_card("fish_fac_crimsonseraphim_nameless_lotus"))
+        return next(SMODS.find_card("fish_fac_crimsonseraphim_nameless_lotus")) and not FishAndChips.mod.config.performance_mode
     end,
 }
 

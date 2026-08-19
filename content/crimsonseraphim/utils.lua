@@ -150,12 +150,13 @@ function Card:transmute(seed, center)
         end
     })
     G.E_MANAGER:add_event(Event{
-        blocking = false,
+        blockable = false,
+        trigger = "after",
+        timer = "REAL",
+        delay = 0.65,
         func = function()
-            if self.children.center.aeonfish_transmute and math.abs((G.TIMERS.REAL - self.children.center.aeonfish_transmute.realtime_start) - 0.2) < 0.01 then
-                self:juice_up(0.6, 0.7)
-                return true
-            end
+            self:juice_up(0.6, 0.7)
+            return true
         end
     })
 end
@@ -410,7 +411,8 @@ function _G.create_UIBox_crimsonseraphim_cursedfish()
         {card_limit = 1, type = 'play', highlight_limit = 0, negative_info = 'joker'})
     }
     for i = 1, 3 do
-        SMODS.add_card{set = "fac_Fish", area = G.your_cursefish_areas[i]}
+        local new_fish = SMODS.create_card{set = "fac_Fish", area = G.your_cursefish_areas[i]}
+        G.your_cursefish_areas[i]:emplace(new_fish)
     end
     return create_UIBox_generic_options({
         contents = {
@@ -519,7 +521,7 @@ function FishAndChips.crimsonseraphim.swoon()
         blocking = false,
         func = (function()
             G.swoon = 60 * G.SETTINGS.GAMESPEED
-            play_sound("fac_crimsonseraphim_swoon", 1, 1)
+            play_sound("fac_crimsonseraphim_swoon", 1, 0.8)
             return true
         end),
     }))

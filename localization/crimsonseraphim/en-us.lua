@@ -173,7 +173,8 @@ return {
                     {
                         "Use this {C:fac_fish}Fish{} to",
                         "store or release",
-                        "the rightmost {C:fac_fish}Fish{}"
+                        "the rightmost {C:fac_fish}Fish{}",
+                        "{ppu_bubble:usable}"
                     },
                 },
                 flavor = {
@@ -252,7 +253,8 @@ return {
                 text = {
                     "Use this {C:fac_fish}Fish{} to create a {C:attention}copy{}",
                     "of the last {C:attention}#1#{} obtained {C:fac_fish}Fish{}",
-                    "{C:inactive}(Must have room)"
+                    "{C:inactive}(Must have room)",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "W8W WILL YOU LOOK AT TH8T!",
@@ -269,7 +271,8 @@ return {
                 text = {
                     "Use this {C:fac_fish}Fish{} to create a {C:attention}copy{}",
                     "of the last {C:attention}#1#{} obtained {C:fac_fish}Fish{}",
-                    "{C:inactive}(Must have room)"
+                    "{C:inactive}(Must have room)",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "W8W WILL YOU LOOK AT TH8T!",
@@ -315,11 +318,11 @@ return {
                 }
             },
             fish_fac_crimsonseraphim_delphinus_dormiens = {
-                name = "Delphinus dormiens",
+                name = "Delphinus Dormiens",
                 text = {
-                    "When a non-{C:attention}Perishable Fish{}",
-                    "is used create a {C:attention}Perishable{} copy",
-                    "then {C:red}self-destruct{}",
+                    "When a non-{C:attention}Perishable{} {C:fac_fish}Fish{}",
+                    "is {C:attention}used{}, create a {C:attention}Perishable{}",
+                    "copy, then {C:red,E:2}self destruct{}",
                     "{C:inactive}(Must have room)"
                 },
                 flavor = {
@@ -347,11 +350,12 @@ return {
                 }
             },
             fish_fac_crimsonseraphim_falx_sulphurata = {
-                name = "Falx sulphurata",
+                name = "Falx Sulphurata",
                 text = {
-                    "Before a hand is played",
-                    "if {C:attention}2{} or more cards are selected",
-                    "{C:red}destroy{} a {C:attention}random{} selected card",
+                    "Before a hand is played,",
+                    "if {C:attention}2{} or more cards",
+                    "are selected, {C:red}destroy{} a",
+                    "{C:attention}random{} selected card",
                 },
                 flavor = {
                     "Meditate on the horrors of Hell, which",
@@ -363,11 +367,13 @@ return {
                 }
             },
             fish_fac_crimsonseraphim_squalus_aeternus = {
-                name = "Squalus aeternus",
+                name = "Squalus Aeternus",
                 text = {
                     "Use this {C:fac_fish}Fish{} to remove",
-                    "{C:attention}Eternal{} from a selected {C:fac_fish}Fish{}",
-                    "or {C:attention}Joker{} then add {C:attention}Eternal{} to this {C:fac_fish}Fish{}",
+                    "{C:attention}Eternal{} from a selected",
+                    "{C:fac_fish}Fish{} or {C:attention}Joker{}, then add",
+                    "{C:attention}Eternal{} to this {C:fac_fish}Fish{}",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
                     "And when the entire mountain is",
@@ -378,22 +384,22 @@ return {
             fish_fac_crimsonseraphim_vanitas = {
                 name = "{X:white,C:crimsonseraphim_transparent}Vanitas{}",
                 text = {
-                    "When blind is selected",
+                    "When {C:attention}Blind{} is selected,",
                     "fill {C:attention}Bucket{} slots with",
-                    "{C:attention}Temporary{} random {C:fac_fish}Fish{}"
+                    "random {C:attention}Temporary{} {C:fac_fish}Fish{}"
                 },
                 flavor = {
-                    "Silence will fall when the",
-                    "question is asked."
+                    "Silence will fall when",
+                    "the question is asked."
                 }
             },
             fish_fac_crimsonseraphim_silly_bunny = {
                 name = "Silly Bunny",
                 text = {
-                    "Moves to a random slot",
-                    "in the bucket before scoring",
-                    "gives {X:mult,C:white}XMult{} equal to ",
-                    "its position in the bucket."
+                    "Moves to a random {C:attention}slot{} in",
+                    "the {C:attention}Bucket{} before scoring",
+                    "Gives {X:mult,C:white}XMult{} equal to",
+                    "its position in the {C:attention}Bucket{}"
                 },
                 flavor = {
                     "What does he even do?"
@@ -403,9 +409,9 @@ return {
             fish_fac_crimsonseraphim_ronald_reagan_2 = {
                 name = "Ronald Reagan II",
                 text = {
-                    "At the end of round the listed",
-                    "probabilites of all held {C:fac_fish}Fish{}",
-                    "increase by {X:green,C:white}20%{} permanently."
+                    "At the end of the round, all",
+                    "listed {C:green,E:1}probabilites{} of all held {C:fac_fish}Fish{}",
+                    "increase by {X:green,C:white}20%{} {C:attention}permanently{}"
                 },
                 flavor = {
                     "Whatever grace might 'trickle down' from",
@@ -418,26 +424,27 @@ return {
                 name = "Tier 1 Fish (Cursed)",
                 text = {
                     "Use this {C:fac_fish}Fish{} to select",
-                    "{C:attention}1{} of {C:attention}3{} random {C:fac_fish}Fish{}",
-                    "to either obtain or banish."
+                    "{C:attention}1{} of {C:attention}3{} random {C:fac_fish}Fish{} to",
+                    "either {C:green}obtain{} or {C:red,E:2}banish{}",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
-                    "Fish are best handled by strafing",
-                    "out of the way of their dashes and",
-                    "staying out of their range, as their",
-                    "movement speed is relatively slow otherwise."
+                    "Fish are best handled by strafing out",
+                    "of the way of their dashes and staying",
+                    "out of their range, as their movement",
+                    "speed is relatively slow otherwise."
                 }
             },
             fish_fac_crimsonseraphim_miniaturized_exoplanet = {
                 name = "Miniaturized Exoplanet",
                 text = {
-                    "Use this {C:fac_fish}Fish{} to",
-                    "instantly use {C:attention}#1#{}",
-                    "{C:planet}Planet{} cards"
+                    "Use this {C:fac_fish}Fish{} to instantly",
+                    "{C:attention}use{} {C:attention}#1#{} {C:planet}Planet{} cards",
+                    "{ppu_bubble:usable}"
                 },
                 flavor = {
-                    "Many are wondering how it",
-                    "became so light."
+                    "Many are wondering how",
+                    "it became so light."
                 }
             },
             fish_fac_crimsonseraphim_nameless_lotus = {
@@ -445,7 +452,7 @@ return {
                 text = {
                     "{E:fac_nameless}Gives {X:mult,C:white,E:fac_nameless}X#1# {E:fac_nameless} Mult for",
                     "{E:fac_nameless}each unique {E:fac_nameless,C:attention}Developer {E:fac_nameless}or",
-                    "{E:fac_nameless,C:attention}Artist{E:fac_nameless} on held {E:fac_nameless,C:attention}Fish",
+                    "{E:fac_nameless,C:attention}Artist{E:fac_nameless} credited for held {E:fac_nameless,C:attention}Fish",
                     "{E:fac_nameless,C:inactive}(Currently {X:mult,C:white,E:fac_nameless}X#2#{E:fac_nameless,C:inactive} Mult)"
                 },
                 flavor = {
@@ -461,13 +468,14 @@ return {
                 text = {
                     {
                         "Use this {C:fac_fish}Fish{} for {C:money}$#1#{} to change",
-                        "the current {C:attention}Environment{} to {C:attention}#2#{}",
+                        "the current {C:attention}Environment{} to {C:attention}#2#{},",
                         "then increase the cost by {C:money}$1{} and",
                         "randomize the selected {C:attention}Environment{}",
+                        "{ppu_bubble:usable}"
                     },
                     {
-                        "Resets cost to {C:money}$3{}",
-                        "at the end of round."
+                        "Resets cost to {C:money}$3{} at",
+                        "the end of the round"
                     }
                 },
                 flavor = {
@@ -480,10 +488,10 @@ return {
                 name = "Roaring Fish",
                 text = {
                     {
-                        "At the end of the shop",
-                        "{C:red}Destroy{} a random {C:attention}Fish",
-                        "and apply {C:dark_edition}Negative{} to a",
-                        "random {C:fac_fish}Fish{}"
+                        "At the end of the shop,",
+                        "{C:red}destroy{} a random {C:attention}Fish,",
+                        "then apply {C:dark_edition}Negative{} to",
+                        "a random {C:fac_fish}Fish{}"
                     },
 
                 },
@@ -501,7 +509,31 @@ return {
                 text = {
                     {
                         "Use this {C:fac_fish}Fish{} to",
-                        "{C:red}destroy{} the rightmost {C:fac_fish}Fish{}"
+                        "{C:red}destroy{} the rightmost {C:fac_fish}Fish{}",
+                        "{ppu_bubble:usable}"
+                    },
+                    {
+                        "The next caught {C:fac_fish}Fish{} will",
+                        "be a completely random {C:fac_fish}Fish{}",
+                        "from the same {C:attention}Developer/Artist{}"
+                    }
+
+                },
+                flavor = {
+                    "{element:1}"
+                }
+            },
+            fish_fac_omega_crimsonfang_ff = {
+                name = {
+                    "s****y {C:red}mentally ill {E:fac_nameless}plural",
+                    "girl fish for {C:fac_transgender_gradient,E:2}transgenders",
+                    "and {C:green,E:2}furries{}"   
+                },
+                text = {
+                    {
+                        "Use this {C:fac_fish}Fish{} to",
+                        "{C:red}destroy{} the rightmost {C:fac_fish}Fish{}",
+                        "{ppu_bubble:usable}"
                     },
                     {
                         "The next caught {C:fac_fish}Fish{} will",
@@ -520,7 +552,8 @@ return {
                 name = "Transmute",
                 text = {
                     "Becomes another Fish",
-                    "with similar effects"
+                    "with an attribute",
+                    "this Fish has"
                 }
             },
             fac_crimsonseraphim_forge = {
@@ -546,54 +579,56 @@ return {
             fac_crimsonseraphim_forged_money = {
                 name = {"Hammerhead Shark", "Generate me a {C:blue}Common{} Joker", "that gives {C:money}${}"},
                 text = {
-                    "Earn {C:money}$3{}",
-                    "When a blind is selected"
+                    "Earn {C:money}$3{} when",
+                    "selecting a {C:attention}Blind{}"
                 }
             },
             fac_crimsonseraphim_forged_sand = {
                 name = {"Hammerhead Shark", "Generate me a {C:blue}Common{} Joker", "that gives me roi"},
                 text = {
-                    "When a Fish is caught",
-                    "earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}1{}"
+                    "When a {C:fac_fish}Fish is",
+                    "caught, earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{}"
                 }
             },
 
             red_fish_seal = {
                 name = "Red Seal",
                 text = {
-                    "Retrigger the First",
-                    "scored card of each round"
+                    "Retrigger the first",
+                    "scored card each round"
                 }
             },
             blue_fish_seal = {
                 name = "Blue Seal",
                 text = {
-                    "When Caught create",
+                    "When {C:attention}caught{}, create",
                     "{C:attention}2{} {C:blue}Planet{} Cards",
-                    "{C:inactive}(Must Have Room)"
+                    "{C:inactive}(Must have room)"
                 }
             },
             purple_fish_seal = {
                 name = "Purple Seal",
                 text = {
-                    "When Caught create",
+                    "When {C:attention}caught{}, create",
                     "{C:attention}2{} {C:purple}Tarot{} Cards",
-                    "{C:inactive}(Must Have Room)"
+                    "{C:inactive}(Must have room)"
                 }
             },
             gold_fish_seal = {
                 name = "Gold Seal",
                 text = {
-                    "Earn {C:money}$1{} for every other",
-                    "fish when a Blind is selected."
+                    "Earn {C:money}$1{} for each",
+                    "other {C:fac_fish}Fish{} when a",
+                    "{C:attention}Blind{} is selected"
                 }   
             },
 
             crimsonseraphim_starblighted = {
                 name = "Starblighted",
                 text = {
-                    "{C:red}-#1#{} Mult",
-                    "then decreases by {C:red}#2#{} Mult"
+                    "{C:red}-#1#{} Mult,",
+                    "then decreases",
+                    "by {C:red}#2#{} Mult"
                 }
             },
             crimsonseraphim_temporary = {
@@ -622,6 +657,7 @@ return {
             k_omega_crimsonfang_1 = {'Did you mean:', '"40% of Potato Patch Modding Hub?"'},
             k_omega_crimsonfang_2 = '',
             k_omega_crimsonfang_3 = {'Cooking up bullshit', 'since 2005'},
+            k_omega_crimsonfang_3_ff = {'Cooking up bulls***', 'since 2005'},
             k_omega_crimsonfang_4 = {'PERFECT HEAVEN', ">w<", "WONDERFUL NIGHTMARE"},
             k_omega_crimsonfang_5 = {'Your eyes can\'t hide it', "Without play... The knife grows dull."},
             k_omega_crimsonfang_6 = {'LAST JARONA!'},
@@ -629,6 +665,7 @@ return {
             k_omega_crimsonfang_8 = {'we heard you like rubys', 'so we uhhhh uhhhhhhh uhhhhhh'},
             k_omega_crimsonfang_9 = '',
             k_omega_crimsonfang_10 = {"stupid bullshit = kill", "everyone you know"},
+            k_omega_crimsonfang_10_ff = {"stupid bulls*** = kill", "everyone you know"},
             k_omega_crimsonfang_11 = {"DIDN'T YOU KNOW [Omega Crimsonfang]", "IS FAMOUS FOR ITS HIGH DEFENSE!?"},
             k_omega_crimsonfang_12 = {
                 "There cannot be any other living beings in zone 0", 
@@ -639,11 +676,17 @@ return {
             },
             k_omega_crimsonfang_13 = "Prepare yourselves to suffer my judgement.",
             k_omega_crimsonfang_14 = "TL;DR eat shit fa-",
+            k_omega_crimsonfang_14_ff = "TL;DR eat s*** fa-",
             k_omega_crimsonfang_15 = "How queer and peculiar",
             k_omega_crimsonfang_16 = {"7000 people in the earth and", "i will protect them all"},
             k_omega_crimsonfang_17 = {"I DID YOu A FAVOR. ANOTHER POINTLESS", "ACTION STRICKEN FROM THE TIMELINE."},
             k_omega_crimsonfang_18 = {
                 "world is a fuck",
+                "i am god dog",
+                "168,518,993,170 dead"
+            },
+            k_omega_crimsonfang_18_ff = {
+                "world is a f***",
                 "i am god dog",
                 "168,518,993,170 dead"
             },
