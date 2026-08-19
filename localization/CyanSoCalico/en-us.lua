@@ -152,7 +152,7 @@ return {
                 name = "Suketoudara",
                 flavor = {
                     "It's pronounced",
-                    "\"sket-o-darr-uh!\"",
+                    "\"sketto-darruh!\"",
                     "Cue the music!"
                 },
                 text = {

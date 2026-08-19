@@ -5,6 +5,13 @@ SMODS.Atlas({
 	py = 95,
 })
 
+SMODS.Atlas({
+	key = "csc_suke",
+	path = "CyanSoCalico/literally-just-suketoudara-because-he's-been-causing-sprite-bleed-issues.png",
+	px = 71,
+	py = 95,
+})
+
 local loc_colours = {
 	CSC = "7AC7AC",
 	MLM1 = "078D70",

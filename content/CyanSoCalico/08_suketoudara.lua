@@ -1,7 +1,7 @@
 FishAndChips.Fish {
 	key = "csc_suketoudara",
-	atlas = "csc_fish",
-	pos = { x = 1, y = 2 },
+	atlas = "csc_suke",
+	pos = { x = 0, y = 0 },
 	badge_key = "k_fac_maybe_fish",
 
 	ppu_coder = { "CyanSoCalico" },
