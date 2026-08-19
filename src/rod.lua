@@ -183,7 +183,7 @@ FishAndChips.Rod {
 	end,
 	on_catch = function(self, card, key)
 		if SMODS.pseudorandom_probability(card, "fac_lucky_rod", card.ability.extra.num, card.ability.extra.dem) then
-			ease_dollars(card.ability.extra.money)
+			SMODS.calculate_effect({ dollars = card.ability.extra.money },card)
 		end
 	end,
 	ppu_coder = { "Foo54" }
