@@ -367,10 +367,29 @@ FishAndChips.Fish {
 	no_collection = true,
 	discovered = true,
 	environments = all_env(),
+	pos = {x=0,y=0},
 	stats = {
 		weight = {min = 1, max = 1},
 		length = {min = 1, max = 1}
 	},
 }
+
+-- Clone of the above, intended specifically for the intro/splash screen
+FishAndChips.Fish {
+	key = "splash_screen",
+	weight = 10,
+	ppu_artist = { "squeax09" },
+	ppu_coder = { "Mack" },
+	in_pool = function() return false end,
+	no_collection = true,
+	discovered = true,
+	environments = all_env(),
+	pos = {x=0,y=1},
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
+}
+
 
 --#endregion

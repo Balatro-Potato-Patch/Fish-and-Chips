@@ -97,6 +97,7 @@ end
 '''
 match_indent = true
 
+# Splash Card [or fish in this case]
 [[patches]]
 [patches.pattern]
 target = "game.lua"
@@ -105,7 +106,7 @@ SC = Card(G.ROOM.T.w/2 - SC_scale*G.CARD_W/2, 10. + G.ROOM.T.h/2 - SC_scale*G.CA
 '''
 position = "after"
 payload = '''
-SC = Card(G.ROOM.T.w/2 - SC_scale*G.CARD_W/2, 10. + G.ROOM.T.h/2 - SC_scale*G.CARD_H/2, SC_scale*G.CARD_W, SC_scale*G.CARD_H, G.P_CARDS.empty, G.P_CENTERS['fish_fac_test'],{bypass_discovery_center = true, bypass_discovery_ui = true})
+SC = Card(G.ROOM.T.w/2 - SC_scale*G.CARD_W/2, 10. + G.ROOM.T.h/2 - SC_scale*G.CARD_H/2, SC_scale*G.CARD_W, SC_scale*G.CARD_H, G.P_CARDS.empty, G.P_CENTERS['fish_fac_splash_screen'],{bypass_discovery_center = true, bypass_discovery_ui = true})
 '''
 match_indent = true
 times = 1

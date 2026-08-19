@@ -258,7 +258,7 @@ FishAndChips.mod.menu_cards = function()
 	if FishAndChips.mod.config.menu then
 		return {
 			remove_original = true,
-			{ key = 'fish_fac_test' }
+			{ key = 'fish_fac_splash_screen' }
 		}
 	end
 end

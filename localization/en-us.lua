@@ -95,6 +95,17 @@ return {
                     "try fishing elsewhere!"
                 }
             },
+            fish_fac_splash = {
+                name = "Flounder",
+                text = {
+                    "Cannot be viewed by normal means.",
+                    "If you see this, be sure to check out",
+                    "all the Credits in the Credits Tab!",
+                    "So many awesome people worked on this mod,",
+                    "and I'm sure they'd enjoy your support.",
+                    "- Gabby/squeax09"
+                }
+            },
         },
         fac_Bait = {
             bait_fac_test = {
