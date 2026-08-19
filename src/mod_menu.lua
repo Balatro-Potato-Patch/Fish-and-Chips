@@ -151,6 +151,8 @@ G.FUNCS.fac_reset_all_progress = function(e)
         G.P_CENTERS[G.P_CENTER_POOLS.fac_Rod[1].key].unlocked = true
         G.P_CENTER_POOLS.fac_Bait[1].discovered = true
         G.P_CENTERS[G.P_CENTER_POOLS.fac_Bait[1].key].discovered = true
+        G.P_CENTERS['fish_fac_test'].discovered = true
+        G.P_CENTERS['fish_fac_splash_screen'].discovered = true
 
         for _, ach in ipairs(FishAndChips.Compendium.get_achievements()) do
             ach.earned = false
