@@ -10,8 +10,7 @@ function Card:set_cost_value(...)
     return fac_set_cost_value(self, ...)
 end
 
-G.FUNCS.toggle_shop = function(e)
-    stop_use()
+local function fac_toggle_shop()
 	if G.CONTROLLER.locks.toggle_shop then return end
     G.CONTROLLER.locks.toggle_shop = true
     G.fac_toggle_shop_lock_started = G.TIMERS.TOTAL
@@ -53,6 +52,24 @@ G.FUNCS.toggle_shop = function(e)
         G.STATE_COMPLETE = false
         G.GAME.fishing = true
         G.STATE = G.STATES.FAC_FISHING
+    end
+end
+
+G.FUNCS.toggle_shop = function(e)
+    stop_use()
+    if G.CONTROLLER.locks.toggle_shop or G.fac_toggle_shop_pending then return end
+    if G.shop then
+        G.fac_toggle_shop_pending = true
+        G.E_MANAGER:add_event(Event({
+            trigger = 'immediate',
+            func = function()
+                G.fac_toggle_shop_pending = nil
+                fac_toggle_shop()
+                return true
+            end
+        }))
+    else
+        fac_toggle_shop()
     end
 end
 
