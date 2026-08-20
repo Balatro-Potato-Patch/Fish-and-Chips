@@ -262,3 +262,56 @@ FishAndChips.mod.menu_cards = function()
 		}
 	end
 end
+
+function FishAndChips.create_baits_from_card(card, amt, key)
+	local w = (G.CARD_W + 0.1) * amt - 0.1
+	local h = G.CARD_H
+	local created_bait = {}
+	delay(1)
+	for i = 1, amt do
+		G.E_MANAGER:add_event(Event {
+			func = function()
+				local _card = SMODS.create_card { set = "fac_Bait", key = key }
+				if not G.fac_temp_bait_area then
+					G.fac_temp_bait_area = CardArea(
+						card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h,
+						w, h,
+						{
+							type = "joker",
+							card_limit = amt,
+							highlight_limit = 1,
+							highlighted_limit = 1,
+							align_buttons = true,
+							bg_colour = G.C.CLEAR,
+							fixed_limit = true,
+							no_card_count = true,
+						}
+					)
+				end
+				G.fac_temp_bait_area:emplace(_card)
+				created_bait[#created_bait + 1] = _card
+				FishAndChips.add_bait_to_inventory(_card.config.center.key)
+				return true
+			end
+		})
+		delay(0.2)
+	end
+	delay(1)
+	for i = 1, amt do
+		G.E_MANAGER:add_event(Event {
+			func = function()
+				created_bait[i]:start_dissolve()
+				return true
+			end
+		})
+		delay(0.2)
+	end
+	delay(0.5)
+	G.E_MANAGER:add_event(Event {
+		func = function()
+			G.fac_temp_bait_area:remove()
+			G.fac_temp_bait_area = nil
+			return true
+		end
+	})
+end

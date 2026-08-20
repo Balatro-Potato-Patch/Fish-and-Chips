@@ -963,63 +963,10 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         if context.fac_environment_changed then
+            FishAndChips.create_baits_from_card(card, card.ability.extra.bait)
             return {
                 message = localize("k_J8-Bit_shark_waifu_quip"),
-                colour = G.C.FAC_FISH,
-                func = function()
-                    G.E_MANAGER:add_event(Event {
-                        func = function()
-                            local w = (G.CARD_W + 0.1) * card.ability.extra.bait
-                            local h = G.CARD_H
-                            G.fac_shark_bait_area = CardArea(
-                                card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h,
-                                w, h,
-                                {
-                                    type = "joker",
-                                    card_limit = card.ability.extra.bait,
-                                    highlight_limit = 1,
-                                    highlighted_limit = 1,
-                                    align_buttons = true,
-                                    bg_colour = G.C.CLEAR,
-                                    fixed_limit = true,
-                                    no_card_count = true,
-                                }
-                            )
-                            return true
-                        end
-                    })
-                    delay(1)
-                    for i = 1, card.ability.extra.bait do
-                        G.E_MANAGER:add_event(Event {
-                            func = function()
-                                local card = SMODS.create_card { set = "fac_Bait" }
-                                G.fac_shark_bait_area:emplace(card)
-                                FishAndChips.add_bait_to_inventory(card.config.center.key)
-                                return true
-                            end
-                        })
-                        delay(0.2)
-                    end
-                    delay(3)
-                    for i = 1, card.ability.extra.bait do
-                        G.E_MANAGER:add_event(Event {
-                            func = function()
-                                G.fac_shark_bait_area.cards[1]:start_dissolve()
-                                return true
-                            end
-                        })
-                        delay(0.2)
-                    end
-                    delay(0.5)
-                    G.E_MANAGER:add_event(Event {
-                        func = function()
-                            G.fac_shark_bait_area:remove()
-                            G.fac_shark_bait_area = nil
-                            return true
-                        end
-                    })
-                    return true
-                end
+                colour = G.C.FAC_FISH
             }
         end
     end,

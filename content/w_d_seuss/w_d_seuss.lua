@@ -1033,52 +1033,11 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.key_press_f1 and card.ability.extra.f1 == true and G.STATE == G.STATES.FAC_FISHING then
-			local w = (G.CARD_W + 0.1) * card.ability.extra.bait * 2 - 0.1
-			local h = G.CARD_H
-			G.fac_temp_bait_area = CardArea(
-				card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h,
-				w, h,
-				{
-					type = "joker",
-					card_limit = card.ability.extra.bait,
-					highlight_limit = 1,
-					highlighted_limit = 1,
-					align_buttons = true,
-					bg_colour = G.C.CLEAR,
-					fixed_limit = true,
-					no_card_count = true,
-				}
-			)
 			play_sound('fac_spamtonf1')
-			for i = 1, card.ability.extra.bait do
-				G.E_MANAGER:add_event(Event({
-					trigger = 'after',
-					delay = 0.4,
-					func = function()
-						card.ability.extra.f1 = false
-						local bait = SMODS.add_card({ set = 'fac_Bait', area = G.fac_temp_bait_area })
-						FishAndChips.add_bait_to_inventory(bait.config.center_key)
-						card:juice_up(0.3, 0.5)
-						return true
-					end
-				}))
-			end
-			delay(0.5)
-			for i = 1, card.ability.extra.bait do
-				G.E_MANAGER:add_event(Event {
-					func = function()
-						G.fac_temp_bait_area.cards[1]:start_dissolve()
-						return true
-					end
-				})
-			end
-			delay(0.5)
-			G.E_MANAGER:add_event(Event {
-				func = function()
-					G.fac_temp_bait_area:remove()
-					return true
-				end
-			})
+			card.ability.extra.f1 = false
+
+			FishAndChips.create_baits_from_card(card, card.ability.extra.bait)
+			
 			return {
 				message = localize('k_bigtrout'),
 			}

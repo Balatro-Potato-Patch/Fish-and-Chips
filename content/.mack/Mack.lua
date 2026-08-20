@@ -298,54 +298,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.bait } }
 	end,
 	use = function(self, card)
-		local w = (G.CARD_W + 0.1) * card.ability.extra.bait * 2 - 0.1
-		local h = G.CARD_H
-		G.fac_temp_bait_area = CardArea(
-			card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h,
-			w, h,
-			{
-				type = "joker",
-				card_limit = card.ability.extra.bait,
-				highlight_limit = 1,
-				highlighted_limit = 1,
-				align_buttons = true,
-				bg_colour = G.C.CLEAR,
-				fixed_limit = true,
-				no_card_count = true,
-			}
-		)
-		delay(1)
-        local bait_cards = {}
-		for i = 1, card.ability.extra.bait do
-			G.E_MANAGER:add_event(Event {
-				func = function()
-					local _card = SMODS.create_card { set = "fac_Bait", area = G.fac_temp_bait_area }
-					G.fac_temp_bait_area:emplace(_card)
-                    table.insert(bait_cards, _card)
-					FishAndChips.add_bait_to_inventory(_card.config.center.key)
-					return true
-				end
-			})
-			delay(0.2)
-		end
-		delay(3)
-		for _, _card in ipairs(bait_cards) do
-			G.E_MANAGER:add_event(Event {
-				func = function()
-					_card:start_dissolve()
-					return true
-				end
-			})
-			delay(0.2)
-		end
-		delay(0.5)
-		G.E_MANAGER:add_event(Event {
-			func = function()
-				G.fac_temp_bait_area:remove()
-				card:start_dissolve()
-				return true
-			end
-		})
+		FishAndChips.create_baits_from_card(card, card.ability.extra.bait)
 	end,
 	can_use = function(self, card)
 		return true
