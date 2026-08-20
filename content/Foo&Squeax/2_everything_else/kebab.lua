@@ -17,22 +17,24 @@ function FishAndChips.FooSqueax.link_kebab_and_top(args)
 			end
 		end
 	end
-	args.top.states.hover.can = false
-	local kebab_remove_ref = kebab.remove
-	function kebab:remove()
-		kebab_remove_ref(self)
-		args.top:remove()
-	end
-	for i, card in ipairs(G.MOVEABLES) do
-		if card == args.top then
-			table.remove(G.MOVEABLES, i)
-			break
+	if kebab then
+		args.top.states.hover.can = false
+		local kebab_remove_ref = kebab.remove
+		function kebab:remove()
+			kebab_remove_ref(self)
+			args.top:remove()
 		end
-	end
-	for i, card in ipairs(G.MOVEABLES) do
-		if card == args.kebab then
-			table.insert(G.MOVEABLES, i - 1, args.top)
-			break
+		for i, card in ipairs(G.MOVEABLES) do
+			if card == args.top then
+				table.remove(G.MOVEABLES, i)
+				break
+			end
+		end
+		for i, card in ipairs(G.MOVEABLES) do
+			if card == args.kebab then
+				table.insert(G.MOVEABLES, i - 1, args.top)
+				break
+			end
 		end
 	end
 end
