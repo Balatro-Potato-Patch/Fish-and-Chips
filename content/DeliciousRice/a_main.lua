@@ -178,11 +178,13 @@ FishAndChips.DeliciousRice.explode_destroy = function(card)
 	}))
 end
 
-FishAndChips.DeliciousRice.fancy_death = function(card, destroy_args, middle_func, destroys, delay_after, delay_before, end_func)
+FishAndChips.DeliciousRice.fancy_death = function(card, destroy_args, middle_func, destroys, delay_after, delay_before, end_func, persist_state)
 	local old_state = G.STATE
 	G.E_MANAGER:add_event(Event({
 		func = function()
-			G.STATE = nil
+			if not persist_state then
+				G.STATE = nil
+			end
 			if not G.GAME.fac_fish_expanded then G.FUNCS.fac_open_fishing_menu() end
 			FishAndChips.DeliciousRice.bucket_locked = true
 			-- sendDebugMessage("bucket open")
@@ -209,7 +211,9 @@ FishAndChips.DeliciousRice.fancy_death = function(card, destroy_args, middle_fun
 			G.FUNCS.fac_open_fishing_menu()
 			-- sendDebugMessage("bucket closed")
 			if end_func then end_func() end
-			G.STATE = old_state
+			if not persist_state then
+				G.STATE = old_state
+			end
 			return true
 		end
 	}))

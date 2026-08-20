@@ -436,7 +436,8 @@ FishAndChips.Fish { -- Gambling
 						false,
 						nil,
 						nil,
-						end_func
+						end_func,
+						true
 					)
 				end
 
