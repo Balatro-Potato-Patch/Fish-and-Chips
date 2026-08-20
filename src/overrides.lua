@@ -440,12 +440,12 @@ function Game:main_menu(change_context)
             play_sound('button', 1, 0.3)
             SMODS.LAST_SELECTED_MOD_TAB = nil
             G.FUNCS['openModUI_FishAndChips']()
-            G.OVERLAY_MENU:get_UIE_by_ID("overlay_menu_back_button").config.button = "exit_overlay_menu_mxms"
+            G.OVERLAY_MENU:get_UIE_by_ID("overlay_menu_back_button").config.button = "exit_overlay_menu_fac"
         end
 
-        G.FUNCS.exit_overlay_menu_mxms = function()
+        G.FUNCS.exit_overlay_menu_fac = function()
             play_sound("fac_book_close")
-			if SMODS.full_restart > 0 then return SMODS.restart_game() end
+			if SMODS.full_restart and SMODS.full_restart > 0 then return SMODS.restart_game() end
             G.ACTIVE_MOD_UI = nil
             G.FUNCS.exit_overlay_menu()
         end
