@@ -23,7 +23,7 @@ FishAndChips.Fish {
     config = {
         extra = {
             chips = 0,
-            chip_gain = 5
+            chip_gain = 2
         }
     },
 
@@ -38,7 +38,7 @@ FishAndChips.Fish {
             return { chips = card.ability.extra.chips }
         end
 
-        if ((context.post_trigger and context.other_card.area == G.fac_fish_area) or context.fac_use_fish) and not context.blueprint then
+        if context.post_trigger and context.other_card.area == G.fac_fish_area and not context.blueprint then
             local fish = context.fac_use_fish or context.other_card
             local me_index = 0
             local you_index = 0
