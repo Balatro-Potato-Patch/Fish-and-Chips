@@ -385,20 +385,6 @@ return {
                 }
             },
         },
-        PotatoPatch = {
-            PotatoPatchDev_eremel_1 = {
-                name = 'Eremel!',
-                text = {
-                    "I made this book"
-                }
-            },
-            PotatoPatchDev_eremel_2 = {
-                name = 'WilsonTheWolf',
-                text = {
-                    "I made this book"
-                }
-            }
-        }
     },
     misc = {
         dictionary = {
