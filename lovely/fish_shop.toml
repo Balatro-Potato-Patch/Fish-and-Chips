@@ -53,7 +53,7 @@ end
 desired_y = desired_y + FishAndChips.hand_offset()'''
 match_indent = true
 
-# Zodiac Loading/Saving
+# Bait Inv Loading/Saving
 [[patches]]
 [patches.pattern]
 target = 'game.lua'
