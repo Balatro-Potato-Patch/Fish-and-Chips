@@ -1424,7 +1424,7 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
         else
             local key = "click_go_fish"
             if not G.GAME.fac_active_bait then
-                if G.GAME.fac_bait_inventory[1] then
+                if next(G.GAME.fac_bait_inventory) then
                     key = "equip_bait_hint"
                 else
                     key = "no_bait_hint"
