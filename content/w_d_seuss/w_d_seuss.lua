@@ -381,7 +381,7 @@ FishAndChips.Fish {
 		delay(0.6)
 	end,
 	can_use = function(self, card)
-		return G.fac_fish_area and #G.fac_fish_area.cards <= G.fac_fish_area.config.card_limit
+		return G.fac_fish_area and #G.fac_fish_area.cards - (card.area == G.fac_fish_area and 1 or 0) < G.fac_fish_area.config.card_limit
 	end
 }
 
