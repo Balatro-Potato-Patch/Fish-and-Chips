@@ -198,7 +198,7 @@ FishAndChips.Fish {
 
         return {
             key = math.random() < 1 / 20 and "fish_fac_waffle_magic_conch_secret",
-            vars = { num, den }
+            vars = { num, den, ppu_bubbles = { card.ability.extra.used_this_round and "used" or "usable" } }
         }
     end,
     can_use = function(self, card)
@@ -423,6 +423,10 @@ FishAndChips.Fish {
     pos = { x = 1, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_negative
+        return {}
+    end,
     calculate = function(self, card, context)
         if context.fac_end_fishing and not context.failed and context.treasure and G.consumeables.cards[1] then
             G.E_MANAGER:add_event(Event({
@@ -506,26 +510,12 @@ FishAndChips.Fish {
         length = { min = 0.10, max = 0.101 }
     },
     flavour_vars = function()
-        local quotes = {
-            "Hungry...",
-            "Sorrow...",
-            "Sob... sob...",
-            "Don't know...",
-            "Who... am...",
-            "Sob sob...",
-            "Shiny... things...",
-            "Dark... lonely...",
-            "Lost... everything...",
-            "Haaah...",
-            "Into... water...",
-            "Remember... nothing..."
-        }
-        return { vars = { quotes[math.random(1, #quotes)] } }
+        return { vars = { localize("fac_waffle_squid_ink"..math.random(1, 12)) } }
     end,
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                localize('$') .. card.ability.extra.dollars,
+                card.ability.extra.dollars,
                 card.ability.extra.conv_amount,
                 card.ability.extra.conv_amount > 1 and "s" or "",
                 card.ability.extra.conv_suit,
@@ -1400,6 +1390,7 @@ FishAndChips.Fish {
         length = {min = 1.75, max = 1.82},
     },
     loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_negative
         return {vars = {colours = {HEX('7A2E2E')}}}
     end,
     use = function (self, card)
