@@ -15,14 +15,18 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         if context.joker_main then
-            local coef = card.ability.extra.percent / 100
-            local add = (mult + hand_chips) * coef / 2
-            hand_chips = hand_chips * (1 - coef) + add
-            mult = mult * (1 - coef) + add
             return {
                 message = localize("k_balanced"),
                 colour = {0.8, 0.45, 0.85, 1},
                 func = function()
+                    local chips = SMODS.Scoring_Parameters.chips
+					local mult = SMODS.Scoring_Parameters.mult
+					local chip_mod = chips.current * card.ability.extra.percent / 100
+					local mult_mod = mult.current * card.ability.extra.percent / 100
+					chips.current = chips.current * (1 - card.ability.extra.percent / 100)
+					chips:modify(mult_mod)
+					mult.current = mult.current * (1 - card.ability.extra.percent / 100)
+					mult:modify(chip_mod)
                     G.E_MANAGER:add_event(Event{func = function()
                         play_sound("gong", 0.94, 0.3)
                         play_sound("gong", 0.94 * 1.5, 0.2)
