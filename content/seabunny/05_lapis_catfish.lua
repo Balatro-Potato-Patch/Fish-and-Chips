@@ -21,11 +21,11 @@ FishAndChips.Fish {
                 func = function()
                     local chips = SMODS.Scoring_Parameters.chips
 					local mult = SMODS.Scoring_Parameters.mult
-					local chip_mod = chips.current * card.ability.extra.percent / 100
-					local mult_mod = mult.current * card.ability.extra.percent / 100
-					chips.current = chips.current * (1 - card.ability.extra.percent / 100)
+					local chip_mod = chips.current * card.ability.extra.percent / 200
+					local mult_mod = mult.current * card.ability.extra.percent / 200
+					chips.current = chips.current * (1 - card.ability.extra.percent / 200)
 					chips:modify(mult_mod)
-					mult.current = mult.current * (1 - card.ability.extra.percent / 100)
+					mult.current = mult.current * (1 - card.ability.extra.percent / 200)
 					mult:modify(chip_mod)
                     G.E_MANAGER:add_event(Event{func = function()
                         play_sound("gong", 0.94, 0.3)
