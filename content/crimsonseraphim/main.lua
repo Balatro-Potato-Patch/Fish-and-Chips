@@ -1012,8 +1012,8 @@ FishAndChips.Fish {
         }
     end,
     use = function(self, card)
-        if #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit then
-            for i = 1, math.min(card.ability.extra.fish, G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) do
+        if (#G.fac_fish_area.cards - 1) < G.fac_fish_area.config.card_limit then
+            for i = 1, math.min(card.ability.extra.fish, G.fac_fish_area.config.card_limit - (#G.fac_fish_area.cards - 1)) do
                 local c = G.GAME.crimsonseraphim_obtained_fish[#G.GAME.crimsonseraphim_obtained_fish]
                 if c then
                     local car = SMODS.create_card{key = "j_joker", area = G.fac_fish_area}
