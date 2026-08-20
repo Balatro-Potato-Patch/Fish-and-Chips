@@ -49,9 +49,8 @@ return {
             fish_fac_waffle_percheo = {
                 name = "Percheo",
                 text = {
-                    "Creates a {C:dark_edition}Negative{} copy of",
-                    "{C:attention}1{} random {C:attention}consumable{} card",
-                    "in your possession when",
+                    "Creates a random {C:dark_edition}Negative{}",
+                    "{C:tarot}Tarot{} or {C:planet}Planet{} card when",
                     "{C:attention}treasure{} is reeled in",
                 },
                 flavor = {

@@ -116,17 +116,7 @@ do
     end
 
     function waffleFunctions.isCardInCollection(card)
-        if G.your_collection then
-            for i, v in pairs(G.your_collection) do
-                if v.cards then
-                    for _, w in pairs(v.cards) do
-                        if w == card then
-                            return true
-                        end
-                    end
-                end
-            end
-        end
+        return card.area.config.collection
     end
 
     function waffleFunctions.addDucksToDeck(deck)
@@ -424,17 +414,30 @@ FishAndChips.Fish {
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     calculate = function(self, card, context)
-        if context.fac_end_fishing and not context.failed and context.treasure and G.consumeables.cards[1] then
+        if context.fac_end_fishing and not context.failed and context.treasure then
+            local new_card
             G.E_MANAGER:add_event(Event({
-                func = function()
-                    local choose_consumable, _ = pseudorandom_element(G.consumeables.cards, 'fac_waffle_percheo')
-                    local copy = SMODS.copy_card(choose_consumable)
-                    copy:set_edition("e_negative", true)
+                func = function ()
+                    local choose_set = pseudorandom_element({"Tarot", "Planet"}, "fac_waffle_percheo")
+                    new_card = SMODS.create_card({set = choose_set, edition = 'e_negative'})
+                    new_card.T.x = card.T.x - 0.5
+                    new_card.T.y = card.T.y - 2.5
+                    new_card.states.drag.can = false
+                    new_card.states.hover.can = false
                     return true
                 end
             }))
-            return { message = localize('k_duplicated_ex') }
+            delay(2)
+            G.E_MANAGER:add_event(Event({
+                func = function ()
+                    G.consumeables:emplace(new_card)
+                    return true
+                end
+            }))
         end
+    end,
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_consumable', set = 'Edition', config = { extra = 1 } }
     end,
     vel_limit = 0.7,
     impulse_min = 0.42,
