@@ -52,3 +52,35 @@ if not G.deck_preview and G.STATE == G.STATES.FAC_FISHING then
 end
 desired_y = desired_y + FishAndChips.hand_offset()'''
 match_indent = true
+
+# Zodiac Loading/Saving
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''if self.HUD_tags then'''
+position = 'before'
+match_indent = true
+payload = '''
+if self.HUD_bait_inv then
+    for k, v in pairs(self.HUD_bait_inv) do
+        v:remove()
+    end
+    self.HUD_bait_inv = nil
+end
+'''
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''check_and_set_high_score('most_money', G.GAME.dollars)'''
+position = 'before'
+match_indent = true
+payload = '''
+if saveTable then
+    G.HUD_bait_inv = {}
+    for key, _ in pairs(G.GAME.fac_bait_inventory) do
+        if key ~= G.GAME.fac_active_bait then
+            G.HUD_bait_inv[#G.HUD_bait_inv+1] = FishAndChips.create_bait_inventory_item(key)
+        end
+    end
+end
+'''

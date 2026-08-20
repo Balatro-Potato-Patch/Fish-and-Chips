@@ -87,6 +87,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+	key = "mini_bait",
+	path = "core/mini_bait.png",
+	px = 35,
+	py = 35,
+})
+
+SMODS.Atlas({
 	key = "rods",
 	path = "core/rods.png",
 	px = 71,

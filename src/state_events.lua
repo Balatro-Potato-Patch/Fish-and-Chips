@@ -217,16 +217,6 @@ function FishAndChips.create_fishing_UI()
 		},
 	})
 
-	G.FISHING.fishing_bait_inventory = UIBox({
-		definition = G.UIDEF.fac_bait_inventory_button(),
-		config = {
-			align = "bm",
-			offset = { x = 0, y = 0.1 },
-			major = G.fac_bait_area,
-			bond = "Glued",
-		},
-	})
-
 	if G.GAME.fac_active_bait then
 		FishAndChips.update_bait_counter(G.fac_bait_area.cards[1])
 	end
