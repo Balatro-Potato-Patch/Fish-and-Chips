@@ -434,7 +434,7 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
             definition = G.UIDEF.fac_fish_data(added_card, show_full),
             config = {
                 align = "bm",
-                major = added_card,
+                major = reward_area,
                 r_bond = "Weak",
                 offset = {x = 0, y = 0.1}
             }
