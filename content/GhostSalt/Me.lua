@@ -5,14 +5,14 @@ SMODS.Sound({
 
 SMODS.Font({
 	key = "shag",
-	path = "shag.otf",
+	path = "GhostSalt/shag.otf",
 	FONTSCALE = 0.09,
 	TEXT_HEIGHT_SCALE = 0.9
 })
 
 SMODS.Font({
 	key = "stencil",
-	path = "stencil.ttf",
+	path = "GhostSalt/stencil.ttf",
 	FONTSCALE = 0.09,
 	TEXT_HEIGHT_SCALE = 0.9
 })

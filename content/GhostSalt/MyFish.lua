@@ -52,15 +52,9 @@ SMODS.Sound({
 
 SMODS.Font({
 	key = "speakerbox",
-	path = "speakerbox.ttf",
+	path = "GhostSalt/speakerbox.ttf",
 	FONTSCALE = 0.07,
 	TEXT_HEIGHT_SCALE = 1.1
-})
-
-SMODS.Font({
-	key = "special_elite",
-	path = "special_elite.ttf",
-	FONTSCALE = 0.08
 })
 
 SMODS.Atlas({

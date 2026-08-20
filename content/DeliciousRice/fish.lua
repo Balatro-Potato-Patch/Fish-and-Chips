@@ -225,7 +225,7 @@ FishAndChips.Fish { -- Spongecorpse
 	no_collection = true,
 	cost = 0,
 
-	weight = 0, -- is this allowed ?? (mf)
+	weight = 0,
 	environments = {
 	},
 	stats = {
@@ -278,7 +278,7 @@ FishAndChips.Fish { -- Blender
 	},
 	loc_vars = function(self, info_queue, card)
  		local num, denom = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom)
- 		return {vars = {num, denom, (not card.ability.extra.used) and 'unused' or 'used'}}
+ 		return {vars = {num, denom, ppu_bubbles = { not card.ability.extra.used and 'usable' or 'used' }}}
 	end,
 
 	add_to_deck = function(self, card, from_debuff)
