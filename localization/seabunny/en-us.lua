@@ -497,7 +497,8 @@ return {
         v_dictionary = {
             a_fac_seabunny_cm = "+#1# cm",
             a_fac_seabunny_percent = "#1#%",
-            a_fac_seabunny_percent_plus = "+#1#%"
+            a_fac_seabunny_percent_plus = "+#1#%",
+            a_fac_seabunny_percent_minus = "-#1#%"
         }
     }
 }

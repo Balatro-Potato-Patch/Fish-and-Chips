@@ -46,13 +46,12 @@ FishAndChips.Fish {
             }
         elseif not context.blueprint then
             if context.end_of_round and context.main_eval then
-                local mod
-                if card.ability.extra.enchant then
-                    mod = math.min(card.ability.extra.delta, card.ability.extra.max - card.ability.extra.percent)
-                else
-                    mod = -card.ability.extra.delta
-                end
-                card.ability.extra.percent = card.ability.extra.percent + mod
+                SMODS.scale_card (card, {
+                    ref_value = "percent",
+                    scalar_value = "delta",
+                    operation = card.ability.extra.enchant and "+" or "-",
+                    message_key = card.ability.extra.enchant and "a_fac_seabunny_percent_plus" or "a_fac_seabunny_percent_minus"
+                })
                 if card.ability.extra.percent <= 0 then
                     SMODS.destroy_cards(card, {pinch_anim = true})
                     return {
@@ -60,9 +59,10 @@ FishAndChips.Fish {
                         colour = G.C.BLUE
                     }
                 end
-                return {
-                    message = localize{type = "variable", key = mod < 0 and "a_fac_seabunny_percent" or "a_fac_seabunny_percent_plus", vars = {mod}}
-                }
+                if card.ability.extra.percent >= card.ability.extra.max then
+                    card.ability.extra.percent = card.ability.extra.max
+                end
+                return nil, true
             elseif context.selling_card and context.card.ability.set == "fac_Fish" and G.GAME.blind.in_blind and not card.ability.extra.enchant and SMODS.pseudorandom_probability(card, "fac_lapis_catfish", card.ability.extra.num, card.ability.extra.denom) then
                 SEABUN.enchant(card)
             end
