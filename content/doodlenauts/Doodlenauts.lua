@@ -1221,13 +1221,13 @@ FishAndChips.Fish {
 			}
 		}
 	end,
+	keep_on_use = function(self, card)
+		return card.ability.extra.uses > 1
+	end,
 	use = function(self, card, area)
 		G.GAME.blind.chips = math.floor(G.GAME.blind.chips - G.GAME.blind.chips * (card.ability.extra.percentage / 100))
 		G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
 		card.ability.extra.uses = card.ability.extra.uses - 1
-		if card.ability.extra.uses <= 0 then
-			SMODS.destroy_cards(card, nil, nil, true)
-		end
 	end,
 	can_use = function(self, card)
 		return G.GAME.blind.in_blind
