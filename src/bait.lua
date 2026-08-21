@@ -145,7 +145,8 @@ function FishAndChips.create_bait_inventory_item(key, pos)
 		config = {
 			type = pos > 1 and 'cm' or 'tr',
 			offset = pos == 1 and {x=0.2,y=0.7} or pos % 4 == 1 and {x=0.85, y=0} or {x=0,y=0.65},
-			major = pos == 1 and G.fac_bait_area or pos % 4 == 1 and G.HUD_bait_inv[pos-4] or G.HUD_bait_inv[pos-1]
+			major = pos == 1 and G.fac_bait_area or pos % 4 == 1 and G.HUD_bait_inv[pos-4] or G.HUD_bait_inv[pos-1],
+			instance_type = "CARD"
 		},
 	}
 		
