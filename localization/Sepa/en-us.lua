@@ -18,7 +18,7 @@ return {
                     "Talisman",
                     "Ectoplasm",
                     "Immolate",
-                    "Deja vu",
+                    "Deja Vu",
                     "Hex",
                     "Trance",
                     "Medium",
