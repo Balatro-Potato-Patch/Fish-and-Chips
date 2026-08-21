@@ -17,7 +17,7 @@ PotatoPatchUtils.Developer({
 	atlas = 'fac_DoodlenautsAvatar',
     pos = {x = 0, y = 0},
 	colour = HEX('ff00ff'),
-	fac_partner = 'fac_Buckaroodle' -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+	fac_partner = 'fac_Buckaroodle'
 })
 
 PotatoPatchUtils.Developer({
@@ -35,7 +35,7 @@ FishAndChips.Fish {
 	pos = { x = 2, y = 1 },
 	pixel_size = { w = 53, h = 75 },
 	weight = 5, --common / uncommon
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'mult', 'rank', 'scaling', 'two', 'three', 'four', 'five' },
 	stats = {
@@ -60,6 +60,7 @@ FishAndChips.Fish {
 		pier = 0.4,
 		swamp = 0.2,
 	},
+	perishable_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -69,27 +70,20 @@ FishAndChips.Fish {
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.play then
-			local scoring_ranks = { 2 , 3 , 4 , 5 }
-			local triggered = false
+		if context.individual and context.cardarea == G.play and not context.blueprint then
+			local scoring_ranks = { 2, 3, 4, 5 }
 			for i, rank in ipairs(scoring_ranks) do
 				if context.other_card:get_id() == scoring_ranks[i] then
-					triggered = true
-					break
+					SMODS.scale_card(card, {
+						ref_value = "mult",
+						scalar_value = "mult_gain",
+					})
+					return nil, true
 				end
-			end
-			if triggered then
-			    SMODS.scale_card(card, {
-					ref_value = "mult",
-					scalar_value = "mult_gain",
-				})
-				return nil, true
 			end
 		end
 		if context.joker_main then
-			return {
-				mult = card.ability.extra.mult
-			}
+			return { mult = card.ability.extra.mult }
 		end
 	end
 }
@@ -101,7 +95,7 @@ FishAndChips.Fish {
 	pos = { x = 1, y = 1 },
 	pixel_size = { w = 57, h = 57 },
 	weight = 5, --common
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'usable', 'chance', 'editions' },
 	stats = {
@@ -125,7 +119,11 @@ FishAndChips.Fish {
 		calm_pond = 0.6,
 		garden = 0.4
 	},
+	blueprint_compat = false,
+	eternal_compat = false,
 	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_CENTERS.e_foil
+		info_queue[#info_queue + 1] = G.P_CENTERS.e_holo
 		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom, 'fac_bigbasswheel')
 		return {
 			vars = {
@@ -136,15 +134,22 @@ FishAndChips.Fish {
 	end,
 	use = function(self, card, area)
 		if SMODS.pseudorandom_probability(card, 'fac_bigbasswheel', card.ability.extra.num, card.ability.extra.denom) then
-			local eligible_fish = {}
-			for i, fish in ipairs(G.fac_fish_area.cards) do
-				if not fish.edition and fish ~= card then
-					eligible_fish[#eligible_fish+1] = fish
+			G.E_MANAGER:add_event(Event({
+                func = function()
+					local eligible_fish = {}
+					for i, fish in ipairs(G.fac_fish_area.cards) do
+						if not fish.edition and fish ~= card then
+							eligible_fish[#eligible_fish+1] = fish
+						end
+					end
+					if next(eligible_fish) then
+						local selected_fish = pseudorandom_element(eligible_fish, 'fac_bigbasswheelfish')
+						local edition = SMODS.poll_edition { key = 'fac_bigbasswheeled', guaranteed = true, no_negative = true, options = { 'e_foil', 'e_holo' } }
+						selected_fish:set_edition(edition, true)
+					end
+					return true
 				end
-			end
-			local selected_fish = pseudorandom_element(eligible_fish, 'fac_bigbasswheel')
-			local edition = SMODS.poll_edition { key = 'fac_bigbasswheel', guaranteed = true, no_negative = true, options = { 'e_foil', 'e_holo' } }
-			selected_fish:set_edition(edition, true)
+			}))
 		else
 			G.E_MANAGER:add_event(Event({
                 trigger = 'after',
@@ -180,7 +185,7 @@ FishAndChips.Fish {
 	pos = { x = 2, y = 0 },
 	pixel_size = { w = 65, },
 	weight = 6, -- common
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'chips' },
 	stats = {
@@ -228,7 +233,7 @@ FishAndChips.Fish {
 	pos = { x = 0, y = 1 },
 	pixel_size = { w = 51, h = 33 },
 	weight = 6, --common/uncommon
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'chips' },
 	stats = {
@@ -276,7 +281,7 @@ FishAndChips.Fish {
 	pos = { x = 1, y = 0 },
 	pixel_size = { h = 53 },
 	weight = 5, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'passive', 'enhancements', "mod_chance", },
 	stats = {
@@ -294,10 +299,15 @@ FishAndChips.Fish {
 		calm_pond = 0.7,
 		pier = 0.3
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
     end,
-    -- TODO: Fix implementation this is as they say Horrible (mf)
+	calculate = function(self, card, context)
+		if context.mod_probability and (context.identifier == "lucky_mult" or context.identifier == "lucky_money") then
+			return { numerator = 3 }
+		end
+	end
 }
 
 -- Eyeless Fish
@@ -307,7 +317,7 @@ FishAndChips.Fish {
 	pos = { x = 4, y = 0 },
 	pixel_size = { w = 55, h = 79 },
 	weight = 4, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'xmult', 'joker' },
 	stats = {
@@ -340,14 +350,11 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.other_joker then
-			if G.jokers then
-				local joker_name = localize({ type = 'name_text', set = "Joker", key = context.other_joker.config.center.key })
-				--print(joker_name)
-				if string.find(joker_name, "[iI]") == nil then
-					return {
-						xmult = card.ability.extra.xmult
-					}
-				end
+			local joker_name = localize({ type = 'name_text', set = "Joker", key = context.other_joker.config.center.key })
+			if not string.find(joker_name, "[iI]") then
+				return {
+					xmult = card.ability.extra.xmult
+				}
 			end
 		end
 	end
@@ -360,7 +367,7 @@ FishAndChips.Fish {
 	pos = { x = 3, y = 0 },
 	pixel_size = { w = 49, h = 47 },
 	weight = 3, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'suit', "modify_card", "usable", },
 	stats = {
@@ -382,6 +389,8 @@ FishAndChips.Fish {
 	environments = {
 		pier = 1
 	},
+	blueprint_compat = false,
+	requires_hand = true,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -395,8 +404,11 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-			local _suit = pseudorandom_element(SMODS.Suits, 'fac_moonjelly')
-			card.ability.extra.suit = _suit.key
+			local selectable_suits = {}
+			for k, v in pairs(SMODS.Suits) do
+				if k ~= card.ability.extra.suit then selectable_suits[#selectable_suits + 1] = k end
+			end
+			card.ability.extra.suit = pseudorandom_element(selectable_suits, 'fac_moonjelly')
 			return {
                 message = localize('k_reset')
             }
@@ -435,7 +447,7 @@ FishAndChips.Fish {
 	pos = { x = 3, y = 1 },
 	pixel_size = { w = 47, h = 71 },
 	weight = 3, --common/uncommon
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'economy', "lose_economy", "usable", },
 	stats = {
@@ -460,6 +472,7 @@ FishAndChips.Fish {
 		pier = 0.7,
 		volcano = 0.3,
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -478,13 +491,22 @@ FishAndChips.Fish {
                 play_sound('timpani')
                 card:juice_up(0.3, 0.3)
                 ease_dollars(card.ability.extra.money_loaned, true)
+				card.ability.eternal = true
                 return true
             end
         }))
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.game_over == false and card.ability.extra.loanshark_current_debt > 0 then
+		if context.end_of_round and context.game_over == false and card.ability.extra.loanshark_current_debt > 0 and not context.blueprint then
 			card.ability.extra.loanshark_current_debt = card.ability.extra.loanshark_current_debt - card.ability.extra.payback_per_round
+			if card.ability.extra.loanshark_current_debt <= 0 then
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						card.ability.eternal = nil
+						return true
+					end
+				}))
+			end
 			return {
                 dollars = -card.ability.extra.payback_per_round,
             }
@@ -498,14 +520,6 @@ FishAndChips.Fish {
 	end
 }
 
-local can_sell_card_ref = Card.can_sell_card
-function Card:can_sell_card(context)
-	if self.ability.extra and type(self.ability.extra) == 'table' and ((self.ability.extra.loanshark_current_debt ~= nil and self.ability.extra.loanshark_current_debt > 0) or (self.ability.extra.leech ~= nil)) then -- prevents loanshark from being sold when still in debt
-		return false
-	end
-	return can_sell_card_ref(self, context)
-end
-
 --Neon Tetra
 FishAndChips.Fish {
 	key = 'neontetra',
@@ -513,7 +527,7 @@ FishAndChips.Fish {
 	pos = { x = 0, y = 2 },
 	pixel_size = { w = 47, h = 19 },
 	weight = 4, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'hand_type' , 'editions' , "chance" , "modify_card" },
 	stats = {
@@ -538,6 +552,7 @@ FishAndChips.Fish {
 		aquifer = 0.5
 	},
 	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_CENTERS.e_polychrome
 		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom, 'fac_neontetra')
 		return {
 			vars = {
@@ -564,7 +579,7 @@ FishAndChips.Fish {
 	pos = { x = 0, y = 0 },
 	pixel_size = { w = 53, h = 85 },
 	weight = 4, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'economy' , 'joker' , 'sell_value' , "rarity" , "on_sell" },
 	stats = {
@@ -591,6 +606,7 @@ FishAndChips.Fish {
 		city_river = 0.5,
 		pier = 0.5
 	},
+	eternal_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -615,7 +631,9 @@ FishAndChips.Fish {
 				sell_mult = card.ability.extra.legendary_mult
 			end
 			if sell_mult > 0 then
-				SMODS.destroy_cards(card, nil, nil, true)
+				if not context.blueprint then
+					SMODS.destroy_cards(card, nil, nil, true)
+				end
 				return {
 					dollars = card.ability.extra.bounty * sell_mult
 				}
@@ -631,7 +649,7 @@ FishAndChips.Fish {
 	pos = { x = 3, y = 2 },
 	pixel_size = { w = 33, h = 43 },
 	weight = 2, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'seals', "modify_card", "food", },
 	stats = {
@@ -655,6 +673,8 @@ FishAndChips.Fish {
 		styx = 0.25,
 		garden = 0.05
 	},
+	blueprint_compat = false,
+	eternal_compat = false,
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue + 1] = G.P_SEALS['Gold']
 		return {
@@ -664,9 +684,9 @@ FishAndChips.Fish {
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.before then
+		if context.before and not context.blueprint then
 			for i, playing_card in ipairs(context.scoring_hand) do
-				if playing_card:get_seal() == nil and card.ability.extra.gold_seals > 0 then
+				if not playing_card:get_seal() and card.ability.extra.gold_seals > 0 then
 					playing_card:set_seal('Gold')
 					card.ability.extra.gold_seals = card.ability.extra.gold_seals - 1
 					if card.ability.extra.gold_seals <= 0 then
@@ -685,7 +705,7 @@ FishAndChips.Fish {
 	pos = { x = 3, y = 3 },
 	pixel_size = { w = 57, h = 81 },
 	weight = 2, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'xmult', 'reroll', 'scaling', "shop", },
 	stats = {
@@ -702,13 +722,14 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			xmult_per_dollar = 0.01,
-			xmult_total = 1 + (xmult_total or 0)
+			xmult_total = 1
 		}
 	},
 	environments = {
 		garden = 0.95,
 		backroom = 0.05,
 	},
+	perishable_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -718,7 +739,7 @@ FishAndChips.Fish {
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.reroll_shop then
+		if context.reroll_shop and not context.blueprint then
             SMODS.scale_card(card, {
                 ref_value = "xmult_total",
                 scalar_value = "xmult_per_dollar",
@@ -726,7 +747,7 @@ FishAndChips.Fish {
             })
             return nil, true
 		end
-		if context.fac_environment_changed then
+		if context.fac_environment_changed and not context.blueprint then
 		    SMODS.scale_card(card, {
                 ref_value = "xmult_total",
                 scalar_value = "xmult_per_dollar",
@@ -749,7 +770,7 @@ FishAndChips.Fish {
 	pos = { x = 4, y = 1 },
 	pixel_size = { w = 35, h = 33 },
 	weight = 4, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'food', 'sell_value', 'scaling', 'economy', 'generation' },
 	stats = {
@@ -774,6 +795,7 @@ FishAndChips.Fish {
 		swamp = 0.6,
 		calm_pond = 0.4,
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom, 'fac_neontetra')
 		return {
@@ -793,7 +815,7 @@ FishAndChips.Fish {
                 colour = G.C.MONEY
             }
 		end
-		if context.selling_self then
+		if context.selling_self and not context.blueprint then
 			if SMODS.pseudorandom_probability(card, 'fac_neontetra', card.ability.extra.num, card.ability.extra.denom) then
 				local all_fish = G.P_CENTER_POOLS.fac_Fish
 				local frogs = {}
@@ -803,9 +825,11 @@ FishAndChips.Fish {
 						frogs[#frogs+1] = fish
 					end
 				end
-				local random_frog = pseudorandom_element(frogs, 'fac_frogspawn')
-				local random_frog_key = random_frog.key
-				SMODS.add_card{ key = random_frog_key }
+				if next(frogs) then
+					local random_frog = pseudorandom_element(frogs, 'fac_frogspawn')
+					local random_frog_key = random_frog.key
+					SMODS.add_card{ key = random_frog_key }
+				end
 			end
 		end
 	end
@@ -818,7 +842,7 @@ FishAndChips.Fish {
 	pos = { x = 1, y = 2 },
 	pixel_size = { w = 59, h = 61 },
 	weight = 2, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'usable', 'suit', 'rank', 'economy', 'chance', 'enhancements', 'modify_card' },
 	stats = {
@@ -842,6 +866,9 @@ FishAndChips.Fish {
 		wormhole = 0.50,
 		backroom = 0.50,
 	},
+	blueprint_compat = false,
+	eternal_compat = false,
+	requires_hand = true,
 	loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom, 'fac_fihnull')
 		return {
@@ -865,7 +892,7 @@ FishAndChips.Fish {
 				func = function()
 					play_sound('tarot1', percent, 0.6)
 					G.hand.cards[i]:set_base(pseudorandom_element(G.P_CARDS, pseudoseed('fac_fihnull')))
-					if SMODS.pseudorandom_probability(card, 'fac_fihnull', card.ability.extra.num, card.ability.extra.denom) and next(SMODS.get_enhancements(G.hand.cards[i])) == null then
+					if SMODS.pseudorandom_probability(card, 'fac_fihnull', card.ability.extra.num, card.ability.extra.denom) and not next(SMODS.get_enhancements(G.hand.cards[i])) then
 						local enhancement = SMODS.poll_enhancement{key = "fac_fihnull", guaranteed = true}
 						G.hand.cards[i]:set_ability(enhancement)
 					end
@@ -888,7 +915,7 @@ FishAndChips.Fish {
 	pos = { x = 4, y = 2 },
 	pixel_size = { w = 63, h = 25 },
 	weight = 4, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'usable', 'destroy_card', "lose_economy", },
 	stats = {
@@ -914,6 +941,9 @@ FishAndChips.Fish {
 		swamp = 0.3,
 		city_river = 0.1
 	},
+	blueprint_compat = false,
+	eternal_compat = false,
+	requires_hand = true,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -924,7 +954,7 @@ FishAndChips.Fish {
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.before then
+		if context.before and not context.blueprint then
 			return {
 				dollars = -card.ability.extra.money_per_hand
 			}
@@ -953,7 +983,7 @@ FishAndChips.Fish {
 	pos = { x = 2, y = 2 },
 	pixel_size = { w = 51, h = 39 },
 	weight = 3, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'useable', 'generation', 'enhancements', 'seals' , 'edition', },
 	treasure = true,
@@ -976,10 +1006,13 @@ FishAndChips.Fish {
 	environments = {
 		volcano = 1,
 	},
+	blueprint_compat = false,
+	eternal_compat = false,
+	requires_hand = true,
 	loc_vars = function(self, info_queue, card)
-		info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
-		info_queue[#info_queue + 1] = G.P_SEALS['Purple']
 		info_queue[#info_queue + 1] = G.P_CENTERS.e_polychrome
+		info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
+		info_queue[#info_queue + 1] = G.P_SEALS.Purple
 		return {
 			vars = {
 				card.ability.extra.how_many_stone_cards,
@@ -1009,7 +1042,7 @@ FishAndChips.Fish {
 	pos = { x = 1, y = 3 },
 	pixel_size = { w = 47, h = 63 },
 	weight = 4, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'usable', 'economy' },
 	stats = {
@@ -1032,6 +1065,8 @@ FishAndChips.Fish {
 	environments = {
 		pier = 1,
 	},
+	blueprint_compat = false,
+	eternal_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -1065,7 +1100,7 @@ FishAndChips.Fish {
 	pos = { x = 0, y = 3 },
 	pixel_size = { w = 63, h = 87 },
 	weight = 2, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'economy' },
 	stats = {
@@ -1113,7 +1148,7 @@ FishAndChips.Fish {
 	pos = { x = 2, y = 3 },
 	pixel_size = { w = 35, h = 51 },
 	weight = 4, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'reroll', "reset", },
 	stats = {
@@ -1129,56 +1164,64 @@ FishAndChips.Fish {
 	cost = 0,
 	config = {
 		extra = {
-			rerolls = 3,
-			free_rerolls_used_shop = 0,
-			free_rerolls_used_total = 0,
-			rerolls_this_ante = 0
+			freerolls = 3,
+			cached_freerolls = 0,
+			used_freerolls = 0
 		}
 	},
 	environments = {
 		city_river = 1,
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
-				card.ability.extra.rerolls,
-				card.ability.extra.free_rerolls_used_shop,
-				card.ability.extra.rerolls_this_ante
+				card.ability.extra.freerolls,
+				card.ability.extra.freerolls - card.ability.extra.used_freerolls
 			}
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.reroll_shop and not context.blueprint then
-			--card.ability.extra.has_rerolled = true
-			card.ability.extra.rerolls_this_ante = card.ability.extra.rerolls_this_ante + 1
-			if card.ability.extra.rerolls_this_ante <= 3 then
-				card.ability.extra.free_rerolls_used_total = card.ability.extra.free_rerolls_used_total + 1
-				card.ability.extra.free_rerolls_used_shop = card.ability.extra.free_rerolls_used_shop + 1
-				--card.ability.extra.free_used = true
+		if context.reroll_shop and not context.blueprint and card.ability.extra.used_freerolls < card.ability.extra.freerolls then
+			for _, v in ipairs(G.fac_fish_area.cards) do	-- this is to allow multiple tires to work together (ghostsalt)
+				if v.config.center.key == "fish_fac_oldtire" and v.ability.extra.i_rerolled then
+					return
+				end
 			end
+			card.ability.extra.i_rerolled = true
+
+			card.ability.extra.used_freerolls = card.ability.extra.used_freerolls + 1
+			card.ability.extra.cached_freerolls = card.ability.extra.cached_freerolls + 1
+			
+			G.E_MANAGER:add_event(Event({
+                func = function()
+					card.ability.extra.i_rerolled = nil
+					return true
+				end
+			}))
 		end
-		if context.ending_shop then
-			if --[[card.ability.extra.free_used == true and]] card.ability.extra.free_rerolls_used_shop > 0 then
-				SMODS.change_free_rerolls(-card.ability.extra.free_rerolls_used_shop)
-				card.ability.extra.free_rerolls_used_shop = 0
-			end
+
+		if context.ending_shop and not context.blueprint then
+			SMODS.change_free_rerolls(-card.ability.extra.cached_freerolls)
+			card.ability.extra.cached_freerolls = 0
 		end
+
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
 			if context.beat_boss then
-				SMODS.change_free_rerolls(card.ability.extra.rerolls)
-				card.ability.extra.rerolls_this_ante = 0
-				card.ability.extra.free_rerolls_used_total = 0
-				--print(card.ability.extra.rerolls)
+				if card.ability.extra.used_freerolls > 0 then
+					SMODS.change_free_rerolls(card.ability.extra.used_freerolls)
+				end
+				card.ability.extra.used_freerolls = 0
 			end
 		end
 	end,
 	add_to_deck = function(self, card, from_debuff)
-        SMODS.change_free_rerolls(card.ability.extra.rerolls)
-		--print(card.ability.extra.rerolls)
+        SMODS.change_free_rerolls(card.ability.extra.freerolls)
     end,
     remove_from_deck = function(self, card, from_debuff)
-        SMODS.change_free_rerolls(card.ability.extra.rerolls - card.ability.extra.free_rerolls_used_total) -- -free rerolls remaining
-		--print(card.ability.extra.rerolls)
+		if card.ability.extra.used_freerolls < card.ability.extra.freerolls or card.ability.extra.cached_freerolls > 0 then
+        	SMODS.change_free_rerolls(-(card.ability.extra.freerolls - card.ability.extra.used_freerolls + card.ability.extra.cached_freerolls))
+		end
     end
 }
 
@@ -1189,7 +1232,7 @@ FishAndChips.Fish {
 	pos = { x = 4, y = 3 },
 	pixel_size = { w = 47, h = 63 },
 	weight = 3, --uncommon/rare
-	ppu_coder = { 'Buckaroodle'},
+	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
 	attributes = { 'usable', "xblindsize", },
 	stats = {
@@ -1213,6 +1256,8 @@ FishAndChips.Fish {
 		city_river = 0.5,
 		pier = 0.5,
 	},
+	blueprint_compat = false,
+	eternal_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
