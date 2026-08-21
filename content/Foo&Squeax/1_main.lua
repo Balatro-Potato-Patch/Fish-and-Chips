@@ -93,6 +93,13 @@ for i=1, 11 do
 	SMODS.Sound({key = 'fac_fas_gabby' .. i, path = FishAndChips.FooSqueax.file_path .. "gabby" .. i .. ".ogg",})
 end
 
+SMODS.Font({
+	key = "sunghyun_sans",
+	path = "SunghyunSans-Black.otf",
+	FONTSCALE = 0.07,
+	TEXT_HEIGHT_SCALE = 0.9
+})
+
 PotatoPatchUtils.Developer{
 	name = "squeax09",
 	atlas = "fac_fas_credits_sqx",
@@ -101,7 +108,7 @@ PotatoPatchUtils.Developer{
 	fac_partner = "fac_Foo54",
 	loc = true,
 	loc_vars = function(self, info_queue, card)
-		return {vars = {elements = {FishAndChips.FooSqueax.sqx_credit_ui_baits(), FishAndChips.FooSqueax.sqx_credit_ui_fish()}}}
+		return {vars = {elements = {FishAndChips.FooSqueax.sqx_credit_ui_baits(), FishAndChips.FooSqueax.sqx_credit_ui_fish()}, colours = {G.C.YELLOW, HEX("ED5B5B")}}, font = SMODS.Fonts.fac_sunghyun_sans}
 	end,
 	click = function(self)
 		local pickables = pseudorandom('ts gabby', 1, 11)

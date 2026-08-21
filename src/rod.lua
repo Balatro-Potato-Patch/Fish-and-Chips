@@ -236,6 +236,6 @@ FishAndChips.Rod {
 		}
 	},
 	ppu_artist = { "DottyKitty" },
-	ppu_coder = { "Mack" },
+	ppu_coder = { "Snapper" },
 }
 --#endregion
