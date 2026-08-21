@@ -278,7 +278,7 @@ return {
 					{"{element:1}",
 					"As you may have seen, I was both a {C:edition,E:1}Guest Dev{} and {C:dark_edition,E:1}Playtester{}.",
 					"I helped make some of the base mod's art, and helped concept the designs of",
-					"{V:1}Mack{} and {V:1}Snapper{} along with {C:white,E:1}GhostSalt{}!",
+					"{V:1}Mack{} and {V:3}Snapper{} along with {C:white,E:1}GhostSalt{}!",
 					"{s:0.8}(Though you'll likely see I ended up spriting more stuff besides all the baits lol)",
 					"{element:2}",
 					"I also worked with {V:2,E:1}Foo{} to art a lot of silly things",

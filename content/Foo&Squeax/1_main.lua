@@ -108,7 +108,7 @@ PotatoPatchUtils.Developer{
 	fac_partner = "fac_Foo54",
 	loc = true,
 	loc_vars = function(self, info_queue, card)
-		return {vars = {elements = {FishAndChips.FooSqueax.sqx_credit_ui_baits(), FishAndChips.FooSqueax.sqx_credit_ui_fish()}, colours = {G.C.YELLOW, HEX("ED5B5B")}}, font = SMODS.Fonts.fac_sunghyun_sans}
+		return {vars = {elements = {FishAndChips.FooSqueax.sqx_credit_ui_baits(), FishAndChips.FooSqueax.sqx_credit_ui_fish()}, colours = {G.C.YELLOW, HEX("ED5B5B"), HEX("04b6b3")}}, font = SMODS.Fonts.fac_sunghyun_sans}
 	end,
 	click = function(self)
 		local pickables = pseudorandom('ts gabby', 1, 11)

@@ -10,7 +10,7 @@ PotatoPatchUtils.Developer({
 	name = 'Snapper',
 	atlas = 'fac_cards',
 	pos = {x = 1, y = 0},
-	colour = G.C.YELLOW,
+	colour = HEX("04b6b3"),
 	ignore_limits = true,
 	fac_partner = 'Mack'
 })
