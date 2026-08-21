@@ -84,3 +84,16 @@ if saveTable then
     end
 end
 '''
+
+# allow attention_text to modify instance_type
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+match_indent = true
+position = 'after'
+pattern = '''
+major = args.cover or args.major or nil,
+'''
+payload = '''
+instance_type = args.instance_type,
+'''
