@@ -51,7 +51,7 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { G.GAME.interest_amount, G.GAME.interest_cap / 5 } }
+		return { vars = { G.GAME.interest_amount, G.GAME.interest_amount * (G.GAME.interest_cap / 5) } }
 	end,
 	stats = {weight = {min = 2, max = 2}, length = {min = 0.3, max = 0.3}},
 	calculate = function(self, card, context)
