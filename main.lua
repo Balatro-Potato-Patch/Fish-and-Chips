@@ -16,6 +16,7 @@ FishAndChips.C = {
 	FISH = HEX("4db1f6"),
 	ROD = HEX("F64D4D"),
 	ENVIRONMENT = HEX("297539"),
+	BAIT = HEX("EFB18D"),
 	SAND_DOLLAR = HEX("ff8a8a"),
     FAC_PRIMARY = HEX("5987c3"),
     FAC_SECONDARY = HEX("9ebcdf"),

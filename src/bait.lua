@@ -43,6 +43,7 @@ FishAndChips.Bait = SMODS.Center:extend{
 
 G.C.SET.fac_Bait = FishAndChips.C.BAIT
 G.C.SECONDARY_SET.fac_Bait = FishAndChips.C.BAIT
+G.ARGS.LOC_COLOURS.fac_Bait = FishAndChips.C.BAIT
 
 function G.UIDEF.create_UIBox_your_collection_bait()
 	local pool = {}
@@ -77,43 +78,28 @@ SMODS.UndiscoveredCompat.fac_Bait = true
 
 function FishAndChips.add_bait_to_shop(key, amt)
 	local found = false
-	for _, b in ipairs(G.GAME.fac_bait_shop_items) do
-		if b.key == key then
-			b.amt = b.amt + (amt or 1)
-			found = true
-			break
-		end
-	end
-	if not found then
-		table.insert(G.GAME.fac_bait_shop_items, 1, { key = key, amt = 1 })
+	local current_inv = G.GAME.fac_bait_shop_items
+
+	if current_inv[key] then
+		current_inv[key].amt = current_inv[key].amt + 1
+		found = true
+	else
+		current_inv[key] = {amt = amt or 1}
 	end
 end
 
-function FishAndChips.remove_bait_from_shop(key)
-	for _, b in ipairs(G.GAME.fac_bait_shop_items) do
-		if b.key == key and b.amt >= 1 then
-			b.amt = b.amt - 1
-			break
-		end
+function FishAndChips.remove_bait_from_shop(key, amount)
+	local bait = G.GAME.fac_bait_shop_items[key]
+	bait.amt = bait.amt - amount
+	if bait.amt == 0 then
+		G.GAME.fac_bait_shop_items[key] = nil
 	end
-end
-
-function FishAndChips.clean_up_bait_shop()
-	local new = {}
-	for _, b in ipairs(G.GAME.fac_bait_shop_items) do
-		if b.amt ~= 0 then
-			new[#new + 1] = b
-		end
-	end
-	G.GAME.fac_bait_shop_items = new
+	G.GAME.fac_active_shop_bait.amount = G.GAME.fac_active_shop_bait.amount - amount
+	G.GAME.fac_active_shop_bait.all_cost = G.GAME.fac_active_shop_bait.cost * G.GAME.fac_active_shop_bait.amount
 end
 
 function FishAndChips.get_bait_shop_item(key)
-	for _, b in ipairs(G.GAME.fac_bait_shop_items) do
-		if b.key == key then
-			return b
-		end
-	end
+	return G.GAME.fac_bait_shop_items[key]
 end
 
 function FishAndChips.create_bait_inventory_item(key, pos)
@@ -121,7 +107,7 @@ function FishAndChips.create_bait_inventory_item(key, pos)
 	local center = G.P_CENTERS[key]
 	local w = center.mini_atlas and 0.65 or 71/95 * 0.65
 	local sprite = SMODS.create_sprite(0,0, w, 0.65, SMODS.get_atlas(center.mini_atlas or center.atlas), center.mini_pos or center.pos)
-
+	sprite.config.center = center
     local bait_node = {n= G.UIT.C, config={align = "cm",  padding = -0.1}, nodes={
 		{n=G.UIT.C, config = {align = 'cm'}, nodes = {
 			{n=G.UIT.R, config = {align = 'cm', minw = 0.65}, nodes = {
@@ -166,10 +152,10 @@ function FishAndChips.create_bait_inventory_item(key, pos)
                     play_sound('paper1', math.random()*0.1 + 0.55, 0.42)
                     play_sound('tarot2', math.random()*0.1 + 0.55, 0.09)
 
-				sprite.ability_UIBox_table = generate_card_ui(G.P_CENTERS[key], nil, {}, 'fac_Bait', nil, nil, nil, nil, self)
+				sprite.ability_UIBox_table = generate_card_ui(G.P_CENTERS[key], nil, {}, 'fac_Bait', {card_type = 'fac_Bait'}, nil, nil, nil, self)
 
                 _self.config.h_popup =  G.UIDEF.card_h_popup(sprite)
-                _self.config.h_popup_config = {align =  'cr', offset = {x=0.1,y=0}, parent = _self}
+                _self.config.h_popup_config = {align =  'br', offset = {x=0.2,y=-0.65}, parent = _self}
                 Node.hover(_self)
             end
         end
@@ -208,7 +194,7 @@ function FishAndChips.add_bait_to_inventory(key, amt)
 		current_inv[key].amt = current_inv[key].amt + 1
 		found = true
 	else
-		current_inv[key] = {amt = 1}
+		current_inv[key] = {amt = amt or 1}
 	end
 
 	if key == G.GAME.fac_active_bait then
@@ -349,7 +335,6 @@ FishAndChips.Bait{
 	pos = {x = 1, y = 1},
 	pixel_size = {w = 47, h = 77},
 	target = 'passive',
-	mini_atlas = false,
 }
 FishAndChips.Bait{
 	key = "rank",
@@ -370,7 +355,7 @@ FishAndChips.Bait{
 	key = "generation",
 	ppu_artist = {'squeax09'},
 	pos = {x = 7, y = 0},
-	pixel_size = {w = 27, h = 85},
+	pixel_size = {w = 35, h = 85},
 	target = 'generation',
 }
 FishAndChips.Bait{

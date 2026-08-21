@@ -480,6 +480,7 @@ return {
             k_fac_cashout_blind_display_small = '(Small Blind)',
             k_fac_cashout_blind_display_big = '(Big Blind)',
             k_fac_cashout_blind_display_boss = '(Boss Blind)',
+            k_fac_out_of_stock = 'Out of Stock!',
         },
         achievement_names = {
             ach_fac_catch_1 = 'Rookie Rodder',
