@@ -1146,7 +1146,7 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card ,context)
         if context.fac_use_fish and not context.fac_use_fish.ability.perishable and not context.blueprint then  -- i made this incompatible because it isn't self destructing sometimes, when copied by Flounder (ghostsalt)
-            if #G.fac_fish_area.cards - (context.fac_use_fish.config.center.keep_on_use and context.fac_use_fish.config.center.keep_on_use() and 0 or 1) < G.fac_fish_area.config.card_limit then
+            if #G.fac_fish_area.cards - (context.fac_use_fish.config.center.keep_on_use and context.fac_use_fish.config.center:keep_on_use(context.fac_use_fish) and 0 or 1) < G.fac_fish_area.config.card_limit then
                 local c = SMODS.add_card{key=context.fac_use_fish.config.center.key, area = G.fac_fish_area}
                 c.ability.perishable = true
                 c.ability.perish_tally = 5
