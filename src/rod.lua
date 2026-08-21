@@ -78,6 +78,7 @@ FishAndChips.Rod {
 	key = "wooden",
 	discovered = true,
 	ppu_artist = { "DottyKitty" },
+	ppu_coder = { "Foo54" },
 	apply = function(self, rod)
 		G.E_MANAGER:add_event(Event({
 			func = function()
@@ -126,6 +127,7 @@ FishAndChips.Rod {
 FishAndChips.Rod {
 	key = "glimmering",
 	ppu_artist = { "DottyKitty" },
+	ppu_coder = { "Foo54" }
 	pos = { x = 0, y = 1 },
 	bait_bonus = 2,
 	unlocked = false,
@@ -144,6 +146,7 @@ FishAndChips.Rod {
 FishAndChips.Rod {
 	key = "extradimensional",
 	ppu_artist = { "squeax09" },
+	ppu_coder = { "Foo54" },
 	pos = { x = 1, y = 1 },
 	unlocked = false,
 	additional_pools = {
@@ -192,6 +195,7 @@ FishAndChips.Rod {
 FishAndChips.Rod {
 	key = "distortion",
 	ppu_artist = { "squeax09" },
+	ppu_coder = { "Foo54" },
 	pos = { x = 0, y = 2 },
 	unlocked = false,
 	check_for_unlock = function(self, args)
@@ -229,6 +233,7 @@ FishAndChips.Rod {
 			bar_size = 0.05
 		}
 	},
+	ppu_artist = { "DottyKitty" },
 	ppu_coder = { "Foo54" }
 }
 --#endregion
