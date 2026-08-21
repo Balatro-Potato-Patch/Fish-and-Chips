@@ -26,7 +26,8 @@ FishAndChips.Fish {
         return {vars = {card.ability.extra.bait, card.ability.extra.sand_dollars}}
     end,
     calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss then
+        if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss
+        and G.GAME.current_round.hands_played == 1 then
             FishAndChips.create_baits_from_card(card, card.ability.extra.bait)
             return {sand_dollars = card.ability.extra.sand_dollars}
         end
