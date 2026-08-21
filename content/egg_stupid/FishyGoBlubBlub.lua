@@ -207,8 +207,6 @@ function fac_get_plasmium_blind_mod(single)
 				total_mod = total_mod * (0.9 + 0.1 * G.GAME.fac_plasmium_infection)
 			end
 
-			print(total_mod)
-
 			return total_mod
 		end
 	end
@@ -266,6 +264,7 @@ FishAndChips.Fish {
 
 	treasure = true, -- Our only treasure :)
 	blueprint_compat = false,
+	eternal_compat = false,
 
 	attributes = { "usable", "function", "editions" },
 	config = {
@@ -279,6 +278,7 @@ FishAndChips.Fish {
 		aquifer = 1.5,
 	},
 	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_CENTERS.e_negative
 	end,
 
 	use = function(self, card)
@@ -433,6 +433,7 @@ FishAndChips.Fish {
 	ppu_artist = { "egg_node" },
 
 	blueprint_compat = false,
+	eternal_compat = false,
 	attributes = { "usable", "function", "hands", },
 
 	config = {
@@ -450,7 +451,7 @@ FishAndChips.Fish {
 		city_river = 5.0
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.hands,  } }
+		return { vars = { card.ability.extra.hands } }
 	end,
 
 	use = function(self, card)
@@ -493,6 +494,7 @@ FishAndChips.Fish {
 	ppu_artist = { "egg_node" },
 
 	blueprint_compat = false,
+	eternal_compat = false,
 	attributes = { "usable", "function", "generation", "consumable", "spectral", "tarot", "planet", },
 
 	config = {
@@ -537,6 +539,7 @@ FishAndChips.Fish {
 	ppu_artist = { "egg_node" },
 
 	blueprint_compat = false,
+	eternal_compat = false,
 	attributes = { "usable", "function", "generation", "consumable", "spectral", "tarot", "planet", },
 
 	config = {
@@ -583,6 +586,8 @@ FishAndChips.Fish {
 	ppu_coder = { "stupid" },
 	ppu_artist = { "egg_node" },
 
+	eternal_compat = false,
+
 	attributes = { "chips", "food", "scaling", },
 	config = {
 		extra = {
@@ -612,6 +617,7 @@ FishAndChips.Fish {
 
 			if card.ability.extra.chips <= 0 then
 				-- bye bye
+				SMODS.destroy_cards(card, nil, nil, true)
 				return {
 					message = localize('b_fac_segg_chips_gone'),
                 	colour = G.C.BLUE,
@@ -677,15 +683,18 @@ FishAndChips.Fish {
 
 	update = function (self, card)
 		if card.ability.extra.in_deck and card.ability.extra.discards_cache ~= G.GAME.current_round.discards_left then
-			G.hand:change_size(-math.floor(card.ability.extra.discards_cache * card.ability.extra.hand_size))
-			G.hand:change_size(math.floor(G.GAME.current_round.discards_left * card.ability.extra.hand_size))
-
+			G.hand:change_size(math.floor(G.GAME.current_round.discards_left * card.ability.extra.hand_size)-math.floor(card.ability.extra.discards_cache * card.ability.extra.hand_size))
 			card.ability.extra.discards_cache = G.GAME.current_round.discards_left
 		end
 	end,
 
     add_to_deck = function(self, card, from_debuff)
         card.ability.extra.in_deck = true
+    end,
+
+    remove_from_deck = function(self, card, from_debuff)
+        card.ability.extra.in_deck = false
+		G.hand:change_size(-math.floor(G.GAME.current_round.discards_left * card.ability.extra.hand_size))
     end,
 
 }
@@ -705,6 +714,7 @@ FishAndChips.Fish {
 
 	requires_hand = true,
 	blueprint_compat = false,
+	eternal_compat = false,
 	attributes = { "usable", "function", "generation", "enhancements", "rank", },
 
     config = { max_highlighted = 1, extra = { cards = 3 } },
@@ -739,7 +749,6 @@ FishAndChips.Fish {
 
 					local rank_name = target.config.card.value
 					if rank_name then
-						print("adding cards: "..card.ability.extra.cards)
 						for _ = 1, card.ability.extra.cards do
 							local enhancement = SMODS.poll_enhancement { guaranteed = true, options = enh_pool, key = "segg_yumama_enh" }
 							cards[#cards + 1] = SMODS.add_card { set = "Base", rank = rank_name, enhancement = enhancement, key_append = "segg_yumama_card" }
