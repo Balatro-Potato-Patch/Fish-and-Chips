@@ -99,16 +99,28 @@ FishAndChips.Fish{
 				func = function()
 					G.E_MANAGER:add_event(Event{
 						func = function ()
-							card.children.center:set_sprite_pos{x = 1, y = 0}
-							delay(2)
 							G.E_MANAGER:add_event(Event{
 								blocking = false,
+								trigger = "after",
+								delay = 0.01,
+								func = function()
+									card.children.center:set_sprite_pos{x = 1, y = 0}
+									play_sound("fac_fas_nyon")
+									return true
+								end
+							})
+							--card.children.center:set_sprite_pos{x = 1, y = 0}
+							--delay(2)
+							G.E_MANAGER:add_event(Event{
+								blocking = false,
+								trigger = "after",
+								delay = 0.89,
 								func = function()
 									card.children.center:set_sprite_pos{x = 0, y = 0}
 									return true
 								end
 							})
-							play_sound("fac_fas_nyon")
+							
 							return true
 						end
 					})
