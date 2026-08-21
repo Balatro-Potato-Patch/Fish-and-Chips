@@ -62,7 +62,7 @@ local pa_fish = {
                 text = {
                     "Gains {C:attention}+#1#{} free {C:attention}Location Reroll{}",
                     "for each used {C:planet}Planet{} card",
-                    "{C:inactive}(Rerolls left: {C:attention}#2#{})"
+                    "{C:inactive}(Rerolls left: {C:attention}#2#{}{C:inactive})"
                 },
                 flavour = {
                     "Fell off of a reusable",
