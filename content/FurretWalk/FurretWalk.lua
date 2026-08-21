@@ -30,7 +30,7 @@ FishAndChips.Fish {
 	attributes = { "xmult", "scaling", },
 	config = {
 		extra = {
-			xMult = 1, xMultmod = 0.05
+			xMultPerFish = 0.05, xMultmod = 0.05
 		}
 	},
 	environments = {
@@ -43,17 +43,18 @@ FishAndChips.Fish {
 		length = {min = 1.3, max = 3.5}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.xMult, card.ability.extra.xMultmod } }
+		local numFish = G.fac_fish_area and #G.fac_fish_area.cards or 1
+		return { vars = { card.ability.extra.xMultPerFish, card.ability.extra.xMultmod, 1 + card.ability.extra.xMultPerFish * numFish } }
 	end,
 	calculate = function(self, card, context)
-		        if context.other_unknown and context.other_unknown.ability.set == "fac_Fish" then
+		    if context.joker_main then
             return {
-                Xmult = card.ability.extra.xMult
+                Xmult = 1 + card.ability.extra.xMultPerFish * #G.fac_fish_area.cards
             }
         end
-        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+        if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss and not context.blueprint then
             SMODS.scale_card(card, {
-                ref_value = "xMult",
+                ref_value = "xMultPerFish",
                 scalar_value = "xMultmod",
                 message_colour = G.C.MULT,
             })

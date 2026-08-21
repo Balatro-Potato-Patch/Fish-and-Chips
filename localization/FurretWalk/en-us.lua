@@ -24,8 +24,10 @@ return {
             fish_fac_miketrout = {
                 name = "Mike Trout",
                 text = {
-                    "{C:fish}Fish{} give {X:mult,C:white}X#1#{} Mult,",
-                    "gains {X:mult,C:white}X#2#{} after Blind is defeated",
+                    "{C:white,X:mult}X#1#{} Mult per {C:fac_fish}Fish{} owned,",
+                    "increases by {C:white,X:mult}X#2#{} when",
+                    "{C:attention}Boss Blind{} is defeated",
+                    "{C:inactive}(Currently {C:white,X:mult}X#3#{C:inactive} Mult)"
                 },
                 flavor = {
                     "This fish can stay for",
