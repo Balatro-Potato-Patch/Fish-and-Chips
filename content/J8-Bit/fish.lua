@@ -1069,8 +1069,6 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         if context.fishing_profile and not context.blueprint then
-            context.fishing_profile.treasure_gain = context.fishing_profile.treasure_gain *
-                card.ability.extra.treasure_reward
             context.fishing_profile.vel_limit = context.fishing_profile.vel_limit * card.ability.extra.fish_cocaine
             context.fishing_profile.impulse_min = context.fishing_profile.impulse_min * card.ability.extra.fish_cocaine
             context.fishing_profile.impulse_max = context.fishing_profile.impulse_max * card.ability.extra.fish_cocaine
@@ -1078,6 +1076,9 @@ FishAndChips.Fish {
                 .fish_cocaine
             context.fishing_profile.decision_max = math.max(context.fishing_profile.decision_min,
                 context.fishing_profile.decision_max / card.ability.extra.fish_cocaine)
+        end
+        if context.fac_treasure_reward and not context.blueprint then
+            context.fac_treasure_reward = context.fac_treasure_reward * card.ability.extra.treasure_reward
         end
     end
 }
