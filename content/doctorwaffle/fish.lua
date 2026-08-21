@@ -115,10 +115,6 @@ do
         return cardToRight
     end
 
-    function waffleFunctions.isCardInCollection(card)
-        return card.area.config.collection
-    end
-
     function waffleFunctions.addDucksToDeck(deck)
             local allCards = {}                                                  -- Initialize list of cards in deck
 
@@ -413,10 +409,6 @@ FishAndChips.Fish {
     pos = { x = 1, y = 0 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = G.P_CENTERS.e_negative
-        return {}
-    end,
     calculate = function(self, card, context)
         if context.fac_end_fishing and not context.failed and context.treasure then
             local new_card
@@ -599,9 +591,9 @@ FishAndChips.Fish {
                 it = it + 1
                 selected_tag = pseudorandom_element(tag_pool, 'fac_waffle_mudskipper_tag_resample' .. it)
             end
-            add_tag(Tag(selected_tag))
             G.E_MANAGER:add_event(Event({
                 func = function()
+                    add_tag(Tag(selected_tag))
                     card.ability.extra.tag_created = true
                     return true
                 end
@@ -610,7 +602,7 @@ FishAndChips.Fish {
                 message = localize('k_fac_waffle_tag')
             }
         end
-        if context.ending_fishing then
+        if context.ending_fishing and not context.blueprint then
             card.ability.extra.tag_created = false
         end
     end,
@@ -767,6 +759,7 @@ FishAndChips.Fish {
         weight = { min = 0.005, max = 0.01 },
         length = { min = 0.10, max = 0.40 }
     },
+    requires_consumables = true,
     pixel_size = { h = 76, w = 71 },
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
@@ -836,6 +829,7 @@ FishAndChips.Fish {
         }
     end,
     blueprint_compat = true,
+    perishable_compat = false,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and context.other_card.ability.fac_extra and context.other_card.ability.fac_extra.fac_waffle_duck and not context.blueprint then
             --print("bonus duck")
@@ -913,6 +907,7 @@ FishAndChips.Fish {
     ppu_coder = { "waffle" },
     ppu_artist = { "waffle" },
     atlas = "waffle_fish",
+    eternal_compat = false,
     pos = { x = 9, y = 0 },
     weight = 4,
     cost = 5,
@@ -1082,6 +1077,7 @@ FishAndChips.Fish {
         }
     },
     blueprint_compat = false,
+    requires_hand = true,
     loc_vars = function(self, info_queue, card)
         local rank, key
         do
@@ -1090,7 +1086,7 @@ FishAndChips.Fish {
             else
                 rank = "Ace"
             end
-            if waffleFunctions.isCardInCollection(card) then
+            if card.area.config.collection then
                 key = "fish_fac_waffle_worn_book_collection"
             end
         end
@@ -1200,6 +1196,7 @@ FishAndChips.Fish {
     weight = 4,
     cost = 7,
     atlas = "waffle_fish",
+    perishable_compat = false,
     pos = { x = 3, y = 1 },
     pixel_size = { h = 72, w = 71 },
     environments = {
@@ -1277,6 +1274,7 @@ FishAndChips.Fish {
         info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.extra.enhancement]
     end,
     blueprint_compat = false,
+    eternal_compat = false,
     calculate = function(self, card, context)
         if context.hand_drawn and context.first_hand_drawn and G.GAME.blind and G.GAME.blind.boss and not G.GAME.fac_waffle_snail_activated then
             G.GAME.fac_waffle_snail_activated = true
@@ -1396,6 +1394,8 @@ FishAndChips.Fish {
         info_queue[#info_queue + 1] = G.P_CENTERS.e_negative
         return {vars = {colours = {HEX('7A2E2E')}}}
     end,
+    blueprint_compat = false,
+    eternal_compat = false,
     use = function (self, card)
         local edition = SMODS.poll_edition({guaranteed = true, no_negative = true})
         G.E_MANAGER:add_event(Event({

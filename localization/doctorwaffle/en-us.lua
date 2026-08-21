@@ -245,7 +245,7 @@ return {
             fish_fac_waffle_scaly_foot_snail = {
                 name = "Scaly-Foot Snail",
                 text = {
-                    "When entering {C:attention}Boss Blind{},",
+                    "When entering a {C:attention}Boss Blind{},",
                     "all cards in {C:attention}first hand drawn{}",
                     "are enhanced into {C:attention}Steel Cards{},",
                     "then {C:red,E:2}self destructs{}"
@@ -281,7 +281,7 @@ return {
             fish_fac_waffle_self_finsert = {
                 name = "Self-Finsert",
                 text = {
-                    "Creates a random {C:fac_fish}Fish",
+                    "Becomes a random {C:fac_fish}Fish",
                     "made by {V:1}waffle{} with",
                     "a random {C:dark_edition}Edition",
                     "{C:inactive}(Self-Finsert excluded,",
