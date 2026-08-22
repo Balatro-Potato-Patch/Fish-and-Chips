@@ -123,7 +123,7 @@ return {
 					- gabby ]]
 				},
 				text = {
-					"Each played card",
+					"Each {C:attention}played card{}",
 					"permanently gains",
 					"{X:mult,C:white}X#1#{} Mult when scored"
 				}
