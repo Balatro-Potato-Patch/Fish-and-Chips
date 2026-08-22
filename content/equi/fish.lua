@@ -54,13 +54,11 @@ FishAndChips.Fish {
     end,
 
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval and not context.game_over then
-            for i = 1, #G.hand.cards do
-                G.hand.cards[i].ability.perma_bonus = (G.hand.cards[i].ability.perma_bonus or 0) + (math.max(card.ability.extra.chips * G.hand.cards[i]:get_id(), 0)) --whoops nearly made stone cards give -1000000 chips
-            end
-            return {
-                message = localize("k_upgrade_ex")
-            }
+        if context.end_of_round and context.individual and context.cardarea == G.hand and not context.game_over then
+            if not SMODS.has_no_rank(context.other_card) then
+                context.other_card.ability.perma_bonus = (context.other_card.ability.perma_bonus or 0) + math.max(card.ability.extra.chips * context.other_card:get_id(), 0)
+                return { message = localize("k_upgrade_ex") }
+           end
         end
     end
 }
@@ -165,7 +163,7 @@ FishAndChips.Fish {
                 G.hand:unhighlight_all()
                 local unselected_cards = {}
                 for _, playing_card in ipairs(G.hand.cards) do
-                    if playing_card.highlighted == false then
+                    if not playing_card.highlighted and not playing_card.ability.forced_selection then
                         table.insert(unselected_cards, playing_card)
                     end
                 end
@@ -181,6 +179,18 @@ FishAndChips.Fish {
         end
     end
 }
+
+function fac_equi_get_targeted_bait(seed)
+    return SMODS.poll_object{ type = "fac_Bait", seed = seed, filter = function(pool)
+        local filtered_pool = {}
+        for _, bait in ipairs(pool) do
+            if G.P_CENTERS[bait.key].target ~= "" then
+                table.insert(filtered_pool, bait)
+            end
+        end
+        return #filtered_pool > 0 and filtered_pool or pool
+    end }
+end
 
 --Fished For It Again Award
 FishAndChips.Fish {
@@ -206,28 +216,21 @@ FishAndChips.Fish {
         wormhole = 1
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.bait_given, card.ability.extra.current_fails, card.ability.extra.required_fails, card.ability.extra.max_per_round, card.ability.extra.baits_this_round } }
+        return { vars = { card.ability.extra.current_fails, card.ability.extra.required_fails, card.ability.extra.max_per_round, card.ability.extra.baits_this_round } }
     end,
 
     calculate = function(self, card, context)
         if context.failed and card.ability.extra.baits_this_round < card.ability.extra.max_per_round then
+            local temp_fails = card.ability.extra.current_fails + 1
             if not context.blueprint then
-                card.ability.extra.current_fails = card.ability.extra.current_fails + 1
+                card.ability.extra.current_fails = temp_fails
             end
-            if card.ability.extra.current_fails == card.ability.extra.required_fails then
+            if temp_fails >= card.ability.extra.required_fails then
                 if not context.blueprint then
-                    G.E_MANAGER:add_event(Event({
-                        trigger = "after",
-                        delay = 0.0,
-                        func = (function()
-                            card.ability.extra.current_fails = 0
-                            return true
-                        end)}))
+                    card.ability.extra.current_fails = 0
+                    card.ability.extra.baits_this_round = card.ability.extra.baits_this_round + 1
                 end
-                card.ability.extra.baits_this_round = card.ability.extra.baits_this_round + 1
-                local bait_number = pseudorandom("equi_fishedforitagain", 2, #G.P_CENTER_POOLS.fac_Bait)
-                local bait = G.P_CENTER_POOLS.fac_Bait[bait_number]
-                FishAndChips.add_bait_to_inventory(bait.key, card.ability.extra.bait_given)
+                FishAndChips.add_bait_to_inventory(fac_equi_get_targeted_bait("equi_fishedforitagain"), card.ability.extra.bait_given)
                 return {
                     message = localize {
                         type = "variable",
@@ -235,9 +238,9 @@ FishAndChips.Fish {
                         vars = { card.ability.extra.bait_given }
                     }
                 }
-            else
+            elseif not context.blueprint then
                 return {
-                    message =  card.ability.extra.current_fails .. "/" .. card.ability.extra.required_fails
+                    message = card.ability.extra.current_fails .. "/" .. card.ability.extra.required_fails
                 }
             end
         end
@@ -267,40 +270,47 @@ FishAndChips.Fish {
     },
     config = {
         extra = {
-            chosen_bait = 2
+            chosen_bait = "bait_fac_normal"
         }
     },
     environments = {
         backroom = 1,
         wormhole = 0.25
     },
+    requires_consumables = true,
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.chosen_bait, localize{ set = "fac_Bait", type = "name_text", key = G.P_CENTER_POOLS.fac_Bait[card.ability.extra.chosen_bait].key } } }
+        info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.extra.chosen_bait]
+        return { vars = { localize{ set = "fac_Bait", type = "name_text", key = card.ability.extra.chosen_bait } } }
     end,
 
     calculate = function(self, card, context)
         if context.fac_fish_hooked then
-            if G.GAME.fac_active_bait == G.P_CENTER_POOLS.fac_Bait[card.ability.extra.chosen_bait].key then
-                card.ability.extra.chosen_bait = pseudorandom("equi_carpticalillusion", 2, #G.P_CENTER_POOLS.fac_Bait)
-                if (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit) then
+            if G.GAME.fac_active_bait == card.ability.extra.chosen_bait then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        card.ability.extra.chosen_bait = fac_equi_get_targeted_bait("equi_carpticalillusion")
+                        return true
+                    end
+                }))
+                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
                     G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
                     G.E_MANAGER:add_event(Event({
-                        trigger = "before",
-                        delay = 0.0,
-                        func = (function()
-                            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer - 1
+                        func = function()
+                            G.GAME.consumeable_buffer = 0
                             SMODS.add_card {
-                                set = "Spectral"
+                                set = "Spectral",
+                                key_append = "equi_carpticalillusioncard"
                             }
                             return true
-                        end)}))
+                        end
+                    }))
                     return {
                         message = localize("k_plus_spectral"),
                         colour = G.C.SECONDARY_SET.Spectral
                     }
                 else
                     return {
-                        message = localize("k_fac_equi_no_room"),
+                        message = localize("k_no_room_ex"),
                         colour = G.C.SECONDARY_SET.Spectral
                     }
                 end
@@ -309,26 +319,25 @@ FishAndChips.Fish {
     end,
 
     set_ability = function(self, card, initial, delay_sprites)
-        card.ability.extra.chosen_bait = pseudorandom("equi_carpticalillusion", 2, #G.P_CENTER_POOLS.fac_Bait)
+        card.ability.extra.chosen_bait = fac_equi_get_targeted_bait("equi_carpticalillusion")
     end
 }
 
 --Mawray
 fac_equi_get_longest_fish = function(fish)
     local max_length = 0
-    local longest_fish = nil
     for k, v in pairs(fish) do
         if v.ability.stats.length ~= nil and v.ability.stats.length > max_length and v.config.center.key ~= "fish_fac_mawray" then
             max_length = v.ability.stats.length
-            longest_fish = v
         end
     end
-    return max_length, longest_fish
+    return max_length
 end
 
 fac_equi_get_mawray_xmult = function()
-    local max_length, _ = fac_equi_get_longest_fish(G.fac_fish_area.cards)
-    local xmult = (3 * (math.log10(max_length + 0.5) + math.log10(2)) + 1)
+    if not G.fac_fish_area then return 1 end
+    local max_length = fac_equi_get_longest_fish(G.fac_fish_area.cards)
+    local xmult = (3 * math.log10((2 * max_length) + 1) + 1)
     --note: would maybe be good if the player can know this formula in some way, but seems like too much to put into the description
     return xmult
 end
@@ -349,30 +358,18 @@ FishAndChips.Fish {
         weight = { min = 15, max = 30 },
         length = { min = 2.5, max = 3.5 }
     },
-    config = {
-        extra = {
-            xmult = 1
-        }
-    },
     environments = {
         aquifer = 1,
         styx = 0.1,
         swamp = 0.1
     },
     loc_vars = function(self, info_queue, card)
-        if G.fac_fish_area then
-            card.ability.extra.xmult = fac_equi_get_mawray_xmult()
-        else
-            card.ability.extra.xmult = 1
-        end
-        return { vars = { card.ability.extra.xmult } }
+        return { vars = { fac_equi_get_mawray_xmult() } }
     end,
 
     calculate = function(self, card, context)
         if context.joker_main then
-            return {
-                xmult = card.ability.extra.xmult
-            }
+            return { xmult = fac_equi_get_mawray_xmult() }
         end
     end
 }
@@ -416,38 +413,35 @@ FishAndChips.Fish {
 
     calculate = function(self, card, context)
         if context.setting_blind and not context.blueprint then
-            card.ability.extra.current_rank = pseudorandom_element(SMODS.Ranks, "equi_gofish").original_key
+            card.ability.extra.current_rank = pseudorandom_element(SMODS.Ranks, "equi_gofish").key
             return {
                 message = localize {
                     type = "variable",
                     key = "k_fac_equi_go_fish_call",
-                    vars = { card.ability.extra.current_rank }
+                    vars = { localize(card.ability.extra.current_rank, "ranks") }
                 }
             }
         end
 
         if context.after and G.GAME.current_round.hands_played == 0 and not context.blueprint then
-            local rank_check = true
             for i = 1, #context.full_hand do
-                if context.full_hand[i].base.value ~= card.ability.extra.current_rank then
-                    rank_check = false
+                if context.full_hand[i]:get_id() ~= SMODS.Ranks[card.ability.extra.current_rank].id then
+                    return
                 end
             end
 
-            if rank_check == true then
-                SMODS.scale_card(card, {
-                    ref_value = "xmult",
-                    scalar_value = "xmult_gain",
-                    scalar_factor = #context.full_hand,
-                    no_message = true,
-                })
-                for i = 1, #context.full_hand do
-                    SMODS.destroy_cards(context.full_hand[i])
-                end
-                return {
-                    message = localize("k_fac_equi_go_fish_response")
-                }
+            SMODS.scale_card(card, {
+                ref_value = "xmult",
+                scalar_value = "xmult_gain",
+                scalar_factor = #context.full_hand,
+                no_message = true,
+            })
+            for i = 1, #context.full_hand do
+                SMODS.destroy_cards(context.full_hand[i])
             end
+            return {
+                message = localize("k_fac_equi_go_fish_response")
+            }
         end
 
         if context.joker_main then
@@ -455,11 +449,16 @@ FishAndChips.Fish {
                 xmult = card.ability.extra.xmult
             }
         end
+    end,
+
+    set_ability = function(self, card, initial, delay_sprites)
+        card.ability.extra.current_rank = pseudorandom_element(SMODS.Ranks, "equi_gofish").key
     end
 }
 
 FishAndChips.equi.mutekimaru_flavour = {
     --Wanted to have the DynaText actually cycle through these in order but that seems to require some cursed stuff
+    --TODO: move these into the localisation file (ghostsalt)
     cycles = {
         "Up Down Left Right B A",
         "Down Left Right B A Down",
@@ -610,9 +609,6 @@ FishAndChips.Fish {
                     pop_delay = 0.7,
                     scale = 0.32,
                     min_cycle_time = 0 })} }
-            } },
-            { n = G.UIT.R, config = { align = "cm", padding = 0.02 }, nodes = {
-                { n = G.UIT.T, config = { text = " card when scored", colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
             } }
         }
 
@@ -633,116 +629,48 @@ FishAndChips.Fish {
     end,
 
     calculate = function(self, card, context)
-        --this code is poop from a butt but i have more important things to do than making it better
-        if context.press_play then
-            leftright = pseudorandom_element({"left", "right"}, "equi_mutekimaruchannel")
-            target = pseudorandom_element({"joker", "fish", "card"}, "equi_mutekimaruchannel")
-            reward = pseudorandom_element({"chips", "mult", "xmult"}, "equi_mutekimaruchannel")
-            card_reward = pseudorandom_element({"Tarot", "Planet"}, "equi_mutekimaruchannel")
+        if context.press_play and not context.blueprint then
+            card.ability.extra.leftright = pseudorandom_element({"left", "right"}, "equi_mutekimaruchannellr")
+            card.ability.extra.target = pseudorandom_element({"joker", "fish", "card"}, "equi_mutekimaruchanneltarget")
+            card.ability.extra.reward = pseudorandom_element({"chips", "mult", "xmult"}, "equi_mutekimaruchannelreward")
+            card.ability.extra.card_reward = pseudorandom_element({"Tarot", "Planet"}, "equi_mutekimaruchannelcard")
         end
 
-        if context.other_joker and target == "joker" then
-            if (context.other_joker == G.jokers.cards[1] and leftright == "left") or
-            (context.other_joker == G.jokers.cards[#G.jokers.cards] and leftright == "right") then
-                if reward == "chips" then
-                    SMODS.calculate_effect({chips = card.ability.extra.chips, message_card = context.other_joker}, context.blueprint_card or card)
-                elseif reward == "mult" then
-                    SMODS.calculate_effect({mult = card.ability.extra.mult, message_card = context.other_joker}, context.blueprint_card or card)
-                elseif reward == "xmult" then
-                    SMODS.calculate_effect({xmult = card.ability.extra.xmult, message_card = context.other_joker}, context.blueprint_card or card)
-                end
+        if (context.other_joker and card.ability.extra.target == "joker" and
+                ((context.other_joker == G.jokers.cards[1] and card.ability.extra.leftright == "left")
+                or (context.other_joker == G.jokers.cards[#G.jokers.cards] and card.ability.extra.leftright == "right"))) or
 
-                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            SMODS.add_card {
-                                set = card_reward,
-                            }
-                            G.GAME.consumeable_buffer = 0
-                            return true
-                        end
-                    }))
-                    if card_reward == "Tarot" then
-                        return {
-                            message = localize("k_plus_tarot")
-                        }
-                    elseif card_reward == "Planet" then
-                        return {
-                            message = localize("k_plus_planet")
-                        }
-                    end
-                end
+            (context.other_main and context.other_main.ability.set == "fac_Fish" and card.ability.extra.target == "fish" and
+                ((context.other_main == G.fac_fish_area.cards[1] and card.ability.extra.leftright == "left") or
+                    (context.other_main == G.fac_fish_area.cards[#G.fac_fish_area.cards] and card.ability.extra.leftright == "right"))) or
+
+            (context.individual and context.cardarea == G.play and card.ability.extra.target == "card" and
+                ((context.other_card == context.scoring_hand[1] and card.ability.extra.leftright == "left") or
+                    (context.other_card == context.scoring_hand[#context.scoring_hand] and card.ability.extra.leftright == "right"))) then
+            if card.ability.extra.reward == "chips" then
+                SMODS.calculate_effect({ chips = card.ability.extra.chips, message_card = context.other_joker or context.other_main or context.other_card }, context.blueprint_card or card)
+            elseif card.ability.extra.reward == "mult" then
+                SMODS.calculate_effect({ mult = card.ability.extra.mult, message_card = context.other_joker or context.other_main or context.other_card }, context.blueprint_card or card)
+            elseif card.ability.extra.reward == "xmult" then
+                SMODS.calculate_effect({ xmult = card.ability.extra.xmult, message_card = context.other_joker or context.other_main or context.other_card }, context.blueprint_card or card)
             end
-        end
 
-        if context.other_main and context.other_main.ability.set == "fac_Fish" and target == "fish" then
-            if (context.other_main == G.fac_fish_area.cards[1] and leftright == "left") or
-            (context.other_main == G.fac_fish_area.cards[#G.fac_fish_area.cards] and leftright == "right") then
-                if reward == "chips" then
-                    SMODS.calculate_effect({chips = card.ability.extra.chips, message_card = card}, context.blueprint_card or card)
-                elseif reward == "mult" then
-                    SMODS.calculate_effect({mult = card.ability.extra.mult, message_card = card}, context.blueprint_card or card)
-                elseif reward == "xmult" then
-                    SMODS.calculate_effect({xmult = card.ability.extra.xmult, message_card = card}, context.blueprint_card or card)
-                end
-
-                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            SMODS.add_card {
-                                set = card_reward,
-                            }
-                            G.GAME.consumeable_buffer = 0
-                            return true
-                        end
-                    }))
-
-                    if card_reward == "Tarot" then
-                        return {
-                            message = localize("k_plus_tarot")
+            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        SMODS.add_card {
+                            set = card.ability.extra.card_reward,
+                            key_append = "fish_fac_mutekimaruchannelcard"
                         }
-                    elseif card_reward == "Planet" then
-                        return {
-                            message = localize("k_plus_planet")
-                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
                     end
-                end
-            end
-        end
-
-        if context.individual and context.cardarea == G.play and target == "card" then
-            if (context.other_card == context.scoring_hand[1] and leftright == "left") or
-            (context.other_card == context.scoring_hand[#context.scoring_hand] and leftright == "right") then
-                if reward == "chips" then
-                    SMODS.calculate_effect({chips = card.ability.extra.chips, message_card = context.other_card}, context.blueprint_card or card)
-                elseif reward == "mult" then
-                    SMODS.calculate_effect({mult = card.ability.extra.mult, message_card = context.other_card}, context.blueprint_card or card)
-                elseif reward == "xmult" then
-                    SMODS.calculate_effect({xmult = card.ability.extra.xmult, message_card = context.other_card}, context.blueprint_card or card)
-                end
-
-                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            SMODS.add_card {
-                                set = card_reward,
-                            }
-                            G.GAME.consumeable_buffer = 0
-                            return true
-                        end
-                    }))
-                    if card_reward == "Tarot" then
-                        return {
-                            message = localize("k_plus_tarot")
-                        }
-                    elseif card_reward == "Planet" then
-                        return {
-                            message = localize("k_plus_planet")
-                        }
-                    end
+                }))
+                if card.ability.extra.card_reward == "Tarot" then
+                    return { message = localize("k_plus_tarot") }
+                elseif card.ability.extra.card_reward == "Planet" then
+                    return { message = localize("k_plus_planet") }
                 end
             end
         end
