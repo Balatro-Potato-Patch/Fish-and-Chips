@@ -152,13 +152,12 @@ return {
 				text = {
 					{
 						"Held {C:attention}Joker{} is treated",
-						"as if it was a {C:fac_fish}Fish",
+						"as if it were a {C:fac_fish}Fish",
 						"{C:inactive}(Currently holding: {C:attention}#1#{}{C:inactive}){}"
 					},
 					{
-						"Use to {C:red}consume{}",
-						"any held Joker",
-						"and then {C:attention}grabs{} leftmost Joker",
+						"Use to {C:red}consume{} any held Joker",
+						"and then {C:attention}grab{} leftmost Joker",
 						"{ppu_bubble:usable}"
 					},
 				}
