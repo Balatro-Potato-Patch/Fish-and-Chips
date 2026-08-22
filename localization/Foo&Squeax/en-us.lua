@@ -240,7 +240,7 @@ return {
 					"Yes, that's my name"
 				},
 				text = {
-					"Once per {C:attention}Ante",
+					"Once per {C:attention}Ante,",
 					"Wish a random {C:dark_edition}edition",
 					"upon the next {C:fac_fish}Fish{} caught",
 					"{ppu_bubble:usable}"
