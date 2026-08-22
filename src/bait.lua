@@ -349,7 +349,6 @@ FishAndChips.Bait{
 	pos = {x = 3, y = 1},
 	pixel_size = {w = 60, h = 84},
 	target = 'copying',
-	mini_atlas = false,
 }
 FishAndChips.Bait{
 	key = "generation",
@@ -371,6 +370,5 @@ FishAndChips.Bait{
 	pos = {x = 5, y = 1},
 	pixel_size = {w = 68, h = 68},
 	target = 'destroy_card',
-	mini_atlas = false,
 }
 --#endregion
