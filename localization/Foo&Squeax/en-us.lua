@@ -153,7 +153,7 @@ return {
 					{
 						"Held {C:attention}Joker{} is treated",
 						"as if it was a {C:fac_fish}Fish",
-						"{C:inactive}(Currently holding: {C:attention}#1#{}{C:inactive} ){}"
+						"{C:inactive}(Currently holding: {C:attention}#1#{}{C:inactive}){}"
 					},
 					{
 						"Use to {C:red}consume{}",
