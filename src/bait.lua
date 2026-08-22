@@ -299,7 +299,6 @@ FishAndChips.Bait{
 	pos = {x = 6, y = 1},
 	pixel_size = {w = 69, h = 74},
 	target = 'xmult',
-	mini_atlas = false,
 }
 FishAndChips.Bait{
 	key = "retrigger",
