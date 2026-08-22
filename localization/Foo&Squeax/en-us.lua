@@ -33,7 +33,7 @@ return {
 				text = {
 					"While Submerged:",
 					"All {C:attention}Jokers{} are debuffed",
-					"All {C:fac_fish}Fish{} retrigger {C:attention}#1#{} times",
+					"All {C:fac_fish}Fish{} retrigger {C:attention}#1#{} time",
 					"{C:inactive}[#2#]",
 					"{ppu_bubble:toggle}"
 				}
