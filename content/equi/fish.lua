@@ -327,7 +327,7 @@ FishAndChips.Fish {
 fac_equi_get_longest_fish = function(fish)
     local max_length = 0
     for k, v in pairs(fish) do
-        if v.ability.stats.length ~= nil and v.ability.stats.length > max_length and v.config.center.key ~= "fish_fac_mawray" then
+        if v.ability.stats.length ~= nil and v.ability.stats.length > max_length and v.config.center.key ~= "fish_fac_mawray" and v.ability.stats.length < 1e308 then
             max_length = v.ability.stats.length
         end
     end
