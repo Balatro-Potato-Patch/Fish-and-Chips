@@ -523,7 +523,7 @@ FishAndChips.Fish {
 		end })
 	end,
 	can_use = function(self, card)
-		return true
+		return #G.consumeables.cards < G.consumeables.config.card_limit
 	end
 }
 
@@ -568,7 +568,7 @@ FishAndChips.Fish {
 		end })
 	end,
 	can_use = function(self, card)
-		return true
+		return #G.consumeables.cards < G.consumeables.config.card_limit
 	end
 }
 
