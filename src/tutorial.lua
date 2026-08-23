@@ -77,11 +77,11 @@ function FishAndChips.tutorial()
 	step = tutorial_info({
 		text_key = "fac_fishing_2d",
 		attach = {
-			major = G.FISHING.fishing_bait_inventory,
+			major = G.fac_bait_area,
 			type = "cm",
-			offset = { x = 0, y = 2 },
+			offset = { x = 0, y = 3 },
 		},
-		highlight = { G.FISHING.fishing_bait_inventory },
+		highlight = { G.fac_bait_area },
 		align = "cr",
 		step = step,
 		fac_tutorial = true,
@@ -89,11 +89,35 @@ function FishAndChips.tutorial()
 	step = tutorial_info({
 		text_key = "fac_fishing_2e",
 		attach = {
-			major = G.FISHING.fishing_bait_inventory,
+			major = G.fac_bait_area,
 			type = "cm",
-			offset = { x = 0, y = 2 },
+			offset = { x = 0, y = 3 },
 		},
-		highlight = { G.FISHING.fishing_bait_inventory },
+		highlight = { G.fac_bait_area },
+		align = "cr",
+		step = step,
+		fac_tutorial = true,
+	})
+	step = tutorial_info({
+		text_key = "fac_fishing_2f",
+		attach = {
+			major = G.fac_bait_area,
+			type = "cm",
+			offset = { x = 0, y = 3 },
+		},
+		highlight = { G.fac_bait_area },
+		align = "cr",
+		step = step,
+		fac_tutorial = true,
+	})
+	step = tutorial_info({
+		text_key = "fac_fishing_2g",
+		attach = {
+			major = G.fac_bait_area,
+			type = "cm",
+			offset = { x = 0, y = 3 },
+		},
+		highlight = { #G.HUD_bait_inv > 0 and G.HUD_bait_inv[1] or nil },
 		align = "cr",
 		step = step,
 		fac_tutorial = true,
