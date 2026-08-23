@@ -9,17 +9,16 @@ return {
 				},
 				text = {
 					{
+						"While {C:attention}empty{}, {C:attention}use{} to skewer",
+						"all {C:fac_fish}Fish{} to the right",
+					},
+					{
 						"Skewered {C:fac_fish}Fish{} still activate normally",
 						"At end of round, consume topmost {C:fac_fish}Fish{}"
 					},
 					{
-						"While Empty:",
-						"Skewer all {C:fac_fish}Fish{}",
-						"to the right of this {C:fac_fish}Fish{}",
-					},
-					{
-						"While filled:",
-						"Eat all skewered {C:fac_fish}Fish{}",
+						"While {C:attention}filled{}, {C:attention}use{} to",
+						"{C:red}eat{} all skewered {C:fac_fish}Fish{}",
 						"{ppu_bubble:usable}"
 					},
 				}
@@ -33,8 +32,8 @@ return {
 				text = {
 					"While Submerged:",
 					"All {C:attention}Jokers{} are debuffed",
-					"All {C:fac_fish}Fish{} retrigger {C:attention}#1#{} times",
-					"{C:inactive}[#2#]",
+					"All {C:fac_fish}Fish{} retrigger {C:attention}#1#{} time",
+					"{C:inactive}(#2#)",
 					"{ppu_bubble:toggle}"
 				}
 			},
@@ -51,10 +50,9 @@ return {
 						"more likely to appear"
 					},
 					{
-						"This {C:fac_fish}Fish{} consumes",
-						"caught {C:attention}Food{} {C:fac_fish}Fish{}",
-						"and gains {X:mult,C:white}X#3#{} Mult",
-						"{C:inactive}[Currently {X:mult,C:white}X#4#{C:inactive} Mult]"
+						"This {C:fac_fish}Fish{} consumes caught",
+						"{C:attention}Food{} {C:fac_fish}Fish{} and gains {X:mult,C:white}X#3#{} Mult",
+						"{C:inactive}(Currently {X:mult,C:white}X#4#{C:inactive} Mult)"
 					}
 				}
 			},
@@ -71,7 +69,7 @@ return {
 						"Must be pet periodically",
 						"{C:inactive}(but not too much)",
 						"or it's shooed away",
-						"{C:inactive}[#4# seconds remaining]"
+						"{C:inactive}(#4# seconds remaining)"
 					}
 				}
 			},
@@ -81,31 +79,28 @@ return {
 					"he's john cod"
 				},
 				text = {
-					"Instantly {C:attention}win",
-					"current non-{C:attention}Boss Blind{}",
-					"or gain {X:purple,C:white}#1#%{} of",
-					"requirement as Score",
+					"Instantly {C:attention}win{} current",
+					"non-{C:attention}Boss Blind{} or gain {X:purple,C:white}#1#%{}",
+					"of requirement as {C:purple}Score{}",
 					"{ppu_bubble:usable}"
 				}
 			},
 			fish_fac_fas_can_of_wormholes = {
 				name = "Can of Wormholes",
 				flavour = {
-					"These space-faring worms finally",
-					"managed to reach the other",
-					"side of the wormhole"
+					"These space-faring worms finally managed",
+					"to reach the other side of the wormhole"
 				},
 				text = {
 					{
-						"This {C:fac_fish}Fish{} gains {X:mult,C:white}X#1#{} Mult", -- decided to keep this due to how vanilla wording handles this - gabby
-						"when a {C:fac_fish}Fish{} made by {C:attention}#2#{} is caught",
-						"{C:inactive}[Currently {X:mult,C:white}X#3#{C:inactive} Mult]",
-						"{C:inactive}[Target changes every round]"
+						"This {C:fac_fish}Fish{} gains {X:mult,C:white}X#1#{} Mult when a", -- decided to keep this due to how vanilla wording handles this - gabby
+						"{C:fac_fish}Fish{} made by {C:attention}#2#{} is caught,",
+						"target changes every round",
+						"{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)"
 					},
 					{
-						"Use this {C:fac_fish}Fish{} to",
-						"convert it into {C:attention}#4#{} bait",
-						"per {C:attention}#1# {X:mult,C:white}XMult{} gained",
+						"Use this {C:fac_fish}Fish{} to convert it",
+						"into {C:attention}#4#{} Bait per {X:mult,C:white}X#1#{} Mult gained",
 						"{ppu_bubble:usable}"
 					},
 				}
@@ -123,9 +118,8 @@ return {
 					- gabby ]]
 				},
 				text = {
-					"Each played card",
-					"permanently gains",
-					"{X:mult,C:white}X#1#{} Mult when scored"
+					"Each {C:attention}played card{} permanently",
+					"gains {X:mult,C:white}X#1#{} Mult when scored"
 				}
 			},
 			fish_fac_fas_kyu_kurafin = {
@@ -137,29 +131,27 @@ return {
 					"This {C:fac_fish}Fish{} gains {C:chips}+#1#{} Chips",
 					"when a {C:fac_fish}Fish{} is {C:red}lost",
 					"or a treasure is {C:red}failed",
-					"{C:inactive}[Currently {C:chips}+#2#{C:inactive} Chips]"
+					"{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips){}"
 				}
 			},
 			fish_fac_fas_kine = {
 				name = "Kine",
 				flavour = {
-					"A funny guy who looks",
-					"just like an ocean sunfish.",
-					"He'll always stick",
-					"by everyone's side."
+					"A funny guy who looks just",
+					"like an ocean sunfish. He'll",
+					"always stick by everyone's side."
 					-- ripped from Kirby's Star Stacker website [ https://www.nintendo.co.jp/n02/dmg/akcj/chr.html ]
 				},
 				text = {
 					{
-						"Held {C:attention}Joker{} is treated",
-						"as if it was a {C:fac_fish}Fish",
-						"{C:inactive}(Currently holding: {C:attention}#1#{}{C:inactive} ){}"
+						"Use to {C:red}consume{} currently held Joker",
+						"and then {C:attention}grab{} leftmost Joker",
+						"{ppu_bubble:usable}"
 					},
 					{
-						"Use to {C:red}consume{}",
-						"any held Joker",
-						"and then {C:attention}grabs{} leftmost Joker",
-						"{ppu_bubble:usable}"
+						"Grabbed {C:attention}Joker{} is treated",
+						"as if it were a {C:fac_fish}Fish",
+						"{C:inactive}(Currently holding: {C:attention}#1#{}{C:inactive}){}"
 					},
 				}
 			},
@@ -172,7 +164,7 @@ return {
 					"Needs some encouragement",
 					"before it's ready to help you.",
 					"Maybe some {C:attention}ACT{}ing would work?",
-					"{C:inactive}[Once per round]",
+					"{C:inactive}(Once per round)",
 					"{ppu_bubble:usable}{ppu_bubble:inactive}"
 				}
 			},
@@ -204,9 +196,9 @@ return {
 					"Don't krill, and don't be krilled, alright?"
 				},
 				text = {
-					"{C:mult}+#1#{} Mult per unique {C:fac_fish}Fish{}",
-					"caught this run",
-					"{C:inactive}[Currently {C:mult}+#2#{C:inactive} Mult]"
+					"{C:mult}+#1#{} Mult per unique",
+					"{C:fac_fish}Fish{} caught this run",
+					"{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
 				}
 			},
 			fish_fac_fas_sardine = {
@@ -241,9 +233,9 @@ return {
 					"Yes, that's my name"
 				},
 				text = {
-					"Once per {C:attention}Ante",
-					"Wish a random {C:dark_edition}edition",
-					"upon the next {C:fac_fish}Fish{} caught",
+					"Once per {C:attention}Ante{}, wish",
+					"a random {C:dark_edition}edition{} upon",
+					"the next {C:fac_fish}Fish{} caught",
 					"{ppu_bubble:usable}"
 				}
 			}

@@ -74,7 +74,7 @@ FishAndChips.Fish {
     weight = 55,
     ppu_coder = { "FurretWalk" },
     ppu_artist = { "FurretWalk" },
-    attributes = { "mult", "destroy_card"},
+    attributes = { "chips", "destroy_card"},
     config = {
         extra = {
             chips = 21, chipmod = 8, suit = 'Hearts'

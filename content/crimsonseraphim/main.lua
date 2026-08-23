@@ -662,22 +662,26 @@ FishAndChips.Fish {
                 }))
                 card.ability.saved_card = nil
             else
-                SMODS.calculate_effect({message = localize("k_nope_ex")}, card)
+                SMODS.calculate_effect({message = localize("k_nope_ex"), colour = G.C.PURPLE}, card)
             end
         else
             local c = G.fac_fish_area.cards[#G.fac_fish_area.cards]
             if c == card then return end
-            c.area:remove_card(c)
-            c.states.collide.can = false
-            c.states.hover.can = false
-            c.states.click.can = false
-            c.states.drag.can = false
-            c.states.focus.can = false
-            c.states.visible = false
-            card.ability.saved_card = {
-                save_table = c:save(),
-                card = c
-            }
+            if c.config.center.key == card.config.center.key then
+                SMODS.calculate_effect({message = localize("k_nope_ex"), colour = G.C.PURPLE}, card)
+            else
+                c.area:remove_card(c)
+                c.states.collide.can = false
+                c.states.hover.can = false
+                c.states.click.can = false
+                c.states.drag.can = false
+                c.states.focus.can = false
+                c.states.visible = false
+                card.ability.saved_card = {
+                    save_table = c:save(),
+                    card = c
+                }
+            end
         end
 	end,
 	can_use = function(self, card)
@@ -1518,7 +1522,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.crimsonseraphim.lotus_alts = {
-    "mf", "maxboi", "eris", "squeax09", "cassknows", "jade", "ruby",
+    "mf", "maxboi", "eris", "squeaxo9", "cassknows", "jade", "ruby", -- i hate that O and 0 are treated the same on the game profiles fuckkkkk [gabby, making an adjustment here hai :3]
     "lizie"
 }
 for i, v in pairs(FishAndChips.crimsonseraphim.lotus_alts) do
@@ -1580,7 +1584,7 @@ FishAndChips.Fish {
 	},
     config = {
         extra = {
-            mult = 1
+            mult = 0.25
         }
     },
     flavour_vars = function()
