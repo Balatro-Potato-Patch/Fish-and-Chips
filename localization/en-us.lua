@@ -464,6 +464,7 @@ return {
             ph_fac_with_rod = 'with ',
             ph_fac_unknown_item = '????',
             ph_fac_by = 'By ',
+            ph_fac_times_fished = 'Times Fished: ',
             ph_fac_caught = 'Fish caught: ',
             ph_fac_lost = 'Fish lost: ',
             ph_fac_rate = 'Catch rate: ',

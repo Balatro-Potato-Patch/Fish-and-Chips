@@ -131,7 +131,7 @@ G.FUNCS.fac_reset_all_progress = function(e)
             career_lines_snapped = 0,
             career_sand_dollars = 0,
             career_fish_sold = 0,
-            environments_fished = {},
+            environment_data = {},
             baits_used = {},
             fish_data = {},
             rod_data = {},
@@ -475,6 +475,9 @@ end
 function FishAndChips.Compendium.environment_page(page_number, left)
     local environment_key = FishAndChips.Environment.obj_buffer[math.ceil(page_number/2)]
     local environment = FishAndChips.Environments[environment_key]
+    local environment_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.environment_data and G.PROFILES[G.SETTINGS.profile].fac_fishing.environment_data[environment_key]
+
+    local times_fished = environment_data and environment_data.times_fished or 0
 
     -- TODO: Fix artist
     local page = {n=G.UIT.C, config = {minw = 5.4, minh = 9.3, align = 'tm', padding = 0.1}, nodes = {
@@ -489,7 +492,12 @@ function FishAndChips.Compendium.environment_page(page_number, left)
                     {n=G.UIT.R, config = {align = 'tr'}, nodes = {
                         {n=G.UIT.T, config = {text = localize('ph_fac_by')..environment.ppu_artist[1], scale = 0.35, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}
                     }},
-                }}
+                }},
+                {n=G.UIT.R, config = {colour = G.C.WHITE, align = 'bl'}, nodes = {
+                    {n=G.UIT.R, config = {align = 'tl', padding = -0.4}, nodes = {
+                        {n=G.UIT.T, config = {text = '           '..localize('ph_fac_times_fished')..times_fished, scale = 0.25, colour = FishAndChips.C.COMPENDIUM_TEXT, font = SMODS.Fonts.fac_collection}}
+                    }},
+                }},
             }},
         }} or nil,
         {n=G.UIT.R, config = {align = 'tm', minh = page_number%2==1 and 3 or 8.2, minw = 4.8}, nodes = {
