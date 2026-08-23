@@ -1522,7 +1522,7 @@ FishAndChips.Fish {
 }
 
 FishAndChips.crimsonseraphim.lotus_alts = {
-    "mf", "maxboi", "eris", "squeax09", "cassknows", "jade", "ruby",
+    "mf", "maxboi", "eris", "squeaxo9", "cassknows", "jade", "ruby", -- i hate that O and 0 are treated the same on the game profiles fuckkkkk [gabby, making an adjustment here hai :3]
     "lizie"
 }
 for i, v in pairs(FishAndChips.crimsonseraphim.lotus_alts) do
