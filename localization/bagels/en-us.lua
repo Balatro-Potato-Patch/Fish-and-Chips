@@ -34,7 +34,7 @@ return {
 			},
 			fish_fac_bagels_hookworm = {
 				name = 'Hookworm',
-				text = { '{C:attention}+#1#{} Bait when any', '{C:attention}Booster Pack{} is opened' },
+				text = { 'Receive {C:attention}#1#{} random', 'Bait when any', '{C:attention}Booster Pack{} is opened' },
 				flavor = { 'I think this is the', 'same worm you used', 'as bait. It must really', 'like your hook.' },
 			},
 			fish_fac_bagels_a_for_effish = {

@@ -133,16 +133,31 @@ FishAndChips.Fish {
 		end
 
 		if context.end_of_round and context.main_eval then
-			local old_slot = card.ability.extra.slot
-			repeat
-				card.ability.extra.slot = pseudorandom("chameleon", 1, G.jokers.config.card_limit)
-			until card.ability.extra.slot ~= old_slot
+			if #G.jokers.cards > 0 then
+				local old_slot = card.ability.extra.slot
+				repeat
+					card.ability.extra.slot = pseudorandom("chameleon", 1, #G.jokers.cards)
+				until card.ability.extra.slot ~= old_slot
+			else
+				card.ability.extra.slot = 1
+			end
+		end
+
+		if #G.jokers.cards < card.ability.extra.slot then
+			if #G.jokers.cards > 0 then
+				local old_slot = card.ability.extra.slot
+				repeat
+					card.ability.extra.slot = pseudorandom("chameleon", 1, #G.jokers.cards)
+				until card.ability.extra.slot ~= old_slot
+			else
+				card.ability.extra.slot = 1
+			end
 		end
 		
 		return ret
 	end,
 	on_catch = function(self, card)
-		card.ability.extra.slot = pseudorandom("chameleon", 1, G.jokers.config.card_limit)
+		card.ability.extra.slot = pseudorandom("chameleon", 1, #G.jokers.cards)
 	end,
 }
 
