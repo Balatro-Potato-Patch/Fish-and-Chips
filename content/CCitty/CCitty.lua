@@ -32,7 +32,7 @@ PotatoPatchUtils.Developer({
 	name = 'CampfireCollective',
 	atlas = 'fac_Kittyfire',
 	pos = { x = 0, y = 0 },
-	colour = G.C.PURPLE,
+	colour = HEX('e223eb'),
 	fac_partner = 'fac_DottyKitty',
 	joint_credits = 2,
 	loc = true,
@@ -70,6 +70,7 @@ FishAndChips.Fish { --perkoio
 	environments = {
 		soup = 1
 	},
+	colour = HEX('56A786'),
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS["e_negative"]
@@ -116,6 +117,7 @@ FishAndChips.Fish { --yoray
 	environments = {
 		styx = 1
 	},
+	colour = HEX('5C7280'),
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.Xmult } }
 	end,
@@ -152,6 +154,7 @@ FishAndChips.Fish { --canioctopus
 	environments = {
 		volcano = 1
 	},
+	colour = HEX('FFFFFF'),
 	loc_vars = function(self, info_queue, card)
 		return { vars = {} }
 	end,
@@ -184,6 +187,7 @@ FishAndChips.Fish { --troutulet
 	environments = {
 		city_river = 1
 	},
+	colour = HEX('009cfd'),
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.sand } }
 	end,
@@ -226,6 +230,7 @@ FishAndChips.Fish { --chicod
 	environments = {
 		swamp = 1
 	},
+	colour = HEX('fd5f55'),
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.reduce } }
 	end,
@@ -345,6 +350,7 @@ FishAndChips.Fish { --Doctor Sharktred
 		aquifer = 15
 
 	},
+	colour = HEX('9e95b3'),
 	loc_vars = function(self, info_queue, card)
 		return { vars = {} }
 	end,
@@ -590,6 +596,7 @@ FishAndChips.Fish { --Seiun Sky seahorse
 		soup = 3,
 		calm_pond = 2
 	},
+	colour = HEX('9fc590'),
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.freeroll } }
 	end,
@@ -684,6 +691,7 @@ FishAndChips.Fish { --sweet bro and hella jeff fish
 	environments = {
 		backroom = 1
 	},
+	colour = HEX('ecdac2'),
 	loc_vars = function(self, info_queue, card)
 		return { vars = { elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 250 / 500, "fac_fihs_CCitty_desc") } } }
 	end,
@@ -756,6 +764,7 @@ FishAndChips.Fish { --Garfield Phone
 		backroom = 3,
 		wormhole = 2
 	},
+	colour = HEX('f28a3c'),
 	blueprint_compat = false,
 	in_pool = function(self, args)
 		return G.GAME.garfield_day > 1
@@ -886,6 +895,7 @@ FishAndChips.Fish { --Bluebell Angler
 		aquifer = 1,
 		garden = 1
 	},
+	colour = HEX('7c75d2'),
 	stats = {
 		weight = { min = .01, max = .06 },
 		length = { min = .02, max = .18 }
@@ -1001,6 +1011,7 @@ FishAndChips.Fish { --Solin the Sea Slug
 	environments = {
 		chocolate_river = 1
 	},
+	colour = HEX('77533f'),
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.dollars, card.ability.extra.remaining, card.ability.extra.names[card.ability.extra.chosen] } }
 	end,
