@@ -183,14 +183,18 @@ FishAndChips.Fish{
 			local free = {}
 			if G.fac_fish_area then
 				for _, _card in ipairs(G.fac_fish_area.cards) do
-					if found and _card.config.center.key ~= "fac_fas_fish_kebab" then
-						free[#free+1] = _card
-						_card.ability.fac_fas_kebab = {
-							id = card.ability.immutable.id,
-							order = card.ability.immutable.fish
-						}
-						card.ability.immutable.fish = card.ability.immutable.fish + 1
-						FishAndChips.FooSqueax.link_kebab(card, _card)
+					if found then
+						if _card.config.center.key ~= "fish_fac_fas_fish_kebab" then
+							free[#free+1] = _card
+							_card.ability.fac_fas_kebab = {
+								id = card.ability.immutable.id,
+								order = card.ability.immutable.fish
+							}
+							card.ability.immutable.fish = card.ability.immutable.fish + 1
+							FishAndChips.FooSqueax.link_kebab(card, _card)
+						else
+							SMODS.calculate_effect({message = localize("k_nope_ex"), colour = G.C.PURPLE}, _card)
+						end
 					end
 					if _card == card then found = true end
 				end
