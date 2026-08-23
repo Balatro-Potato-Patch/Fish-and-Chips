@@ -95,7 +95,7 @@ return {
                     "try fishing elsewhere!"
                 }
             },
-            fish_fac_splash = {
+            fish_fac_splash_screen = {
                 name = "Flounder",
                 text = {
                     "Cannot be viewed by normal means.",
@@ -172,7 +172,7 @@ return {
                 },
             },
             bait_fac_function = {
-                name = "Functional Frog", -- i think i'm naming him felix
+                name = "Functional Frog", -- His name is Felix and he is my Son. - also gabby
                 text = {
                     "Fish that are {C:attention}usable{}",
                     "are {X:attention,C:white}X#1#{} more likely",
