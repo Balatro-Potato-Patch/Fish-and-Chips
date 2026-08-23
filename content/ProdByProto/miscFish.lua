@@ -136,9 +136,9 @@
 		blockable = false,
 		blocking = false,
 		func = function()
+			G.GAME.proto_q_music = false
 			G.ARGS.push.type = 'restart_music'
 			G.SOUND_MANAGER.channel:push(G.ARGS.push)
-			G.GAME.proto_q_music = false
 			return true
 		end
 	}
@@ -170,7 +170,7 @@
 			return { vars = { cae.bait } }
 		end,
 
-		use = function(self,card,area)
+		use = function(self,card)
 			FishAndChips.create_baits_from_card(card, card.ability.extra.bait)
 			G.GAME.proto_q_music = "jclub"
 			G.E_MANAGER:add_event(Event(playlistEvent))

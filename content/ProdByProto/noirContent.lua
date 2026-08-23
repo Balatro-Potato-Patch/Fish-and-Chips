@@ -72,6 +72,7 @@
 
 
     function facp.noirProg(args)
+        if not args then return end
         G.E_MANAGER:add_event(Event({
             trigger = "immediate",
             no_delete = true,
@@ -79,10 +80,7 @@
             blockable = true,
             blocking = false,
             func = function()
-                local contextTable = {}
-                if args.flg then contextTable["noir_flag"] = args.flg end
-                if args.lvl then contextTable["noir_level"] = args.lvl end
-                SMODS.calculate_context(contextTable)
+                SMODS.calculate_context{noir_flag = args.flg, noir_level = args.lvl}
                 return true
             end
         }))
@@ -162,9 +160,9 @@
             local ca = card.ability
             G.GAME.proto_noirshade = not G.GAME.proto_noirshade
             if not ca.extra.storyActive then
+                G.GAME.proto_q_music = "noir1"
                 G.ARGS.push.type = 'restart_music'
                 G.SOUND_MANAGER.channel:push(G.ARGS.push)
-                G.GAME.proto_q_music = "noir1"
                 facp.noirProg({ flg = 1, lvl = 1})
                 ca.eternal = true
                 ca.extra.storyActive = true
@@ -242,7 +240,7 @@
                             G.GAME.noir_pts = G.GAME.noir_pts * facp.itemScores[context.other_card.ability.noir_mark].xPts
                                 if #cae.noir_inv > 2 then
                                     for i,_ in ipairs(cae.noir_inv) do
-                                        local level = false
+                                        local level
                                         if i > 3 then
                                             cae.noir_inv[i] = nil
                                         end
@@ -301,17 +299,17 @@
 
                 if context.hand_drawn then
                     if SMODS.find_card("fish_fac_proto_lockpick")[1] then
-                        for _,card in ipairs(context.hand_drawn) do
-                            if card.ability.noir_mark == "truedoor" then
-                                juice_card_until(card,(function() return context.using_consumeable and context.consumeable == self end))
+                        for _,pcard in ipairs(context.hand_drawn) do
+                            if pcard.ability.noir_mark == "truedoor" then
+                                juice_card_until(pcard,(function() return context.using_consumeable and context.consumeable == self end))
                             end
                         end
                     end
                 end
 
                 if context.hand_drawn and cae.playing_true_end then
-                    for _,card in G.hand.cards do
-                        card.ability.noir_mark = nil
+                    for _,pcard in ipairs(G.hand.cards) do
+                        pcard.ability.noir_mark = nil
                     end
                     local item_card = pseudorandom_element(G.hand.cards,"noir_item")
                     local item_keys = {}
@@ -335,7 +333,7 @@
                     if cae.hand_limit then
                         cae.hand_limit = cae.hand_limit - 1
                         ret.message = cae.hand_limit..(not not cae.playing_true_end and (" / 10 ") or "")..localize("proot_noir_hands")
-                        if cae.hand_limit > 9 then
+                        if cae.playing_true_end and cae.hand_limit > 9 then
                             cae.storyActive = false
                             cae.storyComplete = true
                             cae.finalScore = G.GAME.noir_pts or 0
@@ -349,6 +347,7 @@
                                 SMODS.destroy_cards(self,nil,nil,true)
                             end
                         end
+                        return ret
                     end
                 end
 
@@ -382,16 +381,13 @@
                     end
                 end
 
-                if cae.finalScore > 144 then
-                    if context.joker_main then
-                        return{ chips = cae.finalScore * 2}
+                if cae.finalScore > 144 and context.joker_main then
+                    ret.chips = cae.finalScore * 2
+                    if cae.finalScore > 184 then
+                        ret.xmult = cae.finalScore/100
                     end
-                end
 
-                if cae.finalScore > 184 then
-                    if context.joker_main then
-                        return{ xmult = cae.finalScore/100 }
-                    end
+                    return ret
                 end
             end
         end

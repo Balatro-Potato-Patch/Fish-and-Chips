@@ -161,7 +161,7 @@ return {
                 name = "Concerning memo...",
                 text = {
                     "An {C:attention}important memo{}.",
-                    "{C:inactive,s:0.8}(Required for{}{C:dark_edition,s:0.85}true ending{}{C:inactive,s:0.8})"
+                    "{C:inactive,s:0.8}(Required for {}{C:dark_edition,s:0.85}true ending{}{C:inactive,s:0.8})"
                 }
             },
             proot_noir_key = {
