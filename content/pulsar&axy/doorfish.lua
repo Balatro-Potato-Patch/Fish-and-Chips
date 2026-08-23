@@ -64,7 +64,7 @@ FishAndChips.Fish {
 	-- set use cost based on total cost/weight of chosen fish, we have 6 sand dollars per ante
 	add_to_deck = function(self, card, from_debuff)
 		--draw fish based on rank 0
-		card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
+		card.ability.extra.drawn_fish = self:choose_fish_in_pool(card)
 		local seal_unlocked = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish and G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data.fish_fac_pa_doorfish.seal_unlocked
 		if seal_unlocked then
 			G.E_MANAGER:add_event(Event({
@@ -79,7 +79,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.fac_environment_changed then
-			card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
+			card.ability.extra.drawn_fish = self:choose_fish_in_pool(card)
 		end
 
 		if context.fac_cast_rod then
@@ -95,7 +95,7 @@ FishAndChips.Fish {
 		
 		-- otherwise just change drawn fish
 		if context.fac_end_fishing then
-			card.ability.extra.drawn_fish = self:choose_fish_in_pool(card.ability.extra.times_used)
+			card.ability.extra.drawn_fish = self:choose_fish_in_pool(card)
 			card.ability.extra.toggle = 0
 		end
 	end,
@@ -126,7 +126,7 @@ FishAndChips.Fish {
 			self:show_seal_unlocked()
 		end
 	end,
-	choose_fish_in_pool = function(self, rank)
+	choose_fish_in_pool = function(self, card)
 		-- find current environment, get all fish from it, set rarities based on weight
 		-- set gem costs based on relative costs, but they will likely all be 4
 		-- filter out treasure fish, only spawn them if seal unlocked
@@ -137,6 +137,7 @@ FishAndChips.Fish {
 		_force_env = FishAndChips.rod_function('force_environment')
 		local unfiltered_fish_pool = SMODS.create_poll_pool({_force_env or G.GAME.fac_fishing_environment}, {types = {'fac_Fish'}})
 		fish_pool = FishAndChips.rod_function('modify_pool', fish_pool) or fish_pool
+		local fishing_active = G.STATE == G.STATES.FAC_FISHING
 
 		local fish_pool = unfiltered_fish_pool
 		for _,v in ipairs(unfiltered_fish_pool) do
