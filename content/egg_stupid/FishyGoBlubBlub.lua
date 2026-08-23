@@ -494,6 +494,7 @@ FishAndChips.Fish {
 
 	blueprint_compat = false,
 	attributes = { "usable", "function", "generation", "consumable", "spectral", "tarot", "planet", },
+	requires_consumables = true,
 
 	config = {
 	},
@@ -538,6 +539,7 @@ FishAndChips.Fish {
 
 	blueprint_compat = false,
 	attributes = { "usable", "function", "generation", "consumable", "spectral", "tarot", "planet", },
+	requires_consumables = true,
 
 	config = {
 	},
