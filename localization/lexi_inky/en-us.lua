@@ -1,8 +1,8 @@
 return {
 	descriptions = {
 		PotatoPatch = {
-			PotatoPatchDev_lexi = {
-				name = "lexi",
+			PotatoPatchDev_sheila = {
+				name = "sheila",
 				text = {
 					{
 						"I pretend to know how to code",

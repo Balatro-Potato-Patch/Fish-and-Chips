@@ -11,7 +11,7 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 1 },
 	weight = 3,
 	ppu_coder = {
-		"lexi",
+		"sheila",
 	},
 	ppu_artist = {
 		"inky",
@@ -66,7 +66,7 @@ FishAndChips.Fish({
 	pos = { x = 1, y = 1 },
 	weight = 3,
 	ppu_coder = {
-		"lexi",
+		"sheila",
 	},
 	ppu_artist = {
 		"inky",
@@ -113,7 +113,7 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 0 },
 	weight = 9,
 	ppu_coder = {
-		"lexi",
+		"sheila",
 	},
 	ppu_artist = {
 		"inky",
@@ -211,7 +211,7 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 0 },
 	weight = 7,
 	ppu_coder = {
-		"lexi",
+		"sheila",
 	},
 	ppu_artist = {
 		"inky",
@@ -289,7 +289,7 @@ FishAndChips.Fish({
 	pos = { x = 0, y = 1 },
 	weight = 7,
 	ppu_coder = {
-		"lexi",
+		"sheila",
 	},
 	ppu_artist = {
 		"inky",
@@ -360,7 +360,7 @@ FishAndChips.Fish({
 	pos = { x = 2, y = 1 },
 	weight = 7,
 	ppu_coder = {
-		"lexi",
+		"sheila",
 	},
 	ppu_artist = {
 		"inky",
@@ -440,7 +440,7 @@ FishAndChips.Fish({
 	pos = { x = 1, y = 0 },
 	weight = 8,
 	ppu_coder = {
-		"lexi",
+		"sheila",
 	},
 	ppu_artist = {
 		"inky",
@@ -496,7 +496,7 @@ FishAndChips.Fish({
 	pos = { x = 3, y = 0 },
 	weight = 10,
 	ppu_coder = {
-		"lexi",
+		"sheila",
 	},
 	ppu_artist = {
 		"inky",
@@ -558,7 +558,7 @@ FishAndChips.Fish({
 	pos = { x = 3, y = 1 },
 	weight = 9,
 	ppu_coder = {
-		"lexi",
+		"sheila",
 	},
 	ppu_artist = {
 		"inky",
@@ -617,7 +617,7 @@ FishAndChips.Fish({
 	},
 	weight = 8,
 	ppu_coder = {
-		"lexi",
+		"sheila",
 	},
 	ppu_artist = {
 		"inky",
@@ -683,7 +683,7 @@ FishAndChips.Fish({
 	weight = 1,
 	treasure = true,
 	ppu_coder = {
-		"lexi",
+		"sheila",
 	},
 	ppu_artist = {
 		"inky",
@@ -735,7 +735,7 @@ FishAndChips.Fish({
 	pos = { x = 4, y = 1 },
 	weight = 2,
 	ppu_coder = {
-		"lexi",
+		"sheila",
 	},
 	ppu_artist = {
 		"inky",
