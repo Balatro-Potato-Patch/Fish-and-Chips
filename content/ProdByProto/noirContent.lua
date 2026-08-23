@@ -333,7 +333,7 @@
                     if cae.hand_limit then
                         cae.hand_limit = cae.hand_limit - 1
                         ret.message = cae.hand_limit..(not not cae.playing_true_end and (" / 10 ") or "")..localize("proot_noir_hands")
-                        if false then --I don't know what's supposed to trigger this, but hand_limit>9 is not it.
+                        if false and not cae.storyComplete then --I don't know what's supposed to trigger this, but hand_limit>9 is not it.
                             cae.storyActive = false
                             cae.storyComplete = true
                             cae.finalScore = G.GAME.noir_pts or 0
