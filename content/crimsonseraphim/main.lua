@@ -1584,7 +1584,7 @@ FishAndChips.Fish {
 	},
     config = {
         extra = {
-            mult = 1
+            mult = 0.25
         }
     },
     flavour_vars = function()
