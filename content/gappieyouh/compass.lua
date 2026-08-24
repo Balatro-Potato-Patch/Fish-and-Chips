@@ -18,57 +18,37 @@ FishAndChips.Fish {
         backroom = 0.25,
         wormhole = 0.25
     },
+    blueprint_compat = false,
+    eternal_compat = false,
     can_use = function(self, card)
-        return G.fac_fish_area and G.fac_fish_area.cards and #G.fac_fish_area.cards > 0
+        return true
     end,
     use = function(self, card, area, copier)
+        local envirotable = {}
+        for _,fish in ipairs(G.fac_fish_area.cards) do
+            if fish.config.center.key ~= 'fish_fac_gappieyouh_compass' then
+                for k,_ in pairs(fish.config.center.environments) do
+                    envirotable[k] = (envirotable[k] or 0) + 1
+                end
+            end
+        end
+        local highest = 'calm_pond'
+        for environment,values in pairs(envirotable) do
+            if values > (envirotable[highest] or 0) then
+                highest = environment
+            end
+        end
+        G.GAME.fac_next_environment = highest
+
         G.E_MANAGER:add_event(Event{
             trigger = 'after',
             delay = 0.4,
             func = function()
                 play_sound('timpani')
-
-                -- logic for defining compass
-                local envirotable = {
-                    calm_pond = 0,
-                    chocolate_river = 0,
-                    styx = 0,
-                    pier = 0,
-                    swamp = 0,
-                    aquifer = 0,
-                    volcano = 0,
-                    city_river = 0,
-                    soup = 0,
-                    garden = 0,
-                    backroom = 0,
-                    wormhole = 0
-                }
-                local fish_table = {}
-                for _, fish in pairs(G.fac_fish_area.cards) do
-                    if fish.config.center.key ~= 'fish_fac_gappieyouh_obsession' then
-                        table.insert(fish_table, fish)
-                    end
-                end
-                for envs,_ in pairs(envirotable) do
-                    for _,fish in pairs(fish_table) do
-                        for k,_ in pairs(fish.config.center.environments) do
-                            if k == envs then envirotable[envs] = envirotable[envs] + 1 end
-                        end
-                    end
-                end
-                local highest = 'calm_pond'
-                for environment,values in pairs(envirotable) do
-                    if values > envirotable[highest] then
-                        highest = environment
-                    end
-                end
-
-                -- execute compass
                 card:juice_up(0.3,0.5)
-                G.GAME.fac_next_environment = highest
-
-                return {message = localize('k_fac_fish_compass_new'), colour = G.C.SPECTRAL}
+                return true
             end
         })
+        return {message = localize('k_fac_fish_compass_new'), colour = G.C.SPECTRAL}
     end,
 }
