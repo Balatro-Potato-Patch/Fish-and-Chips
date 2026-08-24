@@ -32,15 +32,14 @@ FishAndChips.Fish {
 		return { vars = {
 			card.ability.extra.blindsize_increase,
 			card.ability.extra.perma_xblind_size,
-			G.GAME.starting_params.ante_scaling,
+			card.ability.extra.total_x_blind_size,
 			text
 		},
-		key = self.key .. "_variable"
 	}
 	end,
 	flavour_vars = function(self, info_queue, card)
 		local text = self:count_duplicates()
-		return { vars = { text, string.lower(text) }, key = self.key .. "_variable" }
+		return { vars = { text, string.lower(text) } }
 	end,
     add_to_deck = function(self, card, from_debuff)
         if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
@@ -90,7 +89,7 @@ FishAndChips.Fish {
 				no_message = true
             })
 			return {
-				message = "Blind size: " .. G.GAME.starting_params.ante_scaling,
+				message = "X"..card.ability.extra.total_x_blind_size,
 				color = G.C.BLIND
 			}
 		end
