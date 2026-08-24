@@ -269,7 +269,7 @@ FishAndChips.Fish {
 		}
 		info_queue[#info_queue + 1] = { key = "fac_ghostsalt_tap_code", set = "Other", vars = { elements = {} } }
 		info_queue[#info_queue + 1] = { key = "fac_ghostsalt_tap_code_table", set = "Other", vars = { elements = { n } } }
-		return { vars = { ppu_bubbles = { card.ability.fac_ghostsalt_tap_cod_used and "usable" or "used" } } }
+		return { vars = { ppu_bubbles = { card.ability.fac_ghostsalt_tap_cod_used and "used" or "usable" } } }
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and not context.invididual and not context.repetition and not context.game_over and not context.blueprint then
