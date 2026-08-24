@@ -25,6 +25,8 @@ function FishAndChips.tutorial()
 	G.PROFILES[G.SETTINGS.profile].fac_tutorial_seen = true
 	FishAndChips.in_tutorial = true
 	G.SETTINGS.paused = true
+	FishAndChips.old_gamespeed = G.SETTINGS.GAMESPEED
+	G.SETTINGS.GAMESPEED = 1
 	local step = 1
 	step = tutorial_info({
 		text_key = "fac_fishing_1a",
@@ -212,6 +214,8 @@ function FishAndChips.tutorial()
 					G.OVERLAY_TUTORIAL:remove()
 					G.OVERLAY_TUTORIAL = nil
 					FishAndChips.in_tutorial = nil
+					G.SETTINGS.GAMESPEED = FishAndChips.old_gamespeed
+					FishAndChips.old_gamespeed = nil
 					check_for_unlock({ type = 'fac_tutorial' })
 					return true
 				end
@@ -228,4 +232,6 @@ function G.FUNCS.skip_tutorial_section(e)
 	skip_tutorial_hook(e)
 	if FishAndChips.in_tutorial then check_for_unlock({ type = 'fac_tutorial' }) end
 	FishAndChips.in_tutorial = nil
+	G.SETTINGS.GAMESPEED = FishAndChips.old_gamespeed
+	FishAndChips.old_gamespeed = nil
 end

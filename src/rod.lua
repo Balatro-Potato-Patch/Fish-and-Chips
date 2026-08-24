@@ -203,7 +203,7 @@ FishAndChips.Rod {
 	check_for_unlock = function(self, args)
 		if args.type == "fac_fish_caught" then
 			for _, v in pairs(G.FAC_ENVIRONMENT_POOL) do
-				if not G.PROFILES[G.SETTINGS.profile].fac_fishing.environments_fished[v.key] then
+				if not G.PROFILES[G.SETTINGS.profile].fac_fishing.environment_data[v.key].times_fished or G.PROFILES[G.SETTINGS.profile].fac_fishing.environment_data[v.key].times_fished < 1 then
 					return false
 				end
 			end

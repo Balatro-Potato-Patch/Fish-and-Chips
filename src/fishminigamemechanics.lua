@@ -367,7 +367,8 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     local rod_key = FishAndChips.get_rod().key
     local bait_key = G.GAME.fac_active_bait
     local _, rod_stats, bait_stats = fac_get_fishing_stats(rod_key, bait_key)
-    profile_data.environments_fished = profile_data.environments_fished or {}
+    profile_data.environment_data = profile_data.environment_data or {}
+    profile_data.environment_data[FishAndChips.get_environment().key] = profile_data.environment_data[FishAndChips.get_environment().key] or {}
     profile_data.baits_used = profile_data.baits_used or {}
     if profile.fish then
         profile_data.fish_data[profile.key] = profile_data.fish_data[profile.key] or {
@@ -415,7 +416,7 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
         rod_stats.treasure = rod_stats.treasure + 1
         if bait_stats then bait_stats.treasure = bait_stats.treasure + 1 end
     end
-    profile_data.environments_fished[FishAndChips.get_environment().key] = true
+    profile_data.environment_data[FishAndChips.get_environment().key].times_fished = (profile_data.environment_data[FishAndChips.get_environment().key].times_fished or 0) + 1 
     if bait_key and queue ~= "fac_treasure_reveal" then
         profile_data.baits_used[bait_key] = true
     end
@@ -778,8 +779,8 @@ local function fac_finish_round(success, skip)
             profile_data.career_treasure_caught = (profile_data.career_treasure_caught or 0) + 1
             rod_stats.treasure = rod_stats.treasure + 1
             if bait_stats then bait_stats.treasure = bait_stats.treasure + 1 end
-            profile_data.environments_fished = profile_data.environments_fished or {}
-            profile_data.environments_fished[FishAndChips.get_environment().key] = true
+            profile_data.environment_data = profile_data.environment_data or {}
+            profile_data.environment_data[FishAndChips.get_environment().key] = profile_data.environment_data[FishAndChips.get_environment().key] or {}
             if G.GAME.fac_active_bait then
                 profile_data.baits_used = profile_data.baits_used or {}
                 profile_data.baits_used[G.GAME.fac_active_bait] = true
