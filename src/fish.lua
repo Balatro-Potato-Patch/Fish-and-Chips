@@ -335,7 +335,7 @@ function Card:highlight(is_higlighted)
 					G.jokers.T.x = G.jokers.T.x + 1.5 - (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
 				else
 					G.jokers.T.y = -10
-					G.jokers.T.x = G.jokers.T.x - 1.5 + (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
+					G.jokers.T.x = G.hand.T.x - 0.1
 				end
 			end
 			if self.config.center.requires_consumables then
@@ -357,7 +357,7 @@ function Card:highlight(is_higlighted)
 					G.consumeables.T.x = G.consumeables.T.x - 3.5
 				else
 					G.consumeables.T.y = -10
-					G.consumeables.T.x = G.consumeables.T.x + 3.5
+					G.consumeables.T.x = G.jokers.T.x + G.jokers.T.w + 0.2
 				end
 			end
 		end
