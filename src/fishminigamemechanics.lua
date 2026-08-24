@@ -1358,6 +1358,39 @@ local function fac_get_rod_tip_local(px, py, pw, ph, force_anim_state)
 end
 
 local FAC_STATUS_QUEUE
+local FAC_BOBBER_BAIT_QUADS = {}
+local function fac_draw_bobber_bait(bait_key, x, y)
+    local bait = bait_key and G.P_CENTERS[bait_key]
+    if not bait then return end
+    local atlas = SMODS.get_atlas(bait.mini_atlas or bait.atlas)
+    local pos = bait.mini_pos or bait.pos
+    if not atlas or not atlas.image or not pos then return end
+    local cache_key = (bait.mini_atlas or bait.atlas) .. ':' .. pos.x .. ':' .. pos.y
+    local quad = FAC_BOBBER_BAIT_QUADS[cache_key]
+    if not quad then
+        quad = love.graphics.newQuad( pos.x * atlas.px, pos.y * atlas.py, atlas.px, atlas.py, atlas.image:getDimensions())
+        FAC_BOBBER_BAIT_QUADS[cache_key] = quad
+    end
+    local scale = bait.mini_atlas and 0.5 or 17.5 / math.max(atlas.px, atlas.py)
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(atlas.image, quad, x, y + 7, 0, scale, scale, atlas.px / 2, 0)
+end
+
+local function fac_draw_bobber(x, y)
+    fac_draw_bobber_bait(G.GAME.fac_last_used_bait, x, y)
+    love.graphics.setColor(0.08, 0.10, 0.14, 0.9)
+    love.graphics.rectangle('fill', x - 2, y - 14, 4, 8, 2, 2)
+    love.graphics.circle('fill', x, y, 9)
+    love.graphics.setColor(0.96, 0.94, 0.84, 1)
+    love.graphics.arc('fill', x, y, 7, 0, math.pi)
+    love.graphics.setColor(0.95, 0.24, 0.22, 1)
+    love.graphics.arc('fill', x, y, 7, math.pi, math.pi * 2)
+    love.graphics.setColor(1, 0.64, 0.55, 1)
+    love.graphics.circle('fill', x - 2, y - 3, 2)
+    love.graphics.setColor(0.08, 0.10, 0.14, 0.9)
+    love.graphics.circle('line', x, y, 9)
+end
+
 local function fac_draw_text_with_black_bg(str, x, y, text_color)
     if FishAndChips.show_ui then
         if FAC_STATUS_QUEUE then
@@ -1440,9 +1473,8 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
             local arc_x = rod_x + (land_x - rod_x) * progress
             local arc_y = rod_y + (land_y - rod_y) * progress - math.sin(progress * math.pi) * 40
             love.graphics.setColor(1, 1, 1, 1)
-            love.graphics.line(rod_x, rod_y, arc_x, arc_y)
-            love.graphics.setColor(1, 0.3, 0.25, 1)
-            love.graphics.circle("fill", arc_x, arc_y, 6)
+            love.graphics.line(rod_x, rod_y, arc_x, arc_y - 14)
+            fac_draw_bobber(arc_x, arc_y)
             local str = localize("ph_fac_casting_line")
             fac_draw_text_with_black_bg(str, px, status_y)
         end
@@ -1462,11 +1494,8 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
         love.graphics.circle("line", bobber_x, bobber_y, 10 + ripple * 22)
 
         love.graphics.setColor(1, 1, 1, 1)
-        fac_draw_slack_line(rod_x, rod_y, bobber_x, bobber_y, 14 + math.sin(state.bobber_t * 2) * 3)
-        love.graphics.setColor(1, 0.3, 0.25, 1)
-        love.graphics.circle("fill", bobber_x, bobber_y, 8)
-        love.graphics.setColor(1, 0.86, 0.86, 0.8)
-        love.graphics.circle("line", bobber_x, bobber_y, 12)
+        fac_draw_slack_line(rod_x, rod_y, bobber_x, bobber_y - 14, 14 + math.sin(state.bobber_t * 2) * 3)
+        fac_draw_bobber(bobber_x, bobber_y)
 
         if G.FISHING_STATE == G.FISHING_STATES.WAITING then
             if state.scare_t > 0 then
@@ -1493,9 +1522,8 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
         local hook_y = land_y
 
         love.graphics.setColor(1, 1, 1, 1)
-        fac_draw_slack_line(rod_x, rod_y, hook_x, hook_y, 3)
-        love.graphics.setColor(1, 0.3, 0.25, 1)
-        love.graphics.circle("fill", hook_x, hook_y, 7)
+        fac_draw_slack_line(rod_x, rod_y, hook_x, hook_y - 14, 3)
+        fac_draw_bobber(hook_x, hook_y)
 
         love.graphics.setColor(0.06, 0.20, 0.33, 0.95)
         love.graphics.rectangle("fill", track_x, track_y, track_w, track_h, 10, 10)
