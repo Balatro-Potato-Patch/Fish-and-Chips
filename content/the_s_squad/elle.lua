@@ -29,10 +29,6 @@ FishAndChips.Fish {
 	set_card_type_badge = function(self, card, badges) -- TODO: Make its own loc_key
 		badges[#badges + 1] = create_badge('"'..localize("k_fac_fish")..'"', FishAndChips.C.FISH, G.C.WHITE, 1.2)
 	end,
-	unlocked = false,
-	check_for_unlock = function (self, args)
-		return args.type == "fac_tss_chesh"
-	end
 }
 
 local emplace_hook = CardArea.emplace
@@ -67,10 +63,6 @@ FishAndChips.Fish {
 		end
 
 		if context.joker_main then return { mult = card.ability.extra.mult } end
-
-		if context.joker_type_destroyed and context.card == card then
-			check_for_unlock{type="fac_tss_chesh"}
-		end
 	end
 }
 
