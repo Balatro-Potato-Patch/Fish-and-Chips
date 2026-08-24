@@ -124,8 +124,9 @@ function Game:init_game_object()
     local ret = igo(self)
     ret.fac_sand_dollars = 4
 	ret.current_round.fac_sand_dollars = 0
-    ret.fac_bait_shop_items = {}
-    ret.fac_bait_inventory = {{key = 'bait_fac_normal', amt = 3}}
+	ret.fac_active_shop_bait = {cost = 0, all_cost = 0, amount = 0}
+	ret.fac_bait_shop_items = {}
+	ret.fac_bait_inventory = {bait_fac_normal = {amt = 3}}
     ret.fac_active_bait = nil
     ret.fac_treasure_earned = 0
     ret.fac_perfect_catches = 0
@@ -137,8 +138,9 @@ local gsp = get_starting_params
 function get_starting_params()
     local ret = gsp()
     ret.fac_sand_dollars = 0
-    ret.fac_bait_shop_items = {}
-    ret.fac_bait_inventory = {}
+	ret.fac_active_shop_bait = {cost = 0, all_cost = 0, amount = 0}
+	ret.fac_bait_shop_items = {}
+	ret.fac_bait_inventory = {}
     ret.fac_active_bait = nil
     return ret
 end
