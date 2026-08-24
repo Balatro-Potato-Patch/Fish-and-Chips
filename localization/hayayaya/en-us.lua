@@ -113,7 +113,7 @@ return {
 					},
 					{
 						"{C:inactive}(Currently{} {C:chips}+#2#{C:inactive} Chips)",
-						"{C:inactive}(Evolves at #3#/#4#)",
+						"{C:inactive}(Evolves at #3#/#4# rounds)",
 					},
 				},
 				flavor = {
@@ -131,7 +131,7 @@ return {
 					},
 					{
 						"{C:inactive}(Currently{} {C:chips}+#2#{C:inactive} Chips)",
-						"{C:inactive}(Evolves at #3#/#4#)",
+						"{C:inactive}(Evolves at #3#/#4# rounds)",
 					},
 				},
 				flavor = {

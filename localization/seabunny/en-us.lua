@@ -253,7 +253,8 @@ return {
                     {
                         "At end of round,",
                         "create a {C:planet}Planet{} card for",
-                        "a random played {C:attention}poker hand",
+                        "a random {C:attention}poker hand",
+                        "played this run"
                     },
                     {
                         "{C:inactive}Enchanted:",
