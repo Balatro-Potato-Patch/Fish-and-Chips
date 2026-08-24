@@ -54,17 +54,10 @@ FishAndChips.Fish {
 		return { vars = { G.GAME.interest_amount, G.GAME.interest_amount * (G.GAME.interest_cap / 5) } }
 	end,
 	stats = {weight = {min = 2, max = 2}, length = {min = 0.3, max = 0.3}},
-	calculate = function(self, card, context)
-		if context.modify_final_cashout and not context.blueprint then 
-			local interest = math.min(math.floor(G.GAME.fac_sand_dollars / 5), G.GAME.interest_cap / 5)
-			if interest <= 0 then return end
-			local vars = {
-				name = "joker_safe",
-				sand_dollars = interest * G.GAME.interest_amount,
-				pitch = 1, --src/sand_dollars.lua 234 tries to do arithmetic on pitch (a nil value),
-				card = card
-			}
-			add_round_eval_sand_dollars(vars)
+	calc_sand_dollar_bonus = function(self, card)
+		local interest = math.min(math.floor(G.GAME.fac_sand_dollars / 5), G.GAME.interest_cap / 5)
+		if interest > 0 then 
+			return interest * G.GAME.interest_amount
 		end
 	end
 }
@@ -226,14 +219,10 @@ FishAndChips.Fish {
 				card.ability.extra.visited = card.ability.extra.visited + 1
 			end
 		end
-		if context.modify_final_cashout and not context.blueprint then 
-			local vars = {
-				name = "joker_yapping",
-				sand_dollars = card.ability.extra.visited,
-				pitch = 1, --src/sand_dollars.lua 234 tries to do arithmetic on pitch (a nil value),
-				card = card
-			}
-			add_round_eval_sand_dollars(vars)
+	end,
+	calc_sand_dollar_bonus = function(self, card)
+		if card.ability.extra.visited > 0 then
+			return card.ability.extra.visited
 		end
 	end
 }

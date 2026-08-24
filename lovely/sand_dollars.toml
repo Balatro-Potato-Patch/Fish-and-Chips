@@ -64,7 +64,7 @@ match_indent = true
 [patches.pattern]
 target = "functions/state_events.lua"
 position = "before"
-pattern = "add_round_eval_row({name = 'bottom', dollars = dollars})"
+pattern = "SMODS.cashout_pitch = pitch; SMODS.cashout_index = i; SMODS.cashout_dollars = dollars"
 payload = """
 -- Add Sand Dollars
 local FAC_CASHOUT_REWARD = { Small = 1, Big = 2, Boss = 3 }
@@ -73,6 +73,29 @@ local sand_dollars_to_add = FAC_CASHOUT_REWARD[G.GAME.blind_on_deck] or FAC_CASH
 
 add_round_eval_sand_dollars({name='sand_dollars', pitch = pitch, sand_dollars = sand_dollars_to_add})
 sand_dollars = sand_dollars + sand_dollars_to_add
+pitch = pitch + 0.06
+
+i = 0
+for _, area in ipairs(SMODS.get_card_areas('jokers')) do
+    for _, _card in ipairs(area.cards) do
+        local center = _card.config.center
+        if type(center.calc_sand_dollar_bonus) == 'function' then
+            local ret, ret_opts = center:calc_sand_dollar_bonus(_card)
+            ret_opts = ret_opts or {}
+
+            -- TARGET: calc_sand_dollar_bonus per card
+            if ret then
+                if not ret_opts.no_eval_row then
+                    i = i+1
+                    add_round_eval_sand_dollars({sand_dollars = ret, bonus = true, name='joker'..i, pitch = pitch, card = _card, loc_opts = ret_opts})
+                    pitch = pitch + 0.06
+                end
+                sand_dollars = sand_dollars + ret
+            end
+        end
+    end
+end
+i = 0
 
 """
 match_indent = true

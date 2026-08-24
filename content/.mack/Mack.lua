@@ -117,14 +117,12 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money, card.ability.extra.money_needed, elements = { SMODS.create_sprite(0, 0, 3.5, 3.5 * 51 / 513, "fac_earthfish_lore") } } }
 	end,
-	calculate = function(self, card, context)
-		if context.modify_final_cashout then
-			local money = math.max(0, math.floor(G.GAME.dollars / card.ability.extra.money_needed)) * card.ability.extra.money
-			if money > 0 then
-				return { sand_dollars = money }
-			end
+	calc_sand_dollar_bonus = function(self, card)
+		local money = math.max(0, math.floor(G.GAME.dollars / card.ability.extra.money_needed)) * card.ability.extra.money
+		if money > 0 then
+			return money
 		end
-	end,
+	end
 }
 
 FishAndChips.Fish {

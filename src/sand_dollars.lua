@@ -184,6 +184,10 @@ function G.UIDEF.use_and_sell_buttons(card)
     local width = G.round_eval.T.w - 0.51
     local num_dollars = config.sand_dollars or 1
     local scale = 0.9
+
+    if Talisman then
+        num_dollars = to_number(num_dollars)
+    end
     
     if not G.round_eval.divider_added then
     G.E_MANAGER:add_event(Event({
