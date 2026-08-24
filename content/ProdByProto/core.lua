@@ -179,25 +179,18 @@ function FishAndChips.ProdByProto.loadLevel(card,level)
         iCard.ability.noir_level = nil
         iCard.ability.aux = nil
     end
-    for _,_ in pairs({1}) do
-        if level > 12 then break end
-        for _,item in pairs(card.ability.extra.noir_levels[level]) do
+    if level > 12 then return end
+    for _,item in pairs(card.ability.extra.new_noir_levels[level]) do
+        if item.key then
             local item_card = pseudorandom_element(G.playing_cards, "pick non item", {
                 in_pool = function(v)
                     return not v.ability.noir_mark and SMODS.is_playing_card(v)
                 end
             })
-            if type(item) == "table" then
-                if item[1] then item_card.ability.noir_mark = item[1] end
-                if item[2] then item_card.ability.noir_plot = item[2] end
-                if item[3] then item_card.ability.noir_level = item[3] end
-            else
-                if item then item_card.ability.noir_mark = item end
-            end
-            for _,jtem in pairs(FishAndChips.ProdByProto.auxItems) do
-                item_card.ability.aux = (item_card.ability.noir_mark == jtem)
-                if item_card.ability.aux then break end
-            end
+                item_card.ability.noir_mark = item.key
+                item_card.ability.aux = FishAndChips.ProdByProto.auxItems[item.key]
+                item_card.ability.noir_plot = item.plot
+                item_card.ability.noir_level = item.level
         end
     end
 end
