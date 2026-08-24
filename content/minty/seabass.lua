@@ -62,7 +62,7 @@ FishAndChips.Fish{
         }
     end,
     use = function (self, card)
-        SMODS.destroy_cards(card, {colours = {G.C.RED}})
+        SMODS.destroy_cards(card, {colours = {G.C.RED}, skip_calc = true})
         local luck = card.ability.extra.luck
         if card.ability.extra.native then
             luck = luck*2
