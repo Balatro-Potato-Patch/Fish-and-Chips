@@ -250,6 +250,8 @@ FishAndChips.mod.menu_cards = function()
 			remove_original = true,
 			{ key = 'fish_fac_splash_screen' }
 		}
+	else
+		return { func = function() return end }
 	end
 end
 
