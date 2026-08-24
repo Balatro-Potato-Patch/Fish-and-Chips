@@ -223,7 +223,7 @@ return {
 					"All {C:fac_fish}Fish{} have a fixed {C:green}#1# in #2#",
 					"chance to retrigger {C:attention}repeatedly",
 					"until the probability fails",
-					"{C:inactive,s:.7}Toggle Low Performance Mode in Mod Settings",
+					"{C:red,s:.8}Toggle Low Performance Mode in Mod Settings",
 					"{C:inactive,s:.7}...but if you can read this, it's already off"
 				},
 				flavour = {
