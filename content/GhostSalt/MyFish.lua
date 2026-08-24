@@ -967,7 +967,7 @@ FishAndChips.Fish {
 	stats = { weight = { min = 0.02, max = 0.02 }, length = { min = 0.1, max = 0.1 } },
 	ppu_coder = { "GhostSalt" },
 	ppu_artist = { "GhostSalt" },
-	attributes = { "modify_card", "usable", "rank" },
+	attributes = { "modify_card", "usable", "rank", "food" },
 	environments = {
 		chocolate_river = 10
 	},

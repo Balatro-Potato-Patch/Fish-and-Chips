@@ -55,6 +55,14 @@ FishAndChips.Fish{
 		card.ability.immutable.id = random_string(20, pseudoseed("fac_fas_kine"))
 	end,
 	calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval and not context.blueprint then
+			for _, _card in ipairs(G.fac_fas_kine_area.cards) do
+				_card:calculate_rental()
+				if not _card.debuff then
+					_card:calculate_perishable()
+				end
+			end
+		end
 		if not context.retrigger_joker_check then
 			for _, _card in ipairs(G.fac_fas_kine_area.cards) do
 				if _card.ability.fac_fas_kine == card.ability.immutable.id then

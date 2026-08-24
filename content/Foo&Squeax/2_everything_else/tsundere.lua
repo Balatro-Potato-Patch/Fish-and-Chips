@@ -28,6 +28,8 @@ FishAndChips.Fish{
 		weight = {min = 25, max = 25}
 	},
 	attributes = {"usable", "passive", "undertale", "utdr"},
+	blueprint_compat = false,
+	perishable_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return {vars = {card.ability.extra.selection}, key = card.ability.immutable.active and "fish_fac_fas_tsundere_active" or nil}
 	end,
@@ -43,7 +45,7 @@ FishAndChips.Fish{
 		G.fac_fas_tsunderfish_ui = FishAndChips.FooSqueax.tsunderfish.create_act_uibox(card)
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval then
+		if context.end_of_round and context.main_eval and not context.blueprint then
 			if card.ability.immutable.used and not card.ability.immutable.active then card.ability.immutable.used = false end
 		end
 	end

@@ -23,6 +23,7 @@ FishAndChips.Fish{
 			bait = 3
 		}
 	},
+	perishable_compat = false,
 	disable_visual_scaling = true,
 	badge_key = "k_fac_fas_worm",
 	attributes = {"xmult", "usable", "scaling", "generation"},
@@ -36,8 +37,8 @@ FishAndChips.Fish{
 	end,
 	calculate = function(self, card, context)
 		if context.fac_end_fishing and not context.failed and not context.blueprint then
-			for _, dev in ipairs(G.P_CENTERS[context.fish].ppu_coder) do
-				if dev == G.GAME.fac_FooSqueax.wormholes.target or dev == PotatoPatchUtils.Developers["fac_" .. G.GAME.fac_FooSqueax.wormholes.target].fac_partner then
+			for _, dev in ipairs(SMODS.merge_lists{ G.P_CENTERS[context.fish].ppu_coder, G.P_CENTERS[context.fish].ppu_artist }) do
+				if dev == G.GAME.fac_FooSqueax.wormholes.target then
 					SMODS.scale_card(card, {
 						ref_table = card.ability.extra,
 						ref_value = "xmult",
@@ -48,13 +49,11 @@ FishAndChips.Fish{
 			end
 		end
 		if context.joker_main then
-			return {
-				xmult = card.ability.extra.xmult
-			}
+			return { xmult = card.ability.extra.xmult }
 		end
 	end,
 	can_use = function (self, card)
-		return card.ability.extra.xmult > 1
+		return card.ability.extra.xmult >= 2
 	end,
 	use = function(self, card)
 		FishAndChips.create_baits_from_card(card, card.ability.extra.bait * (card.ability.extra.xmult - 1))

@@ -110,7 +110,7 @@ FishAndChips.Fish{
 			end
 		end
 
-		if context.starting_shop and G.GAME.fac_FooSqueax.bucket.on then
+		if context.starting_shop and G.GAME.fac_FooSqueax.bucket.on and not context.blueprint then
 			card.ability.extra.should_resume_debuff = true
 			FishAndChips.FooSqueax.toggle_bucket_shader()
 			SMODS.calculate_effect({message = localize(G.GAME.fac_FooSqueax.bucket.on and "k_fac_fas_dive" or "k_fac_fas_resurface"), colour = G.C.BLUE}, card)
@@ -119,7 +119,7 @@ FishAndChips.Fish{
 			end
 		end
 
-		if context.ending_shop and card.ability.extra.should_resume_debuff then
+		if context.ending_shop and card.ability.extra.should_resume_debuff and not context.blueprint then
 			card.ability.extra.should_resume_debuff = nil
 			FishAndChips.FooSqueax.toggle_bucket_shader()
 			SMODS.calculate_effect({message = localize(G.GAME.fac_FooSqueax.bucket.on and "k_fac_fas_dive" or "k_fac_fas_resurface"), colour = G.C.BLUE}, card)

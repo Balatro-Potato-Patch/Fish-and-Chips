@@ -22,6 +22,7 @@ FishAndChips.Fish{
 		length = {min = 1.3, max = 1.6},
 		weight = {min = 0.7, max = 1.7}
 	},
+	perishable_compat = false,
 	disable_visual_scaling = true,
 	attributes = {"chips", "vocaloid", "scaling",},
 	loc_vars = function(self, info_queue, card)
@@ -35,7 +36,7 @@ FishAndChips.Fish{
 				chips = card.ability.extra.chips
 			}
 		end
-		if context.fac_end_fishing then
+		if context.fac_end_fishing and not context.blueprint then
 			local retrigger = nil
 			if context.missed_treasure then
 				retrigger = true

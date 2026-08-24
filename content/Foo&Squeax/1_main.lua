@@ -231,7 +231,7 @@ SMODS.Sound{
 	pitch = 1,
 }
 
-local cardarea_emplace_red = CardArea.emplace
+local cardarea_emplace_ref = CardArea.emplace
 ---@diagnostic disable-next-line: duplicate-set-field
 function CardArea:emplace(card, ...)
 	if card.ppu_member and card.ppu_member.name == "Foo54" then
@@ -257,7 +257,7 @@ function CardArea:emplace(card, ...)
 			}, "fac_fas_defoko"))
 		end
 	end
-	cardarea_emplace_red(self, card, ...)
+	cardarea_emplace_ref(self, card, ...)
 end
 
 local FishAndChips_mod_custom_card_areas_ref = FishAndChips.mod.custom_card_areas

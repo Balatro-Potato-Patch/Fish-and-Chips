@@ -1,12 +1,3 @@
-
-SMODS.Atlas{
-	key = "fas_chirema_placeholder",
-	path = FishAndChips.FooSqueax.file_path .. "credits/teto.png",
-	px = 71,
-	py = 95,
-}
-
-
 FishAndChips.Fish{
 	key = "fas_chimera",
 	config = {
@@ -35,6 +26,7 @@ FishAndChips.Fish{
 		wormhole = 1,
 		backroom = 1,
 	},
+	perishable_compat = false,
 	attributes = {"scaling", "xmult", "destroy_card", "vocaloid"},
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS[card.ability.immutable.fish]
@@ -55,7 +47,8 @@ FishAndChips.Fish{
 		end
 	end,
 	calculate = function(self, card, context)
-		if context.modify_weights then
+		if context.joker_main then return { xmult = card.ability.extra.xmult } end
+		if context.modify_weights and not context.blueprint then
 			for _, _card in ipairs(context.pool) do
 				if _card.key == card.ability.immutable.fish then
 					_card.weight = _card.weight * card.ability.extra.rate
