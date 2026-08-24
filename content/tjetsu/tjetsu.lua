@@ -144,10 +144,10 @@ FishAndChips.Fish { -- Ineffa
 		wormhole = 6
 	},
 	config = {
-		extra = {re = 1, pscale = 2, det = 1, ucount = 1}
+		extra = {re = 1, pscale = 1, ucount = 3}
 	},
 	loc_vars = function(self, info_queue, card)
-		return {vars = {card.ability.extra.re, card.ability.extra.pscale, card.ability.extra.ucount}}
+		return {vars = {card.ability.extra.re, card.ability.extra.pscale, card.ability.extra.ucount, ppu_bubbles = {card.ability.extra.ucount > 0 and 'active' or 'inactive'}}}
 	end,
 
 	calculate = function(self, card, context)
@@ -171,10 +171,14 @@ FishAndChips.Fish { -- Ineffa
                 card = card
             }
 		end
-		if context.end_of_round and context.main_eval and card.ability.extra.ucount > 0 then
+		if context.after and card.ability.extra.ucount > 0 then
 			card.ability.extra.ucount = card.ability.extra.ucount-1
 			return {
-				message = card.ability.extra.ucount.." Remaining", -- TODO: Localize
+				message = localize {
+					type = "variable",
+					key = "a_remaining",
+					vars = { card.ability.extra.ucount }
+				},
 				card = card
             }
 		end

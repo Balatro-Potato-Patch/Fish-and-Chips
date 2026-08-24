@@ -41,12 +41,17 @@ return {
                 }
             },
             fish_fac_tje_ineffa = {
-                name = "Ancient Draconic Duckle Device",
+                name = {"Ancient Draconic", "Duckle Device"},
                 text = {
-                    {"Retrigger all cards for the next",
-                    "{C:attention}#3#{} rounds"},
-                    {"Restore {C:attention}#2#{} when you achieve a",
-                     "{C:attention}Perfect{} Catch"}
+                {
+                    "{C:attention}Retrigger{} scoring cards",
+                    "for the next {C:attention}#3#{} hands",
+                    "{ppu_bubble:1}"
+                },
+                {
+                    "Restore {C:attention}#2#{} when you",
+                    "achieve a {C:attention}Perfect{} Catch"
+                }
                 },
                 flavor = {
                     "Model I.N.E.F.F.A"
