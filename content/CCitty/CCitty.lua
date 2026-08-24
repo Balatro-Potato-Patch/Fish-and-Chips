@@ -161,6 +161,7 @@ FishAndChips.Fish { --canioctopus
 	calculate = function(self, card, context)
 		if context.remove_playing_cards or context.joker_type_destroyed then
 			local removed = context.removed and #context.removed or 1
+			if context.card.area == G.fac_bait_area or context.card.area == G.fac_temp_bait_area then return end
 			FishAndChips.create_baits_from_card(card, card.ability.extra.bait * removed)
 		end
 	end,
