@@ -21,20 +21,17 @@ FishAndChips.Fish {
 	blueprint_compat = false,
 	config = {
 		extra = {
-			perma_xblind_size = 2,
+			perma_xblind_size = 0.8,
 			blindsize_increase = 1.15,
-			rounds_elapsed = 0
+			total_x_blind_size = 1.0,
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		local opposite = 1 / (card.ability.extra.perma_xblind_size or 1)
-
 		local text = self:count_duplicates()
 
 		return { vars = {
 			card.ability.extra.blindsize_increase,
 			card.ability.extra.perma_xblind_size,
-			opposite,
 			G.GAME.starting_params.ante_scaling,
 			text
 		},
@@ -46,9 +43,6 @@ FishAndChips.Fish {
 		return { vars = { text, string.lower(text) }, key = self.key .. "_variable" }
 	end,
     add_to_deck = function(self, card, from_debuff)
-		if not from_debuff then
-			card.ability.extra.rounds_elapsed = 0
-		end
         if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
             G.GAME.blind:disable()
             play_sound('timpani')
@@ -57,64 +51,48 @@ FishAndChips.Fish {
     end,
 	remove_from_deck = function(self, card, from_debuff)
 		if not from_debuff then
-			card.ability.extra.rounds_elapsed = card.ability.extra.rounds_elapsed or 0
-			card.ability.extra.blindsize_increase = (1 / card.ability.extra.blindsize_increase) ^ card.ability.extra.rounds_elapsed
-
-			SMODS.scale_card(card, {
-				ref_table = G.GAME.starting_params,
-				ref_value = "ante_scaling",
-				scalar_table = card.ability.extra,
-				scalar_value = "blindsize_increase",
-				operation = 'X',
-				no_message = true
-			})
+			if FishAndChips.get_environment().key == 'volcano' then
+				G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling * card.ability.extra.perma_xblind_size
+			end
 		end
-
-		if FishAndChips.get_environment().key == 'volcano' and not from_debuff then
-			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling / card.ability.extra.perma_xblind_size
-		elseif not from_debuff then
-			G.GAME.starting_params.ante_scaling = G.GAME.starting_params.ante_scaling * card.ability.extra.perma_xblind_size
-		end
-
-		SMODS.calculate_effect({
-			message = "Blind size: " .. G.GAME.starting_params.ante_scaling,
-			color = G.C.BLIND
-		}, card)
 	end,
 	calculate = function(self, card, context)
 		-- disable all boss blinds, from vanillaremade's chicot
-        if context.setting_blind and not context.blueprint and context.blind.boss then
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            G.GAME.blind:disable()
-                            play_sound('timpani')
-                            delay(0.4)
-                            return true
-                        end
-                    }))
-                    SMODS.calculate_effect({ message = localize('ph_boss_disabled') }, card)
-                    return true
-                end
-            }))
-            return nil, true -- This is for Joker retrigger purposes
+        if context.setting_blind and not context.blueprint then
+			if context.blind.boss then
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						G.E_MANAGER:add_event(Event({
+							func = function()
+								G.GAME.blind:disable()
+								play_sound('timpani')
+								delay(0.4)
+								return true
+							end
+						}))
+						SMODS.calculate_effect({ message = localize('ph_boss_disabled') }, card)
+						return true
+					end
+				}))
+			end
+            return {
+				x_blind_size = card.ability.extra.total_x_blind_size
+			}
         end
 		-- blind size increases per round
 		if context.end_of_round and context.main_eval then
             SMODS.scale_card(card, {
-                ref_table = G.GAME.starting_params,
-                ref_value = "ante_scaling",
+                ref_table = card.ability.extra,
+                ref_value = "total_x_blind_size",
 				scalar_table = card.ability.extra,
                 scalar_value = "blindsize_increase",
 				operation = 'X',
 				no_message = true
             })
-			card.ability.extra.rounds_elapsed = card.ability.extra.rounds_elapsed + 1
-			SMODS.calculate_effect({
+			return {
 				message = "Blind size: " .. G.GAME.starting_params.ante_scaling,
 				color = G.C.BLIND
-			}, card)
+			}
 		end
 	end,
 	count_duplicates = function(self)
@@ -127,22 +105,22 @@ FishAndChips.Fish {
 			end
 		end
 
-		local text = "One"
+		local text = "one"
 		if dupeCount == 1 then
-			text = "One"
+			text = "one"
 		elseif dupeCount == 2 then
-			text = "Two"
+			text = "two"
 		elseif dupeCount == 3 then
-			text = "Three"
+			text = "three"
 		elseif dupeCount == 4 then
-			text = "Four"
+			text = "four"
 		elseif dupeCount == 5 then
-			text = "Five"
+			text = "five"
 		elseif dupeCount == 6 then
-			text = "Six"
+			text = "six"
 		elseif dupeCount == 7 then -- stop at seven because six sevennn
-			text = "Seven"
+			text = "seven"
 		end
-		return text
+		return localize("k_pulsaraxy_" .. text)
 	end,
 }
