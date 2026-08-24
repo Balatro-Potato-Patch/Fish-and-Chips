@@ -72,6 +72,24 @@ return {
 					}
 				}
 			},
+			fish_fac_fas_kawkaw_slow = {
+				name = "BlubBlub",
+				flavour = {
+					"#1#"
+				},
+				text = {
+					{
+						"{X:mult,C:white}X#1#{} Mult",
+					},
+					{
+						"Must be pet periodically",
+						"{C:inactive}(but not too much)",
+						"or it's shooed away",
+						"{C:inactive}(#2# seconds remaining)",
+						"{C:inactive}(Slow lasts for #3# more rounds)"
+					}
+				}
+			},
 			fish_fac_fas_john_cod = {
 				name = "John Cod",
 				flavour = {

@@ -59,6 +59,9 @@ FishAndChips.Fish{
 		return {vars = { pseudorandom_element({"Nyon!", "Ueueleuleuleue"})} }
 	end,
 	loc_vars = function(self, info_queue, card)
+		if card.ability.immutable.slow then
+			return {key = self.key .. '_slow', vars = {card.ability.extra.xmult, card.ability.immutable.timer, card.ability.extra.rounds}}
+		end
 		return {vars = {card.ability.extra.xmult, card.ability.immutable.timer}}
 	end,
 	update = function (self, card, dt)
