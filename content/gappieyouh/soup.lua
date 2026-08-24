@@ -13,14 +13,19 @@ FishAndChips.Fish {
     environments = {
         soup = 10
     },
+    blueprint_compat = false,
+    eternal_compat = false,
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_negative
+    end,
     can_use = function(self, card)
-        local check = 0
+        if not G.fac_fish_area.cards then return false end
         for _,v in pairs(G.fac_fish_area.cards) do
-            if not v.edition then
-                check = check + 1
+            if not v.edition and v ~= card then
+                return true
             end
         end
-        return G.fac_fish_area.cards and #G.fac_fish_area.cards > 0 and check == #G.fac_fish_area.cards
+        return false
     end,
     use = function(self, card, area, copier)
         G.E_MANAGER:add_event(Event{
