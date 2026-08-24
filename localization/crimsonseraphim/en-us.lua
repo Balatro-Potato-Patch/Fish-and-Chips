@@ -34,7 +34,8 @@ return {
                 name = "Hammerhead Shark",
                 text = {
                     "When a {C:fac_fish}Fish{} is caught,",
-                    "{C:red}Forge{} a {C:blue}Common{} {C:attention}Joker{}"
+                    "{C:red}Forge{} a {C:blue}Common{} {C:attention}Joker{}",
+                    "{C:inactive}(Must have room){}"
                 },
                 flavor = {
                     "Usually found near anvils and",
