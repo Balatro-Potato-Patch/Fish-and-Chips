@@ -789,8 +789,8 @@ return {
             },
             fac_fishing_2b = {
                 "To lure in the fish,",
-                "you need {C:attention}Bait{}! You use",
-                "{C:attention}1{} Bait every time you fish."
+                "you need {C:fac_bait}Bait{}! You use",
+                "{C:attention}1{} {C:fac_bait}Bait{} every time you fish."
             },
             fac_fishing_2c = {
                 "If ya catch the fish",
@@ -800,15 +800,27 @@ return {
             fac_fishing_2d = {
                 "You can check out",
                 "your {C:attention}tacklebox{} by",
-                "clickin' this button."
+                "lookin' here."
             },
             fac_fishing_2e = {
-                "I've given ya some {C:attention}free Bait{}!",
+                "I've given ya some {C:fac_bait}free Bait{}!",
                 "I know, I'm so generous.",
                 "You can thank me later."
             },
+            fac_fishing_2f = {
+                "These Worms are what's",
+                "currently hooked on your line.",
+                "Surely a fish'll make a feast",
+                "outta those bad boys!"
+            },
+            fac_fishing_2g = {
+                "You can take a looksee at",
+                "the rest of your stock on the",
+                "right of your equipped bait.",
+                "Just click a {C:fac_bait}Bait{} to equip!"
+            },
             fac_fishing_3a = {
-                "Out of Bait? Not a bother!",
+                "Out of {C:fac_bait}Bait{}? Not a bother!",
                 "Head on over to the Bait Shop",
                 "and {C:gold}Snapper'll{} sort ya out."
             },
