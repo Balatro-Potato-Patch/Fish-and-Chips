@@ -353,55 +353,58 @@ function FishAndChips.mod.custom_card_areas(game)
 	end
 
 	-- kine
-	G.fac_fas_kine_area = CardArea(
-		-20, -20,
-		G.CARD_W, G.CARD_H,
-		{
-			type = "joker",
-			highlighted_limit = 1,
-			highlight_limit = 1
-		}
-	)
-	function G.fac_fas_kine_area:align_cards()
-		local scale = 4
-		for i, card in ipairs(self.cards) do
-			for _, _card in ipairs(G.fac_fish_area.cards) do
-				if _card.config.center.key == "fish_fac_fas_kine" and _card.ability.immutable.id == card.ability.fac_fas_kine and not card.disable_align then
-					card.T.x = _card.T.x + _card.T.w - 0.1
-					card.T.y = _card.T.y + _card.T.h / 2 + 0.1
-					card.T.r = _card.T.r
-					if not card.memT then card.memT = copy_table(card.T) end
-					card.T.w = card.memT.w / G.CARD_W * _card.T.w / scale
-					card.T.h = card.memT.h / G.CARD_H * _card.T.h / scale
-					card.T.x = card.T.x - card.T.w
-					card.T.y = card.T.y - card.T.h / 2
-				end
-			end
-			for _, _card in ipairs(G.fac_fas_fish_kebab_area.cards) do
-				if _card.config.center.key == "fish_fac_fas_kine" and _card.ability.immutable.id == card.ability.fac_fas_kine and not card.disable_align then
-					card.T.x = _card.T.x + _card.T.w - 0.1
-					card.T.y = _card.T.y + _card.T.h / 2 + 0.1
-					card.T.r = _card.T.r
-					if not card.memT then card.memT = copy_table(card.T) end
-					card.T.w = card.memT.w / G.CARD_W * _card.T.w / scale
-					card.T.h = card.memT.h / G.CARD_H * _card.T.h / scale
-					card.T.x = card.T.x - card.T.w
-					card.T.y = card.T.y - card.T.h / 2
+	G.fac_fas_kine_areas = {}
+	function G.fac_fas_kine_areas:align_cards()
+		if #G.fac_fas_kine_areas > 1 then
+			for j, area in ipairs(G.fac_fas_kine_areas) do
+				local scale = 4
+				for i, card in ipairs(area.cards) do
+					-- renders held joker when in typical fish bucket area
+					for _, _card in ipairs(G.fac_fish_area.cards) do
+						if _card.config.center.key == "fish_fac_fas_kine" and _card.ability.immutable.id == card.ability.fac_fas_kine and not card.disable_align then
+							card.T.x = _card.T.x + _card.T.w - 0.1
+							card.T.y = _card.T.y + _card.T.h / 2 + 0.1
+							card.T.r = _card.T.r
+							if not card.memT then card.memT = copy_table(card.T) end
+							card.T.w = card.memT.w / G.CARD_W * _card.T.w / scale
+							card.T.h = card.memT.h / G.CARD_H * _card.T.h / scale
+							card.T.x = card.T.x - card.T.w
+							card.T.y = card.T.y - card.T.h / 2
+						else print("something is weird?")
+						end
+					end
+					-- renders held joker when in kebab area
+					for _, _card in ipairs(G.fac_fas_fish_kebab_area.cards) do
+						if _card.config.center.key == "fish_fac_fas_kine" and _card.ability.immutable.id == card.ability.fac_fas_kine and not card.disable_align then
+							card.T.x = _card.T.x + _card.T.w - 0.1
+							card.T.y = _card.T.y + _card.T.h / 2 + 0.1
+							card.T.r = _card.T.r
+							if not card.memT then card.memT = copy_table(card.T) end
+							card.T.w = card.memT.w / G.CARD_W * _card.T.w / scale
+							card.T.h = card.memT.h / G.CARD_H * _card.T.h / scale
+							card.T.x = card.T.x - card.T.w
+							card.T.y = card.T.y - card.T.h / 2
+						end
+					end
 				end
 			end
 		end
 	end
 
 	for index, box in ipairs(G.I.CARD) do
-		if box == G.fac_fas_kine_area then
-			table.remove(G.I.CARD, index)
-			break
+		for i = 1, #G.fac_fas_kine_areas do
+			if box == G.fac_fas_kine_areas[i] then
+				table.remove(G.I.CARD, index)
+				break
+			end
 		end
 	end
 	for index, box in ipairs(G.I.CARD) do
-		if box == G.fac_fishing_bucket_top then
-			table.insert(G.I.CARD, index, G.fac_fas_kine_area)
-			break
+		for i = 1, #G.fac_fas_kine_areas do
+			if box == G.fac_fishing_bucket_top then
+				table.insert(G.I.CARD, index, G.fac_fas_kine_areas[i])
+				break
+			end
 		end
 	end
 end
