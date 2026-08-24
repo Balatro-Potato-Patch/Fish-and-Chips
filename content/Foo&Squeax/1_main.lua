@@ -274,12 +274,12 @@ function FishAndChips.mod.custom_card_areas(game)
 			highlight_limit = 1,
 		}
 	)
-	game.fac_fas_kebab_cards = UIBox({
+	G.fac_fas_kebab_cards = UIBox({
 		definition = {
 			n = G.UIT.ROOT,
 			config = { colour = G.C.CLEAR },
 			nodes = {
-				{ n = G.UIT.O, config = { object = game.fac_fas_fish_kebab_area } },
+				{ n = G.UIT.O, config = { object = G.fac_fas_fish_kebab_area } },
 			},
 		},
 		config = {
@@ -289,6 +289,10 @@ function FishAndChips.mod.custom_card_areas(game)
 			instance_type = "CARD",
 		},
 	})
+	--[[fac_kebab_draw_ref = G.fac_fas_fish_kebab_area.draw
+	function G.fac_fas_fish_kebab_area:draw()
+		fac_kebab_draw_ref()
+	end]]
 	function G.fac_fas_fish_kebab_area:align_cards()
 		table.sort(self.cards, function (a, b)
 			return a.ability.fac_fas_kebab.order < b.ability.fac_fas_kebab.order
