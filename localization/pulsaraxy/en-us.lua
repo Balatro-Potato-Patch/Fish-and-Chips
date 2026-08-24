@@ -72,24 +72,6 @@ local pa_fish = {
                 }
             },
             fish_fac_pa_onering = {
-                name = "The One Fish",
-                text = {{
-                    "{C:attention}Disable{} all {C:attention}Boss Blinds{}",
-                    "Blind Size temporarily increases by",
-                    "{B:blind,C:white}X#1#{} each round while held",
-                    "{C:inactive}(Current Blind Size: {}{B:blind,C:white}#3#x{}{C:inactive}){}"
-                },{
-                    "If {C:attention}sold{} or {C:attention}destroyed{}:",
-                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size {C:attention}permanently",
-                }},
-                flavour = {
-                    "One fish to rule them all,",
-                    "one fish to find them,",
-                    "One fish to bring them all",
-                    "and in the darkness bind them."
-                }
-            },
-            fish_fac_pa_onering_variable = {
                 name = "The #4# Fish",
                 text = {{
                     "{C:attention}Disable{} all {C:attention}Boss Blinds{}",
