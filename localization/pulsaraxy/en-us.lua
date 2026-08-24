@@ -74,14 +74,13 @@ local pa_fish = {
             fish_fac_pa_onering = {
                 name = "The One Fish",
                 text = {{
-                    "Disable all {C:attention}Boss Blinds{}",
+                    "{C:attention}Disable{} all {C:attention}Boss Blinds{}",
                     "Blind Size temporarily increases by",
                     "{B:blind,C:white}X#1#{} each round while held",
-                    "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
+                    "{C:inactive}(Current Blind Size: {}{B:blind,C:white}#3#x{}{C:inactive}){}"
                 },{
-                    "If {C:attention}sold or destroyed{}:",
-                    "Outside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size permanently",
-                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
+                    "If {C:attention}sold{} or {C:attention}destroyed{}:",
+                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size {C:attention}permanently",
                 }},
                 flavour = {
                     "One fish to rule them all,",
@@ -91,16 +90,15 @@ local pa_fish = {
                 }
             },
             fish_fac_pa_onering_variable = {
-                name = "The #5# Fish",
+                name = "The #4# Fish",
                 text = {{
-                    "Disable all {C:attention}Boss Blinds{}",
+                    "{C:attention}Disable{} all {C:attention}Boss Blinds{}",
                     "Blind Size temporarily increases by",
                     "{B:blind,C:white}X#1#{} each round while held",
-                    "{C:inactive}(Current blind size: {}{B:blind,C:white}#4#x{}{C:inactive}){}"
+                    "{C:inactive}(Current Blind Size: {}{B:blind,C:white}#3#x{}{C:inactive}){}"
                 },{
-                    "If {C:attention}sold or destroyed{}:",
-                    "Outside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#2#{} base blind size permanently",
-                    "Inside of {X:fac_environment,C:white}Volcano{}, {X:blind,C:white}X#3#{} base blind size permanently",
+                    "If {C:attention}sold{} or {C:attention}destroyed{} inside of {X:fac_environment,C:white}Volcano{},",
+                    "{X:blind,C:white}X#2#{} base blind size {C:attention}permanently",
                 }},
                 flavour = {
                     "#1# fish to rule them all,",
@@ -324,6 +322,13 @@ local pa_fish = {
             k_fac_pa_fromg = "fromg",
             k_fac_pa_box_jellyfish_open = "Open",
             k_fac_pa_box_jellyfish_consume = "Consume",
+            k_pulsaraxy_one = "One",
+            k_pulsaraxy_two = "Two",
+            k_pulsaraxy_three = "Three",
+            k_pulsaraxy_four = "Four",
+            k_pulsaraxy_five = "Five",
+            k_pulsaraxy_six = "Six",
+            k_pulsaraxy_seven = "Seven",
         },
     }
 }

@@ -89,7 +89,7 @@ FishAndChips.Fish {
 		-- successful catch, doorfish active
 		if context.fac_end_fishing and context.fish == (card.ability.extra.drawn_fish[card.ability.extra.toggle]) then
 			card.ability.extra.times_used = card.ability.extra.times_used + 1
-			local is_blue = context.fish_obj.config.center.attributes and (context.fish_obj.config.center.attributes.chips or context.fish_obj.config.center.attributes.xchips)
+			local is_blue = SMODS.has_attribute(context.fish_obj, "chips") or SMODS.has_attribute(context.fish_obj, "xchips")
 			card.ability.extra.blue_streak = is_blue and card.ability.extra.blue_streak + 1 or 0
 		end
 		
@@ -160,7 +160,7 @@ FishAndChips.Fish {
 			if only_treasure then
 				local out_of_time = false
 				local fish_is_treasure = (chosen_fish and chosen_fish.treasure)
-				while not out_of_time and not fish_is_treasure do
+				while not out_of_time and not fish_is_treasure do -- Todo: Consider using FishAndChips.poll_treasure_fish() instead (slight change in functionality)
 					chosen_fish = SMODS.poll_object({
 						pool = fish_pool,
 						use_bait = fishing_active,
