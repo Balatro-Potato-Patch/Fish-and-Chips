@@ -25,6 +25,9 @@ FishAndChips.Fish({
 	impulse_max = 0,
 	vel_limit = 0.01,
 	badge_key = "k_fac_hayayaya_badge_q",
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_CENTERS.e_polychrome
+	end,
 	can_use = function(self, card)
 		local eligible = {}
 		for _, c in ipairs(G.fac_fish_area.cards) do
