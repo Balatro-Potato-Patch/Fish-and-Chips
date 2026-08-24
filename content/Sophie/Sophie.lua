@@ -667,7 +667,18 @@ FishAndChips.Fish {
         end
         if context.starting_shop then
             for i = 1, card.ability.extra.consumables do
-                local consumable = create_card('Consumeables', G.shop_jokers, nil, nil, true)
+
+                local ctypes = {}
+                for _,v in ipairs(SMODS.ConsumableType.obj_buffer) do
+                    ctypes[#ctypes + 1] = v
+                end
+                -- Include spectrals in the pool
+                local old_spec_rate = G.GAME.spectral_rate
+                G.GAME.spectral_rate = 2
+                local type = SMODS.poll_object_type{types = ctypes, 'kfc'..G.GAME.round_resets.ante..i}
+                G.GAME.spectral_rate = old_spec_rate
+
+                local consumable = SMODS.create_card{set = type, area = G.shop_jokers, skip_materialize = true}
                 consumable.states.visible = false
                 G.shop_jokers:emplace(consumable)
                 consumable:start_materialize()
