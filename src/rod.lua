@@ -204,7 +204,7 @@ FishAndChips.Rod {
 		if args.type == "fac_fish_caught" then
 			local env_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.environment_data or {}
 			for _, v in pairs(G.FAC_ENVIRONMENT_POOL) do
-				if not env_data[v.key].times_fished or env_data[v.key].times_fished < 1 then
+				if not env_data[v.key] or not env_data[v.key].times_fished or env_data[v.key].times_fished < 1 then
 					return false
 				end
 			end
