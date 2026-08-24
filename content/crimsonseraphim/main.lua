@@ -1587,10 +1587,11 @@ FishAndChips.Fish {
             mult = 0.25
         }
     },
-    flavour_vars = function()
-        return {
-            vars = {
-                elements = {
+    flavour_vars = function(self)
+        if FishAndChips.mod.config.performance_mode then
+            return {
+                key = self.key ..'_low_perf',
+                vars = {
                     FishAndChips.crimsonseraphim.get_word_cycle("determiners"),
                     FishAndChips.crimsonseraphim.get_word_cycle("adjectives"),
                     FishAndChips.crimsonseraphim.get_word_cycle("nouns"),
@@ -1601,7 +1602,22 @@ FishAndChips.Fish {
                     FishAndChips.crimsonseraphim.get_word_cycle("nouns")
                 }
             }
-        }
+        else
+            return {
+                vars = {
+                    elements = {
+                        FishAndChips.crimsonseraphim.get_word_cycle("determiners"),
+                        FishAndChips.crimsonseraphim.get_word_cycle("adjectives"),
+                        FishAndChips.crimsonseraphim.get_word_cycle("nouns"),
+                        FishAndChips.crimsonseraphim.get_word_cycle("verbs"),
+                        FishAndChips.crimsonseraphim.get_word_cycle("prepositions"),
+                        FishAndChips.crimsonseraphim.get_word_cycle("determiners"),
+                        FishAndChips.crimsonseraphim.get_word_cycle("adjectives"),
+                        FishAndChips.crimsonseraphim.get_word_cycle("nouns")
+                    }
+                }
+            }
+        end
     end,
     loc_vars = function(self, _, card)
         local heart

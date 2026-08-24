@@ -447,6 +447,19 @@ return {
                     "it became so light."
                 }
             },
+            fish_fac_crimsonseraphim_nameless_lotus_low_perf = {
+                name = "{E:fac_nameless}Erilucyxwyn{}",
+                text = {
+                    "{E:fac_nameless}Gives {X:mult,C:white,E:fac_nameless}X#1# {E:fac_nameless} Mult for",
+                    "{E:fac_nameless}each unique {E:fac_nameless,C:attention}Developer {E:fac_nameless}or",
+                    "{E:fac_nameless,C:attention}Artist{E:fac_nameless} credited for held {E:fac_nameless,C:attention}Fish",
+                    "{E:fac_nameless,C:inactive}(Currently {X:mult,C:white,E:fac_nameless}X#2#{E:fac_nameless,C:inactive} Mult)"
+                },
+                flavor = {
+                    "#1# #2# #3# #4#",
+                    "#5# #6# #7# #8#"
+                }
+            },
             fish_fac_crimsonseraphim_nameless_lotus = {
                 name = "{E:fac_nameless}Erilucyxwyn{}",
                 text = {

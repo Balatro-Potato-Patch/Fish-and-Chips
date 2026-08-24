@@ -263,23 +263,25 @@ SMODS.DrawStep({
 SMODS.DynaTextEffect {
     key = "nameless",
     func = function (dynatext, index, letter)
-        letter.dt = (letter.dt or 0) + G.TIMERS.REAL - (letter.timer or G.TIMERS.REAL)
-        if letter.dt2 then
-            letter.dt2 = letter.dt2 + G.TIMERS.REAL - (letter.timer or G.TIMERS.REAL)
-        end
-        letter.timer_offset = letter.timer_offset or (math.random() + 0.1)
-        letter.orig_char = letter.orig_char or letter.char
-        if (not letter.dt2 or letter.dt2 > 0.075) and not letter.done_char then
-            letter.letter:release()
-            if letter.dt < letter.timer_offset and letter.orig_char ~= " " then
-                letter.letter = love.graphics.newText(dynatext.font.FONT, string.char(math.fmod((string.byte(letter.char) + math.fmod(math.floor(G.TIMERS.REAL * 142.1 + index), 192)), 94)+ 33))
-            else
-                letter.letter = love.graphics.newText(dynatext.font.FONT, letter.char)
-                letter.done_char = true
+        if not FishAndChips.mod.config.performance_mode then
+            letter.dt = (letter.dt or 0) + G.TIMERS.REAL - (letter.timer or G.TIMERS.REAL)
+            if letter.dt2 then
+                letter.dt2 = letter.dt2 + G.TIMERS.REAL - (letter.timer or G.TIMERS.REAL)
             end
-            letter.dt2 = 0
+            letter.timer_offset = letter.timer_offset or (math.random() + 0.1)
+            letter.orig_char = letter.orig_char or letter.char
+            if (not letter.dt2 or letter.dt2 > 0.075) and not letter.done_char then
+                letter.letter:release()
+                if letter.dt < letter.timer_offset and letter.orig_char ~= " " then
+                    letter.letter = love.graphics.newText(dynatext.font.FONT, string.char(math.fmod((string.byte(letter.char) + math.fmod(math.floor(G.TIMERS.REAL * 142.1 + index), 192)), 94)+ 33))
+                else
+                    letter.letter = love.graphics.newText(dynatext.font.FONT, letter.char)
+                    letter.done_char = true
+                end
+                letter.dt2 = 0
+            end
+            letter.timer = G.TIMERS.REAL
         end
-        letter.timer = G.TIMERS.REAL
     end
 }
 
@@ -454,6 +456,9 @@ FishAndChips.crimsonseraphim.words = {
 --[Determiner] [Adjective] [Noun] [Verb] [Preposition] [Determiner] [Adjective] [Noun].
 
 function FishAndChips.crimsonseraphim.get_word_cycle(type)
+    if FishAndChips.mod.config.performance_mode then
+        return pseudorandom_element(FishAndChips.crimsonseraphim.words[type])
+    end
     return DynaText({ string = FishAndChips.crimsonseraphim.words[type], colours = { G.C.JOKER_GREY }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0 })
 end
 
