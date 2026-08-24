@@ -40,9 +40,8 @@ return {
 			fish_fac_fas_chimera = {
 				name = "Water Chimera",
 				flavour = {
-					"Often mistaken for",
-					"birds, bugs, drugs, drills",
-					"and baguettes (somehow???)"
+					"Often mistaken for birds, bugs, drugs,",
+					"drills and baguettes (somehow???)"
 				},
 				text = {
 					{
@@ -59,7 +58,7 @@ return {
 			fish_fac_fas_kawkaw = {
 				name = "BlubBlub",
 				flavour = {
-					"#3#"
+					"#1#"
 				},
 				text = {
 					{
@@ -69,7 +68,7 @@ return {
 						"Must be pet periodically",
 						"{C:inactive}(but not too much)",
 						"or it's shooed away",
-						"{C:inactive}(#4# seconds remaining)"
+						"{C:inactive}(#2# seconds remaining)"
 					}
 				}
 			},
@@ -176,7 +175,7 @@ return {
 				},
 				text = {
 					"It's not like I want to give you",
-					"{C:attention}+#1#{} selection limit. Hmph!",
+					"{C:attention}+#1#{} card selection limit. Hmph!",
 					"{ppu_bubble:active}"
 				}
 			},

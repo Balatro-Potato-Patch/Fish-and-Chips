@@ -22,10 +22,9 @@ FishAndChips.Fish {
         soup = 1,
         styx = 1,
 	},
-    -- placeholder values
     stats = {
-		weight = {min = 1.87, max = 1.87 + 0.00001},
-		length = {min = 0.276225, max = 0.276225 + 0.00001}
+		weight = {min = 1.87, max = 1.87},
+		length = {min = 0.276225, max = 0.276225}
 	},
     decision_max = 0.75,
     decision_min = 0.35,
@@ -36,7 +35,7 @@ FishAndChips.Fish {
         }}
 	end,
 	calculate = function(self, card, context)
-        if context.starting_shop then
+        if context.starting_shop and not context.blueprint then
             if card.ability.extra.amt - card.ability.extra.dec <= 0 then
                 SMODS.destroy_cards(card, nil, nil, true)
                 return {
@@ -58,7 +57,7 @@ FishAndChips.Fish {
             end
         end
 
-        if context.modify_final_cashout then
+        if context.modify_final_cashout and not context.blueprint then
 			return { sand_dollars = card.ability.extra.amt }
 		end
     end,

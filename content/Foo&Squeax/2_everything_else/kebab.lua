@@ -7,6 +7,7 @@ SMODS.Atlas{
 	py = 95
 }
 
+--[[
 function FishAndChips.FooSqueax.link_kebab_and_top(args)
 	local kebab = args.kebab
 	if (not args.kebab) and G.fac_fish_area then
@@ -126,6 +127,8 @@ FishAndChips.Fish{
 		end
 	end
 }
+]]
+
 
 FishAndChips.Fish{
 	key = "fas_fish_kebab",
@@ -151,14 +154,14 @@ FishAndChips.Fish{
 	set_ability = function (self, card, initial, delay_sprites)
 		if G.fac_fas_fish_kebab_area then
 			card.ability.immutable.id = random_string(20, pseudoseed("fac_fas_fish_kebab"))
-			FishAndChips.FooSqueax.fish_kebab_link = card
-			SMODS.add_card{key = "fish_fac_fas_fish_kebab_top", no_edition = true, area = G.fac_fas_fish_kebab_area}
+			--FishAndChips.FooSqueax.fish_kebab_link = card
+			--SMODS.add_card{key = "fish_fac_fas_fish_kebab_top", no_edition = true, area = G.fac_fas_fish_kebab_area}
 		end
 	end,
 	keep_on_use = function (self, card)
 		return true
 	end,
-	load = function (self, card, card_table, other_card)
+	--[[load = function (self, card, card_table, other_card)
 		G.E_MANAGER:add_event(Event{
 			func = function()
 				for _, _card in ipairs(G.fac_fas_fish_kebab_area.cards) do
@@ -169,7 +172,7 @@ FishAndChips.Fish{
 				return true
 			end
 		})
-	end,
+	end,]]
 	can_use = function (self, card)
 		if (card.ability.immutable.fish > 0) or (not G.fac_fish_area) then return true end
 		for i, _card in ipairs(G.fac_fish_area.cards) do
@@ -183,14 +186,18 @@ FishAndChips.Fish{
 			local free = {}
 			if G.fac_fish_area then
 				for _, _card in ipairs(G.fac_fish_area.cards) do
-					if found and _card.config.center.key ~= "fac_fas_fish_kebab" then
-						free[#free+1] = _card
-						_card.ability.fac_fas_kebab = {
-							id = card.ability.immutable.id,
-							order = card.ability.immutable.fish
-						}
-						card.ability.immutable.fish = card.ability.immutable.fish + 1
-						FishAndChips.FooSqueax.link_kebab(card, _card)
+					if found then
+						if _card.config.center.key ~= "fish_fac_fas_fish_kebab" then
+							free[#free+1] = _card
+							_card.ability.fac_fas_kebab = {
+								id = card.ability.immutable.id,
+								order = card.ability.immutable.fish
+							}
+							card.ability.immutable.fish = card.ability.immutable.fish + 1
+							--FishAndChips.FooSqueax.link_kebab(card, _card)
+						else
+							SMODS.calculate_effect({message = localize("k_nope_ex"), colour = G.C.PURPLE}, _card)
+						end
 					end
 					if _card == card then found = true end
 				end
@@ -237,4 +244,42 @@ FishAndChips.Fish{
 		if retrigger then return eff, retrigger
 		else return eff end
 	end,
+}
+
+
+
+-- drawstep tomfoolery by gabby
+SMODS.DrawStep {
+    key = 'fas_fish_kebab_top',
+    order = 1000,
+    func = function(self, layer)
+        if self.config.center.key == "fish_fac_fas_fish_kebab" then
+            if not FishAndChips.FooSqueax.kebab_top then
+                FishAndChips.FooSqueax.kebab_top = Sprite(0, 0, G.CARD_W, G.CARD_H, G.ASSET_ATLAS['fac_fas_fish_kebab'], { x = 1, y = 0 })
+            end
+            FishAndChips.FooSqueax.kebab_top.role.draw_major = self
+			FishAndChips.FooSqueax.kebab_top:draw_shader('dissolve', nil, nil, nil, self.children.center)
+			
+			-- edition handling i yoinked from absinthe wormhole - gabby 
+            if self.edition and not self.delay_edition then
+                for k, v in pairs(G.P_CENTER_POOLS.Edition) do
+                    if self.edition[v.key:sub(3)] and v.shader then
+						if type(v.draw) == 'function' then
+							v:draw(self, layer)
+						else
+							FishAndChips.FooSqueax.kebab_top:draw_shader(v.shader, nil, self.ARGS.send_to_shader, nil, self.children.center)
+						end
+                    end
+                end
+                if self.edition.negative then
+                    FishAndChips.FooSqueax.kebab_top:draw_shader('negative_shine', nil, self.ARGS.send_to_shader, nil, self.children.center)
+                end
+            elseif not self:should_draw_base_shader() then
+            	-- Don't render base dissolve shader.
+            elseif not self.greyed then
+				FishAndChips.FooSqueax.kebab_top:draw_shader('dissolve', nil, nil, nil, self.children.center)
+            end
+        end
+    end,
+    conditions = { vortex = false, facing = 'front' },
 }

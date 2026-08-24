@@ -40,8 +40,9 @@ FishAndChips.Fish {
 	config = { extra = { blu = false } },
 	blueprint_compat = false,
 	environments = {
-		pier = 10,
-		aquifer = 2
+		city_river = 1,
+		styx = 2,
+		pier = 6
 	},
 	calculate = function(self, card, context)
 		if context.after and not context.blueprint and not context.retrigger_joker and G.GAME.current_round.hands_left <= 0 and G.GAME.chips < G.GAME.blind.chips and SMODS.find_card(card.config.center_key)[1]==card then

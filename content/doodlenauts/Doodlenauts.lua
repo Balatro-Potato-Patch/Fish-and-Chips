@@ -249,7 +249,7 @@ FishAndChips.Fish {
 	cost = 5,
 	config = {
 		extra = {
-			chips_per_sanddollar = 8,
+			chips_per_sanddollar = 3,
 		}
 	},
 	environments = {

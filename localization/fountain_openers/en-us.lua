@@ -7,7 +7,7 @@ return {
                     "Makes {C:attention}boids{} appear on screen",
                     "This Fish gains {C:chips}+#2#{} Chips",
                     "when you {C:attention}click{} on a boid",
-                    "while reeling in a Fish",
+                    "while reeling in a {C:fac_fish}Fish{}",
                     "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
                 },
                 flavor = {
@@ -20,8 +20,8 @@ return {
             fish_fac_fo_neutron_starfish = {
                 name = "Dying Neutron Starfish",
                 text = {
-                    "Use to {C:red}destroy{} all cards held in hand",
-                    "Level up a random {C:attention}poker hand",
+                    "{C:red}Destroy{} all cards held in hand,",
+                    "level up a random {C:attention}poker hand",
                     "for each card destroyed",
                     "{ppu_bubble:usable}"
                 },
@@ -33,7 +33,7 @@ return {
             fish_fac_fo_goldfish = {
                 name = "Goldfish Crackers",
                 text = {
-                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} at end of round",
+                    "Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} at end of round,",
                     "{C:fac_sand_dollars,f:fac_sand_dollars}-${C:fac_sand_dollars}#2#{} when entering the shop"
                 },
                 flavor = {
@@ -60,8 +60,8 @@ return {
                         "and become {C:attention}Queens{} after scoring",
                     },
                     {
-                        "Scored {C:attention}Kings{} and {C:attention}Queens{}",
-                        "each give {X:mult,C:white}X#2#{} Mult"
+                        "Played {C:attention}Kings{} and {C:attention}Queens{}",
+                        "give {X:mult,C:white}X#2#{} Mult when scored"
                     }
                 },
                 flavor = {
@@ -76,7 +76,7 @@ return {
                         "{element:1}",
                     },
                     {
-                        "This Fish gains {C:mult}+#2#{} Mult when you",
+                        "Gains {C:mult}+#2#{} Mult when you",
                         "{element:2}",
                         "a {C:fac_fish}Fish",
                         "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
@@ -89,9 +89,8 @@ return {
             fish_fac_fo_crabkhon = {
                 name = "Crabkhon",
                 text = {
-                    "Gives {C:attention}#1#{} free rerolls",
-                    "each {C:attention}ante",
-                    "{C:inactive}({C:attention}#2#{C:inactive} remaining)"
+                    "{C:attention}#1#{} {C:inactive}[#2#]{} free {C:green}Rerolls{} in",
+                    "the shop per {C:attention}Ante{}"
                 },
                 flavor = {
                     "Look, I could give you infinite rerolls",
@@ -111,8 +110,8 @@ return {
             fish_fac_fo_thoracle = {
                 name = "Thassa's Oracle",
                 text = {
-                    "Once per {C:attention}round{}, use this Fish to reduce",
-                    "the {C:attention}Blind's{} requirement by {X:purple,C:white}X#1#{} if the {C:attention}sum{} of ranks",
+                    "Once per {C:attention}round{}, use this {C:fac_fish}Fish{} to reduce the",
+                    "{C:attention}Blind's{} requirement by {X:purple,C:white}X#1#{} if the {C:attention}sum{} of ranks",
                     "of all {C:clubs}Clubs{} held in hand is greater than the",
                     "number of remaining cards in your {C:attention}deck",
                     "{ppu_bubble:usable}{element:1}"

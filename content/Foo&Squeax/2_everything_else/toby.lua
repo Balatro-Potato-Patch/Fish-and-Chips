@@ -60,7 +60,7 @@ FishAndChips.Fish{
 	},
 	attributes = {"chips", "mult", "xchips", "xmult", "score", "xscore", "blindsize", "lose_economy", "sell_value", "undertale", "deltarune", "utdr"},
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval then
+		if context.end_of_round and context.main_eval and not context.blueprint then
 			card.ability.extra_cost = (card.ability.extra_cost or 0) - 1
 			card:set_cost()
 		end

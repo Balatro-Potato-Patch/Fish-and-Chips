@@ -14,6 +14,7 @@ FishAndChips.Fish {
 	atlas = "fo_fish",
 	pos = { x = 8, y = 0 },
 	weight = 8,
+    blueprint_compat = false,
 	disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
@@ -53,7 +54,7 @@ FishAndChips.Fish {
         }
 	end,
     calculate = function(self, card, context)
-        if context.setting_blind then
+        if context.setting_blind and not context.blueprint then
             card.ability.extra.active = true
             return {
                 message = localize{

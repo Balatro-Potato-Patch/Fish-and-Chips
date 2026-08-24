@@ -3,6 +3,7 @@ FishAndChips.Fish {
 	atlas = "fo_fish",
 	pos = { x = 4, y = 0 },
 	weight = 11,
+    blueprint_compat = false,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_grahkon" },
 	attributes = { "xmult", "usable", "food", },
@@ -45,7 +46,7 @@ FishAndChips.Fish {
         }
 	end,
 	calculate = function(self, card, context)
-        if context.final_scoring_step and card.ability.extra.active then
+        if context.final_scoring_step and card.ability.extra.active and not context.blueprint then
             G.E_MANAGER:add_event(Event({
                 func = function()
                     SMODS.calculate_effect({

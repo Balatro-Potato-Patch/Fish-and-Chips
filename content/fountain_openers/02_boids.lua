@@ -319,6 +319,7 @@ FishAndChips.Fish {
 	pos = { x = 0, y = 0 },
 	weight = 12,
 	blueprint_compat = true,
+	perishable_compat = false,
 	disable_visual_scaling = true,
 	ppu_coder = { "fo_alexi" },
 	ppu_artist = { "fo_alexi" },
@@ -347,7 +348,7 @@ FishAndChips.Fish {
 				chips = card.ability.extra.chips
 			}
 		end
-		if context.fac_end_fishing then
+		if context.fac_end_fishing and not context.blueprint then
 			G.E_MANAGER:add_event(Event({
 				func = function()
 					FountainOpeners.boids_game:add_boids(card, card.ability.immutable.fish_killed)

@@ -911,7 +911,7 @@ FishAndChips.Fish {
     config = {
         extra = {
             gender_presentation = nil,
-            bait = 3,
+            bait = 2,
         }
     },
     treasure = true,

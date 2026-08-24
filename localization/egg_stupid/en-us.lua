@@ -21,9 +21,8 @@ return {
                 name = "Pale Oil",
                 text = {
                     "Applies an {C:dark_edition}Edition{}",
-                    "to a random Joker",
+                    "to a random {C:attention}Joker{}",
                     "{s:0.8,C:inactive}Cannot apply Negative{}",
-                    "",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -47,10 +46,10 @@ return {
                 name = "Rootfish",
                 text = {
                     "When {C:attention}Blind{} is selected,",
-                    "lowers {C:attention}sell value{} of all Jokers",
+                    "lowers {C:attention}sell value{} of all {C:attention}Jokers{}",
                     "by {C:money}$#1#{} and gains {X:mult,C:white} X#2# {} Mult",
-                    "for each dollar removed",
-                    "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)"
+                    "for each {C:money}dollar{} removed",
+                    "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)"
                 },
                 flavor = {
                     "The time...",
@@ -60,8 +59,7 @@ return {
             fish_fac_segg_plasmium_phial = {
                 name = "Plasmium Phial",
                 text = {
-                    "{C:blue}+#1#{} Hands",
-                    "",
+                    "Gain {C:blue}+#1#{} hands",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -76,7 +74,6 @@ return {
                 text = {
                     "Awoo!",
                     "{C:inactive}(Must have room)",
-                    "",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -90,7 +87,6 @@ return {
                 text = {
                     "AWOO!",
                     "{C:inactive}(Must have room)",
-                    "",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {
@@ -115,9 +111,8 @@ return {
             fish_fac_segg_couriers_rasher = {
                 name = "Courier's Rasher",
                 text = {
-                    "{C:attention}+#1#{} hand size",
-                    "for every",
-                    "{C:mult}discard{} remaining"
+                    "{C:attention}+#1#{} hand size for every",
+                    "{C:red}discard{} remaining"
                 },
                 flavor = {
                     "Fatty meat of indeterminate origin.",
@@ -126,15 +121,12 @@ return {
                 }
             },
 
-            -- todo
-
             fish_fac_segg_yumama = {
                 name = "Yumama",
                 text = {
-                    "Add {C:attention}#1#{} randomly {C:attention}Enhanced cards{}",
-                    "with the rank of {C:attention}#2#{} selected card",
-                    "to your hand",
-                    "",
+                    "Add {C:attention}#1#{} randomly {C:attention}Enhanced{}",
+                    "cards with the rank of {C:attention}#2#{}",
+                    "selected card to your hand",
                     "{ppu_bubble:usable}"
                 },
                 flavor = {

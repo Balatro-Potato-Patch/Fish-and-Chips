@@ -2,6 +2,7 @@ FishAndChips.Fish {
 	key = "fo_neutron_starfish",
 	atlas = "fo_fish",
 	pos = { x = 1, y = 0 },
+    blueprint_compat = false,
     eternal_compat = false,
 	disable_visual_scaling = true,
 	weight = 2,

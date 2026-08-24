@@ -49,16 +49,17 @@ FishAndChips.Fish{
 			slow = false,
 		}
 	},
+	eternal_compat = false,
 	stats = {
 		length = {min = 1, max = 1.2},
 		weight = {min = 1, max = 1}
 	},
 	attributes = {"xmult", "deltarune", "utdr"},
 	flavour_vars = function(self, info_queue, card)
-		return {vars = {nil, nil, pseudorandom_element({"Nyon!", "Ueueleuleuleue"})}}
+		return {vars = { pseudorandom_element({"Nyon!", "Ueueleuleuleue"})} }
 	end,
 	loc_vars = function(self, info_queue, card)
-		return {vars = {card.ability.extra.xmult, card.ability.extra.call, nil, card.ability.immutable.timer}}
+		return {vars = {card.ability.extra.xmult, card.ability.immutable.timer}}
 	end,
 	update = function (self, card, dt)
 		if card.REMOVED then return end
@@ -94,6 +95,7 @@ FishAndChips.Fish{
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main then
+			if context.blueprint then return { xmult = card.ability.extra.xmult } end
 			return {
 				xmult = card.ability.extra.xmult,
 				func = function()

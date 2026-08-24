@@ -247,9 +247,8 @@ return {
             fish_fac_oldtire = {
                 name = 'Old Tire',
                 text = {
-                    '{C:attention}#1#{} free {C:green}Rerolls{} in',
-                    'the shop, per {C:attention}Ante{}',
-                    '{C:inactive}({C:attention}#2#{C:inactive} remaining){}'
+                    '{C:attention}#1#{} {C:inactive}[#2#]{} free {C:green}Rerolls{} in',
+                    'the shop per {C:attention}Ante{}'
                 },
                 flavour = {
                     "The lost rubber wheel of someone's bike.",
