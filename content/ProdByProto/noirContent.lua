@@ -164,7 +164,7 @@ FishAndChips.Fish {
                     {key = "lockdoor", level = 3},
                     {key = "fabric"},
                     {key = "bcard"},
-                    {key = "key"},
+                    {key = "key", level = 3},
                     state = noir_states.warehouse
                 },
                 {--3: Locked room in the warehouse
@@ -312,26 +312,19 @@ FishAndChips.Fish {
             end
         end
 
-        local function unlock_door(key_card)
-            for i,v in ipairs(cae.new_noir_levels[cae.level]) do
-                if v.key == "lockdoor" and (key_card.ability.noir_plot == v.plot or key_card.ability.noir_level == v.level) then
-                    v.key = "door"
-                    key_card:juice_up()
-                end
-            end
-        end
-
         local function use_door(door_card)
             local doormark = door_card.ability.noir_mark
+            noir_trigger(door_card)
             if not string.find(doormark or "", "door") then
                 return false
             end
             if (cae.noir_keys <= 0 and doormark == "lockdoor") or doormark == "truedoor" then
+                SMODS.calculate_effect{message = localize("proot_noir_unlocked"), card = door_card}
                 return false
             elseif cae.noir_keys > 0 and doormark == "lockdoor" then
-                unlock_door(door_card)
                 cae.noir_keys = cae.noir_keys - 1
                 door_card.ability.noir_mark = "door"
+                SMODS.calculate_effect{message = localize("proot_noir_locked"), card = door_card}
             end
 
             facp.noirProg({ flg = flag, lvl = level })
@@ -385,22 +378,17 @@ FishAndChips.Fish {
 
         if storyState == noir_states.warehouse then
             if context.individual and context.cardarea == G.play and context.other_card.ability.noir_mark and not context.other_card.noir_triggered then
-                if context.other_card.ability.noir_mark == "key" then
-                    cae.noir_keys = cae.noir_keys + 1
-                    remove_item_from_current_level("key")
-                    noir_trigger(context.other_card)
-                    context.other_card.ability.noir_mark = nil
-                elseif context.other_card.ability.noir_mark == "lockdoor" then
+                if context.other_card.ability.noir_mark == "lockdoor" then
                     if cae.noir_keys > 0 then
-                        unlock_door(context.other_card)
-                        return {
-                            message = localize("proot_noir_unlock")
-                        }
-                    else
-                        return {
-                            message = localize("proot_noir_locked")
-                        }
+                        use_door(context.other_card)
+                        return
                     end
+                else
+                    if context.other_card.ability.noir_mark == "key" then
+                        cae.noir_keys = cae.noir_keys + 1
+                        remove_item_from_current_level("key")
+                    end
+                    claim_item(context.other_card)
                 end
             end
 
