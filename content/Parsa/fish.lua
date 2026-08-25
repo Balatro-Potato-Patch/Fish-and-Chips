@@ -131,25 +131,9 @@ FishAndChips.Fish {
 
     attributes = {"destroy_card", "generation", "tag", "joker", },
 
-    config = {
-        extra = {
-            rounds_played = 0,
-        },
-    },
-
-    loc_vars = function(self, info_queue, card)
-        return {
-            vars = { card.ability.extra.rounds_played },
-        }
-    end,
 
 calculate = function(self, card, context)
     if context.setting_blind then
-        if card.ability.extra.rounds_played <= 2 then -- TODO: This definitely seems wrong but i can't be bothered testing it rn (mf)
-            card.ability.extra.rounds_played = 2
-        else
-            card.ability.extra.rounds_played = card.ability.extra.rounds_played + 1
-        end
 
         local destructable_jokers = {}
         for i = 1, #G.jokers.cards do
@@ -179,13 +163,6 @@ calculate = function(self, card, context)
         for i = 1, 2 do
             local tag_key = pseudorandom_element(tag_pool, 'facfile_tag_' .. i)
             add_tag(Tag(tag_key))
-        end
-    end
-
-    if context.check_eternal and context.other_card == card and card.ability.extra.rounds_played < 2 then
-        local trig = context.trigger
-        if type(trig) == 'table' and trig.from_sell then
-            return { no_destroy = true }
         end
     end
 end,
