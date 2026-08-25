@@ -766,6 +766,7 @@ FishAndChips.Fish {
     config = {
         extra = {
             joker = "fish_fac_cod"
+            joker = "fish_fac_drspectred"
         }
     },
     stats = {
@@ -797,8 +798,6 @@ FishAndChips.Fish {
                 func = function()
                     local blacklist = {
                         fish_fac_crimsonseraphim_larp = true,
-                        fish_fac_drspectred = true,
-                        fish_fac_fihs_CCitty = true,
                     }
                     card.ability.extra.joker = SMODS.poll_object({
                         type = "fac_Fish",

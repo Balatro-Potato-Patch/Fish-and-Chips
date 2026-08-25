@@ -333,6 +333,15 @@ function FishAndChips.crimsonseraphim.get_dummy(center, area, self)
         can_calculate = function(self, ...)
             return Card.can_calculate(self, ...)
         end,
+        CCitty_dialogue_say_stuff = function(self, ...)
+            Card.CCitty_dialogue_say_stuff(self, ...)
+        end,
+        CCitty_add_dialogue = function(self, ...)
+            Card.CCitty_add_dialogue(self, ...)
+        end,
+        CCitty_remove_dialogue = function(self, ...)
+            Card.CCitty_remove_dialogue(self, ...)
+        end,
         original_card = self,
         area = area,
         added_to_deck = added_to_deck,
