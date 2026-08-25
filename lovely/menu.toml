@@ -133,3 +133,18 @@ if FishAndChips and FishAndChips.bg_manager then
 end
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+        G.VIBRATION = G.VIBRATION + 1
+        return true
+end)}))
+'''
+position = 'after'
+payload = '''
+
+FishAndChips.init_custom_menu(change_context)
+'''
+match_indent = true
