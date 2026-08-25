@@ -54,7 +54,7 @@ return {
             fish_fac_sg11_n_vekhi_quantum_fish = {
                 name = "Quantum Fish (photo)",
                 text = {
-                    "{C:attention}Random{} card on screen gives",
+                    "A {C:attention}random{} card on screen gives",
                     "{C:white,X:mult}X#1#{} Mult when triggered",
                 },
                 flavour = {
