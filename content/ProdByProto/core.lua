@@ -14,6 +14,11 @@ PotatoPatchUtils.Developer({
     soul_pos = { x = 1, y = 1 },
     click = function ()
         love.system.openURL("https://ko-fi.com/foxgirlproto/")
+    end,
+    calculate = function (self, context)
+        if context.stay_flipped and context.from_area == G.play then
+            context.other_card.noir_triggered = nil
+        end
     end
 })
 
