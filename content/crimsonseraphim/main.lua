@@ -766,7 +766,6 @@ FishAndChips.Fish {
     config = {
         extra = {
             joker = "fish_fac_cod"
-            joker = "fish_fac_drspectred"
         }
     },
     stats = {
