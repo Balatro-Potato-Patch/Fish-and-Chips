@@ -849,6 +849,9 @@ FishAndChips.Fish {
         else
             local ret = Card.calculate_joker(card.dummy, context)
             card.ability.extra.dummy_abil = card.dummy.ability
+            if ret then
+                ret.card = card
+            end
             return ret
         end
     end,
