@@ -1,7 +1,7 @@
 local facp = FishAndChips.ProdByProto
 
 local dprint = function (...)
-    local StillDebugging = true --change to false to turn off all debug prints
+    local StillDebugging = false --change to true to see debug prints again if something goes horribly wrong
     if StillDebugging then return print(...) end
 end
 
@@ -233,8 +233,20 @@ FishAndChips.Fish {
                     state = noir_states.finished
                 },
             },
-            nearest_starter_level = {
-                1,2,2,4,5,6,6,6,6,6,6,12,13
+            nearest_starter_level = { --ngl I do not know why
+                1, --0
+                2, --0
+                2, --1
+                4, --0
+                5, --0
+                6, --0
+                6, --1
+                6, --2
+                6, --3
+                6, --4
+                6, --5
+                12, --0
+                13, --0 
             },
             noir_keys = 0,
             noir_inv = {},
@@ -340,7 +352,7 @@ FishAndChips.Fish {
             triggered_card.noir_triggered = true
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    triggered_card.ability.noir_triggered = nil
+                    triggered_card.ability.noir_triggered = nil --kinda an artifact, this is handled in the dev object now, but probably better to leave it
                     triggered_card:juice_up()
                     return true;
                 end

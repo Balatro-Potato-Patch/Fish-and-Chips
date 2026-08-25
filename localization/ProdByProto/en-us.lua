@@ -187,6 +187,15 @@ return {
                     "{C:inactive,s:0.8}practical approach to security..."
                 }
             },
+            proot_noir_truedoor_unlocked = {
+                name = "Special Door... ?",
+                text = {
+                    "This door was locked.",
+                    "You needed a {C:attention}Lockpick{} to open it.",
+                    "Rather suspicious, that...",
+                    "Better see what it's hiding!"
+                }
+            },
         },
         PotatoPatch = {
             PotatoPatchDev_ProdByProto = {
@@ -235,11 +244,11 @@ return {
             proot_noir_locked = "Locked!",
             proot_noir_unlocked = "*click*",
             proot_noir_hands = "hands left",
-            proot_noir_congrats = "Thanks for playing!\n",
+            proot_noir_congrats = "Thanks for playing!\n \n",
             proot_noir_finalgrade = "Final Rank: ",
-            proot_noir_finalitems = "Items Presented: ",
+            proot_noir_finalitems = "Items Presented: \n",
             proot_noir_finalscore = "Final Score: ",
-            proot_noir_credits = "Music, Writing, and Gameplay by the Proto System, Proofreading and Writing Feedback by AllUniversal",
+            proot_noir_credits = "Music, Writing, and Gameplay by the Proto System\nProofreading and Writing Feedback by AllUniversal\nPlaytesting and debugging by mys. minty wingedcatgirl",
 
         },
         v_dictionary = {

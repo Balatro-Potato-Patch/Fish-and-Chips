@@ -155,14 +155,16 @@ function FishAndChips.ProdByProto.noirDialog(storyFlag)
         if G.GAME.proto_noirshade then G.GAME.proto_noirshade = false end
         vars_[1] = localize("proot_noir_congrats")
         vars_[2] = localize("proot_noir_finalgrade")
-        if G.GAME.noir_pts < 145 then vars_[3] = "C\n" end
-        if G.GAME.noir_pts < 185 then vars_[3] = "B\n" end
-        if G.GAME.noir_pts > 184 then vars_[3] = "A\n" end
+        if G.GAME.noir_pts < 145 then vars_[3] = "C" end
+        if G.GAME.noir_pts < 185 then vars_[3] = "B" end
+        if G.GAME.noir_pts > 184 then vars_[3] = "A" end
+        vars_[3] = vars_[3].."\n \n"
         vars_[4] = localize("proot_noir_finalitems")
         for _,item in ipairs(noirFish.ability.extra.noir_inv) do
             vars_[4] = vars_[4]..localize("proot_noir_"..item).." (+"..FishAndChips.ProdByProto.itemScores[item].Pts.." Pts.,".." x"..FishAndChips.ProdByProto.itemScores[item].xPts.." Pts.), \n"
         end
-        vars_[5] = "\n"..localize("proot_noir_finalscore")..G.GAME.noir_pts.."\n"
+        vars_[4] = vars_[4].." \n"
+        vars_[5] = "\n"..localize("proot_noir_finalscore")..G.GAME.noir_pts.."\n \n"
         vars_[6] = localize("proot_noir_credits")
         local concatVars = table.concat(vars_,"")
         vars_ = {
@@ -182,6 +184,7 @@ function FishAndChips.ProdByProto.loadLevel(card,level)
         iCard.ability.noir_mark = nil
         iCard.ability.noir_plot = nil
         iCard.ability.noir_level = nil
+        iCard.ability.fake_level = nil
         iCard.ability.aux = nil
     end
     if level > 12 then return end
