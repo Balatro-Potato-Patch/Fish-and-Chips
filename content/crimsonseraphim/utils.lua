@@ -341,7 +341,8 @@ function FishAndChips.crimsonseraphim.get_dummy(center, area, self)
         eligible_strength_jokers = eligible_editionless_jokers,
         eligible_editionless_jokers = eligible_editionless_jokers,
         T = self.T,
-        VT = self.VT
+        VT = self.VT,
+        children = { center = { set_sprite_pos = function(_, ...) end } } -- if this line throws any crashes report to blamperer
     }
     for i, v in pairs(self) do
         if type(v) == "function" and i ~= "flip_side" then
