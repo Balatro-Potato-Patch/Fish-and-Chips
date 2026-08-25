@@ -53,10 +53,10 @@ return {
             fish_fac_ghostsalt_chalkoutline = {
                 name = "Chalk Outline",
                 text = {
-                    "{X:red,C:white}X1{} Mult for each",
+                    "{X:red,C:white}X#1#{} Mult for each",
                     "empty {C:attention}Bucket{} slot",
                     "{s:0.8}Chalk Outline included{}",
-                    "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult){}"
+                    "{C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult){}"
                 },
                 flavor = {
                     "I will find him, I will",

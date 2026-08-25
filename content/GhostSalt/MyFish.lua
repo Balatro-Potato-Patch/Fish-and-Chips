@@ -729,6 +729,7 @@ FishAndChips.Fish {
 	key = "ghostsalt_chalkoutline",
 	atlas = "GhostSaltMyFish",
 	pos = { x = 3, y = 0 },
+	config = { extra = { xmult = 1 } },
 	stats = { weight = { min = 0.01, max = 0.01 }, length = { min = 0.40, max = 1.00 } },
 	weight = fac_ghostsalt_common_weight,
 	ppu_coder = { "GhostSalt" },
@@ -746,11 +747,11 @@ FishAndChips.Fish {
 	decision_max = 1.2,
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { G.fac_fish_area and math.max(1, (G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) + #SMODS.find_card("fish_fac_ghostsalt_chalkoutline", true)) or 1 } }
+		return { vars = { card.ability.extra.xmult, G.fac_fish_area and math.max(1, ((G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) + #SMODS.find_card("fish_fac_ghostsalt_chalkoutline", true)) * card.ability.extra.xmult) or 1 } }
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main then
-			return { xmult = math.max(1, (G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) + #SMODS.find_card("fish_fac_ghostsalt_chalkoutline", true)) }
+			return { xmult = math.max(1, ((G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards) + #SMODS.find_card("fish_fac_ghostsalt_chalkoutline", true)) * card.ability.extra.xmult) }
 		end
 	end,
 	pronouns = "they_them"
