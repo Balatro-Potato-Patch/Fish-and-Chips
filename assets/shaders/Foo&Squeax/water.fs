@@ -56,7 +56,7 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
         )) * 10);
         n = clamp(n, 0, 1);
 		vec4 outcolor = mix(LIGHT_BLUE, DARK_BLUE, n * 2);
-        vec4 col = Texel(texture, texture_coords);
+        vec4 col = Texel(texture, texture_coords) * colour;
         outcolor.a = col.a;
 
         return mix(col, outcolor, min(1, n / 2 + 0.3) * step(water_height + 0.075 * sin(fas_water.y * 5 + uv.x * 7) + 0.005 * sin(-fas_water.y * 20 + uv.x * 35), mem_uv.y));

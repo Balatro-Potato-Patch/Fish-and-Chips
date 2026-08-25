@@ -212,8 +212,9 @@ end
 
 local old_main_menu = Game.main_menu
 function Game:main_menu(...)
-    old_main_menu(self, ...)
+    local ret = old_main_menu(self, ...)
     EMPTY(FishAndChips.QuantumFish.cards_to_score)
+    return ret
 end
 
 FishAndChips.QuantumFish = {

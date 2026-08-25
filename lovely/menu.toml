@@ -110,3 +110,41 @@ SC = Card(G.ROOM.T.w/2 - SC_scale*G.CARD_W/2, 10. + G.ROOM.T.h/2 - SC_scale*G.CA
 '''
 match_indent = true
 times = 1
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+match_indent = true
+pattern = '''if not G.debug_UI_toggle then '''
+position = 'before'
+payload = '''FishAndChips.bg_manager:draw()'''
+
+# Background Fade from White
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''
+ease_value(splash_args, 'mid_flash', -(change_context == 'splash' and 1.6 or 0), nil, nil, nil, 4)
+'''
+position = "after"
+payload = '''
+if FishAndChips and FishAndChips.bg_manager then
+    FishAndChips.bg_manager.splash_args = splash_args
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+        G.VIBRATION = G.VIBRATION + 1
+        return true
+end)}))
+'''
+position = 'after'
+payload = '''
+
+FishAndChips.init_custom_menu(change_context)
+'''
+match_indent = true

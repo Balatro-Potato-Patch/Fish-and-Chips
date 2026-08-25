@@ -1356,8 +1356,8 @@ G.fac_ghostsalt_mezepheles_min = 0.06
 G.fac_ghostsalt_mezepheles_max = 0.2
 
 local main_menu_ref = Game.main_menu
-Game.main_menu = function(change_context)
-	local ret = main_menu_ref(change_context)
+function Game:main_menu(change_context)
+	local ret = main_menu_ref(self, change_context)
 
 	fac_ghostsalt_mezepheles_recalc_wordlist()
 
