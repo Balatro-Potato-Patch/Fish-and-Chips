@@ -1,8 +1,8 @@
-return { 
+return {
     descriptions = {
-    PotatoPatch = {
-			PotatoPatchDev_FurretWalk = {
-				name = "FurretWalk",
+        PotatoPatch = {
+            PotatoPatchDev_FurretWalk = {
+                name = "FurretWalk",
                 text = {
                     "{C:tarot}Oh, bait",
                     "{C:mult}To chomp upon this {C:money}bait",
@@ -18,7 +18,7 @@ return {
                     "{C:inactive}(Play SynthB and Walkies!)"
 
                 }
-			},
+            },
         },
         fac_Fish = {
             fish_fac_miketrout = {
@@ -30,23 +30,28 @@ return {
                     "{C:inactive}(Currently {C:white,X:mult}X#3#{C:inactive} Mult)"
                 },
                 flavor = {
-                    "This fish can stay for",
-                    "15 years, even in the",
-                    "worst situations!"
+                    "This fish can stay for 15 years,",
+                    "even in the worst situations!"
                 }
             },
             fish_fac_fishmael = {
                 name = "Fishmael",
                 text = {
-                    "Destroys scoring {C:hearts}#3#{} cards and",
-                    "gains {C:chips}+#2#{} Chips for every {C:hearts}Heart{} destroyed",
+                    "Destroys scoring {C:hearts}Hearts{}",
+                    "cards and gains {C:chips}+#2#{} Chips",
+                    "for every {C:hearts}Heart{} destroyed",
                     "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
                 },
                 flavor = {
-                    "This fish is piercing through the rope",
-                    "that strangled you and me...",
+                    "This fish is piercing through the",
+                    "rope that strangled you and me...",
                 }
             },
         }
-}
+    },
+    misc = {
+        dictionary = {
+            k_fac_fishmael_harpooned_ex = "Harpooned!"
+        }
+    }
 }
