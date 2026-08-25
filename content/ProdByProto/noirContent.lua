@@ -379,8 +379,8 @@ FishAndChips.Fish {
             if context.individual and context.cardarea == G.play and not context.other_card.noir_triggered and context.other_card.ability.noir_mark == "soda" and context.other_card.ability.noir_level then
                 G.GAME.proto_q_music = "noir2"
                 noir_trigger(context.other_card)
+                facp.noirProg({ flg = context.other_card.ability.noir_plot, lvl = context.other_card.ability.noir_level })
             end
-            facp.noirProg({ flg = context.other_card.ability.noir_plot, lvl = context.other_card.ability.noir_level })
         end
 
         if storyState == noir_states.warehouse then
