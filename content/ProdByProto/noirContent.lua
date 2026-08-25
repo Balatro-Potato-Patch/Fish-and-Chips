@@ -304,7 +304,7 @@ FishAndChips.Fish {
         end
 
         local function remove_item_from_current_level(item_key)
-            for i, item_data in pairs(cae.new_noir_levels[cae.level]) do
+            for i, item_data in ipairs(cae.new_noir_levels[cae.level]) do
                 if item_key == item_data.key then
                     table.remove(cae.new_noir_levels[cae.level], i)
                     break
