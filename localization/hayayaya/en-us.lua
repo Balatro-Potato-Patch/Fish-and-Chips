@@ -57,7 +57,8 @@ return {
 			fish_fac_8f_alt = {
 				name = "{f:fac_hayayaya_pkmn}8F",
 				text = {
-					"{f:fac_hayayaya_pkmn,C:red}-1{f:fac_hayayaya_pkmn} Ante",
+					"{C:red,f:fac_hayayaya_pkmn}Removes",
+					"{f:fac_hayayaya_pkmn}an Ante",
 					"{ppu_bubble:usable}",
 				},
 				flavor = {
@@ -142,7 +143,7 @@ return {
 					{
 						"Gains {X:chips,C:white}X#1#{} Chips when",
 						"a card is {C:attention}scored",
-						"{C:inactive}Resets at end of ante{}",
+						"{C:inactive}Resets at end of Ante{}",
 					},
 					{
 						"{C:inactive}(Currently{} {X:chips,C:white}X#2#{C:inactive} Chips)",

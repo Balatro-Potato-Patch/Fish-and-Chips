@@ -9,6 +9,7 @@ FishAndChips.Fish({
 	attributes = {
 		"chance", "generation", "fac_perfect_catch",
 	},
+	blueprint_compat = false,
 	atlas = "hayayaya_fih",
 	pos = { x = 1, y = 1 },
 	config = { extra = { num = 1, den = 4, active_bait = nil } },
@@ -26,10 +27,10 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.fac_cast_rod then
+		if context.fac_cast_rod and not context.blueprint then
 			card.ability.extra.active_bait = G.GAME.fac_active_bait
 		end
-		if context.fac_end_fishing and not context.failed then
+		if context.fac_end_fishing and not context.failed and card.ability.extra.active_bait and not context.blueprint then
 			if
 				SMODS.pseudorandom_probability(
 					card,
