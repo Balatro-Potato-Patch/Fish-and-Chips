@@ -38,6 +38,7 @@ SMODS.Atlas({
     px = 3,
     py = 3,
     frames = 4,
+    force_pixel = true,
 })
 
 SMODS.Atlas({
