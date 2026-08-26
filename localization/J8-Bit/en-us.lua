@@ -31,10 +31,9 @@ return {
             ["fish_fac_J8-Bit_money_mola_mola"] = {
                 name = "Money Mola Mola",
                 text = {
-                    "Each {V:1}#1#{} card",
-                    "held in hand has",
-                    "a {C:green}#2# in #3#{} chance",
-                    "to give {C:money}$#4#{}",
+                    "Each {V:1}#1#{} card held",
+                    "in hand has a {C:green}#2# in #3#{}",
+                    "chance to earn {C:money}$#4#{}",
                 },
                 flavour = {
                     "\"Moolah Moolah\" was too",
@@ -102,8 +101,8 @@ return {
                 text = {
                     "Cards in the {C:attention}first",
                     "{C:attention}discarded hand{} each",
-                    "round gain a",
-                    "permanent {C:mult}+#1#{} Mult"
+                    "round permanently",
+                    "gain {C:mult}+#1#{} Mult"
                 },
                 flavour = {
                     "It's called that because",
@@ -116,9 +115,9 @@ return {
                     "Nocto Octo",
                 },
                 text = {
-                    "Hands containing {C:attention}#1#s{} score",
-                    "the {C:attention}latter played rank{} as",
-                    "{C:mult}+Mult{} instead of {C:chips}+Chips{}"
+                    "Hands containing {C:attention}#1#s{}",
+                    "score the {C:attention}latter played rank{}",
+                    "as {C:mult}+Mult{} instead of {C:chips}+Chips{}"
                 },
                 flavour = {
                     "Not actually an octopus.",
@@ -130,9 +129,9 @@ return {
                     "Boostorca",
                 },
                 text = {
-                    "{C:attention}+#1#{} initial Booster Pack",
+                    "{C:attention}+#1#{} initial {C:attention}Booster Pack{}",
                     "slots in shop",
-                    "{C:attention}+#1#{} cards in Booster Packs",
+                    "{C:attention}+#1#{} cards in {C:attention}Booster Packs{}",
                 },
                 flavour = {
                     "Everybody could use a little boost."
@@ -143,15 +142,12 @@ return {
                     "Later Alligator",
                 },
                 text = {
-                    "Creates a {C:green}#3#{},",
-                    "{C:red}#4#{}, and",
-                    "{C:attention}#5#{} after",
-                    "{C:attention}#2#{} {C:inactive}[#1#]{} rounds,",
-                    "{C:red}self-destructs"
+                    "Creates a {C:green}#3#{}, {C:red}#4#{}",
+                    "and {C:attention}#5#{} after",
+                    "{C:attention}#2#{} {C:inactive}[#1#]{} rounds, {C:red,E:2}self destructs{}",
                 },
                 flavour = {
-                    "In a while,",
-                    "crocodile!"
+                    "In a while, crocodile!"
                 }
             },
             ["fish_fac_J8-Bit_mult_mahi_mahi"] = {
@@ -159,7 +155,8 @@ return {
                     "Mult Mahi Mahi",
                 },
                 text = {
-                    "{C:attention}Retrigger{} all {C:attention}#1#s{}"
+                    "{C:attention}Retrigger{} all {C:attention}#1#s{}",
+                    "{C:attention}#2#{} additional time"
                 },
                 flavour = {
                     "Esteemed delicacies",
@@ -187,9 +184,8 @@ return {
                     "Partner"
                 },
                 text = {
-                    "Creates {C:attention}#1#{}",
-                    "random {C:fac_bait}Baits{} when",
-                    "{C:fac_environment}Environment{} changes"
+                    "Creates {C:attention}#1#{} random {C:fac_bait}Baits{} when",
+                    "the {C:fac_environment}Environment{} changes"
                 },
                 flavour = {
                     "They're interested in your hobbies!",
@@ -202,9 +198,8 @@ return {
                     "Boyfriend"
                 },
                 text = {
-                    "Creates {C:attention}#1#{}",
-                    "random {C:fac_bait}Baits{} when",
-                    "{C:fac_environment}Environment{} changes"
+                    "Creates {C:attention}#1#{} random {C:fac_bait}Baits{} when",
+                    "the {C:fac_environment}Environment{} changes"
                 },
                 flavour = {
                     "He's interested in your hobbies!",
@@ -217,9 +212,8 @@ return {
                     "Girlfriend"
                 },
                 text = {
-                    "Creates {C:attention}#1#{}",
-                    "random {C:fac_bait}Baits{} when",
-                    "{C:fac_environment}Environment{} changes"
+                    "Creates {C:attention}#1#{} random {C:fac_bait}Baits{} when",
+                    "the {C:fac_environment}Environment{} changes"
                 },
                 flavour = {
                     "She's interested in your hobbies!",
@@ -296,15 +290,13 @@ return {
                     "{C:inactive,s:0.8}(Gen VII Pokémon)"
                 },
                 text = {
-                    "{C:attention}#1#s{} count",
-                    "as {C:fac_suits}any suit{},",
-                    "can't be debuffed,",
-                    "and {C:attention}always score"
+                    "{C:attention}#1#s{} count as {C:fac_suits}any suit{}, can't",
+                    "be {C:red}debuffed{}, and {C:attention}always score"
                 },
                 flavour = {
                     "For #1#, every battle's a stage.",
-                    "Its singing and the dancing of,",
-                    "its balloons will mesmerize the audience."
+                    "Its singing and the dancing of its",
+                    "balloons will mesmerize the audience."
                 }
             },
             ["fish_fac_J8-Bit_toxic_seahorse"] = {
@@ -316,8 +308,8 @@ return {
                     {
                         "{C:red}Destroy{} up to {C:attention}#1#{}",
                         "selected cards per round",
-                        "{ppu_bubble:usable}",
-                        "{s:0.8,C:inactive}(Infinite uses)",
+                        "{ppu_bubble:1}",
+                        "{C:inactive}(Reusable)",
                     },
                     {
                         "If a card destroyed",
@@ -350,9 +342,10 @@ return {
                     "{C:inactive,s:0.8}(Terraria/Edge of Space)"
                 },
                 text = {
-                    "{V:1}#1#{} cards in your {C:attention}consumable{} area",
-                    "{C:attention}retrigger{} all played cards if",
-                    "played {C:attention}poker hand{} is their specified {C:attention}poker hand"
+                    "{V:1}#1#{} cards in your {C:attention}consumable{}",
+                    "area {C:attention}retrigger{} all played cards if",
+                    "played {C:attention}poker hand{} is their",
+                    "specified {C:planet}poker hand"
                 },
                 flavour = {
                     "It came from the edge of space"
@@ -365,10 +358,10 @@ return {
                 text = {
                     "Creates a {C:dark_edition}#1#{} copy of",
                     "a {C:fac_fish}Fish{} you own when reeled,",
-                    "{C:red}self-destructs"
+                    "{C:red,E:2}self destructs"
                 },
                 flavour = {
-                    "Not too important",
+                    "Not too important,",
                     "not too unimportant."
                 }
             },
