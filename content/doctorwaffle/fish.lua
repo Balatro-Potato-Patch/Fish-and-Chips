@@ -1421,7 +1421,7 @@ FishAndChips.Fish {
     end,
     can_use = function (self, card)
         local caught = G.FISHING and (card.area == G.FISHING.fac_fish_reward_area or card.area == G.FISHING.fac_treasure_reward_area)
-        return card.area == G.fac_fish_area or caught or #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit
+        return card.area == G.fac_fish_area or caught or G.fac_fish_area:has_space()
     end,
     pronouns = "they_them"
 }
