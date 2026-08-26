@@ -1,0 +1,48 @@
+[manifest]
+version = "0.1.0"
+dump_lua = true
+priority = 0
+
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = '''
+            type(v) == 'table' then
+            self.ability[k] = copy_table(v)
+        else
+            self.ability[k] = v
+        end
+            '''
+position = 'before'
+payload = '''
+            k == "area_num" and v ~= 0 then
+                self.ability[k] = 0
+            elseif "area_UI" and type(v) == "table" then
+                self.ability[k] = {}
+            elseif
+'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = 'common_events.lua'
+pattern = '''
+            type(v) == 'table' then 
+            new_card.ability[k] = copy_table(v)
+        else
+            new_card.ability[k] = v
+        end
+            '''
+position = 'before'
+payload = '''
+            k == "area_num" and v ~= 0 then
+                new_card.ability[k] = 0
+            elseif k == "area_UI" and type(v) == "table" then
+                new_card.ability[k] = {}
+            elseif
+'''
+match_indent = true
+times = 1
+

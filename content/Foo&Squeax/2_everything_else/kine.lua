@@ -30,7 +30,7 @@ FishAndChips.Fish{
 		return {vars = {joker}}
 	end,
 	load = function (self, card, card_table, other_card)
-		if card.ability.area_num ~= 0 then
+		--[[if card.ability.area_num ~= 0 and not G.fac_fas_kine_areas[card.ability.area_num] then
 			G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
 				-10, -10,
 				G.CARD_W, G.CARD_H,
@@ -60,10 +60,10 @@ FishAndChips.Fish{
 					return true
 				end
 			})
-		end
+		end]]
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.main_eval and not context.blueprint and G.fac_fas_kine_areas[card.ability.area_num] then
 			for _, _card in ipairs(G.fac_fas_kine_areas[card.ability.area_num].cards) do
 				_card:calculate_rental()
 				if not _card.debuff then
@@ -71,7 +71,7 @@ FishAndChips.Fish{
 				end
 			end
 		end
-		if not context.retrigger_joker_check then
+		if not context.retrigger_joker_check and G.fac_fas_kine_areas[card.ability.area_num] then
 			for _, _card in ipairs(G.fac_fas_kine_areas[card.ability.area_num].cards) do
 				if _card.ability.fac_fas_kine == card.ability.area_num then
 					return _card:calculate_joker(context)
@@ -145,18 +145,38 @@ FishAndChips.Fish{
 		G:save_progress()
 	end,
 	add_to_deck = function (self, card, from_debuff)
-		card.ability.area_num = #G.fac_fas_kine_areas+1
-		G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
-			-10, -10,
-			G.CARD_W, G.CARD_H,
-			{
-				type = "joker",
-				card_limit = 1,
-				highlighted_limit = 1,
-				highlight_limit = 1
-			}
-		)
-		G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
+		if not G.fac_fas_kine_areas[card.ability.area_num] then -- If a kine joker cardarea has not been made for Kine [aka when getting a new one to start with]
+			card.ability.area_num = #G.fac_fas_kine_areas+1
+			G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
+				-10, -10,
+				G.CARD_W, G.CARD_H,
+				{
+					type = "joker",
+					card_limit = 1,
+					highlighted_limit = 1,
+					highlight_limit = 1
+				}
+			)
+			G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
+		else -- If a kine joker cardarea for this card already exists somehow [likely through copying the card]
+			if G.fac_fas_kine_areas[card.ability.area_num].cards and #G.fac_fas_kine_areas[card.ability.area_num].cards > 0 then -- If this cardarea has cards
+				card.ability.area_num = 0
+				card.ability.area_UI = {}
+			else -- If this cardarea is empty [this should only happen to start with when making a copy of an empty Kine]
+				card.ability.area_num = #G.fac_fas_kine_areas+1
+				G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
+					-10, -10,
+					G.CARD_W, G.CARD_H,
+					{
+						type = "joker",
+						card_limit = 1,
+						highlighted_limit = 1,
+						highlight_limit = 1
+					}
+				)
+				G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
+			end
+		end
 	end,
 	remove_from_deck = function (self, card, from_debuff)
 		if G.fac_fas_kine_areas[card.ability.area_num].cards then
