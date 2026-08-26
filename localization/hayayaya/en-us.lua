@@ -31,16 +31,15 @@ return {
 			fish_fac_mewtwostrikesback = {
 				name = "Cloner Fish",
 				text = {
-					"{C:attention}Clones{} a random fish",
-					"when used and multiplies",
-					"its values by {X:attention,C:white}X#1#-X#2#{}",
-					"{C:inactive,s:0.8}Cannot be other Cloner Fish{}",
+					"{C:attention}Clones{} a random {C:fac_fish}Fish{}",
+					"and multiplies its",
+					"values by {X:attention,C:white}X#1#-X#2#{}",
+					"{C:inactive,s:0.8}Cannot clone other Cloner Fish{}",
 					"{ppu_bubble:usable}",
 				},
 				flavor = {
-					"Cloning fish like",
-					"this has dire, dire",
-					"consequences...",
+					"Cloning fish like this has",
+					"dire, dire consequences..."
 				},
 			},
 			fish_fac_8f = { -- For compendium
@@ -59,7 +58,7 @@ return {
 				name = "{f:fac_hayayaya_pkmn}8F",
 				text = {
 					"{C:red,f:fac_hayayaya_pkmn}Removes",
-					"{f:fac_hayayaya_pkmn}an ante",
+					"{f:fac_hayayaya_pkmn}an Ante",
 					"{ppu_bubble:usable}",
 				},
 				flavor = {
@@ -69,9 +68,9 @@ return {
 			fish_fac_codamite = {
 				name = "Codamite",
 				text = {
-					"{C:red}Explodes{} when used and",
-					"either {C:attention}halves{} or {C:attention}doubles{}",
-					"the boss blind's requirement",
+					"{C:attention}Halves{} or {C:attention}doubles{} current",
+					"{C:attention}Boss Blind's{} requirement,",
+					"{C:red,E:2}explodes{}",
 					"{ppu_bubble:usable}",
 				},
 				flavor = {
@@ -81,10 +80,10 @@ return {
 			fish_fac_anglrifle = {
 				name = "Anglrifle",
 				text = {
-					"{C:chips}+#1#{} Chips for every card",
-					"discarded in the first",
-					"discard and {C:red}destroys{} them",
-					"{C:inactive}(Currently{} {C:chips}+#2#{C:inactive} Chips)",
+					"{C:red}Destroys{} all cards in first",
+					"{C:red}discard{} of round, gains {C:chips}+#1#{} Chips",
+					"for each card {C:red}destroyed{} this way",
+					"{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
 					"{ppu_bubble:1}",
 				},
 				flavor = {
@@ -144,7 +143,7 @@ return {
 					{
 						"Gains {X:chips,C:white}X#1#{} Chips when",
 						"a card is {C:attention}scored",
-						"{C:inactive}Resets at end of ante{}",
+						"{C:inactive}Resets at end of Ante{}",
 					},
 					{
 						"{C:inactive}(Currently{} {X:chips,C:white}X#2#{C:inactive} Chips)",
@@ -158,8 +157,8 @@ return {
 				name = "Fish's Inferno",
 				text = {
 					"{C:green}#1# in #2#{} chance of",
-					"getting the bait {C:attention}back{}",
-					"after a successful fish",
+					"getting the Bait {C:attention}back{}",
+					"after a successful catch",
 				},
 				flavor = {
 					"Excuse me sir! There must be",
@@ -181,10 +180,10 @@ return {
 			fish_fac_motif = {
 				name = "Freedom Motif",
 				text = {
-					"When a fish is {C:attention}sold{}, get",
-					"the {C:attention}bait{} you used back",
-					"{X:attention,C:white}X0{C:red} Fish sell cost",
-					"{C:inactive,s:0.8}Doesn't apply to perfect fishes{}",
+					"When a {C:fac_fish}Fish{} is {C:attention}sold{}, get",
+					"the Bait you used {C:attention}back{}",
+					"{X:attention,C:white}X0{C:red} {C:fac_fish}Fish{} sell value",
+					"{C:inactive,s:0.8}Doesn't apply to perfect catches{}",
 				},
 				flavor = {
 					"TURN ME INTO A [REAL BOY!!!]",
@@ -194,7 +193,7 @@ return {
 				name = "Unown",
 				text = {
 					"Prevents Death and",
-					"{C:attention}rewinds{} the ante by {C:attention}1{}",
+					"rewinds the {C:attention}Ante{} by {C:attention}1{}",
 					"{C:red,E:2}self destructs",
 				},
 				flavor = {
@@ -206,9 +205,9 @@ return {
 			fish_fac_luvdisc = {
 				name = "Luvdisc",
 				text = {
-					"This Fish gains {X:mult,C:white}X#1#{} Mult",
-					"if played card is {C:hearts}Hearts{}",
-					"{C:attention}Resets{} when not {C:hearts}Hearts{}",
+					"This {C:fac_fish}Fish{} gains {X:mult,C:white}X#1#{} Mult when a",
+					"{C:hearts}Hearts{} card scores, {C:attention}resets{} when",
+					"a non-{C:hearts}Hearts{} card scores",
 					"{C:inactive}(Currently{} {X:mult,C:white}X#2#{C:inactive} Mult)",
 				},
 				flavor = {
@@ -225,7 +224,7 @@ return {
 				},
 				flavor = {
 					"When you're out of quarters,",
-					"He's got your back!",
+					"he's got your back!",
 				},
 			},
 			fish_fac_tower = {

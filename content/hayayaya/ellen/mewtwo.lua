@@ -11,6 +11,8 @@ FishAndChips.Fish({
 		"generation",
 		"usable",
 	},
+	blueprint_compat = false,
+	eternal_compat = false,
 	atlas = "hayayaya_fih",
 	pos = { x = 0, y = 0 },
 	-- TODO: Possibly tweak this????

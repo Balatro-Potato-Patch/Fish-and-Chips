@@ -12,6 +12,7 @@ FishAndChips.Fish({
 		"scaling",
 		"mult",
 	},
+	perishable_compat = false,
 	stats = {
 		length = { min = 0.4, max = 0.4 },
 		weight = { min = 0.2, max = 0.2 },
@@ -30,7 +31,7 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.discard then
+		if context.discard and not context.blueprint then
 			SMODS.scale_card(card, {
 				ref_table = card.ability.extra,
 				ref_value = "mult",

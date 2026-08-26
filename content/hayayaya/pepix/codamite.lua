@@ -12,6 +12,8 @@ FishAndChips.Fish({
 		"usable",
 		"xblindsize",
 	},
+	blueprint_compat = false,
+	eternal_compat = false,
 	atlas = "hayayaya_fih",
 	pos = { x = 1, y = 0 },
 	stats = {
