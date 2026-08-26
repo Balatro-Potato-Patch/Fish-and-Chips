@@ -132,6 +132,7 @@ function FishAndChips.create_bait_inventory_item(key, pos)
 			type = pos > 1 and 'cm' or 'tr',
 			offset = pos == 1 and {x=0.2,y=0.7} or pos % 4 == 1 and {x=0.85, y=0} or {x=0,y=0.65},
 			major = pos == 1 and G.fac_bait_area or pos % 4 == 1 and G.HUD_bait_inv[pos-4] or G.HUD_bait_inv[pos-1],
+			fac_bait_key = key,
 			instance_type = "CARD"
 		},
 	}
@@ -162,27 +163,44 @@ function FishAndChips.create_bait_inventory_item(key, pos)
 	end
 
 	box.click = function(_self)
-		_self:remove()
-		if G.GAME.fac_active_bait then
-			G.HUD_bait_inv[_self.definition.config.pos] = FishAndChips.create_bait_inventory_item(G.GAME.fac_active_bait, _self.definition.config.pos)
-		else	
-			for i=pos+1, #G.HUD_bait_inv do
-				G.HUD_bait_inv[i].definition.config.pos = i-1
-				G.HUD_bait_inv[i-1] = G.HUD_bait_inv[i]
-				G.HUD_bait_inv[i] = nil
-			end
-			for pos, bait in ipairs(G.HUD_bait_inv) do
-				bait:set_alignment({
-					type = pos > 1 and 'cm' or 'tr',
-					offset = pos == 1 and {x=0.2,y=0.7} or pos % 4 == 1 and {x=0.85, y=0} or {x=0,y=0.65},
-					major = pos == 1 and G.fac_bait_area or pos % 4 == 1 and G.HUD_bait_inv[pos-4] or G.HUD_bait_inv[pos-1]
-				})
-			end
-		end
-		G.FUNCS.fac_set_active_bait({ config = { key = key }})
+		G.FUNCS.fac_set_active_bait({ config = { key = key, inventory_swap = true }})
 	end
 
     return box
+end
+
+function FishAndChips.rebuild_bait_inventory(swapped_bait)
+	if not G.GAME or not G.GAME.fac_bait_inventory or not G.fac_bait_area then return end
+	local old_inventory = G.HUD_bait_inv or {}
+	local ordered_keys = {}
+	local seen = {}
+	for _, box in ipairs(old_inventory) do
+		local key = box.config and box.config.fac_bait_key
+		local bait = key and G.GAME.fac_bait_inventory[key]
+		local replacement = key == G.GAME.fac_active_bait and swapped_bait or key
+		bait = replacement and G.GAME.fac_bait_inventory[replacement]
+		if bait and bait.amt > 0 and replacement ~= G.GAME.fac_active_bait and not seen[replacement] then
+			seen[replacement] = true
+			ordered_keys[#ordered_keys + 1] = replacement
+		end
+	end
+	local new_keys = {}
+	for key, bait in pairs(G.GAME.fac_bait_inventory) do
+		if bait.amt > 0 and key ~= G.GAME.fac_active_bait and not seen[key] then
+			new_keys[#new_keys + 1] = key
+		end
+	end
+	table.sort(new_keys)
+	for _, key in ipairs(new_keys) do
+		ordered_keys[#ordered_keys + 1] = key
+	end
+	for _, box in pairs(old_inventory) do
+		box:remove()
+	end
+	G.HUD_bait_inv = {}
+	for _, key in ipairs(ordered_keys) do
+		G.HUD_bait_inv[#G.HUD_bait_inv + 1] = FishAndChips.create_bait_inventory_item(key)
+	end
 end
 
 function FishAndChips.add_bait_to_inventory(key, amt)
@@ -191,7 +209,7 @@ function FishAndChips.add_bait_to_inventory(key, amt)
 	local current_inv = G.GAME.fac_bait_inventory
 
 	if current_inv[key] then
-		current_inv[key].amt = current_inv[key].amt + 1
+		current_inv[key].amt = current_inv[key].amt + (amt or 1)
 		found = true
 	else
 		current_inv[key] = {amt = amt or 1}
@@ -203,7 +221,7 @@ function FishAndChips.add_bait_to_inventory(key, amt)
 	if not G.GAME.fac_active_bait then
 		G.FUNCS.fac_set_active_bait({ config = { key = key }})
 	elseif not found then
-		G.HUD_bait_inv[#G.HUD_bait_inv+1] = FishAndChips.create_bait_inventory_item(key)
+		FishAndChips.rebuild_bait_inventory()
 	end
 end
 
@@ -237,8 +255,9 @@ function FishAndChips.remove_bait_from_inventory(key, amt)
 					end
 				}))
 			end
-			G.GAME.fac_bait_inventory[key] = nil
 		end
+		G.GAME.fac_bait_inventory[key] = nil
+		FishAndChips.rebuild_bait_inventory()
 	end
 end
 

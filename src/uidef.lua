@@ -1079,6 +1079,7 @@ function G.FUNCS.fac_can_set_active(e)
 end
 
 function G.FUNCS.fac_set_active_bait(e)
+	local previous_active_bait = G.GAME.fac_active_bait
 	G.GAME.fac_active_bait = e.config.key
 
 	G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] = G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] or {
@@ -1099,6 +1100,7 @@ function G.FUNCS.fac_set_active_bait(e)
 	local bait = SMODS.add_card({ key = e.config.key, area = G.fac_bait_area, skip_materialize = true })
 
 	if G.FISHING then FishAndChips.update_bait_counter(bait) end
+	FishAndChips.rebuild_bait_inventory(e.config.inventory_swap and previous_active_bait or nil)
 end
 
 function G.UIDEF.fac_create_inventory_entry(key)
