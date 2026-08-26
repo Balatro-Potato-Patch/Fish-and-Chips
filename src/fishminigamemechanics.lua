@@ -856,7 +856,7 @@ local function fac_begin_hooking_round()
     state.fish_vel = 0
     state.fish_goal_vel = fac_rand(-0.12, 0.12)
     state.fish_decision_timer = fac_rand(profile.decision_min, profile.decision_max)
-    state.treasure_enabled = math.random() < 0.66
+    state.treasure_enabled = math.random() < 0.4
     state.treasure_pos = fac_rand(0.14, 0.86)
     state.treasure_meter = 0
     state.got_treasure = false

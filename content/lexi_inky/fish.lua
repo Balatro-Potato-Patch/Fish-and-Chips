@@ -35,9 +35,18 @@ FishAndChips.Fish({
 		length = { min = 0.08, max = 0.086 },
 	},
 	loc_vars = function(self, info_queue, card)
+		local econFish = 0
+		if G.fac_fish_area then
+			for k, v in ipairs(G.fac_fish_area.cards) do
+				if v:has_attribute("economy") then
+					econFish = econFish + 1
+				end
+			end
+		end
 		return {
 			vars = {
 				card.ability.extra.sand,
+				econFish * card.ability.extra.sand 
 			},
 		}
 	end,

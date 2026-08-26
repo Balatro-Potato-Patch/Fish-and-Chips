@@ -16,9 +16,9 @@ return {
             fish_fac_plaggeromega_troutearthextinct = {
                 name = 'Trout Earth Extinction',
                 text = {
-                    'Use this Fish for',
+                    'Use this {C:fac_fish}Fish{} for',
                     '{C:attention}-#1#{} Ante,',
-                    '{C:red,E:2}destroys{} all Fish'
+                    '{C:red,E:2}destroys{} all {C:fac_fish}Fish{}'
                 },
                 flavour = {
                     'This will severely',
@@ -42,7 +42,7 @@ return {
             fish_fac_plaggeromega_gurmag = {
                 name = 'Gurmag Angler',
                 text = {
-                    'This Fish gains {X:mult,C:white}X#2#{} Mult',
+                    'This {C:fac_fish}Fish{} gains {X:mult,C:white}X#2#{} Mult',
                     'whenever a {C:attention}Joker{} is destroyed',
                     '{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)'
                 },
@@ -55,7 +55,7 @@ return {
             fish_fac_plaggeromega_stewfish = {
                 name = 'Stewfish',
                 text = {
-                    'This Fish gains {C:mult}+#2#{} Mult',
+                    'This {C:fac_fish}Fish{} gains {C:mult}+#2#{} Mult',
                     'per {C:attention}consecutive{} {C:fac_fish}Fish{} caught',
                     'in the {C:attention}Soup{} environment',
                     '{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)'
@@ -79,9 +79,9 @@ return {
                 }
             },
             fish_fac_plaggeromega_baa = {
-                name = 'Bibilically Accurate Angelfish',
+                name = 'Biblically Accurate Angelfish',
                 text = {
-                    'Use this Fish',
+                    'Use this {C:fac_fish}Fish{}',
                     'to create a random',
                     '{C:money}rental{} {C:rare}Rare {C:attention}Joker',
                     '{C:inactive}(Must have room)'

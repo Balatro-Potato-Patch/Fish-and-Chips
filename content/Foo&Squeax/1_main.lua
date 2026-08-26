@@ -352,38 +352,39 @@ function FishAndChips.mod.custom_card_areas(game)
 		end
 	end
 
+	-- G.fac_fas_kine_areas[1].cards[1].disable_align 
+	-- this was me testing things in dbp lmao - gabby
+
 	-- kine
 	G.fac_fas_kine_areas = {}
 	function G.fac_fas_kine_areas:align_cards()
-		if #G.fac_fas_kine_areas > 1 then
-			for j, area in ipairs(G.fac_fas_kine_areas) do
-				local scale = 4
-				for i, card in ipairs(area.cards) do
-					-- renders held joker when in typical fish bucket area
-					for _, _card in ipairs(G.fac_fish_area.cards) do
-						if _card.config.center.key == "fish_fac_fas_kine" and _card.ability.immutable.id == card.ability.fac_fas_kine and not card.disable_align then
-							card.T.x = _card.T.x + _card.T.w - 0.1
-							card.T.y = _card.T.y + _card.T.h / 2 + 0.1
-							card.T.r = _card.T.r
-							if not card.memT then card.memT = copy_table(card.T) end
-							card.T.w = card.memT.w / G.CARD_W * _card.T.w / scale
-							card.T.h = card.memT.h / G.CARD_H * _card.T.h / scale
-							card.T.x = card.T.x - card.T.w
-							card.T.y = card.T.y - card.T.h / 2
-						else print("something is weird?")
+		if #G.fac_fas_kine_areas > 0 then
+			for j, fish in ipairs(G.fac_fish_area.cards) do
+				if fish.config.center.key == "fish_fac_fas_kine" and fish.ability.area_num then
+					local j = fish.ability.area_num
+					if G.fac_fas_kine_areas[j] and G.fac_fas_kine_areas[j].cards then
+						G.fac_fas_kine_areas[j].T.x = fish.T.x * -1.1
+						G.fac_fas_kine_areas[j].T.y = fish.T.y
+						G.fac_fas_kine_areas[j].T.r = fish.T.r
+						if G.fac_fas_kine_areas[j].cards[1] then
+							G.fac_fas_kine_areas[j].cards[1].states.drag = fish.states.drag
+							fish.ability.area_UI.states.visible = G.GAME.fac_fish_expanded
 						end
 					end
-					-- renders held joker when in kebab area
-					for _, _card in ipairs(G.fac_fas_fish_kebab_area.cards) do
-						if _card.config.center.key == "fish_fac_fas_kine" and _card.ability.immutable.id == card.ability.fac_fas_kine and not card.disable_align then
-							card.T.x = _card.T.x + _card.T.w - 0.1
-							card.T.y = _card.T.y + _card.T.h / 2 + 0.1
-							card.T.r = _card.T.r
-							if not card.memT then card.memT = copy_table(card.T) end
-							card.T.w = card.memT.w / G.CARD_W * _card.T.w / scale
-							card.T.h = card.memT.h / G.CARD_H * _card.T.h / scale
-							card.T.x = card.T.x - card.T.w
-							card.T.y = card.T.y - card.T.h / 2
+				end
+			end
+			for j, fish in ipairs(G.fac_fas_fish_kebab_area.cards) do
+				if fish.config.center.key == "fish_fac_fas_kine" and fish.ability.area_num then
+					local j = fish.ability.area_num
+					if G.fac_fas_kine_areas[j] and G.fac_fas_kine_areas[j].cards then
+						G.fac_fas_kine_areas[j].T.x = fish.T.x * -1.1
+						G.fac_fas_kine_areas[j].T.y = fish.T.y
+						G.fac_fas_kine_areas[j].T.r = fish.T.r
+						G.fac_fas_kine_areas[j].T.w = fish.T.w / 2
+						G.fac_fas_kine_areas[j].T.h = fish.T.h / 2
+						if G.fac_fas_kine_areas[j].cards[1] then
+							G.fac_fas_kine_areas[j].cards[1].states.drag = fish.states.drag
+							fish.ability.area_UI.states.visible = G.GAME.fac_fish_expanded
 						end
 					end
 				end

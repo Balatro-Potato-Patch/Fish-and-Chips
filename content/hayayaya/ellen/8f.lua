@@ -129,6 +129,9 @@ FishAndChips.Fish({
 	attributes = {
 		"usable", "economy",
 	},
+	blueprint_compat = false,
+	eternal_compat = false,
+	perishable_compat = false,
 	decision_min = math.huge,
 	decision_max = math.huge,
 	impulse_min = 0,
@@ -250,7 +253,7 @@ FishAndChips.Fish({
 		delay(0.5)
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval and card.ability.immutable.count < card.ability.immutable.max then
+		if context.end_of_round and context.main_eval and card.ability.immutable.count < card.ability.immutable.max and not context.blueprint then
 			card.ability.immutable.count = card.ability.immutable.count + 1
 			return {
 				message = string.format("%i/%i", card.ability.immutable.count, card.ability.immutable.max),

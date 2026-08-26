@@ -54,6 +54,7 @@ FishAndChips.Fish{
     key = "iamarta_100_gar",
     weight = 8,
     atlas = "iamarta_100_gar",
+    perishable_compat = false,
     ppu_coder = {"iamarta"},
     ppu_artist = {"iamarta"},
     attributes = {"xmult", "fac_perfect_catch", "scaling"},
@@ -191,6 +192,7 @@ FishAndChips.Fish{
     weight = 9,
     atlas = "iamarta_fish",
     blueprint_compat = false,
+    eternal_compat = false,
     pos = {x = 2, y = 0},
     pixel_size = {h = 71},
     ppu_coder = {"iamarta"},
@@ -214,7 +216,9 @@ FishAndChips.Fish{
     loc_vars = function(self, info_queue, card)
         return {vars = {
             card.ability.extra.cards,
-            card.ability.extra.card_increase
+            card.ability.extra.card_increase,
+            card.ability.extra.cards == 1 and localize("fac_card") or localize("fac_cards"),
+            card.ability.extra.card_increase == 1 and localize("fac_card") or localize("fac_cards")
         }}
     end,
     calculate = function(self, card, context)
@@ -256,6 +260,7 @@ FishAndChips.Fish{
     weight = 6,
     atlas = "iamarta_fish",
     blueprint_compat = false,
+    eternal_compat = false,
     pos = {x = 3, y = 0},
     ppu_coder = {"iamarta"},
     ppu_artist = {"iamarta"},
@@ -313,6 +318,7 @@ FishAndChips.Fish{
     key = "iamarta_hot_dogfish",
     weight = 8,
     atlas = "iamarta_fish",
+    eternal_compat = false,
     ppu_coder = {"iamarta"},
     ppu_artist = {"iamarta"},
     attributes = {"usable", "xmult", "food"},
@@ -422,11 +428,12 @@ FishAndChips.Fish{
     key = "iamarta_big_fish",
     weight = 9,
     atlas = "iamarta_fish",
+    blueprint_compat = false,
+    eternal_compat = false,
     pos = {x = 3, y = 1},
     ppu_coder = {"iamarta"},
     ppu_artist = {"iamarta"},
     attributes = {"usable", "xblindsize", "ante",},
-    blueprint_compat = false,
     stats = {
 		weight = {min = 0.18, max = 0.3},
 		length = {min = 0.2, max = 0.3}
@@ -497,6 +504,9 @@ FishAndChips.Fish{
             active = false
         }
     },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.active and localize("fac_bait_next_attempt") or localize("fac_no_bait_next_attempt") } }
+    end,
     calculate = function(self, card, context)
         if context.fac_end_fishing and not context.blueprint then
             if card.ability.extra.active then

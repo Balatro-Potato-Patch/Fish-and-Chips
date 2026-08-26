@@ -37,10 +37,10 @@ FishAndChips.Fish {
     },
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds,
-            'J8-Bit_money_mola_mola')
+            'fac_J8-Bit_money_mola_mola')
         return {
             vars = {
-                localize(card.ability.extra.suit or "Heart", 'suits_singular'),
+                localize(card.ability.extra.suit or "Hearts", 'suits_singular'),
                 numerator,
                 denominator,
                 card.ability.extra.money,
@@ -119,7 +119,7 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                localize(card.ability.extra.rank, 'ranks'),
+                localize(card.ability.extra.rank or "8", 'ranks'),
                 card.ability.extra.chips,
                 card.ability.extra.mult,
             }
@@ -133,8 +133,7 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.individual and context.cardarea == G.play and
-            (context.other_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id) then
+        if context.individual and context.cardarea == G.play and context.other_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id then
             return {
                 chips = card.ability.extra.chips,
                 mult = card.ability.extra.mult
@@ -262,6 +261,7 @@ FishAndChips.Fish {
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
     blueprint_compat = false,
+    eternal_compat = false,
     config = {
         extra = {
             money_mult = 2.0,
@@ -327,6 +327,7 @@ FishAndChips.Fish {
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
     blueprint_compat = true,
+    requires_consumeables = true,
     config = {
         extra = {
             card_type = "Planet",
@@ -673,7 +674,8 @@ FishAndChips.Fish {
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
-    blueprint_compat = true,
+    blueprint_compat = false,
+    eternal_compat = false,
     config = {
         extra = {
             round_counter = 0,
@@ -786,6 +788,7 @@ FishAndChips.Fish {
         return {
             vars = {
                 localize({ type = 'name_text', set = "Enhanced", key = card.ability.extra.enhancement }) or "Mult Card",
+                card.ability.extra.repetitions
             }
         }
     end,
@@ -795,8 +798,7 @@ FishAndChips.Fish {
                 localize({
                     type = 'name_text',
                     set = card.ability.extra.flavor_card.set,
-                    key = card.ability.extra
-                        .flavor_card.key
+                    key = card.ability.extra.flavor_card.key
                 }) or
                 "The Empress",
                 colours = {
@@ -836,7 +838,7 @@ FishAndChips.Fish {
     cost = 4,
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
-    blueprint_compat = true,
+    blueprint_compat = false,
     config = {
         extra = {
             hands = 1,
@@ -1104,6 +1106,7 @@ FishAndChips.Fish {
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
     blueprint_compat = false,
+    eternal_compat = false,
     environments = {
         backroom = 3.0,
         wormhole = 3.0,
@@ -1560,7 +1563,10 @@ FishAndChips.Fish {
         end
         return {
             vars = {
-                card.ability.extra.cards_selectable
+                card.ability.extra.cards_selectable,
+                ppu_bubbles = {
+                    card.ability.extra.can_destroy and "usable" or "used"
+                }
             },
             main_end = main_end
         }
@@ -1803,6 +1809,7 @@ FishAndChips.Fish {
     ppu_coder = { "J8-Bit" },
     ppu_artist = { "J8-Bit" },
     blueprint_compat = false,
+    eternal_compat = false,
     config = {
         extra = {
             edition = "e_negative",

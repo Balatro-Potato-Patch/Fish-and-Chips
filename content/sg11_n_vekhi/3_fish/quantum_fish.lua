@@ -37,7 +37,7 @@ local center = FishAndChips.Fish({
             key = card.ability.extra.wild and (self.key .. "_wild") or nil,
         }
     end,
-    set_sprites = function(self, card) end,
+    set_sprites = function(self, card) end, -- :drool: (mf)
     calculate = function(self, card, context)
         if context.before and not context.blueprint then
             local possible_cards = {}
@@ -55,21 +55,23 @@ local center = FishAndChips.Fish({
             end
             local winner = pseudorandom_element(possible_cards, "fac_quantum_fish")
             if winner then
-                FishAndChips.QuantumFish.cards_to_score[winner] = FishAndChips.QuantumFish.cards_to_score[winner] or {}
-                FishAndChips.QuantumFish.cards_to_score[winner][card] = true
+                card.ability.qfish_id = math.random(100000000000000) -- These won't collide right (mf)
+                winner.ability.qfish_hit_id = card.ability.qfish_id
             end
         end
         if
             context.individual
             and (context.cardarea == G.play or context.cardarea == G.hand)
-            and FishAndChips.QuantumFish.cards_to_score[context.other_card]
-            and FishAndChips.QuantumFish.cards_to_score[context.other_card][card]
+            and context.other_card.ability.qfish_hit_id
+            and card.ability.qfish_id == context.other_card.ability.qfish_hit_id
         then
             return {
                 xmult = card.ability.extra.xmult,
             }
         end
-        if context.other_main and FishAndChips.QuantumFish.cards_to_score[context.other_main] and FishAndChips.QuantumFish.cards_to_score[context.other_main][card] then
+        if context.other_main
+            and context.other_main.ability.qfish_hit_id
+            and card.ability.qfish_id == context.other_main.ability.qfish_hit_id then
             return {
                 xmult = card.ability.extra.xmult,
             }
@@ -210,15 +212,7 @@ function G:update_fac_fishing_hooking(dt, ...)
     FishAndChips.QuantumFish.update_minigame(G.FAC_FISH_GAME, dt)
 end
 
-local old_main_menu = Game.main_menu
-function Game:main_menu(...)
-    local ret = old_main_menu(self, ...)
-    EMPTY(FishAndChips.QuantumFish.cards_to_score)
-    return ret
-end
-
 FishAndChips.QuantumFish = {
-    cards_to_score = {},
     center = center,
     calculate = function(context)
         if context.fac_fish_caught then
@@ -226,9 +220,24 @@ FishAndChips.QuantumFish = {
                 start_quantum_fish_sequence(context.fac_fish_caught)
             end
         end
-        if context.press_play or context.after then
-            EMPTY(FishAndChips.QuantumFish.cards_to_score)
-        end
+
+		-- mf was here
+		-- shouldnt have banned pk :p
+		if context.after or context.press_play then
+		    -- clear out qfish ids
+			for _, c in ipairs(SMODS.get_card_areas("playing_cards")) do
+                for _, cc in ipairs(c.cards) do
+                    cc.ability.qfish_hit_id = nil
+                end
+            end
+            for _, c in ipairs(SMODS.get_card_areas("jokers")) do
+                if c.area ~= G.vouchers and c.area ~= G.discard then
+                    for _, cc in ipairs(c.cards) do
+                        cc.ability.qfish_hit_id = nil
+                    end
+                end
+            end
+		end
     end,
     minigame_teleport_delay = 1.5,
     minigame_pos = math.random(),

@@ -5,7 +5,7 @@ return {
 				name = "Trojan Fish",
 				text = {
 					"Copies the ability",
-					"of {C:attention}Fish{} to the right",
+					"of {C:fac_fish}Fish{} to the right",
 					"{C:green}#1# in #2#{} chance to create",
 					"a random {C:attention}Joker{} at end of",
 					"round and {C:red,E:2}self destruct",
@@ -72,8 +72,8 @@ return {
 			fish_fac_ta_fish_flavored_fish = {
 				name = "Fish Flavored Fish",
 				text = {
-					"After a {C:attention}Fish{} is caught,",
-					"create a random {C:attention}Fish",
+					"After a {C:fac_fish}Fish{} is caught,",
+					"create a random {C:fac_fish}Fish",
 					"{C:inactive}(Must have room)",
 				},
 				flavor = {
@@ -88,9 +88,9 @@ return {
 				text = {
 					{
 						"At end of round, destroy the",
-						"nearest {C:attention}Fish{} in the direction",
-						"that this {C:attention}Fish{} points towards",
-						"and this {C:attention}Fish{} gains {C:attention}1{} charge",
+						"nearest {C:fac_fish}Fish{} in the direction",
+						"that this {C:fac_fish}Fish{} points towards",
+						"and this {C:fac_fish}Fish{} gains {C:attention}1{} charge",
 						"Flips direction at end of round",
 					},
 					{
@@ -154,7 +154,7 @@ return {
 				name = "Snad",
 				text = {
 					"Earn {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for every {C:attention}#2#",
-					"{C:attention}Fish{} owned at end",
+					"{C:fac_fish}Fish{} owned at end",
 					"of round",
 					"{C:inactive}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#3#{C:inactive})",
 				},
@@ -166,14 +166,14 @@ return {
 				name = "Reaper Leviathan",
 				text = {
 					{
-						"At end of round, eats both adjacent {C:attention}Fish",
-						"Gains {X:mult,C:white}X#1#{} Mult per {C:attention}Fish{} eaten",
+						"At end of round, eats both adjacent {C:fac_fish}Fish",
+						"Gains {X:mult,C:white}X#1#{} Mult per {C:fac_fish}Fish{} eaten",
 						"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
 					},
 					{
 						"{C:attention}Fixed{} {C:green}1 in 2{} chance to leave your",
 						"bucket when selecting a {C:attention}Blind{} if no",
-						"{C:attention}Fish{} was eaten last round",
+						"{C:fac_fish}Fish{} was eaten last round",
 					},
 				},
 				flavor = {

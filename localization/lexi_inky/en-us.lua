@@ -34,6 +34,7 @@ return {
 					"Gives {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for each {C:fac_fish}Fish",
 					"with the {C:money}Economy{} attribute",
 					"at the end of the round",
+					"{C:inactive}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{C:inactive})"
 				},
 				flavour = {
 					"Living once in wages,",

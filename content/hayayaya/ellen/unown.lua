@@ -10,6 +10,8 @@ FishAndChips.Fish({
 	attributes = {
 		"prevents_death", "ante",
 	},
+	blueprint_compat = false,
+	eternal_compat = false,
 	atlas = "hayayaya_fih",
 	pos = { x = 3, y = 1 },
 	pixel_size = { w = 48, h = 58 },
@@ -25,7 +27,7 @@ FishAndChips.Fish({
 	impulse_min = 0.0,
 	impulse_max = 0.5,
 	calculate = function(self, card, context)
-		if context.game_over then
+		if context.game_over and not context.blueprint then
 			G.E_MANAGER:add_event(Event({
 				func = function()
 					play_sound("tarot1")
