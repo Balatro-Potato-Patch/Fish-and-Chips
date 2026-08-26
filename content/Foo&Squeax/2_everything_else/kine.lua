@@ -159,23 +159,19 @@ FishAndChips.Fish{
 			)
 			G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
 		else -- If a kine joker cardarea for this card already exists somehow [likely through copying the card]
-			if G.fac_fas_kine_areas[card.ability.area_num].cards and #G.fac_fas_kine_areas[card.ability.area_num].cards > 0 then -- If this cardarea has cards
-				card.ability.area_num = 0
-				card.ability.area_UI = {}
-			else -- If this cardarea is empty [this should only happen to start with when making a copy of an empty Kine]
-				card.ability.area_num = #G.fac_fas_kine_areas+1
-				G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
-					-10, -10,
-					G.CARD_W, G.CARD_H,
-					{
-						type = "joker",
-						card_limit = 1,
-						highlighted_limit = 1,
-						highlight_limit = 1
-					}
-				)
-				G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
-			end
+			 -- If this cardarea is empty [this should only happen to start with when making a copy of an empty Kine]
+			card.ability.area_num = #G.fac_fas_kine_areas+1
+			G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
+				-10, -10,
+				G.CARD_W, G.CARD_H,
+				{
+					type = "joker",
+					card_limit = 1,
+					highlighted_limit = 1,
+					highlight_limit = 1
+				}
+			)
+			G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
 		end
 	end,
 	remove_from_deck = function (self, card, from_debuff)
@@ -194,5 +190,51 @@ function Game:update(dt)
 	game_update_ref(self, dt)
 	if G.fac_fas_kine_areas then
 		G.fac_fas_kine_areas:align_cards()
+	end
+end
+
+copy_card_ref = copy_card
+function copy_card(other, new_card, card_scale, playing_card, strip_edition)
+	if other.config.center.key == 'fish_fac_fas_kine' then
+		local new_card = SMODS.create_card({
+			set = "fac_Fish",
+			key = "fish_fac_fas_kine",
+			area = G.fac_fish_area
+		})
+		if not strip_edition then 
+			new_card:set_edition(other.edition or {}, nil, true)
+			for k,v in pairs(other.edition or {}) do
+				if type(v) == 'table' then
+					new_card.edition[k] = copy_table(v)
+				else
+					new_card.edition[k] = v
+				end
+			end
+		end
+		check_for_unlock({type = 'have_edition'})
+		new_card:set_seal(other.seal, true)
+		if other.seal then
+			for k, v in pairs(other.ability.seal or {}) do
+				if type(v) == 'table' then
+					new_card.ability.seal[k] = copy_table(v)
+				else
+					new_card.ability.seal[k] = v
+				end
+			end
+		end
+		if other.params then
+			new_card.params = other.params
+			new_card.params.playing_card = playing_card
+		end
+		new_card.debuff = other.debuff
+		new_card.pinned = other.pinned
+		if other.edition and strip_edition then
+			new_card.ability.card_limit = new_card.ability.card_limit - (other.edition.card_limit or 0)
+			new_card.ability.extra_slots_used = new_card.ability.extra_slots_used - (other.edition.extra_slots_used or 0)
+		end
+		new_card:set_cost()
+		return new_card
+	else
+		return copy_card_ref(other, new_card, card_scale, playing_card, strip_edition)
 	end
 end
