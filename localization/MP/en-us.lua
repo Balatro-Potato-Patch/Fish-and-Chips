@@ -91,9 +91,10 @@ return {
             fish_fac_halibut_cannon = {
                 name = "Halibut Cannon",
                 text = {
-                    "{C:green}#1#{} in #2#{} chance to trigger",
-                    "{C:attention}Retrigger{} {C:attention}#3#{} times",
-                    "(All affected by unique fish caught)"
+                    "{C:green}#1# in #2#{} chance to {C:attention}retrigger",
+                    "{C:attention}held{} cards {C:attention}#3#{} times",
+                    "{C:inactive,s:0.8}{C:green,s:0.8}Nominator{C:inactive,s:0.8} increases for every",
+                    "{C:attention,s:0.8}unique{C:fac_fish,s:0.8} Fish{C:inactive,s:0.8} caught",
                 },
                 flavour = {
                     "Yup. Still overpowered."

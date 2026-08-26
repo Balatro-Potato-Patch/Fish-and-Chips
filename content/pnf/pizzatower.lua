@@ -369,23 +369,23 @@ FishAndChips.Fish {
         swamp = 5
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.select, colours = { HEX("4db1f6") } } }
+        return { vars = { SMODS.signed(card.ability.extra.select), SMODS.signed(-card.ability.extra.select), colours = { HEX("4db1f6") } } }
     end,
     add_to_deck = function (self, card, from_debuff)
-    local add = card.ability.extra.select
-	G.hand:change_size(add)
-    SMODS.change_play_limit(add)
-	SMODS.change_discard_limit(add)
-    G.GAME.round_resets.discards = G.GAME.round_resets.discards - add
-    ease_discard(-add)
-    end,
+        local add = card.ability.extra.select
+        G.hand:change_size(add)
+        SMODS.change_play_limit(add)
+        SMODS.change_discard_limit(add)
+        G.GAME.round_resets.discards = G.GAME.round_resets.discards - add
+        ease_discard(-add)
+        end,
     remove_from_deck = function (self, card, from_debuff)
-    local add = card.ability.extra.select
-    G.hand:change_size(-add)
-    SMODS.change_play_limit(-add)
-	SMODS.change_discard_limit(-add)
-    G.GAME.round_resets.discards = G.GAME.round_resets.discards + add
-    ease_discard(add)
+        local add = card.ability.extra.select
+        G.hand:change_size(-add)
+        SMODS.change_play_limit(-add)
+        SMODS.change_discard_limit(-add)
+        G.GAME.round_resets.discards = G.GAME.round_resets.discards + add
+        ease_discard(add)
     end,
 }
 

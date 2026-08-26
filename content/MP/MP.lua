@@ -67,19 +67,6 @@ local function fac_count_suit(scoring_hand, suit)
 	return count
 end
 
-local function fac_count_unique_fish()
-	local profile = G.PROFILES[G.SETTINGS.profile]
-	local fish_data = profile and profile.fac_fishing and profile.fac_fishing.fish_data
-	if not fish_data then return 0 end
-	local unique = 0
-	for _, data in pairs(fish_data) do
-		if data and data.times_caught and data.times_caught > 0 then
-			unique = unique + 1
-		end
-	end
-	return unique
-end
-
 FishAndChips.Fish {
 	key = 'letter_fish',
 	atlas = 'fac_MPcards',
@@ -383,25 +370,23 @@ FishAndChips.Fish {
 		extra = {
 			numerator = 1,
 			denominator = 25,
-			retriggers = 10,
+			repetitions = 3,
+			unique_fish = {}, -- Map of fish keys
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.numerator, card.ability.extra.denominator, card.ability.extra.retriggers } }
+		local unique_fish = table_length(card.ability.extra.unique_fish)
+		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.numerator + unique_fish, card.ability.extra.denominator, "fac_MP_halibut")
+		return { vars = { numerator, denominator, card.ability.extra.repetitions } }
 	end,
 	calculate = function(self, card, context)
-		local unique_fish = fac_count_unique_fish()
-		if context.mod_probability or context.fix_probability then
-			return {
-				numerator = card.ability.extra.numerator + unique_fish,
-				denominator = card.ability.extra.denominator,
-			}
-		end
-		if context.individual and context.cardarea == G.hand and not context.repetition and not context.mod_probability and not context.fix_probability then
-			local numerator = card.ability.extra.numerator + unique_fish
-			if SMODS.pseudorandom_probability(card, 'fac_halibut_cannon', numerator, card.ability.extra.denominator) then
+		if context.fac_fish_caught then
+			card.ability.extra.unique_fish[context.fish] = true
+		elseif context.repetition and context.cardarea == G.hand then
+			local unique_fish = table_length(card.ability.extra.unique_fish)
+			if SMODS.pseudorandom_probability(card, 'fac_halibut_cannon', card.ability.extra.numerator + unique_fish, card.ability.extra.denominator) then
 				return {
-					repetitions = card.ability.extra.retriggers + unique_fish,
+					repetitions = card.ability.extra.repetitions,
 				}
 			end
 		end

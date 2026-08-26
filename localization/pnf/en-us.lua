@@ -50,9 +50,9 @@ return {
                 name = "Circus Frog",
                 text = {
                     {
-                         "{C:attention}+#1#{} Card Selection Limit",
-                         "{C:blue}+#1#{} Hand Size",
-                         "{C:red}-#1#{} Discard",
+                         "{C:attention}#1#{} Card Selection Limit",
+                         "{C:attention}#1#{} Hand Size",
+                         "{C:red}#2#{} Discard",
                 }
                 },
                 flavor = {
@@ -64,9 +64,9 @@ return {
                 name = "Patrick Starwalker",
                 text = {
                     {
-                        "{C:attention}Stone cards{} are {C:red}destroyed{}",
+                        "Scoring {C:attention}Stone cards{} are {C:red}destroyed{}",
                         "and this {V:1}Fish{} gains {C:white,X:chips}X#2#{} Chips",
-                        "{C:inactive}(Currently: {X:chips,C:white}X#1#{C:inactive})"
+                        "{C:inactive}(Currently {X:chips,C:white}X#1#{C:inactive} Chips)"
                         
                 }
                 },
