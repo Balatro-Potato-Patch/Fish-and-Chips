@@ -5,15 +5,14 @@ return {
                 name = "Floppy Fish",
                 text = {
                     "Occasionally starts {C:attention}flopping",
-                    "and permanently gains {X:mult,C:white}X#1#{} Mult",
-                    "when the flopping is stopped",
-                    "by {C:attention}selecting{} this fish",
+                    "Gains {X:mult,C:white}X#1#{} Mult when",
+                    "stopping the flopping",
+                    "by {C:attention}selecting{} this {C:fac_fish}Fish{}",
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
                 },
                 flavour = {
                     "flippity floppity",
-                    "i am no longer",
-                    "your property"
+                    "i am no longer your property"
                 }
             },
 
@@ -25,23 +24,22 @@ return {
                     "{C:inactive}(Capped at {X:mult,C:white}X#2#{C:inactive} Mult)"
                 },
                 flavour = {
-                    "I'm pretty sure this",
-                    "is a fish, right? It has fins."
+                    "I'm pretty sure this is a",
+                    "fish, right? It has fins."
                 }
             },
 
             fish_fac_argel_blowfish = {
                 name = "Blowfish",
                 text = {
-                    "{C:attention}Blows{} the fish to the",
-                    "left to the {C:attention}end",
-                    "of the area, and earns",
-                    "{C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} for each fish",
-                    "passed on the way"
+                    "During scoring, {C:attention}blows{} the",
+                    "leftmost {C:fac_fish}Fish{} all the way to the",
+                    "{C:attention}right{}, then earn {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} for each",
+                    "{C:fac_fish}Fish{} it passed on the way"
                 },
                 flavour = {
-                    "I'm sorry, but what did you expect",
-                    "for a 'blowfish'?"
+                    "I'm sorry, but what did you",
+                    "expect for a 'blowfish'?"
                 }
             },
 
@@ -58,12 +56,11 @@ return {
             fish_fac_argel_thing = {
                 name = "Thing",
                 text = {
-
-                    "{C:attention}Using{} this Fish makes it",
-                    "eat a random owned Fish,",
-                    "gaining {C:fac_sand_dollars,f:fac_sand_dollars}+$#1#{} in",
-                    "sell value for each fish eaten",
-                    "{C:inactive}(Once per round, max of {C:fac_sand_dollars,f:fac_sand_dollars}+$#2#{C:inactive})"
+                    "Once per round, {C:red}eats{} a random",
+                    "{C:fac_fish}Fish{} and gains {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} in {C:attention}sell value{}",
+                    "for each {C:fac_fish}Fish{} eaten so far",
+                    "{C:inactive}(Max of {C:fac_sand_dollars,f:fac_sand_dollars}+$#2#{C:inactive} sell value)",
+                    "{ppu_bubble:usable}"
                 },
                 flavour = {
                     "What the hell did you just find.",
@@ -75,7 +72,7 @@ return {
                 name = "Still Fish",
                 text = {
                     "{C:green}#1# in #2#{} chance for any",
-                    "Joker or Fish trigger",
+                    "{C:attention}Joker{} or {C:fac_fish}Fish{} trigger",
                     "to be {C:green}repeated"
                 },
                 flavour = {
@@ -87,8 +84,8 @@ return {
             fish_fac_lizie_cafindish = {
                 name = "Cafindish",
                 text = {
-                    "All owned Fish give {X:mult,C:white}X#3#{} Mult",
-                    "{C:green}#1# in #2#{} chance this Fish is",
+                    "All owned {C:fac_fish}Fish{} give {X:mult,C:white}X#3#{} Mult",
+                    "{C:green}#1# in #2#{} chance this {C:fac_fish}Fish{} is",
                     "destroyed at end of round",
                 },
                 flavour = {
@@ -96,30 +93,86 @@ return {
                 }
             },
 
-            fish_fac_lizzie_jellyfish = {
+            fish_fac_lizzie_jellyfish_larva = {
                 name = {
                     "Immortal Jellyfish",
-                    "{C:inactive,s:0.75}#1#"
+                    "{C:inactive,s:0.75}(Larva)"
+                },
+                text = {
+                    "Becomes a {C:attention}polyp{} at",
+                    "the end of the round"
+                },
+                flavour = {
+                    "Branching off from the known immortal jellyfish,",
+                    "this jellyfish has adapted to mimic a purple presence",
+                    "just to survive in the harshest environments."
+                }
+            },
+            fish_fac_lizzie_jellyfish_polyp = {
+                name = {
+                    "Immortal Jellyfish",
+                    "{C:inactive,s:0.75}(Polyp)"
                 },
                 text = {
                     {
-                        "{C:green}#2#{}#3#",
-                        "#4#{C:fac_sand_dollars,f:fac_sand_dollars}#5#{C:inactive}#8#",
-                        "#6#{C:attention}#7#"
+                        "{C:green}#1# in #2#{} chance to earn {C:fac_sand_dollars,f:fac_sand_dollars}$#3#{}",
+                        "at the end of the round"
                     },
                     {
-                        "A {C:attention}maturing{} or {C:attention}mature{} Jellyfish",
-                        "will regress to its {C:attention}Polyp{} stage",
-                        "when {C:red}destroyed{}, with a {C:green}#9# in #10#{}",
-                        "chance to create a new {C:attention}Larva{}",
-                        "when it matures",
-                        "{C:inactive}(Stage changes at end of round){}"
+                        "Becomes {C:attention}maturing{} at",
+                        "the end of the round,",
+                        "{C:green}#4# in #5#{} chance to create a",
+                        "{C:attention}larva{} when this happens"
                     }
                 },
                 flavour = {
                     "Branching off from the known immortal jellyfish,",
-                    "this jellyfish has adapted to mimic a purple",
-                    "presence just to survive in the harshest environments."
+                    "this jellyfish has adapted to mimic a purple presence",
+                    "just to survive in the harshest environments."
+                }
+            },
+            fish_fac_lizzie_jellyfish_maturing = {
+                name = {
+                    "Immortal Jellyfish",
+                    "{C:inactive,s:0.75}(Maturing)"
+                },
+                text = {
+                    {
+                        "{C:green}#1# in #2#{} chance to earn {C:fac_sand_dollars,f:fac_sand_dollars}$#3#{}",
+                        "at the end of the round"
+                    },
+                    {
+                        "If {C:red}destroyed{}, regresses",
+                        "to a {C:attention}polyp{} instead",
+                        "Becomes {C:attention}mature{} at",
+                        "the end of the round"
+                    }
+                },
+                flavour = {
+                    "Branching off from the known immortal jellyfish,",
+                    "this jellyfish has adapted to mimic a purple presence",
+                    "just to survive in the harshest environments."
+                }
+            },
+            fish_fac_lizzie_jellyfish = {
+                name = {
+                    "Immortal Jellyfish",
+                    "{C:inactive,s:0.75}(Mature)"
+                },
+                text = {
+                    {
+                        "{C:green}#1# in #2#{} chance to earn {C:fac_sand_dollars,f:fac_sand_dollars}$#3#{}",
+                        "at the end of the round"
+                    },
+                    {
+                        "If {C:red}destroyed{}, regresses",
+                        "to a {C:attention}polyp{} instead"
+                    }
+                },
+                flavour = {
+                    "Branching off from the known immortal jellyfish,",
+                    "this jellyfish has adapted to mimic a purple presence",
+                    "just to survive in the harshest environments."
                 }
             },
 
@@ -127,19 +180,19 @@ return {
                 name = "Toxikarp",
                 text = {
                     {
-                        "Before scoring, blows a {C:attention}bubble",
-                        "around a random owned Joker"
+                        "Before scoring, blows a {C:dark_edition}bubble",
+                        "around a random owned {C:attention}Joker{}"
                     },
                     {
-                        "If the bubbled Joker triggers",
+                        "If the {C:dark_edition}bubbled{} {C:attention}Joker{} triggers",
                         "during {C:attention}scoring{}, the bubble",
-                        "pops, giving {X:mult,C:white}X#1#{} Mult"
+                        "{C:blue}pops{} and gives {X:mult,C:white}X#1#{} Mult"
                     }
                 },
                 flavour = {
-                    "Fished from the waters of scourges and tumors,",
-                    "this fish would be having better days",
-                    "not as a makeshift weapon."
+                    "Fished from the waters of scourges",
+                    "and tumors, this fish would be having",
+                    "better days not as a makeshift weapon."
                 }
             },
 
@@ -147,20 +200,20 @@ return {
                 name = "Bladetongue",
                 text = {
                     {
-                        "Once per round, use this Fish",
-                        "to activate it for one hand"
+                        "Once per round, {C:attention}use{} this {C:fac_fish}Fish{}",
+                        "to {C:green}activate{} it for one hand",
+                        "{ppu_bubble:1}{ppu_bubble:2}"
                     },
                     {
-                        "When active, Bladetongue {C:red}slashes",
-                        "the first scored {C:hearts}Hearts{} card,",
-                        "destroying it and applying",
-                        "{X:purple,C:white}X#1#{} blind size"
+                        "When {C:green}active{}, {C:fac_fish}Bladetongue{} {C:red}slashes",
+                        "the first scored {C:hearts}Hearts{} card",
+                        "and gives {X:blind,C:white}X#1#{} Blind size"
                     }
                 },
                 flavour = {
-                    "Fished from the waters of guck and flesh,",
-                    "this fish would be having better days",
-                    "with a cleaner tongue."
+                    "Fished from the waters of guck and",
+                    "flesh, this fish would be having better",
+                    "days with a cleaner tongue."
                 }
             }
         },

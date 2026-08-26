@@ -722,7 +722,7 @@ FishAndChips.Fish {
 		},
 
         immutable = {
-            usable = false
+            usable = true
         }
 	},
 	environments = {
@@ -967,24 +967,18 @@ FishAndChips.Fish {
     loc_vars = function (self, info_queue, card)
         local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizzie_jellyfish")
 		local num2, denom2 = SMODS.get_probability_vars(card, 1, card.ability.extra.odds_pregnant, "lizzie_jellyfish_gregnnant")
-		local baby = card.ability.immutable.state == "larva"
+		local key = self.key..(card.ability.immutable.state == "mature" and "" or "_"..card.ability.immutable.state)
         return {
+            key = key,
             vars = {
-                localize("k_fac_lizie_jellyfish_" .. card.ability.immutable.state),
-                not baby and (tostring(num) .. " in " .. tostring(denom)) or "",
-                not baby and " chance to" or "",
-                not baby and "earn " or "",
-                not baby and ("$" .. tostring(card.ability.extra.sand_dollars)) or "",
-                not baby and "at " or "",
-                not baby and "end of round" or "",
-                baby and "Does nothing... maybe wait a round?" or "",
-                num2,
-                denom2
+                num, denom,
+                card.ability.extra.sand_dollars,
+                num2, denom2
             }
         }
     end,
 
-    update =function (self, card, dt)
+    update = function(self, card, dt)
         card.children.center:set_sprite_pos(card.ability.immutable.sprite_pos[card.ability.immutable.state])
     end,
     calculate = function (self, card, context)
@@ -1278,6 +1272,8 @@ FishAndChips.Fish {
     end,
 
     loc_vars = function (self, info_queue, card)
-        return { vars = { card.ability.extra.Xblindsize } }
+        return { vars = { card.ability.extra.Xblindsize,
+        ppu_bubbles = { card.ability.immutable.used_this_round and "used" or "usable",
+        card.ability.immutable.active and "active" or "inactive" } } }
     end
 }
