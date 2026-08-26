@@ -96,6 +96,8 @@ G.FUNCS.fac_toggle_fishing = function(e)
 								G.jokers.T.y = G.jokers.T.y + 10
 								G.consumeables.T.y = G.consumeables.T.y + 10
                 ease_value(G.HUD.alignment.offset, "x", 10) -- for some reason this value changes instantly unlike others
+				G.GAME.fac_fishing_environment = G.GAME.fac_next_environment or pseudorandom_element(FishAndChips.create_env_pool(), "fac_next_location")
+				if G.GAME.fac_next_environment then G.GAME.fac_next_environment = nil else G.GAME.fac_envs_used[G.GAME.fac_fishing_environment] = G.GAME.fac_envs_used[G.GAME.fac_fishing_environment] + 1 end
                 return true
             end
         }), 'fac_fishing_transition')
@@ -131,6 +133,12 @@ function Game:init_game_object()
     ret.fac_treasure_earned = 0
     ret.fac_perfect_catches = 0
 	ret.fac_no_jokers = true
+
+	local envs_used = {}
+	for k, _ in pairs(FishAndChips.Environments) do
+		envs_used[k] = 0
+	end
+	ret.fac_envs_used = envs_used
     return ret
 end
 
