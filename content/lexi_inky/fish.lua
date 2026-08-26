@@ -758,6 +758,7 @@ FishAndChips.Fish({
 		length = { min = 0.018, max = 0.026 },
 	},
 	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_CENTERS.e_negative
 		return {
 			vars = {
 				localize(card.ability.extra.type, "poker_hands"),
