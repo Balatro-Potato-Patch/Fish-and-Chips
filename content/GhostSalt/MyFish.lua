@@ -1257,7 +1257,12 @@ FishAndChips.Fish {
 	blueprint_compat = true,
 	calculate = function(self, card, context)
 		if context.other_main and context.other_main.ability.set == "fac_Fish" and context.other_main.config.center.key ~= "fish_fac_ghostsalt_mezepheles" then
-			local words = fac_ghostsalt_mezepheles_wordify_fish(context.other_main.config.center.key)
+			local key = context.other_main.config.center.key
+			if context.other_main.config.center.loc_vars then
+				local loc_vars = context.other_main.config.center:loc_vars({}, context.other_main)
+				if loc_vars.key then key = loc_vars.key end
+			end
+			local words = fac_ghostsalt_mezepheles_wordify_fish(key)
 			for _, word in ipairs(words) do
 				if word == card.ability.extra.word then
 					return { xmult = card.ability.extra.xmult }
@@ -1277,9 +1282,9 @@ FishAndChips.Fish {
 	pronouns = "it_its"
 }
 
-function fac_ghostsalt_mezepheles_wordify_fish(key)
+function fac_ghostsalt_mezepheles_wordify_fish(key, ignore_no_collection)
 	if key == "fish_fac_ghostsalt_mezepheles" then return {} end
-	if G.P_CENTERS[key].no_collection then return {} end;
+	if ignore_no_collection and G.P_CENTERS[key] and G.P_CENTERS[key].no_collection then return {} end
 	local loc_target = G.localization.descriptions["fac_Fish"][key]
 	local final_line = ""
 	local box = loc_target.text_parsed[1]
@@ -1332,7 +1337,7 @@ function fac_ghostsalt_mezepheles_find_doable_words(min_fish, max_fish)
 		if v.set == "fac_Fish" then
 			no_of_fish = no_of_fish + 1
 			local individual_counted = {}
-			local words = fac_ghostsalt_mezepheles_wordify_fish(k)
+			local words = fac_ghostsalt_mezepheles_wordify_fish(k, ignore_no_collection)
 			for _, word in ipairs(words) do
 				-- Eliminate anything shorter than 3 letters, to make things interesting (and also to eliminate the X in X2 Mult).
 				-- Also eliminate words appearing twice in the same ability text.
