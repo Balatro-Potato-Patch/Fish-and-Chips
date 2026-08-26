@@ -43,7 +43,7 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.play then
+		if context.individual and context.cardarea == G.play and not context.blueprint then
 			SMODS.scale_card(card, {
 				ref_table = card.ability.extra,
 				ref_value = "chips",
@@ -57,14 +57,14 @@ FishAndChips.Fish({
 			}
 		end
 
-		if context.after then
+		if context.after and not context.blueprint then
 			card.ability.extra.chips = 0
 			return {
 				message = localize("k_reset"),
 			}
 		end
 
-		if context.end_of_round and context.main_eval and not context.game_over then
+		if context.end_of_round and context.main_eval and not context.game_over and not context.blueprint then
 			card.ability.extra.forme_counter = card.ability.extra.forme_counter + 1
 			if card.ability.extra.forme_counter >= card.ability.extra.forme_max then
 				card.ability.extra.forme_counter = 0
@@ -123,7 +123,7 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.play then
+		if context.individual and context.cardarea == G.play and not context.blueprint then
 			SMODS.scale_card(card, {
 				ref_table = card.ability.extra,
 				ref_value = "chips",
@@ -137,7 +137,7 @@ FishAndChips.Fish({
 			}
 		end
 
-		if context.end_of_round and context.main_eval and not context.game_over then
+		if context.end_of_round and context.main_eval and not context.game_over and not context.blueprint then
 			card.ability.extra.chips = 0
 			card.ability.extra.forme_counter = card.ability.extra.forme_counter + 1
 			if card.ability.extra.forme_counter >= card.ability.extra.forme_max then
@@ -197,7 +197,7 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.play then
+		if context.individual and context.cardarea == G.play and not context.blueprint then
 			SMODS.scale_card(card, {
 				ref_table = card.ability.extra,
 				ref_value = "xchips",
@@ -211,7 +211,7 @@ FishAndChips.Fish({
 			}
 		end
 
-		if context.ante_end then
+		if context.ante_end and not context.blueprint then
 			card.ability.extra.xchips = 1
 			return {
 				message = localize("k_reset"),

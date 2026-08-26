@@ -89,7 +89,7 @@ return {
             fish_fac_iamarta_big_fish = {
                 name = "Big Fish",
                 text = {
-                    "{X:blind,C:white}X#1#{} Blind Size",
+                    "{X:blind,C:white}X#1#{} Blind size",
                     "After {C:attention}#2#{} rounds,",
                     "{C:attention}use{} for {C:attention}-#3#{} Ante",
                     "{C:inactive}(Currently #4#/#2#)",

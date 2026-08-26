@@ -13,13 +13,14 @@ FishAndChips.Fish({
 		"scaling",
 		"chips",
 	},
+	perishable_compat = false,
 	stats = {
 		length = { min = 0.75, max = 1.3 },
 		weight = { min = 0.5, max = 2 },
 	},
 	atlas = "hayayaya_fih",
 	pos = { x = 3, y = 2 },
-	config = { extra = { chips = 0, chips_add = 5, done = false, discard_flush = false } },
+	config = { extra = { chips = 0, chips_add = 5 } },
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -34,56 +35,17 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.pre_discard and not card.ability.extra.done then
-			G.E_MANAGER:add_event(Event({
-				func = function()
-					card.ability.extra.done = true
-					return true
-				end,
-			}))
-		end
-
-		-- TODO: Make each card disappear one by one?
-		if context.discard and not card.ability.extra.done then
-			SMODS.destroy_cards(context.other_card, {
-				immediate = true,
-				destroy_func = function(destroy_card, args)
-					if destroy_card.shattered then
-						destroy_card:shatter()
-					else
-						destroy_card:start_dissolve()
-					end
-					SMODS.scale_card(card, {
-						ref_table = card.ability.extra,
-						ref_value = "chips",
-						scalar_value = "chips_add",
-					})
-				end,
+		if context.discard and G.GAME.current_round.discards_used <= 0 and not context.blueprint then
+			SMODS.scale_card(card, {
+				ref_table = card.ability.extra,
+				ref_value = "chips",
+				scalar_value = "chips_add",
 			})
-		end
-
-		-- Genuinely, for some reason they still exist in the discard pile
-		-- We already know the actual moveable is deleted now, so just clear the table manually
-		if context.hand_drawn and card.ability.extra.done and not card.ability.extra.discard_flush then
-			G.E_MANAGER:add_event(Event({
-				func = function()
-					G.discard.cards = {}
-					card.ability.extra.done = true
-					return true
-				end,
-			}))
-			card.ability.extra.discard_flush = true
-		end
-
-		if context.end_of_round and context.main_eval then
-			card.ability.extra.done = false
-			card.ability.extra.discard_flush = false
+			return { remove = true }
 		end
 
 		if context.joker_main then
-			return {
-				chips = card.ability.extra.chips,
-			}
+			return { chips = card.ability.extra.chips }
 		end
 	end,
 })

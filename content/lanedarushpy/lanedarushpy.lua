@@ -226,13 +226,15 @@ FishAndChips.Fish {
         weight = { min = 1, max = 15 },
         length = { min = 0.2, max = 1.2}
     },
+    eternal_compat = false,
+    perishable_compat = false,
 
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult } }
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main and not card.ability.immutable.cant_flop then return { Xmult = card.ability.extra.Xmult > 1.0 and card.ability.extra.Xmult or nil } end
-        local context_check = (context.end_of_round or context.first_hand_drawn or context.after or (context.fac_fish_hooked and pseudorandom("laneda_floppy_fuckyou", 1, 10) < 3))
+        local context_check = not context.blueprint and (context.end_of_round or context.first_hand_drawn or context.after or (context.fac_fish_hooked and pseudorandom("laneda_floppy_fuckyou", 1, 10) < 3))
         if context_check and card.ability.immutable.flop_flag then
             G.E_MANAGER:add_event(Event({
                 func = function ()
@@ -423,7 +425,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main then
-            local xmult = math.min(card.ability.extra.divide / hand_chips, 4)
+            local xmult = math.min(card.ability.extra.divide / hand_chips, card.ability.extra.cap)
             if xmult > 1 then
                 return { Xmult = xmult };
             end
@@ -579,12 +581,12 @@ FishAndChips.Fish {
 
         local main_start = not card.name_only and {
             { n = G.UIT.O, config = { object = DynaText({ string = {
-                { string = "All Jokers ", colour = loc_colors["jokers"] },
-                { string = "All Fish ", colour = loc_colors["fish"] },
-                { string = "Consumables ", colour = loc_colors["consumables"] },
-                { string = "Scored cards ", colour = loc_colors["playing_cards"] }
+                { string = localize("k_fac_lizie_all_jokers"), colour = loc_colors["jokers"] },
+                { string = localize("k_fac_lizie_all_fish"), colour = loc_colors["fish"] },
+                { string = localize("k_fac_lizie_consumables"), colour = loc_colors["consumables"] },
+                { string = localize("k_fac_lizie_scored_cards"), colour = loc_colors["playing_cards"] }
             }, colours = { G.C.RED }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.75, scale = 0.32, min_cycle_time = 0 }) } },
-            { n = G.UIT.T, config = { text = 'give ', colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
+            { n = G.UIT.T, config = { text = localize("k_fac_lizie_give"), colour = G.C.UI.TEXT_DARK, scale = 0.32 } },
             { n = G.UIT.O, config = { object = DynaText({ string = loc_choices, colours = { G.C.RED }, pop_in_rate = 9999999, silent = true, random_element = true, pop_delay = 0.5, scale = 0.32, min_cycle_time = 0 }) } },
             {
                 n = G.UIT.O,
@@ -722,7 +724,7 @@ FishAndChips.Fish {
 		},
 
         immutable = {
-            usable = false
+            usable = true
         }
 	},
 	environments = {
@@ -730,16 +732,17 @@ FishAndChips.Fish {
 		backroom = 10,
         wormhole = 25,
 	},
+    blueprint_compat = false,
 
     stats = {
         weight = { min = -100, max = -5 },
         length = { min = -10, max = 10}
     },
 	loc_vars = function(self, info_queue, card)
-		return { vars = { 1, card.ability.extra.cap } }
+		return { vars = { 1, card.ability.extra.cap, ppu_bubbles = { card.ability.extra.usable and "usable" or "used" } } }
 	end,
 	calculate = function(self, card, context)
-        if context.setting_blind then
+        if context.setting_blind and not context.blueprint then
             G.E_MANAGER:add_event(Event({
                 func = function(e)
                     card.ability.immutable.usable = true
@@ -876,6 +879,7 @@ FishAndChips.Fish {
         soup = 20,
         city_river = 5
 	},
+    eternal_compat = false,
 	loc_vars = function(self, info_queue, card)
         local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizie_cafindish")
 		return { vars = { num, denom, card.ability.extra.Xmult } }
@@ -902,7 +906,7 @@ FishAndChips.Fish {
             return SMODS.merge_effects(fx);
         end
 
-        if context.end_of_round and context.main_eval and context.cardarea == G.fac_fish_area then
+        if context.end_of_round and context.main_eval and context.cardarea == G.fac_fish_area and not context.blueprint then
             local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizie_cafindish")
 		    if SMODS.pseudorandom_probability(card, "lizie_cafindish", num, denom) then
                 SMODS.destroy_cards(card, nil, nil, true)
@@ -963,32 +967,27 @@ FishAndChips.Fish {
         aquifer = 0.2,
         styx = 0.2
 	},
+    eternal_compat = false, -- its ability does this anyway
 
     loc_vars = function (self, info_queue, card)
-        local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "lizzie_jellyfish")
-		local num2, denom2 = SMODS.get_probability_vars(card, 1, card.ability.extra.odds_pregnant, "lizzie_jellyfish_gregnnant")
-		local baby = card.ability.immutable.state == "larva"
+        local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds or 1, "lizzie_jellyfish")
+		local num2, denom2 = SMODS.get_probability_vars(card, 1, card.ability.extra.odds_pregnant or 1, "lizzie_jellyfish_gregnnant")
+        local key = self.key..(card.ability.immutable.state == "mature" and "" or "_"..card.ability.immutable.state)
         return {
+            key = key,
             vars = {
-                localize("k_fac_lizie_jellyfish_" .. card.ability.immutable.state),
-                not baby and (tostring(num) .. " in " .. tostring(denom)) or "",
-                not baby and " chance to" or "",
-                not baby and "earn " or "",
-                not baby and ("$" .. tostring(card.ability.extra.sand_dollars)) or "",
-                not baby and "at " or "",
-                not baby and "end of round" or "",
-                baby and "Does nothing... maybe wait a round?" or "",
-                num2,
-                denom2
+                num, denom,
+                card.ability.extra.sand_dollars,
+                num2, denom2
             }
         }
     end,
 
-    update =function (self, card, dt)
+    update = function(self, card, dt)
         card.children.center:set_sprite_pos(card.ability.immutable.sprite_pos[card.ability.immutable.state])
     end,
     calculate = function (self, card, context)
-        if context.joker_type_destroyed and context.card == card then
+        if context.joker_type_destroyed and context.card == card and not context.blueprint then
             if not (card.ability.immutable.state == "larva" or card.ability.immutable.state == "polyp") then
                 G.E_MANAGER:add_event(Event({
                     func = function()
@@ -1016,7 +1015,7 @@ FishAndChips.Fish {
                 end
             end
 
-            if not (card.ability.immutable.state == "mature") then
+            if not (card.ability.immutable.state == "mature") and not context.blueprint then
                 G.E_MANAGER:add_event(Event({
                     func = function(e)
                         local aged = false
@@ -1089,13 +1088,14 @@ FishAndChips.Fish {
         soup = 0.35,
         wormhole = 0.15
 	},
+    blueprint_compat = false,
 
     loc_vars = function (self, info_queue, card)
         return { vars = { card.ability.extra.Xmult } }
     end,
 
     calculate = function (self, card, context)
-        if context.before and context.main_eval then
+        if context.before and context.main_eval and not context.blueprint then
             if #G.jokers.cards < 1 then card.ability.immutable.current_bubble_joker = -1 end
             if card.ability.immutable.current_bubble_joker < 0 then
                 local picked_joker = pseudorandom_element(G.jokers.cards, "fac_lizie_toxikarp_choice")
@@ -1116,7 +1116,7 @@ FishAndChips.Fish {
             end
         end
 
-        if context.after then
+        if context.after and not context.blueprint then
             if card.ability.immutable.current_bubble_joker >= 0 then
                 local jokie = G.jokers.cards[card.ability.immutable.current_bubble_joker]
                 G.E_MANAGER:add_event(Event({
@@ -1135,7 +1135,7 @@ FishAndChips.Fish {
             end
         end
 
-        if context.post_trigger and card.ability.immutable.current_bubble_joker > -1 then
+        if context.post_trigger and card.ability.immutable.current_bubble_joker > -1 and not context.blueprint then
             local jokie = G.jokers.cards[card.ability.immutable.current_bubble_joker]
             if jokie and context.other_card and context.other_card == jokie then
                 return {
@@ -1158,7 +1158,7 @@ FishAndChips.Fish {
             end
         end
 
-        if context.end_of_round then
+        if context.end_of_round and not context.blueprint then
             if card.ability.immutable.current_bubble_joker >= 0 then
                 local jokie = G.jokers.cards[card.ability.immutable.current_bubble_joker]
                 G.E_MANAGER:add_event(Event({
@@ -1211,6 +1211,7 @@ FishAndChips.Fish {
         soup = 0.35,
         wormhole = 0.15
 	},
+    blueprint_compat = false,
 
     keep_on_use = function (self, card)
         return true
@@ -1232,7 +1233,7 @@ FishAndChips.Fish {
     end,
 
     calculate = function (self,card,context)
-        if context.setting_blind then
+        if context.setting_blind and not context.blueprint then
             G.E_MANAGER:add_event(Event({
                 func = function(e)
                     card.ability.immutable.used_this_round = false
@@ -1242,7 +1243,7 @@ FishAndChips.Fish {
             }))
         end
 
-        if context.joker_main and card.ability.immutable.active then
+        if context.joker_main and card.ability.immutable.active and not context.blueprint then
             for _, v in ipairs(G.play.cards) do
                 if v:is_suit("Hearts") then
                     G.E_MANAGER:add_event(Event({
@@ -1266,7 +1267,7 @@ FishAndChips.Fish {
             end
         end
 
-        if context.end_of_round and context.main_eval then
+        if context.end_of_round and context.main_eval and not context.blueprint then
             G.E_MANAGER:add_event(Event({
                 func = function(e)
                     card.ability.immutable.used_this_round = true
@@ -1278,6 +1279,8 @@ FishAndChips.Fish {
     end,
 
     loc_vars = function (self, info_queue, card)
-        return { vars = { card.ability.extra.Xblindsize } }
+        return { vars = { card.ability.extra.Xblindsize,
+        ppu_bubbles = { card.ability.immutable.used_this_round and "used" or "usable",
+        card.ability.immutable.active and "active" or "inactive" } } }
     end
 }

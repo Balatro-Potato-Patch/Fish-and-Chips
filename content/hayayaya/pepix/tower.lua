@@ -32,17 +32,46 @@ FishAndChips.Fish({
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main then
-			local xmult = 0
-			local suits = {}
-			for _, c in ipairs(context.scoring_hand) do
-				-- Cards with any suit qualify for this as well
-				if (not suits[c.base.suit]) or SMODS.has_any_suit(c) then
-					xmult = xmult + 1
-					suits[c.base.suit] = true
+			local best = 0
+			local function search(card_index, used_suits, chosen_cards)
+				if card_index > #context.scoring_hand then
+					local count = 0
+					for _ in pairs(used_suits) do
+						count = count + 1
+					end
+					if count > best then
+						best = count
+					end
+					return
+				end
+
+				local had_suit = false
+				for k, v in pairs(SMODS.Suits) do
+					if context.scoring_hand[card_index]:is_suit(k) then
+						had_suit = true
+						local suit_used = not not used_suits[k]
+						used_suits[k] = true
+
+						if not suit_used then
+							chosen_cards[#chosen_cards + 1] = card_index
+						end
+
+						search(card_index + 1, used_suits, chosen_cards)
+
+						if not suit_used then
+							chosen_cards[#chosen_cards] = nil
+							used_suits[k] = nil
+						end
+					end
+				end
+				if not had_suit then
+					search(card_index + 1, used_suits, chosen_cards)
 				end
 			end
+			search(1, {}, {})
+
 			return {
-				xmult = math.max(1, xmult),
+				xmult = math.max(1, best),
 			}
 		end
 	end,

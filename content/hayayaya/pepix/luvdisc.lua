@@ -14,6 +14,7 @@ FishAndChips.Fish({
 		"reset",
 		"scaling",
 	},
+	perishable_compat = false,
 	atlas = "hayayaya_fih",
 	pos = { x = 0, y = 2 },
 	config = { extra = { xmult = 1.0, xmult_add = 0.1 } },
@@ -30,13 +31,17 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.play then
+		if context.individual and context.cardarea == G.play and not context.blueprint then
 			if context.other_card:is_suit("Hearts") then
 				SMODS.scale_card(card, {
 					ref_table = card.ability.extra,
 					ref_value = "xmult",
 					scalar_value = "xmult_add",
+					no_message = true,
 				})
+				return {
+					message = localize("k_upgrade_ex"),
+				}
 			elseif card.ability.extra.xmult > 1 then
 			    SMODS.reset_card(card, {
 					ref_table = card.ability.extra,
