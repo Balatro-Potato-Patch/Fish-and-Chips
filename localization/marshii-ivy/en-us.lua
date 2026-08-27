@@ -25,16 +25,6 @@ return {
             }
         },
         fac_Fish = {
-            -- fish_fac_cod = {
-            --     name = "Common Cod",
-            --     text = {
-            --         "{C:chips}+#1#{} Chips"
-            --     },
-            --     flavor = {
-            --         "This fish likes to",
-            --         "call itself Zubin."
-            --     }
-            -- },
             fish_fac_stencil = {
                 name = "Fish Stencil",
                 text = {
@@ -50,9 +40,10 @@ return {
             fish_fac_tsnefish = {
                 name = "This is not a fish.",
                 text = {
-                    "Use this {C:blue}Fish{} to transform another",
-                    "{C:blue}Fish{} into a random {C:attention}Joker{}",
-                    "{C:inactive}(May be used once per round)"
+                    "Transform another {C:fac_fish}Fish{}",
+                    "into a random {C:attention}Joker{}",
+                    "{C:inactive}(Once per round)",
+                    "{ppu_bubble:1}"
                 },
                 flavor = {
                     "The famous fish. How people reproached me for it!",
@@ -65,7 +56,7 @@ return {
             fish_fac_thefuckingabstractone = {
                 name = "The Abstract One",
                 text = {
-                    "After {C:blue}Fishing{}, this {C:blue}Fish{}",
+                    "After {C:fac_fish}fishing{}, this {C:fac_fish}Fish{}",
                     "gains {C:mult}+#1#{} Mult if you succeeded",
                     "and loses {C:mult}#2#{} Mult otherwise",
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
@@ -79,16 +70,16 @@ return {
             fish_fac_fishbone_dagger = {
                 name = "Fishbone Dagger",
                 text = {
-                    "When {C:attention}Blind{} selected,",
-                    "destroy the {C:blue}Fish{} to the",
-                    "right, and add {C:attention}ten times{} its",
-                    "sell value to this {C:blue}Fish's{} Chips",
+                    "When {C:attention}Blind{} is selected,",
+                    "{C:red}destroy{} the {C:fac_fish}Fish{} to the",
+                    "right and add {C:attention}ten times{} its",
+                    "sell value to this {C:fac_fish}Fish's{} {C:chips}Chips{}",
                     "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
                 },
                 flavor = {
-                    "It's not technically alive, but",
-                    "that doesn't mean you should let",
-                    "your kids play with this thing, it's sharp!"
+                    "It's not technically alive, but that",
+                    "doesn't mean you should let your kids",
+                    "play with this thing, it's sharp!"
                 },
             },
         },

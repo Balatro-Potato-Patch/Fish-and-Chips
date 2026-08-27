@@ -128,7 +128,7 @@ do
 
         local duckRatio = 0.3
         for _, fish in pairs(G.fac_fish_area.cards) do
-            if fish.ability and fish.ability.extra and fish.ability.extra.duck_ratio then
+            if fish.ability and fish.ability.extra and type(fish.ability.extra) == "table" and fish.ability.extra.duck_ratio then
                 duckRatio = math.max(duckRatio, fish.ability.extra.duck_ratio)
             end
         end

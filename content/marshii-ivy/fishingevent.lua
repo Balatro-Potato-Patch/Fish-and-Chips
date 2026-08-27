@@ -110,7 +110,7 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.joker_main then
+        if context.joker_main and (G.fac_fish_area.config.card_limit - G.fac_fish_area.config.card_count) > 0 then
             return {
                 xmult = 1 +
                     card.ability.extra.xmult * (G.fac_fish_area.config.card_limit - G.fac_fish_area.config.card_count)
@@ -134,19 +134,29 @@ FishAndChips.Fish {
         length = { min = 81.12 / 100, max = 81.12 / 100 } -- 81.12cm is the width of the original painting
     },
     config = { extra = { used = false } },
+    blueprint_compat = false,
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                ppu_bubbles = {
+                    card.ability.extra.used and "used" or "usable"
+                }
+            }
+        }
+    end,
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval then
+        if context.end_of_round and context.main_eval and not context.blueprint then
             card.ability.extra.used = false
         end
     end,
     can_use = function(self, card)
-        local other_fish = false
+        if card.ability.extra.used then return false end
         for _, fih in pairs(G.fac_fish_area.cards) do
             if fih.config.center.set == "fac_Fish" and fih ~= card then
-                other_fish = true
+                return true
             end
         end
-        return not card.ability.extra.used and other_fish
+        return false
     end,
     use = function(self, card)
         card.ability.extra.used = true
@@ -163,7 +173,6 @@ FishAndChips.Fish {
     keep_on_use = function(self, card)
         return true
     end,
-    attributes = {},
     atlas = "ivy-tsnefish",
     pos = { x = 0, y = 0 },
     pixel_size = { w = 95, h = 71 },
@@ -190,6 +199,7 @@ FishAndChips.Fish {
         length = { min = 0.7, max = 1.6 }
     },
     config = { extra = { mult = 0, scaleby = 1, hatred = -5 } },
+    perishable_compat = false,
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -200,7 +210,7 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.fac_end_fishing then
+        if context.fac_end_fishing and not context.blueprint then
             if context.failed then
                 SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "mult", scalar_value = "hatred" })
                 card.ability.extra.mult = math.max(0, card.ability.extra.mult)
@@ -236,13 +246,14 @@ FishAndChips.Fish {
         length = { min = 0.7, max = 1.6 }
     },
     config = { extra = { chips = 0 } },
+    perishable_compat = false,
     loc_vars = function(self, info_queue, card)
         return {vars = {
             card.ability.extra.chips
         }}
     end,
     calculate = function(self, card, context)
-        if context.setting_blind then
+        if context.setting_blind and not context.blueprint then
             local fisharea = card.area
             local index = nil
             for i, ifish in ipairs(fisharea.cards) do
@@ -257,11 +268,9 @@ FishAndChips.Fish {
 
             -- thank you N' for vanillaremade so i could save 90 seconds writing this myself
             sliced.getting_sliced = true
-            G.GAME.joker_buffer = G.GAME.joker_buffer - 1
             local new_chips = card.ability.extra.chips + sliced.sell_cost * 10
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    G.GAME.joker_buffer = 0
                     card.ability.extra.chips = new_chips
                     card:juice_up(0.8, 0.8)
                     sliced:start_dissolve({ G.C.CHIPS }, nil, 1.6)
