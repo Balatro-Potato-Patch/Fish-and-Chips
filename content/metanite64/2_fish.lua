@@ -28,6 +28,7 @@ FishAndChips.Fish {
     },
 
     blueprint_compat = true,
+    perishable_compat = true,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chip_gain, card.ability.extra.chips } }
@@ -89,6 +90,8 @@ FishAndChips.Fish {
     },
 
     blueprint_compat = true,
+    eternal_compat = false,
+    perishable_compat = false,
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult, card.ability.extra.xmult - 1, card.ability.extra.denominator } }
@@ -207,7 +210,7 @@ FishAndChips.Fish {
     blueprint_compat = true,
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.xmult } }
+        return { vars = { card.ability.extra.xmult, card.ability.extra_slots_used + 1 } }
     end,
 
     calculate = function(self, card, context)
@@ -238,6 +241,9 @@ FishAndChips.Fish {
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
 
+    blueprint_compat = false,
+    eternal_compat = false,
+
     draw = function(self, card, layer)
         local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[card.key] or {}
         if not (card.area and card.area.config and card.area.config.fac_compendium) or fish_data.times_caught and fish_data.times_caught > 0 then
@@ -246,7 +252,7 @@ FishAndChips.Fish {
     end,
 
     can_use = function()
-        return G.fac_fish_area and #G.fac_fish_area.cards > 1 and G.fac_fish_area:has_space()
+        return G.fac_fish_area and #G.fac_fish_area.cards > 1 and G.fac_fish_area:has_space(0)  -- the 0 here means "hi i'm adding 0 to the number of fish" (ghostsalt)
     end,
 
     use = function(self, card, area)
@@ -378,7 +384,7 @@ FishAndChips.Fish {
     blueprint_compat = false,
 
     calculate = function(self, card, context)
-        if context.fishing_profile then
+        if context.fishing_profile and not context.blueprint then
             local fp = context.fishing_profile
             fp.treasure_gain = fp.treasure_gain * 3
             fp.vel_limit = fp.vel_limit * 2
@@ -436,8 +442,9 @@ FishAndChips.Fish {
     } },
 
     blueprint_compat = true,
+    perishable_compat = false,
 
-    on_catch = function(self, card)
+    set_ability = function(self, card, initial, delay_sprites)
         card.ability.extra.suit_1 = pseudorandom_element(vanilla_suits_1, "vibrill_suit_1")
         repeat
             card.ability.extra.suit_2 = pseudorandom_element(vanilla_suits_2, "vibrill_suit_2")
@@ -445,20 +452,22 @@ FishAndChips.Fish {
     end,
 
     loc_vars = function(self, info_queue, card)
-        local var_and = ""
+        local key = self.key
         local suit2 = ""
         if card.ability.extra.suit_2 then
-            var_and = " and "
+            key = key.."_two"
             suit2 = card.ability.extra.suit_2
         end
         local pos = {
             y = vanilla_suits_pos[card.ability.extra.suit_1],
             x = card.ability.extra.suit_2 and (vanilla_suits_pos[card.ability.extra.suit_2] + 1) or 0
         }
-        return { vars = {
+        return { 
+            key = key,
+            vars = {
             card.ability.extra.suit_1,
-            var_and,
             suit2,
+            card.ability.extra.score_scale,
             card.ability.extra.score,
             colours = {
                 G.C.SUITS[card.ability.extra.suit_1],
@@ -495,13 +504,13 @@ FishAndChips.Fish {
                 })
                 card.ability.extra.high_score = math.max(card.ability.extra.high_score, card.ability.extra.score)
                 return {
-                    message = "Yippee!",
+                    message = localize("k_fac_meta_yippee_ex"),
                     colour = G.C.BLACK
                 }
             else
-                card.ability.extra.score = 2
+                card.ability.extra.score = 1
                 return {
-                    message = "Ouch!",
+                    message = localize("k_fac_meta_ouch_ex"),
                     colour = G.C.BLACK
                 }
             end
@@ -539,6 +548,9 @@ FishAndChips.Fish {
     ppu_coder = { "metanite64" },
     ppu_artist = { "metanite64" },
 
+    blueprint_compat = false,
+    eternal_compat = false,
+
     impulse_min = 0.01,
     impulse_max = 0.6,
     decision_min = 0.01,
@@ -546,10 +558,10 @@ FishAndChips.Fish {
 
     can_use = function() return true end,
     use = function(self, card, area)
-        G.GAME.fac_meta.tsuchi_bonus = G.GAME.fac_meta.tsuchi_bonus + 1,
+        G.GAME.fac_meta.tsuchi_bonus = (G.GAME.fac_meta.tsuchi_bonus or 0) + 1
         SMODS.destroy_cards(card, {pinch_anim = true})
         SMODS.calculate_effect( {
-            message = "Yum!",
+            message = localize("k_fac_meta_yum_ex"),
             colour = FishAndChips.C.SAND_DOLLAR
         }, card)
     end,
