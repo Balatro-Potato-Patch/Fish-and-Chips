@@ -173,6 +173,15 @@ FishAndChips.Fish{
 			end
 		})
 	end,]]
+	loc_vars = function(self, info_queue, card)
+		local fish_check = false
+		if G.fac_fish_area and #G.fac_fish_area.cards > 0 then
+			for i, fih in ipairs(G.fac_fish_area.cards) do
+				if fih.ability.eternal then fish_check = true break end
+			end
+		end
+		return {vars = {(fish_check and "(Cannot skewer " or ""), (fish_check and "Eternals" or ""), (fish_check and ")" or "")}}
+	end,
 	can_use = function (self, card)
 		if (card.ability.immutable.fish > 0) or (not G.fac_fish_area) then return true end
 		for i, _card in ipairs(G.fac_fish_area.cards) do

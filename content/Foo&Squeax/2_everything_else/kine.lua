@@ -12,7 +12,8 @@ FishAndChips.Fish{
 	pixel_size = {w=59,h=95},
 	config = {
 		area_num = 0,
-		area_UI = {}
+		area_UI = {},
+		stored_center = ""
 	},
 	stats = {
 		length = {min = 5, max = 5},
@@ -23,14 +24,15 @@ FishAndChips.Fish{
 	loc_vars = function(self, info_queue, card)
 		local joker = ""
 		if G.fac_fas_kine_areas and G.fac_fas_kine_areas[card.ability.area_num] and G.fac_fas_kine_areas[card.ability.area_num].cards and G.fac_fas_kine_areas[card.ability.area_num].cards[1] then -- i probably dont need all three checks here but
-			joker = G.P_CENTERS[G.fac_fas_kine_areas[card.ability.area_num].cards[1].config.center.key].name
+			joker = G.P_CENTERS[card.ability.stored_center].name
 		else
 			joker = "None"
 		end
-		return {vars = {joker}}
+		local joker_check = G.jokers and #G.jokers.cards > 0 and G.jokers.cards[1].ability.eternal
+		return {vars = {joker, (joker_check and "(Cannot grab " or ""), (joker_check and "Eternals" or ""), (joker_check and ")" or "")}}
 	end,
 	load = function (self, card, card_table, other_card)
-		--[[if card.ability.area_num ~= 0 and not G.fac_fas_kine_areas[card.ability.area_num] then
+		if card.ability.area_num ~= 0 and not G.fac_fas_kine_areas[card.ability.area_num] then
 			G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
 				-10, -10,
 				G.CARD_W, G.CARD_H,
@@ -60,7 +62,7 @@ FishAndChips.Fish{
 					return true
 				end
 			})
-		end]]
+		end
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and not context.blueprint and G.fac_fas_kine_areas[card.ability.area_num] then
@@ -80,12 +82,14 @@ FishAndChips.Fish{
 		end
 	end,
 	can_use = function (self, card)
-		for _, _card in ipairs(G.fac_fas_kine_areas[card.ability.area_num].cards) do
-			if _card.ability.fac_fas_kine == card.ability.area_num then
-				return true
+		if G.fac_fas_kine_areas[card.ability.area_num] then
+			for _, _card in ipairs(G.fac_fas_kine_areas[card.ability.area_num].cards) do
+				if _card.ability.fac_fas_kine == card.ability.area_num then
+					return true
+				end
 			end
 		end
-		return G.jokers.cards[1]
+		return G.jokers.cards[1] and not G.jokers.cards[1].ability.eternal
 	end,
 	keep_on_use = function (self, card)
 		return true
@@ -102,48 +106,45 @@ FishAndChips.Fish{
 			end
 		end
 		if G.jokers.cards[1] then
-			if not G.jokers.cards[1].ability.eternal then
-				G.E_MANAGER:add_event(Event{
-					func = function()
-						local _card = G.jokers.cards[1]
-						_card.T.w = G.CARD_W / 3
-						_card.T.h = G.CARD_H / 3
-						G.jokers:remove_card(_card)
-						G.fac_fas_kine_areas[card.ability.area_num]:emplace(_card)
-						card.ability.area_UI = UIBox({
-							definition = {
-								n = G.UIT.ROOT,
-								config = { colour = G.C.CLEAR },
-								nodes = {
-									{ n = G.UIT.O, config = { object = G.fac_fas_kine_areas[card.ability.area_num].cards[1] } },
-								},
+			G.E_MANAGER:add_event(Event{
+				func = function()
+					local _card = G.jokers.cards[1]
+					_card.T.w = G.CARD_W / 3
+					_card.T.h = G.CARD_H / 3
+					G.jokers:remove_card(_card)
+					G.fac_fas_kine_areas[card.ability.area_num]:emplace(_card)
+					card.ability.area_UI = UIBox({
+						definition = {
+							n = G.UIT.ROOT,
+							config = { colour = G.C.CLEAR },
+							nodes = {
+								{ n = G.UIT.O, config = { object = G.fac_fas_kine_areas[card.ability.area_num].cards[1] } },
 							},
-							config = {
-								align = "cr",
-								offset = { x = -0.45, y = 0.05 },
-								major = card,
-								instance_type = "CARD",
-							},
-						})
-						_card.states.hover.can = true
-						_card.states.click.can = false
-						_card.no_shadow = true
-						_card.ability.fac_fas_kine = card.ability.area_num
-						local card_remove_ref = card.remove
-						function card:remove()
-							card_remove_ref(self)
-							if _card then
-								_card:remove()
-								_card = nil
-							end
+						},
+						config = {
+							align = "cr",
+							offset = { x = -0.45, y = 0.05 },
+							major = card,
+							instance_type = "CARD",
+						},
+					})
+					_card.states.hover.can = true
+					_card.states.click.can = false
+					_card.no_shadow = true
+					_card.ability.fac_fas_kine = card.ability.area_num
+					card.ability.stored_center = _card.config.center.key
+					local card_remove_ref = card.remove
+					function card:remove()
+						card_remove_ref(self)
+						if _card then
+							_card:remove()
+							_card = nil
 						end
-						return true
 					end
-				})
-				delay(0.07)
-			else
-				SMODS.calculate_effect({message = localize("k_nope_ex"), colour = G.C.PURPLE}, card)
-			end
+					return true
+				end
+			})
+			delay(0.07)
 		end
 		G.fac_fas_kine_areas[card.ability.area_num]:save()
 		G:save_progress()
@@ -162,8 +163,7 @@ FishAndChips.Fish{
 				}
 			)
 			G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
-		else -- If a kine joker cardarea for this card already exists somehow [likely through copying the card]
-			 -- If this cardarea is empty [this should only happen to start with when making a copy of an empty Kine]
+		else -- Fallback
 			card.ability.area_num = #G.fac_fas_kine_areas+1
 			G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
 				-10, -10,
