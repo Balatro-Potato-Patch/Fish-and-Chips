@@ -79,6 +79,7 @@ PotatoPatchUtils.Developer{
 
 					for _, v in ipairs(cheshlist) do
 						v.area:remove_card(v)
+						G.fac_fish_area:buffer(1)
 						G.FISHING.fac_fish_reward_area:emplace(v)
 					end
 					SMODS.destroy_cards(f)
@@ -101,6 +102,7 @@ PotatoPatchUtils.Developer{
 						v.ability.extra.xmult = v.ability.extra.xmult + v.ability.extra.xmult_mod
 						G.E_MANAGER:add_event(Event({func=function()
 							v.area:remove_card(v)
+							G.fac_fish_area:buffer(-1)
 							G.fac_fish_area:emplace(v)
 						return true end}))
 					end
@@ -113,6 +115,7 @@ PotatoPatchUtils.Developer{
 			for _, v in ipairs(cheshlist) do
 				G.E_MANAGER:add_event(Event({trigger = "after", delay = chesh_speed/#cheshlist, func=function()
 					v.area:remove_card(v)
+					G.fac_fish_area:buffer(1)
 
 					G.FISHING.fac_fish_reward_area:emplace(v)
 
@@ -164,6 +167,7 @@ PotatoPatchUtils.Developer{
 			for _, v in ipairs(cheshlist) do
 				G.E_MANAGER:add_event(Event({trigger = "after", delay = chesh_speed/#cheshlist, func=function()
 					v.area:remove_card(v)
+					G.fac_fish_area:buffer(-1)
 					G.fac_fish_area:emplace(v)
 					play_sound("fac_tss_burp")
 					if v._fac_bucketed then

@@ -39,7 +39,7 @@ FishAndChips.Fish {
         recalc_size(card, nil, nil, true)
     end,
     remove_from_deck = function(self, card, from_debuff)
-        G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.size
+        if card.ability.extra.enchant then  G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.size end
     end,
     calculate = function(self, card, context)
         if context.setting_blind then
