@@ -887,6 +887,7 @@ FishAndChips.Fish({
 		calm_pond = 1,
 	},
 	cost = 3,
+    blueprint_compat = false,
 	atlas = "thunder_and_aiko",
 	pos = { x = 3, y = 1 },
 	stats = {

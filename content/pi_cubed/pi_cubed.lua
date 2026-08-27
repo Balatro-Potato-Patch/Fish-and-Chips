@@ -417,6 +417,7 @@ FishAndChips.Fish {
     pixel_size = { w = 56, h = 94 },
 	ppu_coder = { "pi_cubed" },
 	ppu_artist = { "pi_cubed" },
+    blueprint_compat = false,
 	weight = 10,
     environments = {
 		pier = 4,
