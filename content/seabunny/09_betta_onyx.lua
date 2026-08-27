@@ -1,25 +1,20 @@
 -- Betta Onyx
-local recalc_size = function(card, set, add, first)
+local recalc_size = function(card, added_card, removed_card, reset)
     local tally = {}
-    if set then
-        tally[set] = add and 1 or -1
-    end
-    local limit = G.consumeables.config.card_limit
-    if not first then
-        limit = limit - card.ability.extra.size
-    end
-    card.ability.extra.size = 0
-    for k, v in ipairs(G.consumeables.cards) do
-        tally[v.ability.set] = (tally[v.ability.set] or 0) + 1
-    end
-    for k, v in pairs(tally) do
-        if v > 0 then
-            card.ability.extra.size = card.ability.extra.size + 1
+    for _, consumable in ipairs(G.consumeables.cards) do
+        if consumable ~= removed_card then
+            tally[consumable.ability.set] = true
         end
     end
-    if card.ability.extra.enchant then
-        G.consumeables.config.card_limit = limit + card.ability.extra.size
+    if added_card then tally[added_card.ability.set] = true end
+    local size = 0
+    for _ in pairs(tally) do
+        size = size + 1
     end
+    local old_size = reset and 0 or (card.ability.extra.enchant and card.ability.extra.size or 0)
+    local new_size = card.ability.extra.enchant and size or 0
+    G.consumeables:change_size(new_size - old_size)
+    card.ability.extra.size = size
 end
 
 FishAndChips.Fish {
@@ -39,7 +34,7 @@ FishAndChips.Fish {
         recalc_size(card, nil, nil, true)
     end,
     remove_from_deck = function(self, card, from_debuff)
-        if card.ability.extra.enchant then  G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.size end
+        if card.ability.extra.enchant then G.consumeables:change_size(-card.ability.extra.size) end
     end,
     calculate = function(self, card, context)
         if context.setting_blind then
@@ -64,14 +59,10 @@ FishAndChips.Fish {
                 }
             end
         elseif not context.blueprint then
-            if context.card_added and context.card.ability.consumeable then
-                recalc_size(card, context.card.ability.set, true)
-            elseif (context.selling_card or context.joker_type_destroyed) and context.card.ability.consumeable then
-                recalc_size(card, context.card.ability.set)
-            elseif context.selling_card and context.card.config.center.name == "fish_fac_enchantfish" then
-                recalc_size(card)
-            elseif context.using_consumeable then
-                recalc_size(card)
+            if context.card_added and context.card.ability.consumeable then recalc_size(card, context.card)
+            elseif (context.selling_card or context.joker_type_destroyed) and context.card.ability.consumeable then recalc_size(card, nil, context.card)
+            elseif context.selling_card and context.card.config.center.name == "fish_fac_enchantfish" then recalc_size(card)
+            elseif context.using_consumeable then recalc_size(card)
                 if not card.ability.extra.enchant then
                     card.ability.extra.count = card.ability.extra.count + 1
                     if card.ability.extra.count < card.ability.extra.times then

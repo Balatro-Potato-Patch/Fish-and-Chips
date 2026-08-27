@@ -300,7 +300,7 @@ FishAndChips.Fish { --Manos
 		end
 		prep_draw(card, 1)
 		local mh = card.fac_manohands
-		local pf = FishAndChips.mod.config.performance_mode
+		local pf = FishAndChips.mod.config.performance_mode or false
 		if mano_rate_check[2][pf]() then
 			local mx, my = love.graphics.inverseTransformPoint(love.mouse.getPosition())
 			local xs = (math.floor(((math.atan2(mx - 0.6, my - 2.5) * todeg) + 112.5) * todeg2) % 8) + 1
