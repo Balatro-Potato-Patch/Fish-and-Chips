@@ -21,7 +21,7 @@ PPU.Developer({
         
             for _, fish in pairs(G.fac_fish_area.cards) do
                 
-                if fish.ability and fish.ability.extra and fish.ability.extra.fac_waffle_finclair then
+                if fish.ability and fish.ability.extra and type(fish.ability.extra) == "table" and fish.ability.extra.fac_waffle_finclair then
                     G.E_MANAGER:add_event(Event({
                         func = function ()
                             local originalStats = fish.ability.extra.fac_waffle_finclair.stats
