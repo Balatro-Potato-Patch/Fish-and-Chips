@@ -204,13 +204,12 @@ FishAndChips.Fish{ --Xanax Sargo
     }
   end,
 
-  calculate = function (self, card, context)
-    if context.modify_final_cashout and not context.blueprint then
-      return{
-        dollars = card.ability.extra.dollars,
-        sand_dollars = card.ability.extra.sand_dollars
-      }
-    end
+  calc_dollar_bonus = function(self, card)
+    return card.ability.extra.dollars
+  end,
+
+  calc_sand_dollar_bonus = function(self, card)
+    return card.ability.extra.sand_dollars
   end
 }
 

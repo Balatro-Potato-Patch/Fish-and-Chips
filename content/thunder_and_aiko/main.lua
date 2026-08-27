@@ -913,15 +913,12 @@ FishAndChips.Fish({
 			},
 		}
 	end,
-	calculate = function(self, card, context)
-		if context.modify_final_cashout then
-			local money = math.max(0, math.floor(#G.fac_fish_area.cards / card.ability.extra.fish))
-				* card.ability.extra.sand_dollars
-			if money > 0 then
-				return { sand_dollars = money }
-			end
+    calc_sand_dollar_bonus = function(self, card)
+		local money = math.max(0, math.floor(#G.fac_fish_area.cards / card.ability.extra.fish)) * card.ability.extra.sand_dollars
+		if money > 0 then
+			return money
 		end
-	end,
+	end
 })
 
 local miku_click = function (self)
