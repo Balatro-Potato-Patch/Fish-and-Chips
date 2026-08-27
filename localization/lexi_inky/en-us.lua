@@ -31,9 +31,9 @@ return {
 			fish_fac_l_i_id = {
 				name = "Accountant's ID",
 				text = {
-					"Gives {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} at the end of",
-					"the round for each {C:fac_fish}Fish",
-					"with the {C:money}Economy{} attribute",
+					"Earn {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} at the end of",
+					"the round for each",
+					"owned {C:money}Economy{} {C:fac_fish}Fish",
 				},
 				flavour = {
 					"Living once in wages,",
@@ -44,7 +44,8 @@ return {
 				name = "Black Feather",
 				text = {
 					"All played cards are",
-					"converted to {C:hearts}Hearts{}",
+					"converted to {V:1}#1#{},",
+                    "{s:0.8}suit changes at end of round",
 				},
 				flavour = {
 					"It's strangely cold to the touch",
@@ -67,7 +68,8 @@ return {
 				name = "Wooden #1# Fish",
 				text = {
 					"Played {C:attention}Aces{}, {C:attention}3s{}, and {C:attention}7s",
-					"gain {C:mult}+#2#{} Mult when scored",
+					"permanently gain {C:mult}+#2#{} Mult",
+					"when scored"
 				},
 				flavour = {
 					"{s:1.1}(Palacium pro plankei)",
@@ -99,7 +101,7 @@ return {
 				name = "Phish Bait",
 				text = {
 					"{X:mult,C:white}X#1#{} Mult",
-					"{C:red}Debuffs{} adjacent {C:fac_Fish}Fish",
+					"{C:red}Debuffs{} adjacent {C:fac_fish}Fish",
 					"when a hand is played",
 				},
 				flavour = {
@@ -138,7 +140,7 @@ return {
 				name = "Kevin",
 				text = {
 					"{X:mult,C:white}X#1#{} Mult if chips scored are",
-					"under {C:attention}#2#%{} of required chips",
+					"under {C:attention}25%{} of required chips",
 				},
 				flavour = {
 					"{s:1.1}(Kevus immortali)",
