@@ -1850,7 +1850,7 @@ FishAndChips.Fish {
             end
             if #fish > 0 then
                 --print("we got fish")
-                if #G.fac_fish_area.cards <= G.fac_fish_area.config.card_limit + 1 then
+                if G.fac_fish_area:has_space() then
                     local chosen_fish = pseudorandom_element(fish, 'fac_j8bit_red_herring')
                     G.E_MANAGER:add_event(Event({
                         delay = 0.5,

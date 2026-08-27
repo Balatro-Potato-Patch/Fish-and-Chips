@@ -56,9 +56,8 @@ FishAndChips.Fish {
                 })
             end
         end
-
-        if context.modify_final_cashout and not context.blueprint then
-			return { sand_dollars = card.ability.extra.amt }
-		end
     end,
+    calc_sand_dollar_bonus = function(self, card)
+        return card.ability.extra.amt
+    end
 }

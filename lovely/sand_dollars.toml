@@ -87,7 +87,7 @@ for _, area in ipairs(SMODS.get_card_areas('jokers')) do
             if ret then
                 if not ret_opts.no_eval_row then
                     i = i+1
-                    add_round_eval_sand_dollars({sand_dollars = ret, bonus = true, name='joker'..i, pitch = pitch, card = _card, loc_opts = ret_opts})
+                    add_round_eval_sand_dollars({sand_dollars = ret, bonus = true, name='fish'..i, pitch = pitch, card = _card, loc_opts = ret_opts})
                     pitch = pitch + 0.06
                 end
                 sand_dollars = sand_dollars + ret

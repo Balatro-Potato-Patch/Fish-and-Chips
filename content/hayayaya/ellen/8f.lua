@@ -60,14 +60,26 @@ local function calculate_all_round_dollars()
 			dollars = dollars
 				+ G.GAME.interest_amount * math.min(math.floor(G.GAME.dollars / 5), G.GAME.interest_cap / 5)
 		end
+		-- Sand dollars
+		for _, area in ipairs(SMODS.get_card_areas('jokers')) do
+			for _, _card in ipairs(area.cards) do
+				local center = _card.config.center
+				if type(center.calc_sand_dollar_bonus) == 'function' then
+					local ret, ret_opts = center:calc_sand_dollar_bonus(_card)
+					ret_opts = ret_opts or {}
+					if ret then
+						sand_dollars = sand_dollars + ret
+					end
+				end
+			end
+		end
+		sand_dollars = sand_dollars + sand_dollars_to_add
 		-- Misc dolyar
 		SMODS.cashout_pitch = 0
 		SMODS.cashout_index = 0
 		SMODS.cashout_dollars = dollars
 		SMODS.calculate_context({ modify_final_cashout = true, amount = dollars })
 		dollars = SMODS.cashout_dollars
-		-- Sand dollars
-		sand_dollars = sand_dollars + sand_dollars_to_add
 
 		::continue::
 

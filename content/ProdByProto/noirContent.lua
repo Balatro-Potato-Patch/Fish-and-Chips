@@ -441,12 +441,6 @@ FishAndChips.Fish {
         local storyState = cae.storyState
 
         if storyState == noir_states.finished then
-            if context.modify_final_cashout then
-                local money = math.max(0, math.floor(cae.finalScore/10))
-                if money > 0 then
-                    return { sand_dollars = money }
-                end
-            end
 
             if cae.finalScore > 144 and context.joker_main then
                 local ret = {}
@@ -625,8 +619,18 @@ FishAndChips.Fish {
                 end
             end
         end
-    end
+    end,
+    calc_sand_dollar_bonus = function(self, card)
+        local cae = card.ability.extra
+        local storyState = cae.storyState
 
+        if storyState == noir_states.finished then
+            local money = math.max(0, math.floor(cae.finalScore/10))
+            if money > 0 then
+                return money
+            end
+        end
+    end
 }
 
 --Lockpick

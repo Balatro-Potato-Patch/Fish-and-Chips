@@ -819,19 +819,19 @@ FishAndChips.Fish {
 			context.card.area == (G.FISHING or {}).fac_treasure_reward_area,
 			context.card.area == G.fac_fish_area
 			if context.card.area and (fish_rw or treasure_fish_rw or bucket) then
-				if ((fish_rw or treasure_fish_rw) and #G.fac_fish_area.cards + (G.GAME.fac_fish_buffer or 0) < G.fac_fish_area.config.card_limit)
-				or (bucket and #G.fac_fish_area.cards - (1 + context.card.ability.card_limit - context.card.ability.extra_slots_used) + (G.GAME.fac_fish_buffer or 0) < G.fac_fish_area.config.card_limit) then
+				if ((fish_rw or treasure_fish_rw) and G.fac_fish_area:has_space())
+				or (bucket and #G.fac_fish_area.cards - (1 + context.card.ability.card_limit - context.card.ability.extra_slots_used) < G.fac_fish_area.config.card_limit) then
 					card.ability.extra.active = false
-					G.GAME.fac_fish_buffer = (G.GAME.fac_fish_buffer or 0) + 1
+					G.fac_fish_area:buffer(1)
 					local fish_key = SMODS.poll_object{type = "fac_Fish", seed = "fisher_fish"}
-					SMODS.add_card{key = fish_key, area = G.fac_fish_area}
 					G.E_MANAGER:add_event(Event({
 						func = function()
-							G.GAME.fac_fish_buffer = 0
-							SMODS.calculate_effect({message = localize('ph_thats_mine')}, card)
+							SMODS.add_card{key = fish_key, area = G.fac_fish_area}
+							G.fac_fish_area:buffer(-1)
 							return true
 						end
 					}))
+					SMODS.calculate_effect({message = localize('ph_thats_mine')}, card)
 					return nil, true
 				end
 			end

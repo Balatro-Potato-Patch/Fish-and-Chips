@@ -84,7 +84,7 @@ FishAndChips.Fish {
         end
 	end,
     can_use = function(self, card)
-        return (card.ability.extra.count_cards <= 0) and (#G.fac_fish_area.cards - 1 < G.fac_fish_area.config.card_limit)
+        return (card.ability.extra.count_cards <= 0) and G.fac_fish_area:has_space(0)
     end,
     use = function(self, card, area, copier)
         for i = 1, math.min(card.ability.extra.amt_create, G.fac_fish_area.config.card_limit - #G.fac_fish_area.cards + 1) do
@@ -92,7 +92,7 @@ FishAndChips.Fish {
                 trigger = 'after',
                 delay = 0.4,
                 func = function()
-                    if G.fac_fish_area.config.card_limit > #G.fac_fish_area.cards - 1 then
+                    if G.fac_fish_area:has_space(0) then
                         play_sound('timpani')
                         local new_fish = SMODS.add_card({ set = 'fac_Fish', key_append = "smaller_wrapped_present" })
                         new_fish.ability.stats = {}
@@ -417,6 +417,7 @@ FishAndChips.Fish {
     pixel_size = { w = 56, h = 94 },
 	ppu_coder = { "pi_cubed" },
 	ppu_artist = { "pi_cubed" },
+    blueprint_compat = false,
 	weight = 10,
     environments = {
 		pier = 4,
@@ -442,12 +443,11 @@ FishAndChips.Fish {
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'mysteriouscanfish')
         return { vars = { numerator, denominator, card.ability.extra.eor_sand, card.ability.extra.use_sand, card.ability.extra.use_dollars } }
     end,
-    calculate = function(self, card, context)
-		if context.modify_final_cashout
-        and SMODS.pseudorandom_probability(card, 'mysteriouscanfish', 1, card.ability.extra.odds) then
-			return { sand_dollars = card.ability.extra.eor_sand }
-		end
-	end,
+    calc_sand_dollar_bonus = function(self, card)
+        if SMODS.pseudorandom_probability(card, 'mysteriouscanfish', 1, card.ability.extra.odds) then
+            return card.ability.extra.eor_sand
+        end
+    end,
     can_use = function(self, card)
         return true
     end,

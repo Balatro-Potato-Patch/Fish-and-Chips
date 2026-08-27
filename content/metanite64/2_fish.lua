@@ -246,7 +246,7 @@ FishAndChips.Fish {
     end,
 
     can_use = function()
-        return G.fac_fish_area and #G.fac_fish_area.cards > 1 and #G.fac_fish_area.cards < G.fac_fish_area.config.card_limit
+        return G.fac_fish_area and #G.fac_fish_area.cards > 1 and G.fac_fish_area:has_space()
     end,
 
     use = function(self, card, area)

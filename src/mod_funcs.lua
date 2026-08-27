@@ -118,7 +118,8 @@ end
 
 function FishAndChips.mod.reset_game_globals (run_start)
 	if run_start then
-		G.GAME.fac_fishing_environment = "calm_pond"
+		G.GAME.fac_fishing_environment = not G.PROFILES[G.SETTINGS.profile].fac_tutorial_seen and "calm_pond" or pseudorandom_element(FishAndChips.create_env_pool(), "fac_starting_location")
+		G.GAME.fac_envs_used[G.GAME.fac_fishing_environment] = G.GAME.fac_envs_used[G.GAME.fac_fishing_environment] + 1
 		G.GAME.fac_environment_reroll_cost = 5
 		G.FUNCS.fac_set_active_bait({ config = { key = 'bait_fac_normal' } })
 		G.GAME.fac_bucket_price = 10

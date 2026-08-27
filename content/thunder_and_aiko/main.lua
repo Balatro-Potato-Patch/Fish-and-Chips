@@ -485,12 +485,12 @@ FishAndChips.Fish({
 	calculate = function(self, card, context)
 		if context.fac_end_fishing and context.fish then
 			local count = #G.fac_fish_area.cards
-			if count + 1 + (G.GAME.fac_fish_buffer or 0) < G.fac_fish_area.config.card_limit then
-				G.GAME.fac_fish_buffer = (G.GAME.fac_fish_buffer or 0) + 1
+			if G.fac_fish_area:has_space() then
+				G.fac_fish_area:buffer(1)
 				G.E_MANAGER:add_event(Event({
 					func = function()
-						G.GAME.fac_fish_buffer = 0
 						SMODS.add_card({ set = "fac_Fish" })
+						G.fac_fish_area:buffer(-1)
 						return true
 					end,
 				}))
@@ -887,6 +887,7 @@ FishAndChips.Fish({
 		calm_pond = 1,
 	},
 	cost = 3,
+    blueprint_compat = false,
 	atlas = "thunder_and_aiko",
 	pos = { x = 3, y = 1 },
 	stats = {
@@ -913,15 +914,12 @@ FishAndChips.Fish({
 			},
 		}
 	end,
-	calculate = function(self, card, context)
-		if context.modify_final_cashout then
-			local money = math.max(0, math.floor(#G.fac_fish_area.cards / card.ability.extra.fish))
-				* card.ability.extra.sand_dollars
-			if money > 0 then
-				return { sand_dollars = money }
-			end
+    calc_sand_dollar_bonus = function(self, card)
+		local money = math.max(0, math.floor(#G.fac_fish_area.cards / card.ability.extra.fish)) * card.ability.extra.sand_dollars
+		if money > 0 then
+			return money
 		end
-	end,
+	end
 })
 
 local miku_click = function (self)
