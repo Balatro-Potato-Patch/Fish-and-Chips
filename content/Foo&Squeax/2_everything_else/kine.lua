@@ -32,49 +32,46 @@ FishAndChips.Fish{
 		return {vars = {joker, (joker_check and "(Cannot grab " or ""), (joker_check and "Eternals" or ""), (joker_check and ")" or "")}}
 	end,
 	load = function (self, card, card_table, other_card)
+		if G.fac_fas_kine_areas[card.ability.area_num] then
+			if G.fac_fas_kine_areas[card.ability.area_num].cards then
+				SMODS.destroy_cards(G.fac_fas_kine_areas[card.ability.area_num].cards, { bypass_eternal = true })
+			end
+			G.fac_fas_kine_areas[card.ability.area_num]:remove()
+			G.fac_fas_kine_areas[card.ability.area_num] = nil
+		end
+		card.ability.area_num = 0
 		card.ability.area_UI = {}
-		local reload_flags = {}
-		function FishAndChips.FooSqueax.kine_reload(table)
-			table = {
-				saved_area = card.ability.area_num ~= 0,
-				rendered_area = saved_area and G.fac_fas_kine_areas[card.ability.area_num],
-				stored_center = card.ability.stored_center,
-				area_cards = rendered_area and stored_center,
-				rendered_cards = stored_center and stored_center == G.fac_fas_kine_areas[card.ability.area_num].cards[1],
-				card_UI = rendered_cards and card.ability.area_UI ~= {},
-			}
-		end
-		FishAndChips.FooSqueax.kine_reload(reload_flags)
-		if not reload_flags.saved_area then
+		if not G.fac_fas_kine_areas[card.ability.area_num] then -- If a kine joker cardarea has not been made for Kine [aka when getting a new one to start with]
 			card.ability.area_num = #G.fac_fas_kine_areas+1
-			reload_flags.saved_area = true
-		end
-		FishAndChips.FooSqueax.kine_reload(reload_flags)
-		if not reload_flags.rendered_area then
 			G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
 				-10, -10,
 				G.CARD_W, G.CARD_H,
 				{
-					card_limit = 1,
 					type = "joker",
+					card_limit = 1,
 					highlighted_limit = 1,
-					highlight_limit = 1,
+					highlight_limit = 1
 				}
 			)
 			G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
-			reload_flags.rendered_area = true
+		else -- Fallback
+			card.ability.area_num = #G.fac_fas_kine_areas+1
+			G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
+				-10, -10,
+				G.CARD_W, G.CARD_H,
+				{
+					type = "joker",
+					card_limit = 1,
+					highlighted_limit = 1,
+					highlight_limit = 1
+				}
+			)
+			G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
 		end
-
-		FishAndChips.FooSqueax.kine_reload(reload_flags)
-		if reload_flags.area_cards and not reload_flags.rendered_cards and reload_flags.stored_center then
-			SMODS.destroy_cards(G.fac_fas_kine_areas[card.ability.area_num].cards, { bypass_eternal = true })
-		end
-		FishAndChips.FooSqueax.kine_reload(reload_flags)
-		if reload_flags.stored_center and not reload_flags.rendered_cards and reload_flags.rendered_area then
+		if card.ability.stored_center and #card.ability.stored_center > 0 then
 			G.E_MANAGER:add_event(Event{
 				func = function ()
 					local _card = SMODS.create_card({
-						set = "Joker",
 						key = card.ability.stored_center,
 						area = G.fac_fas_kine_areas[card.ability.area_num]
 					})
@@ -85,31 +82,27 @@ FishAndChips.Fish{
 					_card.no_shadow = true
 					_card.ability.fac_fas_kine = card.ability.area_num
 					G.fac_fas_kine_areas[card.ability.area_num]:emplace(_card)
+					card.ability.area_UI = UIBox({
+						definition = {
+							n = G.UIT.ROOT,
+							config = { colour = G.C.CLEAR },
+							nodes = {
+								{ n = G.UIT.O, config = { object = G.fac_fas_kine_areas[card.ability.area_num].cards[1] } },
+							},
+						},
+						config = {
+							align = "cr",
+							offset = { x = -0.45, y = 0.05 },
+							major = card,
+							instance_type = "CARD",
+						},
+					})
 					return true
 				end
 			})
-			reload_flags.rendered_cards = true
 		end
-		FishAndChips.FooSqueax.kine_reload(reload_flags)
-		if not reload_flags.cardUI then
-			card.ability.area_UI = UIBox({
-				definition = {
-					n = G.UIT.ROOT,
-					config = { colour = G.C.CLEAR },
-					nodes = {
-						{ n = G.UIT.O, config = { object = G.fac_fas_kine_areas[card.ability.area_num].cards[1] } },
-					},
-				},
-				config = {
-					align = "cr",
-					offset = { x = -0.45, y = 0.05 },
-					major = card,
-					instance_type = "CARD",
-				},
-			})
-			reload_flags.cardUI = true
-		end
-		FishAndChips.FooSqueax.kine_reload(reload_flags)
+		G.fac_fas_kine_areas[card.ability.area_num]:save()
+		G:save_progress()
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and not context.blueprint and G.fac_fas_kine_areas[card.ability.area_num] then
@@ -224,7 +217,7 @@ FishAndChips.Fish{
 			)
 			G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
 		end
-		if card.ability.stored_center ~= "" then
+		if #card.ability.stored_center > 0 then
 			G.E_MANAGER:add_event(Event{
 				func = function ()
 					local _card = SMODS.create_card({
