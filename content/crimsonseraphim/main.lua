@@ -667,7 +667,7 @@ FishAndChips.Fish {
         else
             local c = G.fac_fish_area.cards[#G.fac_fish_area.cards]
             if c == card then return end
-            if c.config.center.key == card.config.center.key then
+            if c.config.center.key == card.config.center.key or c.config.center.key == 'fish_fac_fas_kine' or c.config.center.key == 'fish_fac_fas_fish_kebab' then
                 SMODS.calculate_effect({message = localize("k_nope_ex"), colour = G.C.PURPLE}, card)
             else
                 c.area:remove_card(c)

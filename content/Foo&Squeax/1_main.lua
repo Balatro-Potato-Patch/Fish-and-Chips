@@ -117,6 +117,22 @@ PotatoPatchUtils.Developer{
 	end,
 }
 
+function FishAndChips.FooSqueax.cannot_eternal(fish)
+	if fish == "kebab" then
+		local et = false
+		if G.fac_fish_area and G.fac_fish_area.cards then
+			for i, fish in ipairs(G.fac_fish_area.cards) do
+				if fish.ability.eternal then et = true break end
+			end
+		end
+		return (et and "{C:inactive}(Cannot skewer {C:eternal}Eternals{C:inactive})") or ""
+	elseif fish == "kine" then
+		return ((G.jokers and G.jokers.cards[1] and G.jokers.cards[1].ability.eternal) and "{C:inactive}(Cannot grab {C:eternal}Eternals{C:inactive})",) or ""
+	else
+		return ""
+	end
+end
+
 function FishAndChips.FooSqueax.sqx_credit_ui_baits()
 	local area = CardArea(G.ROOM.T.x, G.ROOM.T.y, (G.CARD_W * 4.5), G.CARD_H*0.4, { card_limit = 15, type = 'title', highlight_limit = 0, collection = true }) 
 	for i=1, #G.P_CENTER_POOLS.fac_Bait do
@@ -358,7 +374,7 @@ function FishAndChips.mod.custom_card_areas(game)
 	-- kine
 	G.fac_fas_kine_areas = {}
 	function G.fac_fas_kine_areas:align_cards()
-		if #G.fac_fas_kine_areas > 0 then
+		if G.GAME and #G.fac_fas_kine_areas > 0 and G.fac_fish_area then
 			for j, fish in ipairs(G.fac_fish_area.cards) do
 				if fish.config.center.key == "fish_fac_fas_kine" and fish.ability.area_num then
 					local j = fish.ability.area_num

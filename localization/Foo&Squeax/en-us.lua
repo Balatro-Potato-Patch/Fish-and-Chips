@@ -11,6 +11,7 @@ return {
 					{
 						"While {C:attention}empty{}, {C:attention}use{} to skewer",
 						"all {C:fac_fish}Fish{} to the right",
+						FishAndChips.FooSqueax.cannot_eternal("kebab"),
 					},
 					{
 						"Skewered {C:fac_fish}Fish{} still activate normally",
@@ -163,6 +164,7 @@ return {
 					{
 						"Use to {C:red}consume{} currently held Joker",
 						"and then {C:attention}grab{} leftmost Joker",
+						FishAndChips.FooSqueax.cannot_eternal("kine"),
 						"{ppu_bubble:usable}"
 					},
 					{

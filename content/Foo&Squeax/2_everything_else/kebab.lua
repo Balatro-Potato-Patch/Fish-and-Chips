@@ -187,7 +187,7 @@ FishAndChips.Fish{
 			if G.fac_fish_area then
 				for _, _card in ipairs(G.fac_fish_area.cards) do
 					if found then
-						if _card.config.center.key ~= "fish_fac_fas_fish_kebab" then
+						if _card.config.center.key ~= "fish_fac_fas_fish_kebab" and not _card.ability.eternal then
 							free[#free+1] = _card
 							_card.ability.fac_fas_kebab = {
 								id = card.ability.immutable.id,
