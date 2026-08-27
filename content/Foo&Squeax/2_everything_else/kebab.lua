@@ -260,7 +260,7 @@ FishAndChips.Fish{
 -- drawstep tomfoolery by gabby
 SMODS.DrawStep {
     key = 'fas_fish_kebab_top',
-    order = 1000,
+    order = 690,
     func = function(self, layer)
         if self.config.center.key == "fish_fac_fas_fish_kebab" then
             if not FishAndChips.FooSqueax.kebab_top then
