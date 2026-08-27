@@ -311,6 +311,7 @@ FishAndChips.Bait{
 	pos = {x = 3, y = 0},
 	pixel_size = {w = 60, h = 73},
 	target = 'economy',
+	boost = 5
 }
 FishAndChips.Bait{
 	key = "xmult",
@@ -325,27 +326,31 @@ FishAndChips.Bait{
 	pos = {x = 6, y = 0},
 	pixel_size = {w = 50, h = 78},
 	target = 'retrigger',
+	boost = 8
 }
 FishAndChips.Bait{
 	key = "space",
 	ppu_artist = {'squeax09'},
 	pos = {x = 4, y = 0},
 	pixel_size = {w = 62, h = 83},
-	target = 'hand_level'
+	target = 'hand_level',
+	boost = 15
 }
 FishAndChips.Bait{
 	key = "function",
-		ppu_artist = {'squeax09'},
+	ppu_artist = {'squeax09'},
 	pos = {x = 5, y = 0},
 	pixel_size = {w = 70, h = 86},
-	target = 'usable'
+	target = 'usable',
+	boost = 4
 }
 FishAndChips.Bait{
 	key = "suit",
 	ppu_artist = {'squeax09'},
 	pos = {x = 0, y = 1},
 	pixel_size = {w = 68, h = 66},
-	target = 'suit'
+	target = 'suit',
+	boost = 8
 }
 FishAndChips.Bait{
 	key = "passive",
@@ -360,6 +365,7 @@ FishAndChips.Bait{
 	pos = {x = 2, y = 1},
 	pixel_size = {w = 70, h = 87},
 	target = 'rank',
+	boost = 8
 }
 FishAndChips.Bait{
 	key = "copy",
@@ -367,6 +373,7 @@ FishAndChips.Bait{
 	pos = {x = 3, y = 1},
 	pixel_size = {w = 60, h = 84},
 	target = 'copying',
+	boost = 8
 }
 FishAndChips.Bait{
 	key = "generation",
@@ -374,6 +381,7 @@ FishAndChips.Bait{
 	pos = {x = 7, y = 0},
 	pixel_size = {w = 35, h = 85},
 	target = 'generation',
+	boost = 5
 }
 FishAndChips.Bait{
 	key = "boss",
@@ -381,6 +389,7 @@ FishAndChips.Bait{
 	pos = {x = 4, y = 1},
 	pixel_size = {w = 37, h = 84},
 	target = 'boss_blind',
+	boost = 15
 }
 FishAndChips.Bait{
 	key = "destroy",
