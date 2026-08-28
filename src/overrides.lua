@@ -379,8 +379,8 @@ function G.UIDEF.card_h_popup(card)
         local flavour_node = {}
 		local stats = card.ability.stats
 		local stat_proto = card.config.center.stats
-		local weight_perc = (stats.weight - stat_proto.weight.min)/(stat_proto.weight.max-stat_proto.weight.min)*100
-		local length_perc = (stats.length - stat_proto.length.min)/(stat_proto.length.max-stat_proto.length.min)*100
+		local weight_perc = stats.w_prop*100
+		local length_perc = stats.l_prop*100
 		local colours = { -- TODO: are these colours okay?
 			darken(G.C.RED, 0.1),
 			G.C.RED,
