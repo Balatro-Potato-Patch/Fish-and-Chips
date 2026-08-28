@@ -79,6 +79,25 @@ SMODS.Atlas {
     atlas_table = "ANIMATION_ATLAS"
 }
 
+SMODS.Atlas {
+    key = "fo_fucking_kill_alt",
+    path = "fountain_openers/fucking_kill_alt.png",
+    px = 378,
+    py = 105,
+    frames = 5,
+    atlas_table = "ANIMATION_ATLAS"
+}
+
+SMODS.Atlas {
+    key = "fo_fucking_killed_alt",
+    path = "fountain_openers/fucking_killed_alt.png",
+    px = 463,
+    py = 106,
+    frames = 5,
+    atlas_table = "ANIMATION_ATLAS"
+}
+
+
 SMODS.Sound {
     key = "fac_fo_explosion",
     path = "fountain_openers/fac_fo_explosion.ogg"

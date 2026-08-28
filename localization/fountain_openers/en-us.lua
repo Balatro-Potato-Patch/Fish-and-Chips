@@ -72,8 +72,10 @@ return {
                 name = "Anvil",
                 text = {
                     {
-                        "Caught {C:fac_fish}Fish{} may be",
+                        "Whenever you sell a {C:fac_fish}Fish{},",
+                        "it is instead",
                         "{element:1}",
+                        "{C:inactive,s:0.75}(Except Anvil. Anvil is invincible. Know this.)"
                     },
                     {
                         "Gains {C:mult}+#2#{} Mult when you",
