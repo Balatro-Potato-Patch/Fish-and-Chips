@@ -26,7 +26,7 @@ FishAndChips.Fish {
         return {vars = {card.ability.extra.chips, card.ability.extra.chips_mod}}
     end,
     calculate = function(self, card, context)
-        if not context.blueprint and (context.fac_use_fish or (context.selling_card and context.card.ability.set == 'fac_Fish' and context.card ~= card)) then
+        if not context.blueprint and ((context.fac_use_fish and not context.kept_on_use) or (context.selling_card and context.card.ability.set == 'fac_Fish' and context.card ~= card)) then
             -- card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
             SMODS.scale_card(card, {
                 ref_value = "chips",
