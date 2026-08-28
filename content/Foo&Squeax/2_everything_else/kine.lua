@@ -21,6 +21,7 @@ FishAndChips.Fish{
 	},
 	attributes = {"copying", "usable"},
 	disable_visual_scaling = true,
+	--print({dp.hovered.ability.stored_center, dp.hovered.ability.area_num, G.fac_fas_kine_areas[dp.hovered.ability.area_num].cards, dp.hovered.ability.area_UI})
 	loc_vars = function(self, info_queue, card)
 		local joker = ""
 		if G.fac_fas_kine_areas and G.fac_fas_kine_areas[card.ability.area_num] and G.fac_fas_kine_areas[card.ability.area_num].cards and G.fac_fas_kine_areas[card.ability.area_num].cards[1] then -- i probably dont need all three checks here but
@@ -32,77 +33,74 @@ FishAndChips.Fish{
 		return {vars = {joker, (joker_check and "(Cannot grab " or ""), (joker_check and "Eternals" or ""), (joker_check and ")" or "")}}
 	end,
 	load = function (self, card, card_table, other_card)
-		if G.fac_fas_kine_areas[card.ability.area_num] then
-			if G.fac_fas_kine_areas[card.ability.area_num].cards then
-				SMODS.destroy_cards(G.fac_fas_kine_areas[card.ability.area_num].cards, { bypass_eternal = true })
-			end
-			G.fac_fas_kine_areas[card.ability.area_num]:remove()
-			G.fac_fas_kine_areas[card.ability.area_num] = nil
-		end
-		card.ability.area_num = 0
-		card.ability.area_UI = {}
-		if not G.fac_fas_kine_areas[card.ability.area_num] then -- If a kine joker cardarea has not been made for Kine [aka when getting a new one to start with]
-			card.ability.area_num = #G.fac_fas_kine_areas+1
-			G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
-				-10, -10,
-				G.CARD_W, G.CARD_H,
-				{
-					type = "joker",
-					card_limit = 1,
-					highlighted_limit = 1,
-					highlight_limit = 1
-				}
-			)
-			G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
-		else -- Fallback
-			card.ability.area_num = #G.fac_fas_kine_areas+1
-			G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
-				-10, -10,
-				G.CARD_W, G.CARD_H,
-				{
-					type = "joker",
-					card_limit = 1,
-					highlighted_limit = 1,
-					highlight_limit = 1
-				}
-			)
-			G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
-		end
-		if card.ability.stored_center and #card.ability.stored_center > 0 then
-			G.E_MANAGER:add_event(Event{
-				func = function ()
-					local _card = SMODS.create_card({
-						key = card.ability.stored_center,
-						area = G.fac_fas_kine_areas[card.ability.area_num]
-					})
-					_card.T.w = G.CARD_W / 3
-					_card.T.h = G.CARD_H / 3
-					_card.states.hover.can = true
-					_card.states.click.can = false
-					_card.no_shadow = true
-					_card.ability.fac_fas_kine = card.ability.area_num
-					G.fac_fas_kine_areas[card.ability.area_num]:emplace(_card)
-					card.ability.area_UI = UIBox({
-						definition = {
-							n = G.UIT.ROOT,
-							config = { colour = G.C.CLEAR },
-							nodes = {
-								{ n = G.UIT.O, config = { object = G.fac_fas_kine_areas[card.ability.area_num].cards[1] } },
-							},
-						},
-						config = {
-							align = "cr",
-							offset = { x = -0.45, y = 0.05 },
-							major = card,
-							instance_type = "CARD",
-						},
-					})
-					return true
+		G.E_MANAGER:add_event(Event{
+			func = function ()
+				if not G.fac_fas_kine_areas[card.ability.area_num] then -- If a kine joker cardarea has not been made for Kine [aka when getting a new one to start with]
+					card.ability.area_num = #G.fac_fas_kine_areas+1
+					G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
+						-10, -10,
+						G.CARD_W, G.CARD_H,
+						{
+							type = "joker",
+							card_limit = 1,
+							highlighted_limit = 1,
+							highlight_limit = 1
+						}
+					)
+					G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
+				else -- Fallback
+					card.ability.area_num = #G.fac_fas_kine_areas+1
+					G.fac_fas_kine_areas[card.ability.area_num] = CardArea(
+						-10, -10,
+						G.CARD_W, G.CARD_H,
+						{
+							type = "joker",
+							card_limit = 1,
+							highlighted_limit = 1,
+							highlight_limit = 1
+						}
+					)
+					G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
 				end
-			})
-		end
-		G.fac_fas_kine_areas[card.ability.area_num]:save()
-		G:save_progress()
+				if card.ability.stored_center then
+					G.E_MANAGER:add_event(Event{
+						func = function ()
+							local _card = SMODS.create_card({
+								set = "Joker",
+								key = card.ability.stored_center,
+								area = G.fac_fas_kine_areas[card.ability.area_num]
+							})
+							_card.T.w = G.CARD_W / 3
+							_card.T.h = G.CARD_H / 3
+							_card.states.hover.can = true
+							_card.states.click.can = false
+							_card.no_shadow = true
+							_card.ability.fac_fas_kine = card.ability.area_num
+							G.fac_fas_kine_areas[card.ability.area_num]:emplace(_card)
+							card.ability.area_UI = UIBox({
+								definition = {
+									n = G.UIT.ROOT,
+									config = { colour = G.C.CLEAR },
+									nodes = {
+										{ n = G.UIT.O, config = { object = G.fac_fas_kine_areas[card.ability.area_num].cards[1] } },
+									},
+								},
+								config = {
+									align = "cr",
+									offset = { x = -0.45, y = 0.05 },
+									major = card,
+									instance_type = "CARD",
+								},
+							})
+							return true
+						end
+					})
+				end
+				G.fac_fas_kine_areas[card.ability.area_num]:save()
+				G:save_progress()
+				return true
+			end
+		})
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and not context.blueprint and G.fac_fas_kine_areas[card.ability.area_num] then
@@ -217,7 +215,7 @@ FishAndChips.Fish{
 			)
 			G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
 		end
-		if #card.ability.stored_center > 0 then
+		if card.ability.stored_center then
 			G.E_MANAGER:add_event(Event{
 				func = function ()
 					local _card = SMODS.create_card({
