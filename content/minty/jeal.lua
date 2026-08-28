@@ -4,15 +4,14 @@ local event = function (data)
 end
 local once = true
 
+PotatoPatchUtils.Bubble_Colours["minty_jealusable"] = G.C.ETERNAL
+PotatoPatchUtils.Bubble_Colours["minty_jealused"] = adjust_alpha(G.C.ETERNAL, 0.6)
+
 ---@param args table I forget how to spell this shit out lmao. not that anything uses it i'm just future-proofing
 ---@return string wish_key Key in G.P_CENTERS of the available item
 ---@return string wish_set Set of the available item
 ---@return integer wish_cost Cost in sand dollars to buy the item
 local function get_wish(args)
-    if G.SETTINGS.paused then -- prevent rng advancement in collection and atp crash in main menu
-        return "j_joker", "Joker", 8
-    end
-
     args = args or {}
     local append = args.append or ""
 
@@ -40,7 +39,7 @@ local function get_wish(args)
 
     for k, v in pairs(G.P_CENTERS) do
         local atp = false
-        if (v.set == "Joker" or v.set == "Voucher" or v.set == args.force_set) and SMODS.add_to_pool(v, { source = "fac_minty_jeal" .. append }) then
+        if (v.set == "Joker" or v.set == "Voucher" or v.set == args.force_set) and not (v.in_pool and not v:in_pool()) and SMODS.add_to_pool(v, { source = "fac_minty_jeal" .. append }) then
             atp = true
         end
         if v.set == "Joker" then
@@ -71,6 +70,7 @@ FishAndChips.Fish{
     pos = {x=3, y=0},
     badge_key = "k_fac_maybe_fish",
     weight = 1,
+    blueprint_compat = false,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     environments = { --Maximum 6
@@ -96,7 +96,8 @@ FishAndChips.Fish{
         extra = {
             wish = "j_joker",
             set = "Joker",
-            cost = 4
+            cost = 4,
+            unset = true
         }
     },
     loc_vars = function (self, info_queue, card)
@@ -118,7 +119,8 @@ FishAndChips.Fish{
             key = key,
             vars = {
                 localize{type = "name_text", set = card.ability.extra.set, key = card.ability.extra.wish},
-                not G.GAME.fac_jeal_free_wishes and card.ability.extra.cost or "free"
+                not G.GAME.fac_jeal_free_wishes and card.ability.extra.cost or localize("fac_minty_jealfree"),
+                ppu_bubbles = { wish and "minty_jealusable" or "minty_jealused" }
             },
             main_end = main_end
         }
@@ -192,14 +194,21 @@ FishAndChips.Fish{
             return true
         end)
     end,
+    add_to_deck = function(self, card, from_debuff)
+        if card.ability.extra.unset then
+            card.ability.extra.unset = nil
+            card.ability.extra.wish, card.ability.extra.set, card.ability.extra.cost = get_wish{}
+        end
+    end,
     set_ability = function (self, card, initial, delay_sprites)
         if not G.SETTINGS.paused then
+            card.ability.extra.unset = nil
             card.ability.extra.wish, card.ability.extra.set, card.ability.extra.cost = get_wish{}
         end
 
-        event(function ()
-            if not card.area then return false end
-            if card.area.config.collection then
+        local once
+        if card.area and card.area.config.collection then
+            event(function ()
                 function card:click()
                     if once then
                         once = false
@@ -207,12 +216,13 @@ FishAndChips.Fish{
                     end
                     return Card.click(card)
                 end
-            end
-            return true
-        end)
+                return true
+            end)
+        end
     end,
     calculate = function (self, card, context)
-        if context.after then
+        if context.after and not context.blueprint then
+            card.ability.extra.unset = nil
             card.ability.extra.wish, card.ability.extra.set, card.ability.extra.cost = get_wish{}
 
             return {

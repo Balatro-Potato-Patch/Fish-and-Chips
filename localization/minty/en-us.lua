@@ -18,11 +18,12 @@ return {
                     "species, just chum it."
                 },
                 text = {
-                    "Use for {C:green}#1# in #2#{} chance",
-                    "to get a sand dollar, and",
-                    "{C:green}#3# in #4#{} chance for some bait",
-                    "Also {C:red}culls the population{}",
-                    "of this invasive species"
+                    "Use for a {C:green}#1# in #2#{} chance",
+                    "to earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} and a {C:green}#3# in #4#{}",
+                    "chance to gain {C:attention}1{} Bait",
+                    "Also {C:red,E:2}culls the population{}",
+                    "of this invasive species",
+                    "{ppu_bubble:usable}"
                 }
             },
             fish_fac_minty_seabass_alt = {
@@ -33,11 +34,12 @@ return {
                     "SUPPOSED to live!"
                 },
                 text = {
-                    "Use for {C:green}#1# in #2#{} chance",
-                    "to get a sand dollar, and",
-                    "{C:green}#3# in #4#{} chance for some bait",
+                    "Use for a {C:green}#1# in #2#{} chance",
+                    "to earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} and a {C:green}#3# in #4#{}",
+                    "chance to gain {C:attention}1{} Bait",
                     "The fish was healthier",
-                    "in its native habitat."
+                    "in its native habitat.",
+                    "{ppu_bubble:usable}"
                 }
             },
             fish_fac_minty_fission = {
@@ -46,9 +48,20 @@ return {
                     "This isn't a fish??",
                 },
                 text = {
+                    "Each {C:fac_fish}Fish{} has a",
                     "{C:green}#1# in #2#{} chance to",
-                    "retrigger any other fish",
-                    "#3# time#4#"
+                    "retrigger {C:attention}#3#{} time"
+                }
+            },
+            fish_fac_minty_fission_plural = {
+                name = "Fission Chip",
+                flavour = {
+                    "This isn't a fish??",
+                },
+                text = {
+                    "Each {C:fac_fish}Fish{} has a",
+                    "{C:green}#1# in #2#{} chance to",
+                    "retrigger {C:attention}#3#{} times"
                 }
             },
             fish_fac_minty_catfish = {
@@ -58,7 +71,7 @@ return {
                 },
                 text = {
                     "{C:green}#1#{} denominator to",
-                    "all listed probabilities",
+                    "all listed {C:green,E:1}probabilities{}",
                     "{C:inactive,s:0.8}(e.g. {C:green,s:0.8}1 in 5{C:inactive,s:0.8} -> {C:green,s:0.8}1 in #2#{C:inactive,s:0.8})"
                 }
             },
@@ -68,9 +81,10 @@ return {
                     "It's hungry!",
                 },
                 text = {
-                    "{C:red}Destroy{} played {C:attention}Lucky Cards{}",
-                    "and gain {C:white,X:mult}X#2#{} Mult for each",
-                    "{C:inactive}(Currently {C:white,X:mult}X#1#{C:inactive})"
+                    "{C:red}Destroy{} played {C:attention}Lucky{}",
+                    "cards, this {C:fac_fish}Fish{} gains",
+                    "{C:white,X:mult}X#2#{} Mult for each",
+                    "{C:inactive}(Currently {C:white,X:mult}X#1#{C:inactive} Mult)"
                 }
             },
             fish_fac_minty_shrimp_npc = {
@@ -79,7 +93,9 @@ return {
                     "Hello there!",
                     "As the Shrimp NPC,"
                 },
-                text = {}
+                text = {
+                    "{C:inactive}(...){}"
+                }
             },
             fish_fac_minty_goldfish = {
                 name = "Goldfish",
@@ -88,8 +104,8 @@ return {
                     "it's not a snack"
                 },
                 text = {
-                    "Gains {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} sell value",
-                    "when gaining money"
+                    "Gains {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} of sell value",
+                    "when earning {C:money}dollars{}"
                 }
             },
             fish_fac_minty_starfish = {
@@ -100,9 +116,9 @@ return {
                     "how can I help you?"
                 },
                 text = {
-                    "When leveling up any hand",
-                    "{C:green}#1# in #2#{} chance to",
-                    "level it up again"
+                    "When leveling up any",
+                    "hand, {C:green}#1# in #2#{} chance",
+                    "to do it {C:attention}again{}"
                 }
             },
             fish_fac_minty_mimic_octopus = {
@@ -111,27 +127,33 @@ return {
                     "Koppi, arms up!"
                 },
                 text = {
-                    "{C:attention}Use{} to copy fish to",
-                    "the right until end of round",
-                    "{C:inactive}(Currently copying: {C:attention}#1#{C:inactive})"
+                    "{C:attention}Use{} to copy {C:fac_fish}Fish{} to the",
+                    "right until end of round",
+                    "{C:inactive}(Currently {C:attention}#1#{C:inactive})",
+                    "{ppu_bubble:usable}"
                 }
             },
             fish_fac_minty_electric_eel = {
                 name = "Electric Eel",
                 flavour = {
-                    "If there were four of",
-                    "them, Outkast would have",
-                    "to sing an apology."
+                    "If there were four of them, Outkast",
+                    "would have to sing an apology."
                 },
                 text = {
-                    "{C:attention}Use{} to ready a stored",
-                    "charge ({C:blue}#1#{} available)",
-                    "For each readied charge ({C:red}#2#{}),",
-                    "retrigger every Joker and",
-                    "fish next hand",
-                    "Gains 1 charge when",
-                    "defeating Boss Blind"
-                    
+                    {
+                        "{C:attention}Use{} to ready a stored charge",
+                        "{C:inactive}({C:red}#2#{C:inactive}/{C:blue}#1#{C:inactive} charges readied){}",
+                        "{ppu_bubble:1}"
+                    },
+                    {
+                        "Stores {C:blue}+1{} charge when a",
+                        "{C:attention}Boss Blind{} is defeated"
+                    },
+                    {
+                        "For each {C:red}readied{} charge, retrigger",
+                        "all {C:attention}Jokers{} and {C:fac_fish}Fish{} until",
+                        "the end of the round"
+                    }
                 }
             },
             fish_fac_minty_electric_eel_alt = {
@@ -160,9 +182,9 @@ return {
                     "but the modern age conceals it"
                 },
                 text = {
-                    "{X:purple,C:white}X#1#{} Blind size when",
-                    "entering blind and after",
-                    "each hand played"
+                    "{X:blind,C:white}X#1#{} Blind size when",
+                    "{C:attention}Blind{} is selected and",
+                    "after each hand played"
                 }
             },
             fish_fac_minty_elder_tuna = {
@@ -171,14 +193,10 @@ return {
                     "I'm old!"
                 },
                 text = {
-                    "When acquired, level up",
+                    "When acquired, {C:attention}level up{}",
                     "a semi-random poker hand",
-                    --[[
-                    "{C:inactive}(33% highest level,",
-                    "{C:inactive}33% most played,",
-                    "{C:inactive}22% lowest level,",
-                    "{C:inactive}11% random visible)"
-                    --]]
+                    "{C:inactive,s:0.8}(Hand selected may be highest level, most",
+                    "{C:inactive,s:0.8}played, lowest level or completely random)"
                 }
             },
             fish_fac_minty_tundra_eel = {
@@ -188,8 +206,8 @@ return {
                     "made the Outkast joke."
                 },
                 text = {
-                    "{C:purple}Balances{} #1#% of",
-                    "Chips and Mult,",
+                    "Balances {C:purple}#1#%{} of",
+                    "{C:chips}Chips{} and {C:mult}Mult{},",
                     "for some reason"
                 }
             },
@@ -211,9 +229,9 @@ return {
                     "'fish', respectively."
                 },
                 text = {
-                    "Hello! I'm Jeal, and",
-                    "I grant wishes! Today",
-                    "I have {C:attention}#1#{} for {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{}!"
+                    "Hello! I'm {C:purple}Jeal{}, and I grant wishes!",
+                    "Today I have {C:attention}#1#{} for {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{}!",
+                    "{ppu_bubble:1}"
                 }
             },
             fish_fac_minty_jeal_unready = {
@@ -223,9 +241,9 @@ return {
                     "'fish', respectively."
                 },
                 text = {
-                    "Hello! I'm Jeal, and",
-                    "I grant wishes! I'll have",
-                    "a new offering next hand!"
+                    "Hello! I'm {C:purple}Jeal{}, and I grant wishes!",
+                    "I'll have a new offering next hand!",
+                    "{ppu_bubble:1}"
                 }
             },
             fish_fac_minty_jeal_2 = {
@@ -236,9 +254,9 @@ return {
                     "prefer balance in this case!"
                 },
                 text = {
-                    "Hello! I'm Jeal, and",
-                    "I grant wishes! Today",
-                    "I have {C:attention}#1#{} for {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{}!"
+                    "Hello! I'm {C:purple}Jeal{}, and I grant wishes!",
+                    "Today I have {C:attention}#1#{} for {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{}!",
+                    "{ppu_bubble:1}"
                 }
             },
             fish_fac_minty_jeal_3 = {
@@ -251,9 +269,9 @@ return {
                     "and I'll stop charging!"
                 },
                 text = {
-                    "Hello! I'm Jeal, and",
-                    "I grant wishes! Today",
-                    "I have {C:attention}#1#{} for {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{}!"
+                    "Hello! I'm {C:purple}Jeal{}, and I grant wishes!",
+                    "Today I have {C:attention}#1#{} for {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{}!",
+                    "{ppu_bubble:1}"
                 }
             },
             fish_fac_minty_chaos_salmon = {
@@ -262,7 +280,7 @@ return {
                     "I can do anything!"
                 },
                 text = {
-                    'Fish whose names',
+                    '{C:fac_fish}Fish{} whose names',
                     'contain "{C:attention}fish{}"',
                     'give {C:white,X:mult}X#1#{} Mult'
                 }
@@ -307,11 +325,15 @@ return {
             k_fac_minty_youagain_qex = "You again?!",
             k_fac_minty_ready_ex = "Ready!",
             k_fac_minty_charged_ex = "Charged!",
-            k_fac_minty_chum = "Chum",
+            b_fac_minty_chum = "CHUM",
             k_fac_minty_iamfoureels1 = "I'm sorry Ms. Jackson",
             k_fac_minty_iamfoureels2 = "I am four eels",
             k_fac_minty_iamfoureels3 = "Never meant to make your daughter cry",
             k_fac_minty_iamfoureels4 = "I am several fish and not a guy",
+            
+            ppu_bubble_minty_jealusable = " use me and i'll grant your wish! ",
+            ppu_bubble_minty_jealused = " come back soon! ",
+            fac_minty_jealfree = "free"
         },
         labels={},
         poker_hand_descriptions={},

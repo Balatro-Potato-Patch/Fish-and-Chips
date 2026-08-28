@@ -3,6 +3,7 @@ FishAndChips.Fish{
     atlas = "minty_fish",
     pos = {x=1, y=0},
     weight = 1,
+    blueprint_compat = false,
     ppu_coder = {"minty"},
     ppu_artist = {"Gooseworx", "Gobo3D"}, --Credited as concept artist and art director on TADC e7, if anyone has a better idea who should go here lmk
     environments = {

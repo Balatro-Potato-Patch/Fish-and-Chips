@@ -50,7 +50,7 @@ FishAndChips.Fish{
             }
         end
 
-        if context.joker_type_destroyed and context.card == card then
+        if context.joker_type_destroyed and context.card == card and not context.blueprint then
             return {
                 message = "Defeat",
                 sound = "fac_minty_defeat"
