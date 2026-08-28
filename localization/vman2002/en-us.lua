@@ -54,7 +54,7 @@ return {
 				text = {
 					q("{~A}USE{} to activate,"),
 					"becomes {V:1}Eternal",
-					"???",
+					"{E:1,C:red,s:0.8}(Seems dangerous...)",
 					"{ppu_bubble:usable}"
 				}
 			},
@@ -70,7 +70,7 @@ return {
 						q("{~I}Destroy all played cards in first hand"),
 						q("{~I}Retrigger played cards in second hand #6# time"),
 						q("{~I}Destroyed after playing hands containing"),
-						q("{~I}#2#/#3# Straights and #4#/#5# Flushes")
+						q("{~I}#3# [#2#] Straights and #5# [#4#] Flushes")
 					}
 				}
 			},
@@ -81,7 +81,7 @@ return {
 					q("{~A}Destroy{} all played cards in first hand"),
 					q("Retrigger {~A}played{} cards in second hand {~A}#6#{} time"),
 					q("{~A}Destroyed{} after playing hands containing"),
-					q("{~A}#2#/#3#{} Straights and {~A}#4#/#5#{} Flushes")
+					q("{~A}#3#{} {~I}[#2#]{} Straights and {~A}#5#{} {~I}[#4#]{} Flushes")
 				}
 			},
 			fish_fac_vman2002_necklace = {

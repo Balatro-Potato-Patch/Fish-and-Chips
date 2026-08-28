@@ -203,9 +203,9 @@ FishAndChips.Fish { --Manos
 		extra = {
 			active = false,
 			straights_current = 0,
-			straights_goal = 8,
+			straights_goal = 4,
 			flushes_current = 0,
-			flushes_goal = 8,
+			flushes_goal = 4,
 			repetitions = 1
 		}
 	},
