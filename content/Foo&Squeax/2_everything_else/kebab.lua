@@ -183,6 +183,11 @@ FishAndChips.Fish{
 		return {vars = {(fish_check and "(Cannot skewer " or ""), (fish_check and "Eternals" or ""), (fish_check and ")" or "")}}
 	end,
 	can_use = function (self, card)
+		for i, fish in ipairs(G.fac_fish_area.cards) do
+			if fish.config.center.key == 'fish_fac_fas_fish_kebab' then
+				if fish.ID == card.ID and fish.rank ~= card.rank then return false end
+			end
+		end
 		if (card.ability.immutable.fish > 0) or (not G.fac_fish_area) then return true end
 		for i, _card in ipairs(G.fac_fish_area.cards) do
 			if _card == card then return i ~= #G.fac_fish_area.cards end
@@ -254,11 +259,19 @@ FishAndChips.Fish{
 		else return eff end
 	end,
 	remove_from_deck = function (self, card, from_debuff)
-		card.ability.immutable.fish = 0
-		for i = #G.fac_fas_fish_kebab_area.cards, 1, -1 do
-			local _card = G.fac_fas_fish_kebab_area.cards[i]
-			if _card.ability.fac_fas_kebab.id == card.ability.immutable.id and _card.ability.fac_fas_kebab.order ~= 1000 then
-				_card:start_dissolve()
+		local copy_check = false
+		for i, fish in ipairs(G.fac_fish_area.cards) do
+			if fish.ability.immutable.id and fish.config.center.key == 'fish_fac_fas_fish_kebab' then
+				if fish.ability.immutable.id == card.ability.immutable.id and fish.rank ~= card.rank then copy_check = true end
+			end
+		end
+		if not copy_check then
+			card.ability.immutable.fish = 0
+			for i = #G.fac_fas_fish_kebab_area.cards, 1, -1 do
+				local _card = G.fac_fas_fish_kebab_area.cards[i]
+				if _card.ability.fac_fas_kebab.id == card.ability.immutable.id and _card.ability.fac_fas_kebab.order ~= 1000 then
+					_card:start_dissolve()
+				end
 			end
 		end
 	end
