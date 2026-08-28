@@ -42,6 +42,10 @@ PotatoPatchUtils.Developer({
 	loc_vars = function(self, info_queue, card)
 	    return { vars = { elements = { fishee2 } } }
 	end,
+	click = function(self)
+		play_sound('generic1')
+		love.system.openURL("https://www.github.com/Steamodded/smods/pull/1351")
+	end
 })
 
 SMODS.Atlas({
