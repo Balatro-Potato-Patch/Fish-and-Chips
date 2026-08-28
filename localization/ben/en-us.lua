@@ -43,7 +43,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
@@ -57,7 +57,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
@@ -71,7 +71,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
@@ -85,7 +85,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
@@ -99,7 +99,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
@@ -113,7 +113,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
@@ -127,7 +127,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
@@ -142,7 +142,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
@@ -156,7 +156,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
@@ -170,7 +170,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
@@ -184,7 +184,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
@@ -198,7 +198,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
@@ -213,7 +213,7 @@ return {
                 text = {
                     "Earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} at end of round",
                     "per unique {C:fac_environment}Environment{}",
-                    "visited since being caught",
+                    "{C:green}rerolled{} to since being caught",
                     "{C:inactive,f:fac_sand_dollars}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{C:inactive,f:fac_sand_dollars}){}"
                 }
             },
