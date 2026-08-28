@@ -339,7 +339,7 @@ FishAndChips.Fish { --Manos
 		end
 	end,
 	can_use = function(self, card)
-		return (G.GAME.current_round.hands_played == 0 or G.STATE ~= G.STATES.SELECTING_HAND) and not card.ability.extra.active
+		return (G.GAME.current_round.hands_played == 0 or G.STATE ~= G.STATES.SELECTING_HAND) and not card.ability.extra.active and (card.area and not card.area.config.fac_catch_area)
 	end,
 	keep_on_use = returnTrue,
 	usable = true,
