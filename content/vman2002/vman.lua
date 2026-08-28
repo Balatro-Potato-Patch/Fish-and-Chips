@@ -172,7 +172,7 @@ FishAndChips.Fish { --Trust
 		return { vars = { ex.odds_add, ex.odds_add + 1 } }
 	end,
     calculate = function(self, card, context)
-		if context.mod_probability and G.GAME.fac_trust_active and G.GAME.current_round.hands_played == 0 then
+		if context.mod_probability and G.STATE == G.STATES.HAND_PLAYED and G.GAME.current_round.hands_played == 0 then
 			return {numerator = context.numerator + card.ability.extra.odds_add}
 		end
     end,

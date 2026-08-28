@@ -127,7 +127,7 @@ return {
                 name = "Multi Minnows",
                 text = {
                     "Fish that give {C:mult}+Mult{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -135,7 +135,7 @@ return {
                 name = "Chippy Chum",
                 text = {
                     "Fish that give {C:chips}+Chips{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -143,7 +143,7 @@ return {
                 name = "Dollar Dough",
                 text = {
                     "Fish that give {C:money}money{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -151,7 +151,7 @@ return {
                 name = "Powerful Popper",
                 text = {
                     "Fish that give {X:mult,C:white}XMult{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -159,7 +159,7 @@ return {
                 name = "Rapid Rig", 
                 text = {
                     "Fish that affect {C:attention}retriggers{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -167,7 +167,7 @@ return {
                 name = "Lunar Lure", -- astra also suggested Level Lure so feel free to tinker with this one - gabby
                 text = {
                     "Fish that affect {C:planet}hand levels{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -175,7 +175,7 @@ return {
                 name = "Functional Frog", -- His name is Felix and he is my Son. - also gabby
                 text = {
                     "Fish that are {C:attention}usable{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -183,7 +183,7 @@ return {
                 name = "Fancy Fly", 
                 text = {
                     "Fish that affect {C:fac_suits}suits{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -191,7 +191,7 @@ return {
                 name = "Chained Chatterbait", 
                 text = {
                     "Fish that affect {C:attention}ranks{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -199,7 +199,7 @@ return {
                 name = "Static Spinner", 
                 text = {
                     "Fish with {C:attention}passive{} effects",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -207,7 +207,7 @@ return {
                 name = "Twintail Topwater", 
                 text = {
                     "Fish that {C:attention}copy{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -215,7 +215,7 @@ return {
                 name = "Judgement Jig", 
                 text = {
                     "Fish that {C:attention}generate{} cards",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -223,7 +223,7 @@ return {
                 name = "Spooky Spoon", 
                 text = {
                     "Fish that affect {C:attention}Boss Blinds{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -231,7 +231,7 @@ return {
                 name = "Bashful Bladebait", 
                 text = {
                     "Fish that {C:red}destroy{} cards",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
