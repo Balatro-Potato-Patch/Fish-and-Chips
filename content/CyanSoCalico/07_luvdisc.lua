@@ -1,7 +1,7 @@
 FishAndChips.Fish {
 	key = "csc_luvdisc",
 	atlas = "csc_fish",
-	pos = { x = 0, y = 2 },
+	pos = { x = 1, y = 1 },
 	badge_key = "k_fac_csc_pokemon",
 
 	ppu_coder = { "CyanSoCalico" },
