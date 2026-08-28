@@ -13,7 +13,7 @@ FishAndChips.Fish{
 	config = {
 		area_num = 0,
 		area_UI = {},
-		stored_center = ""
+		stored_center = nil
 	},
 	stats = {
 		length = {min = 5, max = 5},
@@ -274,45 +274,45 @@ end
 copy_card_ref = copy_card
 function copy_card(other, new_card, card_scale, playing_card, strip_edition)
 	if other.config.center.key == 'fish_fac_fas_kine' then
-		local new_card = SMODS.create_card({
+		local copied_card = SMODS.create_card({
 			set = "fac_Fish",
 			key = "fish_fac_fas_kine",
 			area = G.fac_fish_area
 		})
 		if not strip_edition then 
-			new_card:set_edition(other.edition or {}, nil, true)
+			copied_card:set_edition(other.edition or {}, nil, true)
 			for k,v in pairs(other.edition or {}) do
 				if type(v) == 'table' then
-					new_card.edition[k] = copy_table(v)
+					copied_card.edition[k] = copy_table(v)
 				else
-					new_card.edition[k] = v
+					copied_card.edition[k] = v
 				end
 			end
 		end
 		check_for_unlock({type = 'have_edition'})
-		new_card:set_seal(other.seal, true)
+		copied_card:set_seal(other.seal, true)
 		if other.seal then
 			for k, v in pairs(other.ability.seal or {}) do
 				if type(v) == 'table' then
-					new_card.ability.seal[k] = copy_table(v)
+					copied_card.ability.seal[k] = copy_table(v)
 				else
-					new_card.ability.seal[k] = v
+					copied_card.ability.seal[k] = v
 				end
 			end
 		end
 		if other.params then
-			new_card.params = other.params
-			new_card.params.playing_card = playing_card
+			copied_card.params = other.params
+			copied_card.params.playing_card = playing_card
 		end
-		new_card.debuff = other.debuff
-		new_card.pinned = other.pinned
+		copied_card.debuff = other.debuff
+		copied_card.pinned = other.pinned
 		if other.edition and strip_edition then
-			new_card.ability.card_limit = new_card.ability.card_limit - (other.edition.card_limit or 0)
-			new_card.ability.extra_slots_used = new_card.ability.extra_slots_used - (other.edition.extra_slots_used or 0)
+			copied_card.ability.card_limit = copied_card.ability.card_limit - (other.edition.card_limit or 0)
+			copied_card.ability.extra_slots_used = copied_card.ability.extra_slots_used - (other.edition.extra_slots_used or 0)
 		end
-		if other.ability.stored_center then new_card.ability.stored_center = other.ability.stored_center end
-		new_card:set_cost()
-		return new_card
+		if other.ability.stored_center then copied_card.ability.stored_center = other.ability.stored_center end
+		copied_card:set_cost()
+		return copied_card
 	else
 		return copy_card_ref(other, new_card, card_scale, playing_card, strip_edition)
 	end
