@@ -160,6 +160,7 @@ G.FUNCS.fac_reset_all_progress = function(e)
         end
 
         G.PROFILES[G.SETTINGS.profile].fac_tutorial_seen = nil
+        G.PROFILES[G.SETTINGS.profile].omega_crimsonfang_obtained = nil
 
         G:save_progress()
         remove_save()
