@@ -12,17 +12,17 @@ return {
                         "{C:fac_csc_CSC,E:2,u:fac_csc_CSC}My Time on Fish and Chips{}",
                         "Ooh boy, was this event rough for me, generally",
                         "being swamped for time and my art laptop going",
-                        "out of commission for the whole event... {C:fac_csc_CSC}>>{} It's",
-                        "definitely not my best showing, but I hope what",
-                        "I squeaked out still brings you some enjoyment!"
+                        "out of commission for the whole event... {C:fac_csc_CSC}>>{} But",
+                        "I still got my art done and even outdid myself!",
+                        "I also helped playtest, bugfix, and contribute",
+                        "art to the base mod--it was all a fun privilege!"
                     },
                     {
                         "{C:fac_csc_CSC,E:2,u:fac_csc_CSC}My Upcoming Mod{}",
-                        "What {C:fac_csc_CSC}is{} my best showing is my breakout mod I'm",
-                        "developing as a fledgling solo Balatro mod dev!",
-                        "Whether 11 hours or 11 years, look forward",
-                        "to my one-man vanilla+ mod {C:fac_csc_CSC,E:1}Steady Hand{}!",
-                        "I'm putting all of my love and effort into it {C:fac_csc_CSC}^w^{}"
+                        "I'm developing my breakout mod as a fledgeling",
+                        "mod dev! Whether 11 hours or 11 years, please",
+                        "look forward to the one-man vanilla+ mod made",
+                        "with all of my love, {C:fac_csc_CSC,E:1}Steady Hand{}!",
                     },
                     {
                         "{C:fac_csc_CSC,E:2,u:fac_csc_CSC}Thanks for Playing!{}",
