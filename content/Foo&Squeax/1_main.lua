@@ -289,10 +289,6 @@ function FishAndChips.mod.custom_card_areas(game)
 			instance_type = "CARD",
 		},
 	})
-	--[[fac_kebab_draw_ref = G.fac_fas_fish_kebab_area.draw
-	function G.fac_fas_fish_kebab_area:draw()
-		fac_kebab_draw_ref()
-	end]]
 	function G.fac_fas_fish_kebab_area:align_cards()
 		table.sort(self.cards, function (a, b)
 			return a.ability.fac_fas_kebab.order < b.ability.fac_fas_kebab.order

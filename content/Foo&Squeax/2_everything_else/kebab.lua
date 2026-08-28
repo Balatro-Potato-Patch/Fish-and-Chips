@@ -253,6 +253,15 @@ FishAndChips.Fish{
 		if retrigger then return eff, retrigger
 		else return eff end
 	end,
+	remove_from_deck = function (self, card, from_debuff)
+		card.ability.immutable.fish = 0
+		for i = #G.fac_fas_fish_kebab_area.cards, 1, -1 do
+			local _card = G.fac_fas_fish_kebab_area.cards[i]
+			if _card.ability.fac_fas_kebab.id == card.ability.immutable.id and _card.ability.fac_fas_kebab.order ~= 1000 then
+				_card:start_dissolve()
+			end
+		end
+	end
 }
 
 
