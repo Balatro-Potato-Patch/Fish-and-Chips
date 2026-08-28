@@ -284,6 +284,7 @@ end
 FishAndChips.Bait{
 	key = "normal",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'Lusha'},
 	target = '',
 	pixel_size = {w = 63, h = 91},
 	cost = 1,
@@ -295,12 +296,14 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "mult",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'CyanSoCalico'},
 	pos = {x = 2, y = 0},
 	target = 'mult',
 }
 FishAndChips.Bait{
 	key = "chips",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'Lusha'},
 	pos = {x = 1, y = 0},
 	pixel_size = {w = 60, h = 78},
 	target = 'chips',
@@ -308,6 +311,7 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "economy",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'Lusha'},
 	pos = {x = 3, y = 0},
 	pixel_size = {w = 60, h = 73},
 	target = 'economy',
@@ -316,6 +320,7 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "xmult",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'Lusha'},
 	pos = {x = 6, y = 1},
 	pixel_size = {w = 69, h = 74},
 	target = 'xmult',
@@ -323,6 +328,7 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "retrigger",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'Lusha'},
 	pos = {x = 6, y = 0},
 	pixel_size = {w = 50, h = 78},
 	target = 'retrigger',
@@ -331,6 +337,7 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "space",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'Lusha'},
 	pos = {x = 4, y = 0},
 	pixel_size = {w = 62, h = 83},
 	target = 'hand_level',
@@ -339,6 +346,7 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "function",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'Lusha'},
 	pos = {x = 5, y = 0},
 	pixel_size = {w = 70, h = 86},
 	target = 'usable',
@@ -347,6 +355,7 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "suit",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'Lusha'},
 	pos = {x = 0, y = 1},
 	pixel_size = {w = 68, h = 66},
 	target = 'suit',
@@ -355,6 +364,7 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "passive",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'Lusha'},
 	pos = {x = 1, y = 1},
 	pixel_size = {w = 47, h = 77},
 	target = 'passive',
@@ -362,6 +372,7 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "rank",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'CyanSoCalico'},
 	pos = {x = 2, y = 1},
 	pixel_size = {w = 70, h = 87},
 	target = 'rank',
@@ -370,6 +381,7 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "copy",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'CyanSoCalico'},
 	pos = {x = 3, y = 1},
 	pixel_size = {w = 60, h = 84},
 	target = 'copying',
@@ -378,6 +390,7 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "generation",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'Lusha'},
 	pos = {x = 7, y = 0},
 	pixel_size = {w = 35, h = 85},
 	target = 'generation',
@@ -386,6 +399,7 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "boss",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'CyanSoCalico'},
 	pos = {x = 4, y = 1},
 	pixel_size = {w = 37, h = 84},
 	target = 'boss_blind',
@@ -394,6 +408,7 @@ FishAndChips.Bait{
 FishAndChips.Bait{
 	key = "destroy",
 	ppu_artist = {'squeax09'},
+	fac_mini_artist = {'Lusha'},
 	pos = {x = 5, y = 1},
 	pixel_size = {w = 68, h = 68},
 	target = 'destroy_card',

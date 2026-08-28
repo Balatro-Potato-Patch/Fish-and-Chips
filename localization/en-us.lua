@@ -228,7 +228,7 @@ return {
                 },
             },
             bait_fac_destroy = {
-                name = "Bashful Bladebait", 
+                name = "Bashful Bladebait",
                 text = {
                     "Fish that {C:red}destroy{} cards",
                     "are {C:attention}more likely",
@@ -481,6 +481,7 @@ return {
             k_fac_cashout_blind_display_big = '(Big Blind)',
             k_fac_cashout_blind_display_boss = '(Boss Blind)',
             k_fac_out_of_stock = 'Out of Stock!',
+            fac_mini_art_credit = 'Mini Art by '
         },
         achievement_names = {
             ach_fac_catch_1 = 'Rookie Rodder',

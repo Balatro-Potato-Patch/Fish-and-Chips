@@ -517,3 +517,14 @@ function Game:start_run(args)
 	start_run_hook(self, args)
 	G.GAME.fac_fish_expanded = false
 end
+
+local create_mod_badges_ref = SMODS.create_mod_badges
+function SMODS.create_mod_badges(obj, badges)
+	create_mod_badges_ref(obj, badges)
+	if obj and obj.fac_mini_artist then
+		local str = PotatoPatchUtils.CREDITS.generate_string(obj.fac_mini_artist, 'fac_mini_art_credit', obj.mod.prefix, obj)
+		if str then
+			table.insert(badges, str)
+		end
+	end
+end
