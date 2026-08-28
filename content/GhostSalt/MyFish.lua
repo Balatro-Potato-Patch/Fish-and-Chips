@@ -503,7 +503,7 @@ end
 local use_and_sell = G.UIDEF.use_and_sell_buttons
 function G.UIDEF.use_and_sell_buttons(card)
 	local ret = use_and_sell(card)
-	if card.config.center.key == "fish_fac_ghostsalt_tapcod" and not card.ability.fac_ghostsalt_tap_cod_used then
+	if card.config.center.key == "fish_fac_ghostsalt_tapcod" and not card.ability.fac_ghostsalt_tap_cod_used and card.area.config.type == "joker" then
 		local sell = {
 			n = G.UIT.C,
 			config = { align = "cr" },

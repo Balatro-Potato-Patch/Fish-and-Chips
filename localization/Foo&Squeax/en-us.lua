@@ -11,7 +11,29 @@ return {
 					{
 						"While {C:attention}empty{}, {C:attention}use{} to skewer",
 						"all {C:fac_fish}Fish{} to the right",
-						"{C:inactive}#1#{C:c75985}#2#{C:inactive}#3#",
+						"{ppu_bubble:usable}"
+					},
+					{
+						"Skewered {C:fac_fish}Fish{} still activate normally",
+						"At end of round, consume topmost {C:fac_fish}Fish{}"
+					},
+					{
+						"While {C:attention}filled{}, {C:attention}use{} to",
+						"{C:red}eat{} all skewered {C:fac_fish}Fish{}",
+					},
+				}
+			},
+			fish_fac_fas_fish_kebab_eternalthing = {
+				name = "Fish Kebab",
+				flavour = {
+					"Great for the grill",
+					"AND the krill."
+				},
+				text = {
+					{
+						"While {C:attention}empty{}, {C:attention}use{} to skewer",
+						"all {C:fac_fish}Fish{} to the right",
+						"{C:inactive}(Cannot skewer {C:c75985}Eternals{C:inactive})",
 						"{ppu_bubble:usable}"
 					},
 					{

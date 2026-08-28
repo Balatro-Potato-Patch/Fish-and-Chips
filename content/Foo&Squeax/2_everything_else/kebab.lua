@@ -180,7 +180,7 @@ FishAndChips.Fish{
 				if fih.ability.eternal then fish_check = true break end
 			end
 		end
-		return {vars = {(fish_check and "(Cannot skewer " or ""), (fish_check and "Eternals" or ""), (fish_check and ")" or "")}}
+		return { key = self.key..(fish_check and "_eternalthing" or "") }
 	end,
 	can_use = function (self, card)
 		if (card.ability.immutable.fish > 0) or (not G.fac_fish_area) then return true end

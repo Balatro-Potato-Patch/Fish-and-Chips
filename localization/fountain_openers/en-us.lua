@@ -43,7 +43,7 @@ return {
             fish_fac_fo_fireball = {
                 name = "Fireball",
                 text = {
-                    "Use this fish to get",
+                    "Use this {C:fac_fish}Fish{} to get",
                     "{X:mult,C:white}X#1#{} Mult next hand",
                     "{element:1}"
                 },
