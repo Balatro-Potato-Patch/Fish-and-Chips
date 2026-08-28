@@ -50,7 +50,7 @@ FishAndChips.Fish {
 	},
 	stats = {
 		weight = {min = 0.005, max = 0.20},
-		length = {min = 0.15, max = 1}
+		length = {min = 0.15, max = 1},
 	},
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xmult, card.ability.extra.mod } }
@@ -79,6 +79,7 @@ FishAndChips.Fish {
 					if myStats.weight + weight_mod > stats.weight then
 						weight_mod = stats.weight - card.ability.stats.weight
 					end
+					if stats.units and stats.units.weight then myStats.units.weight = stats.units.weight end
 					extra = { message = "+" .. FishAndChips.format_measurement(weight_mod, 'weight', stats.units) }
 				end
 				if stats.length > myStats.length then
@@ -87,6 +88,7 @@ FishAndChips.Fish {
 					if myStats.length + length_mod > stats.length then
 						length_mod = stats.length - card.ability.stats.length
 					end
+					if stats.units and stats.units.length then myStats.units.length = stats.units.length end
 					local nextra = { message = "+" .. FishAndChips.format_measurement(length_mod, 'length', stats.units) }
 					if extra then
 						extra.extra = nextra
@@ -104,7 +106,9 @@ FishAndChips.Fish {
 						message_colour = G.C.RED,
 					})
 					myStats.weight = myStats.weight + weight_mod
+					myStats.w_prop = math.min(1, myStats.weight/self.stats.weight.max)
 					myStats.length = myStats.length + length_mod
+					myStats.l_prop = math.min(1, myStats.length/self.stats.length.max)
 					return extra
 				end
 			end
