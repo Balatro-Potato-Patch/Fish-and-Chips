@@ -213,8 +213,8 @@ return {
                         "{C:inactive,s:0.8}(ex. {C:mult,s:0.8}+15{C:inactive,s:0.8} -> {X:chips,C:white,s:0.8}X#2#{C:inactive,s:0.8})"
                     },
                     {
-                        "When you would earn money,",
-                        "{C:red}don't{}"
+                        "When you would earn",
+                        "{C:money}dollars{}, {C:red}don't{}"
                     }
                 },
                 flavour = {
@@ -486,7 +486,7 @@ return {
                     "Copies the {C:fac_fish}Fish{} to the right",
                     "of {C:attention}Broken Mirror{}",
                     "{C:green}#1# in #2#{} chance to ",
-                    "{C:red}self destruct{} at end of round",
+                    "{C:red,E:2}self destruct{} at end of round",
                 }
             },
             fac_mf_sap_chips = {
@@ -513,7 +513,7 @@ return {
                 text = {
                     "{C:attention}Retrigger{} this once",
                     "{C:green}#1# in #2#{} chance to",
-                    "{C:red}self destruct{} at",
+                    "{C:red,E:2}self destruct{} at",
                     "end of round"
                 }
             },
@@ -522,7 +522,7 @@ return {
                 text = {
                     "{C:attention}Retrigger{} this once",
                     "{C:green}#1# in #2#{} chance to",
-                    "{C:red}self destruct{} at",
+                    "{C:red,E:2}self destruct{} at",
                     "end of round",
                     "{C:inactive,s:0.8}(has #3# stacks)"
                 }
@@ -531,7 +531,7 @@ return {
                 name = "kaboom and such",
                 text = {
                     "{C:green}#1# in #2#{} chance to",
-                    "{C:red}self destruct{} at",
+                    "{C:red,E:2}self destruct{} at",
                     "end of round"
                 }
             },
@@ -539,7 +539,7 @@ return {
                 name = "kaboom and such",
                 text = {
                     "{C:green}#1# in #2#{} chance to",
-                    "{C:red}self destruct{} at",
+                    "{C:red,E:2}self destruct{} at",
                     "end of round",
                     "{C:inactive,s:0.8}(has #3# stacks)"
                 }
