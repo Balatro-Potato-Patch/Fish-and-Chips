@@ -47,7 +47,13 @@ FishAndChips.Fish {
     },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = {
+        local key = self.key
+        if card.ability.extra.hand_played then
+            key = key.."_unsellable"
+        end
+        return {
+            key = key,
+            vars = {
             card.ability.extra.dollar_cost,
             card.ability.extra.retriggers,
             card.ability.extra.xchips_penalty,
@@ -56,7 +62,7 @@ FishAndChips.Fish {
 calculate = function(self, card, context)
 
     if context.before and not context.blueprint then
-        if G.GAME.dollars >= card.ability.extra.dollar_cost then
+        if G.GAME.dollars - card.ability.extra.dollar_cost >= G.GAME.bankrupt_at then
             ease_dollars(-card.ability.extra.dollar_cost, true)
             card.ability.extra.underpaid = false
         else
@@ -102,10 +108,6 @@ FishAndChips.Fish {
     environments = {
         wormhole = 7,
     },
-    attributes = {
-        destroy_card = true,
-        generation = true,
-    },
 
     ppu_coder = { 'Parsa' },
     ppu_artist = { 'Parsa' },
@@ -114,7 +116,7 @@ FishAndChips.Fish {
     pos = { x = 0, y = 0 },
 
     cost = 8,
-    blueprint_compat = false,
+    blueprint_compat = true,
 
     stats = {
         weight = { min = 0.001, max = 0.009 },
@@ -160,9 +162,16 @@ calculate = function(self, card, context)
         for k, _ in pairs(G.P_TAGS) do
             tag_pool[#tag_pool + 1] = k
         end
-        for i = 1, 2 do
-            local tag_key = pseudorandom_element(tag_pool, 'facfile_tag_' .. i)
-            add_tag(Tag(tag_key))
+        if next(tag_pool) then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    add_tag(Tag(pseudorandom_element(tag_pool, 'facfile_tag_')))
+                    play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+                    play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+                    return true
+                end
+            }))
+            return { message = localize("k_fac_plus_tag") }
         end
     end
 end,
