@@ -186,7 +186,28 @@ return {
 					{
 						"Use to {C:red}consume{} currently held Joker",
 						"and then {C:attention}grab{} leftmost Joker",
-						"{C:inactive}#2#{C:c75985}#3#{C:inactive}#4#",
+						"{ppu_bubble:usable}"
+					},
+					{
+						"Grabbed {C:attention}Joker{} is treated",
+						"as if it were a {C:fac_fish}Fish",
+						"{C:inactive}(Currently holding: {C:attention}#1#{}{C:inactive}){}"
+					},
+				}
+			},
+			fish_fac_fas_kine_eternalthing = {
+				name = "Kine",
+				flavour = {
+					"A funny guy who looks just",
+					"like an ocean sunfish. He'll",
+					"always stick by everyone's side."
+					-- ripped from Kirby's Star Stacker website [ https://www.nintendo.co.jp/n02/dmg/akcj/chr.html ]
+				},
+				text = {
+					{
+						"Use to {C:red}consume{} currently held Joker",
+						"and then {C:attention}grab{} leftmost Joker",
+						"{C:inactive}(Cannot grab {C:c75985}Eternals{C:inactive})",
 						"{ppu_bubble:usable}"
 					},
 					{

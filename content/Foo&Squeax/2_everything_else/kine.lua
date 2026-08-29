@@ -29,8 +29,8 @@ FishAndChips.Fish{
 		else
 			joker = "None"
 		end
-		local joker_check = G.jokers and #G.jokers.cards > 0 and G.jokers.cards[1].ability.eternal
-		return {vars = {joker, (joker_check and "(Cannot grab " or ""), (joker_check and "Eternals" or ""), (joker_check and ")" or "")}}
+		local joker_check = (G.jokers and G.jokers.cards[1] and G.jokers.cards[1].ability.eternal)
+		return {key = self.key..(joker_check and "_eternalthing" or ""), vars = {joker}}
 	end,
 	load = function (self, card, card_table, other_card)
 		G.E_MANAGER:add_event(Event{
