@@ -439,7 +439,7 @@ FishAndChips.Fish {
             trigger = "after",
             blocking = false,
             func = function()
-                if not G.FAC_FISH_GAME.fishing_active then
+                if not G.FAC_FISH_GAME.fishing_active and G.GAME.fac_active_bait then
                     G.E_MANAGER:add_event(Event{
                         trigger = "after",
                         blocking = false,
