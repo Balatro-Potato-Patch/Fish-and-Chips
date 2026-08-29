@@ -384,6 +384,21 @@ return {
                     "Massive thank you to everyone involved!"
                 }
             },
+            fac_recommendation = {
+                text = {
+                    ' {element:1} {}',
+                    '{s:0.4} {}',
+                    "Thanks for checking out Fish and Chips!",
+                    " ",
+                    "We recommend playing without unlocking all",
+                    "for the best experience. We put a ton of time",
+                    "and love into this mod, and there's a ton of fish",
+                    "for you to discover.",
+                    " ",
+                    "Thanks again, and happy angling!",
+                    "~ The Potato Patch {element:2} {}"
+                }
+            }
         },
     },
     misc = {
@@ -481,7 +496,8 @@ return {
             k_fac_cashout_blind_display_big = '(Big Blind)',
             k_fac_cashout_blind_display_boss = '(Boss Blind)',
             k_fac_out_of_stock = 'Out of Stock!',
-            fac_mini_art_credit = 'Mini Art by '
+            fac_mini_art_credit = 'Mini Art by ',
+            k_fac_okay = 'Okay!',
         },
         achievement_names = {
             ach_fac_catch_1 = 'Rookie Rodder',

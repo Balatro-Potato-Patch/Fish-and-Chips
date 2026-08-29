@@ -389,4 +389,42 @@ function FishAndChips.init_custom_menu(change_context)
             }
         } })
     end
+
+	if not FishAndChips.mod.config.first_startup then -- Attach to config instead of profile because per-profile feels less right
+		FishAndChips.mod.config.first_startup = true
+		
+		local nodes = {}
+		nodes[#nodes+1] = {}
+		local loc_vars = {
+            background_colour = G.C.CLEAR,
+            text_colour = G.C.WHITE,
+            scale = 1.4,
+			vars = {
+				elements = {
+					SMODS.create_sprite(0, 0, 6.6, 6.6 * (G.ASSET_ATLAS["fac_logo"].py / G.ASSET_ATLAS["fac_logo"].px), "fac_logo", {x = 0, y = 0}),
+					SMODS.create_sprite(0, 0, 0.5, 0.5 * (G.ASSET_ATLAS["fac_pp_icon"].py / G.ASSET_ATLAS["fac_pp_icon"].px), "fac_pp_icon", {x = 0, y = 0}),
+				}
+			}
+		}
+
+		localize { type = 'descriptions', key = 'fac_recommendation', set = 'Other', nodes = nodes[#nodes], vars = loc_vars.vars, text_colour = loc_vars.text_colour, shadow = loc_vars.shadow  }
+		nodes[#nodes] = desc_from_rows(nodes[#nodes])
+        nodes[#nodes].config.colour = loc_vars.background_colour or nodes[#nodes].config.colour
+
+		G.FUNCS.overlay_menu {
+			definition = {
+				n = G.UIT.ROOT, config = {align = "cm", minw = G.ROOM.T.w * 5, minh = G.ROOM.T.h * 5, padding = 0.1, r = 0.1, colour = { G.C.GREY[1], G.C.GREY[2], G.C.GREY[3], 0.7 }}, nodes = {
+				{n = G.UIT.R, config = { r = 0.1, colour = G.C.JOKER_GREY, padding = 0.05, align = "cm" }, nodes = {
+					{n = G.UIT.C, config = { colour = G.C.L_BLACK, r = 0.1, padding = 0.2, align = "cm" }, nodes = {
+						{n = G.UIT.R, config = { align = "cm", padding = 0.1 }, nodes = nodes },
+						{n = G.UIT.R, config = {id = "overlay_menu_back_button", align = "cm", minw = 2.5, padding = 0.1, r = 0.1, hover = true, colour = G.C.ORANGE, button = "exit_overlay_menu", shadow = true, focus_args = { nav = "wide", button = "b" }}, nodes = {
+							{n = G.UIT.R, config = { align = "cm", padding = 0, no_fill = true }, nodes = {
+								{n = G.UIT.T, config = {text = localize("k_fac_okay"), scale = 0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
+							}},
+						}},
+					}},
+				}},
+			}}
+		}
+	end
 end

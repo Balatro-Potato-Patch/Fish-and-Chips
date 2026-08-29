@@ -115,6 +115,13 @@ SMODS.Atlas{
 	py = 95
 }
 
+SMODS.Atlas {
+	key = 'pp_icon',
+	path = "core/potato_patch_icon.png",
+	px = 320,
+	py = 320
+}
+
 --#endregion
 
 PotatoPatchUtils.load_files(FishAndChips.mod.path .. '/src')
