@@ -53,18 +53,6 @@ return {
                     "true after all"
                 }
             },
-
-            fish_fac_gezora = {
-                name = "Gezora",
-                text = {
-                    "{C:green}#1# in #2#{} chance",
-                    "for {C:white,X:chips}X#3#{} Chips"
-                },
-                flavour = {
-                    "This ISN'T Not-Gezora,",
-                    "by the way"
-                }
-            },
             fish_fac_gezora = {
                 name = "Gezora",
                 text = {
