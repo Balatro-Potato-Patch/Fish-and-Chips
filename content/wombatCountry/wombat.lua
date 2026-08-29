@@ -340,8 +340,8 @@ FishAndChips.Fish({
 		soup = 0.125,
 	},
 	stats = {
-		weight = {min = 0.025, max = 0.03},
-		length = {min = 0.07, max = 0.08}
+		weight = {min = 0.05, max = 0.06},
+		length = {min = 0.14, max = 0.16}
 	},
 	config = {
 		extra = {
@@ -386,8 +386,8 @@ FishAndChips.Fish({
 		soup = 0.125,
 	},
 	stats = {
-		weight = {min = 0.025, max = 0.03},
-		length = {min = 0.07, max = 0.08}
+		weight = {min = 0.075, max = 0.09},
+		length = {min = 0.21, max = 0.24}
 	},
 	config = {
 		extra = {

@@ -35,8 +35,8 @@ return {
                 name = "One Fish Stick",
                 text = {
                     "{C:chips}+#1#{} Chips",
-                    "If you have two after",
-                    "fishing, then merge",
+                    "If you have two of this {C:fac_fish}Fish{}",
+                    "after fishing, then merge",
                     "them into {C:attention}Two Fish Sticks{}"
                 },
                 flavor = {
@@ -48,8 +48,8 @@ return {
                 name = "Two Fish Sticks",
                 text = {
                     "{C:chips}+#1#{} Chips",
-                    "If you have two after",
-                    "fishing, then merge",
+                    "If you have two of this {C:fac_fish}Fish{}",
+                    "after fishing, then merge",
                     "them into {C:attention}Three Fish Sticks{}"
                 },
                 flavor = {
