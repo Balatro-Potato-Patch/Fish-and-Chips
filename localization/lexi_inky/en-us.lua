@@ -31,9 +31,9 @@ return {
 			fish_fac_l_i_id = {
 				name = "Accountant's ID",
 				text = {
-					"Gives {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} for each {C:fac_fish}Fish",
-					"with the {C:money}Economy{} attribute",
-					"at the end of the round",
+					"Earn {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} at the end of",
+					"the round for each",
+					"owned {C:money}Economy{} {C:fac_fish}Fish",
 					"{C:inactive}(Currently {C:fac_sand_dollars,f:fac_sand_dollars}$#2#{C:inactive})"
 				},
 				flavour = {
@@ -45,7 +45,8 @@ return {
 				name = "Black Feather",
 				text = {
 					"All played cards are",
-					"converted to {C:hearts}Hearts{}",
+					"converted to {V:1}#1#{},",
+                    "{s:0.8}suit changes at end of round",
 				},
 				flavour = {
 					"It's strangely cold to the touch",
@@ -56,7 +57,7 @@ return {
 				name = "Square Fish",
 				text = {
 					"Played {C:attention}4s{} give",
-					"{C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{} when scored",
+					"{C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} when scored",
 				},
 				flavour = {
 					"{s:1.1}(Quadrilateret rightang)",
@@ -67,9 +68,9 @@ return {
 			fish_fac_l_i_wood = {
 				name = "Wooden #1# Fish",
 				text = {
-					"{C:attention}Aces{}, {C:attention}3s{}, and {C:attention}7s",
-					"gain {C:mult}+#2#{} Mult",
-					"when scored",
+					"Played {C:attention}Aces{}, {C:attention}3s{}, and {C:attention}7s",
+					"permanently gain {C:mult}+#2#{} Mult",
+					"when scored"
 				},
 				flavour = {
 					"{s:1.1}(Palacium pro plankei)",
@@ -78,7 +79,7 @@ return {
 			fish_fac_l_i_plastic = {
 				name = "Plastic #1# Fish",
 				text = {
-					"{C:attention}4s{} and {C:attention}8s{} give",
+					"Played {C:attention}4s{} and {C:attention}8s{} give",
 					"{C:purple}+#2#{} Score when scored",
 				},
 				flavour = {
@@ -100,8 +101,8 @@ return {
 			fish_fac_l_i_phish_bait_real = {
 				name = "Phish Bait",
 				text = {
-					"{X:mult,C:white}X3{} Mult",
-					"debuffs adjacent {C:fac_Fish}Fish",
+					"{X:mult,C:white}X#1#{} Mult",
+					"{C:red}Debuffs{} adjacent {C:fac_fish}Fish",
 					"when a hand is played",
 				},
 				flavour = {
@@ -115,7 +116,7 @@ return {
 				name = "yhsiFishy",
 				text = {
 					"If played hand is {C:attention}5{} cards",
-					"and a palindrome, gain {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#1#{}",
+					"and a {C:attention}palindrome{}, earn {C:fac_sand_dollars,f:fac_sand_dollars}$#1#{}",
 					"{C:inactive}(Eg: 35653)",
 				},
 				flavour = {
@@ -126,10 +127,10 @@ return {
 			fish_fac_l_i_freddy = {
 				name = "Freddy Fishbear",
 				text = {
-					"If played hand is exactly {C:attention}4{} scoring cards",
-					"change their ranks to",
-					"{C:attention}Ace{}, {C:attention}9{}, {C:attention}8{}, and {C:attention}7{} respective to",
-					"their position in your hand",
+					"If played hand is",
+					"exactly {C:attention}4{} scoring cards,",
+					"change their ranks to {C:attention}Ace{},",
+					"{C:attention}9{}, {C:attention}8{}, and {C:attention}7{} respectively"
 				},
 				flavour = {
 					"{s:1.1}(Phiv knight freedee)",
@@ -139,8 +140,8 @@ return {
 			fish_fac_l_i_kevin = {
 				name = "Kevin",
 				text = {
-					"If chips are less than {C:attention}#2#%",
-					"of required chips {X:mult,C:white}X#1#{} Mult",
+					"{X:mult,C:white}X#1#{} Mult if chips scored are",
+					"under {C:attention}25%{} of required chips",
 				},
 				flavour = {
 					"{s:1.1}(Kevus immortali)",
@@ -151,10 +152,9 @@ return {
 			fish_fac_l_i_fof = {
 				name = "Filet-O-Fish",
 				text = {
-					"Eat this {C:fac_fish}Burger{} to gain",
-					"{C:red}+#1#{} temporary Discards",
-					"{C:inactive,s:0.8}Only useable while",
-					"{C:inactive,s:0.8}a blind is selected",
+					"Eat this {C:fac_fish}Burger{}",
+					"during a {C:attention}Blind{} to gain",
+					"{C:red}+#1#{} temporary discards",
 					"{ppu_bubble:usable}",
 				},
 				flavour = {
@@ -175,11 +175,24 @@ return {
 					"Reminds me of 2016 tycoons",
 				},
 			},
+			fish_fac_l_i_fish_ost_ff = {
+				name = "Fish Tycoon OST",
+				text = {
+					"NCS music btw",
+					"{X:mult,C:white}X#1#{} Mult",
+					"{C:money}$#2#",
+					"{C:inactive}it sounds like s*** on purpose",
+				},
+				flavour = {
+					"{s:1.1}(Disckus roablots)",
+					"Reminds me of 2016 tycoons",
+				},
+			},
 			fish_fac_l_i_fishsocks = {
 				name = "Fishsocks",
 				text = {
-					"If played hand is a {C:attention}#1#",
-					"Create an editioned {C:fac_fish}Fish",
+					"If played hand is a {C:attention}#1#{},",
+					"create an {C:dark_edition}editioned{} {C:fac_fish}Fish",
 					"{C:inactive}(Negative excluded)",
 					"{C:inactive}(Must have room)",
 				},

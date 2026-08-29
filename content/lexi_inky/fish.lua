@@ -27,13 +27,14 @@ FishAndChips.Fish({
 	cost = 4,
 	config = {
 		extra = {
-			sand = 3,
+			sand = 1,
 		},
 	},
 	stats = {
 		weight = { min = 0.003, max = 0.006 },
 		length = { min = 0.08, max = 0.086 },
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		local econFish = 0
 		if G.fac_fish_area then
@@ -50,19 +51,15 @@ FishAndChips.Fish({
 			},
 		}
 	end,
-	calculate = function(self, card, context)
-		if context.modify_final_cashout and not context.blueprint then
-			local econFish = 0
-			for k, v in ipairs(G.fac_fish_area.cards) do
-				if v:has_attribute("economy") then
-					econFish = econFish + 1
-				end
+	calc_sand_dollar_bonus = function(self, card)
+		local econFish = 0
+		for k, v in ipairs(G.fac_fish_area.cards) do
+			if v:has_attribute("economy") then
+				econFish = econFish + 1
 			end
-			if econFish > 0 then
-				return {
-					sand_dollars = econFish * card.ability.extra.sand,
-				}
-			end
+		end
+		if econFish > 0 then
+			return econFish * card.ability.extra.sand
 		end
 	end,
 	badge_key = "k_fac_l_i_id",
@@ -81,7 +78,7 @@ FishAndChips.Fish({
 		"inky",
 	},
 	attributes = {
-		"suit", "hearts", "modify_card",
+		"suit", "modify_card",
 	},
 	environments = {
 		styx = 1,
@@ -94,9 +91,11 @@ FishAndChips.Fish({
 		weight = { min = 0, max = 0 },
 		length = { min = 0.22, max = 0.27 },
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return {
-			vars = {},
+			vars = { localize(card.ability.extra.suit or "Hearts", "suits_plural"),
+        	colours = { G.C.SUITS[card.ability.extra.suit] } },
 		}
 	end,
 	calculate = function(self, card, context)
@@ -105,13 +104,29 @@ FishAndChips.Fish({
 				G.E_MANAGER:add_event(Event({
 					func = function()
 						v:juice_up()
-						assert(SMODS.change_base(v, "Hearts"))
+						assert(SMODS.change_base(v, card.ability.extra.suit or "Hearts"))
 						return true
 					end,
 				}))
 			end
 		end
+
+		if context.end_of_round and context.main_eval and not context.game_over and not context.blueprint then
+			local all_suits = {}
+			for _, v in pairs(SMODS.Suits) do
+				if (not v.in_pool or v:in_pool()) and card.ability.extra.suit ~= v.key then all_suits[#all_suits + 1] = v.key end
+			end
+			card.ability.extra.suit = pseudorandom_element(all_suits, "fish_fac_l_i_feather")
+			return { message = localize("k_reset") }
+		end
 	end,
+  	set_ability = function(self, card, initial, delay_sprites)
+  		local all_suits = {}
+		for _, v in pairs(SMODS.Suits) do
+			if (not v.in_pool or v:in_pool()) and card.ability.extra.suit ~= v.key then all_suits[#all_suits + 1] = v.key end
+		end
+		card.ability.extra.suit = pseudorandom_element(all_suits, "fish_fac_l_i_feather")
+  	end,
 	badge_key = "k_fac_l_i_feather",
 	disable_fish_scaling = true,
 })
@@ -415,23 +430,10 @@ FishAndChips.Fish({
 			local leftFish = G.fac_fish_area.cards[pos - 1]
 			local rightFish = G.fac_fish_area.cards[pos + 1]
 			for k, v in ipairs(G.fac_fish_area.cards) do
-				if v.fac_db_l_i_pb == true then
-					v.fac_db_l_i_pb = false
-					v.debuff = false
-				end
+				SMODS.debuff_card(v, false, card.config.center.key.."_"..card.sort_id)
 			end
-			if leftFish then
-				if not leftFish.debuff then
-					leftFish.fac_db_l_i_pb = true
-					leftFish.debuff = true
-				end
-			end
-			if rightFish then
-				if not rightFish.debuff then
-					rightFish.fac_db_l_i_pb = true
-					rightFish.debuff = true
-				end
-			end
+			if leftFish then SMODS.debuff_card(leftFish, true, card.config.center.key.."_"..card.sort_id) end
+			if rightFish then SMODS.debuff_card(rightFish, true, card.config.center.key.."_"..card.sort_id) end
 		end
 		if context.joker_main then
 			return {
@@ -526,6 +528,7 @@ FishAndChips.Fish({
 	config = {
 		extra = {},
 	},
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {},
@@ -534,29 +537,19 @@ FishAndChips.Fish({
 	calculate = function(self, card, context)
 		if context.initial_scoring_step and not context.blueprint then
 			if #context.scoring_hand == 4 and #context.scoring_hand == #context.full_hand then
-				for k, v in ipairs(context.scoring_hand) do
-					if k == 1 then
-						assert(SMODS.change_base(v, nil, "Ace"))
-						v:juice_up()
-					end
-					if k == 2 then
-						assert(SMODS.change_base(v, nil, "9"))
-						v:juice_up()
-					end
-					if k == 3 then
-						assert(SMODS.change_base(v, nil, "8"))
-						v:juice_up()
-					end
-					if k == 4 then
-						assert(SMODS.change_base(v, nil, "7"))
-						v:juice_up()
-					end
-				end
+				assert(SMODS.change_base(context.scoring_hand[1], nil, "Ace"))
+				context.scoring_hand[1]:juice_up()
+				assert(SMODS.change_base(context.scoring_hand[2], nil, "9"))
+				context.scoring_hand[2]:juice_up()
+				assert(SMODS.change_base(context.scoring_hand[3], nil, "8"))
+				context.scoring_hand[3]:juice_up()
+				assert(SMODS.change_base(context.scoring_hand[4], nil, "7"))
+				context.scoring_hand[4]:juice_up()
 			end
 		end
 	end,
 	on_catch = function(self, card)
-		play_sound("fac_l_i_87", nil, 2)
+		play_sound("fac_l_i_87")	-- no please no i beg of you don't play a sound with volume 2 (ghostsalt)
 	end,
 	disable_fish_scaling = true,
 })
@@ -594,7 +587,6 @@ FishAndChips.Fish({
 		return {
 			vars = {
 				card.ability.extra.xmult,
-				25,
 			},
 		}
 	end,
@@ -651,6 +643,8 @@ FishAndChips.Fish({
 			discards = 2,
 		},
 	},
+	blueprint_compat = false,
+	eternal_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
@@ -715,12 +709,17 @@ FishAndChips.Fish({
 	cost = 10,
 	config = {
 		extra = {
-			xmult = 4,
+			xmult = 2,
 			dollars = 2,
 		},
 	},
 	loc_vars = function(self, info_queue, card)
+		local key = self.key
+        if FishAndChips.mod.config.family_friendly then
+            key = key.."_ff"
+        end
 		return {
+			key = key,
 			vars = {
 				card.ability.extra.xmult,
 				card.ability.extra.dollars,
@@ -767,6 +766,7 @@ FishAndChips.Fish({
 		length = { min = 0.018, max = 0.026 },
 	},
 	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_CENTERS.e_negative
 		return {
 			vars = {
 				localize(card.ability.extra.type, "poker_hands"),
