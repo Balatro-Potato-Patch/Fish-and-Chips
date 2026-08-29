@@ -16,7 +16,7 @@ return {
                 name = "Red Herring",
                 text = {
                     {
-                        "{C:dark_edition}+#1#{} Fish Slot"
+                        "{C:dark_edition}+#1#{} bucket slot"
                     },
                     {
                         "This {C:fac_fish}Fish{} has every {C:spectral}attribute{}",
@@ -33,7 +33,7 @@ return {
                     "{C:uncommon}Uncommon{} {C:attention}Jokers{} also copy",
                     "the {C:fac_fish}Fish{} to the right",
                     "of this and have a {C:green}#1# in #2#{}",
-                    "chance to {C:red}self destruct",
+                    "chance to {C:red,E:2}self destruct",
                     "at end of round"
                 },
                 flavour = {
@@ -48,7 +48,7 @@ return {
                     },
                     {
                         "This fish is {C:red}extinct",
-                        "{C:inactive,s:0.8}(It cannot be caught.)"
+                        "{C:inactive,s:0.8}(It cannot be caught)"
                     }
                 }
             },
@@ -62,8 +62,8 @@ return {
                     {
                         "All {C:fac_fish}Fish{} are equally",
                         "likely to be caught",
-                        "{C:inactive,s:0.8}(if they could appear at",
-                        "{C:inactive,s:0.8}that location.)"
+                        "{C:inactive,s:0.8}(if they could appear",
+                        "{C:inactive,s:0.8}at that location)"
                     }
                 },
                 flavour = {
@@ -75,9 +75,9 @@ return {
             fish_fac_mf_wa = {
                 name = ":Wa:",
                 text = {
-                    "Retriggers cards in",
-                    "first half of hand",
-                    "once"
+                    "Retriggers cards",
+                    "in the {C:attention}left half{}",
+                    "of played hand"
                 },
                 flavour = {
                     ":hoo:"
@@ -108,8 +108,8 @@ return {
             fish_fac_mf_junk_carp = {
                 name = "Junk Carp",
                 text = {
-                    "Hands have {B:1,C:white}X#1#{} more",
-                    "{C:chips}Chips{} and {C:mult}Mult"
+                    "Poker hands have {B:1,C:white}X#1#",
+                    "more {C:chips}Chips{} and {C:mult}Mult"
                 },
                 flavour = {
                     "Is that a Wormhole Reference ????",
@@ -129,12 +129,12 @@ return {
                 name = "Minifish",
                 text = {
                     {
-                        "{X:purple,C:white}X#1#{} blind size",
+                        "{X:purple,C:white}X#1#{} Blind size",
                         "when a {C:attention}2{} is scored"
                     },
                     {
-                        "{C:green}#2# in #3#{} chance to lose",
-                        "it at end of round"
+                        "{C:green}#2# in #3#{} chance to {C:red,E:2}lose{}",
+                        "{C:red,E:2}it{} at end of round"
                     }
                 },
                 flavour = {
@@ -157,9 +157,9 @@ return {
             fish_fac_mf_sap_fish = {
                 name = "Super Auto Fish",
                 text = {
-                    "When a hand is {C:planet}leveled up{},",
-                    "gives two random other {C:fac_fish}Fish",
-                    "{C:chips}+#1#{} Chips and {C:mult}+#2#{} Mult"
+                    "When a poker hand is {C:planet}leveled up{},",
+                    "{C:attention}#1#{} other random {C:fac_fish}Fish{} gain",
+                    "{C:chips}+#2#{} Chips and {C:mult}+#3#{} Mult"
                 }
             },
             fish_fac_mf_car_battery = {
@@ -167,7 +167,7 @@ return {
                 text = {
                     "Give each {C:fac_fish}Fish{} a {C:attention}retrigger{}",
                     "and a {C:green}#1# in #2#{} chance to",
-                    "{C:red}self destruct{} at end of round",
+                    "{C:red,E:2}self destruct{} at end of round",
                     "{ppu_bubble:usable}",
                 },
                 flavour = {
@@ -194,7 +194,7 @@ return {
                     },
                     {
                         "{C:red,f:fac_notmario_emoji}🚨{} {C:red}ABORT MISSION{} {C:red,f:fac_notmario_emoji}🚨{} {f:6}—{} Swims",
-                        "to consumeable slots when caught"
+                        "to consumable slots when caught"
                     }
                 },
                 flavour = {
@@ -227,13 +227,13 @@ return {
                 name = "Dandân",
                 text = {
                     {
-                        "{X:purple,C:white}X#1#{} blind size",
+                        "{X:purple,C:white}X#1#{} Blind size",
                         "when {C:attention}Blind{} is selected"
                     },
                     {
                         "{C:spectral}Oceanhome",
                         "{C:inactive,s:0.8}(When caught, travel to Ocean Pier.",
-                        "{C:inactive,s:0.8}Destroyed if you aren't at Ocean Pier.)",
+                        "{C:inactive,s:0.8}Destroyed if you aren't at Ocean Pier)",
                     }
                 },
                 flavour = {
@@ -261,7 +261,7 @@ return {
                     "Once per round, duplicate",
                     "the {C:fac_fish}Fish{} to the right",
                     "Both copies have a {C:green}#1# in #2#{} chance",
-                    "to {C:red}self destruct{} at end of round",
+                    "to {C:red,E:2}self destruct{} at end of round",
                     "{C:inactive}(Does not require room)",
                     "{ppu_bubble:1}",
                 },
@@ -277,8 +277,8 @@ return {
                     },
                     {
                         "{C:spectral}Flying{}, {C:attention}first strike{}, {C:red}multlink{}",
-                        "Protection from debuffs",
-                        "and face down"
+                        "Protection from {C:red}debuffs{}",
+                        "and {C:attention}face down{}"
                     }
                 },
             },
@@ -286,14 +286,14 @@ return {
                 name = "Perch-ance",
                 text = {
                     {
-                        "Reduces all {C:attention}listed",
-                        "{C:green,E:1,S:1.1}denominators{} by {C:green}#1#",
+                        "Reduces all listed",
+                        "{C:green,E:1}denominators{} by {C:green}#1#",
                         "{C:inactive}(ex: {C:green}1 in #2#{C:inactive} -> {C:green}1 in 2{C:inactive})",
                     },
                     {
-                        "Increases by {C:green}#3#{} when",
-                        "a probability {C:red}fails{} until",
-                        "one {C:green}succeeds"
+                        "Increases by {C:green}+#3#{} when",
+                        "a probability {C:red}fails{}, until",
+                        "a probability {C:green}succeeds"
                     }
                 },
                 flavour = {
@@ -319,8 +319,8 @@ return {
             fish_fac_mf_frying_fish = {
                 name = "Frying Fish",
                 text = {
-                    "Create a {C:green}Food{} {C:attention}Joker{}",
-                    "It gains a {C:attention}retrigger{}",
+                    "Create a {C:green}Food{} {C:attention}Joker{},",
+                    "it gains a {C:attention}retrigger{}",
                     "{ppu_bubble:usable}",
                 },
                 flavour = {
@@ -332,7 +332,7 @@ return {
                 text = {
                     "Swaps {C:purple}#1#%{} of {C:chips}Chips{} and {C:mult}Mult{}",
                     "if played hand contains",
-                    "an {C:attention}#2#{} and a {C:attention}#3#{}",
+                    "#4# {C:attention}#2#{} and #5# {C:attention}#3#{}",
                     "{C:inactive}(ranks change each round)"
                 },
             },
@@ -355,8 +355,8 @@ return {
                 name = "The Sole",
                 text = {
                     "Create a {C:purple}Legendary{} {C:attention}Joker{}",
-                    "It gains a {C:green}#1# in #2#{} chance to",
-                    "{C:red}self destruct{} at end of round",
+                    "with a {C:green}#1# in #2#{} chance to",
+                    "{C:red,E:2}self destruct{} at end of round",
                     "{ppu_bubble:usable}",
                 },
                 flavour = {
@@ -379,7 +379,7 @@ return {
                 text = {
                     "{X:attention,C:white}..Round{} Round,",
                     "then earn {C:gold}$#1#{} for every",
-                    "digit in {C:attention}Round{} {C:inactive}(max of $#2#)",
+                    "digit in {C:attention}Round{} {C:inactive}(max of {C:money}$#2#{C:inactive})",
                     "{C:inactive,s:0.8}(ex. round 12 -> round 1212,",
                     "{C:inactive,s:0.8}round 1284 -> round 12841284,",
                     "{C:inactive,s:0.8}67676155 -> 6767615567676155)",
@@ -392,9 +392,9 @@ return {
             fish_fac_mf_treasure_chest = {
                 name = "Treasure Chest",
                 text = {
-                    "Once per Ante, create a",
-                    "{C:fac_fish}Pearl{}, or if {C:fac_fish}Fish{} slots",
-                    "are full, earn {C:gold}$#1#{}",
+                    "Once per {C:attention}Ante{}, create a",
+                    "{C:fac_fish}Pearl{}, or if you don't",
+                    "have room, earn {C:gold}$#1#{}",
                     "{ppu_bubble:1}",
                 },
             },
@@ -402,15 +402,15 @@ return {
                 name = "Red Pearl",
                 text = {
                     {
-                        "Give up to {C:attention}#1#{}",
-                        "selected cards {C:mult}+#2#{} Mult",
+                        "Up to {C:attention}#1#{} selected",
+                        "cards gain {C:mult}+#2#{} Mult",
                         "{ppu_bubble:usable}",
                     },
                     {
                         "Select an additional",
                         "card for every {C:money}$#3#",
                         "earned while this is held",
-                        "{C:inactive}(Currently {C:money}$#4#{C:inactive} ({C:attention}#5#{C:inactive}))"
+                        "{C:inactive}(Currently {C:money}$#4#{C:inactive} earned)"
                     }
                 }
             },
@@ -427,7 +427,7 @@ return {
                         "Select an additional",
                         "card for every {C:money}$#2#",
                         "spent while this is held",
-                        "{C:inactive}(Currently {C:money}$#3#{C:inactive} ({C:attention}#4#{C:inactive}))"
+                        "{C:inactive}(Currently {C:money}$#3#{C:inactive} spent)"
                     }
                 }
             },
@@ -435,14 +435,14 @@ return {
                 name = "Green Pearl",
                 text = {
                     {
-                        "Give {C:green}#1#{} free rerolls",
+                        "Give {C:green}+#1#{} free Rerolls",
                         "{ppu_bubble:usable}",
                     },
                     {
-                        "Gives an additional {C:green}reroll",
+                        "Gives an additional {C:green}Reroll",
                         "for every {C:attention}#2#{} cards",
                         "sold while this is held",
-                        "{C:inactive}(Currently {C:attention}#3#{C:inactive} ({C:green}#4#{C:inactive} rerolls))"
+                        "{C:inactive}(Currently {C:attention}#3#{C:inactive} sold)"
                     }
                 }
             },
@@ -450,14 +450,13 @@ return {
                 name = "Gold Pearl",
                 text = {
                     {
-                        "Give each {C:attention}Joker",
-                        "a {C:attention}retrigger{} and a",
-                        "{C:green}#1# in #2#{} chance to {C:red}self{}",
-                        "{C:red}destruct{} each round",
+                        "Give each {C:attention}Joker +1{} retrigger",
+                        "and a {C:green}#1# in #2#{} chance to",
+                        "{C:red,E:2}self destruct{} each round",
                         "{ppu_bubble:usable}",
                     },
                     {
-                        "Increase {C:green}denominator{} by {C:green}#3#{}",
+                        "Increase {C:green}denominator{} by {C:green}+#3#{}",
                         "for each {C:attention}unscored{} card",
                         "played while this is held"
                     }
@@ -467,15 +466,15 @@ return {
                 name = "Black Pearl",
                 text = {
                     {
-                        "Destroy up to",
+                        "{C:red}Destroy{} up to",
                         "{C:attention}#1#{} selected cards",
                         "{ppu_bubble:usable}",
                     },
                     {
                         "Select an additional",
                         "card for every {C:red}#2#{} cards",
-                        "discarded while this is held",
-                        "{C:inactive}(Currently {C:red}#3#{C:inactive} ({C:attention}#4#{C:inactive}))"
+                        "{C:red}discarded{} while this is held",
+                        "{C:inactive}(Currently {C:red}#3#{C:inactive} discarded)"
                     }
                 }
             }
@@ -595,6 +594,9 @@ return {
             k_fac_mf_pearl = "Pearl",
 
             ppu_bubble_mf_evil = ' EVIL ',
+
+            fac_mf_a = "a",
+            fac_mf_an = "an",
         },
     }
 }
