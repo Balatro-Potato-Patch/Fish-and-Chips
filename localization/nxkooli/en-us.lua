@@ -85,39 +85,178 @@ return{
                     "Wait no, I\'m a catfish!",
                 }
             },
+
             fish_fac_nxkooli_pp_tile = {
                 name = {
                     "Fisher\'s Tile",
                 },
-                text = {
-                    {
-                        "{V:1}+#3#{} #4# for #7# {C:attention}#6#{}",
-                        "in the {C:attention}name{} and {C:attention}flavor text{}",
-                        "of the {C:planet}Fish{} to the right",
-                        "{C:inactive,s:0.8}(Tile changes every hand)",
-                        "{C:inactive}(Currently {V:1}+#8#{C:inactive} #4#)"
-
-                        
-                    }
-                },
+                text = {},
                 flavor = {
                     "Previously a weapon of the oppressed.",
-                    "Now merely a reminder of the Party\'s","past influence.",
+                    "Now merely a reminder of the Party\'s",
+                    "past influence.",
                 }
             },
-            fish_fac_nxkooli_pp_tile_crit = {
+
+
+
+            fish_fac_nxkooli_pp_tile_wood = {
                 name = {
                     "Fisher\'s Tile",
                 },
                 text = {
                     {
-                        "{V:1}+#3#{} #4# and",
-                        "{X:1,C:white}+X#5#{} #4# for #7# {C:attention}#6#{}",
+                        "{C:mult}+#1#{} Mult for each \"{C:attention}#3#{}\"",
                         "in the {C:attention}name{} and {C:attention}flavor text{}",
-                        "of the {C:planet}Fish{} to the right",
+                        "of the {C:fac_fish}Fish{} to the right",
                         "{C:inactive,s:0.8}(Tile changes every hand)",
-                        "{C:inactive}(Currently {V:1}+#8#{C:inactive}, {X:1,C:white}X#9#{C:inactive} #4#)"
-                        
+                        "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)"
+                    }
+                },
+                flavor = {
+                    "Previously a weapon of the oppressed.",
+                    "Now merely a reminder of the Party\'s",
+                    "past influence.",
+                }
+            },
+            fish_fac_nxkooli_pp_tile_wood_any = {
+                name = {
+                    "Fisher\'s Tile",
+                },
+                text = {
+                    {
+                        "{C:mult}+#1#{} Mult for most frequent {C:attention}letter{}",
+                        "in the {C:attention}name{} and {C:attention}flavor text{}",
+                        "of the {C:fac_fish}Fish{} to the right",
+                        "{C:inactive,s:0.8}(Tile changes every hand)",
+                        "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)"
+                    }
+                },
+                flavor = {
+                    "Previously a weapon of the oppressed.",
+                    "Now merely a reminder of the Party\'s",
+                    "past influence.",
+                }
+            },
+
+
+            
+            fish_fac_nxkooli_pp_tile_plastic = {
+                name = {
+                    "Fisher\'s Tile",
+                },
+                text = {
+                    {
+                        "{C:chips}+#1#{} Chips for each \"{C:attention}#3#{}\"",
+                        "in the {C:attention}name{} and {C:attention}flavor text{}",
+                        "of the {C:fac_fish}Fish{} to the right",
+                        "{C:inactive,s:0.8}(Tile changes every hand)",
+                        "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)"
+                    }
+                },
+                flavor = {
+                    "Previously a weapon of the oppressed.",
+                    "Now merely a reminder of the Party\'s",
+                    "past influence.",
+                }
+            },
+            fish_fac_nxkooli_pp_tile_plastic_any = {
+                name = {
+                    "Fisher\'s Tile",
+                },
+                text = {
+                    {
+                        "{C:chips}+#1#{} Chips for most frequent {C:attention}letter{}",
+                        "in the {C:attention}name{} and {C:attention}flavor text{}",
+                        "of the {C:fac_fish}Fish{} to the right",
+                        "{C:inactive,s:0.8}(Tile changes every hand)",
+                        "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)"
+                    }
+                },
+                flavor = {
+                    "Previously a weapon of the oppressed.",
+                    "Now merely a reminder of the Party\'s",
+                    "past influence.",
+                }
+            },
+
+
+
+            fish_fac_nxkooli_pp_tile_crit_wood = {
+                name = {
+                    "Fisher\'s Tile",
+                },
+                text = {
+                    {
+                        "{C:mult}+#1#{} Mult and",
+                        "{X:mult,C:white}X#2#{} Mult for each \"{C:attention}#3#{}\"",
+                        "in the {C:attention}name{} and {C:attention}flavor text{}",
+                        "of the {C:fac_fish}Fish{} to the right",
+                        "{C:inactive,s:0.8}(Tile changes every hand)",
+                        "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult, {X:mult,C:white}X#5#{C:inactive} Mult)"
+                    }
+                },
+                flavor = {
+                    "Previously a weapon of the oppressed.",
+                    "Now merely a reminder of the Party\'s",
+                    "past influence.",
+                }
+            },
+            fish_fac_nxkooli_pp_tile_crit_wood_any = {
+                name = {
+                    "Fisher\'s Tile",
+                },
+                text = {
+                    {
+                        "{C:mult}+#1#{} Mult and",
+                        "{X:mult,C:white}X#2#{} Mult for most frequent {C:attention}letter{}",
+                        "in the {C:attention}name{} and {C:attention}flavor text{}",
+                        "of the {C:fac_fish}Fish{} to the right",
+                        "{C:inactive,s:0.8}(Tile changes every hand)",
+                        "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult, {X:mult,C:white}X#5#{C:inactive} Mult)"
+                    }
+                },
+                flavor = {
+                    "Previously a weapon of the oppressed.",
+                    "Now merely a reminder of the Party\'s",
+                    "past influence.",
+                }
+            },
+
+
+
+            fish_fac_nxkooli_pp_tile_crit_plastic = {
+                name = {
+                    "Fisher\'s Tile",
+                },
+                text = {
+                    {
+                        "{C:chips}+#1#{} Chips and",
+                        "{X:chips,C:white}X#2#{} Chips for each \"{C:attention}#3#{}\"",
+                        "in the {C:attention}name{} and {C:attention}flavor text{}",
+                        "of the {C:fac_fish}Fish{} to the right",
+                        "{C:inactive,s:0.8}(Tile changes every hand)",
+                        "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips, {X:chips,C:white}X#5#{C:inactive} Chips)"
+                    }
+                },
+                flavor = {
+                    "Previously a weapon of the oppressed.",
+                    "Now merely a reminder of the Party\'s",
+                    "past influence.",
+                }
+            },
+            fish_fac_nxkooli_pp_tile_crit_plastic_any = {
+                name = {
+                    "Fisher\'s Tile",
+                },
+                text = {
+                    {
+                        "{C:chips}+#1#{} Chips and",
+                        "{X:chips,C:white}X#2#{} Chips for most frequent {C:attention}letter{}",
+                        "in the {C:attention}name{} and {C:attention}flavor text{}",
+                        "of the {C:fac_fish}Fish{} to the right",
+                        "{C:inactive,s:0.8}(Tile changes every hand)",
+                        "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips, {X:chips,C:white}X#5#{C:inactive} Chips)"
                     }
                 },
                 flavor = {

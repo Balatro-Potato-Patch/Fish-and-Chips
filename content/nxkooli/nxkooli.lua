@@ -466,43 +466,38 @@ FishAndChips.Fish {
 	end,
 
 	loc_vars = function(self, info_queue, card)
-
-
-		local color = card.ability.is_plastic and G.C.CHIPS or G.C.MULT
 		local value = card.ability.is_plastic and card.ability.extra.plastic or card.ability.extra.wood
-		local type = card.ability.is_plastic and "Chips" or "Mult"
-		local _key = card.ability.is_crit and self.key.."_crit" or self.key
-		local every = card.ability.letter == "*" and "most frequent" or "every"
-		local every_letter = card.ability.letter == "*" and "letter" or ("\"" .. (card.ability.letter or "?") .. "\"")
-		local material = card.ability.is_plastic and "Plastic " or "Wooden "
-		local crit = card.ability.is_crit and "Crit " or ""
 		local other_fish = nil
 		if G.fac_fish_area then
 			for i = 1, #G.fac_fish_area.cards do
-				if G.fac_fish_area.cards[i] == card then other_fish = G.fac_fish_area.cards[i + 1] end
+				if G.fac_fish_area.cards[i] == card then other_fish = G.fac_fish_area.cards[i + 1]; break; end
 			end
 		end
 
-		if not other_fish or not other_fish.config or not other_fish.config.center or not other_fish.config.center.key then other_fish = nil end
+		local count
+		if not other_fish or not other_fish.config or not other_fish.config.center or not other_fish.config.center.key then count = 0
+		else
+			local fish_key = other_fish.config.center.key
+			if other_fish.config.center.loc_vars then
+				local loc_ret = other_fish.config.center:loc_vars({}, other_fish)
+				fish_key = loc_ret and loc_ret.key or fish_key
+			end
+			count = self:countLetters(fish_key, card.ability.letter) or 0
+		end
 
-		local count = other_fish and self:countLetters(other_fish.config.center.key, card.ability.letter) or 0
-		local total_value = value * count
-		local total_value_x = 1 + (card.ability.extra.xval * count)
-
+		local key = self.key
+		if card.ability.is_crit then key = key.."_crit" end
+		if card.ability.is_plastic then key = key.."_plastic"
+		else key = key.."_wood" end
+		if card.ability.letter == "*" then key = key.."_any" end
 		local ret = {}
-		ret.key = _key
+		ret.key = key
 		ret.vars = {
-			card.ability.letter,
-			letter_value[card.ability.letter].value or 1,
 			value * (letter_value[card.ability.letter].value or 1),
-			type,
 			card.ability.extra.xval,
-			every_letter,
-			every,
-			total_value, total_value_x,
-			material,crit,
-
-			colours = {color}
+			card.ability.letter or "?",
+			value * count,
+			1 + (card.ability.extra.xval * count),
 		}
 		return ret
 	end,
@@ -523,7 +518,11 @@ FishAndChips.Fish {
 			if not other_fish or not other_fish.config or not other_fish.config.center or not other_fish.config.center.key then return {} end
 
 
-			fish_key = other_fish.config.center.key
+			local fish_key = other_fish.config.center.key
+			if other_fish.config.center.loc_vars then
+				local loc_ret = other_fish.config.center:loc_vars({}, other_fish)
+				fish_key = loc_ret and loc_ret.key or fish_key
+			end
 			local count = self:countLetters(fish_key, letter)
 
 
@@ -548,7 +547,7 @@ FishAndChips.Fish {
 			return ret
 		end
 
-		if context.after then
+		if context.after and not context.blueprint then
 			G.E_MANAGER:add_event(Event({
 			func = function()
 				local back = nxkooli_pick(types, pseudorandom(pseudoseed("nxkooli_pp_tile_after")))

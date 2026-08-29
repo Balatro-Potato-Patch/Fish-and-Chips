@@ -1286,6 +1286,7 @@ function fac_ghostsalt_mezepheles_wordify_fish(key, ignore_no_collection)
 	if key == "fish_fac_ghostsalt_mezepheles" then return {} end
 	if ignore_no_collection and G.P_CENTERS[key] and G.P_CENTERS[key].no_collection then return {} end
 	local loc_target = G.localization.descriptions["fac_Fish"][key]
+	if not loc_target then return {} end
 	local final_line = ""
 	local box = loc_target.text_parsed[1]
 	if not box then return {} end
