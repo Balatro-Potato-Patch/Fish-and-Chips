@@ -49,6 +49,7 @@ local FAC_SCARE_DURATION = 0.4
 local FAC_DECAY_UNLOCK_THRESHOLD = 0.15
 local FAC_SCENE_CANVAS_RES_SCALE = 0.55
 local FAC_TRACK_H_RATIO = 0.72
+local FAC_BOBBER_BOTTOM_INSET = 30
 local FAC_FISH_DRAW_SIZE = 10
 local FAC_FISH_DRAW_VRADIUS_FACTOR = 0.56
 local FAC_FISH_HITBOX_FORGIVENESS = 0.6
@@ -1425,8 +1426,8 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
     local stable_rod_x = state.stable_rod_x
 
     local water_top = py + ph * (env.water_bounds and env.water_bounds.top or 0.80)
-    local water_bottom = py + ph * (env.water_bounds and env.water_bounds.bottom or 0.84)
-
+    local water_bottom = math.min(py + ph * (env.water_bounds and env.water_bounds.bottom or 0.84), py + ph - FAC_BOBBER_BOTTOM_INSET)
+    water_top = math.min(water_top, water_bottom)
     local track_w = fac_clamp(pw * 0.05, 26, 52)
     local track_h = ph * FAC_TRACK_H_RATIO
     local track_x = px + pw * 0.83

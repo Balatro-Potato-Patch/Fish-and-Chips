@@ -225,35 +225,58 @@ function FishAndChips.add_bait_to_inventory(key, amt)
 	end
 end
 
+function FishAndChips.sync_active_bait()
+	if not G.GAME or not G.GAME.fac_bait_inventory or not G.fac_bait_area then return end
+	local key = G.GAME.fac_active_bait
+	local inventory_bait = key and G.GAME.fac_bait_inventory[key]
+	if not inventory_bait or inventory_bait.amt <= 0 or not G.P_CENTERS[key] then
+		key = nil
+		G.GAME.fac_active_bait = nil
+	end
+	local active_card = G.fac_bait_area.cards[1]
+	local active_key = active_card and (active_card.config.center_key or active_card.config.center and active_card.config.center.key)
+	if not key or active_key ~= key or #G.fac_bait_area.cards > 1 then
+		for i = #G.fac_bait_area.cards, 1, -1 do
+			G.fac_bait_area.cards[i]:remove()
+		end
+		active_card = key and SMODS.add_card({ key = key, area = G.fac_bait_area, skip_materialize = true }) or nil
+	end
+	if G.FISHING then
+		if active_card then FishAndChips.update_bait_counter(active_card)
+		elseif G.FISHING.fishing_bait_count then
+			G.FISHING.fishing_bait_count:remove()
+			G.FISHING.fishing_bait_count = nil
+		end
+	end
+end
+
 function FishAndChips.remove_bait_from_inventory(key, amt)
 	local zeroed = false
-
 	local b = G.GAME.fac_bait_inventory[key]
 	b.amt = math.max(b.amt - (amt or 1), 0)
 	if b.amt == 0 then
 		zeroed = true
 	end
-	
-	if key == G.GAME.fac_active_bait then
+	if key == G.GAME.fac_active_bait and not zeroed then
+		local active_key = key
 		G.E_MANAGER:add_event(Event({
 			func = function()
-				FishAndChips.update_bait_counter(G.fac_bait_area.cards[1])
+				if G.GAME.fac_active_bait == active_key and G.fac_bait_area.cards[1] then
+					FishAndChips.update_bait_counter(G.fac_bait_area.cards[1])
+				end
 				return true;
 			end
 		}))
 	end
-
 	if zeroed then
 		if key == G.GAME.fac_active_bait then
-			SMODS.destroy_cards(G.fac_bait_area.cards[1], { pinch_anim = true, skip_calc = true })
 			G.GAME.fac_active_bait = nil
-			if G.FISHING.fishing_bait_count then
-				G.E_MANAGER:add_event(Event({
-					func = function()
-						G.FISHING.fishing_bait_count:remove()
-						return true;
-					end
-				}))
+			if G.fac_bait_area.cards[1] then
+				SMODS.destroy_cards(G.fac_bait_area.cards[1], { pinch_anim = true, skip_calc = true })
+			end
+			if G.FISHING and G.FISHING.fishing_bait_count then
+				G.FISHING.fishing_bait_count:remove()
+				G.FISHING.fishing_bait_count = nil
 			end
 		end
 		G.GAME.fac_bait_inventory[key] = nil

@@ -1095,6 +1095,7 @@ function G.FUNCS.fac_set_active_bait(e)
 
 	if G.FISHING and G.FISHING.fishing_bait_count then
 		G.FISHING.fishing_bait_count:remove()
+		G.FISHING.fishing_bait_count = nil
 	end
 
 	local bait = SMODS.add_card({ key = e.config.key, area = G.fac_bait_area, skip_materialize = true })

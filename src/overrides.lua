@@ -416,6 +416,12 @@ end
 local start_run_ref = Game.start_run
 function Game:start_run(...)
 	start_run_ref(self, ...)
+	G.E_MANAGER:add_event(Event({
+		func = function()
+			FishAndChips.sync_active_bait()
+			return true
+		end
+	}))
 	FishAndChips.stop_ambience()
 	FishAndChips.stop_reel_sound()
 
