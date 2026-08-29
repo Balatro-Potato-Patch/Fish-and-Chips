@@ -1,0 +1,23 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''if flags.remove_from_hand then unsplashed = true end'''
+position = "after"
+payload = '''
+if #SMODS.find_card("fish_fac_wilson_mug") % 2 == 1 then
+	if splashed and not unsplashed then
+		unsplashed = true
+		splashed = false
+	else
+		splashed = true
+		unsplashed = false
+	end
+end
+'''
+match_indent = true
+

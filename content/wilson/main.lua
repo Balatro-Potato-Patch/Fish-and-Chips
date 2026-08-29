@@ -132,18 +132,6 @@ FishAndChips.Fish {
 		weight = {min = 0.25, max = 0.6},
 		length = {min = 0.10, max = 0.20}
 	},
-	calculate = function(self, card, context)
-		if context.modify_scoring_hand then
-			if next(SMODS.find_card"j_splash") then return { remove_from_hand = true } end -- Doesn't play nice by default
-			local c = context.other_card
-			local scoring = false
-			for _, v in ipairs(context.scoring_hand) do
-				if c == v then scoring = true break end
-			end
-			if scoring then return { remove_from_hand = true } end
-			return { add_to_hand = true }
-		end
-	end,
 }
 
 local function checkSprites(fish)
