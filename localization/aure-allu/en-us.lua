@@ -169,7 +169,7 @@ return {
             fish_fac_aureallu_blue_garden_gnome = {
                 name = "Blue Garden Gnome",
                 text = {
-                    "{C:white,X:money}X#1#{C:money} Treasure{} rewards",
+                    "{C:white,X:attention}X#1#{C:attention} Treasure{} rewards",
                     "and catch speed"
                 },
                 flavor = {

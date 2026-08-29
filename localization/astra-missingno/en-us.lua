@@ -207,7 +207,7 @@ return {
                 text = {
                     "Applies a {C:green}random{} {C:dark_edition}edition",
                     "to the next {C:attention}#1# {C:fac_fish}Fish{}",
-                    "caught {C:attention}perfectly{}"
+                    "caught {C:gold}perfectly{}"
                 },
                 flavor = {
                     "Typical French Cuisine",

@@ -31,9 +31,9 @@ return {
                         "end of round",
                     },
                     {
-                        "When {C:attention}Used{}, all cards",
-                        "held in hand",
-                        "become {C:attention}Gold{} cards",
+                        "When {C:attention}used{}, all cards held",
+                        "in hand become {C:attention}Gold{} cards",
+                        "{ppu_bubble:usable}"
                     },
                 },
                 flavor = {
@@ -46,9 +46,9 @@ return {
                 name = "Salmonid",
                 text = {
                     {
-                        "If played hand has",
+                        "If played hand contains",
                         "{C:attention}#1#{} scoring cards, a random",
-                        "unenhanced card becomes",
+                        "{C:attention}unenhanced{} card becomes",
                         "a {C:attention}Mult{} or {C:attention}Bonus{} card",
                     },
                 },
@@ -62,9 +62,10 @@ return {
                 name = "Squid?",
                 text = {
                     {
-                        "When {C:attention}Used{}, {C:attention}#1#{} random cards",
-                        "held in hand become {V:1}#2#{}",
+                        "When {C:attention}used{}, {C:attention}#1#{} random cards",
+                        "held in hand become {V:1}#2#{},",
                         "{s:0.8}suit changes at end of round",
+                        "{ppu_bubble:usable}"
                     },
                 },
                 flavor = {
@@ -77,10 +78,9 @@ return {
                 name = "Spiked Fish",
                 text = {
                     {
-                        "This Fish gains {C:white,X:mult}X#1#{} when",
-                        "{C:money}Treasure{} is {C:attention}ready{} to be caught,",
-                        "{C:red}resets{} when a {C:fac_fish}Fish{} is caught and",
-                        "available {C:money}Treasure{} is {C:attention}not{} caught",
+                        "Gains {C:white,X:mult}X#1#{} Mult when {C:attention}Treasure{}",
+                        "is caught, {C:red}resets{} if {C:attention}Treasure{}",
+                        "is {C:red}missed{} when catching a {C:fac_fish}Fish{}",
                         "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
                     },
                 },
@@ -94,9 +94,10 @@ return {
                 text = {
                     {
                         "After scoring {C:attention}#1#{} {C:inactive}[#2#]{} cards",
-                        "of rank {C:attention}2{}, {C:attention}Use{} this Fish",
+                        "of rank {C:attention}2{}, {C:attention}use{} this {C:fac_fish}Fish{}",
                         "to create {C:attention}#3#{} random {C:fac_fish}Fish{}",
                         "{C:inactive}(Must have room){}",
+                        "{ppu_bubble:usable}"
                     },
                 },
                 flavor = {
@@ -130,11 +131,12 @@ return {
                 text = {
                     {
                         "{C:green}#1# in #2#{} chance for",
-                        "{C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}$#3#{} at end of round",
+                        "{C:fac_sand_dollars,f:fac_sand_dollars}$#3#{} at end of round",
                     },
                     {
-                        "When {C:attention}Used{}, earn {C:fac_sand_dollars,s:0.9,f:fac_sand_dollars}$#4#{}",
-                        "and {C:red}-$#5#",
+                        "{C:attention}Use{} to earn {C:fac_sand_dollars,f:fac_sand_dollars}$#4#{}",
+                        "and lose {C:red}-$#5#",
+                        "{ppu_bubble:usable}"
                     },
                 },
                 flavor = {
@@ -147,11 +149,11 @@ return {
                 name = "Intergalactic Drunkfish",
                 text = {
                     {
-                        "{C:red}+#1#{} Discard for {C:attention}this round{}",
+                        "If played hand contains a",
+                        "{C:attention}#3#{}, {C:red}+#1#{} discard",
                         "and each played card",
-                        "gives {C:money}$#2#{} when scored if",
-                        "poker hand is a {C:attention}#3#{}",
-                        "{s:0.8}poker hand changes every {C:attention,s:0.8}hand{}",
+                        "earns {C:money}$#2#{} when scored",
+                        "{s:0.8}Poker hand changes every {C:attention,s:0.8}hand{}",
                     },
                 },
                 flavor = {
