@@ -161,7 +161,7 @@ PotatoPatchUtils.Developer {
             0, 0,
             0.95*G.CARD_W,
             0.95*G.CARD_H, 
-            {type = 'joker', highlight_limit = 1, colour = HEX("00000000")}
+            {type = 'joker', no_card_count = true, highlight_limit = 1, colour = HEX("00000000")}
         )
         SMODS.add_card({ key = "c_aura", area = area })
         return {
