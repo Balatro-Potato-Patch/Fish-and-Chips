@@ -44,7 +44,9 @@ return {
             fish_fac_wilson_mug = {
                 name = "Big Blue Mug",
                 text = {
-                    "{C:attention}Inverts{} scored cards",
+                    "When a hand is played:",
+                    "Unscored cards are {C:attention}scored{}",
+                    "Scored cards are {C:red}unscored{}",
                 },
                 flavor = {
                     "Scientists are still debating whether",
