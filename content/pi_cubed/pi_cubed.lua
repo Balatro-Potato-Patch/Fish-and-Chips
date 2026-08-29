@@ -25,6 +25,7 @@ SMODS.Atlas({
 -- Smaller Wrapped Fish
 -- dev note for playtesters: i think this fish can create treasure fish.
 -- this is not intended behaviour and i wouldn't mind if it was no longer able to
+-- i think it's fine (ghostsalt)
 FishAndChips.Fish {
 	key = "pi_cubed_smallerwrappedfish",
 	atlas = "pi_cubed_fish",
@@ -32,6 +33,8 @@ FishAndChips.Fish {
     pixel_size = { w = 54, h = 61 },
 	ppu_coder = { "pi_cubed" },
 	ppu_artist = { "pi_cubed" },
+    blueprint_compat = false,
+    eternal_compat = false,
 	weight = 10,
     environments = {
 		wormhole = 4,
@@ -196,6 +199,8 @@ FishAndChips.Fish {
     pixel_size = { w = 53, h = 92 },
 	ppu_coder = { "pi_cubed" },
 	ppu_artist = { "pi_cubed" },
+    blueprint_compat = false,
+    eternal_compat = false,
 	weight = 10,
     environments = {
 		city_river = 4,
@@ -343,6 +348,7 @@ FishAndChips.Fish {
     pixel_size = { w = 69, h = 72 },
 	ppu_coder = { "pi_cubed" },
 	ppu_artist = { "pi_cubed" },
+    perishable_compat = false,
 	weight = 10,
     environments = {
 		styx = 4,
@@ -368,7 +374,7 @@ FishAndChips.Fish {
         return { vars = { card.ability.extra.xmult_mod, card.ability.extra.xmult } }
     end,
     calculate = function(self, card, context)
-		if context.treasure_progress and context.treasure_progress == 1 and not context.blueprint then
+		if context.fac_end_fishing and context.treasure and not context.blueprint then
             return {
                 card = card,
                 func = function()
@@ -383,7 +389,7 @@ FishAndChips.Fish {
                 end
             }
         end
-        if context.missed_treasure and not context.blueprint and card.ability.extra.xmult ~= 1 then
+        if context.fac_end_fishing and context.missed_treasure and not context.blueprint and card.ability.extra.xmult ~= 1 then
             local reset_xmult = -card.ability.extra.xmult + 1
 			return {
 				card = card,
@@ -418,6 +424,7 @@ FishAndChips.Fish {
 	ppu_coder = { "pi_cubed" },
 	ppu_artist = { "pi_cubed" },
     blueprint_compat = false,
+    eternal_compat = false,
 	weight = 10,
     environments = {
 		pier = 4,
@@ -512,7 +519,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
 		if context.before and next(context.poker_hands[card.ability.extra.poker_hand]) then
             ease_discard(card.ability.extra.discard_mod)
-            SMODS.calculate_effect({ message = localize { type = 'variable', key = 'a_discards', vars = { card.ability.extra.discard_mod } }, colour = G.C.RED, }, card)
+            SMODS.calculate_effect({ message = localize { type = 'variable', key = 'a_discards', vars = { card.ability.extra.discard_mod } }, colour = G.C.RED, }, context.blueprint_card or card)
         end
         if context.individual and context.cardarea == G.play and
         next(context.poker_hands[card.ability.extra.poker_hand]) then
@@ -614,7 +621,7 @@ FishAndChips.Fish {
         end
 
         if context.repetition and context.other_card:is_suit('Diamonds')
-        and context.other_card.seal then
+        and (context.other_card.seal or context.other_card.yellowtanged) then
             return {
                 repetitions = card.ability.extra.repetitions
             }
@@ -630,6 +637,8 @@ FishAndChips.Fish {
     pixel_size = { w = 65, h = 65 },
 	ppu_coder = { "pi_cubed" },
 	ppu_artist = { "pi_cubed" },
+    blueprint_compat = false,
+    eternal_compat = false,
 	weight = 5,
     environments = {
 		pier = 4,

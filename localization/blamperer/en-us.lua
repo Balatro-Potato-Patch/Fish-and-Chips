@@ -17,7 +17,7 @@ return {
                 text = {
                     "Earn {C:money}$#1#{} when returning",
                     "from fishing based on your",
-                    "best streak of {C:gold}Perfect Catches",
+                    "best streak of {C:gold}perfect catches",
                     "{C:inactive}(Resets on payout)",
                     "{C:inactive}(Highest streak: {C:gold}#2#{C:inactive} in a row)"
                 },
@@ -67,7 +67,7 @@ return {
             fish_fac_blamperer_clout = {
                 name = "Clout Trout",
                 text = {
-                    "{X:attention,C:white}#1#X{} Treasure rewards if",
+                    "{X:attention,C:white}#1#X{} {C:treasure}Treasure{} rewards if",
                     "{C:fac_fish}Fish{} is caught {C:gold}perfectly"
                 },
                 flavor = {

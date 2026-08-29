@@ -51,7 +51,7 @@ return {
                 text = {
                     "Creates a random {C:dark_edition}Negative{}",
                     "{C:tarot}Tarot{} or {C:planet}Planet{} card when",
-                    "{C:attention}treasure{} is reeled in",
+                    "{C:attention}Treasure{} is reeled in",
                 },
                 flavor = {
                     "Chat, is this nanefish?"
@@ -113,7 +113,7 @@ return {
                 name = "Double Dicefin",
                 text = {
                     "{X:green,C:white}X#1#{} to all {C:attention}listed{} {C:green}probabilities{}",
-                    "if a {C:attention}perfect catch{} was made",
+                    "if a {C:gold}perfect catch{} was made",
                     "last fishing trip",
                     "{C:inactive}(ex: {C:green}1 in 3 {C:inactive}-> {C:green}#1# in 3{C:inactive})",
                     "{ppu_bubble:1}"
@@ -127,7 +127,7 @@ return {
             fish_fac_waffle_gossamer_worm = {
                 name = "Gossamer Worm",
                 text = {
-                    "If catch is a {C:attention}perfect catch{} and",
+                    "If catch is a {C:gold}perfect catch{} and",
                     "{C:attention}Treasure{} is reeled in, create a",
                     "random {C:spectral}Spectral{} card",
                     "{C:inactive}(Must have room)"

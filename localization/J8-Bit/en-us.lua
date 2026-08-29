@@ -227,7 +227,7 @@ return {
                 },
                 text = {
                     "{X:blue,C:white} X#1# {} {C:fac_fish}Fish{} swimming speed",
-                    "{X:money,C:white} X#1# {} reward from {C:gold}Treasure",
+                    "{X:attention,C:white} X#1# {} reward from {C:attention}Treasure",
                 },
                 flavour = {
                     "{element:1}",

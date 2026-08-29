@@ -41,7 +41,7 @@ return {
             fish_fac_gappieyouh_obsession = {
                 name = 'Obsessive Fish',
                 text = {
-                    "On {C:dark_edition}perfect catch{}, earn {C:money}$#1#{}",
+                    "On {C:gold}perfect catch{}, earn {C:money}$#1#{}",
                     "if there was {C:attention}Treasure{}",
                     "that you {C:red}didn't{} catch"
                 },
