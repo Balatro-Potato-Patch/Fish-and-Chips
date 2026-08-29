@@ -290,7 +290,11 @@ for _, bait in ipairs(FishAndChips.Bait.obj_buffer) do
             if args.type == 'fac_fish_caught' and args.bait == self.config.type and G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[self.config.type].fish_caught >= self.config.amount then return true end
         end,
         display_progress = function(self)
-            return G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[self.config.type].fish_caught .. '/' .. self.config.amount
+            local count = 0
+            if G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[self.config.type] then
+                count = G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[self.config.type].fish_caught
+            end
+            return count .. '/' .. self.config.amount
         end
     })
 
