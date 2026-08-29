@@ -23,7 +23,7 @@ return {
                 text = {
                     "{C:mult}+#1#{} Mult",
                     "Scored {C:attention}3s{} and {C:attention}7s",
-                    "act like {C:attention}Lucky Cards"
+                    "act like {C:attention}Lucky{} cards"
                 },
                 flavour = {
                     "Looks like Ehekatl took",
@@ -34,7 +34,7 @@ return {
                 name = "Toxikarp",
                 text = {
                     "Reduces {C:attention}Blind{} size by",
-                    "{C:attention}#1#%{} per {C:attention}Face Card{}",
+                    "{C:attention}#1#%{} per {C:attention}face card{}",
                     "in scoring hand"
                 },
                 flavour = {
@@ -53,12 +53,12 @@ return {
                     "true after all"
                 }
             },
-
             fish_fac_gezora = {
                 name = "Gezora",
                 text = {
-                    "{C:green}1 in #2#{} chance for",
-                    "{C:chips}+#1#{} Chips"
+                    "{C:green}#1# in #2#{} chance for each",
+                    "card held in hand",
+                    "to give {C:white,X:chips}X#3#{} Chips"
                 },
                 flavour = {
                     "This ISN'T Not-Gezora,",
@@ -70,7 +70,7 @@ return {
                 text = {
                     "Reduces {C:attention}Blind{} size by",
                     "{C:attention}#1#%{} if scoring hand",
-                    "contains {C:attention}2 or more{} suits"
+                    "contains {C:attention}#2# or more{} suits"
                 },
                 flavour = {
                     "The scales shimmer",
@@ -80,8 +80,8 @@ return {
             fish_fac_reaver_fish = {
                 name = "Reaver Shark",
                 text = {
-                    "{C:chips}+#1#{} Chips per each",
-                    "{C:attention}Face Card{} in scoring hand"
+                    "{C:chips}+#1#{} Chips per {C:attention}face{}",
+                    "{C:attention}card{} in scoring hand"
                 },
                 flavour = {
                     "Used to mine ore in the",
@@ -91,10 +91,10 @@ return {
             fish_fac_halibut_cannon = {
                 name = "Halibut Cannon",
                 text = {
-                    "{C:green}#1# in #2#{} chance to {C:attention}retrigger",
-                    "{C:attention}held{} cards {C:attention}#3#{} times",
-                    "{C:inactive,s:0.8}{C:green,s:0.8}Nominator{C:inactive,s:0.8} increases for every",
-                    "{C:attention,s:0.8}unique{C:fac_fish,s:0.8} Fish{C:inactive,s:0.8} caught",
+                    "{C:green}#1# in #2#{} chance to {C:attention}retrigger{} card",
+                    "{C:attention}held in hand{} abilities {C:attention}#3#{} times",
+                    "Gains {C:green}+#4#{} numerator when a",
+                    "new, {C:attention}unique{} {C:fac_fish}Fish{} is caught"
                 },
                 flavour = {
                     "Yup. Still overpowered."
@@ -103,9 +103,10 @@ return {
             fish_fac_trash_crab = {
                 name = "Trash Crab",
                 text = {
-                    "{C:chips}+#1#{} Chips per each",
-                    "{C:spades}Spade{} scored",
-                    "(Scales up as you score more)"
+                    "Played {C:spades}Spades{} give {C:chips}+#1#{} Chips",
+                    "when scored and {C:attention}permanently{}",
+                    "increase this {C:fac_fish}Fish's{} {C:chips}Chips{}",
+                    "bonus by {C:chips}+#2#{} Chips"
                 },
                 flavour = {
                     "Collects bits of junk",
@@ -115,9 +116,9 @@ return {
             fish_fac_primordial_wyrm = {
                 name = "Primordial Wyrm",
                 text = {
-                    "Reduces {C:attention}Blind{} size by",
-                    "{C:attention}#1#%{} times the current ante",
-                    "(Minimum {C:attention}50%{} reduction)"
+                    "Reduces {C:attention}Blind{} size by {C:attention}#1#%{}",
+                    "times the current {C:attention}Ante{}",
+                    "{C:inactive}(Max {C:attention}50%{C:inactive} reduction)"
                 },
                 flavour = {
                     "A colossal wyrm that",

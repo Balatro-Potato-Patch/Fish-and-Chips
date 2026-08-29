@@ -12,17 +12,6 @@ PotatoPatchUtils.Developer({
 	ignore_limits = false, -- USING THIS VALUE WILL RESULT IN YOUR SUBMISSION BEING REJECTED
 })
 
-local function fac_count_rank(scoring_hand, rank)
-	local count = 0
-	if not scoring_hand then return count end
-	for _, scored_card in ipairs(scoring_hand) do
-		if scored_card and scored_card.get_id and scored_card:get_id() == rank then
-			count = count + 1
-		end
-	end
-	return count
-end
-
 local function fac_has_rank_pair(scoring_hand)
 	if not scoring_hand then return false end
 	local seen = {}
@@ -93,7 +82,12 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main and context.scoring_hand then
-			local aces = fac_count_rank(context.scoring_hand, 14)
+			local aces = 0
+			for _, scored_card in ipairs(context.scoring_hand) do
+				if scored_card and scored_card:get_id() == 14 then
+					aces = aces + 1
+				end
+			end
 			if aces > 0 then
 				return { sand_dollars = aces * card.ability.extra.sand_dollars }
 			end
@@ -181,12 +175,12 @@ FishAndChips.Fish {
 		if context.joker_main and context.scoring_hand then
 			local face_cards = 0
 			for _, scored_card in ipairs(context.scoring_hand) do
-				if scored_card and scored_card.get_id and scored_card:get_id() >= 11 and scored_card:get_id() <= 13 then
+				if scored_card and scored_card:is_face() then
 					face_cards = face_cards + 1
 				end
 			end
 			if face_cards > 0 then
-				return { xblind_size = 1 - card.ability.extra.blinds * 0.01 * face_cards }
+				return { xblind_size = 1 - (card.ability.extra.blinds * 0.01 * face_cards) }
 			end
 		end
 	end,
@@ -218,9 +212,10 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main and context.scoring_hand then
-			local twos = fac_count_rank(context.scoring_hand, 2)
-			if twos > 0 then
-				return { x_mult = card.ability.extra.x_mult }
+			for _, scored_card in ipairs(context.scoring_hand) do
+				if scored_card and scored_card:get_id() == 2 then
+					return { x_mult = card.ability.extra.x_mult }
+				end
 			end
 		end
 	end,
@@ -248,17 +243,19 @@ FishAndChips.Fish {
 	},
 	config = {
 		extra = {
-			chance = 3,
-			chips = 2,
+			num = 1,
+			denom = 3,
+			xchips = 2,
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chance, card.ability.extra.chips } }
+      	local num, denom = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.denom, "fac_gezora")
+		return { vars = { num, denom, card.ability.extra.xchips } }
 	end,
 	calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.hand and not context.repetition and not context.mod_probability and not context.fix_probability then
-			if SMODS.pseudorandom_probability(card, 'fac_gezora', 1, card.ability.extra.chance) then
-				return { chips = card.ability.extra.chips }
+		if context.individual and context.cardarea == G.hand and not context.end_of_round then
+			if SMODS.pseudorandom_probability(card, 'fac_gezora', card.ability.extra.num, card.ability.extra.denom) then
+				return { xchips = card.ability.extra.xchips }
 			end
 		end
 	end,
@@ -283,26 +280,55 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			blinds = 3,
+			requirement = 2
 		}
 	},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.blinds } }
+		return { vars = { card.ability.extra.blinds, card.ability.extra.requirement } }
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main and context.scoring_hand then
-			local unique_suits = {}
-			for _, scored_card in ipairs(context.scoring_hand) do
-				if scored_card then
-					local suit = scored_card.base and scored_card.base.suit -- TODO: Wild cards ?
-					if suit then
-						unique_suits[suit] = true
+			local best = 0
+			local function search(card_index, used_suits, chosen_cards)
+				if best >= card.ability.extra.requirement then return end
+				if card_index > #context.scoring_hand then
+					local count = 0
+					for _ in pairs(used_suits) do
+						count = count + 1
+					end
+					if count > best then
+						best = count
+					end
+					return
+				end
+
+				local had_suit = false
+				for k, v in pairs(SMODS.Suits) do
+					if context.scoring_hand[card_index]:is_suit(k) then
+						had_suit = true
+						local suit_used = not not used_suits[k]
+						used_suits[k] = true
+
+						if not suit_used then
+							chosen_cards[#chosen_cards + 1] = card_index
+						end
+
+						search(card_index + 1, used_suits, chosen_cards)
+
+						if not suit_used then
+							chosen_cards[#chosen_cards] = nil
+							used_suits[k] = nil
+						end
 					end
 				end
+				if not had_suit then
+					search(card_index + 1, used_suits, chosen_cards)
+				end
 			end
-			local suit_count = 0
-			for _ in pairs(unique_suits) do suit_count = suit_count + 1 end
-			if suit_count >= 2 then
-				return { xblind_size = 1 - card.ability.extra.blinds * 0.01 }
+			search(1, {}, {})
+			
+			if best >= card.ability.extra.requirement then
+				return { xblind_size = 1 - (card.ability.extra.blinds * 0.01) }
 			end
 		end
 	end,
@@ -369,22 +395,24 @@ FishAndChips.Fish {
 	config = {
 		extra = {
 			numerator = 1,
+			numerator_increase = 1,
 			denominator = 25,
 			repetitions = 3,
 			unique_fish = {}, -- Map of fish keys
 		}
 	},
+	perishable_compat = false,
 	loc_vars = function(self, info_queue, card)
 		local unique_fish = table_length(card.ability.extra.unique_fish)
-		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.numerator + unique_fish, card.ability.extra.denominator, "fac_MP_halibut")
-		return { vars = { numerator, denominator, card.ability.extra.repetitions } }
+		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.numerator + (unique_fish * card.ability.extra.numerator_increase), card.ability.extra.denominator, "fac_MP_halibut")
+		return { vars = { numerator, denominator, card.ability.extra.repetitions, card.ability.extra.numerator_increase } }
 	end,
 	calculate = function(self, card, context)
-		if context.fac_fish_caught then
+		if context.fac_fish_caught and not context.blueprint then
 			card.ability.extra.unique_fish[context.fish] = true
 		elseif context.repetition and context.cardarea == G.hand then
 			local unique_fish = table_length(card.ability.extra.unique_fish)
-			if SMODS.pseudorandom_probability(card, 'fac_halibut_cannon', card.ability.extra.numerator + unique_fish, card.ability.extra.denominator) then
+			if SMODS.pseudorandom_probability(card, 'fac_halibut_cannon', card.ability.extra.numerator + (unique_fish * card.ability.extra.numerator_increase), card.ability.extra.denominator) then
 				return {
 					repetitions = card.ability.extra.repetitions,
 				}
@@ -415,17 +443,21 @@ FishAndChips.Fish {
 			chips_mod = 1,
 		}
 	},
+	perishable_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips_mod } } -- Change with loc rewrite
+		return { vars = { card.ability.extra.chips, card.ability.extra.chips_mod } }
 	end,
 	calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.hand and context.other_card and context.other_card:is_suit('Spades') then
-		    SMODS.scale_card(card, {
-				ref_value = "chips",
-				scalar_value = "chips_mod",
-			})
+		if context.individual and context.cardarea == G.play and context.other_card and context.other_card:is_suit('Spades') and not context.end_of_round then
+			local chip_cache = card.ability.extra.chips
+			if not context.blueprint then
+				SMODS.scale_card(card, {
+					ref_value = "chips",
+					scalar_value = "chips_mod",
+				})
+			end
 			return {
-				chips = card.ability.extra.chips,
+				chips = chip_cache,
 			}
 		end
 	end,
@@ -458,7 +490,7 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.joker_main and context.scoring_hand then
 			local ante = (G.GAME and G.GAME.round_resets and G.GAME.round_resets.ante) or 1
-			local multiplier = 1 - card.ability.extra.blinds * 0.01 * math.min(ante, 10)
+			local multiplier = 1 - (card.ability.extra.blinds * 0.01 * ante)
 			if multiplier < 0.5 then multiplier = 0.5 end
 			return { xblind_size = multiplier }
 		end
