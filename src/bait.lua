@@ -163,7 +163,9 @@ function FishAndChips.create_bait_inventory_item(key, pos)
 	end
 
 	box.click = function(_self)
-		G.FUNCS.fac_set_active_bait({ config = { key = key, inventory_swap = true }})
+		if G.FISHING_STATE == G.FISHING_STATES.LOBBY and (not G.FAC_FISH_GAME or not G.FAC_FISH_GAME.fishing_active) then
+			G.FUNCS.fac_set_active_bait({ config = { key = key, inventory_swap = true }})
+		end
 	end
 
     return box
