@@ -700,7 +700,7 @@ FishAndChips.Fish({
 	cost = 10,
 	config = {
 		extra = {
-			xmult = 4,
+			xmult = 2,
 			dollars = 2,
 		},
 	},
