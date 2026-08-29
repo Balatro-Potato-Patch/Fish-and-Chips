@@ -1,0 +1,16 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+dump_lua = true
+
+# Fix nil value sent to shader
+# DynaText:set_letter_shader
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = 'G.SHADERS[shader]:send("letter_rot", letter.r)'
+position = "at"
+match_indent = true
+payload = '''
+G.SHADERS[shader]:send("letter_rot", letter.r or 0)
+'''

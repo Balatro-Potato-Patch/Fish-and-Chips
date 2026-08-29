@@ -15,7 +15,8 @@ FishAndChips.mod_badge = {
 FishAndChips.C = {
 	FISH = HEX("4db1f6"),
 	ROD = HEX("F64D4D"),
-	ENVIRONMENT = HEX("1D5228"),
+	ENVIRONMENT = HEX("297539"),
+	BAIT = HEX("EFB18D"),
 	SAND_DOLLAR = HEX("ff8a8a"),
     FAC_PRIMARY = HEX("5987c3"),
     FAC_SECONDARY = HEX("9ebcdf"),
@@ -87,6 +88,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+	key = "mini_bait",
+	path = "core/mini_bait.png",
+	px = 35,
+	py = 35,
+})
+
+SMODS.Atlas({
 	key = "rods",
 	path = "core/rods.png",
 	px = 71,
@@ -105,6 +113,13 @@ SMODS.Atlas{
 	path = "core/bucket_plus.png",
 	px = 71,
 	py = 95
+}
+
+SMODS.Atlas {
+	key = 'pp_icon',
+	path = "core/potato_patch_icon.png",
+	px = 320,
+	py = 320
 }
 
 --#endregion

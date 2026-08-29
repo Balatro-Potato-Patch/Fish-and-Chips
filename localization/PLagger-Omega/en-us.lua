@@ -1,0 +1,243 @@
+return {
+    descriptions = {
+        fac_Fish = {
+            fish_fac_plaggeromega_hawaii = {
+                name = 'Humuhumunukunukuāpua\'a Pt II',
+                text = {
+                    '{X:mult,C:white}X#1#{} Mult if a',
+                    '{C:attention}#2#{} was',
+                    '{C:attention}discarded{} this round'
+                },
+                flavour = {
+                    'Why did fire erupted',
+                    'lands arrive?'
+                }
+            },
+            fish_fac_plaggeromega_troutearthextinct = {
+                name = 'Trout Earth Extinction',
+                text = {
+                    'Use this {C:fac_fish}Fish{} for',
+                    '{C:attention}-#1#{} Ante,',
+                    '{C:red,E:2}destroys{} all {C:fac_fish}Fish{}'
+                },
+                flavour = {
+                    'This will severely',
+                    'impact the trout',
+                    'population.'
+                }
+            },
+            fish_fac_plaggeromega_xanaxsargo = {
+                name = 'Xanax Sargo',
+                text = {
+                    'Earn {C:money}$#1#{} and {C:fac_sand_dollars,f:fac_sand_dollars}${C:fac_sand_dollars}#2#{}',
+                    'at end of round'
+                },
+                flavour = {
+                    'They say taking a bite',
+                    'of this fish',
+                    'lowers your cortisol',
+                    'levels for a round.'
+                }
+            },
+            fish_fac_plaggeromega_gurmag = {
+                name = 'Gurmag Angler',
+                text = {
+                    'This {C:fac_fish}Fish{} gains {X:mult,C:white}X#2#{} Mult',
+                    'whenever a {C:attention}Joker{} is destroyed',
+                    '{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)'
+                },
+                flavour = {
+                    'If everything in the Gurmag Swamp',
+                    'hungers for Joker flesh,',
+                    'what bait could be more effective?'
+                }
+            },
+            fish_fac_plaggeromega_stewfish = {
+                name = 'Stewfish',
+                text = {
+                    'This {C:fac_fish}Fish{} gains {C:mult}+#2#{} Mult',
+                    'per {C:attention}consecutive{} {C:fac_fish}Fish{} caught',
+                    'in the {C:attention}Soup{} environment',
+                    '{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)'
+                },
+                flavour = {
+                    'This species is rumoured',
+                    'to have simmered in perpetuity',
+                    'for at least 1000 years.',
+                    'Or was it hours?'
+                }
+            },
+            fish_fac_plaggeromega_docfish = {
+                name = 'Docfish',
+                text = {
+                    'Played {C:attention}Aces{} permanently',
+                    'gain {C:chips}+#1#{} Chips and {C:mult}+#2#{} Mult',
+                    'when scored'
+                },
+                flavour = {
+                    'Aces have no weaknesses!'
+                }
+            },
+            fish_fac_plaggeromega_baa = {
+                name = 'Biblically Accurate Angelfish',
+                text = {
+                    'Use this {C:fac_fish}Fish{}',
+                    'to create a random',
+                    '{C:money}rental{} {C:rare}Rare {C:attention}Joker',
+                    '{C:inactive}(Must have room)'
+                },
+                flavour = {
+                    'B E    N O T',
+                    'A F R A I D'
+                },
+            },
+            fish_fac_plaggeromega_relicanth = {
+                name = 'Relicanth',
+                text = {
+                    '{C:attention}Last{} played card',
+                    'used in scoring',
+                    'becomes {C:attention}Stone'
+                },
+                flavour = {
+                    'The reason it hasn\'t changed',
+                    'at all in a hundred million',
+                    'years is that it\'s apparently already',
+                    'a perfect life-form.'
+                }
+            },
+            fish_fac_plaggeromega_gummigoo = {
+                name = 'Gummigoo',
+                text = {
+                    'Retrigger all cards',
+                    'played for the next',
+                    '{C:attention}#1#{} rounds'
+                },
+                flavour = {
+                    'This gummy cowboy',
+                    'used to be friends with',
+                    'a clown, but seems to',
+                    'have no recollection of her...'
+                }
+            },
+            fish_fac_plaggeromega_frozenchicken = {
+                name = 'Frozen Chicken?',
+                text = {
+                    'Gives {C:chips}+#2#{} Chips',
+                    'for each {C:attention}Glass Card',
+                    'in your {C:attention}full deck',
+                    '{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)'
+                },
+                flavour = {
+                    'A solid block of ice,',
+                    'trapping some sort of avian',
+                    'within. Weirdly, it feels',
+                    'like you can become',
+                    'stronger if you use it',
+                    'to its full potential...'
+                }
+            },
+            fish_fac_plaggeromega_mysticremora = {
+                name = 'Mystic Remora',
+                text = {
+                    {
+                    'When {C:attention}Blind{} is selected,',
+                    'increase the {C:attention}upkeep cost{} by {C:money}$#2#{},',
+                    '{C:red,E:2}sacrifice{} it unless you pay',
+                    'the {C:attention}upkeep cost {C:inactive}({C:money}$#1#{C:inactive})',
+                    '{s:0.8,C:inactive}(This Fish can\'t be sold)'
+                    },
+                    {
+                        '{C:attention}Draw{} a card whenever',
+                        'a played card is scored'
+                    }
+
+                },
+                flavour = {
+                    'Do you pay',
+                    'the 4?'
+                }
+            },
+            fish_fac_plaggeromega_chiyu = {
+                name = 'Chi-Yu',
+                text = {
+                    'Upgrade the level',
+                    'of the last {C:attention}discarded',
+                    'poker hand each round'
+                },
+                flavour = {
+                    'It controls flames burning at',
+                    'over 5,400 degrees Fahrenheit.',
+                    'It casually swims through the',
+                    'sea of lava it creates by',
+                    'melting rock and sand.'
+                }
+            },
+            fish_fac_plaggeromega_fishcage = {
+                name = 'Fish in a Birdcage',
+                text = {
+                    'Have a {C:blue}Blue Seal {C:attention}Steel 4{} of {C:clubs}Clubs,',
+                    'a {C:red}Red Seal {C:attention}Lucky 4{} of {C:hearts}Hearts',
+                    'a {C:purple}Purple Seal {C:attention}Gold 4{} of {C:diamonds}Diamonds',
+                    'and a {C:attention}Gold Seal Bonus 4{} of {C:spades}Spades',
+                    'in your {C:attention}Full Deck{} to free this {C:fac_fish}Fish'
+                },
+                flavour = {
+                    'I\'m a fish inside a birdcage',
+                    'My brother always sings me songs',
+                    'With his beak, he tries to soothe me',
+                    'He makes me feel that I belong'
+                }
+            },
+            fish_fac_plaggeromega_freedfish = {
+                name = 'Freed Fish',
+                text = {
+                    'Each played {C:attention}4{} gives',
+                    '{X:mult,C:white}X#1#{} Mult when scored'
+                },
+                flavour = {
+                    'So carry me from these walls',
+                    'Brother of mine',
+                    'Show me the world outside',
+                    'It has to be true',
+                    'I\'m counting on you',
+                    'To be my wings and my eyes'
+                }
+            }
+        },
+        PotatoPatch = {
+            PLagger = {
+                name = 'PLagger',
+                text = {
+                'I had a lot of fun coding these fish,',
+                'except Mystic Remora. $$$$ UI code.',
+                'I\'ve worked on {C:chips}Wormhole{} and the {C:hearts}House of Hearts{} mod for charity,',
+                'and I made {C:money}Flowery{} as the Plant {C:attention}(Jarona!)',
+                '{C:attention,u:attention}Click on me{} to see more of my stuff!',
+                'You should try {C:attention}Balatro Story Mode{} ;)'
+                }
+            },
+            Omegaflowey18 = {
+                name = 'Omegaflowey18',
+                text = {
+                    'Hey! I\'m Omega!',
+                    'Almost all {C:red}Lusty Joker{} fanart is my fault someway or another',
+                    'If you see {C:blue}Triboulet{} and {C:green}Perkeo{} kissing, that\'s also probably my fault',
+                    'I worked on {C:attention}Hot Potato{}, {C:chips}Wormhole{}, and am a guest artist',
+                    'on {C:purple}GARBSHIT{} and the {C:green}Balatro University Language mod{}.',
+                    '{C:attention,u:attention}Click on me{} to see more of my art!'
+                }
+            }
+        }
+    },
+
+    misc = {
+        dictionary = {
+            fac_plaggeromega_active_ex = 'Active!',
+            fac_plaggeromega_inactive = 'Inactive',
+            fac_plaggeromega_giada = 'Shout out Giada',
+            fac_plaggeromega_stone = 'Stone',
+            fac_plaggeromega_pay = 'Pay Upkeep Cost',
+            fac_plaggeromega_sac_it = 'Sacrifice Mystic Remora'
+        }
+    }
+}

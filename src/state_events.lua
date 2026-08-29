@@ -14,10 +14,33 @@ G.FISHING_STATES = {
 	LEAVING = 20,
 }
 
+local fac_save_run_ref = save_run
+function save_run()
+	if G.GAME then
+		G.GAME.fac_resume_fishing = (G.STATE == G.STATES.FAC_FISHING) or nil
+	end
+	return fac_save_run_ref()
+end
+
+local fac_start_run_resume_ref = Game.start_run
+function Game:start_run(...)
+	local ret = fac_start_run_resume_ref(self, ...)
+	if G.GAME.fac_resume_fishing then
+		G.GAME.fac_resume_fishing = nil
+		G.STATE = G.STATES.FAC_FISHING
+		G.STATE_COMPLETE = false
+	end
+	return ret
+end
+
 local g_update_ref = Game.update
 ---@diagnostic disable-next-line: duplicate-set-field
 function Game:update(dt)
 	g_update_ref(self, dt)
+	if G.CONTROLLER.locks.toggle_shop and G.fac_toggle_shop_lock_started and G.TIMERS.TOTAL - G.fac_toggle_shop_lock_started > 3 then
+		G.CONTROLLER.locks.toggle_shop = nil
+		G.fac_toggle_shop_lock_started = nil
+	end
 
 	-- shader fish logic
 
@@ -194,16 +217,6 @@ function FishAndChips.create_fishing_UI()
 		},
 	})
 
-	G.FISHING.fishing_bait_inventory = UIBox({
-		definition = G.UIDEF.fac_bait_inventory_button(),
-		config = {
-			align = "bm",
-			offset = { x = 0, y = 0.1 },
-			major = G.fac_bait_area,
-			bond = "Glued",
-		},
-	})
-
 	if G.GAME.fac_active_bait then
 		FishAndChips.update_bait_counter(G.fac_bait_area.cards[1])
 	end
@@ -215,6 +228,7 @@ function FishAndChips.create_fishing_UI()
 		align_buttons = true,
 		bg_colour = G.C.CLEAR,
 		no_card_count = true,
+		fac_catch_area = true,
 	})
 	G.FISHING.fac_fishing_reward_box = UIBox({
 		definition = {
@@ -239,6 +253,7 @@ function FishAndChips.create_fishing_UI()
 		align_buttons = true,
 		bg_colour = G.C.CLEAR,
 		no_card_count = true,
+		fac_catch_area = true,
 	})
 	G.FISHING.fac_treasure_reward_box = UIBox({
 		definition = {

@@ -49,6 +49,7 @@ local FAC_SCARE_DURATION = 0.4
 local FAC_DECAY_UNLOCK_THRESHOLD = 0.15
 local FAC_SCENE_CANVAS_RES_SCALE = 0.55
 local FAC_TRACK_H_RATIO = 0.72
+local FAC_BOBBER_BOTTOM_INSET = 30
 local FAC_FISH_DRAW_SIZE = 10
 local FAC_FISH_DRAW_VRADIUS_FACTOR = 0.56
 local FAC_FISH_HITBOX_FORGIVENESS = 0.6
@@ -181,6 +182,8 @@ local function fac_ensure_state()
             round_success = false,
             reel_rumbling = false,
             harpoon_dir = true,
+            harpoon_treasure = false,
+            harpoon_both = false,
             reel_buffer = false,
         }
     end
@@ -302,8 +305,53 @@ local function fac_set_caught_reward_box_shift(state, enable)
 end
 
 local function fac_recompute_reward_box_shift(state)
-    local both_stalled = state.treasure_type == "fish" and state.fac_main_fish_stalled and state.fac_treasure_fish_stalled
-    fac_set_caught_reward_box_shift(state, both_stalled)
+    local is_double_fish = state.treasure_type == "fish"
+    local main_needs_space = state.fac_main_fish_stalled or state.fac_main_fish_discovered_showing
+    local treasure_needs_space = state.fac_treasure_fish_stalled or state.fac_treasure_fish_discovered_showing
+    fac_set_caught_reward_box_shift(state, is_double_fish and main_needs_space and treasure_needs_space)
+end
+
+local function fac_reveal_treasure_reward(state)
+    local treasure_type = state.treasure_type
+    local treasure_reward = treasure_type == "dollars"
+        and state.result_dollars_reward or state.result_reward
+    state.fac_treasure_reward_showing = true
+
+    local treasure_box = UIBox {
+        definition = G.UIDEF.fac_treasure_reward(treasure_reward, treasure_type),
+        config = {
+            align = "cm",
+            major = G.FISHING.fishing,
+            offset = {x = 0, y = 0},
+            bond = "Weak",
+        }
+    }
+    local treasure_catch_text = UIBox {
+        definition = G.UIDEF.fac_treasure_catch(),
+        config = {
+            align = "tm",
+            major = treasure_box,
+            offset = {x = 0, y = 0.4},
+            r_bond = "Weak"
+        }
+    }
+    treasure_box:juice_up()
+    play_sound('fac_treasure_get')
+    delay(G.SETTINGS.GAMESPEED * 2)
+    G.E_MANAGER:add_event(Event {
+        func = function()
+            treasure_catch_text:remove()
+            treasure_box:remove()
+            if treasure_type == "dollars" then
+                ease_dollars(treasure_reward)
+            else
+                ease_sand_dollars(treasure_reward)
+            end
+            state.fac_treasure_reward_showing = false
+            save_run()
+            return true
+        end
+    })
 end
 
 local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_catch)
@@ -320,7 +368,8 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     local rod_key = FishAndChips.get_rod().key
     local bait_key = G.GAME.fac_active_bait
     local _, rod_stats, bait_stats = fac_get_fishing_stats(rod_key, bait_key)
-    profile_data.environments_fished = profile_data.environments_fished or {}
+    profile_data.environment_data = profile_data.environment_data or {}
+    profile_data.environment_data[FishAndChips.get_environment().key] = profile_data.environment_data[FishAndChips.get_environment().key] or {}
     profile_data.baits_used = profile_data.baits_used or {}
     if profile.fish then
         profile_data.fish_data[profile.key] = profile_data.fish_data[profile.key] or {
@@ -333,12 +382,21 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     end
     local fish_stats = profile_data.fish_data[profile.key] or {}
     local first_catch = not (fish_stats.times_caught and fish_stats.times_caught > 0)
+    if first_catch and profile.fish then
+        if is_treasure_catch then
+            state.fac_treasure_fish_discovered_showing = true
+        else
+            state.fac_main_fish_discovered_showing = true
+        end
+        fac_recompute_reward_box_shift(state)
+    end
     profile.center.discovered = true
     play_sound('fac_fish_landed', math.random(0.8, 1.2))
     FishAndChips.create_card_stats = profile.stats
-    local added_card = SMODS.add_card({ area = reward_area, key = profile.key })
+    local added_card = SMODS.create_card({ area = reward_area, key = profile.key })
     FishAndChips.create_card_stats = nil
     if added_card then
+        reward_area:emplace(added_card)
         if profile.fish then FishAndChips.update_fish_records(fish_stats, profile.stats) end
         added_card:set_sprites(added_card.config.center)
         added_card.states.visible = false
@@ -359,7 +417,7 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
         rod_stats.treasure = rod_stats.treasure + 1
         if bait_stats then bait_stats.treasure = bait_stats.treasure + 1 end
     end
-    profile_data.environments_fished[FishAndChips.get_environment().key] = true
+    profile_data.environment_data[FishAndChips.get_environment().key].times_fished = (profile_data.environment_data[FishAndChips.get_environment().key].times_fished or 0) + 1 
     if bait_key and queue ~= "fac_treasure_reveal" then
         profile_data.baits_used[bait_key] = true
     end
@@ -378,7 +436,7 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
             definition = G.UIDEF.fac_fish_data(added_card, show_full),
             config = {
                 align = "bm",
-                major = added_card,
+                major = reward_area,
                 r_bond = "Weak",
                 offset = {x = 0, y = 0.1}
             }
@@ -387,6 +445,7 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
     local initial_area = FishAndChips.get_area_for_center(profile.center)
     local starts_full = #initial_area.cards >= initial_area.config.card_limit
     local caught_box = build_caught_box(starts_full)
+    local displayed_center_key = added_card.config.center_key
     caught_box.states.visible = false
     local treasure_box
     local treasure_catch_text
@@ -490,7 +549,12 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
                     return true;
                 end
             }), queue)
-            SMODS.calculate_effect({ message = localize('k_saved_ex'), colour = G.C.ATTENTION }, G.fac_bait_area.cards[1])
+                        -- (waffle) remove the bait preservation on perfect catches, instead increase sell value of caught fish by 2 sand dollars 
+            -- SMODS.calculate_effect({ message = localize('k_saved_ex'), colour = G.C.ATTENTION }, G.fac_bait_area.cards[1])
+            FishAndChips.remove_bait_from_inventory(G.GAME.fac_active_bait)
+            added_card.ability.extra_value = added_card.ability.extra_value + 2
+            added_card:set_cost()
+            SMODS.calculate_effect({ message = localize('k_val_up'), colour = FishAndChips.C.SAND_DOLLAR }, added_card)
             delay(G.SETTINGS.GAMESPEED * 2, queue)
         else
             FishAndChips.remove_bait_from_inventory(G.GAME.fac_active_bait)
@@ -526,7 +590,28 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
         blocking = false,
         func = function()
             local area = FishAndChips.get_area_for_center(profile.center)
-            if #area.cards >= area.config.card_limit and not added_card.REMOVED then
+            local effective_area_limit = area.config.card_limit + (added_card.ability.card_limit or 0) - (added_card.ability.extra_slots_used or 0)
+            if displayed_center_key ~= added_card.config.center_key then
+                displayed_center_key = added_card.config.center_key
+                local was_visible = caught_box.states.visible
+                caught_box:remove()
+                caught_box = build_caught_box(#area.cards >= effective_area_limit)
+                caught_box.states.visible = was_visible
+                if was_visible then caught_box:juice_up() end
+                if discovery_text then
+                    discovery_text:remove()
+                    discovery_text = build_discovery_text()
+                end
+                if perfect_catch_text then
+                    perfect_catch_text:remove()
+                    perfect_catch_text = build_perfect_catch_text()
+                end
+                if treasure_catch_text then
+                    treasure_catch_text:remove()
+                    treasure_catch_text = build_treasure_catch_text()
+                end
+            end
+            if #area.cards >= effective_area_limit and not added_card.REMOVED then
                 G.NOT_SAFE_TO_PRESS_BUTTONS = false
                 if not card_limit_stalled then
                     card_limit_stalled = true
@@ -583,15 +668,18 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
                 reward_area.config.highlighted_limit = 0
                 reward_area:remove_card(added_card)
                 area:emplace(added_card)
+                added_card:add_to_deck()
             end
             if is_treasure_catch then
                 state.fac_treasure_fish_stalled = false
+                state.fac_treasure_fish_discovered_showing = false
             else
                 state.fac_main_fish_stalled = false
+                state.fac_main_fish_discovered_showing = false
             end
-            fac_recompute_reward_box_shift(state)
             caught_box:remove()
             if discovery_text then discovery_text:remove() end
+            fac_recompute_reward_box_shift(state)
             if perfect_catch_text then perfect_catch_text:remove() end
             if treasure_catch_text then treasure_catch_text:remove() end
             if treasure_box then treasure_box:remove() end
@@ -600,6 +688,7 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
             elseif treasure_type == "sand_dollars" then
                 ease_sand_dollars(treasure_reward)
             end
+            save_run()
             return true
         end
     }, queue)
@@ -627,8 +716,11 @@ local function fac_finish_round(success, skip)
     end
     local fish_obj
     local treasure_obj
+    local harpoon_treasure = success and state.profile.rod_key == "rod_fac_harpoon" and state.harpoon_treasure
+    local harpoon_treasure_only = harpoon_treasure and not state.harpoon_both
     if success then
-        state.result_message = localize(state.perfect and "ph_fac_perfect_catch" or "ph_fac_good_catch")
+        state.result_message = localize(harpoon_treasure_only and "ph_fac_treasure_catch"
+            or state.perfect and "ph_fac_perfect_catch" or "ph_fac_good_catch")
         state.celebrate_t = FAC_CELEBRATE_DURATION
         fac_rumble(1, 0.4)
         state.result_reward = 0
@@ -659,10 +751,12 @@ local function fac_finish_round(success, skip)
             G.GAME.fac_treasure_earned = G.GAME.fac_treasure_earned + 1
             check_for_unlock({type = 'fac_treasure', value = G.GAME.fac_treasure_earned})
         end
-        FishAndChips.rod_function("on_catch", state.profile.key)
+        if not harpoon_treasure_only then
+            FishAndChips.rod_function("on_catch", state.profile.key)
+        end
         state.fac_main_fish_stalled = false
         state.fac_treasure_fish_stalled = false
-        if state.treasure_type == "fish" then
+        if state.treasure_type == "fish" and not harpoon_treasure_only then
             local bucket_area = FishAndChips.get_area_for_center(state.profile.center)
             if bucket_area.config.card_limit - #bucket_area.cards <= 0 then
                 state.fac_main_fish_stalled = true
@@ -670,11 +764,49 @@ local function fac_finish_round(success, skip)
                 fac_recompute_reward_box_shift(state)
             end
         end
-        fish_obj = fac_reveal_catch(state, state.profile)
+        if not harpoon_treasure_only then
+            fish_obj = fac_reveal_catch(state, state.profile)
+        end
         if treasure_profile then
             FishAndChips.rod_function("on_catch", treasure_profile.key)
             G.E_MANAGER.queues.fac_treasure_reveal = G.E_MANAGER.queues.fac_treasure_reveal or {}
-            treasure_obj = fac_reveal_catch(state, treasure_profile, "fac_treasure_reveal", G.FISHING.fac_treasure_reward_area, true)
+            local treasure_area = harpoon_treasure_only and G.FISHING.fac_fish_reward_area or G.FISHING.fac_treasure_reward_area
+            treasure_obj = fac_reveal_catch(state, treasure_profile, "fac_treasure_reveal", treasure_area, true)
+        elseif harpoon_treasure_only then
+            fac_reveal_treasure_reward(state)
+        end
+        if harpoon_treasure_only then
+            local profile_data, rod_stats, bait_stats = fac_get_fishing_stats(FishAndChips.get_rod().key, G.GAME.fac_active_bait)
+            profile_data.career_treasure_caught = (profile_data.career_treasure_caught or 0) + 1
+            rod_stats.treasure = rod_stats.treasure + 1
+            if bait_stats then bait_stats.treasure = bait_stats.treasure + 1 end
+            profile_data.environment_data = profile_data.environment_data or {}
+            profile_data.environment_data[FishAndChips.get_environment().key] = profile_data.environment_data[FishAndChips.get_environment().key] or {}
+            if G.GAME.fac_active_bait then
+                profile_data.baits_used = profile_data.baits_used or {}
+                profile_data.baits_used[G.GAME.fac_active_bait] = true
+            end
+            if not treasure_profile then
+                check_for_unlock({
+                    type = 'fac_fish_caught',
+                    rod = FishAndChips.get_rod().key,
+                    bait = G.GAME.fac_active_bait,
+                    treasure = true,
+                    perfect = false,
+                    [FishAndChips.get_environment().key] = true,
+                })
+            end
+            FishAndChips.remove_bait_from_inventory(G.GAME.fac_active_bait)
+            if G.GAME.fac_active_bait then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        G.fac_bait_area.cards[1]:juice_up()
+                        play_sound('generic1')
+                        return true
+                    end
+                }))
+            end
+            G:save_progress()
         end
     else
         play_sound('fac_line_snap', 1.2)
@@ -702,8 +834,9 @@ local function fac_finish_round(success, skip)
                 end
             }))
         end
+        G.E_MANAGER:add_event(Event({ func = function() save_run(); return true end }))
     end
-    SMODS.calculate_context({fac_end_fishing = true, failed = not success, fish = success and state.profile.key or nil, fish_obj = fish_obj or nil, treasure = success and state.got_treasure or false, treasure_available = state.treasure_enabled or false, treasure_progress = state.treasure_meter or 0, missed_treasure = success and state.treasure_enabled and not state.got_treasure or false, attempted_treasure = state.treasure_enabled and not state.got_treasure and (state.treasure_meter or 0) > 0 or false, treasure_obj = treasure_obj, perfect = success and state.perfect or false})
+    SMODS.calculate_context({fac_end_fishing = true, failed = not success, fish = success and not harpoon_treasure_only and state.profile.key or nil, fish_obj = fish_obj or nil, treasure = success and state.got_treasure or false, treasure_available = state.treasure_enabled or false, treasure_progress = state.treasure_meter or 0, missed_treasure = success and state.treasure_enabled and not state.got_treasure or false, attempted_treasure = state.treasure_enabled and not state.got_treasure and (state.treasure_meter or 0) > 0 or false, treasure_obj = treasure_obj, perfect = success and state.perfect or false})
     G.GAME.fac_forced_fish = nil
 end
 local function fac_begin_hooking_round()
@@ -724,10 +857,13 @@ local function fac_begin_hooking_round()
     state.fish_vel = 0
     state.fish_goal_vel = fac_rand(-0.12, 0.12)
     state.fish_decision_timer = fac_rand(profile.decision_min, profile.decision_max)
-    state.treasure_enabled = profile.rod_key ~= "rod_fac_harpoon" and math.random() < 0.66 or false
+    state.treasure_enabled = math.random() < 0.4
     state.treasure_pos = fac_rand(0.14, 0.86)
     state.treasure_meter = 0
     state.got_treasure = false
+    state.harpoon_treasure = false
+    state.harpoon_both = false
+    state.fac_treasure_reward_showing = false
     state.splash_t = FAC_SPLASH_DURATION
     state.perfect = true
     state.has_reeled = false
@@ -835,6 +971,7 @@ function G:update_fac_fishing_casting(dt)
         state.bite_timer = fac_clamp(fac_rand(0.75, 1.95) - state.cast_power * 0.55, 0.35, 1.95)
         G.FISHING_STATE_COMPLETE = true
         FishAndChips.update_jimbo_state(FishAndChips.JIMBO_ANIMATION_STATES.CAST)
+        G.GAME.fac_last_used_bait = G.GAME.fac_active_bait
         SMODS.calculate_context{fac_cast_rod = true}
     end
     if G.FAC_JIMBO_ANIMATION_STATE == FishAndChips.JIMBO_ANIMATION_STATES.WAIT then
@@ -1026,7 +1163,15 @@ function G:update_fac_fishing_hooking(dt)
             state.reel_buffer = true
         end
         if reeling and state.reel_buffer then
-            if in_bar then
+            local chest_in_bar = state.treasure_enabled and math.abs(state.treasure_pos - state.bar_pos) <= (state.bar_size * 0.5)
+            if chest_in_bar then
+                state.got_treasure = true
+                state.harpoon_treasure = true
+                state.harpoon_both = in_bar
+                state.treasure_meter = 1
+                state.perfect = in_bar
+                state.meter = 1
+            elseif in_bar then
                 state.meter = 1
             else
                 state.meter = 0
@@ -1048,7 +1193,7 @@ function G:update_fac_fishing_hooking(dt)
         fac_rumble_release()
     end
 
-    if state.treasure_enabled and not state.got_treasure then
+    if state.profile.rod_key ~= "rod_fac_harpoon" and state.treasure_enabled and not state.got_treasure then
         local chest_in_bar = math.abs(state.treasure_pos - state.bar_pos) <= (state.bar_size * 0.5)
         if chest_in_bar then
             state.treasure_meter = fac_clamp(state.treasure_meter + profile.treasure_gain * dt, 0, 1)
@@ -1078,7 +1223,8 @@ function G:update_fac_fishing_results(dt)
     end
     state.result_timer = state.result_timer + dt
     if state.result_timer > 0.2 and not next(G.FISHING.fac_fish_reward_area.cards)
-        and not next(G.FISHING.fac_treasure_reward_area.cards) then
+        and not next(G.FISHING.fac_treasure_reward_area.cards)
+        and not state.fac_treasure_reward_showing then
         fac_set_fishing_state(state, G.FISHING_STATES.LOBBY)
         FishAndChips.show_fishing_buttons()
     end
@@ -1213,6 +1359,39 @@ local function fac_get_rod_tip_local(px, py, pw, ph, force_anim_state)
 end
 
 local FAC_STATUS_QUEUE
+local FAC_BOBBER_BAIT_QUADS = {}
+local function fac_draw_bobber_bait(bait_key, x, y)
+    local bait = bait_key and G.P_CENTERS[bait_key]
+    if not bait then return end
+    local atlas = SMODS.get_atlas(bait.mini_atlas or bait.atlas)
+    local pos = bait.mini_pos or bait.pos
+    if not atlas or not atlas.image or not pos then return end
+    local cache_key = (bait.mini_atlas or bait.atlas) .. ':' .. pos.x .. ':' .. pos.y
+    local quad = FAC_BOBBER_BAIT_QUADS[cache_key]
+    if not quad then
+        quad = love.graphics.newQuad( pos.x * atlas.px, pos.y * atlas.py, atlas.px, atlas.py, atlas.image:getDimensions())
+        FAC_BOBBER_BAIT_QUADS[cache_key] = quad
+    end
+    local scale = bait.mini_atlas and 0.5 or 17.5 / math.max(atlas.px, atlas.py)
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(atlas.image, quad, x, y + 7, 0, scale, scale, atlas.px / 2, 0)
+end
+
+local function fac_draw_bobber(x, y)
+    fac_draw_bobber_bait(G.GAME.fac_last_used_bait, x, y)
+    love.graphics.setColor(0.08, 0.10, 0.14, 0.9)
+    love.graphics.rectangle('fill', x - 2, y - 14, 4, 8, 2, 2)
+    love.graphics.circle('fill', x, y, 9)
+    love.graphics.setColor(0.96, 0.94, 0.84, 1)
+    love.graphics.arc('fill', x, y, 7, 0, math.pi)
+    love.graphics.setColor(0.95, 0.24, 0.22, 1)
+    love.graphics.arc('fill', x, y, 7, math.pi, math.pi * 2)
+    love.graphics.setColor(1, 0.64, 0.55, 1)
+    love.graphics.circle('fill', x - 2, y - 3, 2)
+    love.graphics.setColor(0.08, 0.10, 0.14, 0.9)
+    love.graphics.circle('line', x, y, 9)
+end
+
 local function fac_draw_text_with_black_bg(str, x, y, text_color)
     if FishAndChips.show_ui then
         if FAC_STATUS_QUEUE then
@@ -1247,8 +1426,8 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
     local stable_rod_x = state.stable_rod_x
 
     local water_top = py + ph * (env.water_bounds and env.water_bounds.top or 0.80)
-    local water_bottom = py + ph * (env.water_bounds and env.water_bounds.bottom or 0.84)
-
+    local water_bottom = math.min(py + ph * (env.water_bounds and env.water_bounds.bottom or 0.84), py + ph - FAC_BOBBER_BOTTOM_INSET)
+    water_top = math.min(water_top, water_bottom)
     local track_w = fac_clamp(pw * 0.05, 26, 52)
     local track_h = ph * FAC_TRACK_H_RATIO
     local track_x = px + pw * 0.83
@@ -1280,7 +1459,7 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
         else
             local key = "click_go_fish"
             if not G.GAME.fac_active_bait then
-                if G.GAME.fac_bait_inventory[1] then
+                if next(G.GAME.fac_bait_inventory) then
                     key = "equip_bait_hint"
                 else
                     key = "no_bait_hint"
@@ -1295,9 +1474,8 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
             local arc_x = rod_x + (land_x - rod_x) * progress
             local arc_y = rod_y + (land_y - rod_y) * progress - math.sin(progress * math.pi) * 40
             love.graphics.setColor(1, 1, 1, 1)
-            love.graphics.line(rod_x, rod_y, arc_x, arc_y)
-            love.graphics.setColor(1, 0.3, 0.25, 1)
-            love.graphics.circle("fill", arc_x, arc_y, 6)
+            love.graphics.line(rod_x, rod_y, arc_x, arc_y - 14)
+            fac_draw_bobber(arc_x, arc_y)
             local str = localize("ph_fac_casting_line")
             fac_draw_text_with_black_bg(str, px, status_y)
         end
@@ -1317,11 +1495,8 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
         love.graphics.circle("line", bobber_x, bobber_y, 10 + ripple * 22)
 
         love.graphics.setColor(1, 1, 1, 1)
-        fac_draw_slack_line(rod_x, rod_y, bobber_x, bobber_y, 14 + math.sin(state.bobber_t * 2) * 3)
-        love.graphics.setColor(1, 0.3, 0.25, 1)
-        love.graphics.circle("fill", bobber_x, bobber_y, 8)
-        love.graphics.setColor(1, 0.86, 0.86, 0.8)
-        love.graphics.circle("line", bobber_x, bobber_y, 12)
+        fac_draw_slack_line(rod_x, rod_y, bobber_x, bobber_y - 14, 14 + math.sin(state.bobber_t * 2) * 3)
+        fac_draw_bobber(bobber_x, bobber_y)
 
         if G.FISHING_STATE == G.FISHING_STATES.WAITING then
             if state.scare_t > 0 then
@@ -1348,9 +1523,8 @@ local function fac_draw_scene_content(state, px, py, pw, ph)
         local hook_y = land_y
 
         love.graphics.setColor(1, 1, 1, 1)
-        fac_draw_slack_line(rod_x, rod_y, hook_x, hook_y, 3)
-        love.graphics.setColor(1, 0.3, 0.25, 1)
-        love.graphics.circle("fill", hook_x, hook_y, 7)
+        fac_draw_slack_line(rod_x, rod_y, hook_x, hook_y - 14, 3)
+        fac_draw_bobber(hook_x, hook_y)
 
         love.graphics.setColor(0.06, 0.20, 0.33, 0.95)
         love.graphics.rectangle("fill", track_x, track_y, track_w, track_h, 10, 10)

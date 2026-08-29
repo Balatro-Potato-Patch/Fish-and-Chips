@@ -1,0 +1,14 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = '''card.lua'''
+pattern = ''' if self.seal then badges[#badges + 1] = string.lower(self.seal)..'_seal' end'''
+position = "before"
+payload = '''
+if self.fish_seal then badges[#badges + 1] = string.lower(self.fish_seal)..'_fish_seal' end
+'''
+match_indent = true

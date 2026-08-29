@@ -1,0 +1,26 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS FishAndChips "/src/fishminigamemechanics.lua"]'''
+pattern = '''if not state.decay_unlocked and state.meter >= FAC_DECAY_UNLOCK_THRESHOLD then'''
+position = "before"
+payload = '''
+G.crimsonseraphim_previous_in_bar = in_bar
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS FishAndChips "/src/fishminigamemechanics.lua"]'''
+pattern = '''if state.decay_unlocked then'''
+position = "before"
+payload = '''
+if G.crimsonseraphim_previous_in_bar then
+    SMODS.calculate_context{crimsonseraphim_fish_leaving_sweet_spot = true}
+end
+'''
+match_indent = true

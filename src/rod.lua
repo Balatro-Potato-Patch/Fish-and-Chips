@@ -74,10 +74,22 @@ end
 
 --#region Rod Objects
 
+-- thank you foo for making rod functionality
+
 FishAndChips.Rod {
 	key = "wooden",
 	discovered = true,
 	ppu_artist = { "DottyKitty" },
+	ppu_coder = { "Mack" },
+	apply = function(self, rod)
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				local key = pseudorandom_element(G.P_CENTER_POOLS["fac_Bait"], "wooden_rod").key
+				FishAndChips.add_bait_to_inventory(key, 1)
+				return true;
+			end
+		}))
+	end
 }
 
 FishAndChips.Rod {
@@ -93,7 +105,7 @@ FishAndChips.Rod {
 			catch_gain = 0.12
 		}
 	},
-	ppu_coder = { "Foo54" },
+	ppu_coder = { "Mack" },
 	ppu_artist = { "GhostSalt" }
 }
 
@@ -110,13 +122,14 @@ FishAndChips.Rod {
 			catch_gain = 0.46
 		}
 	},
-	ppu_coder = { "Foo54" },
+	ppu_coder = { "Mack" },
 	ppu_artist = { "GhostSalt" }
 }
 
 FishAndChips.Rod {
 	key = "glimmering",
 	ppu_artist = { "DottyKitty" },
+	ppu_coder = { "Mack" },
 	pos = { x = 0, y = 1 },
 	bait_bonus = 2,
 	unlocked = false,
@@ -135,6 +148,7 @@ FishAndChips.Rod {
 FishAndChips.Rod {
 	key = "extradimensional",
 	ppu_artist = { "squeax09" },
+	ppu_coder = { "Mack" },
 	pos = { x = 1, y = 1 },
 	unlocked = false,
 	additional_pools = {
@@ -164,8 +178,8 @@ FishAndChips.Rod {
 	config = {
 		extra = {
 			num = 1,
-			dem = 2,
-			money = 3
+			dem = 3,
+			money = 2
 		}
 	},
 	loc_vars = function(self, info_queue, card)
@@ -174,21 +188,23 @@ FishAndChips.Rod {
 	end,
 	on_catch = function(self, card, key)
 		if SMODS.pseudorandom_probability(card, "fac_lucky_rod", card.ability.extra.num, card.ability.extra.dem) then
-			ease_dollars(card.ability.extra.money)
+			SMODS.calculate_effect({ dollars = card.ability.extra.money },card)
 		end
 	end,
-	ppu_coder = { "Foo54" }
+	ppu_coder = { "Mack" },
 }
 
 FishAndChips.Rod {
 	key = "distortion",
 	ppu_artist = { "squeax09" },
+	ppu_coder = { "Mack" },
 	pos = { x = 0, y = 2 },
 	unlocked = false,
 	check_for_unlock = function(self, args)
 		if args.type == "fac_fish_caught" then
+			local env_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.environment_data or {}
 			for _, v in pairs(G.FAC_ENVIRONMENT_POOL) do
-				if not G.PROFILES[G.SETTINGS.profile].fac_fishing.environments_fished[v.key] then
+				if not env_data[v.key] or not env_data[v.key].times_fished or env_data[v.key].times_fished < 1 then
 					return false
 				end
 			end
@@ -220,6 +236,7 @@ FishAndChips.Rod {
 			bar_size = 0.05
 		}
 	},
-	ppu_coder = { "Foo54" }
+	ppu_artist = { "DottyKitty" },
+	ppu_coder = { "Snapper" },
 }
 --#endregion

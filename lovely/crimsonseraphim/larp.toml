@@ -1,0 +1,92 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+match_indent = true
+position = 'at'
+pattern = '''
+if self.ability.name ~= 'Seeing Double' and self.ability.x_mult > 1 and (self.ability.type == '' or next(context.poker_hands[self.ability.type])) then
+'''
+payload = '''
+if self.ability.name ~= 'Seeing Double' and  self.ability.x_mult and self.ability.x_mult > 1 and (self.ability.type == '' or next(context.poker_hands[self.ability.type] or {})) then
+'''
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS FishAndChips "/content/mack/Mack.lua"]'''
+pattern = '''
+local other_fish
+for i = 2, #G.fac_fish_area.cards do
+    if G.fac_fish_area.cards[i] == card then other_fish = G.fac_fish_area.cards[i - 1] end
+end
+local compatible = other_fish and other_fish ~= card and other_fish.config.center.blueprint_compat
+'''
+position = "at"
+payload = '''
+local c = card.original_card or card
+local other_fish
+for i = 2, #G.fac_fish_area.cards do
+    if G.fac_fish_area.cards[i] == c then other_fish = G.fac_fish_area.cards[i - 1] end
+end
+local compatible = other_fish and other_fish ~= c and other_fish.config.center.blueprint_compat
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS FishAndChips "/src/overrides.lua"]'''
+pattern = '''
+    table.insert(name_node[#name_node - 3], name.tree[#name.tree - 2] + 1, {n=G.UIT.R, config = {align = 'cm'}, nodes = final_flavour})
+end
+'''
+position = "after"
+payload = '''
+if card.config.center_key == "fish_fac_crimsonseraphim_larp" and not card.area.config.collection and not card.area.config.fac_compendium then
+    if not card.dummy then
+        card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
+        card.dummy.added_to_deck = true
+        if card.ability.extra.dummy_abil then card.dummy.ability = card.ability.extra.dummy_abil end
+    end
+    AUT_LARP = Card.generate_UIBox_ability_table(card.dummy)
+    local name = SMODS.deepfind(ret, 'tooltip_id_'..FishAndChips.tooltip_seed, nil, true)[1]
+    local name_node = name.objtree
+    local target = ret.nodes[1].nodes[1].nodes[1].nodes
+    table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], name_from_rows(AUT_LARP.name, is_playing_card and G.C.WHITE or nil))
+    local card = card.dummy
+    if not FishAndChips.mod.config.disable_flavour and card.config.center.discovered and G.localization.descriptions.fac_Fish[card.config.center_key] and G.localization.descriptions.fac_Fish[card.config.center_key].fac_flavour_parsed then
+        local flavour_node = {}
+        local loc_vars = G.P_CENTERS[card.config.center_key].loc_vars and G.P_CENTERS[card.config.center_key]:loc_vars({}, card) or {}
+        localize({type = 'flavour', nodes = flavour_node, loc_target = G.localization.descriptions.fac_Fish[loc_vars.key or card.config.center_key], scale = 0.8, text_colour = G.C.JOKER_GREY, shadow = true, vars = loc_vars.vars})
+        local final_flavour = {{n=G.UIT.R, config = {minh = 0.1}}}
+        for i, line in ipairs(flavour_node) do
+            local node = {n=G.UIT.R, config = {align = 'cm'}, nodes = {}}
+            for _, part in ipairs(line) do
+                table.insert(node.nodes, part)
+            end
+            table.insert(final_flavour, i, node)
+        end
+        table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], {n=G.UIT.R, config = {align = 'cm'}, nodes = final_flavour})
+    end
+    table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], desc_from_rows(AUT_LARP.main))
+    for i, v in pairs(AUT_LARP.multi_box or {}) do
+        table.insert(name_node[#name_node - 3], #name_node[#name_node - 3], desc_from_rows(v))
+    end
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS FishAndChips "/src/overrides.lua"]'''
+pattern = '''
+local stat_proto = card.config.center.stats
+'''
+position = "at"
+payload = '''
+local stat_proto = (card.dummy or card).config.center.stats
+'''
+match_indent = true

@@ -1,0 +1,24 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS FishAndChips "/src/fishminigamemechanics.lua"]'''
+pattern = '''fac_draw_fish(track_x + track_w * 0.5 + 6, fish_y, FAC_FISH_DRAW_SIZE, state.profile.colour)'''
+position = "after"
+payload = '''
+if next(SMODS.find_card("fish_fac_crimsonseraphim_rusty_revolver")) or G.GAME.REVOLVER_RETICLE_ALPHA then
+    local reticle = G.GAME.REVOLVER_RETICLE_ALPHA
+    for i, v in pairs(SMODS.find_card("fish_fac_crimsonseraphim_rusty_revolver")) do
+        if v.ability.extra.primed then
+            reticle = true
+        end
+    end
+    if reticle then
+        FishAndChips.crimsonseraphim.draw_reticle(track_x + track_w * 0.5 + 6, fish_y, FAC_FISH_DRAW_SIZE)
+    end
+end
+'''
+match_indent = true

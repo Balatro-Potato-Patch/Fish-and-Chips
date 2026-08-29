@@ -86,18 +86,18 @@ function FishAndChips.format_measurement(value, measurement, units)
 		return string.format(localize(units[measurement].format), strip_decimals(nil, value/units[measurement].scale, units[measurement].precision or 2))
 	end
 	if measurement == 'weight' then
-		if value > 10000 then
+		if math.abs(value) > 10000 then
 			return strip_decimals(nil, value / 1000, 1) .. 't'
-		elseif value < 1 then
+		elseif math.abs(value) < 1 then
 			return value*1000 .. 'g'
 		else
 			return value .. 'kg'
 		end
 	end
 	if measurement == 'length' then
-		if value > 10000 then
+		if math.abs(value) > 10000 then
 			return strip_decimals(nil, value / 1000, 1) .. 'km'
-		elseif value < 1 then
+		elseif math.abs(value) < 1 then
 			return value*100 .. 'cm'
 		else
 			return value .. 'm'
@@ -158,33 +158,6 @@ G.C.SET.fac_Fish = FishAndChips.C.FISH
 G.C.SECONDARY_SET.fac_Fish = FishAndChips.C.FISH
 
 function FishAndChips.verify_submissions()
-	local fac_count = 0
-	local developer_ids = {}
-	local contributors = {}
-	local built_in_developers = {
-		fac_Mack = true,
-		fac_Snapper = true,
-	}
-	for _, id in ipairs(PotatoPatchUtils.Developer.obj_buffer) do
-		local dev = PotatoPatchUtils.Developers[id]
-		if dev.mod_id == 'FishAndChips' then
-			assert(not developer_ids[id], 'Duplicate developer ID registered: ' .. id)
-			developer_ids[id] = true
-			if not built_in_developers[id] then
-				fac_count = fac_count + 1
-				contributors[#contributors + 1] = dev
-			end
-		end
-	end
-	assert(fac_count <= 2, 'Too many devs registered, submissions are limited to two participants.')
-	if fac_count == 2 then
-		local first, second = contributors[1], contributors[2]
-		assert(
-			first.fac_partner == second.key and second.fac_partner == first.key,
-			'Two-person submissions must register each contributor as the other contributor\'s fac_partner.'
- 	)
-	end
-
 	local devs = {}
 	for _, fish in ipairs(G.P_CENTER_POOLS.fac_Fish) do
 		devs[fish.ppu_coder[1]] = devs[fish.ppu_coder[1]] or {}
@@ -270,6 +243,9 @@ SMODS.Shader {
 	key = "hide_fish",
 	path = "core/hide_fish.fs",
 	send_vars = function(self, card)
+		if self.role and self.role.draw_major then
+			card = self.role.draw_major
+		end
 		return {
 			mask_colour = card and card.area and card.area.config.fac_compendium and FishAndChips.C.COMPENDIUM_COLOUR or {0,0,0,1}
 		}
@@ -281,7 +257,7 @@ SMODS.DrawStep {
 	key = "fac_hidden",
 	order = 25,
 	func = function(card, layer)
-		if not card.config.center.discovered and (card.config.center.unlocked or card.area and card.area.config.fac_compendium) then
+		if not (card.config.center.discovered or card.bypass_discovery_center) and (card.config.center.unlocked or card.area and card.area.config.fac_compendium) then
 			if card.config.center.set == "fac_Fish" or card.config.center.set == "fac_Bait" or card.area and card.area.config.fac_compendium then
 				card.children.center:draw_shader("fac_hide_fish", nil, card.ARGS.send_to_shader)
 			end
@@ -293,6 +269,24 @@ SMODS.DrawStep {
 		end
 	end
 }
+
+local floating_sprite_ref = SMODS.DrawSteps['floating_sprite'].func
+function SMODS.DrawSteps.floating_sprite.func(card)
+	if card.config.center.soul_pos and (card.config.center.set == "fac_Fish" or card.config.center.set == "fac_Bait") then
+		local scale_mod = 0.07 + 0.02*math.sin(1.8*G.TIMERS.REAL) + 0.00*math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL))*math.pi*14)*(1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL)))^3
+        local rotate_mod = 0.05*math.sin(1.219*G.TIMERS.REAL) + 0.00*math.sin((G.TIMERS.REAL)*math.pi*5)*(1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL)))^2
+		local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[card.config.center_key] or {}
+		if not (card.config.center.discovered or card.bypass_discovery_center) and (card.config.center.unlocked or card.area and card.area.config.fac_compendium) then
+			card.children.floating_sprite:draw_shader('fac_hide_fish', nil, card.ARGS.send_to_shader, nil, card.children.center, scale_mod, rotate_mod)
+		elseif not (fish_data.times_caught and fish_data.times_caught > 0) and card.area and card.area.config.fac_compendium then
+			card.children.floating_sprite:draw_shader('fac_hide_fish', nil, card.ARGS.send_to_shader, nil, card.children.center, scale_mod, rotate_mod)
+		else
+			floating_sprite_ref(card)
+		end
+	else
+		floating_sprite_ref(card)
+	end
+end
 
 --#endregion
 
@@ -325,22 +319,46 @@ function Card:highlight(is_higlighted)
 		if G.STATE == G.STATES.FAC_FISHING then
 			if self.config.center.requires_jokers then
 				if self.highlighted then
-					G.jokers.T.y = G.jokers.T.y + 15.25
+
+					if self.area == G.FISHING.fac_fish_reward_area then
+						G.fac_fish_area:unhighlight_all()
+						G.FISHING.fac_treasure_reward_area:unhighlight_all()
+					elseif self.area == G.FISHING.fac_treasure_reward_area then
+						G.fac_fish_area:unhighlight_all()
+						G.FISHING.fac_fish_reward_area:unhighlight_all()
+					elseif self.area == G.fac_fish_area then
+						G.FISHING.fac_treasure_reward_area:unhighlight_all()
+						G.FISHING.fac_fish_reward_area:unhighlight_all()
+					end
+
+					G.jokers.T.y = G.jokers.T.y + 15.25 + ((self.area and self.area.config.fac_catch_area) and 3 or 0)
 					G.jokers.T.x = G.jokers.T.x + 1.5 - (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
 				else
-					G.jokers.T.y = G.jokers.T.y - 15.25
-					G.jokers.T.x = G.jokers.T.x - 1.5 + (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
+					G.jokers.T.y = -10
+					G.jokers.T.x = G.hand.T.x - 0.1
 				end
 			end
 			if self.config.center.requires_consumables then
 				if self.highlighted then
-					G.consumeables.T.y = G.consumeables.T.y + 15.25
+					
+					if self.area == G.FISHING.fac_fish_reward_area then
+						G.fac_fish_area:unhighlight_all()
+						G.FISHING.fac_treasure_reward_area:unhighlight_all()
+					elseif self.area == G.FISHING.fac_treasure_reward_area then
+						G.fac_fish_area:unhighlight_all()
+						G.FISHING.fac_fish_reward_area:unhighlight_all()
+					elseif self.area == G.fac_fish_area then
+						G.FISHING.fac_treasure_reward_area:unhighlight_all()
+						G.FISHING.fac_fish_reward_area:unhighlight_all()
+					end
+
+					
+					G.consumeables.T.y = G.consumeables.T.y + 15.25 + ((self.area and self.area.config.fac_catch_area) and 3 or 0)
 					G.consumeables.T.x = G.consumeables.T.x - 3.5
 				else
-					G.consumeables.T.y = G.consumeables.T.y - 15.25
-					G.consumeables.T.x = G.consumeables.T.x + 3.5
+					G.consumeables.T.y = -10
+					G.consumeables.T.x = G.jokers.T.x + G.jokers.T.w + 0.2
 				end
-		
 			end
 		end
 	else
@@ -370,10 +388,29 @@ FishAndChips.Fish {
 	no_collection = true,
 	discovered = true,
 	environments = all_env(),
+	pos = {x=0,y=0},
 	stats = {
 		weight = {min = 1, max = 1},
 		length = {min = 1, max = 1}
 	},
 }
+
+-- Clone of the above, intended specifically for the intro/splash screen
+FishAndChips.Fish {
+	key = "splash_screen",
+	weight = 10,
+	ppu_artist = { "squeax09" },
+	ppu_coder = { "Mack" },
+	in_pool = function() return false end,
+	no_collection = true,
+	discovered = true,
+	environments = all_env(),
+	pos = {x=0,y=1},
+	stats = {
+		weight = {min = 1, max = 1},
+		length = {min = 1, max = 1}
+	},
+}
+
 
 --#endregion

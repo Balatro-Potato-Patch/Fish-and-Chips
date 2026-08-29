@@ -1,4 +1,5 @@
 return {
     ambience = true,
-    menu = true
+    noir_music = true,
+    menu = true,
 }

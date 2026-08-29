@@ -1,0 +1,78 @@
+-- BALANCE: 2X-1 seemed pretty good to me, but tweak as you see fit
+---@param streak_length number
+---@return number
+local streak_reward = function(streak_length)
+    return math.max(0, 2 * streak_length - 1)
+end
+
+FishAndChips.Fish {
+    key = "blamperer_perfish",
+    atlas = "blamperer_fitch",
+    pos = { x = 1, y = 0 },
+    ppu_coder = { "blamperer" },
+    ppu_artist = { "blamperer" },
+    attributes = {
+        "economy", "fac_perfect_catch", "scaling", "reset"
+    },
+    config = {
+        extra = {
+            best_streak = 0,
+            current_streak = 0
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                streak_reward(card.ability.extra.best_streak),
+                card.ability.extra.best_streak
+            }
+        }
+    end,
+    cost = 4,
+    stats = {
+        weight = { min = 0.20, max = 1 },
+        length = { min = 0.25, max = 1 },
+    },
+    weight = 4,
+    environments = {
+        pier = 10,
+    },
+    calculate = function(self, card, context)
+        if context.fac_end_fishing and not context.blueprint then
+            local break_streak = true
+            if not context.failed then
+                if context.perfect then
+                    break_streak = false
+                    local msg_colour = G.C.BLUE
+                    card.ability.extra.current_streak = card.ability.extra.current_streak + 1
+                    if card.ability.extra.current_streak > card.ability.extra.best_streak then
+                        card.ability.extra.best_streak = card.ability.extra.current_streak
+                        msg_colour = G.C.GOLD
+                    end
+                    return {
+                        message = localize {
+                            type = "variable",
+                            key = "a_fac_blamperer_str_gain",
+                            vars = { card.ability.extra.current_streak }
+                        },
+                        colour = msg_colour
+                    }
+                end
+            end
+            if break_streak and card.ability.extra.current_streak > 0 then
+                card.ability.extra.current_streak = 0
+                return {
+                    message = localize("k_fac_blamperer_str_broke"),
+                    colour = G.C.RED
+                }
+            end
+        end
+
+        if context.ending_fishing and card.ability.extra.best_streak > 0 then
+            local reward = streak_reward(card.ability.extra.best_streak)
+            card.ability.extra.current_streak = 0
+            card.ability.extra.best_streak = 0
+            return { dollars = reward }
+        end
+    end
+}

@@ -113,6 +113,44 @@ function SMODS.get_weight_of_object(obj, opt_weight, args)
 	end
 	return get_weight_of_object(obj, opt_weight, args)
 end
+
+function FishAndChips.create_env_pool()
+	local eligible_envs = {}
+
+	for k, v in pairs(FishAndChips.Environments) do
+		if v.key ~= G.GAME.fac_fishing_environment then
+			eligible_envs[k] = true
+		end
+	end
+
+	for k, v in pairs(G.GAME.banned_keys) do
+		if eligible_envs[k] then eligible_envs[k] = nil end
+	end
+
+	local min_use = 1000
+	for k, v in pairs(G.GAME.fac_envs_used) do
+		if eligible_envs[k] then
+			eligible_envs[k] = v
+			if eligible_envs[k] <= min_use then
+				min_use = eligible_envs[k]
+			end
+		end
+	end
+
+	local final_pool = {}
+	for k, v in pairs(eligible_envs) do
+		if eligible_envs[k] then
+			if eligible_envs[k] > min_use then
+				eligible_envs[k] = nil
+			else
+				final_pool[#final_pool+1] = k
+			end
+		end
+	end
+
+	return final_pool
+end
+
 --#endregion
 
 --#region Environment Objects
@@ -943,6 +981,13 @@ local function fac_wormhole_create_flyer(name, atlas_key, px, py)
 	}
 end
 
+local function fac_wormhole_reset_path(path)
+	path.state = "cooldown"
+	path.start_time = G.TIMERS.REAL
+	path.duration = FAC_WORMHOLE_MIN_GAP
+	path.layer = nil
+end
+
 local function fac_wormhole_update_rocket()
 	local path = FAC_WORMHOLE_ROCKET_PATH
 	local under, over, top = G.FISHING.wormhole_rocket_under, G.FISHING.wormhole_rocket_over, G.FISHING.wormhole_rocket_top
@@ -1143,6 +1188,8 @@ FishAndChips.Environment {
 		end
 	end,
 	generate_ui = function(self)
+		fac_wormhole_reset_path(FAC_WORMHOLE_ROCKET_PATH)
+		fac_wormhole_reset_path(FAC_WORMHOLE_POTATO_PATH)
 		local scale_h = FAC_WORMHOLE_SCALE
 		local scale_w = FAC_WORMHOLE_SCALE
 		G.FISHING.hole = UIBox {

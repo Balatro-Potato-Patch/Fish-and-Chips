@@ -224,44 +224,6 @@ function G.FUNCS.fac_can_reroll_location(e)
 	return G.FISHING_STATE == G.FISHING_STATES.LOBBY and (G.GAME.dollars - G.GAME.bankrupt_at) - G.GAME.fac_environment_reroll_cost >= 0
 end
 
-function G.UIDEF.fac_bait_inventory_button()
-	return {
-		n = G.UIT.ROOT,
-		config = { colour = G.C.CLEAR, align = "cm", padding = 0.1 },
-		nodes = {
-			{
-				n = G.UIT.C,
-				config = {
-					minw = 1.5,
-					minh = 0.5,
-					r = 0.1,
-					colour = { G.C.BLACK[1], G.C.BLACK[2], G.C.BLACK[3], 0.65 },
-					padding = 0.1,
-					align = "cm",
-					button = "fac_open_bait_inventory",
-					hover = true
-				},
-				nodes = {
-					{
-						n = G.UIT.R,
-						config = { align = "cm" },
-						nodes = {
-							{
-								n = G.UIT.T,
-								config = {
-									text = localize("k_fac_view_baits"),
-									scale = 0.4,
-									colour = G.C.UI.TEXT_LIGHT,
-								},
-							},
-						}
-					},
-				}
-			},
-		},
-	}
-end
-
 function G.UIDEF.fac_bait_count()
 	local t = {
 		n = G.UIT.ROOT,
@@ -518,25 +480,20 @@ end
 
 function G.UIDEF.fac_fish_data(fish, show_full)
 	local center = fish.config.center
+	local locvars = center.loc_vars and center:loc_vars({}, fish) or {}
+	local name = localize({
+		type = "name",
+		set = center.set,
+		key = locvars.key or center.key,
+		nodes = {},
+		vars = locvars.vars or {},
+		text_colour = G.C.UI.TEXT_LIGHT,
+		no_pop_in = true,
+	})
 	local t = {
 		n = G.UIT.ROOT,
 		config = { emboss = 0.1, r = 0.2, padding = 0.2 },
-		nodes = {
-			{
-				n = G.UIT.R,
-				config = { align = "cm" },
-				nodes = {
-					{
-						n = G.UIT.T,
-						config = {
-							text = localize({ type = "name_text", set = center.set, key = center.key }),
-							scale = 0.5,
-							colour = G.C.UI.TEXT_LIGHT,
-						},
-					},
-				},
-			},
-		},
+		nodes = name,
 	}
 	if show_full then
 		t.nodes[#t.nodes + 1] = fac_cardarea_full_row(center)
@@ -727,7 +684,8 @@ end
 
 function G.FUNCS.fac_upgrade_bucket (e)
 	ease_sand_dollars(-G.GAME.fac_bucket_price, true)
-	G.GAME.fac_bucket_price = G.GAME.fac_bucket_price + 10
+	G.GAME.fac_slots_purchased = (G.GAME.fac_slots_purchased or 0) + 1
+	G.GAME.fac_bucket_price = G.GAME.fac_bucket_price + (10 * G.GAME.fac_slots_purchased)
 	G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base + 1
 	G.GAME.fac_upgrade_text = localize{type = "variable", key = "ph_fac_upgrade_increase", vars = {G.fac_fish_area.config.card_limits.base, G.fac_fish_area.config.card_limits.base + 1}}
 end
@@ -735,7 +693,7 @@ end
 function G.FUNCS.fac_can_upgrade_bucket (e)
 	if G.GAME.fac_sand_dollars >= G.GAME.fac_bucket_price then
 		e.config.button = 'fac_upgrade_bucket'
-		e.config.colour = G.C.ORANGE
+		e.config.colour = FishAndChips.C.SAND_DOLLAR
 	else
 		e.config.button = nil
 		e.config.colour = G.C.UI.BACKGROUND_INACTIVE
@@ -767,10 +725,7 @@ function G.UIDEF.fac_bait_shop()
 	sprite.states.drag.can = false
 	sprite.config.speech_bubble_align = { align = "tm", offset = { x = 0, y = -0.1 }, parent = sprite }
 
-	local stocked_items = false
-	for _, v in ipairs(G.GAME.fac_bait_shop_items) do
-		if v.amt > 0 then stocked_items = true end
-	end
+	local stocked_items = next(G.GAME.fac_bait_shop_items)
 	if not stocked_items then
 		G.E_MANAGER:add_event(Event({
 			trigger = "after",
@@ -843,245 +798,96 @@ function G.UIDEF.fac_bait_shop()
 		}))
 	end
 
-	return {
-		n = G.UIT.ROOT,
-		config = {
-			align = "cm",
-			minw = G.ROOM.T.w * 5,
-			minh = G.ROOM.T.h * 5,
-			padding = 0.1,
-			r = 0.1,
-			colour = { G.C.GREY[1], G.C.GREY[2], G.C.GREY[3], 0.7 },
-		},
-		nodes = {
-			{
-				n = G.UIT.R,
-				config = { r = 0.1, colour = G.C.JOKER_GREY, padding = 0.05, align = "cm" },
-				nodes = {
-					{
-						n = G.UIT.C,
-						config = { colour = G.C.L_BLACK, r = 0.1, padding = 0.2, align = "cm" },
-						nodes = {
-							{
-								n = G.UIT.R,
-								config = { align = "cm", padding = 0.1 },
-								nodes = {
-									{
-										n = G.UIT.R,
-										config = { align = "cm" },
-										nodes = {
-											{
-												n = G.UIT.T,
-												config = {
-													text = localize('ph_fac_shop_title'),
-													scale = 0.8,
-													colour = G.C.UI.TEXT_LIGHT,
-												},
-											},
-										},
-									},
-									{
-										n = G.UIT.R,
-										config = { align = "cm", padding = 0.1 },
-										nodes = {
-											{
-												n = G.UIT.C,
-												config = { align = "cm", padding = 0.1 },
-												nodes = {
-													{
-														n = G.UIT.R,
-														nodes = {
-															{
-																n = G.UIT.O,
-																config = {
-																	object = sprite
-																},
-															},
-														},
-													},
-													{
-														n = G.UIT.R,
-														config = {
-															r = 0.1,
-															emboss = 0.05,
-															padding = 0.2,
-															colour = G.C.BLACK,
-															align = "cm",
-														},
-														nodes = {
-															{
-																n = G.UIT.O,
-																config = {
-																	object = DynaText({
-																		string = {
-																			{
-																				prefix = localize("$"),
-																				ref_table = G.GAME,
-																				ref_value = "fac_sand_dollars",
-																			},
-																		},
-																		colours = { FishAndChips.C.SAND_DOLLAR },
-																		shadow = true,
-																		silent = true,
-																		bump = true,
-																		pop_in = 0,
-																		scale = 0.7,
-																		font = SMODS.Fonts["fac_sand_dollars"],
-																		spacing = 1.2,
-																	}),
-																},
-															},
-														},
-													},
-												},
-											},
-											{
-												n = G.UIT.C,
-												config = { padding = 0.1, align = "cm" },
-												nodes = G.UIDEF.fac_bait_shop_item_rows(),
-											},
-											{n = G.UIT.C, config = {align = "cm", padding = 0.2, r = 0.2, colour = G.C.BLACK, emboss = 0.05}, nodes = {
-												{n = G.UIT.R, config = {align = "cm"}, nodes = {
-													{n = G.UIT.R, config = {align = "cm"}, nodes = {
-														{n = G.UIT.O, config = {object = DynaText{
-															string = localize("ph_fac_bucket_upgrade_1"),
-															colours = { G.C.GOLD },
-															shadow = true,
-															silent = true,
-															bump = true,
-															pop_in = 0.2,
-															scale = 0.6,
-															spacing = 1.2,
-														}}}
-													}},
-													{n = G.UIT.R, config = {align = "cm"}, nodes = {
-														{n = G.UIT.O, config = {object = DynaText{
-															string = localize("ph_fac_bucket_upgrade_2"),
-															colours = { G.C.GOLD },
-															shadow = true,
-															silent = true,
-															bump = true,
-															pop_in = 0.2,
-															scale = 0.6,
-															spacing = 1.2,
-														}}}
-													}}
-												}},
-												{n = G.UIT.R, config = {align = "cm", r = 0.2, tooltip = {
-														title = localize("ph_fac_upgrade"),
-														text = {{ref_table = G.GAME, ref_value = "fac_upgrade_text"}}
-													}}, nodes = {
-													{n = G.UIT.O, config = {object = SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H, "fac_upgrade_bucket")}}
-												}},
-												{n = G.UIT.R, config = {align = "cm", colour = G.C.ORANGE, r = 0.3, emboss = 0.1, button = "fac_upgrade_bucket", func = "fac_can_upgrade_bucket", padding = 0.2}, nodes = {
-													{n = G.UIT.O, config = {object = DynaText{
-														string = {
-															{
-																prefix = localize("$"),
-																ref_table = G.GAME,
-																ref_value = "fac_bucket_price"
-															}
-														},
-														colours = { G.C.UI.TEXT_LIGHT },
-														shadow = true,
-														silent = true,
-														bump = true,
-														pop_in = 0.2,
-														scale = 0.7,
-														spacing = 1.2,
-														font = SMODS.Fonts["fac_sand_dollars"],
-													}}}
-												}}
-											}}
-										},
-									},
-								},
-							},
-							{
-								n = G.UIT.R,
-								config = {
-									id = "overlay_menu_back_button",
-									align = "cm",
-									minw = 2.5,
-									padding = 0.1,
-									r = 0.1,
-									hover = true,
-									colour = G.C.ORANGE,
-									button = "exit_overlay_menu",
-									shadow = true,
-									focus_args = { nav = "wide", button = "b" },
-								},
-								nodes = {
-									{
-										n = G.UIT.R,
-										config = { align = "cm", padding = 0, no_fill = true },
-										nodes = {
-											{
-												n = G.UIT.T,
-												config = {
-													text = localize("b_back"),
-													scale = 0.5,
-													colour = G.C.UI.TEXT_LIGHT,
-													shadow = true,
-												},
-											},
-										},
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-	}
+	return {n = G.UIT.ROOT, config = {align = "cm", minw = G.ROOM.T.w * 5, minh = G.ROOM.T.h * 5, padding = 0.1, r = 0.1, colour = { G.C.GREY[1], G.C.GREY[2], G.C.GREY[3], 0.7 }}, nodes = {
+			{n = G.UIT.R, config = { r = 0.1, colour = G.C.JOKER_GREY, padding = 0.05, align = "cm" }, nodes = {
+				{n = G.UIT.C, config = { colour = G.C.L_BLACK, r = 0.1, padding = 0.2, align = "cm" }, nodes = {
+					{n = G.UIT.R, config = { align = "cm", padding = 0.1 }, nodes = {
+						{n = G.UIT.R, config = { align = "cm" }, nodes = {
+							{n = G.UIT.T, config = {text = localize('ph_fac_shop_title'), scale = 0.8, colour = G.C.UI.TEXT_LIGHT}},
+						}},
+						{n = G.UIT.R, config = { align = "cm", padding = 0.1 }, nodes = {
+							{n = G.UIT.C, config = { align = "cm", padding = 0.1 }, nodes = {
+								{n = G.UIT.R, nodes = {
+									{n = G.UIT.O, config = {object = sprite}},
+								}},
+								{n = G.UIT.R, config = {r = 0.1, emboss = 0.05, padding = 0.2, colour = G.C.BLACK, align = "cm"}, nodes = {
+									{n = G.UIT.O, config = {object = DynaText({string = {{prefix = localize("$"), ref_table = G.GAME, ref_value = "fac_sand_dollars"}},
+										colours = { FishAndChips.C.SAND_DOLLAR }, shadow = true, silent = true, bump = true,
+										pop_in = 0, scale = 0.7, font = SMODS.Fonts["fac_sand_dollars"], spacing = 1.2
+									})}},
+								}},
+							}},
+							{n = G.UIT.C, config = { padding = 0.1, align = "cm" }, nodes = {
+								G.UIDEF.fac_bait_shop_item_rows()
+							}},
+							{n = G.UIT.C, config = {align = "cm"}, nodes = {
+								{n=G.UIT.R, config={align='cm', minw = 2.1, minh = 5.7, r = 0.2, colour = G.C.BLACK, emboss = 0.05, padding = 0.2}, nodes={
+									{n = G.UIT.R, config = {align = "cm"}, nodes = {
+										{n = G.UIT.R, config = {align = "cm"}, nodes = {
+											{n = G.UIT.O, config = {object = DynaText{string = localize("ph_fac_bucket_upgrade_1"), colours = { G.C.GOLD }, shadow = true,
+												silent = true, bump = true, pop_in = 0.2, scale = 0.6, spacing = 1.2}}}
+										}},
+										{n = G.UIT.R, config = {align = "cm"}, nodes = {
+											{n = G.UIT.O, config = {object = DynaText{string = localize("ph_fac_bucket_upgrade_2"), colours = { G.C.GOLD }, shadow = true,
+												silent = true, bump = true, pop_in = 0.2, scale = 0.6, spacing = 1.2}}}
+										}}
+									}},
+									{n = G.UIT.R, config = {align = "cm", r = 0.2, tooltip = {title = localize("ph_fac_upgrade"), text = {{ref_table = G.GAME, ref_value = "fac_upgrade_text"}}}}, nodes = {
+										{n = G.UIT.O, config = {object = SMODS.create_sprite(0, 0, G.CARD_W, G.CARD_H, "fac_upgrade_bucket")}}
+									}},
+									{n = G.UIT.R, config = {align = "cm", colour = G.C.ORANGE, r = 0.3, emboss = 0.1, button = "fac_upgrade_bucket", func = "fac_can_upgrade_bucket", padding = 0.2}, nodes = {
+										{n = G.UIT.O, config = {object = DynaText{string = {{prefix = localize("$"), ref_table = G.GAME, ref_value = "fac_bucket_price"}}, colours = { G.C.UI.TEXT_LIGHT },
+															shadow = true, silent = true, bump = true, pop_in = 0.2, scale = 0.7, spacing = 1.2, font = SMODS.Fonts["fac_sand_dollars"]}}}
+									}}
+								}}
+							}}
+						}},
+					}},
+					{n = G.UIT.R, config = {id = "overlay_menu_back_button", align = "cm", minw = 2.5, padding = 0.1, r = 0.1, hover = true, colour = G.C.ORANGE, button = "exit_overlay_menu", shadow = true, focus_args = { nav = "wide", button = "b" }}, nodes = {
+						{n = G.UIT.R, config = { align = "cm", padding = 0, no_fill = true }, nodes = {
+							{n = G.UIT.T, config = {text = localize("b_back"), scale = 0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
+						}},
+					}},
+				}},
+			}},
+		}}
 end
 
 function G.FUNCS.fac_open_bait_shop(e)
-	G.SETTINGS.paused = true
+	-- G.SETTINGS.paused = true [idk if this will break anything]
 	G.FUNCS.overlay_menu({
 		definition = G.UIDEF.fac_bait_shop(),
 		config = {},
 	})
 end
 
-local can_buy_hook = G.FUNCS.can_buy
-function G.FUNCS.can_buy(e, ...)
-	local card = e.config.ref_table
-	if card.config.center.set == "fac_Bait" then
-		if (e.config.ref_table.cost > G.GAME.fac_sand_dollars) and (e.config.ref_table.cost > 0) then
-			e.config.colour = G.C.UI.BACKGROUND_INACTIVE
-			e.config.button = nil
-		else
-			e.config.colour = G.C.ORANGE
-			e.config.button = "buy_from_shop"
-		end
-		if e.config.ref_parent and e.config.ref_parent.children.buy_and_use then
-			if e.config.ref_parent.children.buy_and_use.states.visible then
-				e.UIBox.alignment.offset.y = -0.6
-			else
-				e.UIBox.alignment.offset.y = 0
-			end
-		end
+function G.FUNCS.can_buy_bait(e, ...)
+	local card = e.config.ref_table[1]
+	if (e.config.amount and G.GAME.fac_active_shop_bait.amount <= 1) or G.GAME.fac_active_shop_bait.amount == 0 or not card then
+		e.states.visible = false
 	else
-		return can_buy_hook(e, ...)
+		e.states.visible = true
+	end
+	if card and ((e.config.amount and card.cost*G.GAME.fac_active_shop_bait.amount or card.cost) <= G.GAME.fac_sand_dollars) then
+		e.config.colour = FishAndChips.C.SAND_DOLLAR
+		e.config.button = "buy_from_shop"
+	else
+		e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+		e.config.button = nil
 	end
 end
 
 local buy_from_shop_hook = G.FUNCS.buy_from_shop
 function G.FUNCS.buy_from_shop(e, ...)
-	local c = e.config.ref_table
+	local c = e.config.ref_table[1]
 	if c and c:is(Card) and c.config.center.set == "fac_Bait" then
-		ease_sand_dollars(-c.cost, true)
-		FishAndChips.add_bait_to_inventory(c.config.center_key)
-		FishAndChips.remove_bait_from_shop(c.config.center_key)
-		SMODS.calculate_context { fac_buy_bait = c.config.center }
-		c:start_dissolve(nil, nil, 0.3)
+		ease_sand_dollars(-c.cost * (e.config.amount and G.GAME.fac_active_shop_bait.amount or 1), true)
+		FishAndChips.add_bait_to_inventory(c.config.center_key, e.config.amount and G.GAME.fac_active_shop_bait.amount or 1)
+		FishAndChips.remove_bait_from_shop(c.config.center_key, e.config.amount and G.GAME.fac_active_shop_bait.amount or 1)
+		SMODS.calculate_context { fac_buy_bait = c.config.center, amount = e.config.amount and G.GAME.fac_active_shop_bait.amount or 1 }
+		if G.GAME.fac_active_shop_bait.amount == 0 then c:start_dissolve(nil, nil, 0.3) end
 
-		local stocked_items = false
-		for _, v in ipairs(G.GAME.fac_bait_shop_items) do
-			if v.amt > 0 then stocked_items = true end
-		end
+		local stocked_items = next(G.GAME.fac_bait_shop_items)
 		if not stocked_items then
 			G.E_MANAGER:add_event(Event({
 				trigger = "after",
@@ -1104,203 +910,162 @@ function G.FUNCS.buy_from_shop(e, ...)
 	end
 end
 
-function G.UIDEF.fac_create_shop_entry(key)
-	local amt = (FishAndChips.get_bait_shop_item(key) or {}).amt or 0
-	local area = CardArea(0, 0, G.CARD_W + 0.1, G.CARD_H, {
-		card_limit = 1,
-		type = "joker",
-		highlight_limit = 1,
-		highlighted_limit = 1,
-		align_buttons = true,
-		no_card_count = true,
-	})
-	for _ = 1, amt do
-		local c = SMODS.add_card({ key = key, area = area })
-		c.children.buy_button = UIBox({
-			definition = {
-				n = G.UIT.ROOT,
-				config = {
-					ref_table = c,
-					minw = 1.1,
-					maxw = 1.3,
-					padding = 0.1,
-					align = "bm",
-					colour = G.C.GOLD,
-					shadow = true,
-					r = 0.08,
-					minh = 0.94,
-					func = "can_buy",
-					one_press = true,
-					button = "buy_from_shop",
-					hover = true,
-				},
-				nodes = {
-					{ n = G.UIT.T, config = { text = localize("b_buy"), colour = G.C.WHITE, scale = 0.5 } },
-				},
-			},
-			config = {
-				align = "bm",
-				offset = { x = 0, y = -0.3 },
-				major = c,
-				bond = "Weak",
-				parent = c,
-			},
-		})
+function G.FUNCS.click_bait_shop(e)
+	if not G.GAME.fac_bait_shop_items[e.config.key] then
+		e.config.sprite:juice_up()
+		attention_text({text = localize('k_fac_out_of_stock'), scale = 0.5, hold = 1, major = e.config.sprite, backdrop_colour = G.C.RED, instance_type = "POPUP"})
+		return
 	end
-	return {
-		n = G.UIT.C,
-		config = {
-			padding = 0.1,
-			colour = G.C.CLEAR,
-			align = "cm",
-		},
-		nodes = {
-			{
-				n = G.UIT.R,
-				config = {
-					align = "cm",
-					colour = lighten(G.C.BLACK, 0.1),
-					r = 0.1,
-					emboss = 0.05,
-					padding = 0.03,
-					minh = 0.6,
-				},
-				nodes = {
-					{
-						n = G.UIT.O,
-						config = {
-							object = DynaText({
-								string = {
-									{ prefix = localize("$"), ref_table = G.P_CENTERS[key], ref_value = "cost" },
-								},
-								colours = { FishAndChips.C.SAND_DOLLAR },
-								shadow = true,
-								silent = true,
-								bump = true,
-								pop_in = 0,
-								scale = 0.5,
-								font = SMODS.Fonts["fac_sand_dollars"],
-								spacing = 1.2,
-							}),
-						},
-					},
-				},
-			},
-			{
-				n = G.UIT.R,
-				config = { align = "cm", padding = 0.1 },
-				nodes = {
-					{
-						n = G.UIT.R,
-						nodes = {
-							{
-								n = G.UIT.T,
-								config = {
-									text = "X",
-									scale = 0.4,
-									colour = G.C.UI.TEXT_LIGHT,
-								},
-							},
-							{
-								n = G.UIT.T,
-								config = {
-									ref_table = setmetatable({}, {
-										__index = function(_, k)
-											return (FishAndChips.get_bait_shop_item(key) or {}).amt or 0
-										end,
-									}),
-									ref_value = "nope",
-									scale = 0.4,
-									colour = G.C.UI.TEXT_LIGHT,
-								},
-							},
-						},
-					},
-				},
-			},
-			{
-				n = G.UIT.R,
-				nodes = {
-					{
-						n = G.UIT.O,
-						config = {
-							object = area,
-						},
-					},
-				},
-			},
-		},
-	}
+	if G.fac_shop_bait.cards[1] then G.fac_shop_bait.cards[1]:remove() end
+	local c = SMODS.add_card({key = e.config.key, no_add=true, area=G.fac_shop_bait, skip_materialize = true})
+	c:start_materialize({FishAndChips.C.BAIT})
+	local cost = G.fac_shop_bait.cards[1].cost
+	G.GAME.fac_active_shop_bait.cost = cost
+	G.GAME.fac_active_shop_bait.all_cost = cost * G.GAME.fac_bait_shop_items[e.config.key].amt
+	G.GAME.fac_active_shop_bait.amount = G.GAME.fac_bait_shop_items[e.config.key].amt
 end
 
-function G.UIDEF.fac_bait_shop_item_rows()
-	local w = 1 + (G.CARD_W + 0.1) * 3
-	local cols = {}
-	for _, b in ipairs(G.GAME.fac_bait_shop_items) do
-		cols[#cols + 1] = G.UIDEF.fac_create_shop_entry(b.key)
+function G.FUNCS.bait_shop_hover(e)
+	if e.states.hover.is then
+		e.config.not_hovering = false
+		if not e.config.hovering then
+			e.config.hovering = true
+			e.hover_tilt = 3
+			e.config.sprite:juice_up(0.05, 0.02)
+			play_sound('paper1', math.random()*0.1 + 0.55, 0.42)
+			play_sound('tarot2', math.random()*0.1 + 0.55, 0.09)
+
+			e.config.sprite.ability_UIBox_table = generate_card_ui(G.P_CENTERS[e.config.key], nil, {}, 'fac_Bait', {card_type = 'fac_Bait'}, nil, nil, nil, self)
+			e.config.h_popup =  G.UIDEF.card_h_popup(e.config.sprite)
+			e.config.h_popup_config = {align =  'br', offset = {x=0.3,y=-1.5}, parent = e}
+			Node.hover(e)
+		end
+	else
+		e.config.hovering = false
+		if not e.config.not_hovering then
+			e.config.not_hovering = true
+			Node.stop_hover(e)
+			e.config.sprite.ability_UIBox_table = nil
+			e.config.h_popup = nil
+			e.hover_tilt = 0
+		end
 	end
-	local items = UIBox({
-		definition = {
-			n = G.UIT.ROOT,
-			config = {
-				colour = G.C.CLEAR,
-				padding = 0.1,
-				align = "cl",
-				minw = w,
-			},
-			nodes = cols,
-		},
-		config = { instance_type = "CARD" },
-	})
+end
+
+function FishAndChips.bait_shop_scroll(shop_rows)
 	local box = nil
-	if items.T.w > w then
-		box = SMODS.UIScrollBox({
-			content = {
-				definition = {
-					n = G.UIT.ROOT,
-					config = { align = "cm", colour = G.C.CLEAR },
-					nodes = {
-						{
-							n = G.UIT.O,
-							config = { object = items },
-						},
-					},
-				},
-				config = { align = "cm" },
-			},
-			overflow = {
-				node_config = {
-					maxw = w,
-					no_overflow = "h",
-				},
-			},
-			sync_mode = "progress",
-		})
-	end
-	local ret = {
-		{
-			n = G.UIT.R,
-			config = { colour = G.C.BLACK, emboss = 0.05, r = 0.1 },
-			nodes = {
-				{ n = G.UIT.O, config = { object = box or items } },
-			},
+	box = SMODS.UIScrollBox({
+		content = {
+			definition = {n = G.UIT.ROOT, config = { align = "cm", colour = G.C.CLEAR }, nodes = shop_rows},
+			config = { align = "cm" },
 		},
+		overflow = {node_config = {maxh = 5.3}},
+		sync_mode = "offset",
+	})
+	local ret = {
+		{n = G.UIT.C, config = { colour = G.C.BLACK, r = 0.1 }, nodes = {
+			{n=G.UIT.O, config = { object = box or shop_rows }}
+		}}
 	}
 	if box then
 		local bar = SMODS.GUI.scrollbar({
-			horizontal = true,
-			w = w,
-			h = 0.2,
+			h = 5.3,
+			w = 0.3,
 			colour = FishAndChips.C.SAND_DOLLAR,
 			bg_colour = { 0, 0, 0, 0.15 },
 			scroll_collision_obj = box,
 			scroll_mult = 1.6,
 		})
-		bar.config.align = "cm"
-		ret[#ret + 1] = { n = G.UIT.R, config = { minh = 0.1 } }
-		ret[#ret + 1] = bar
+		bar.config.align = "tm"
+		table.insert(ret, 1, bar)
 	end
 	return ret
+end
+
+function G.UIDEF.fac_bait_shop_item_rows()
+	local max_h = 5.7
+	G.fac_shop_bait = nil
+	G.GAME.fac_active_shop_bait = {cost = 0, all_cost = 0, amount = 0}
+	G.fac_shop_bait = CardArea(0,0, G.CARD_W, G.CARD_H, {type = 'voucher', card_limit = 1})
+	
+	local bait_node = function(key)
+		local _size = 1
+		local center = G.P_CENTERS[key]
+		local w = center.mini_atlas and _size or 71/95 * _size
+		local sprite = SMODS.create_sprite(0,0, w, _size, SMODS.get_atlas(center.mini_atlas or center.atlas), center.mini_pos or center.pos)
+		sprite.config.center = center
+
+		return {n=G.UIT.C, config={align='tm', sprite = sprite, center = center, key = key, button = 'click_bait_shop', func = 'bait_shop_hover', minh = 1.4}, nodes = {
+			{n = G.UIT.R, config = {align = "cm", padding = 0.03, minh = 0.6}, nodes = {
+				{n = G.UIT.O, config = {object = DynaText({string = {{prefix = localize("$"), ref_table = G.P_CENTERS[key], ref_value = "cost" }},
+									colours = { FishAndChips.C.SAND_DOLLAR }, shadow = true, silent = true, bump = true, pop_in = 0, scale = 0.5,
+									font = SMODS.Fonts["fac_sand_dollars"], spacing = 1.2}),
+				}},
+			}},
+			{n=G.UIT.R, config = {minh = 0.1, minw = 1.2}},
+			{n= G.UIT.R, config={align = "cm",  padding = -0.25}, nodes={
+				{n=G.UIT.C, config = {align = 'cm'}, nodes = {
+					{n=G.UIT.R, config = {align = 'cm', minw = _size}, nodes = {
+						{n=G.UIT.O, config={object = sprite, focus_with_object = true}},
+					}}
+				}},
+				{n=G.UIT.C, config = {align = 'bl'}, nodes = {
+					{n=G.UIT.R, config = {ralign = 'cl'}, nodes = {
+						{n=G.UIT.O, config={object = DynaText({scale = 0.4, maxw = 0.4, string = {{ref_table = G.GAME.fac_bait_shop_items[key], ref_value = 'amt', prefix = 'X'}}, colours = {G.C.UI.TEXT_LIGHT}, shadow = true})}},
+					}}
+				}}
+			}}
+		}}
+	end
+	
+	local shop_contents = {}
+	local i = 1
+	for key, b in pairs(G.GAME.fac_bait_shop_items) do
+		local row_node = shop_contents[math.ceil(i/4)]
+		if not row_node then
+			shop_contents[math.ceil(i/4)] = {n=G.UIT.R, config={align='cl', padding = 0.1}, nodes = {}}
+			row_node = shop_contents[math.ceil(i/4)]
+		end
+		if i == 1 and key ~= 'bait_fac_normal' and G.GAME.fac_bait_shop_items.bait_fac_normal then
+			table.insert(row_node.nodes, bait_node('bait_fac_normal'))
+			i = i + 1
+		end
+		if key ~= 'bait_fac_normal' then
+			i = i + 1
+			table.insert(row_node.nodes, bait_node(key))
+		end
+	end
+
+	local out = {n=G.UIT.R, config={minh=max_h, minw = 7.8, r = true, colour = G.C.BLACK, padding = 0.1, emboss = 0.05}, nodes = {
+		{n=G.UIT.C, config={minw = 5.2, r=true, padding = 0.1, align='tl'}, nodes = 
+			FishAndChips.bait_shop_scroll(shop_contents)
+		},
+		{n=G.UIT.C, config={align = 'tm', minw = 2.3, r=true, padding = 0.15}, nodes = {
+			{n = G.UIT.R, config = {align = "cm", r = 0.2 	}, nodes = {
+					{n = G.UIT.O, config = {object = G.fac_shop_bait}}
+				}},
+			{n = G.UIT.R, config = {align = "cm", colour = FishAndChips.C.SAND_DOLLAR, r = 0.3, emboss = 0.1, button = "buy_from_shop", func = "can_buy_bait", ref_table = G.fac_shop_bait.cards, padding = 0.2}, nodes = {
+				{n=G.UIT.C, config = {align='cm'}, nodes = {
+					{n=G.UIT.R, config={align='cm'}, nodes = {
+						{n = G.UIT.O, config = {object = DynaText({string = {{prefix = 'X1: '..localize("$"), ref_table = G.GAME.fac_active_shop_bait, ref_value = "cost" }},
+							colours = { G.C.UI.TEXT_LIGHT }, shadow = true, silent = true, bump = true, pop_in = 0, scale = 0.55, font = SMODS.Fonts["fac_sand_dollars"], spacing = 1.2})}}
+					}}
+				}}
+			}},
+			{n = G.UIT.R, config = {align = "cm", colour = FishAndChips.C.SAND_DOLLAR, r = 0.3, emboss = 0.1, button = "buy_from_shop", func = "can_buy_bait", ref_table = G.fac_shop_bait.cards, amount = true, padding = 0.2}, nodes = {
+				{n=G.UIT.C, config = {align = 'cm'}, nodes = {
+					{n=G.UIT.R, config={align='cm'}, nodes = {
+						{n = G.UIT.O, config = {object = DynaText({string = {{prefix = 'X', ref_table = G.GAME.fac_active_shop_bait, ref_value = "amount" }},
+							colours = { G.C.UI.TEXT_LIGHT }, shadow = true, silent = true, bump = true, pop_in = 0, scale = 0.55, font = SMODS.Fonts["fac_sand_dollars"], spacing = 1.2})}},
+						{n = G.UIT.O, config = {object = DynaText({string = {{prefix = ': '..localize("$"), ref_table = G.GAME.fac_active_shop_bait, ref_value = "all_cost" }},
+							colours = { G.C.UI.TEXT_LIGHT }, shadow = true, silent = true, bump = true, pop_in = 0, scale = 0.55, font = SMODS.Fonts["fac_sand_dollars"], spacing = 1.2})}}
+					}}
+				}}
+			}}
+		}},
+	}}
+
+	return out
 end
 
 function G.FUNCS.fac_can_set_active(e)
@@ -1314,6 +1079,7 @@ function G.FUNCS.fac_can_set_active(e)
 end
 
 function G.FUNCS.fac_set_active_bait(e)
+	local previous_active_bait = G.GAME.fac_active_bait
 	G.GAME.fac_active_bait = e.config.key
 
 	G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] = G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[e.config.key] or {
@@ -1329,11 +1095,13 @@ function G.FUNCS.fac_set_active_bait(e)
 
 	if G.FISHING and G.FISHING.fishing_bait_count then
 		G.FISHING.fishing_bait_count:remove()
+		G.FISHING.fishing_bait_count = nil
 	end
 
 	local bait = SMODS.add_card({ key = e.config.key, area = G.fac_bait_area, skip_materialize = true })
 
 	if G.FISHING then FishAndChips.update_bait_counter(bait) end
+	FishAndChips.rebuild_bait_inventory(e.config.inventory_swap and previous_active_bait or nil)
 end
 
 function G.UIDEF.fac_create_inventory_entry(key)
@@ -1428,195 +1196,6 @@ function G.UIDEF.fac_create_inventory_entry(key)
 			},
 		},
 	}
-end
-
-function G.UIDEF.fac_bait_inventory_item_rows()
-	local w = 1 + (G.CARD_W + 0.1) * 3
-	local cols = {}
-	for _, b in ipairs(G.GAME.fac_bait_inventory) do
-		cols[#cols + 1] = G.UIDEF.fac_create_inventory_entry(b.key)
-	end
-	if not next(cols) then
-		cols[#cols + 1] = {
-			n = G.UIT.C,
-			config = {
-				minw = w - 0.2,
-				align = "cm",
-				minh = G.CARD_H + 0.2,
-			},
-			nodes = {
-				{
-					n = G.UIT.T,
-					config = {
-						scale = 0.4,
-						colour = G.C.UI.TEXT_LIGHT,
-						text = localize("k_fac_no_baits")
-					}
-				}
-			}
-		}
-	end
-	local items = UIBox({
-		definition = {
-			n = G.UIT.ROOT,
-			config = {
-				colour = G.C.CLEAR,
-				padding = 0.1,
-				align = "cl",
-				minw = w,
-			},
-			nodes = cols,
-		},
-		config = { instance_type = "CARD" },
-	})
-	local box = nil
-	if items.T.w > w then
-		box = SMODS.UIScrollBox({
-			content = {
-				definition = {
-					n = G.UIT.ROOT,
-					config = { align = "cm", colour = G.C.CLEAR },
-					nodes = {
-						{
-							n = G.UIT.O,
-							config = { object = items },
-						},
-					},
-				},
-				config = { align = "cm" },
-			},
-			overflow = {
-				node_config = {
-					maxw = w,
-					no_overflow = "h",
-				},
-			},
-			sync_mode = "progress",
-		})
-	end
-	local ret = {
-		{
-			n = G.UIT.R,
-			config = { colour = G.C.BLACK, emboss = 0.05, r = 0.1 },
-			nodes = {
-				{ n = G.UIT.O, config = { object = box or items } },
-			},
-		},
-	}
-	if box then
-		local bar = SMODS.GUI.scrollbar({
-			horizontal = true,
-			w = w,
-			h = 0.2,
-			colour = FishAndChips.C.SAND_DOLLAR,
-			bg_colour = { 0, 0, 0, 0.15 },
-			scroll_collision_obj = box,
-			scroll_mult = 1.6,
-		})
-		bar.config.align = "cm"
-		ret[#ret + 1] = { n = G.UIT.R, config = { minh = 0.1 } }
-		ret[#ret + 1] = bar
-	end
-	return ret
-end
-
-function G.UIDEF.fac_bait_inventory()
-	return {
-		n = G.UIT.ROOT,
-		config = {
-			align = "cm",
-			minw = G.ROOM.T.w * 5,
-			minh = G.ROOM.T.h * 5,
-			padding = 0.1,
-			r = 0.1,
-			colour = { G.C.GREY[1], G.C.GREY[2], G.C.GREY[3], 0.7 },
-		},
-		nodes = {
-			{
-				n = G.UIT.R,
-				config = { r = 0.1, colour = G.C.JOKER_GREY, padding = 0.05, align = "cm" },
-				nodes = {
-					{
-						n = G.UIT.C,
-						config = { colour = G.C.L_BLACK, r = 0.1, padding = 0.2, align = "cm" },
-						nodes = {
-							{
-								n = G.UIT.R,
-								config = { align = "cm", padding = 0.1 },
-								nodes = {
-									{
-										n = G.UIT.R,
-										config = { align = "cm" },
-										nodes = {
-											{
-												n = G.UIT.T,
-												config = {
-													text = "Bait Inventory",
-													scale = 0.8,
-													colour = G.C.UI.TEXT_LIGHT,
-												},
-											},
-										},
-									},
-									{
-										n = G.UIT.R,
-										config = { align = "cm" },
-										nodes = {
-											{
-												n = G.UIT.C,
-												config = { padding = 0.1, align = "cm" },
-												nodes = G.UIDEF.fac_bait_inventory_item_rows(),
-											},
-										},
-									},
-								},
-							},
-							{
-								n = G.UIT.R,
-								config = {
-									id = "overlay_menu_back_button",
-									align = "cm",
-									minw = 2.5,
-									padding = 0.1,
-									r = 0.1,
-									hover = true,
-									colour = G.C.ORANGE,
-									button = "exit_overlay_menu",
-									shadow = true,
-									focus_args = { nav = "wide", button = "b" },
-								},
-								nodes = {
-									{
-										n = G.UIT.R,
-										config = { align = "cm", padding = 0, no_fill = true },
-										nodes = {
-											{
-												n = G.UIT.T,
-												config = {
-													text = localize("b_back"),
-													scale = 0.5,
-													colour = G.C.UI.TEXT_LIGHT,
-													shadow = true,
-												},
-											},
-										},
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-	}
-end
-
-function G.FUNCS.fac_open_bait_inventory(e)
-	G.SETTINGS.paused = true
-	G.FUNCS.overlay_menu({
-		definition = G.UIDEF.fac_bait_inventory(),
-		config = {},
-	})
 end
 
 local add_to_highlighted_hook = CardArea.add_to_highlighted

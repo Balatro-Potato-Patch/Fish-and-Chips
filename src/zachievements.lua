@@ -46,6 +46,21 @@ FishAndChips.Achievement({
     end
 })
 
+local add_to_deck_ref = Card.add_to_deck
+function Card:add_to_deck(...)
+    add_to_deck_ref(self, ...)
+    if self.ability.set == 'Joker' then
+        G.GAME.fac_no_jokers = false
+    end
+end
+
+FishAndChips.Achievement({
+    key = 'no_jokers',
+    unlock_condition = function(self, args)
+        return args.type == 'win' and G.GAME.fac_no_jokers
+    end
+})
+
 FishAndChips.Achievement({
     key = 'perfect_1',
     config = {amount = 1},
@@ -171,6 +186,9 @@ FishAndChips.Achievement({
     config = {amount = 1000},
     unlock_condition = function(self, args)
         return args.type == 'fac_sand_dollars' and G.PROFILES[G.SETTINGS.profile].fac_fishing.career_sand_dollars >= self.config.amount
+    end,
+    display_progress = function(self)
+        return G.PROFILES[G.SETTINGS.profile].fac_fishing.career_sand_dollars .. '/' .. self.config.amount
     end
 })
 
@@ -188,18 +206,24 @@ FishAndChips.Achievement({
     end
 })
 
-local add_to_deck_ref = Card.add_to_deck
-function Card:add_to_deck(...)
-    add_to_deck_ref(self, ...)
-    if self.ability.set == 'Joker' then
-        G.GAME.fac_no_jokers = false
-    end
-end
+
 
 FishAndChips.Achievement({
-    key = 'no_jokers',
+    key = 'all_rods',
     unlock_condition = function(self, args)
-        return args.type == 'win' and G.GAME.fac_no_jokers
+        if args.type == 'fac_rod_unlocked' then
+            for _, rod in ipairs(G.P_CENTER_POOLS.fac_Rod) do
+                if not rod.unlocked then return false end
+            end
+            return true
+        end
+    end,
+    display_progress = function(self)
+        local unlocked_count = 0
+        for _, rod in ipairs(G.P_CENTER_POOLS.fac_Rod) do
+            if rod.unlocked then unlocked_count = unlocked_count + 1 end
+        end
+        return unlocked_count .. '/' .. #G.P_CENTER_POOLS.fac_Rod
     end
 })
 
@@ -217,6 +241,17 @@ for _, env in ipairs(FishAndChips.Environment.obj_buffer) do
         config = {type = env},
         unlock_condition = function(self, args)
             if args.type == 'fac_fish_caught' and FishAndChips.is_environment_complete(self.config.type) then return true end
+        end,
+        display_progress = function(self)
+            local caught, total = 0, 0
+            for _, k in ipairs(SMODS.get_attribute_pool(self.config.type)) do
+                total = total + 1
+                local fish_data = G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data[k] or {}
+                if (fish_data.times_caught and fish_data.times_caught > 0) and not G.P_CENTERS[k].no_collection then
+                    caught = caught + 1
+                end
+            end
+            return caught .. '/' .. total
         end
     })
 end
@@ -230,6 +265,9 @@ FishAndChips.Achievement({
             end
             return true
         end
+    end,
+    display_progress = function(self)
+        return SMODS.table_size(G.PROFILES[G.SETTINGS.profile].fac_fishing.fish_data) .. '/' .. #G.P_CENTER_POOLS.fac_Fish
     end
 })
 
@@ -239,7 +277,7 @@ for _, bait in ipairs(FishAndChips.Bait.obj_buffer) do
         key = bait..'_1',
         config = {type = bait, amount = 1},
         unlock_condition = function(self, args)
-            if args.type == 'fac_fish_caught' and args.bait == self.config.type and G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[G.GAME.fac_active_bait].fish_caught >= self.config.amount then return true end
+            if args.type == 'fac_fish_caught' and args.bait == self.config.type and G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[self.config.type].fish_caught >= self.config.amount then return true end
         end
     })
 
@@ -249,7 +287,10 @@ for _, bait in ipairs(FishAndChips.Bait.obj_buffer) do
         key = bait..'_2',
         config = {type = bait, amount = 20},
         unlock_condition = function(self, args)
-            if args.type == 'fac_fish_caught' and args.bait == self.config.type and G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[G.GAME.fac_active_bait].fish_caught >= self.config.amount then return true end
+            if args.type == 'fac_fish_caught' and args.bait == self.config.type and G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[self.config.type].fish_caught >= self.config.amount then return true end
+        end,
+        display_progress = function(self)
+            return G.PROFILES[G.SETTINGS.profile].fac_fishing.bait_data[self.config.type].fish_caught .. '/' .. self.config.amount
         end
     })
 
@@ -265,26 +306,26 @@ FishAndChips.Achievement({
             end
             return true
         end
+    end,
+    display_progress = function(self)
+        local amount = 0
+        for _, ach in ipairs(bait_achieves) do
+            if ach.earned then amount = amount + 1 end
+        end
+        return amount .. '/' .. #bait_achieves
     end
 })
 
-FishAndChips.Achievement({
-    key = 'all_rods',
-    unlock_condition = function(self, args)
-        if args.type == 'fac_rod_unlocked' then
-            for _, rod in ipairs(G.P_CENTER_POOLS.fac_Rod) do
-                if not rod.unlocked then return false end
-            end
-            return true
-        end
-    end
-})
+
 
 FishAndChips.Achievement({
     key = 'sell_1',
     config = {amount = 10},
     unlock_condition = function(self, args)
         return args.type == 'fac_fish_sold' and G.PROFILES[G.SETTINGS.profile].fac_fishing.career_fish_sold >= self.config.amount
+    end,
+    display_progress = function(self)
+        return G.PROFILES[G.SETTINGS.profile].fac_fishing.career_fish_sold .. '/' .. self.config.amount
     end
 })
 
@@ -293,6 +334,9 @@ FishAndChips.Achievement({
     config = {amount = 100},
     unlock_condition = function(self, args)
         return args.type == 'fac_fish_sold' and G.PROFILES[G.SETTINGS.profile].fac_fishing.career_fish_sold >= self.config.amount
+    end,
+    display_progress = function(self)
+        return G.PROFILES[G.SETTINGS.profile].fac_fishing.career_fish_sold .. '/' .. self.config.amount
     end
 })
 
@@ -320,6 +364,16 @@ FishAndChips.Achievement({
             end
             return true
         end
+    end,
+    display_progress = function(self)
+        local earned, total = 0, 0
+        for _, ach in ipairs(FishAndChips.Compendium.get_achievements()) do
+            if ach ~= self then
+                total = total + 1
+                if ach.earned then earned = earned + 1 end
+            end
+        end
+        return earned .. '/' .. total
     end
 })
 

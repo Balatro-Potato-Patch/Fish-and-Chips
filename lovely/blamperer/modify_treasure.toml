@@ -1,0 +1,15 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+# allow modification of treasure rewards
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = '''-- insert general modified value updating here'''
+position = 'after'
+payload = '''
+if context.fac_treasure_reward then context.fac_treasure_reward = flags.modify end
+'''
+match_indent = true

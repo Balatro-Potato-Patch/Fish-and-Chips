@@ -1,0 +1,19 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+# Add temporary info queue
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+if not hide_desc and card and card.ability and (card.ability.extra_slots_used or 0) ~= 0 then
+'''
+payload = '''
+if card and card.ability.fac_r_e_temp then
+    info_queue[#info_queue+1] = {set='Other', key='fac_r_e_temp'}
+end
+'''

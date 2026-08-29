@@ -1,0 +1,19 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS FishAndChips "/src/fishminigamemechanics.lua"]'''
+pattern = '''
+state.fish_vel = state.fish_vel + (state.fish_goal_vel - state.fish_vel) * (6.5 * dt)
+'''
+position = 'after'
+payload = '''
+
+-- Patch added by Astra
+if profile.key == 'fish_fac_am_ascii' and pseudorandom(pseudoseed('ascii_stop_chance')) > 0.95 then state.fish_vel = 0 end
+
+'''
+match_indent = true

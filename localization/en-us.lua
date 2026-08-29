@@ -90,7 +90,20 @@ return {
             fish_fac_test = {
                 name = "Carpboard Cutout",
                 text = {
-                    "Placeholder"
+                    "Does Nothing...",
+                    "You've caught everything here,",
+                    "try fishing elsewhere!"
+                }
+            },
+            fish_fac_splash_screen = {
+                name = "Flounder",
+                text = {
+                    "Cannot be viewed by normal means.",
+                    "If you see this, be sure to check out",
+                    "all the Credits in the Credits Tab!",
+                    "So many awesome people worked on this mod,",
+                    "and I'm sure they'd enjoy your support.",
+                    "- Gabby/squeax09"
                 }
             },
         },
@@ -114,7 +127,7 @@ return {
                 name = "Multi Minnows",
                 text = {
                     "Fish that give {C:mult}+Mult{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -122,7 +135,7 @@ return {
                 name = "Chippy Chum",
                 text = {
                     "Fish that give {C:chips}+Chips{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -130,7 +143,7 @@ return {
                 name = "Dollar Dough",
                 text = {
                     "Fish that give {C:money}money{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -138,7 +151,7 @@ return {
                 name = "Powerful Popper",
                 text = {
                     "Fish that give {X:mult,C:white}XMult{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -146,7 +159,7 @@ return {
                 name = "Rapid Rig", 
                 text = {
                     "Fish that affect {C:attention}retriggers{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -154,15 +167,15 @@ return {
                 name = "Lunar Lure", -- astra also suggested Level Lure so feel free to tinker with this one - gabby
                 text = {
                     "Fish that affect {C:planet}hand levels{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
             bait_fac_function = {
-                name = "Functional Frog", -- i think i'm naming him felix
+                name = "Functional Frog", -- His name is Felix and he is my Son. - also gabby
                 text = {
                     "Fish that are {C:attention}usable{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -170,7 +183,7 @@ return {
                 name = "Fancy Fly", 
                 text = {
                     "Fish that affect {C:fac_suits}suits{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -178,7 +191,7 @@ return {
                 name = "Chained Chatterbait", 
                 text = {
                     "Fish that affect {C:attention}ranks{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -186,7 +199,7 @@ return {
                 name = "Static Spinner", 
                 text = {
                     "Fish with {C:attention}passive{} effects",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -194,7 +207,7 @@ return {
                 name = "Twintail Topwater", 
                 text = {
                     "Fish that {C:attention}copy{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -202,7 +215,7 @@ return {
                 name = "Judgement Jig", 
                 text = {
                     "Fish that {C:attention}generate{} cards",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -210,15 +223,15 @@ return {
                 name = "Spooky Spoon", 
                 text = {
                     "Fish that affect {C:attention}Boss Blinds{}",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
             bait_fac_destroy = {
-                name = "Bashful Bladebait", 
+                name = "Bashful Bladebait",
                 text = {
                     "Fish that {C:red}destroy{} cards",
-                    "are {X:attention,C:white}X#1#{} more likely",
+                    "are {C:attention}more likely",
                     "to be caught",
                 },
             },
@@ -227,9 +240,11 @@ return {
             rod_fac_wooden = {
                 name = "Wooden Rod",
                 text = {
-                    "An aspiring fisherman's",
+                    {"An aspiring fisherman's",
                     "first fishing rod.",
-                    "What wonders will you catch?"
+                    "What wonders will you catch?"},
+                    {"Start run with {C:attention}+1",
+                    "random {C:attention}Bait"}
                 }
             },
             rod_fac_fiberglass = {
@@ -261,18 +276,18 @@ return {
                     "as effective"
                 },
                 unlock = {
-                    "Catch a Fish with",
+                    "Catch a {C:fac_fish}Fish{} with",
                     "each {C:attention}Bait{} at least once"
                 }
             },
             rod_fac_extradimensional = {
                 name = "Extradimensional Rod",
                 text = {
-                    "Chance to catch {C:attention}Cards",
-                    "instead of fish"
+                        "{C:attention}Jokers{} and {C:attention}consumables{} may",
+                        "be caught during fishing"
                 },
                 unlock = {
-                    "Catch {C:attention}50{} Fish"
+                    "Catch {C:attention}50 {C:fac_fish}Fish"
                 }
             },
             rod_fac_lucky = {
@@ -282,20 +297,20 @@ return {
                     "earn {C:money}$#3#{} per catch"
                 },
                 unlock = {
-                    "Collect 10 {C:money}Treasures{}",
+                    "Collect 10 {C:money}Treasures",
                     "in a single run"
                 }
             },
             rod_fac_distortion = {
                 name = "Distortion Rod",
                 text = {
-                    "Chance to catch Fish",
+                    "Chance to catch {C:fac_fish}Fish",
                     "native to other",
-                    "fishing spots"
+                    "{C:fac_environment}Environments"
                 },
                 unlock = {
-                    "Catch a Fish in",
-                    "every {C:attention}Environment{}"
+                    "Catch a {C:fac_fish}Fish{} in",
+                    "every {C:fac_environment}Environment"
                 }
             },
             rod_fac_harpoon = {
@@ -303,9 +318,8 @@ return {
                 text = {
                     "Sweet spot is {C:attention}Tiny",
                     "and moves on its own",
-                    "Click while its over",
+                    "Click while it's over",
                     "the fish to catch it",
-                    "{C:red}Cannot catch treasure"
                 },
                 unlock = {
                     "Get 5 {C:attention}Perfect Catches{}",
@@ -370,40 +384,44 @@ return {
                     "Massive thank you to everyone involved!"
                 }
             },
-        },
-        PotatoPatch = {
-            PotatoPatchDev_eremel_1 = {
-                name = 'Eremel!',
+            fac_recommendation = {
                 text = {
-                    "I made this book"
-                }
-            },
-            PotatoPatchDev_eremel_2 = {
-                name = 'WilsonTheWolf',
-                text = {
-                    "I made this book"
+                    ' {element:1} {}',
+                    '{s:0.4} {}',
+                    "Thanks for checking out Fish and Chips!",
+                    " ",
+                    "We recommend playing without unlocking all",
+                    "for the best experience. We put a ton of time",
+                    "and love into this mod, and there's a ton of fish",
+                    "for you to discover.",
+                    " ",
+                    "Thanks again, and happy angling!",
+                    "~ The Potato Patch {element:2} {}"
                 }
             }
-        }
+        },
     },
     misc = {
         dictionary = {
             b_fac_go_fishing_1 = "Go",
             b_fac_go_fishing_2 = "Fishing",
             b_fac_ambience_toggle = "Enable Ambient Sounds",
+            b_fac_noir_music = "Enable Noir Music",
             b_fac_menu_toggle = "Enable Custom Main Menu",
+            b_fac_family_friendly_toggle = "Family-Friendly Mode",
             b_fac_condensed_fish = "Enable Condensed Fish Collection",
             b_fac_flavour_text = 'Disable Flavour Text',
             b_fac_flashing_lights = 'Disable Flashing Effects',
-            b_fac_fish_scaling = 'Disable Visual Size of Fish',
+            b_fac_fish_scaling = 'Disable Stats Resizing Fish',
+            b_fac_fish_resize = 'Shrink Large Sprites',
             b_fac_performance_mode = 'Low Performance Mode',
             ph_fac_go_fishing_ex = "Go Fishing!",
             k_fac_no_baits = "No Baits in inventory",
             k_fac_equip_bait = "Equip Bait",
             k_fac_view_baits = "View Baits",
             k_fac_fish = "Fish",
-            k_fac_maybe_fish = "Fish?",
             b_fac_fish = "Fish",
+            k_fac_maybe_fish = "Fish?",
             k_fac_rod = "Rod",
             b_fac_rod = "Rods",
             k_fac_bait = "Bait",
@@ -447,6 +465,7 @@ return {
             ph_fac_with_rod = 'with ',
             ph_fac_unknown_item = '????',
             ph_fac_by = 'By ',
+            ph_fac_times_fished = 'Times Fished: ',
             ph_fac_caught = 'Fish caught: ',
             ph_fac_lost = 'Fish lost: ',
             ph_fac_rate = 'Catch rate: ',
@@ -473,6 +492,12 @@ return {
             ph_fac_upgrade = "Increase Bucket Slots",
             ph_fac_shop_title = "Snapper's Shop",
             k_fac_treasure_catch = 'Treasure',
+            k_fac_cashout_blind_display_small = '(Small Blind)',
+            k_fac_cashout_blind_display_big = '(Big Blind)',
+            k_fac_cashout_blind_display_boss = '(Boss Blind)',
+            k_fac_out_of_stock = 'Out of Stock!',
+            fac_mini_art_credit = 'Mini Art by ',
+            k_fac_okay = 'Okay!',
         },
         achievement_names = {
             ach_fac_catch_1 = 'Rookie Rodder',
@@ -781,26 +806,38 @@ return {
             },
             fac_fishing_2b = {
                 "To lure in the fish,",
-                "you need {C:attention}Bait{}! You use",
-                "{C:attention}1{} Bait every time you fish."
+                "you need {C:fac_bait}Bait{}! You use",
+                "{C:attention}1{} {C:fac_bait}Bait{} every time you fish."
             },
             fac_fishing_2c = {
-                "That is... unless you catch",
-                "the fish {C:gold}PERFECTLY{}! Then you",
-                "save the {C:attention}Bait{} you used."
+                "If ya catch the fish",
+                "{C:gold}PERFECTLY{}, it'll be worth",
+                "{C:attention}more{} when ya sell it."
             },
             fac_fishing_2d = {
                 "You can check out",
                 "your {C:attention}tacklebox{} by",
-                "clickin' this button."
+                "lookin' here."
             },
             fac_fishing_2e = {
-                "I've given ya some {C:attention}free Bait{}!",
+                "I've given ya some {C:fac_bait}free Bait{}!",
                 "I know, I'm so generous.",
                 "You can thank me later."
             },
+            fac_fishing_2f = {
+                "These Worms are what's",
+                "currently hooked on your line.",
+                "Surely a fish'll make a feast",
+                "outta those bad boys!"
+            },
+            fac_fishing_2g = {
+                "You can take a looksee at",
+                "the rest of your stock on the",
+                "right of your equipped bait.",
+                "Just click a {C:fac_bait}Bait{} to equip!"
+            },
             fac_fishing_3a = {
-                "Out of Bait? Not a bother!",
+                "Out of {C:fac_bait}Bait{}? Not a bother!",
                 "Head on over to the Bait Shop",
                 "and {C:gold}Snapper'll{} sort ya out."
             },

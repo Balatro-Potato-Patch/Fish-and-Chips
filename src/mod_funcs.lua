@@ -22,6 +22,37 @@ function FishAndChips.mod.custom_card_areas(game)
 		highlighted_limit = 1,
 		align_buttons = true
 	})
+	getmetatable(game.fac_fish_area.config).__index = function(t, key)
+		if key == "card_limit" then
+			return (t.card_limits.total_slots or 0) - (t.card_limits.extra_slots_used or 0) - (t.buffer or 0)
+		end
+	end
+	game.fac_fish_area.load = function(self, cat)
+		CardArea.load(self, cat)
+		getmetatable(game.fac_fish_area.config).__index = function(t, key)
+			if key == "card_limit" then
+				return (t.card_limits.total_slots or 0) - (t.card_limits.extra_slots_used or 0) - (t.buffer or 0)
+			end
+		end
+	end
+	game.fac_fish_area.buffer = function(self, value, event)
+		if event then
+			event = type(event) == 'table' and event or {}
+			G.E_MANAGER:add_event(Event({
+				trigger = event.trigger or 'immediate', delay = event.delay or 0,
+				func = function()
+					self.config.buffer = (self.config.buffer or 0) + value
+					return true
+				end
+			}))
+		else
+			self.config.buffer = (self.config.buffer or 0) + value
+		end
+	end
+	game.fac_fish_area.has_space = function(self, value)
+		value = value or 1
+		return #self.cards + value <= self.config.card_limit
+	end
 	game.fac_fishing_bucket_bottom = UIBox({
 		definition = G.UIDEF.fac_fishing_bucket_bottom(),
 		config = {
@@ -87,9 +118,10 @@ end
 
 function FishAndChips.mod.reset_game_globals (run_start)
 	if run_start then
-		G.GAME.fac_fishing_environment = "calm_pond"
+		G.GAME.fac_fishing_environment = not G.PROFILES[G.SETTINGS.profile].fac_tutorial_seen and "calm_pond" or pseudorandom_element(FishAndChips.create_env_pool(), "fac_starting_location")
+		G.GAME.fac_envs_used[G.GAME.fac_fishing_environment] = G.GAME.fac_envs_used[G.GAME.fac_fishing_environment] + 1
 		G.GAME.fac_environment_reroll_cost = 5
-		G.FUNCS.fac_set_active_bait({ config = G.GAME.fac_bait_inventory[1] })
+		G.FUNCS.fac_set_active_bait({ config = { key = 'bait_fac_normal' } })
 		G.GAME.fac_bucket_price = 10
 		G.GAME.fac_upgrade_text = localize{type = "variable", key = "ph_fac_upgrade_increase", vars = {G.fac_fish_area.config.card_limits.base, G.fac_fish_area.config.card_limits.base + 1}}
 	end
@@ -102,16 +134,6 @@ FishAndChips.mod.calculate = function(self, context)
 			FishAndChips.add_bait_to_shop(SMODS.poll_object({ type = "fac_Bait", append = 'fac_bait_shop' }))
 		end
 		FishAndChips.add_bait_to_shop('bait_fac_normal', pseudorandom('fac_guaranteed_normal_bait' .. G.GAME.round_resets.ante, 1, 3))
-		FishAndChips.clean_up_bait_shop()
-		local function fac_sort_bait_shop(bait1, bait2)
-			if bait1.key == 'bait_fac_normal' then
-				return true
-			elseif bait2.key == 'bait_fac_normal' then
-				return false
-			end
-			return bait1.amt > bait2.amt
-		end
-		table.sort(G.GAME.fac_bait_shop_items, fac_sort_bait_shop)
 	end
 end
 
@@ -182,6 +204,9 @@ function SMODS.showman(card_key)
 	if G.P_CENTERS[card_key].set == "fac_Bait" then
 		return true
 	end
+	if G.P_CENTERS[card_key].set == "fac_Fish" then
+		return false
+	end
 	return showman_hook(card_key)
 end
 
@@ -204,15 +229,202 @@ SMODS.RunSelectPage({
 	end,
 	start_run = function(self, choice)
 		choice = G.P_CENTERS[choice].unlocked and choice or 'rod_fac_wooden'
-		SMODS.add_card{area = G.fac_rod_area, key = choice}
+		local rod = SMODS.add_card{area = G.fac_rod_area, key = choice}
 		G.PROFILES[G.SETTINGS.profile].fac_fishing.rod_data[choice] = G.PROFILES[G.SETTINGS.profile].fac_fishing.rod_data[choice] or {
 			fish_caught = 0,
 			fish_lost = 0,
 			perfect_catch = 0,
 			treasure = 0
 		}
+		if rod.config.center.apply and type(rod.config.center.apply) == 'function' then
+			rod.config.center:apply(rod)
+		end
 	end,
 	set_default = function(self, choice)
 		return choice and G.P_CENTERS[choice].unlocked and choice or 'rod_fac_wooden'
 	end,
 })
+
+FishAndChips.mod.menu_cards = function()
+	if FishAndChips.mod.config.menu then
+		return {
+			remove_original = true,
+			{ key = 'fish_fac_splash_screen' }
+		}
+	else
+		return { func = function() return end }
+	end
+end
+
+function FishAndChips.create_baits_from_card(card, amt, key)
+	local w = (G.CARD_W + 0.1) * amt - 0.1
+	local h = G.CARD_H
+	local created_bait = {}
+	delay(1)
+	for i = 1, amt do
+		G.E_MANAGER:add_event(Event {
+			func = function()
+				local _card = SMODS.create_card { set = "fac_Bait", key = key }
+				if not G.fac_temp_bait_area then
+					G.fac_temp_bait_area = CardArea(
+						card.T.x + card.T.w / 2 - w / 2, card.T.y - 0.5 - h,
+						w, h,
+						{
+							type = "joker",
+							card_limit = amt,
+							highlight_limit = 1,
+							highlighted_limit = 1,
+							align_buttons = true,
+							bg_colour = G.C.CLEAR,
+							fixed_limit = true,
+							no_card_count = true,
+						}
+					)
+				end
+				G.fac_temp_bait_area:emplace(_card)
+				created_bait[#created_bait + 1] = _card
+				FishAndChips.add_bait_to_inventory(_card.config.center.key)
+				return true
+			end
+		})
+		delay(0.2)
+	end
+	delay(1)
+	for i = 1, amt do
+		G.E_MANAGER:add_event(Event {
+			func = function()
+				created_bait[i]:start_dissolve()
+				return true
+			end
+		})
+		delay(0.2)
+	end
+	delay(0.5)
+	G.E_MANAGER:add_event(Event {
+		func = function()
+			G.fac_temp_bait_area:remove()
+			G.fac_temp_bait_area = nil
+			return true
+		end
+	})
+end
+
+function FishAndChips.init_custom_menu(change_context)
+	FishAndChips.stop_ambience()
+
+	if FishAndChips.mod.config.menu then
+        -- Creates FAC Logo Sprite
+        local SC_scale = 0.95 * (G.debug_splash_size_toggle and 0.8 or 1)
+        G.SPLASH_FAC_LOGO = Sprite(0, 0,
+            6 * SC_scale,
+            6 * SC_scale * (G.ASSET_ATLAS["fac_logo"].py / G.ASSET_ATLAS["fac_logo"].px),
+            G.ASSET_ATLAS["fac_logo"], { x = 0, y = 0 }
+        )
+        G.SPLASH_FAC_LOGO:set_alignment({
+            major = G.title_top,
+            type = 'cm',
+            bond = 'Strong',
+            offset = { x = 0, y = 3.35 }
+        })
+        G.SPLASH_FAC_LOGO:define_draw_steps({ {
+            shader = 'dissolve',
+        } })
+
+        -- Define logo properties
+        G.SPLASH_FAC_LOGO.tilt_var = { mx = 0, my = 0, dx = 0, dy = 0, amt = 0 }
+
+        G.SPLASH_FAC_LOGO.dissolve_colours = { FishAndChips.C.FAC_PRIMARY, FishAndChips.C.FAC_SECONDARY }
+        G.SPLASH_FAC_LOGO.dissolve = 1
+
+        G.SPLASH_FAC_LOGO.states.collide.can = true
+
+        -- Define node functions for FAC Logo
+        function G.SPLASH_FAC_LOGO:click()
+            play_sound('button', 1, 0.3)
+            SMODS.LAST_SELECTED_MOD_TAB = nil
+            G.FUNCS['openModUI_FishAndChips']()
+            G.OVERLAY_MENU:get_UIE_by_ID("overlay_menu_back_button").config.button = "exit_overlay_menu_fac"
+        end
+
+        G.FUNCS.exit_overlay_menu_fac = function()
+            play_sound("fac_book_close")
+			if SMODS.full_restart and SMODS.full_restart > 0 then return SMODS.restart_game() end
+            G.ACTIVE_MOD_UI = nil
+            G.FUNCS.exit_overlay_menu()
+        end
+
+        function G.SPLASH_FAC_LOGO:hover()
+            G.SPLASH_FAC_LOGO:juice_up(0.05, 0.03)
+            play_sound('paper1', math.random() * 0.2 + 0.9, 0.35)
+            Node.hover(self)
+        end
+
+        function G.SPLASH_FAC_LOGO:stop_hover() Node.stop_hover(self) end
+
+        --Logo animation
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = change_context == 'splash' and 3.6 or change_context == 'game' and 4 or 1,
+            blockable = false,
+            blocking = false,
+            func = (function()
+                play_sound('magic_crumple' .. (change_context == 'splash' and 2 or 3),
+                    (change_context == 'splash' and 1 or 1.3), 0.9)
+                play_sound('whoosh1', 0.2, 0.8)
+                ease_value(G.SPLASH_FAC_LOGO, 'dissolve', -1, nil, nil, nil,
+                    change_context == 'splash' and 2.3 or 0.9)
+                G.VIBRATION = G.VIBRATION + 1.5
+                return true
+            end)
+        }))
+
+        -- make the title screen use different background colors
+        G.SPLASH_BACK:define_draw_steps({ {
+            shader = 'splash',
+            send = {
+                { name = 'time',       ref_table = G.TIMERS,  ref_value = 'REAL_SHADER' },
+                { name = 'vort_speed', val = 0.4 },
+                { name = 'colour_1',   ref_table = FishAndChips.C, ref_value = 'FAC_PRIMARY' },
+                { name = 'colour_2',   ref_table = FishAndChips.C, ref_value = 'FAC_SECONDARY' },
+            }
+        } })
+    end
+
+	if not FishAndChips.mod.config.first_startup then -- Attach to config instead of profile because per-profile feels less right
+		FishAndChips.mod.config.first_startup = true
+		
+		local nodes = {}
+		nodes[#nodes+1] = {}
+		local loc_vars = {
+            background_colour = G.C.CLEAR,
+            text_colour = G.C.WHITE,
+            scale = 1.4,
+			vars = {
+				elements = {
+					SMODS.create_sprite(0, 0, 6.6, 6.6 * (G.ASSET_ATLAS["fac_logo"].py / G.ASSET_ATLAS["fac_logo"].px), "fac_logo", {x = 0, y = 0}),
+					SMODS.create_sprite(0, 0, 0.5, 0.5 * (G.ASSET_ATLAS["fac_pp_icon"].py / G.ASSET_ATLAS["fac_pp_icon"].px), "fac_pp_icon", {x = 0, y = 0}),
+				}
+			}
+		}
+
+		localize { type = 'descriptions', key = 'fac_recommendation', set = 'Other', nodes = nodes[#nodes], vars = loc_vars.vars, text_colour = loc_vars.text_colour, shadow = loc_vars.shadow  }
+		nodes[#nodes] = desc_from_rows(nodes[#nodes])
+        nodes[#nodes].config.colour = loc_vars.background_colour or nodes[#nodes].config.colour
+
+		G.FUNCS.overlay_menu {
+			definition = {
+				n = G.UIT.ROOT, config = {align = "cm", minw = G.ROOM.T.w * 5, minh = G.ROOM.T.h * 5, padding = 0.1, r = 0.1, colour = { G.C.GREY[1], G.C.GREY[2], G.C.GREY[3], 0.7 }}, nodes = {
+				{n = G.UIT.R, config = { r = 0.1, colour = G.C.JOKER_GREY, padding = 0.05, align = "cm" }, nodes = {
+					{n = G.UIT.C, config = { colour = G.C.L_BLACK, r = 0.1, padding = 0.2, align = "cm" }, nodes = {
+						{n = G.UIT.R, config = { align = "cm", padding = 0.1 }, nodes = nodes },
+						{n = G.UIT.R, config = {id = "overlay_menu_back_button", align = "cm", minw = 2.5, padding = 0.1, r = 0.1, hover = true, colour = G.C.ORANGE, button = "exit_overlay_menu", shadow = true, focus_args = { nav = "wide", button = "b" }}, nodes = {
+							{n = G.UIT.R, config = { align = "cm", padding = 0, no_fill = true }, nodes = {
+								{n = G.UIT.T, config = {text = localize("k_fac_okay"), scale = 0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
+							}},
+						}},
+					}},
+				}},
+			}}
+		}
+	end
+end

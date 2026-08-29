@@ -1,0 +1,46 @@
+[manifest]
+version = "0.1.0"
+dump_lua = true
+priority = 50000
+
+# Add an additional suffix to the name based on a number
+# Yes im patching into fish and chips
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/game_object.lua"]'''
+pattern = '''full_UI_table.name = self.set == 'Enhanced' and 'temp_value' or localize { type = 'name', set = res.name_set or target.set, key = res.name_key or target.key, nodes = full_UI_table.name, vars = res.name_vars or target.vars or {} }'''
+position = "at"
+payload = '''
+full_UI_table.name = self.set == 'Enhanced' and 'temp_value' or localize { type = 'name', set = res.name_set or target.set, key = res.name_key or target.key, nodes = full_UI_table.name, vars = res.name_vars or target.vars or {}, hayayaya_suffix = card.ability and card.ability.immutable and card.ability.immutable.hayayaya_clone_suffix }
+'''
+match_indent = true
+
+# Suffixes
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = '''local final_line = SMODS.localize_box(lines, args)
+        if args.type == 'text' then return final_line end'''
+position = "before"
+payload = '''
+if args.type == 'name' and args.hayayaya_suffix then
+	lines = copy_table(lines)
+	pcall(function()
+		local str = lines[#lines].strings
+		str[#str] = str[#str] .. args.hayayaya_suffix
+	end)
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = '''else ret_string = "ERROR" end'''
+position = "after"
+payload = '''
+if args.hayayaya_suffix then
+	ret_string = ret_string .. args.hayayaya_suffix
+end
+'''
+match_indent = true

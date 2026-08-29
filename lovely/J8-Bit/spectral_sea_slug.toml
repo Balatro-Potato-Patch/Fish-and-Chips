@@ -1,0 +1,46 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -6
+
+# thank you AllUniversal
+
+# init_game_object(): Inject variable initialization
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''
+win_ante = 8,
+'''
+position = "before"
+payload = '''
+fac_j8bit_last_spectral = nil,
+'''
+match_indent = true
+
+# set_consumeable_usage(): Inject variable setting/updating
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = """
+if card.config.center.set == 'Tarot' or card.config.center.set == 'Planet' then
+"""
+position = "before"
+payload = '''
+if card.config.center.set == 'Spectral' then 
+  G.E_MANAGER:add_event(Event({
+    trigger = 'immediate',
+    func = function()
+      G.E_MANAGER:add_event(Event({
+        trigger = 'immediate',
+        func = function()
+          G.GAME.fac_j8bit_last_spectral = card.config.center_key
+          return true
+        end
+      }))
+      return true
+    end
+  }))
+end
+'''
+match_indent = true

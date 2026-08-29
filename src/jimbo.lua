@@ -33,7 +33,14 @@ function FishAndChips.create_jimbo()
 end
 
 function FishAndChips.draw_jimbo(env)
+	local jimbo_index
 	if G.FISHING.jimbo then
+		for index, box in ipairs(G.I.UIBOX) do
+			if box == G.FISHING.jimbo then
+				jimbo_index = index
+				break
+			end
+		end
 		G.FISHING.jimbo:remove()
 	end
 	local jimbo = FishAndChips.create_jimbo()
@@ -51,24 +58,13 @@ function FishAndChips.draw_jimbo(env)
 			}
 		}
 	}
-	local reward_boxes = {
-		G.FISHING.fac_fishing_reward_box,
-		G.FISHING.fac_treasure_reward_box,
-	}
-	for _, reward_box in ipairs(reward_boxes) do
+	if jimbo_index then
 		for index, box in ipairs(G.I.UIBOX) do
-			if box == reward_box then
+			if box == G.FISHING.jimbo then
 				table.remove(G.I.UIBOX, index)
+				table.insert(G.I.UIBOX, jimbo_index, G.FISHING.jimbo)
 				break
 			end
-		end
-	end
-	for index, box in ipairs(G.I.UIBOX) do
-		if box == G.FISHING.jimbo then
-			for reward_index, reward_box in ipairs(reward_boxes) do
-				table.insert(G.I.UIBOX, index + reward_index, reward_box)
-			end
-			break
 		end
 	end
 end

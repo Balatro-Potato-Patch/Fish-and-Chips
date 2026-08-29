@@ -1,0 +1,33 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+match_indent = true
+pattern = '''for _, v in ipairs(info_queue) do'''
+position = 'before'
+payload = '''
+if SMODS.find_card("fish_fac_proto_noir")[1] then noirFish = SMODS.find_card("fish_fac_proto_noir")[1] end
+if card and SMODS.is_playing_card(card) and card.ability.noir_mark then 
+    if string.find(card.ability.noir_mark, "door") then
+        local level = (card.ability.noir_level and card.ability.noir_level - noirFish.ability.extra.nearest_starter_level[noirFish.ability.extra.level]) or card.ability.fake_level or math.random(1,5)
+        card.ability.fake_level = card.ability.fake_level or level
+        info_queue[#info_queue+1] = { key = "proot_noir_doors", vars = { ((localize("proot_noir_"..card.ability.noir_mark)) or " "), level }, set = "Other" }
+        if card.ability.noir_mark == "lockdoor" then
+            info_queue[#info_queue+1] = { key = "proot_noir_lockdoor", set = "Other" }
+        end
+        if card.ability.noir_level == 11 then
+            if card.ability.noir_mark == "door" then
+                info_queue[#info_queue+1] = { key = "proot_noir_truedoor_unlocked", set = "Other" }
+            elseif card.ability.noir_mark == "truedoor" then
+                info_queue[#info_queue+1] = { key = "proot_noir_truedoor", set = "Other" }
+            end
+        end
+    else
+        info_queue[#info_queue+1] = { key = "proot_noir_"..card.ability.noir_mark, set = "Other" }
+    end
+end
+'''

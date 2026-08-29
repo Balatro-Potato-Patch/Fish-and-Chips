@@ -1,25 +1,40 @@
-G.FUNCS.toggle_shop = function(e)
-    stop_use()
+local fac_set_cost_value = Card.set_cost_value
+function Card:set_cost_value(...)
+    if self.ability and (self.ability.set == 'fac_Fish' or self.ability.set == 'fac_Bait') then
+        local discount_percent = G.GAME.discount_percent
+        G.GAME.discount_percent = 0
+        local ret = fac_set_cost_value(self, ...)
+        G.GAME.discount_percent = discount_percent
+        return ret
+    end
+    return fac_set_cost_value(self, ...)
+end
+
+local function fac_toggle_shop()
 	if G.CONTROLLER.locks.toggle_shop then return end
     G.CONTROLLER.locks.toggle_shop = true
+    G.fac_toggle_shop_lock_started = G.TIMERS.TOTAL
     if G.shop then
         SMODS.calculate_context({ ending_shop = true })
+        G.E_MANAGER.queues.fac_fishing_transition = G.E_MANAGER.queues.fac_fishing_transition or {}
         G.E_MANAGER:add_event(Event({
             trigger = 'immediate',
+            blockable = false,
             func = function()
-                G.shop.alignment.offset.y = G.ROOM.T.y + 29
-                G.SHOP_SIGN.alignment.offset.y = -15
+                if G.shop then G.shop.alignment.offset.y = G.ROOM.T.y + 29 end
+                if G.SHOP_SIGN then G.SHOP_SIGN.alignment.offset.y = -15 end
                 return true
             end
-        }))
+        }), 'fac_fishing_transition')
         G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.5,
+            blockable = false,
             func = function()
-                G.shop:remove()
-                G.shop = nil
-                G.SHOP_SIGN:remove()
-                G.SHOP_SIGN = nil
+                G.CONTROLLER.locks.toggle_shop = nil
+                G.fac_toggle_shop_lock_started = nil
+                if G.shop then G.shop:remove(); G.shop = nil end
+                if G.SHOP_SIGN then G.SHOP_SIGN:remove(); G.SHOP_SIGN = nil end
                 G.STATE_COMPLETE = false
                 if not G.GAME.fishing then
                     G.GAME.fishing = true
@@ -28,22 +43,48 @@ G.FUNCS.toggle_shop = function(e)
                     G.GAME.fishing = false
                     G.STATE = G.STATES.BLIND_SELECT
                 end
-                G.CONTROLLER.locks.toggle_shop = nil
+                return true
+            end
+        }), 'fac_fishing_transition')
+    else
+        G.CONTROLLER.locks.toggle_shop = nil
+        G.fac_toggle_shop_lock_started = nil
+        G.STATE_COMPLETE = false
+        G.GAME.fishing = true
+        G.STATE = G.STATES.FAC_FISHING
+    end
+end
+
+G.FUNCS.toggle_shop = function(e)
+    stop_use()
+    if G.CONTROLLER.locks.toggle_shop or G.fac_toggle_shop_pending then return end
+    if G.shop then
+        G.fac_toggle_shop_pending = true
+        G.E_MANAGER:add_event(Event({
+            trigger = 'immediate',
+            func = function()
+                G.fac_toggle_shop_pending = nil
+                fac_toggle_shop()
                 return true
             end
         }))
+    else
+        fac_toggle_shop()
     end
 end
 
 G.FUNCS.fac_toggle_fishing = function(e)
     stop_use()
-	if G.CONTROLLER.locks.toggle_shop then return end
+	if not G.GAME.fishing or FishAndChips.in_tutorial or G.CONTROLLER.locks.toggle_shop then return end
     G.CONTROLLER.locks.toggle_shop = true
+    G.fac_toggle_shop_lock_started = G.TIMERS.TOTAL
     if G.GAME.fishing and not FishAndChips.in_tutorial then
-        SMODS.calculate_context({ ending_fishing = true })
 		G.GAME.fac_snapper_dialogue_opt = nil	-- To let Snapper know your next visit will advance his dialogue count.
+        G.E_MANAGER.queues.fac_fishing_transition = G.E_MANAGER.queues.fac_fishing_transition or {}
+        if G.FISHING and G.FISHING.fishing then
         G.E_MANAGER:add_event(Event({
             trigger = 'immediate',
+            blockable = false,
             func = function()
                 G.FISHING.fishing.alignment.offset.y = G.ROOM.T.y + 29
                 G.fac_fishing_bucket_bottom.alignment.offset.y = -0.5 - G.CARD_H
@@ -57,21 +98,26 @@ G.FUNCS.fac_toggle_fishing = function(e)
                 ease_value(G.HUD.alignment.offset, "x", 10) -- for some reason this value changes instantly unlike others
                 return true
             end
-        }))
+        }), 'fac_fishing_transition')
+        end
         G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.5,
+            blockable = false,
             func = function()
-                G.FISHING.fishing:remove()
-                G.FISHING.fishing = nil
+                G.CONTROLLER.locks.toggle_shop = nil
+                G.fac_toggle_shop_lock_started = nil
+                if G.FISHING and G.FISHING.fishing then G.FISHING.fishing:remove(); G.FISHING.fishing = nil end
                 G.GAME.fishing = false
                 G.STATE_COMPLETE = false
                 G.STATE = G.STATES.BLIND_SELECT
-                G.CONTROLLER.locks.toggle_shop = nil
+				G.GAME.fac_fishing_environment = G.GAME.fac_next_environment or pseudorandom_element(FishAndChips.create_env_pool(), "fac_next_location")
+				if G.GAME.fac_next_environment then G.GAME.fac_next_environment = nil else G.GAME.fac_envs_used[G.GAME.fac_fishing_environment] = G.GAME.fac_envs_used[G.GAME.fac_fishing_environment] + 1 end
 				FishAndChips:stop_ambience()
+				SMODS.calculate_context({ ending_fishing = true })
                 return true
             end
-        }))
+        }), 'fac_fishing_transition')
     end
 end
 
@@ -80,12 +126,19 @@ function Game:init_game_object()
     local ret = igo(self)
     ret.fac_sand_dollars = 4
 	ret.current_round.fac_sand_dollars = 0
-    ret.fac_bait_shop_items = {}
-    ret.fac_bait_inventory = {{key = 'bait_fac_normal', amt = 3}}
+	ret.fac_active_shop_bait = {cost = 0, all_cost = 0, amount = 0}
+	ret.fac_bait_shop_items = {}
+	ret.fac_bait_inventory = {bait_fac_normal = {amt = 3}}
     ret.fac_active_bait = nil
     ret.fac_treasure_earned = 0
     ret.fac_perfect_catches = 0
 	ret.fac_no_jokers = true
+
+	local envs_used = {}
+	for k, _ in pairs(FishAndChips.Environments) do
+		envs_used[k] = 0
+	end
+	ret.fac_envs_used = envs_used
     return ret
 end
 
@@ -93,8 +146,9 @@ local gsp = get_starting_params
 function get_starting_params()
     local ret = gsp()
     ret.fac_sand_dollars = 0
-    ret.fac_bait_shop_items = {}
-    ret.fac_bait_inventory = {}
+	ret.fac_active_shop_bait = {cost = 0, all_cost = 0, amount = 0}
+	ret.fac_bait_shop_items = {}
+	ret.fac_bait_inventory = {}
     ret.fac_active_bait = nil
     return ret
 end
@@ -166,6 +220,21 @@ function Sprite:draw(...)
 end
 
 local align_cards_hook = CardArea.align_cards
+
+local function fac_scale_unglued_card_layers(card, scale)
+	for _, child in pairs(card.children) do
+		if child.T and child.VT and child.role and child.role.draw_major == card and child.T ~= card.T then
+			child.T.w = child.T.w * scale
+			child.T.h = child.T.h * scale
+			child.VT.w = child.VT.w * scale
+			child.VT.h = child.VT.h * scale
+		end
+		if child.T and type(child.scale) == 'table' and child.scale.x and child.scale.y then
+			child.scale_mag = math.min(child.scale.x / child.T.w, child.scale.y / child.T.h)
+		end
+	end
+end
+
 ---@diagnostic disable-next-line: duplicate-set-field
 function CardArea:align_cards(...)
 	if self == G.fac_fish_area then
@@ -181,8 +250,8 @@ function CardArea:align_cards(...)
 					card.states.drag.can = true
 					card.T.w = card.T.w / 0.7
 					card.T.h = card.T.h / 0.7
-					card:set_sprites(card.config.center)
-          card._fac_bucketed = false
+					fac_scale_unglued_card_layers(card, 1 / 0.7)
+					card._fac_bucketed = false
 				end
 			elseif not card._fac_bucketed then
 				card.states.click.can = false
@@ -190,8 +259,8 @@ function CardArea:align_cards(...)
 				card.states.drag.can = false
 				card.T.w = card.T.w * 0.7
 				card.T.h = card.T.h * 0.7
-				card:set_sprites(card.config.center)
-        card._fac_bucketed = true
+				fac_scale_unglued_card_layers(card, 0.7)
+				card._fac_bucketed = true
 			end
 			if not card.states.drag.is and not card.disable_align then
 				card.T.r = (G.GAME.fac_fish_expanded and 0.1 or 1) * (-#self.cards / 2 + k) / #self.cards
@@ -235,10 +304,12 @@ function CardArea:align_cards(...)
 			self.T.w = self.T.w / 5
 			self.T.x = self.T.x + G.CARD_W * 6
 		end
-		table.sort(self.cards, function(a, b)
-			return a.T.x + a.T.w / 2 - 100 * ((a.pinned and not a.ignore_pinned) and a.sort_id or 0)
-				< b.T.x + b.T.w / 2 - 100 * ((b.pinned and not b.ignore_pinned) and b.sort_id or 0)
-		end)
+		if G.GAME.fac_fish_expanded then
+			table.sort(self.cards, function(a, b)
+				return a.T.x + a.T.w / 2 - 100 * ((a.pinned and not a.ignore_pinned) and a.sort_id or 0)
+					< b.T.x + b.T.w / 2 - 100 * ((b.pinned and not b.ignore_pinned) and b.sort_id or 0)
+			end)
+		end
 	else
 		align_cards_hook(self, ...)
 	end
@@ -308,8 +379,8 @@ function G.UIDEF.card_h_popup(card)
         local flavour_node = {}
 		local stats = card.ability.stats
 		local stat_proto = card.config.center.stats
-		local weight_perc = (stats.weight - stat_proto.weight.min)/(stat_proto.weight.max-stat_proto.weight.min)*100
-		local length_perc = (stats.length - stat_proto.length.min)/(stat_proto.length.max-stat_proto.length.min)*100
+		local weight_perc = stats.w_prop*100
+		local length_perc = stats.l_prop*100
 		local colours = { -- TODO: are these colours okay?
 			darken(G.C.RED, 0.1),
 			G.C.RED,
@@ -342,96 +413,15 @@ function name_from_rows(name_nodes, background_colour)
     return ret
 end
 
-local mainmenuref = Game.main_menu
-function Game:main_menu(change_context)
-	FishAndChips.stop_ambience()
-
-	local ret = mainmenuref(self, change_context)
-
-	if FishAndChips.mod.config.menu then
-        -- Creates FAC Logo Sprite
-        local SC_scale = 0.95 * (G.debug_splash_size_toggle and 0.8 or 1)
-        G.SPLASH_FAC_LOGO = Sprite(0, 0,
-            6 * SC_scale,
-            6 * SC_scale * (G.ASSET_ATLAS["fac_logo"].py / G.ASSET_ATLAS["fac_logo"].px),
-            G.ASSET_ATLAS["fac_logo"], { x = 0, y = 0 }
-        )
-        G.SPLASH_FAC_LOGO:set_alignment({
-            major = G.title_top,
-            type = 'cm',
-            bond = 'Strong',
-            offset = { x = 0, y = 3.35 }
-        })
-        G.SPLASH_FAC_LOGO:define_draw_steps({ {
-            shader = 'dissolve',
-        } })
-
-        -- Define logo properties
-        G.SPLASH_FAC_LOGO.tilt_var = { mx = 0, my = 0, dx = 0, dy = 0, amt = 0 }
-
-        G.SPLASH_FAC_LOGO.dissolve_colours = { FishAndChips.C.FAC_PRIMARY, FishAndChips.C.FAC_SECONDARY }
-        G.SPLASH_FAC_LOGO.dissolve = 1
-
-        G.SPLASH_FAC_LOGO.states.collide.can = true
-
-        -- Define node functions for FAC Logo
-        function G.SPLASH_FAC_LOGO:click()
-            play_sound('button', 1, 0.3)
-            SMODS.LAST_SELECTED_MOD_TAB = nil
-            G.FUNCS['openModUI_FishAndChips']()
-            G.OVERLAY_MENU:get_UIE_by_ID("overlay_menu_back_button").config.button = "exit_overlay_menu_mxms"
-        end
-
-        G.FUNCS.exit_overlay_menu_mxms = function()
-            play_sound("fac_book_close")
-            G.ACTIVE_MOD_UI = nil
-            G.FUNCS.exit_overlay_menu()
-        end
-
-        function G.SPLASH_FAC_LOGO:hover()
-            G.SPLASH_FAC_LOGO:juice_up(0.05, 0.03)
-            play_sound('paper1', math.random() * 0.2 + 0.9, 0.35)
-            Node.hover(self)
-        end
-
-        function G.SPLASH_FAC_LOGO:stop_hover() Node.stop_hover(self) end
-
-        --Logo animation
-        G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = change_context == 'splash' and 3.6 or change_context == 'game' and 4 or 1,
-            blockable = false,
-            blocking = false,
-            func = (function()
-                play_sound('magic_crumple' .. (change_context == 'splash' and 2 or 3),
-                    (change_context == 'splash' and 1 or 1.3), 0.9)
-                play_sound('whoosh1', 0.2, 0.8)
-                ease_value(G.SPLASH_FAC_LOGO, 'dissolve', -1, nil, nil, nil,
-                    change_context == 'splash' and 2.3 or 0.9)
-                G.VIBRATION = G.VIBRATION + 1.5
-                return true
-            end)
-        }))
-
-        -- make the title screen use different background colors
-        G.SPLASH_BACK:define_draw_steps({ {
-            shader = 'splash',
-            send = {
-                { name = 'time',       ref_table = G.TIMERS,  ref_value = 'REAL_SHADER' },
-                { name = 'vort_speed', val = 0.4 },
-                { name = 'colour_1',   ref_table = FishAndChips.C, ref_value = 'FAC_PRIMARY' },
-                { name = 'colour_2',   ref_table = FishAndChips.C, ref_value = 'FAC_SECONDARY' },
-            }
-        } })
-    end
-
-    return ret
-
-end
-
 local start_run_ref = Game.start_run
 function Game:start_run(...)
 	start_run_ref(self, ...)
+	G.E_MANAGER:add_event(Event({
+		func = function()
+			FishAndChips.sync_active_bait()
+			return true
+		end
+	}))
 	FishAndChips.stop_ambience()
 	FishAndChips.stop_reel_sound()
 
@@ -532,4 +522,15 @@ local start_run_hook = Game.start_run
 function Game:start_run(args)
 	start_run_hook(self, args)
 	G.GAME.fac_fish_expanded = false
+end
+
+local create_mod_badges_ref = SMODS.create_mod_badges
+function SMODS.create_mod_badges(obj, badges)
+	create_mod_badges_ref(obj, badges)
+	if obj and obj.fac_mini_artist then
+		local str = PotatoPatchUtils.CREDITS.generate_string(obj.fac_mini_artist, 'fac_mini_art_credit', obj.mod.prefix, obj)
+		if str then
+			table.insert(badges, str)
+		end
+	end
 end

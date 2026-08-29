@@ -1,0 +1,45 @@
+[manifest]
+version = "0.1.0"
+dump_lua = true
+priority = -1
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''G.GAME.saved_text = nil'''
+position = "after"
+payload = '''
+G.GAME.fac_saved_font = nil
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''{n=G.UIT.C, config={padding = 0.05, align = 'cm'}, nodes={
+                        {n=G.UIT.R, config={align = 'cm'}, nodes={
+                            {n=G.UIT.O, config={object = DynaText({string = {' '..(type(G.GAME.saved_text) == 'string' and (G.localization.misc.dictionary[G.GAME.saved_text] and localize(G.GAME.saved_text) or G.GAME.saved_text) or localize('ph_mr_bones'))..' '}, colours = {G.C.FILTER}, shadow = true, pop_in = 0, scale = 0.5*scale, silent = true})}}
+                        }}
+                    }}'''
+position = "at"
+payload = '''
+{n=G.UIT.C, config={padding = 0.05, align = 'cm'}, nodes={
+    {n=G.UIT.R, config={align = 'cm'}, nodes={
+        {n=G.UIT.O, config={object = DynaText({font = G.GAME.fac_saved_font and SMODS.Fonts[G.GAME.fac_saved_font] or nil, string = {' '..(type(G.GAME.saved_text) == 'string' and (G.localization.misc.dictionary[G.GAME.saved_text] and localize(G.GAME.saved_text) or G.GAME.saved_text) or localize('ph_mr_bones'))..' '}, colours = {G.C.FILTER}, shadow = true, pop_in = 0, scale = 0.5*scale, silent = true})}}
+    }}
+}}
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/utils.lua"]'''
+pattern = '''if key == 'effect' then'''
+position = "before"
+payload = '''
+if key == 'font' then
+	G.GAME.fac_saved_font = amount
+	return key
+end
+'''
+match_indent = true

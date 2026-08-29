@@ -1,0 +1,183 @@
+
+
+	local addEnvs = FishAndChips.ProdByProto.addEnvs
+
+
+	-- no name
+	local idolSuit = function()
+		local suit = 'Spades'
+		local valid_idol_cards = {}
+		for k, v in ipairs(G.playing_cards) do
+			if v.ability.effect ~= 'Stone Card' then
+				if not SMODS.has_no_suit(v) and not SMODS.has_no_rank(v) then
+					valid_idol_cards[#valid_idol_cards+1] = v
+				end
+			end
+		end
+		if valid_idol_cards[1] then
+			local idol_card = pseudorandom_element(valid_idol_cards, pseudoseed('proto_noName'..G.GAME.round_resets.ante))
+			suit = idol_card.base.suit
+		end
+		return suit
+	end
+
+	FishAndChips.Fish {
+		key = "fac_proto_noName",
+		atlas = "fac_proto_noName",
+
+		pos = { x = 0, y = 0 },
+		display_size = {w = 71, h = 47},
+
+		stats = {
+			weight = { min = 4.08, max = 4.08 },
+			length = { min = 1.2, max = 1.2 }
+		},
+		weight = 10,
+		ppu_coder = {"ProdByProto"},
+		attributes = { "economy", "suit", "chance" },
+		environments = addEnvs(),
+
+		config = {
+			extra = {
+				suit = "Spades",
+				num = 1,
+				denom = 2,
+				dollhairs = 2
+			}
+		},
+
+		loc_vars = function(self, info_queue, card)
+			local cae = card.ability.extra
+			local num, denom = SMODS.get_probability_vars(self, cae.num, cae.denom, "proto_noName")
+			return { vars = { localize(cae.suit, "suits_singular"), num, denom, cae.dollhairs, colours = { G.C.SUITS[cae.suit] } } }
+		end,
+		collection_loc_vars = function(self)
+			return { vars = { "Spades","1","2","2" } }
+		end,
+
+		on_catch = function(self,card)
+			card.ability.extra.suit = idolSuit()
+		end,
+
+		calculate = function(self, card, context)
+			local cae = card.ability.extra
+
+
+			if context.individual and context.cardarea == G.play then
+				if context.other_card:is_suit(cae.suit) then
+					if SMODS.pseudorandom_probability(self,"fish for fishing",cae.num,cae.denom,"proto_noName") then
+						return {
+							sand_dollars = cae.dollhairs
+						}
+					end
+				end
+			end
+
+			if context.ending_shop then
+				cae.suit = idolSuit()
+			end
+
+		end,
+	}
+
+	-- eyedle
+	FishAndChips.Fish {
+		key = "fac_proto_eyedle",
+		atlas = "fac_proto_fish",
+
+		pos = { x = 0, y = 0 },
+
+		stats = {
+			weight = { min = 0.025, max = 0.045 },
+			length = { min = 0.05, max = 0.1 }
+		},
+		weight = 10,
+		ppu_coder = {"ProdByProto"},
+		attributes = { "chips","mult","rank", "suit","king","hearts" },
+		environments = addEnvs(),
+
+		config = {
+			extra = {
+				mult = 2
+			}
+		},
+
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue + 1] = {
+				set = "Other",
+				key = "proto_kingdomhearts",
+			}
+			local cae = card.ability.extra
+			return { vars = { cae.mult } }
+		end,
+
+		calculate = function(self, card, context)
+			local cae = card.ability.extra
+
+
+			if context.individual and context.cardarea == G.play then
+				if context.other_card:get_id() == 13 and context.other_card:is_suit("Hearts") then
+					return {mult = cae.mult}
+				end
+			end
+
+		end,
+	}
+
+	-- DJ Fish
+
+	local playlistEvent
+	playlistEvent = {
+		trigger = "after",
+		delay = 64,
+		--start_timer = true,
+		no_delete = true,
+		pause_force = true,
+		blockable = false,
+		blocking = false,
+		func = function()
+			G.GAME.proto_q_music = false
+			G.ARGS.push.type = 'restart_music'
+			G.SOUND_MANAGER.channel:push(G.ARGS.push)
+			return true
+		end
+	}
+
+	FishAndChips.Fish {
+		key = "fac_proto_dj",
+		atlas = "fac_proto_fish",
+
+		pos = { x = 1, y = 0 },
+		pixel_size = {w = 71, h = 64},
+
+		stats = {
+			weight = { min = 3.75, max = 4.5 },
+			length = { min = 0.8, max = 1.4 }
+		},
+		weight = 10,
+		ppu_coder = {"ProdByProto"},
+		attributes = { "usable","generation" },
+		environments = addEnvs(),
+
+		config = {
+			extra = {
+				bait = 2
+			}
+		},
+
+		loc_vars = function(self, info_queue, card)
+			local cae = card.ability.extra
+			return { vars = { cae.bait } }
+		end,
+
+		use = function(self,card)
+			FishAndChips.create_baits_from_card(card, card.ability.extra.bait)
+			G.GAME.proto_q_music = "jclub"
+			G.E_MANAGER:add_event(Event(playlistEvent))
+		end,
+		can_use = function(self,card)
+			local noirFish = SMODS.find_card("fish_fac_proto_noir")[1]
+			return noirFish == nil or (noirFish and not noirFish.ability.extra.storyActive)
+		end
+
+	}

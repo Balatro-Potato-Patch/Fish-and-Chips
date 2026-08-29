@@ -1,0 +1,62 @@
+[manifest]
+version = "0.1.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "engine/sound_manager.lua"
+pattern = '  function RESTART_MUSIC(args)'
+position = "before"
+payload = '''
+function STOP_MUSIC(args)
+  for k, v in pairs(SOURCES) do
+      if string.find(k,'music') then
+          for i, s in ipairs(v) do
+          	s.hayayaya_stop = true
+          end
+      end
+  end
+end
+
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "engine/sound_manager.lua"
+pattern = '''for i, s in ipairs(v) do
+                s.sound:stop()
+            end
+            SOURCES[k] = {}
+'''
+position = "at"
+payload = '''
+for i, s in ipairs(v) do
+	s.sound:stop()
+	s.hayayaya_stop = nil
+end
+SOURCES[k] = {}
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "engine/sound_manager.lua"
+pattern = '''s.sound:setVolume(s.current_volume*s.original_volume*(args.sound_settings.volume/100.0)*(args.sound_settings.music_volume/100.0))'''
+position = "before"
+payload = '''
+if s.hayayaya_stop then s.current_volume = 0 end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "engine/sound_manager.lua"
+pattern = '''elseif request.type == 'restart_music' then'''
+position = "before"
+payload = '''
+elseif request.type == 'hayayaya_stop_music' then
+	STOP_MUSIC(request)
+'''
+match_indent = true

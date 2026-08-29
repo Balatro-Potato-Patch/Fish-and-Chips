@@ -6,12 +6,15 @@ priority = 0
 [[patches]]
 [patches.pattern]
 target = '=[SMODS _ "src/overrides.lua"]'
-pattern = "self.children.center = SMODS.create_sprite(self.T.x, self.T.y, self.T.w, self.T.h, atlas, pos)"
+pattern = "self.children.center = SMODS.create_sprite(self.T.x, self.T.y, self.T.w, self.T.h, atlas, pos, sprite_args)"
 position = "before"
 payload = '''
 if _center.set == "fac_Fish" or _center.set == "fac_Bait" then
     pos = _center.pos
+    soul_pos = _center.soul_pos
     atlas = _center.atlas
+    soul_atlas = _center.soul_atlas
+    sprite_args = _center.sprite_args
 end
 '''
 match_indent = true
@@ -19,7 +22,7 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = '=[SMODS _ "src/overrides.lua"]'
-pattern = "self.children.center = SMODS.create_sprite(self.T.x, self.T.y, self.T.w, self.T.h, atlas, pos)"
+pattern = "self.children.center = SMODS.create_sprite(self.T.x, self.T.y, self.T.w, self.T.h, atlas, pos, sprite_args)"
 position = "after"
 payload = '''
 if _center.set == "fac_Fish" or _center.set == "fac_Bait" then

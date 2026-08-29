@@ -1,0 +1,740 @@
+PotatoPatchUtils.Developer({
+    name = 'FirstTry',
+    atlas = 'fac_pnf_firsttry',
+    loc = true,
+    colour = G.C.SECONDARY_SET.Spectral,
+    display_size = { w = 71 * 20.7, h = 95 * 20.7 },
+    fac_partner =
+    'fac_Pixel',            -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+    click = function(self)
+        play_sound("fac_pnf_fts",math.random(0.95,1.25),1)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            func = function()
+                self:juice_up(1, 0.2)
+                return true
+            end
+        }))
+    end
+})
+
+PotatoPatchUtils.Developer({
+    name = 'Pixel',
+    atlas = 'fac_pnf_pixelcredits',
+    loc = true,
+    colour = G.C.SECONDARY_SET.Planet,
+    fac_partner =
+    'fac_FirstTry',            -- Only use this if you have a partner! This should be a string that's the same as your partner's PPU.Dev name property
+    click = function(self)
+        play_sound("fac_pnf_pixelsounds")
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            func = function()
+                self:juice_up(1, 0.2)
+                return true
+            end
+        }))
+    end
+})
+
+SMODS.Atlas({
+    key = "pnf_firsttry", -- Please include your name/team name in your atlas keys
+    path = "pnf/FirstTryCredits.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_frogchair", -- Please include your name/team name in your atlas keys
+    path = "pnf/FroggyChair.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_fishery", -- Please include your name/team name in your atlas keys
+    path = "pnf/Fishery.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_flyan", -- Please include your name/team name in your atlas keys
+    path = "pnf/FlyingAnchovy.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_blueax", -- Please include your name/team name in your atlas keys
+    path = "pnf/SuspiciousBlueAxolotl.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_rib", -- Please include your name/team name in your atlas keys
+    path = "pnf/Ribbit.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_dupli", -- Please include your name/team name in your atlas keys
+    path = "pnf/Barramunduplicare.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_pixelfish", -- Please include your name/team name in your atlas keys
+    path = "pnf/PixelFish.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_pixelcredits", -- Please include your name/team name in your atlas keys
+    path = "pnf/PixelCredits.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_untitled", -- Please include your name/team name in your atlas keys
+    path = "pnf/UntitledFish.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_star", -- Please include your name/team name in your atlas keys
+    path = "pnf/OriginalStarfish.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Atlas({
+    key = "pnf_tag", -- Please include your name/team name in your atlas keys
+    path = "pnf/Tagfish.png",
+    px = 71,
+    py = 95,
+})
+
+SMODS.Sound({
+    key = "pnf_pixelsounds", -- Please include your name/team name in your atlas keys
+    path = "pnf/pixelnoise.ogg",
+})
+
+SMODS.Sound({
+    key = "pnf_fts", -- Please include your name/team name in your atlas keys
+    path = "pnf/firsttrynoise.ogg",
+})
+
+SMODS.Sound({
+    key = "pnf_fishery1", -- Please include your name/team name in your atlas keys
+    path = "pnf/fishery1.ogg",
+})
+
+SMODS.Sound({
+    key = "pnf_fishery2", -- Please include your name/team name in your atlas keys
+    path = "pnf/fishery2.ogg",
+})
+
+SMODS.Sound({
+    key = "pnf_fishery3", -- Please include your name/team name in your atlas keys
+    path = "pnf/fishery3.ogg",
+})
+
+SMODS.Sound({
+    key = "pnf_fishery4", -- Please include your name/team name in your atlas keys
+    path = "pnf/fishery4.ogg",
+})
+
+FishAndChips.Fish {
+    key = "blueax",
+    atlas = "pnf_blueax",
+    pos = { x = 0, y = 0 },
+    blueprint_compat = true,
+    ppu_coder = { "FirstTry" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "chips", "scaling", "reset", },
+    weight = 1,
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+    config = {
+        extra = {
+            scoring = 1,
+            gain = 4,
+            trigger = false
+        },
+        immutable = {
+            revert = 1
+        }
+    },
+    environments = {
+        wormhole = 0.1,
+        backroom = 0.1
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.scoring, card.ability.extra.gain, colours = { HEX("4db1f6") }, ppu_bubbles = {card.ability.extra.trigger and 'active' or 'inactive' } } }
+    end,
+    calculate = function(self, card, context)
+        local eval = function(card) return card.ability.extra.trigger == true end
+        juice_card_until(card, eval, false)
+        if context.joker_main then
+            if card.ability.extra.trigger then
+                return { chips = card.ability.extra.scoring }
+            else
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "scoring",
+                    scalar_value = "gain",
+                    operation = "X",
+                    scaling_message = {
+                        message = (card.ability.extra.scoring * card.ability.extra.gain) .. " Value",
+                        colour = G.C.DARK_EDITION
+                    }
+                })
+            end
+        end
+        if context.after then
+            if card.ability.extra.trigger then
+                SMODS.reset_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "scoring",
+                    reset_value = card.ability.immutable.revert,
+                    no_message = true,
+                })
+
+                card.ability.extra.trigger = false
+                return { message = localize("k_reset") }
+            end
+        end
+    end,
+    can_use = function(self, card)
+        return G.GAME.blind.in_blind
+    end,
+    keep_on_use = function(self, card)
+        return true
+    end,
+    use = function(self, card, area, copier)
+        card.ability.extra.trigger = true
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.5 + math.random() * 0.4,
+            func = function()
+                play_sound('gong', 2, 0.5)
+                card:juice_up(1, 0.2)
+                return true
+            end
+        }))
+    end
+}
+
+FishAndChips.Fish {
+    key = "dupli",
+    atlas = "pnf_dupli",
+    pos = { x = 0, y = 0 },
+    soul_pos = { x = 1, y = 0 },
+    weight = 1,
+    blueprint_compat = true,
+    ppu_coder = { "FirstTry" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "mult", "scaling", "reset" },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+    config = {
+        extra = {
+            mult = 0,
+            mult_mod = 2,
+        },
+        immutable = {
+            revert = 0
+        }
+    },
+    environments = {
+        wormhole = 1,
+        backroom = 0.1
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.mult, card.ability.extra.mult_mod, colours = { HEX("4db1f6") } } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.main_eval then
+            SMODS.reset_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "mult",
+                reset_value = card.ability.immutable.revert,
+                no_message = true,
+            })
+            return { message = localize("k_reset") }
+        end
+        if context.individual and context.cardarea == G.play then
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "mult",
+                scalar_value = "mult_mod",
+                scaling_message = {
+                    message = "+" .. (card.ability.extra.mult * card.ability.extra.mult_mod) .. " Mult",
+                    colour = G.C.MULT
+                }
+            })
+        end
+        if (context.joker_main and (to_big(card.ability.extra.mult) > 0)) or context.forcetrigger then -- what is to_big doing here :chud: (mf)
+            return {
+                mult = card.ability.extra.mult
+            }
+        end
+    end,
+}
+
+FishAndChips.Fish {
+    key = "pixelfish",
+    atlas = "pnf_pixelfish",
+    pos = { x = 0, y = 0 },
+    weight = 5,
+    blueprint_compat = true,
+    ppu_coder = { "Pixel" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "chips", "xchips" },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+	config = {
+        extra = {
+            chips = 0,
+            xchips = 1,
+            chipgain = 5,
+            xchipgain = 0.05,
+        },
+        immutable = {
+            sellamount = 0,
+            sellgoal = 3,
+        }
+    },
+    environments = {
+        city_river = 5,
+        wormhole = 1
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.chips, card.ability.extra.xchips, card.ability.extra.chipgain, card.ability.extra.xchipgain, card.ability.immutable.sellamount, card.ability.immutable.sellgoal } }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then return { chips = card.ability.extra.chips, xchips = card.ability.extra.xchips } end
+        if context.selling_card then
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "chips",
+                scalar_value = "chipgain",
+                scaling_message = {
+                    message = "+" .. (card.ability.extra.chips + card.ability.extra.chipgain) .. " Chips",
+                    colour = G.C.CHIPS
+                }
+            })
+            card.ability.immutable.sellamount = card.ability.immutable.sellamount + 1
+            if card.ability.immutable.sellamount > card.ability.immutable.sellgoal - 1 then
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "xchips",
+                    scalar_value = "xchipgain",
+                    scaling_message = {
+                        message = "+" .. (card.ability.extra.xchips + card.ability.extra.xchipgain) .. " XChips",
+                        colour = G.C.CHIPS
+                    }
+                })
+            card.ability.immutable.sellamount = 0
+            end
+        end
+    end,
+}
+
+FishAndChips.Fish {
+    key = "ribbit",
+    atlas = "pnf_rib",
+    pos = { x = 0, y = 0 },
+    weight = 5,
+    blueprint_compat = true,
+    ppu_coder = { "FirstTry" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "passive" },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+    config = {
+        extra = {
+            select = 1,
+        },
+        immutable = {
+            revert = 0
+        }
+    },
+    environments = {
+        calm_pond = 5,
+        swamp = 5
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { SMODS.signed(card.ability.extra.select), SMODS.signed(-card.ability.extra.select), colours = { HEX("4db1f6") } } }
+    end,
+    add_to_deck = function (self, card, from_debuff)
+        local add = card.ability.extra.select
+        G.hand:change_size(add)
+        SMODS.change_play_limit(add)
+        SMODS.change_discard_limit(add)
+        G.GAME.round_resets.discards = G.GAME.round_resets.discards - add
+        ease_discard(-add)
+        end,
+    remove_from_deck = function (self, card, from_debuff)
+        local add = card.ability.extra.select
+        G.hand:change_size(-add)
+        SMODS.change_play_limit(-add)
+        SMODS.change_discard_limit(-add)
+        G.GAME.round_resets.discards = G.GAME.round_resets.discards + add
+        ease_discard(add)
+    end,
+}
+
+FishAndChips.Fish {
+    key = "patrickstarwalker",
+    atlas = "pnf_star",
+    pos = { x = 0, y = 0 },
+    weight = 3,
+    blueprint_compat = true,
+    ppu_coder = { "FirstTry" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "chips", "destroy_card", "enhancements", "deltarune", "utdr", },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+    config = {
+        extra = {
+            xchips = 1,
+            add = 0.2
+        },
+        immutable = {
+            revert = 0
+        }
+    },
+    environments = {
+        city_river = 1,
+        wormhole = 3,
+        styx = 1,
+        backroom = 3
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
+        return { vars = { card.ability.extra.xchips, card.ability.extra.add, colours = { HEX("4db1f6") } } }
+    end,
+        calculate = function(self, card, context)
+            if context.joker_main then
+                return {xchips = card.ability.extra.xchips}
+            end
+    if context.destroy_card and context.cardarea == G.play then
+                if SMODS.has_enhancement(context.destroy_card,"m_stone") then
+                    SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "xchips",
+                    scalar_value = "add",
+                    operation = "+",
+                    message_key = "a_xchips",
+                    message_colour = G.C.CHIPS
+                })
+             return {remove = true}
+        end
+    end
+end
+}
+
+
+FishAndChips.Fish {
+    key = "flyinganchovy",
+    atlas = "pnf_flyan",
+    pos = { x = 0, y = 0 },
+    weight = 3,
+    blueprint_compat = true,
+    ppu_coder = { "FirstTry" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "mult", "rank", "hand_type", },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+	config = {
+        extra = {
+            mult = 1
+        },
+        immutable = {
+            revert = 0
+        }
+    },
+    environments = {
+        soup = 5,
+        chocolate_river = 3,
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
+        return { vars = { card.ability.extra.xchips, card.ability.extra.add, colours = { HEX("4db1f6") } } }
+    end,
+        calculate = function(self, card, context)
+       if context.individual and context.cardarea == G.play and not context.end_of_round then
+         if next(context.poker_hands['Straight']) then
+            local rankmult, cardID = 1,1
+            local raised_card = nil
+            for i = 1, #G.play.cards do
+                if cardID <= G.play.cards[i].base.id and not SMODS.has_no_rank(G.play.cards[i]) then
+                    rankmult = G.play.cards[i].base.nominal
+                    cardID = G.play.cards[i].base.id
+                    raised_card = G.play.cards[i]
+                end
+            end
+            if raised_card == context.other_card then
+                if context.other_card.debuff then
+                    return {
+                        message = localize('k_debuffed'),
+                        colour = G.C.RED
+                    }
+                else
+                    return {
+                        mult = rankmult
+                    }
+                end
+            end
+        end
+    end
+end
+}
+
+FishAndChips.Fish {
+    key = "froggychair",
+    atlas = "pnf_frogchair",
+    pos = { x = 0, y = 0 },
+    weight = 5,
+    blueprint_compat = true,
+    ppu_coder = { "Pixel" },
+    ppu_artist = { "Pixel" },
+    attributes = { "destroy_card", "fac_fish_slot", },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+	environments = {
+        city_river = 1,
+        garden = 1
+    },
+    add_to_deck = function(self, card, from_debuff)
+        G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base + 2
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base - 2
+    end,
+    calculate = function(self, card, context)
+        local current_index
+        for i = 1, #G.fac_fish_area.cards do
+            if G.fac_fish_area.cards[i] == card then
+                current_index = i
+            end
+        end
+        if context.setting_blind then
+			for i = 1, #G.fac_fish_area.cards do
+				if G.fac_fish_area.cards[i] == card then
+					if G.fac_fish_area.cards[current_index + 1] then
+						SMODS.destroy_cards(G.fac_fish_area.cards[current_index + 1])
+                    elseif G.fac_fish_area.cards[current_index - 1] then
+                        SMODS.destroy_cards(G.fac_fish_area.cards[current_index - 1])
+                    end
+				end
+			end
+        end
+    end,
+}
+
+FishAndChips.Fish {
+    key = "fishery",
+    atlas = "pnf_fishery",
+    pos = { x = 0, y = 0 },
+    weight = 10,
+    blueprint_compat = true,
+    ppu_coder = { "Pixel" },
+    ppu_artist = { "Pixel" },
+    attributes = { "economy", "mult", "chips", "suit", "diamonds", "deltarune", "utdr", },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+	environments = {
+        city_river = 1,
+        garden = 1
+    },
+    add_to_deck = function(self, card, from_debuff)
+        play_sound("fac_pnf_fishery3")
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        play_sound("fac_pnf_fishery2")
+    end,
+    config = { extra = { s_mult = 2, s_chips = 10, suit = 'Diamonds' }, },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.s_mult, card.ability.extra.s_chips, localize(card.ability.extra.suit, 'suits_singular') } }
+    end,
+    calculate = function(self, card, context)
+        if context.setting_blind then
+            ease_dollars(1)
+        end
+        if context.individual and context.cardarea == G.play and
+            context.other_card:is_suit(card.ability.extra.suit) then
+            return {
+                mult = card.ability.extra.s_mult,
+                chips = card.ability.extra.s_chips
+            }
+        end
+    end,
+}
+
+local SymbolsUNT = {
+    "+",
+    "X",
+    "/",
+    "<",
+    ">",
+    "#",
+    "^",
+    "!",
+    "-",
+    "%",
+    "?",
+    "||",
+    "$",
+    "*",
+    ";",
+    ":",
+    "nil",
+    "nan",
+    "inf",
+    "ERROR"
+}
+local CharacterUNT = {
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+}
+
+FishAndChips.Fish {
+    key = "untitledfish",
+    atlas = "pnf_untitled",
+    pos = { x = 0, y = 0 },
+    weight = 2,
+    blueprint_compat = true,
+    ppu_coder = { "FirstTry" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "chance", "score", },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+	environments = {
+        backroom = 0.1
+    },
+    config = { trigger = false, odds = 10, extra = { valuemin = 1, valuemax = 100 } },
+    loc_vars = function(self,info_queue,card)
+    local oddwin, oddnope = SMODS.get_probability_vars(card, 1, card.ability.odds, "fish_fac_untitledfish3")
+    local randomizer = pseudorandom(pseudoseed("fish_fac_untitledfish"),card.ability.extra.valuemin, card.ability.extra.valuemax)
+    local randomizer2 = pseudorandom(pseudoseed("fish_fac_untitledfish2"),card.ability.extra.valuemin, card.ability.extra.valuemax)
+        local randomtext = CharacterUNT[math.random(#CharacterUNT)]..SymbolsUNT[math.random(#SymbolsUNT)]..randomizer..CharacterUNT[math.random(#CharacterUNT)]..SymbolsUNT[math.random(#SymbolsUNT)]..randomizer2
+        return { vars = { oddwin, oddnope, randomizer, randomtext } }
+    end,
+    calculate = function(self, card, context)
+        local eval = function(card) return card.ability.trigger == true end
+        juice_card_until(card, eval, false)
+        if context.setting_blind then
+            if SMODS.pseudorandom_probability(card, "fish_fac_untitledfish3", 1, card.ability.odds, "fish_fac_untitledfish3") then
+                card.ability.trigger = true
+            end
+        end
+        if context.after and G.GAME.current_round.hands_left == 1 then
+        local gamechips = G.GAME.chips
+        local randomizer = pseudorandom(pseudoseed("fish_fac_untitledfish"),card.ability.extra.valuemin, card.ability.extra.valuemax)
+        local randomizer2 = pseudorandom(pseudoseed("fish_fac_untitledfish2"),card.ability.extra.valuemin, card.ability.extra.valuemax)
+                G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.5 + math.random() * 0.4,
+            func = function()
+            G.GAME.chips = ((gamechips*randomizer)/(randomizer2/2))
+            play_sound('timpani')
+            return true
+            end
+        }))
+            G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.5 + math.random() * 0.4,
+            func = function()
+            G.GAME.chips = "#"..CharacterUNT[math.random(#CharacterUNT)]..SymbolsUNT[math.random(#SymbolsUNT)]..randomizer..CharacterUNT[math.random(#CharacterUNT)]..SymbolsUNT[math.random(#SymbolsUNT)]..randomizer2.."#"
+            G.hand_text_area.game_chips:juice_up()
+            play_sound('timpani')
+            return true
+            end
+        }))
+                G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.5 + math.random() * 0.4,
+            func = function()
+            G.GAME.chips = ((gamechips*randomizer2)/(randomizer/2))
+            play_sound('timpani')
+            return true
+            end
+        }))
+        if card.ability.trigger then
+            SMODS.destroy_cards(card)
+            card.ability.trigger = false
+        end
+    end
+end
+}
+
+
+FishAndChips.Fish {
+    key = "tagfish",
+    atlas = "pnf_tag",
+    pos = { x = 0, y = 0 },
+    weight = 10,
+    blueprint_compat = true,
+    ppu_coder = { "FirstTry" },
+    ppu_artist = { "FirstTry" },
+    attributes = { "generation", "tag", "usable", },
+	stats = { weight = {min = 0.1, max = 1}, length = {min = 0.1, max = 1} },
+    config = {
+        extra = {
+            xchips = 1,
+            add = 0.2
+        },
+        immutable = {
+            revert = 0
+        }
+    },
+    environments = {
+        city_river = 5,
+        wormhole = 3,
+        backroom = 3
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xchips, card.ability.extra.add, colours = { HEX("4db1f6") } } }
+    end,
+        can_use = function(self,card)
+        return true
+    end,
+    use = function(self, card, area, copier)
+        local tag_pool = get_current_pool('Tag')
+    local selected_tag = pseudorandom_element(tag_pool, 'pnf_tag')
+    local it = 1
+    while selected_tag == 'UNAVAILABLE' do
+    it = it + 1
+    selected_tag = pseudorandom_element(tag_pool, 'pnf_tag_re'..it)
+    end
+    add_tag(Tag(selected_tag, false, 'Small'))
+            play_sound("holo1",5)
+    end,
+        calculate = function(self, card, context)
+end
+}

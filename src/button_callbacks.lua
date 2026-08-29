@@ -28,15 +28,12 @@ function G.FUNCS.fac_reroll_location (e)
 		ease_dollars(-G.GAME.fac_environment_reroll_cost)
 		FishAndChips:stop_ambience()
 		local old_env = G.GAME.fac_fishing_environment
-		G.GAME.fac_fishing_environment = G.GAME.fac_next_environment or pseudorandom_element(FishAndChips.Environments, "fac_next_location", {
-			in_pool = function (v, args)
-				return v.key ~= G.GAME.fac_fishing_environment
-			end
-		}).key
+		G.GAME.fac_fishing_environment = G.GAME.fac_next_environment or pseudorandom_element(FishAndChips.create_env_pool(), "fac_next_location")
 		SMODS.calculate_context{fac_environment_changed = G.GAME.fac_fishing_environment, old_environment = old_env, forced = G.GAME.fac_next_environment and true}
-		if G.GAME.fac_next_environment then G.GAME.fac_next_environment = nil end
+		if G.GAME.fac_next_environment then G.GAME.fac_next_environment = nil else G.GAME.fac_envs_used[G.GAME.fac_fishing_environment] = G.GAME.fac_envs_used[G.GAME.fac_fishing_environment] + 1 end
 		G.FISHING_STATE = G.FISHING_STATES.MOVING
 		G.FISHING_STATE_COMPLETE = false
+		save_run()
 	end
 end
 

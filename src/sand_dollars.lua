@@ -184,6 +184,10 @@ function G.UIDEF.use_and_sell_buttons(card)
     local width = G.round_eval.T.w - 0.51
     local num_dollars = config.sand_dollars or 1
     local scale = 0.9
+
+    if Talisman then
+        num_dollars = to_number(num_dollars)
+    end
     
     if not G.round_eval.divider_added then
     G.E_MANAGER:add_event(Event({
@@ -209,8 +213,8 @@ function G.UIDEF.use_and_sell_buttons(card)
                 local left_text = {}
                 if config.name == 'sand_dollars' then
                   table.insert(left_text, {n=G.UIT.T, config={text = config.sand_dollars, font = config.font, scale = 0.8*scale, colour = FishAndChips.C.SAND_DOLLAR, shadow = true, juice = true}})
-                  table.insert(left_text, {n=G.UIT.O, config={object = DynaText({string = {" "..localize('k_fac_sand_dollar_cashout')}, colours = {G.C.UI.TEXT_LIGHT}, shadow = true, pop_in = 0, scale = 0.4*scale, silent = true})}})
-                elseif string.find(config.name, 'joker') then
+                  table.insert(left_text, {n=G.UIT.O, config={object = DynaText({string = {" "..localize('k_fac_sand_dollar_cashout').." "..localize('k_fac_cashout_blind_display_'..G.GAME.blind_on_deck:lower())}, colours = {G.C.UI.TEXT_LIGHT}, shadow = true, pop_in = 0, scale = 0.4*scale, silent = true})}})
+                elseif string.find(config.name, 'fish') then
                   table.insert(left_text, {n=G.UIT.O, config={object = DynaText({string = localize{type = 'name_text', set = config.card.config.center.set, key = config.card.config.center.key}, colours = {G.C.FILTER}, shadow = true, pop_in = 0, scale = 0.6*scale, silent = true})}})
                 elseif string.find(config.name, 'tag') then
                     local blind_sprite = Sprite(0, 0, 0.7,0.7, G.ASSET_ATLAS[config.atlas], copy_table(config.pos))
