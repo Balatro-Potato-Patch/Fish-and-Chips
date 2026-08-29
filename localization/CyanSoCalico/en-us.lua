@@ -22,7 +22,7 @@ return {
                         "I'm developing my breakout mod as a fledgeling",
                         "mod dev! Whether 11 hours or 11 years, please",
                         "look forward to the one-man vanilla+ mod made",
-                        "with all of my love, {C:fac_csc_CSC,E:1}Steady Hand{}!",
+                        "with all of my love, {C:fac_csc_CSC,E:1}Steady Hand{}! {C:fac_csc_CSC}^w^{}",
                     },
                     {
                         "{C:fac_csc_CSC,E:2,u:fac_csc_CSC}Thanks for Playing!{}",
