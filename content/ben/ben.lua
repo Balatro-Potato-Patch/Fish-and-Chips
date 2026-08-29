@@ -130,7 +130,7 @@ FishAndChips.Fish {
 				local old_slot = card.ability.extra.slot
 				repeat
 					card.ability.extra.slot = pseudorandom("chameleon", 1, #G.jokers.cards)
-				until card.ability.extra.slot ~= old_slot
+				until card.ability.extra.slot ~= old_slot or #G.jokers.cards == 1
 			else
 				card.ability.extra.slot = 1
 			end

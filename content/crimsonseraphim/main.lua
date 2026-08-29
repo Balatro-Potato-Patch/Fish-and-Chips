@@ -45,7 +45,9 @@ PotatoPatchUtils.Developer({
         return { vars = { getYearsSince(2005, 12, 4), elements = { {n=G.UIT.O, config={object = area}}, FishAndChips.crimsonseraphim.desc_card.h_popup } } }
     end,
     stop_hover = function()
-        if not FishAndChips.crimsonseraphim.desc_card then return end
+        if not FishAndChips.crimsonseraphim.desc_card
+        or not FishAndChips.crimsonseraphim.desc_card.card
+        or not FishAndChips.crimsonseraphim.desc_card.h_popup then return end
         FishAndChips.crimsonseraphim.desc_card.card:stop_hover()
         FishAndChips.crimsonseraphim.desc_card.h_popup:remove()
         FishAndChips.crimsonseraphim.desc_card.card:remove()
@@ -53,7 +55,9 @@ PotatoPatchUtils.Developer({
         FishAndChips.crimsonseraphim.desc_card = nil
     end,
     remove = function()
-        if not FishAndChips.crimsonseraphim.desc_card then return end
+        if not FishAndChips.crimsonseraphim.desc_card
+        or not FishAndChips.crimsonseraphim.desc_card.card
+        or not FishAndChips.crimsonseraphim.desc_card.h_popup then return end
         FishAndChips.crimsonseraphim.desc_card.card:stop_hover()
         FishAndChips.crimsonseraphim.desc_card.h_popup:remove()
         FishAndChips.crimsonseraphim.desc_card.card:remove()
