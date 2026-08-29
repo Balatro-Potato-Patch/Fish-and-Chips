@@ -28,8 +28,8 @@ FishAndChips.Fish{
         "balance"
     },
     stats = {
-        weight = { min = 1, max = 1}, --In kilograms
-        length = { min = 1, max = 2}, --In meters
+        weight = { min = 15, max = 35}, --In kilograms
+        length = { min = 1.5, max = 3}, --In meters
     },
     update = function (self, card, dt)
         PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)

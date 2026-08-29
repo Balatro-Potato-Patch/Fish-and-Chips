@@ -6,6 +6,7 @@ FishAndChips.Fish{
     atlas = atlas,
     pos = pos,
     weight = 1,
+    blueprint_compat = false,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     environments = { --Maximum 6
@@ -48,7 +49,7 @@ FishAndChips.Fish{
         PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
     end,
     calculate = function (self, card, context)
-        if (context.money_altered or context.sand_dollars_altered) and context.amount > 0 then
+        if context.money_altered and context.amount > 0 and not context.blueprint then
             SMODS.scale_card(card, {
                 ref_table = card.ability,
                 ref_value = "extra_value",

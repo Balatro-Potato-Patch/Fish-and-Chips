@@ -28,8 +28,8 @@ FishAndChips.Fish{
         "hand_level", "hand_type",
     },
     stats = {
-        weight = { min = 1, max = 1}, --In kilograms
-        length = { min = 1, max = 2}, --In meters
+        weight = { min = 10, max = 30}, --In kilograms
+        length = { min = 0.6, max = 1}, --In meters
     },
     eternal_compat = false,
     blueprint_compat = false,
@@ -37,42 +37,42 @@ FishAndChips.Fish{
         PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
     end,
     add_to_deck = function (self, card, from_debuff)
-        print"added"
         local res = pseudorandom("fac_minty_elder_tuna", 1, 9)
         local hand
         if res <= 3 then
             local level = 0
             for k,v in pairs(G.GAME.hands) do
-                if not hand or v.level > level or v.level == level and v.order < G.GAME.hands[hand].order then
+                if SMODS.is_poker_hand_visible(k) and (not hand or v.level > level or (v.level == level and v.order < G.GAME.hands[hand].order)) then
                     hand = k
+                    level = v.level
                 end
             end
         elseif res <= 6 then
             local played = 0
             for k,v in pairs(G.GAME.hands) do
-                if not hand or v.played > played or v.played == played and v.order < G.GAME.hands[hand].order then
+                if SMODS.is_poker_hand_visible(k) and (not hand or v.played > played or (v.played == played and v.order < G.GAME.hands[hand].order)) then
                     hand = k
+                    played = v.played
                 end
             end
         elseif res <= 8 then
             local level = math.huge
             for k,v in pairs(G.GAME.hands) do
-                if not hand or v.level < level or v.level == level and v.order < G.GAME.hands[hand].order then
+                if SMODS.is_poker_hand_visible(k) and (not hand or v.level < level or (v.level == level and v.order < G.GAME.hands[hand].order)) then
                     hand = k
+                    level = v.level
                 end
             end
         else
             local visible = {}
-            local any_visible = false
             for k,v in pairs(G.GAME.hands) do
                 if SMODS.is_poker_hand_visible(k) then
-                    any_visible = true
                     visible[#visible+1] = k
                 else
                     visible[#visible+1] = "UNAVAILABLE"
                 end
             end
-            if not any_visible then --Will this ever happen? Probably not but LARGE SHRUGGING NOISES
+            if not next(visible) then --Will this ever happen? Probably not but LARGE SHRUGGING NOISES
                 visible = {"High Card"}
             end
             local iter = 1

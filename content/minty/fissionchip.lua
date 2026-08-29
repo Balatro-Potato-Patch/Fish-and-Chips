@@ -41,11 +41,16 @@ FishAndChips.Fish{
     },
     loc_vars = function (self, info_queue, card)
         local luck, odds = SMODS.get_probability_vars(card, card.ability.extra.luck, card.ability.extra.odds, "minty_fac_fission_retrigger", false)
+        local key = self.key
+        if card.ability.extra.retriggers ~= 1 then
+            key = key.."_plural"
+        end
         
         return {
+            key = key,
             vars = {
                 luck, odds,
-                card.ability.extra.retriggers, card.ability.extra.retriggers ~= 1 and "s" or ""
+                card.ability.extra.retriggers
             }
         }
     end,

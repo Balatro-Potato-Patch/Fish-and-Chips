@@ -8,6 +8,7 @@ FishAndChips.Fish{
     weight = 1,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
+    perishable_compat = false,
     environments = { --Maximum 6
         pier = 10,
         city_river = 10,
@@ -28,8 +29,8 @@ FishAndChips.Fish{
         "destroy_card", "xmult", "scaling", "enhancements",
     },
     stats = {
-        weight = { min = 1, max = 1}, --In kilograms
-        length = { min = 1, max = 2}, --In meters
+        weight = { min = 1.2, max = 4.8}, --In kilograms
+        length = { min = 0.47, max = 0.92}, --In meters
     },
     config = {
         extra = {
@@ -38,6 +39,7 @@ FishAndChips.Fish{
         }
     },
     loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
         return {
             vars = {
                 card.ability.extra.xmult,
@@ -54,6 +56,7 @@ FishAndChips.Fish{
         end
 
         if context.destroy_card and context.destroy_card.nommed_by_dogfish and not context.blueprint then
+            context.destroy_card.nommed_by_dogfish = nil
             SMODS.scale_card(card, {
                 ref_table = card.ability.extra,
                 ref_value = "xmult",

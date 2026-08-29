@@ -45,6 +45,7 @@ FishAndChips.Fish{
             vars = {
                 card.ability.extra.stored,
                 card.ability.extra.ready,
+                ppu_bubbles = { card.ability.extra.stored > 0 and "usable" or "used" }
             }
         }
     end,
@@ -72,6 +73,9 @@ FishAndChips.Fish{
     can_use = function (self, card)
         return card.ability.extra.stored > 0
     end,
+    keep_on_use = function (self, card)
+        return true
+    end,
     use = function (self, card)
         card.ability.extra.stored = card.ability.extra.stored - 1
         card.ability.extra.ready = card.ability.extra.ready + 1
@@ -86,7 +90,7 @@ FishAndChips.Fish{
         PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row, force)
     end,
     calculate = function (self, card, context)
-        if card.ability.extra.ready > 0 and (context.repetition or context.retrigger_joker and context.other_card ~= card) then
+        if card.ability.extra.ready > 0 and context.retrigger_joker_check and context.other_card ~= card then
             return {
                 repetitions = card.ability.extra.ready
             }

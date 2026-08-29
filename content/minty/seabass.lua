@@ -86,7 +86,6 @@ FishAndChips.Fish{
             end
         end
     end,
-    button_key = "k_fac_minty_chum",
     can_use = function (self, card)
         return true
     end,
@@ -110,3 +109,45 @@ FishAndChips.Fish{
         return not G.GAME.minty_seabass_eradicated[env]
     end,
 }
+
+local use_and_sell = G.UIDEF.use_and_sell_buttons
+function G.UIDEF.use_and_sell_buttons(card)
+	local ret = use_and_sell(card)
+	if card.config.center.key == "fish_fac_minty_seabass" and card.area.config.type == "joker" then
+		local use = {
+            n = G.UIT.C,
+            config = { align = "cr" },
+            nodes = {
+
+                {
+                    n = G.UIT.C,
+                    config = { ref_table = card, align = "cr", maxw = 1.25, padding = 0.1, r = 0.08, minw = 1.25, minh = (card.area and card.area.config.type == "joker") and 0 or 1, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = "use_card", func = "can_use_consumeable" },
+                    nodes = {
+                        { n = G.UIT.B, config = { w = 0.1, h = 0.6 } },
+                        { n = G.UIT.T, config = { text = localize("b_fac_minty_chum"), colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true } }
+                    }
+                }
+            }
+        }
+		ret = {
+			n = G.UIT.ROOT,
+			config = { padding = 0, colour = G.C.CLEAR },
+			nodes = {
+				{
+					n = G.UIT.C,
+					config = { padding = 0.15, align = "cl" },
+					nodes = {
+						{
+							n = G.UIT.R,
+							config = { align = "cl" },
+							nodes = {
+								use
+							}
+						},
+					}
+				},
+			}
+		}
+	end
+	return ret
+end
