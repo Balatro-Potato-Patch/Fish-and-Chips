@@ -47,6 +47,7 @@ FishAndChips.Fish {
 		length = {min = 0.67, max = 0.67}
 	},
 	blueprint_compat = false,
+	eternal_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.max } }
 	end,
@@ -611,24 +612,22 @@ FishAndChips.Fish {
 			local sliced_card = G.fac_fish_area.cards[my_pos + 1]
 			local key = sliced_card.config.center.key
 
-			local fih, old_fih
-
-			for _, f in ipairs(G.P_CENTER_POOLS["fac_Fish"]) do
-				if f.set == "fac_Fish" then
-					old_fih = fih
-					fih = f
-
-					if fih.key == key then break end
+			local fih_ix = 3
+			if key == "fish_fac_cod" then
+				fih_ix = #G.P_CENTER_POOLS["fac_Fish"]
+			else
+				for i = 1, #G.P_CENTER_POOLS["fac_Fish"] do
+					if G.P_CENTER_POOLS["fac_Fish"][i].set == "fac_Fish" and G.P_CENTER_POOLS["fac_Fish"][i].key == key then
+						fih_ix = i - 1; break
+					end
 				end
 			end
-
-			if not old_fih then old_fih = G.P_CENTERS["fish_fac_test"] end
 
 			card.ability.extra.available = false
 
 			play_sound("tarot1")
 			sliced_card:juice_up(0.3, 0.5)
-            sliced_card:set_ability(old_fih)
+            sliced_card:set_ability((G.P_CENTER_POOLS["fac_Fish"][fih_ix] or { key = "fish_fac_cod" }).key)
 		end
     end,
 	calculate = function(self, card, context)
@@ -908,7 +907,7 @@ FishAndChips.Fish {
 	ppu_artist = { "notmario" },
 	attributes = { "hand_level", "chips", "mult", "modify_card", "perma_bonus", },
 	config = {
-		extra = { perma_chips = 3, perma_mult = 1, }
+		extra = { perma_chips = 3, perma_mult = 1, chosen = 2 }
 	},
 	pixel_size = { w = 71, h = 59 },
 	environments = {
@@ -921,16 +920,16 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.perma_chips, card.ability.extra.perma_mult } }
+		return { vars = { card.ability.extra.chosen, card.ability.extra.perma_chips, card.ability.extra.perma_mult } }
 	end,
 	calculate = function(self, card, context)
 		if context.poker_hand_changed then
-			if context.old_level and context.old_level ~= context.new_level then
+			if context.old_level and context.old_level < context.new_level then
 				local eligible_fish = {}
 				for _, other_card in ipairs(G.fac_fish_area.cards) do
-					if other_card ~= card then eligible_fish[#eligible_fish + 1] = other_card end
+					if other_card ~= (context.blueprint_card or card) then eligible_fish[#eligible_fish + 1] = other_card end
 				end
-				local fishies = choose_a_few(eligible_fish, "super_auto_fish", 2)
+				local fishies = choose_a_few(eligible_fish, "super_auto_fish", card.ability.extra.chosen)
 				if #fishies > 0 then
 					for _, fish in ipairs(fishies) do
 						fish.ability.fac_mf_sap_chips = (fish.ability.fac_mf_sap_chips or 0) + card.ability.extra.perma_chips
@@ -974,7 +973,8 @@ FishAndChips.Fish {
 		length = {min = 0.40, max = 0.40}
 	},
 	disable_visual_scaling = true,
-	blueprint_compat = true,
+	blueprint_compat = false,
+	eternal_compat = false,
 	loc_vars = function(self, info_queue, card)
 		local new_numerator, new_denominator =
 			SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "fac_mf_car_battery")
@@ -1025,6 +1025,7 @@ FishAndChips.Fish {
 		length = {min = 0.67, max = 0.67}
 	},
 	blueprint_compat = false,
+	eternal_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.cards } }
 	end,
@@ -1233,7 +1234,7 @@ FishAndChips.Fish {
 				xblindsize = card.ability.extra.xblindsize
 			}
 		end
-		if context.fac_environment_changed and G.GAME.fac_fishing_environment ~= "pier" then
+		if context.fac_environment_changed and G.GAME.fac_fishing_environment ~= "pier" and not context.blueprint then
 			SMODS.destroy_cards(card, nil, nil, true)
 			return {
 				message = localize('k_lost_ex'),
@@ -1315,7 +1316,7 @@ FishAndChips.Fish {
 		city_river = 1.0,
 		pier = 0.1,
 	},
-	blueprint_compat = true,
+	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { } }
 	end,
@@ -1324,7 +1325,7 @@ FishAndChips.Fish {
 		length = {min = 0.10, max = 0.13}
 	},
 	calculate = function(self, card, context)
-		if context.fac_modify_fishing_profile then
+		if context.fac_modify_fishing_profile and not context.blueprint then
 				-- context.fishing_profile.decision_min = context.fishing_profile.decision_min / 2.0
 				-- context.fishing_profile.decision_max = context.fishing_profile.decision_max / 2.0
 
@@ -1333,7 +1334,7 @@ FishAndChips.Fish {
 
 				context.fishing_profile.vel_limit = context.fishing_profile.vel_limit * 4.0
 		end
-		if context.fac_fish_caught then
+		if context.fac_fish_caught and not context.blueprint then
 			local edition = SMODS.poll_edition {
 				no_negative = true,
 				guaranteed = true,
@@ -1583,6 +1584,7 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_BLINDS.bl_wall
 		return { vars = {} }
 	end,
 	add_to_deck = function(self, card, from_debuff)
@@ -1675,6 +1677,7 @@ FishAndChips.Fish {
 		length = {min = 0.20, max = 0.35}
 	},
 	blueprint_compat = false,
+	eternal_compat = false,
 	pixel_size = {w = 71, h = 72},
 	requires_jokers = true,
 	loc_vars = function(self, info_queue, card)
@@ -1722,10 +1725,13 @@ FishAndChips.Fish {
 		weight = {min = 0.20, max = 0.50},
 		length = {min = 0.05, max = 0.10}
 	},
-	blueprint_compat = false,
+	blueprint_compat = true,
 	pixel_size = {w = 64, h = 78},
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.percent_swap * 100, localize(card.ability.extra.rank_one, 'ranks'), localize(card.ability.extra.rank_two, 'ranks') } }
+		return { vars = { card.ability.extra.percent_swap * 100, localize(card.ability.extra.rank_one, 'ranks'), localize(card.ability.extra.rank_two, 'ranks'),
+		(card.ability.extra.rank_one == "8" or card.ability.extra.rank_one == "Ace") and localize("fac_mf_an") or localize("fac_mf_a"),
+		(card.ability.extra.rank_two == "8" or card.ability.extra.rank_two == "Ace") and localize("fac_mf_an") or localize("fac_mf_a"),
+	} }
 	end,
 	set_ability = function(self, card, initial, delay_sprites)
 		local ranks = choose_a_few(SMODS.Rank.obj_buffer, "dominnows", 2)
@@ -1849,7 +1855,7 @@ FishAndChips.Fish {
 				colour = mix_colours(G.C.GREEN, G.C.FILTER, 0.7),
 			}
 		end
-		if context.scaling_card then
+		if context.scaling_card and not context.blueprint then
 		    card.ability.extra.preventing_scaling = true
     		if context.operation == "X" then
     			return {
@@ -1913,6 +1919,7 @@ FishAndChips.Fish {
 		length = {min = 0.21, max = 0.30}
 	},
 	blueprint_compat = false,
+	eternal_compat = false,
 	pixel_size = {w = 60, h = 78},
 	loc_vars = function(self, info_queue, card)
 		local new_numerator, new_denominator =
@@ -1925,7 +1932,7 @@ FishAndChips.Fish {
             delay = 0.4,
             func = function()
                 play_sound('timpani')
-                local food = SMODS.add_card({ set = 'Joker', rarity = "Legendary", key_append = "the_sole" })
+                local food = SMODS.add_card({ set = 'Joker', rarity = "Legendary", key_append = "the_sole" })	-- food lol
 				food.ability.fac_mf_the_sole = { card.ability.extra.odds }
                 card:juice_up(0.3, 0.5)
                 return true
@@ -2024,6 +2031,7 @@ FishAndChips.Fish {
 		length = {min = 0.5, max = 0.6}
 	},
 	blueprint_compat = false,
+	eternal_compat = false,
 	pixel_size = {w = 53, h = 61},
 	display_size = { w = 53 * 1.25, h = 61 * 1.25 },
 	loc_vars = function(self, info_queue, card)
@@ -2143,19 +2151,19 @@ FishAndChips.Fish {
 	},
 	requires_hand = true,
 	blueprint_compat = false,
+	eternal_compat = false,
 	pixel_size = {w = 39, h = 39},
 	loc_vars = function(self, info_queue, card)
-	    return { vars = { card.ability.extra.base_highlighted, card.ability.extra.mult_bonus, card.ability.extra.money_per, card.ability.extra.money_earned,
-			card.ability.extra.base_highlighted + math.floor( card.ability.extra.money_earned / card.ability.extra.money_per ) } }
+	    return { vars = { card.ability.extra.base_highlighted + math.floor( card.ability.extra.money_earned / card.ability.extra.money_per ), card.ability.extra.mult_bonus, card.ability.extra.money_per, card.ability.extra.money_earned } }
 	end,
 	calculate = function(self, card, context)
-        if context.money_altered and context.amount > 0 then
+        if context.money_altered and context.amount > 0 and not context.blueprint then
             card.ability.extra.money_earned = card.ability.extra.money_earned + context.amount
         end
     end,
     use = function(self, card, area, copier)
         for i = 1, #G.hand.highlighted do
-            o_card = G.hand.highlighted[i]
+            local o_card = G.hand.highlighted[i]
             o_card.ability.perma_mult = (o_card.ability.perma_mult or 0) + card.ability.extra.mult_bonus
             local percent = 0.85 + (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.25
             G.E_MANAGER:add_event(Event({
@@ -2193,13 +2201,14 @@ FishAndChips.Fish {
 	},
 	requires_hand = true,
 	blueprint_compat = false,
+	eternal_compat = false,
 	pixel_size = {w = 39, h = 39},
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.base_highlighted, card.ability.extra.money_per, card.ability.extra.money_earned,
-            card.ability.extra.base_highlighted + math.floor( card.ability.extra.money_earned / card.ability.extra.money_per ) } }
+		info_queue[#info_queue + 1] = G.P_CENTERS.m_wild
+        return { vars = { card.ability.extra.base_highlighted + math.floor( card.ability.extra.money_earned / card.ability.extra.money_per ), card.ability.extra.money_per, card.ability.extra.money_earned } }
     end,
     calculate = function(self, card, context)
-        if context.money_altered and context.amount < 0 then
+        if context.money_altered and context.amount < 0 and not context.blueprint then
             card.ability.extra.money_earned = card.ability.extra.money_earned - context.amount
 
             if math.floor(card.ability.extra.money_earned / card.ability.extra.money_per) > math.floor((card.ability.extra.money_earned - context.amount) / card.ability.extra.money_per) then
@@ -2289,12 +2298,13 @@ FishAndChips.Fish {
 		length = {min = 0.0012, max = 0.021}
 	},
 	blueprint_compat = false,
+	eternal_compat = false,
 	pixel_size = {w = 39, h = 39},
 	loc_vars = function(self, info_queue, card)
-	    return { vars = { card.ability.extra.base_rerolls, card.ability.extra.sells_per, card.ability.extra.my_sells, math.floor(card.ability.extra.my_sells / card.ability.extra.sells_per), } }
+	    return { vars = { card.ability.extra.base_rerolls + math.floor(card.ability.extra.my_sells / card.ability.extra.sells_per), card.ability.extra.sells_per, card.ability.extra.my_sells } }
 	end,
 	calculate = function(self, card, context)
-	    if context.selling_card and context.card ~= card then
+	    if context.selling_card and context.card ~= card and not context.blueprint then
             card.ability.extra.my_sells = card.ability.extra.my_sells + 1
             if math.floor(card.ability.extra.my_sells / card.ability.extra.sells_per) > math.floor((card.ability.extra.my_sells - 1) / card.ability.extra.sells_per) then
                 return {
@@ -2334,6 +2344,7 @@ FishAndChips.Fish {
 	},
 	requires_jokers = true,
 	blueprint_compat = false,
+	eternal_compat = false,
 	pixel_size = {w = 39, h = 39},
 	loc_vars = function(self, info_queue, card)
     	local new_numerator, new_denominator =
@@ -2341,7 +2352,7 @@ FishAndChips.Fish {
 	    return { vars = { new_numerator, new_denominator, card.ability.extra.increase_denominator, } }
 	end,
 	calculate = function(self, card, context)
-	    if context.before then
+	    if context.before and not context.blueprint then
 			if #context.scoring_hand < #context.full_hand then
                 card.ability.extra.denominator = card.ability.extra.denominator + card.ability.extra.increase_denominator * (#context.full_hand - #context.scoring_hand)
 			    return {
@@ -2391,12 +2402,13 @@ FishAndChips.Fish {
 	},
 	requires_hand = true,
 	blueprint_compat = false,
+	eternal_compat = false,
 	pixel_size = {w = 39, h = 39},
 	loc_vars = function(self, info_queue, card)
-	    return { vars = { card.ability.extra.base_highlighted, card.ability.extra.discards_per, card.ability.extra.my_discards, math.floor(card.ability.extra.my_discards / card.ability.extra.discards_per), } }
+	    return { vars = { card.ability.extra.base_highlighted + math.floor(card.ability.extra.my_discards / card.ability.extra.discards_per), card.ability.extra.discards_per, card.ability.extra.my_discards, } }
 	end,
 	calculate = function(self, card, context)
-	    if context.discard then
+	    if context.discard and not context.blueprint then
             card.ability.extra.my_discards = card.ability.extra.my_discards + 1
             if math.floor(card.ability.extra.my_discards / card.ability.extra.discards_per) > math.floor((card.ability.extra.my_discards - 1) / card.ability.extra.discards_per) then
                 return {
