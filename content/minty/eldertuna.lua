@@ -28,8 +28,8 @@ FishAndChips.Fish{
         "hand_level", "hand_type",
     },
     stats = {
-        weight = { min = 1, max = 1}, --In kilograms
-        length = { min = 1, max = 2}, --In meters
+        weight = { min = 10, max = 30}, --In kilograms
+        length = { min = 0.6, max = 1}, --In meters
     },
     eternal_compat = false,
     blueprint_compat = false,

@@ -29,8 +29,8 @@ FishAndChips.Fish{
         "destroy_card", "xmult", "scaling", "enhancements",
     },
     stats = {
-        weight = { min = 1, max = 1}, --In kilograms
-        length = { min = 1, max = 2}, --In meters
+        weight = { min = 1.2, max = 4.8}, --In kilograms
+        length = { min = 0.47, max = 0.92}, --In meters
     },
     config = {
         extra = {

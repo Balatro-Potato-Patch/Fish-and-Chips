@@ -32,8 +32,8 @@ FishAndChips.Fish{
         PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
     end,
     stats = {
-        weight = { min = 1, max = 1}, --In kilograms
-        length = { min = 1, max = 2}, --In meters
+        weight = { min = 30, max = 50}, --In kilograms
+        length = { min = 2, max = 3}, --In meters
     },
     config = {
         extra = {
