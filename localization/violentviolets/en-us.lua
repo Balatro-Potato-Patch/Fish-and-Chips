@@ -22,6 +22,7 @@ return {
                         }
                     },
                     flavour = {
+                        "{s:0.8}They/Them",
                         "{C:green}...can you let me go? This is really annoying."
                     }
                 },
