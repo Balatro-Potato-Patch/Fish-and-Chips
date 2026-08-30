@@ -1794,7 +1794,7 @@ FishAndChips.Fish {
 	ppu_coder = { "crimsonseraphim" },
 	ppu_artist = { "crimsonseraphim" },
 	attributes = { "destroy_card", "editions", "modify_card", "deltarune", "utdr", },
-
+    blueprint_compat = false,
 	environments = {
         wormhole = 5,
         garden = 5,
@@ -1810,23 +1810,23 @@ FishAndChips.Fish {
         if context.ending_shop then
             local cards = {}
             for i, v in pairs(G.fac_fish_area.cards) do
-                if not SMODS.is_eternal(v) and not v.getting_sliced and v ~= card then
+                if not SMODS.is_eternal(v) and not v.getting_sliced then
                     cards[#cards+1] = v
                 end
             end
             local destroy_card = pseudorandom_element(cards, pseudoseed("fac_fish_crimsonseraphim_roaring_fish"))
             cards = {}
             for i, v in pairs(G.fac_fish_area.cards) do
-                if not v.getting_sliced and not v.edition and v ~= destroy_card then
+                if not v.getting_sliced and not v.edition then
                     cards[#cards+1] = v
                 end
             end
             if next(cards) then
-                destroy_card.getting_sliced = true
+                if destroy_card then destroy_card.getting_sliced = true end
                 FishAndChips.crimsonseraphim.swoon()
                 G.E_MANAGER:add_event(Event{
                     func = function()
-                        destroy_card:start_dissolve()
+                        if destroy_card then destroy_card:start_dissolve() end
                         local negative_card = pseudorandom_element(cards, pseudoseed("fac_fish_crimsonseraphim_roaring_fish_negative"))
                         negative_card:set_edition("e_negative")
                         return true
