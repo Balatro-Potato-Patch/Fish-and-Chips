@@ -112,10 +112,11 @@ return {
             fish_fac_fo_thoracle = {
                 name = "Thassa's Oracle",
                 text = {
-                    "Once per {C:attention}round{}, use this {C:fac_fish}Fish{} to reduce the",
-                    "{C:attention}Blind's{} requirement by {X:purple,C:white}X#1#{} if the {C:attention}sum{} of ranks",
-                    "of all {C:clubs}Clubs{} held in hand is greater than the",
-                    "number of remaining cards in your {C:attention}deck",
+                    "Once per {C:attention}round{}, use this {C:fac_fish}Fish{} to",
+                    "reduce the {C:attention}Blind's{} size by {X:purple,C:white}X#1#{}",
+                    "if the {C:attention}sum of ranks{} of all {C:clubs}Clubs{} held in hand",
+                    "is greater than the number of",
+                    "remaining cards in your {C:attention}deck",
                     "{ppu_bubble:usable}{element:1}"
                 },
                 flavor = {
