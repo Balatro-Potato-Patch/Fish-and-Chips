@@ -105,13 +105,13 @@ FishAndChips.Fish {
         end
 	end,
     use = function(self, card)
-        if not card.ability.extra.used then
+        if not card.ability.extra.used and not SMODS.is_eternal(G.fac_fish_area.cards[#G.fac_fish_area.cards]) then
             G.fac_fish_area.cards[#G.fac_fish_area.cards]:transmute("crimsonseraphim_aeonfish")
             card.ability.extra.used = true
         end
 	end,
 	can_use = function(self, card)
-		return not card.ability.extra.used
+		return not card.ability.extra.used and not SMODS.is_eternal(G.fac_fish_area.cards[#G.fac_fish_area.cards])
 	end,
     keep_on_use = function()
         return true
