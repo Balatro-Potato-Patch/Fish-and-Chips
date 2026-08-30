@@ -184,29 +184,32 @@ PotatoPatchUtils.Developer {
         local floweries = SMODS.find_card("fish_fac_fo_fishery")
         if #floweries > 0 then
             if context.fac_end_fishing then
-                if not context.failed and not context.fish == "fish_fac_fo_fishery" then
-                    if context.perfect or context.treasure then
-                        FountainOpeners.random_flowery_sound({
-                            "heh_one_more_for_the_fans",
-                            "heh_its_my_jarona",
-                            "all_according_to_all_according_to_plant",
-                            "wow",
-                            "thatsgreat",
-                            "leaf_it_to_me",
-                            "give_it_to_you",
-                            "sustingus",
-                            "glue"
-                        })
-                    else
-                        FountainOpeners.random_flowery_sound({
-                            "heytherelittleguy",
-                            "heyguysithinkifoundaglue",
-                            "its_all_yours",
-                            "minipeppers",
-                            "hey_boys",
-                            "hey",
-                            "heyguys",
-                        })
+                if not context.failed then
+                    -- shouldn't give any voiceline when catching himself
+                    if context.fish ~= "fish_fac_fo_fishery" then
+                        if context.perfect or context.treasure then
+                            FountainOpeners.random_flowery_sound({
+                                "heh_one_more_for_the_fans",
+                                "heh_its_my_jarona",
+                                "all_according_to_all_according_to_plant",
+                                "wow",
+                                "thatsgreat",
+                                "leaf_it_to_me",
+                                "give_it_to_you",
+                                "sustingus",
+                                "glue"
+                            })
+                        else
+                            FountainOpeners.random_flowery_sound({
+                                "heytherelittleguy",
+                                "heyguysithinkifoundaglue",
+                                "its_all_yours",
+                                "minipeppers",
+                                "hey_boys",
+                                "hey",
+                                "heyguys",
+                            })
+                        end
                     end
                 else
                     FountainOpeners.random_flowery_sound({
@@ -250,7 +253,6 @@ PotatoPatchUtils.Developer {
                     "wow",
                     "thatsgreat",
                     "leaf_it_to_me",
-                    "give_it_to_you",
                     "sustingus",
                     "glue"
                 })
