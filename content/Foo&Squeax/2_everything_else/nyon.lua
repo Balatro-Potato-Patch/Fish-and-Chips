@@ -209,49 +209,88 @@ local card_click_ref = Card.click
 ---@diagnostic disable-next-line: duplicate-set-field
 function Card:click()
 	card_click_ref(self)
-	if self.config.center.key == "fish_fac_fas_kawkaw" and self.area == G.fac_fish_area and not G.OVERLAY_MENU then
-		if self.ability.immutable.timer >= 100 then
-			if not (self.area.config.collection or self.area.config.fac_compendium) and not self.ability.immutable.slow then
-				G.GAME.fac_FooSqueax.nyon = G.GAME.fac_FooSqueax.nyon + 1
-				FishAndChips.FooSqueax.nyon.sticky()
-			end
-			self.ability.immutable.slow = true
-			card_eval_status_text(self, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_ule")})
-			play_sound("fac_fas_ule")
-			self.children.center:set_sprite_pos{x = 0, y = 1}
-			delay(0.1)
-			local counter
-			local start
-			local frame = 1
-			G.E_MANAGER:add_event(Event{
-				blocking = false,
-				func = function()
-					if not counter then counter = G.TIMERS.REAL end
-					if not start then start = G.TIMERS.REAL end
-					if G.TIMERS.REAL - counter >= 1/15 then
-						frame = (frame) % 3 + 1
-						self.children.center:set_sprite_pos{x = frame, y = 1}
-						counter = G.TIMERS.REAL
-						if G.TIMERS.REAL - start >= 0.5 then
-							self.children.center:set_sprite_pos{x = 0, y = 0}
-							return true
+	if self.config.center.key == "fish_fac_fas_kawkaw" then
+		if self.area == G.fac_fish_area and not G.OVERLAY_MENU then
+			if self.ability.immutable.timer >= 100 then
+				if not (self.area.config.collection or self.area.config.fac_compendium) and not self.ability.immutable.slow then
+					G.GAME.fac_FooSqueax.nyon = G.GAME.fac_FooSqueax.nyon + 1
+					FishAndChips.FooSqueax.nyon.sticky()
+				end
+				self.ability.immutable.slow = true
+				card_eval_status_text(self, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_ule")})
+				play_sound("fac_fas_ule")
+				self.children.center:set_sprite_pos{x = 0, y = 1}
+				delay(0.1)
+				local counter
+				local start
+				local frame = 1
+				G.E_MANAGER:add_event(Event{
+					blocking = false,
+					func = function()
+						if not counter then counter = G.TIMERS.REAL end
+						if not start then start = G.TIMERS.REAL end
+						if G.TIMERS.REAL - counter >= 1/15 then
+							frame = (frame) % 3 + 1
+							self.children.center:set_sprite_pos{x = frame, y = 1}
+							counter = G.TIMERS.REAL
+							if G.TIMERS.REAL - start >= 0.5 then
+								self.children.center:set_sprite_pos{x = 0, y = 0}
+								return true
+							end
 						end
 					end
-				end
-			})
+				})
+			else
+				self.ability.immutable.timer = self.ability.immutable.timer + self.ability.immutable.gain
+				card_eval_status_text(self, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_nyon")})
+				play_sound("fac_fas_nyon")
+				self.children.center:set_sprite_pos{x = 1, y = 0}
+				delay(0.2)
+				G.E_MANAGER:add_event(Event{
+					blocking = false,
+					func = function()
+						self.children.center:set_sprite_pos{x = 0, y = 0}
+						return true
+					end
+				})
+			end
 		else
-			self.ability.immutable.timer = self.ability.immutable.timer + self.ability.immutable.gain
-			card_eval_status_text(self, "extra", nil, nil, nil, {instant = true, message = localize("k_fac_fas_nyon")})
-			play_sound("fac_fas_nyon")
-			self.children.center:set_sprite_pos{x = 1, y = 0}
-			delay(0.2)
-			G.E_MANAGER:add_event(Event{
-				blocking = false,
-				func = function()
-					self.children.center:set_sprite_pos{x = 0, y = 0}
-					return true
-				end
-			})
+			local choice = math.random()
+			if choice < 0.5 then
+				play_sound("fac_fas_ule")
+				self.children.center:set_sprite_pos{x = 0, y = 1}
+				delay(0.1)
+				local counter
+				local start
+				local frame = 1
+				G.E_MANAGER:add_event(Event{
+					blocking = false,
+					func = function()
+						if not counter then counter = G.TIMERS.REAL end
+						if not start then start = G.TIMERS.REAL end
+						if G.TIMERS.REAL - counter >= 1/15 then
+							frame = (frame) % 3 + 1
+							self.children.center:set_sprite_pos{x = frame, y = 1}
+							counter = G.TIMERS.REAL
+							if G.TIMERS.REAL - start >= 0.5 then
+								self.children.center:set_sprite_pos{x = 0, y = 0}
+								return true
+							end
+						end
+					end
+				})
+			else
+				play_sound("fac_fas_nyon")
+				self.children.center:set_sprite_pos{x = 1, y = 0}
+				delay(0.2)
+				G.E_MANAGER:add_event(Event{
+					blocking = false,
+					func = function()
+						self.children.center:set_sprite_pos{x = 0, y = 0}
+						return true
+					end
+				})
+			end
 		end
 	end
 end
