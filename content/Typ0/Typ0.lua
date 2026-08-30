@@ -169,7 +169,7 @@ FishAndChips.Fish {
         length = {min =  0.123, max = 0.194}
     },
 	ppu_coder = { "SLDTyp0" },
-	ppu_artist = { "SLDTyp0" },
+	ppu_artist = { "TigerThawk" },
 	attributes = { "nothing", "food" },
 	environments = {
 		wormhole = 1,
@@ -195,7 +195,7 @@ FishAndChips.Fish {
         length = {min = 15, max = 25}
     },
 	ppu_coder = { "SLDTyp0" },
-	ppu_artist = { "SLDTyp0" },
+	ppu_artist = { "TigerThawk" },
 	attributes = { "economy", "fac_perfect_catch", },
 	environments = {
 		city_river = 10,
@@ -221,7 +221,7 @@ FishAndChips.Fish {
 	weight = 8,
 	cost = 0,
 	ppu_coder = { "SLDTyp0" },
-	ppu_artist = { "SLDTyp0" },
+	ppu_artist = { "TigerThawk" },
 	attributes = { "xmult" },
 	environments = {
 		city_river = 10,
@@ -250,7 +250,7 @@ FishAndChips.Fish {
 	weight = 8,
 	cost = 0,
 	ppu_coder = { "SLDTyp0" },
-	ppu_artist = { "SLDTyp0" },
+	ppu_artist = { "TigerThawk" },
 	attributes = { "on_sell", },
 	environments = {
 		city_river = 10,
