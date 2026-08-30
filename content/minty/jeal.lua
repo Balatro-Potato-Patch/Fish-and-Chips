@@ -80,14 +80,6 @@ FishAndChips.Fish{
         garden = 10,
         backroom = 10,
         wormhole = 10,
-        --[[
-        calm_pond = 10,
-        pier = 10,
-        swamp = 10,
-        aquifer = 10,
-        volcano = 10,
-        soup = 10,
-        --]]
     },
     attributes = {
         "usable", "generation", "lose_economy", "joker",

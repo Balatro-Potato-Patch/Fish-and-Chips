@@ -14,16 +14,6 @@ FishAndChips.Fish{
         backroom = 10,
         wormhole = 10,
         city_river = 5,
-        --[[
-        calm_pond = 10,
-        chocolate_river = 10,
-        styx = 10,
-        pier = 10,
-        swamp = 10,
-        volcano = 10,
-        soup = 10,
-        garden = 10,
-        --]]
     },
     attributes = {
         "retrigger", "chance"

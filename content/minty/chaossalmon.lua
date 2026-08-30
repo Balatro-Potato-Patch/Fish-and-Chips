@@ -15,15 +15,6 @@ FishAndChips.Fish{
         city_river = 10,
         backroom = 1,
         wormhole = 1,
-        --[[
-        calm_pond = 10,
-        pier = 10,
-        swamp = 10,
-        aquifer = 10,
-        volcano = 10,
-        soup = 10,
-        garden = 10,
-        --]]
     },
     attributes = {
         "xmult", "meta"

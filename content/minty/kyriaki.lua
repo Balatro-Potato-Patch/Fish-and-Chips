@@ -10,17 +10,6 @@ FishAndChips.Fish{
         styx = 10,
         backroom = 10,
         wormhole = 10,
-        --[[
-        calm_pond = 10,
-        chocolate_river = 10,
-        pier = 10,
-        swamp = 10,
-        aquifer = 10,
-        volcano = 10,
-        city_river = 10,
-        soup = 10,
-        garden = 10,
-        --]]
     },
     attributes = {
         "xblindsize", "hands",
