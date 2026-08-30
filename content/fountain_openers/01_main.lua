@@ -144,6 +144,7 @@ PotatoPatchUtils.Developer {
     pos = { x = 0, y = 0 },
     soul_pos = { x = 1, y = 0 },
 	text_effect = "fac_alexi_text",
+	colour = FountainOpeners.AlexiGradient -- fallback
 	fac_partner = "fac_fo_grahkon",
 	fac_dw_shader = true, -- thanks elleeeee love youuu :3
     loc = true,
