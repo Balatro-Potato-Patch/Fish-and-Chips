@@ -620,7 +620,7 @@ FishAndChips.Fish {
             end
         end
 
-        if context.repetition and context.other_card:is_suit('Diamonds')
+        if context.repetition and context.other_card and context.other_card:is_suit('Diamonds')
         and (context.other_card.seal or context.other_card.yellowtanged) then
             return {
                 repetitions = card.ability.extra.repetitions
