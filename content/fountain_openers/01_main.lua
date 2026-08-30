@@ -317,10 +317,6 @@ PotatoPatchUtils.Developer {
                 end
             end
         end
-
-        if context.fac_end_fishing and not context.failed and (#SMODS.find_card("fish_fac_fo_anvil") > 0) then
-            context.fish_obj.fac_fo_anvil = true
-        end
     end,
 }
 
