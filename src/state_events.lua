@@ -372,6 +372,63 @@ function G:update_fac_fishing(dt)
 			end,
 		}))
 	end
+	if SilkTouch and (not G.SETTINGS.enable_action_buttons or G.CONTROLLER.HID.controller) then
+		if G.GAME.fac_fish_expanded then
+			G.fac_fish_area:unhighlight_all()
+			local req_jokers, req_consumables = false, false
+			for _, card in ipairs(G.fac_fish_area.cards) do
+				if card.config.center.requires_jokers then
+					req_jokers = true
+				end
+				if card.config.center.requires_consumables then
+					req_consumables = true
+				end
+			end
+			if req_jokers and not G.GAME.fac_fish_requires_jokers then
+				G.GAME.fac_fish_requires_jokers = true
+				G.jokers.T.y = G.jokers.T.y + 15.25
+				G.jokers.T.x = G.jokers.T.x + 1.5 - (req_consumables and G.consumeables.T.w + 0.5 or 0)
+			elseif not req_jokers and G.GAME.fac_fish_requires_jokers then
+				G.GAME.fac_fish_requires_jokers = nil
+				G.jokers.T.y = G.jokers.T.y - 15.25
+				G.jokers.T.x = G.jokers.T.x - 1.5 + (req_consumables and G.consumeables.T.w + 0.5 or 0)
+			end
+			if req_consumables and not G.GAME.fac_fish_requires_consumables then
+				G.GAME.fac_fish_requires_consumables = true
+				G.consumeables.T.y = G.consumeables.T.y + 15.25
+				G.consumeables.T.x = G.consumeables.T.x - 3.5
+			elseif not req_consumables and G.GAME.fac_fish_requires_consumables then
+				G.GAME.fac_fish_requires_consumables = nil
+				G.consumeables.T.y = G.consumeables.T.y - 15.25
+				G.consumeables.T.x = G.consumeables.T.x + 3.5
+				if G.GAME.fac_fish_requires_jokers then
+					G.jokers.T.x = G.jokers.T.x + G.consumeables.T.w + 0.5
+				end
+			end
+		else
+			if G.GAME.fac_fish_requires_jokers then
+				G.GAME.fac_fish_requires_jokers = nil
+				G.jokers.T.y = G.jokers.T.y - 15.25
+				G.jokers.T.x = G.jokers.T.x - 1.5 + (G.GAME.fac_fish_requires_consumables and G.consumeables.T.w + 0.5 or 0)
+			end
+			if G.GAME.fac_fish_requires_consumables then
+				G.GAME.fac_fish_requires_consumables = nil
+				G.consumeables.T.y = G.consumeables.T.y - 15.25
+				G.consumeables.T.x = G.consumeables.T.x + 3.5
+			end
+		end
+	else
+		if G.GAME.fac_fish_requires_jokers then
+			G.GAME.fac_fish_requires_jokers = nil
+			G.jokers.T.y = G.jokers.T.y - 15.25
+			G.jokers.T.x = G.jokers.T.x - 1.5 + (G.GAME.fac_fish_requires_consumables and G.consumeables.T.w + 0.5 or 0)
+		end
+		if G.GAME.fac_fish_requires_consumables then
+			G.GAME.fac_fish_requires_consumables = nil
+			G.consumeables.T.y = G.consumeables.T.y - 15.25
+			G.consumeables.T.x = G.consumeables.T.x + 3.5
+		end
+	end
 end
 
 ---any additional changes to the hands position
@@ -388,6 +445,14 @@ function FishAndChips.hand_offset(offset)
 				if card.config.center.requires_hand then
 					offset = offset - 3
 					break
+				end
+			end
+			if SilkTouch and G.GAME.fac_fish_expanded and (not G.SETTINGS.enable_action_buttons or G.CONTROLLER.HID.controller) then
+				for _, card in ipairs(G.fac_fish_area.cards) do
+					if card.config.center.requires_hand then
+						offset = offset - 3
+						break
+					end
 				end
 			end
 		end
