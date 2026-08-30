@@ -98,6 +98,18 @@ FishAndChips.Fish{
 				end
 				G.fac_fas_kine_areas[card.ability.area_num]:save()
 				G:save_progress()
+				local card_remove_ref = card.remove
+				function card:remove()
+					card_remove_ref(self)
+					if _card then
+						_card:remove()
+						_card = nil
+					end
+					if card.ability.area_UI and card.ability.area_UI.remove then
+						card.ability.area_UI:remove()
+						card.ability.area_UI = {}
+					end
+				end
 				return true
 			end
 		})
@@ -133,6 +145,7 @@ FishAndChips.Fish{
 		return true
 	end,
 	use = function (self, card)
+		if card.ability.area_UI and card.ability.area_UI.remove then card.ability.area_UI:remove(); card.ability.area_UI = {} end
 		if G.fac_fas_kine_areas[card.ability.area_num] and G.fac_fas_kine_areas[card.ability.area_num].cards and G.fac_fas_kine_areas[card.ability.area_num].cards[1] then
 			for _, _card in ipairs(G.fac_fas_kine_areas[card.ability.area_num].cards) do
 				if _card.ability.fac_fas_kine == card.ability.area_num then
@@ -177,6 +190,10 @@ FishAndChips.Fish{
 						if _card then
 							_card:remove()
 							_card = nil
+						end
+						if card.ability.area_UI and card.ability.area_UI.remove then
+							card.ability.area_UI:remove()
+							card.ability.area_UI = {}
 						end
 					end
 					return true
@@ -259,6 +276,7 @@ FishAndChips.Fish{
 			G.fac_fas_kine_areas[card.ability.area_num] = nil
 		end
 		card.ability.area_num = 0
+		if card.ability.area_UI.remove then card.ability.area_UI:remove() end
 		card.ability.area_UI = {}
 	end,
 }
