@@ -80,7 +80,7 @@ local function create_guppy_uibox(key)
 	FishAndChips.TheShitSquad.guppy_fish = fish
 	return UIBox{definition={n=G.UIT.ROOT, config={colour=G.C.CLEAR}, nodes = {
 		{n = G.UIT.O, config = {object=fish}}
-	}},config={major = G.FISHING.fishing_bait_inventory, align = "cr", offset = { x = 1.6, y = -G.CARD_H/2-.45 }}}
+	}},config={major = G.fac_bait_area, align = "cr", offset = { x = 1.6, y = 0 }, instance_type = 'CARD'}}
 end
 
 FishAndChips.Fish {
