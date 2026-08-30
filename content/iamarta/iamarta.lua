@@ -479,7 +479,7 @@ FishAndChips.Fish{
     use = function(self, card)
         ease_ante(-card.ability.extra.deduction)
     end,
-    can_use = function(self, card) return card.ability.extra.rounds == card.ability.extra.total_rounds end
+    can_use = function(self, card) return card.ability.extra.rounds >= card.ability.extra.total_rounds end
 }
 
 FishAndChips.Fish{
