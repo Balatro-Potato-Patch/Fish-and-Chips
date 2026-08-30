@@ -208,7 +208,7 @@ FishAndChips.Fish {
 		if active and context.joker_main then
 			return { xmult = extra.xmult }
 		end
-		if not active and context.fac_fish_caught then
+		if not active and context.fac_fish_caught and not context.blueprint then
             SMODS.scale_card (card, {
                 ref_table = card.ability.extra,
                 ref_value = "xmult",
