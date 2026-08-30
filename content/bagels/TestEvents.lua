@@ -115,7 +115,7 @@ if Balatest then
 		end
 
 		Balatest.hook_raw(G.GAME, 'fac_forced_fish', args.fish)
-		local fac_finish_round = Balatest.internal.getupvalue(G.update_fac_fishing_hooking, 'fac_finish_round')
+		local fac_finish_round = Balatest.internal.getupvalue(G.update_fac_fishing_hooked, 'fac_finish_round')
 		Balatest.hook_upvalue(fac_finish_round, 'fac_weighted_pick', function(orig, a, b, ...)
 			if b == 'fac_treasure_type' and args.treasure_type then
 				return args.treasure_type

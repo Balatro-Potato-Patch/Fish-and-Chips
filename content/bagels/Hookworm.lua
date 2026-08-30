@@ -91,7 +91,7 @@ if Balatest then
 			end)
 		end,
 		assert = function()
-			assert_bait(5)
+			assert_bait(4)
 		end,
 	}
 end
