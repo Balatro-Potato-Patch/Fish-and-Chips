@@ -1232,7 +1232,7 @@ FishAndChips.Fish {
         card.ability.immutable.used_this_round = true
     end,
 
-    calculate = function (self,card,context)
+    calculate = function(self, card, context)
         if context.setting_blind and not context.blueprint then
             G.E_MANAGER:add_event(Event({
                 func = function(e)
@@ -1243,28 +1243,26 @@ FishAndChips.Fish {
             }))
         end
 
-        if context.joker_main and card.ability.immutable.active and not context.blueprint then
-            for _, v in ipairs(G.play.cards) do
-                if v:is_suit("Hearts") then
+        if context.destroy_card and context.destroy_card:is_suit("Hearts") and context.cardarea == G.play and card.ability.immutable.active and not context.blueprint then
+            card.ability.immutable.active = false
+            return {
+                xblindsize = card.ability.extra.Xblindsize,
+                remove = true,
+                func = function()
                     G.E_MANAGER:add_event(Event({
                         func = function(e)
                             card:juice_up(0.8, 0.8)
                             play_sound('slice1', 0.96 + math.random() * 0.08)
-                            SMODS.destroy_cards(v, { immediate = true })
-                            card.ability.immutable.active = false
-                            card.T.h = (card.T.h / (self.alt_d_size.h/95)) * (self.display_size.h/95)
+                            card.T.h = (card.T.h / (self.alt_d_size.h / 95)) * (self.display_size.h / 95)
                             card.children.center:remove()
-                            card.children.center = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, self.atlas, {x=0,y=0}, {})
+                            card.children.center = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, self.atlas,{ x = 0, y = 0 }, {})
                             card.children.center.scale.y = 152
-                            card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
+                            card.children.center:set_role({ major = card, role_type = 'Glued', draw_major = card })
                             return true;
                         end
                     }))
-                    return {
-                        xblindsize = card.ability.extra.Xblindsize
-                    }
                 end
-            end
+            }
         end
 
         if context.end_of_round and context.main_eval and not context.blueprint then
