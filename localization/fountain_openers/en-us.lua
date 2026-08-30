@@ -93,7 +93,7 @@ return {
                 }
             },
             fish_fac_fo_crabkhon = {
-                name = "Crabhkon",
+                name = "Crabkhon",
                 text = {
                     "{C:attention}#1#{} {C:inactive}[#2#]{} free {C:green}Rerolls{} in",
                     "the shop per {C:attention}Ante{}"
