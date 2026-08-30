@@ -4,11 +4,15 @@ return {
             fish_fac_fo_boids = {
                 name = "Boids",
                 text = {
-                    "Makes {C:attention}boids{} appear on screen",
-                    "This Fish gains {C:chips}+#2#{} Chips",
-                    "when you {C:attention}click{} on a boid",
-                    "while reeling in a {C:fac_fish}Fish{}",
-                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
+                    {
+                        "Makes {C:attention}boids{} appear on screen",
+                    },
+                    {
+                        "This Fish gains {C:chips}+#2#{} Chips",
+                        "when you {C:attention}click{} on a boid",
+                        "while reeling in a {C:fac_fish}Fish{}",
+                        "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
+                    }
                 },
                 flavor = {
                     "Bird? Fish?",
