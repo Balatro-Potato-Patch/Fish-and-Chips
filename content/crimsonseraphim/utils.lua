@@ -524,12 +524,12 @@ function FishAndChips.crimsonseraphim.count_developers()
 end
 
 function FishAndChips.crimsonseraphim.swoon()
-    FishAndChips.crimsonseraphim.vol = G.SETTINGS.SOUND.music_volume
-    G.SETTINGS.SOUND.music_volume = 0
     G.E_MANAGER:add_event(Event({
         trigger = 'immediate',
         blocking = false,
         func = (function()
+            FishAndChips.crimsonseraphim.vol = FishAndChips.crimsonseraphim.vol or G.SETTINGS.SOUND.music_volume
+            G.SETTINGS.SOUND.music_volume = 0
             G.swoon = 60 * G.SETTINGS.GAMESPEED
             play_sound("fac_crimsonseraphim_swoon", 1, 0.8)
             return true
