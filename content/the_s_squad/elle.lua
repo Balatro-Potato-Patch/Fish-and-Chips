@@ -155,7 +155,7 @@ FishAndChips.Fish {
 				if card.area.cards[i] == card then self_pos = i break end
 			end
 
-			if card.area.cards[self_pos+1] then
+			if card.area.cards[self_pos+1] and not SMODS.is_eternal(card.area.cards[self_pos+1]) then
 				devs[1] = PotatoPatchUtils.Developers["fac_"..card.area.cards[self_pos+1].config.center.ppu_coder[1] ]
 				devs[2] = devs[1].fac_partner and PotatoPatchUtils.Developers[devs[1].fac_partner] or nil
 			end
@@ -176,7 +176,7 @@ FishAndChips.Fish {
 			end
 
 			local target = card.area.cards[self_pos+1]
-			if not target then return end
+			if not target or SMODS.is_eternal(target) then return end
 
 			local devs = {}
 			devs[1] = PotatoPatchUtils.Developers["fac_"..target.config.center.ppu_coder[1] ]
