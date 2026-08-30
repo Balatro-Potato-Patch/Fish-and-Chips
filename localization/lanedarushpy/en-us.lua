@@ -33,7 +33,8 @@ return {    -- lizzie didn't allow me to make many changes here (ghostsalt)
             fish_fac_argel_blowfish = {
                 name = "Blowfish",
                 text = {
-                    "{C:attention}Blows{} the fish to the",
+                    "When scored, this {C:fac_fish}Fish",
+                    "{C:attention}blows{} the {C:fac_fish}Fish{} to the",
                     "left to the {C:attention}end",
                     "of the area, and earns",
                     "{C:fac_sand_dollars,f:fac_sand_dollars}$#1#{} for each {C:fac_fish}Fish{}",
