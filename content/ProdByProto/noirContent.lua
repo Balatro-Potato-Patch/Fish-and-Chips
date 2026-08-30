@@ -592,7 +592,7 @@ FishAndChips.Fish {
                         end
                     end
 
-                    local level = 13
+                    local level = 14
                     local flag = 7
                     
                     for i,v in ipairs(cae.noir_inv) do
