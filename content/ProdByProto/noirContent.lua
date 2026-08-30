@@ -309,6 +309,31 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         local cae = card.ability.extra
 
+        if context.remove_playing_cards then
+            for i, v in ipairs(context.removed) do
+                if v.ability.noir_mark then
+                    local noirflags = {}
+                    for kk, vv in pairs(v.ability) do
+                        if string.find(kk, "noir") then
+                            noirflags[kk] = vv
+                        end
+                    end
+
+                    local unmarked_cards = {}
+                    for ii,vv in ipairs(G.playing_cards) do
+                        if not vv.ability.noir_mark then
+                            unmarked_cards[#unmarked_cards+1] = vv
+                        end
+                    end
+
+                    local new_card = pseudorandom_element(unmarked_cards, "fac_move_noir_mark")
+                    for kk,vv in pairs(noirflags) do
+                        new_card.ability[kk] = vv
+                    end
+                end
+            end
+        end
+
         if context.fac_proto_progressing_noir_story then
             if context.noir_level then
                 cae.level = context.noir_level
