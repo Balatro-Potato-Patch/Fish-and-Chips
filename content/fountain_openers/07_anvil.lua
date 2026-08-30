@@ -329,6 +329,22 @@ G.FUNCS.fac_fo_can_fucking_kill_fish = function(e)
 		e.config.colour = G.C.UI.BACKGROUND_INACTIVE
 		e.config.button = nil
 	end
+    if e.config.ref_table.config.center.key == "fish_fac_fas_annoying_fish" then
+        if e.states.hover.is then
+            if not e.config.fac_fas_hovered then
+                e.config.ref_table.children.use_button:set_role{r_bond = "Weak"}
+                local target = {
+                    x = 10 * (math.random() - 0.5),
+                    y = 10 * (math.random() - 0.5)
+                }
+                ease_value(e.config.ref_table.children.use_button.alignment.offset, "x", target.x - e.config.ref_table.children.use_button.alignment.offset.x, nil, nil, true)
+                ease_value(e.config.ref_table.children.use_button.alignment.offset, "y", target.y - e.config.ref_table.children.use_button.alignment.offset.y, nil, nil, true)
+                e.config.ref_table.children.use_button.T.r = 2 * math.pi * math.random()
+            end
+        else
+            e.config.fac_fas_hovered = nil
+        end
+    end
 end
 
 G.FUNCS.fac_fo_fucking_kill_fish = function(e)
