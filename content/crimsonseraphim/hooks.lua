@@ -488,6 +488,10 @@ function Game:update(dt)
 		FishAndChips.crimsonseraphim.ticks = FishAndChips.crimsonseraphim.ticks + 1
 		FishAndChips.crimsonseraphim.dtcounter = FishAndChips.crimsonseraphim.dtcounter - 0.010
 		if G.swoon and G.swoon > 0 then G.swoon = G.swoon - 1 end
+        if G.swoon and G.swoon <= 0 and FishAndChips.crimsonseraphim.vol then
+            G.SETTINGS.SOUND.music_volume = FishAndChips.crimsonseraphim.vol
+            FishAndChips.crimsonseraphim.vol = nil
+        end
 	end
     if FishAndChips.crimsonseraphim.door_timer then
 		FishAndChips.crimsonseraphim.door_timer = FishAndChips.crimsonseraphim.door_timer - dt
