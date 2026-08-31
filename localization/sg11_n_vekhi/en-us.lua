@@ -20,6 +20,7 @@ return {
                     "When {C:attention}primed{}, next caught {C:fac_fish}Fish{}",
                     "will be {C:dark_edition}Negative{}, then",
                     "{S:1.1,C:red,E:2}self destructs{}",
+                    "{ppu_bubble:usable}{ppu_bubble:inactive}"
                 },
                 flavour = {
                     "Known to bit off entire limbs at",
@@ -33,6 +34,7 @@ return {
                     "Next caught {C:fac_fish}Fish{}",
                     "will be {C:dark_edition}Negative{}, then",
                     "{S:1.1,C:red,E:2}self destructs{}",
+                    "{ppu_bubble:usable}{ppu_bubble:active}"
                 },
                 flavour = {
                     "Known to bit off entire limbs at",
