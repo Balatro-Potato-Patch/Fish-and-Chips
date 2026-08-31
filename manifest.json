@@ -4,7 +4,7 @@
 	"version_number": "1.0.2",
 	"website_url": "https://github.com/Balatro-Potato-Patch/Fish-and-Chips",
 	"dependencies": [
-		"Steamodded-26.829.0",
-		"PotatoPatchUtils-1.0.14"
+		"Steamodded-Steamodded-26.829.0",
+		"ThePotatoPatch-PotatoPatchUtils-1.0.14"
 	]
 }
