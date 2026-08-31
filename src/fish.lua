@@ -316,35 +316,48 @@ function Card:highlight(is_higlighted)
 		if self.children.select_button and not (self.highlighted and self.area and self.area.config.type ~= "shop") then
 			self.children.select_button:remove(); self.children.select_button = nil
 		end
-		if G.STATE == G.STATES.FAC_FISHING and self.area then
-			if G.GAME.fac_fish_requires_jokers then
-				G.GAME.fac_fish_requires_jokers = nil
-				G.jokers.T.y = G.jokers.T.y - 15.25
-				G.jokers.T.x = G.jokers.T.x - 1.5 + (G.GAME.fac_fish_requires_consumables and G.consumeables.T.w + 0.5 or 0)
-			end
-			if G.GAME.fac_fish_requires_consumables then
-				G.GAME.fac_fish_requires_consumables = nil
-				G.consumeables.T.y = G.consumeables.T.y - 15.25
-				G.consumeables.T.x = G.consumeables.T.x + 3.5
-			end
-			local req_jokers, req_consumables = false, false
-			for _, card in ipairs(self.area.highlighted) do
-				if card.config.center.requires_jokers then
-					req_jokers = true
+		if G.STATE == G.STATES.FAC_FISHING then
+			if self.config.center.requires_jokers then
+				if self.highlighted then
+
+					if self.area == G.FISHING.fac_fish_reward_area then
+						G.fac_fish_area:unhighlight_all()
+						G.FISHING.fac_treasure_reward_area:unhighlight_all()
+					elseif self.area == G.FISHING.fac_treasure_reward_area then
+						G.fac_fish_area:unhighlight_all()
+						G.FISHING.fac_fish_reward_area:unhighlight_all()
+					elseif self.area == G.fac_fish_area then
+						G.FISHING.fac_treasure_reward_area:unhighlight_all()
+						G.FISHING.fac_fish_reward_area:unhighlight_all()
+					end
+
+					G.jokers.T.y = G.jokers.T.y + 15.25 + ((self.area and self.area.config.fac_catch_area) and 3 or 0)
+					G.jokers.T.x = G.jokers.T.x + 1.5 - (self.config.center.requires_consumables and G.consumeables.T.w + 0.5 or 0)
+				else
+					G.jokers.T.y = -10
+					G.jokers.T.x = G.hand.T.x - 0.1
 				end
-				if card.config.center.requires_consumables then
-					req_consumables = true
+			end
+			if self.config.center.requires_consumables then
+				if self.highlighted then
+
+					if self.area == G.FISHING.fac_fish_reward_area then
+						G.fac_fish_area:unhighlight_all()
+						G.FISHING.fac_treasure_reward_area:unhighlight_all()
+					elseif self.area == G.FISHING.fac_treasure_reward_area then
+						G.fac_fish_area:unhighlight_all()
+						G.FISHING.fac_fish_reward_area:unhighlight_all()
+					elseif self.area == G.fac_fish_area then
+						G.FISHING.fac_treasure_reward_area:unhighlight_all()
+						G.FISHING.fac_fish_reward_area:unhighlight_all()
+					end
+
+					G.consumeables.T.y = G.consumeables.T.y + 15.25 + ((self.area and self.area.config.fac_catch_area) and 3 or 0)
+					G.consumeables.T.x = G.consumeables.T.x - 3.5
+				else
+					G.consumeables.T.y = -10
+					G.consumeables.T.x = G.jokers.T.x + G.jokers.T.w + 0.2
 				end
-			end
-			if req_jokers then
-				G.GAME.fac_fish_requires_jokers = true
-				G.jokers.T.y = G.jokers.T.y + 15.25
-				G.jokers.T.x = G.jokers.T.x + 1.5 - (req_consumables and G.consumeables.T.w + 0.5 or 0)
-			end
-			if req_consumables then
-				G.GAME.fac_fish_requires_consumables = true
-				G.consumeables.T.y = G.consumeables.T.y + 15.25
-				G.consumeables.T.x = G.consumeables.T.x - 3.5
 			end
 		end
 	else
