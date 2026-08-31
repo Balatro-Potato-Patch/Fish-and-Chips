@@ -524,6 +524,32 @@ function Game:start_run(args)
 	G.GAME.fac_fish_expanded = false
 end
 
+local focusable_ref = Controller.is_node_focusable
+function Controller:is_node_focusable(node)
+	local ret = focusable_ref(self, node)
+	if node.not_focusable then
+		ret = false
+	elseif node.always_focusable and (not G.SETTINGS.paused or node.created_on_pause) then
+		ret = true
+	end
+	return ret
+end
+
+local set_screen_pos = set_screen_positions
+function set_screen_positions()
+	set_screen_pos()
+	if G.STAGE == G.STAGES.RUN then
+		G.dummy_node = UIBox{
+			definition = {n = G.UIT.ROOT, config = {maxw = 0.1, maxh = 0.1}, nodes = {}},
+			config = {align = "tm", major = G.jokers, bond = "Weak"},
+		}
+		G.dummy_node.always_focusable = true
+	elseif G.dummy_node then
+		G.dummy_node:remove()
+		G.dummy_node = nil
+	end
+end
+
 local create_mod_badges_ref = SMODS.create_mod_badges
 function SMODS.create_mod_badges(obj, badges)
 	create_mod_badges_ref(obj, badges)
