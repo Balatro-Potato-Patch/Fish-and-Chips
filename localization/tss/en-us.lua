@@ -294,6 +294,9 @@ return {
 			fac_tss_na1 = "#1#",
 			fac_tss_na2 = "#2#",
 			fac_tss_bloon = "Bloon"
+		},
+		v_dictionary = {
+			k_fac_tss_again_ex_multi = "Again! x#1#"
 		}
 	}
 }

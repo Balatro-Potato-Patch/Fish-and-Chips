@@ -59,8 +59,9 @@ FishAndChips.Fish{
     end,
     calculate = function (self, card, context)
         if context.retrigger_joker_check
-        and context.other_card ~= card
-        and context.other_card.config
+        and not context.retrigger_joker
+        and context.other_card
+		and context.other_card:is(Card)
         and context.other_card.config.center.set == "fac_Fish"
         and SMODS.pseudorandom_probability(card, "minty_fac_fission_retrigger", card.ability.extra.luck, card.ability.extra.odds) then
             return {

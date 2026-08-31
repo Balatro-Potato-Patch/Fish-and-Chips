@@ -402,16 +402,21 @@ FishAndChips.Fish {
 		return { vars = { num, den } }
 	end,
 	calculate = function(self, card, context)
-	    -- TODO: If a Joker somehow ends up in Fish area then this will retrigger it. Same for if a Fish ends up in a non-Fish area
-		if context.retrigger_joker_check and context.other_card.area == G.fac_fish_area and context.other_card.config.center_key ~= "fish_fac_tss_slop" then
+		if
+			context.retrigger_joker_check
+			and not context.retrigger_joker
+			and context.other_card
+			and context.other_card:is(Card)
+			and context.other_card.config.center.set == "fac_Fish"
+		then
 			local count = 0
-			while SMODS.pseudorandom_probability(card,"fac_tss_slop", card.ability.immutable.num, card.ability.immutable.den, nil, true) do
+			while SMODS.pseudorandom_probability(card, "fac_tss_slop", card.ability.immutable.num, card.ability.immutable.den, nil, true) do
 				count = count + 1
 			end
 			if count>0 then
 				return {
 					repetitions = count,
-					message = localize("k_again_ex") .. " x" .. count
+					fac_fishingslop_end_msg = localize{ type = 'variable', key = 'k_fac_tss_again_ex_multi', vars = {count} },
 				}
 			end
 		end
