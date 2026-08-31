@@ -394,7 +394,7 @@ FishAndChips.Fish {
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "retrigger", "chance", },
-	config = { immutable = { num = 2, den = 3 } },
+	config = { immutable = { num = 1, den = 3 } },
 	environments = {},
 	treasure = true,
 	loc_vars = function(self, info_queue, card)
