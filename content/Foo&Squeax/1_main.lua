@@ -355,6 +355,9 @@ function FishAndChips.mod.custom_card_areas(game)
 	G.fac_fas_kine_areas = {}
 	function G.fac_fas_kine_areas:align_cards()
 		if G.GAME and #G.fac_fas_kine_areas > 0 and G.fac_fish_area then
+			for i, area in ipairs(G.fac_fas_kine_areas) do
+				if not area.config.card_limits.extra_slots_used then area.config.card_limits.extra_slots_used = 0 end
+			end
 			for j, fish in ipairs(G.fac_fish_area.cards) do
 				if fish.config.center.key == "fish_fac_fas_kine" and fish.ability.area_num then
 					local j = fish.ability.area_num
