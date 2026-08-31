@@ -14,16 +14,6 @@ FishAndChips.Fish{
         city_river = 10,
         chocolate_river = 1,
         soup = 1,
-        --[[
-        styx = 10,
-        pier = 10,
-        swamp = 10,
-        aquifer = 10,
-        volcano = 10,
-        garden = 10,
-        backroom = 10,
-        wormhole = 10,
-        --]]
     },
     attributes = {
         "passive", "mod_chance"

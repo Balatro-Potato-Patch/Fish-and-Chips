@@ -14,16 +14,6 @@ FishAndChips.Fish{
         city_river = 10,
         aquifer = 10,
         chocolate_river = 1,
-        --[[
-        calm_pond = 10,
-        styx = 10,
-        swamp = 10,
-        volcano = 10,
-        soup = 10,
-        garden = 10,
-        backroom = 10,
-        wormhole = 10,
-        --]]
     },
     attributes = {
         "destroy_card", "xmult", "scaling", "enhancements",

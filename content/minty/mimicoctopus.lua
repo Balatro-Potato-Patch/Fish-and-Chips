@@ -14,15 +14,6 @@ FishAndChips.Fish{
         wormhole = 10,
         volcano = 10,
         garden = 10,
-        --[[
-        calm_pond = 10,
-        chocolate_river = 10,
-        styx = 10,
-        swamp = 10,
-        aquifer = 10,
-        city_river = 10,
-        soup = 10,
-        --]]
     },
     attributes = {
         "copying", "usable"
