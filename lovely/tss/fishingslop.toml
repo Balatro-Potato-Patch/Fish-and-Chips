@@ -1,0 +1,24 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -6
+
+# SMODS.insert_repetitions
+# Changes fishingslop's message on the final retrigger to show how many you got
+# ⁝3
+# kind of fucked up that the tricolon ruins a lot of monospace fonts isn't it
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = '''table.insert(ret, _type and effect or { retriggers = effect})'''
+position = "at"
+payload = '''
+    if h == effect.repetitions and effect.fac_fishingslop_end_msg then
+        local eff2 = SMODS.shallow_copy(effect)
+        eff2.message = effect.fac_fishingslop_end_msg
+        table.insert(ret, _type and eff2 or { retriggers = eff2})
+    else
+        table.insert(ret, _type and effect or { retriggers = effect})
+    end
+'''
+match_indent = true

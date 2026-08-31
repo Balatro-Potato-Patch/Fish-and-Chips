@@ -410,13 +410,13 @@ FishAndChips.Fish {
 			and context.other_card.config.center.set == "fac_Fish"
 		then
 			local count = 0
-			while SMODS.pseudorandom_probability(card,"fac_tss_slop", card.ability.immutable.num, card.ability.immutable.den, nil, true) do
+			while SMODS.pseudorandom_probability(card, "fac_tss_slop", card.ability.immutable.num, card.ability.immutable.den, nil, true) do
 				count = count + 1
 			end
 			if count>0 then
 				return {
 					repetitions = count,
-					message = localize{ type = 'variable', key = 'k_fac_tss_again_ex_multi', vars = {count} },
+					fac_fishingslop_end_msg = localize{ type = 'variable', key = 'k_fac_tss_again_ex_multi', vars = {count} },
 				}
 			end
 		end
