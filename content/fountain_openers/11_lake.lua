@@ -1,4 +1,18 @@
 local lake_scale = FishAndChips.mod.config.shrink_sprites and 0.3 or 0.5
+local function do_you_have_jokers()
+	local areas = SMODS.get_card_areas("jokers")
+	-- TARGET: add other areas jokers can be in (for jokers like false vacuum decay from entropy)
+
+	for _, area in ipairs(areas) do
+		for _, card in ipairs(area.cards) do
+			if
+				card
+				and card:is(Card)
+				and card.config.center.set == "Joker"
+			then return true end
+		end
+	end
+end
 
 FishAndChips.Fish {
 	key = "fo_lake",
@@ -37,7 +51,14 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.retriggers } }
 	end,
 	calculate = function(self, card, context)
-        if context.retrigger_joker_check and #G.jokers.cards == 0 and context.other_card.area == G.fac_fish_area and not context.retrigger_joker then
+        if
+			context.retrigger_joker_check
+			and not context.retrigger_joker
+			and not do_you_have_jokers()
+			and context.other_card
+			and context.other_card:is(Card)
+			and context.other_card.config.center.set == "fac_Fish"
+		then
 			return {
 				repetitions = card.ability.extra.retriggers
 			}
