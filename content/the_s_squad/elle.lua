@@ -416,7 +416,7 @@ FishAndChips.Fish {
 			if count>0 then
 				return {
 					repetitions = count,
-					message = localize{ type = 'variable', key = 'k_fac_again_ex_multi', vars = {count} },
+					message = localize{ type = 'variable', key = 'k_fac_tss_again_ex_multi', vars = {count} },
 				}
 			end
 		end
