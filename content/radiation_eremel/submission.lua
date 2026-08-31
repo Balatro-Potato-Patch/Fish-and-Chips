@@ -381,6 +381,10 @@ FishAndChips.Fish({
         for _, fish in ipairs(targets.high) do
             SMODS.add_card{key = fish.config.center.key, no_edition = true, area = fish.area}
         end
+        G.GAME.fac_flowerhorn_extinct = true
+    end,
+    in_pool = function()
+        return not G.GAME.fac_flowerhorn_extinct
     end
 })
 

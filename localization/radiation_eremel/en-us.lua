@@ -117,6 +117,7 @@ return {
                     '{C:red}Destroy{} all owned {C:fac_fish}Fish{} lighter',
                     'than this one and add a',
                     '{C:attention}new copy{} of each heavier one',
+                    'and goes {C:red,E:1}extinct{}',
                     '{ppu_bubble:usable}'
                 },
                 flavour = {
