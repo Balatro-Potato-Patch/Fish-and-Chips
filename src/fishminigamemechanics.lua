@@ -50,9 +50,11 @@ local FAC_DECAY_UNLOCK_THRESHOLD = 0.15
 local FAC_SCENE_CANVAS_RES_SCALE = 0.55
 local FAC_TRACK_H_RATIO = 0.72
 local FAC_BOBBER_BOTTOM_INSET = 30
+local FAC_HARPOON_COYOTE_TIME = 0.05
 local FAC_FISH_DRAW_SIZE = 10
 local FAC_FISH_DRAW_VRADIUS_FACTOR = 0.56
 local FAC_FISH_HITBOX_FORGIVENESS = 0.6
+local FAC_TREASURE_DRAW_HEIGHT = 10
 local fac_node_tile_xy, fac_get_scene_bounds
 
 local FAC_ROD_TIP_FRACTION = {
@@ -184,6 +186,10 @@ local function fac_ensure_state()
             harpoon_dir = true,
             harpoon_treasure = false,
             harpoon_both = false,
+            harpoon_fish_coyote = 0,
+            harpoon_treasure_coyote = 0,
+            harpoon_fish_passes = 0,
+            harpoon_fish_was_in_bar = false,
             reel_buffer = false,
         }
     end
@@ -863,6 +869,10 @@ local function fac_begin_hooking_round()
     state.got_treasure = false
     state.harpoon_treasure = false
     state.harpoon_both = false
+    state.harpoon_fish_coyote = 0
+    state.harpoon_treasure_coyote = 0
+    state.harpoon_fish_passes = 0
+    state.harpoon_fish_was_in_bar = false
     state.fac_treasure_reward_showing = false
     state.splash_t = FAC_SPLASH_DURATION
     state.perfect = true
@@ -1124,13 +1134,16 @@ function G:update_fac_fishing_hooking(dt)
     -- end fish behavior logic
     -- fish progress logic
     local fish_hitbox_half = 0
+    local treasure_hitbox_half = 0
     local _, _, _, scene_ph = fac_get_scene_bounds()
     if scene_ph and scene_ph > 0 then
         local track_h = (scene_ph * FAC_SCENE_CANVAS_RES_SCALE) * FAC_TRACK_H_RATIO
         local fish_visual_half_px = FAC_FISH_DRAW_SIZE * FAC_FISH_DRAW_VRADIUS_FACTOR
         fish_hitbox_half = (fish_visual_half_px * FAC_FISH_HITBOX_FORGIVENESS) / track_h
+        treasure_hitbox_half = (FAC_TREASURE_DRAW_HEIGHT * 0.5 * FAC_FISH_HITBOX_FORGIVENESS) / track_h
     end
     local in_bar = math.abs(state.fish_pos - state.bar_pos) <= (state.bar_size * 0.5 + fish_hitbox_half)
+    local chest_in_bar = state.treasure_enabled and math.abs(state.treasure_pos - state.bar_pos) <= (state.bar_size * 0.5 + treasure_hitbox_half)
     local previous_sound_state = FishAndChips.current_reel_sound
     if in_bar then
         state.meter = state.meter + profile.catch_gain * dt
@@ -1158,20 +1171,29 @@ function G:update_fac_fishing_hooking(dt)
     FishAndChips.handle_reel_sound()
 
     if state.profile.rod_key == "rod_fac_harpoon" then
+        state.harpoon_fish_coyote = math.max((state.harpoon_fish_coyote or 0) - dt, 0)
+        state.harpoon_treasure_coyote = math.max((state.harpoon_treasure_coyote or 0) - dt, 0)
+        if in_bar and not state.harpoon_fish_was_in_bar then state.harpoon_fish_passes = (state.harpoon_fish_passes or 0) + 1 end
+        state.harpoon_fish_was_in_bar = in_bar
+        if in_bar then state.harpoon_fish_coyote = FAC_HARPOON_COYOTE_TIME end
+        if chest_in_bar then state.harpoon_treasure_coyote = FAC_HARPOON_COYOTE_TIME end
+
         state.meter_primed = true
         if not reeling then
             state.reel_buffer = true
         end
         if reeling and state.reel_buffer then
-            local chest_in_bar = state.treasure_enabled and math.abs(state.treasure_pos - state.bar_pos) <= (state.bar_size * 0.5)
-            if chest_in_bar then
+            local hit_fish = in_bar or state.harpoon_fish_coyote > 0
+            local hit_treasure = chest_in_bar or state.harpoon_treasure_coyote > 0
+            if hit_treasure then
                 state.got_treasure = true
                 state.harpoon_treasure = true
-                state.harpoon_both = in_bar
+                state.harpoon_both = hit_fish
                 state.treasure_meter = 1
-                state.perfect = in_bar
+                state.perfect = hit_fish and state.harpoon_fish_passes == 1
                 state.meter = 1
-            elseif in_bar then
+            elseif hit_fish then
+                state.perfect = state.harpoon_fish_passes == 1
                 state.meter = 1
             else
                 state.meter = 0
@@ -1194,7 +1216,6 @@ function G:update_fac_fishing_hooking(dt)
     end
 
     if state.profile.rod_key ~= "rod_fac_harpoon" and state.treasure_enabled and not state.got_treasure then
-        local chest_in_bar = math.abs(state.treasure_pos - state.bar_pos) <= (state.bar_size * 0.5)
         if chest_in_bar then
             state.treasure_meter = fac_clamp(state.treasure_meter + profile.treasure_gain * dt, 0, 1)
         end

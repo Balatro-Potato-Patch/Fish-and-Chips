@@ -232,7 +232,7 @@ FishAndChips.Rod {
 		fishing = {
 			catch_loss = 0,
 			catch_gain = 0,
-			bar_size = 0.05
+			bar_size = 0.07
 		}
 	},
 	ppu_artist = { "DottyKitty" },
