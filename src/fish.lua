@@ -340,7 +340,7 @@ function Card:highlight(is_higlighted)
 			end
 			if self.config.center.requires_consumables then
 				if self.highlighted then
-					
+
 					if self.area == G.FISHING.fac_fish_reward_area then
 						G.fac_fish_area:unhighlight_all()
 						G.FISHING.fac_treasure_reward_area:unhighlight_all()
@@ -352,7 +352,6 @@ function Card:highlight(is_higlighted)
 						G.FISHING.fac_fish_reward_area:unhighlight_all()
 					end
 
-					
 					G.consumeables.T.y = G.consumeables.T.y + 15.25 + ((self.area and self.area.config.fac_catch_area) and 3 or 0)
 					G.consumeables.T.x = G.consumeables.T.x - 3.5
 				else
@@ -413,4 +412,111 @@ FishAndChips.Fish {
 }
 
 
+--#endregion
+
+--#region Silk Touch compat
+if SilkTouch then
+    --#region Drag targets
+    SilkTouch.DragTarget{
+        key = "fish_sell",
+        moveable_t = "C_sell",
+        text = function(card)
+            local sell_loc = copy_table(localize('ml_sell_target'))
+            sell_loc[#sell_loc+1] = localize('$')..card.sell_cost_label
+            return sell_loc
+        end,
+        font = function(card)
+            return {"default", "fac_sand_dollars"}
+        end,
+        colour = FishAndChips.C.SAND_DOLLAR,
+        drag_condition = function(card)
+            return card.area and (card.area == G.fac_fish_area or card.area == (G.FISHING or {}).fac_fish_reward_area or card.area == (G.FISHING or {}).fac_treasure_reward_area)
+        end,
+        active_check = function(card)
+            return card:can_sell_card()
+        end,
+        release_func = function(card)
+            G.FUNCS.sell_card{config = {ref_table = card}}
+        end,
+    }
+    SilkTouch.DragTarget{
+        key = "fish_use",
+        moveable_t = "J_sell",
+        text = function(card)
+            return {type(card.config.center.button_key) == "function" and card.config.center:button_key(card)
+				or type(card.config.center.button_key) == "string" and localize(card.config.center.button_key)
+				or localize('b_use')}
+        end,
+        colour = G.C.ORANGE,
+        drag_condition = function(card)
+            return card.area and (card.area == G.fac_fish_area or card.area == (G.FISHING or {}).fac_fish_reward_area or card.area == (G.FISHING or {}).fac_treasure_reward_area) and card.config.center.use and true
+        end,
+        active_check = function(card)
+            local temp_config = {UIBox = {states = {visible = false}}, config = {ref_table = card}}
+            G.FUNCS.fac_can_use_fish(temp_config)
+            return temp_config.config.button ~= nil
+        end,
+        release_func = function(card)
+            G.FUNCS.fac_use_fish{config = {ref_table = card}}
+        end,
+    }
+    --#endregion
+
+    --#region Controller buttons
+	local old_get_side = SilkTouch.ControllerButtons.sell.get_side
+    local old_font = SilkTouch.ControllerButtons.sell.font
+	local old_focus_condition = SilkTouch.ControllerButtons.sell.focus_condition
+    SilkTouch.ControllerButton:take_ownership("sell",
+    {
+		get_side = function(card)
+			local ret = old_get_side and old_get_side(card) or "left"
+			if card.ability.set == 'fac_Fish' then
+				ret = card:align_h_popup().type == "cl" and "right" or "left"
+			end
+			return ret
+		end,
+        font = function(card)
+            local t = old_font and old_font(card) or {
+                "default",
+                {
+                    "default",
+                    "default"
+                }
+            }
+            if card.ability.set == 'fac_Fish' then
+                t[2][1] = "fac_sand_dollars"
+            end
+            return t
+        end,
+		focus_condition = function(card)
+			return old_focus_condition(card) and card.area and card.area ~= G.fac_bait_area
+			and card.area ~= G.fac_rod_area and card.area ~= G.fac_shop_bait
+		end,
+    },
+    true)
+	SilkTouch.ControllerButton{
+		key = "fish_use",
+		get_side = function(card)
+			return card:align_h_popup().type == "cr" and "left" or "right"
+		end,
+		button_key = "rightshoulder",
+		button_order = 0,
+		text = function(card)
+			return {
+				type(card.config.center.button_key) == "function" and card.config.center:button_key(card)
+				or type(card.config.center.button_key) == "string" and localize(card.config.center.button_key)
+				or localize('b_use'),
+				single_text = true,
+			}
+		end,
+		text_scale = function() return {0.5} end,
+		focus_condition = function(card)
+			return card.area and (card.area == G.fac_fish_area or card.area == (G.FISHING or {}).fac_fish_reward_area or card.area == (G.FISHING or {}).fac_treasure_reward_area) and card.config.center.use and true
+		end,
+		active_check_cb = "fac_can_use_fish",
+		press_func_cb = "fac_use_fish",
+		handy_insta_action = "use",
+	}
+    --#endregion
+end
 --#endregion

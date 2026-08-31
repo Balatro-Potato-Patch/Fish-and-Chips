@@ -16,6 +16,9 @@
 		"Lovely (>=0.9.0)",
 		"PotatoPatchUtils (>=1.0.14)"
 	],
+	"conflicts": [
+		"SilkTouch (<<1.2.5b)"
+	],
 	"allow_redistribution": true,
 	"icon_path": "core/modicon.png",
 	"badge_shader": "fac_mod_badge"

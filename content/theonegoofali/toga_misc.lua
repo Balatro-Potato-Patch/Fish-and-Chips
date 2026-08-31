@@ -67,6 +67,14 @@ function FishAndChips.toga_oopsnothing2uidef()
 	}}
 end
 
+local node_click_ref = Node.click
+function Node:click()
+	node_click_ref(self)
+	if FishAndChips and type(FishAndChips.toga_updateclick) == 'function' then
+		FishAndChips.toga_updateclick(self)
+	end
+end
+
 local clickcount, hastriggered = 0, false
 function FishAndChips.toga_updateclick(self)
 	if self and self.ppu_member and not hastriggered then
