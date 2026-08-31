@@ -265,6 +265,7 @@ FishAndChips.Fish {
 	treasure = true, -- Our only treasure :)
 	blueprint_compat = false,
 	eternal_compat = false,
+	requires_jokers = true,
 
 	attributes = { "usable", "function", "editions" },
 	config = {
