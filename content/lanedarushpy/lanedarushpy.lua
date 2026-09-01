@@ -447,11 +447,17 @@ SMODS.Sound {
     path = "lanedarushpy/music_findows_shop.ogg",
     pitch = 1.0,
     volume = 0.75,
-    -- sync = {
-    --     ['music_findows_booster'] = true,
-    --     ['music_findows_main'] = true,
-    --     ['music_findows_boss'] = true,
-    -- },
+	sync = {
+		['music1'] = true,
+		['music2'] = true,
+		['music3'] = true,
+		['music4'] = true,
+		['music5'] = true,
+        ['fac_music_findows_booster'] = true,
+        ['fac_music_findows_main'] = true,
+        ['fac_music_findows_boss'] = true,
+        ['fac_calm_pond_music'] = true,
+    },
 
     select_music_track = function (self)
         local play_condition = G.STATE == G.STATES.SHOP
@@ -466,11 +472,17 @@ SMODS.Sound {
     path = "lanedarushpy/music_findows_main.ogg",
     pitch = 1.0,
     volume = 0.75,
-    -- sync = {
-    --     ['music_findows_booster'] = true,
-    --     ['music_findows_shop'] = true,
-    --     ['music_findows_boss'] = true,
-    -- },
+	sync = {
+		['music1'] = true,
+		['music2'] = true,
+		['music3'] = true,
+		['music4'] = true,
+		['music5'] = true,
+        ['fac_music_findows_booster'] = true,
+        ['fac_music_findows_shop'] = true,
+        ['fac_music_findows_boss'] = true,
+        ['fac_calm_pond_music'] = true,
+    },
 
     select_music_track = function (self)
         local has_findows = not not next(SMODS.find_card("fish_fac_argel_findows", true))
@@ -484,11 +496,17 @@ SMODS.Sound {
     path = "lanedarushpy/music_findows_boosters.ogg",
     pitch = 1.0,
     volume = 0.75,
-    -- sync = {
-    --     ['music_findows_main'] = true,
-    --     ['music_findows_shop'] = true,
-    --     ['music_findows_boss'] = true,
-    -- },
+	sync = {
+		['music1'] = true,
+		['music2'] = true,
+		['music3'] = true,
+		['music4'] = true,
+		['music5'] = true,
+        ['fac_music_findows_main'] = true,
+        ['fac_music_findows_shop'] = true,
+        ['fac_music_findows_boss'] = true,
+        ['fac_calm_pond_music'] = true,
+    },
 
     select_music_track = function (self)
         local play_condition = G.STATE == G.STATES.SMODS_BOOSTER_OPENED;
@@ -503,11 +521,18 @@ SMODS.Sound {
     path = "lanedarushpy/music_findows_boss.ogg",
     pitch = 1.0,
     volume = 0.75,
-    -- sync = {
-    --     ['music_findows_main'] = true,
-    --     ['music_findows_shop'] = true,
-    --     ['music_findows_booster'] = true,
-    -- },
+
+	sync = {
+		['music1'] = true,
+		['music2'] = true,
+		['music3'] = true,
+		['music4'] = true,
+		['music5'] = true,
+        ['fac_music_findows_main'] = true,
+        ['fac_music_findows_shop'] = true,
+        ['fac_music_findows_booster'] = true,
+        ['fac_calm_pond_music'] = true,
+    },
 
     select_music_track = function (self)
         local play_condition = G.GAME.blind and (G.GAME.blind.in_blind and not not G.GAME.blind.boss);
