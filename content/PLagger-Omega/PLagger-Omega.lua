@@ -584,7 +584,7 @@ FishAndChips.Fish{ --Mystic Remora
   end,
 
   can_sell = function (self, card, context)
-    return false
+    return card.area ~= G.fac_fish_area -- Kinda stinky hardcoding but w/e
   end,
 
   calculate = function (self, card, context)
