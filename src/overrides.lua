@@ -434,13 +434,19 @@ end
 G.FUNCS.fac_can_use_fish = function(e)
 	local center = e.config.ref_table.config.center
 	local card = e.config.ref_table
+
+	local colour = G.C.ORANGE
+	if center.use_colour then
+		colour = center.use_colour
+	end
+
 	card._fac_use_key = localize("b_use")
 	if
 		center.can_use and center:can_use(e.config.ref_table) and not e.config.ref_table.debuff
 		and G.STATE ~= G.STATES.HAND_PLAYED and G.STATE ~= G.STATES.DRAW_TO_HAND and G.STATE ~= G.STATES.PLAY_TAROT
 		and not (((G.play and #G.play.cards > 0) or (G.CONTROLLER.locked) or (G.GAME.STOP_USE and G.GAME.STOP_USE > 0)))
 	then
-		e.config.colour = G.C.ORANGE
+		e.config.colour = colour
 		e.config.button = "fac_use_fish"
 	else
 		e.config.colour = G.C.UI.BACKGROUND_INACTIVE

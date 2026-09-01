@@ -23,6 +23,7 @@ FishAndChips.Fish{
     cost = 0,
     blueprint_compat = false,
     eternal_compat = false,
+    use_colour = G.C.RED,
     config = {
         extra = {
             luck = 1,
@@ -121,7 +122,7 @@ function G.UIDEF.use_and_sell_buttons(card)
 
                 {
                     n = G.UIT.C,
-                    config = { ref_table = card, align = "cr", maxw = 1.25, padding = 0.1, r = 0.08, minw = 1.25, minh = (card.area and card.area.config.type == "joker") and 0 or 1, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = "use_card", func = "can_use_consumeable" },
+                    config = { ref_table = card, align = "cr", maxw = 1.25, padding = 0.1, r = 0.08, minw = 1.25, minh = (card.area and card.area.config.type == "joker") and 0 or 1, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = "fac_use_fish", func = "fac_can_use_fish" },
                     nodes = {
                         { n = G.UIT.B, config = { w = 0.1, h = 0.6 } },
                         { n = G.UIT.T, config = { text = localize("b_fac_minty_chum"), colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true } }
