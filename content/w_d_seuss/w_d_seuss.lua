@@ -384,7 +384,7 @@ FishAndChips.Fish {
 		delay(0.6)
 	end,
 	can_use = function(self, card)
-		return G.fac_fish_area and G.fac_fish_area:has_space()
+		return G.fac_fish_area and G.fac_fish_area:has_space(0)
 	end
 }
 
