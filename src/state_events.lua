@@ -54,12 +54,14 @@ function Game:update(dt)
 	--FishAndChips.mod_badge.r = G.TIMERS.REAL / 10 --FishAndChips.mod_badge.r + FishAndChips.mod_badge.vr / 180 * math.pi
 	--FishAndChips.mod_badge.r = math.max(math.min(FishAndChips.mod_badge.r, math.pi * 5 / 4), math.pi * 3 / 4)
 
-	FishAndChips.mod_badge.cr = math.cos(-FishAndChips.mod_badge.r)
-	FishAndChips.mod_badge.sr = math.sin(-FishAndChips.mod_badge.r)
+	if not G.SETTINGS.reduced_motion then
+		FishAndChips.mod_badge.cr = math.cos(-FishAndChips.mod_badge.r)
+		FishAndChips.mod_badge.sr = math.sin(-FishAndChips.mod_badge.r)
 
-	local vel = -20 * dt
-	FishAndChips.mod_badge.x = FishAndChips.mod_badge.x + vel * math.cos(FishAndChips.mod_badge.r)
-	FishAndChips.mod_badge.y = FishAndChips.mod_badge.y + vel * math.sin(FishAndChips.mod_badge.r)
+		local vel = -20 * dt
+		FishAndChips.mod_badge.x = FishAndChips.mod_badge.x + vel * math.cos(FishAndChips.mod_badge.r)
+		FishAndChips.mod_badge.y = FishAndChips.mod_badge.y + vel * math.sin(FishAndChips.mod_badge.r)
+	end
 
 
 	-- end shader fish logic
