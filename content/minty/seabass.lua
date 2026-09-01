@@ -28,7 +28,7 @@ FishAndChips.Fish{
         extra = {
             luck = 1,
             sand_dollar_odds = 3,
-            bait_odds = 8
+            bait_odds = 3
         }
     },
     attributes = {
