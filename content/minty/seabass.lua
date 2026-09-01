@@ -56,6 +56,8 @@ FishAndChips.Fish{
         local key = self.key
         if card.ability.extra.native then
             key = key.."_alt"
+        elseif #SMODS.find_card("fish_fac_fo_anvil") > 0 then
+            key = key.."_anvil"
         end
 
         return {
