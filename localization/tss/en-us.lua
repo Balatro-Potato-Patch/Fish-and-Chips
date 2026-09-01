@@ -224,6 +224,7 @@ return {
 					"chance to retrigger {C:attention}repeatedly",
 					"until the probability fails",
 					"{C:red,s:.8}Toggle Low Performance Mode in Mod Settings",
+					"{C:red,s:.8}to disable the jpeg filter",
 					"{C:inactive,s:.7}...but if you can read this, it's already off"
 				},
 				flavour = {
