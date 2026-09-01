@@ -279,7 +279,7 @@ FishAndChips.Fish {
     use = function (self, card)
         local ca = card.ability
         G.GAME.proto_noirshade = not G.GAME.proto_noirshade
-        if not ca.extra.storyActive then
+        if not (ca.extra.storyActive or ca.extra.storyComplete) then
             G.GAME.proto_q_music = "noir1"
             G.ARGS.push.type = 'restart_music'
             G.SOUND_MANAGER.channel:push(G.ARGS.push)
@@ -292,7 +292,7 @@ FishAndChips.Fish {
     can_use = function(self, card)
         local cae = card.ability.extra
         local valid_area = (card.area and not card.area.config.fac_catch_area)
-        return (not cae.storyActive or not cae.storyComplete) and valid_area
+        return not cae.storyActive and valid_area
     end,
 
     keep_on_use = function(self,card)
@@ -354,6 +354,7 @@ FishAndChips.Fish {
                     elseif cae.storyState == noir_states.finished then
                         cae.storyActive = false
                         cae.storyComplete = true
+                        card.ability.eternal = false
                     end
                 end
                 if cae.final_court then
@@ -482,7 +483,7 @@ FishAndChips.Fish {
             G.GAME.noir_popup = false
         end
 
-        if not cae.storyActive then return end
+        if context.retrigger_joker or not cae.storyActive then return end
 
         if storyState == noir_states.drink then
             if context.individual and context.cardarea == G.play and not context.other_card.noir_triggered and context.other_card.ability.noir_mark == "soda" and context.other_card.ability.noir_level then
