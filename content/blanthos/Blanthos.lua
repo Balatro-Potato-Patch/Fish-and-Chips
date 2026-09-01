@@ -44,7 +44,8 @@ SMODS.Sound({
 	path = "blanthos/pirate_zone.ogg",
 	select_music_track = function()
 		if (next(SMODS.find_card("fish_fac_gaster_hat"))) then return 6666666666
-	end,
+	end
+		end,
 })
 
 
