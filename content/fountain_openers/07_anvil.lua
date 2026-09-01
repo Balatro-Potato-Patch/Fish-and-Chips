@@ -56,7 +56,7 @@ SMODS.ScreenShader {
 	order = math.huge
 }
 
-local function fucking_kill_sprite(scale)
+function FountainOpeners.fucking_kill_sprite(scale)
     scale = scale or 1
     return SMODS.create_sprite(
         0, 0,
@@ -69,7 +69,7 @@ local function fucking_kill_sprite(scale)
     )
 end
 
-local function fucking_killed_sprite(scale)
+function FountainOpeners.fucking_killed_sprite(scale)
     scale = scale or 1
     return SMODS.create_sprite(
         0, 0,
@@ -291,12 +291,12 @@ FishAndChips.Fish {
                 elements = {
                     { n=G.UIT.R, config = { align="cm" }, nodes = {
                         { n=G.UIT.O, config={ object=
-                            fucking_killed_sprite(2)
+                            FountainOpeners.fucking_killed_sprite(2)
                         }}
                     }},
                     { n=G.UIT.R, config = { align="cm" }, nodes = {
                         { n=G.UIT.O, config={ object=
-                            fucking_kill_sprite(2)
+                            FountainOpeners.fucking_kill_sprite(2)
                         }}
                     }}
                 }
@@ -363,7 +363,7 @@ function G.UIDEF.use_and_sell_buttons(card)
                 minw = 0.5*card.T.w - 0.15, maxw = 0.9*card.T.w - 0.15, minh = 0.3*card.T.h, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE,
                 one_press = true, button = 'fac_fo_fucking_kill_fish', func = 'fac_fo_can_fucking_kill_fish'
             }, nodes = {
-                {n=G.UIT.O, config={object = fucking_kill_sprite()}}
+                {n=G.UIT.O, config={object = FountainOpeners.fucking_kill_sprite()}}
             }},
         }}
         local use = {n=G.UIT.C, config={align = "cr"}, nodes={

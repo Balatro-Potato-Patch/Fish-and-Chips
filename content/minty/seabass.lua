@@ -54,14 +54,20 @@ FishAndChips.Fish{
     end,
     flavour_vars = function (self, info_queue, card)
         local key = self.key
+        local vars = {}
         if card.ability.extra.native then
             key = key.."_alt"
         elseif #SMODS.find_card("fish_fac_fo_anvil") > 0 then
             key = key.."_anvil"
+            vars = {
+                elements = {
+                    FountainOpeners.fucking_kill_sprite(1)
+                }
+            }
         end
 
         return {
-            key = key
+            key = key, vars = vars
         }
     end,
     use = function (self, card)

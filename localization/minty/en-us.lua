@@ -48,7 +48,7 @@ return {
                     "See? Bass!",
                     "...",
                     "... it's an invasive",
-                    "species, just 🔥FUCKING 🔥KILL🔥 it.", --todo someone who knows what they're doing put the `FUCKING KILL` gif here instead
+                    "species, just {element:1}{} it.",
                 },
                 text = {
                     "Use for a {C:green}#1# in #2#{} chance",
