@@ -449,7 +449,14 @@ local function fac_reveal_catch(state, profile, queue, reward_area, is_treasure_
         }
     end
     local initial_area = FishAndChips.get_area_for_center(profile.center)
-    local starts_full = #initial_area.cards >= initial_area.config.card_limit
+    local extra_slots_from_fish = 0
+    if added_card.ability.card_limit then
+        extra_slots_from_fish = extra_slots_from_fish + added_card.ability.card_limit
+    end
+    if added_card.ability.extra_slots_used then
+        extra_slots_from_fish = extra_slots_from_fish - added_card.ability.extra_slots_used
+    end
+    local starts_full = #initial_area.cards >= initial_area.config.card_limit + extra_slots_from_fish
     local caught_box = build_caught_box(starts_full)
     local displayed_center_key = added_card.config.center_key
     caught_box.states.visible = false
