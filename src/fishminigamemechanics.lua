@@ -1148,7 +1148,7 @@ function G:update_fac_fishing_hooking(dt)
     if in_bar then
         state.meter = state.meter + profile.catch_gain * dt
         FishAndChips.current_reel_sound = 'fac_reeling_in'
-        FishAndChips.update_jimbo_state(FishAndChips.JIMBO_ANIMATION_STATES.REEL)
+        if state.profile.rod_key ~= "rod_fac_harpoon" then FishAndChips.update_jimbo_state(FishAndChips.JIMBO_ANIMATION_STATES.REEL) end
         state.has_reeled = true
     else
         if state.decay_unlocked then
