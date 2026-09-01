@@ -166,12 +166,10 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         -- Can i give myself code credit pretty please (mf)
-        if context.individual and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 then
-            if #context.scoring_hand == #G.play.cards then
-                return {
-                    mult = card.ability.extra.mult
-                }
-            end
+        if context.individual and context.cardarea == G.play and #context.scoring_hand == #G.play.cards then
+            return {
+                mult = card.ability.extra.mult
+            }
         end
     end
 }
