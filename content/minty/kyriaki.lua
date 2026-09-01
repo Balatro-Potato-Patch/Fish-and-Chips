@@ -3,7 +3,7 @@ FishAndChips.Fish{
     atlas = "minty_fish",
     pos = {x=2, y=0},
     badge_key = "k_fac_maybe_fish",
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"Trauma Center devteam"},
     environments = { --Maximum 6

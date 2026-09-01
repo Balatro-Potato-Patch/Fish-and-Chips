@@ -1,5 +1,5 @@
-local all_other_minty_fish_weights = 14
-local invasive_weight = 75 - all_other_minty_fish_weights
+local all_other_minty_fish_weights = 42                     --x1 = 14, x2 = 28, x3 = 42
+local invasive_weight = 75 - all_other_minty_fish_weights   --x1 = 61, x2 = 47, x3 = 33
 
 FishAndChips.Fish{
     key = "minty_seabass",
@@ -28,7 +28,7 @@ FishAndChips.Fish{
         extra = {
             luck = 1,
             sand_dollar_odds = 3,
-            bait_odds = 8
+            bait_odds = 3
         }
     },
     attributes = {
@@ -80,8 +80,8 @@ FishAndChips.Fish{
         if caught_env and caught_env ~= "pier" then
             G.GAME.minty_seabass_chummed[caught_env] = (G.GAME.minty_seabass_chummed[caught_env] or 0) + 1
 
-            if G.GAME.minty_seabass_chummed[caught_env] > 7 then
-                if SMODS.pseudorandom_probability(card, "minty_seabass_eradication_"..caught_env, 1, 7, nil, true) then
+            if G.GAME.minty_seabass_chummed[caught_env] > 3 then
+                if SMODS.pseudorandom_probability(card, "minty_seabass_eradication_"..caught_env, 1, 3, nil, true) then
                     G.GAME.minty_seabass_eradicated[caught_env] = true
                 end
             end

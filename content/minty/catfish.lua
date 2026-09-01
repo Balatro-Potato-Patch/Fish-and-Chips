@@ -5,7 +5,7 @@ FishAndChips.Fish{
     key = "minty_catfish",
     atlas = atlas,
     pos = pos,
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     blueprint_compat = false,
