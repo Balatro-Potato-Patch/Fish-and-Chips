@@ -1840,26 +1840,28 @@ FishAndChips.Fish {
 
 function FishAndChips.crimsonseraphim.omega_next_fish(cent)
     local av = {}
-    for i, v in pairs(G.P_CENTERS) do
-        local a
-        if v.ppu_artist then
-            for i, v in pairs(v.ppu_artist) do
-                for _, j in pairs(cent.ppu_artist or {}) do
-                    if j == v then a = true; break end
+    for i, v in pairs(G.P_CENTER_POOLS) do
+        if v.set == 'fac_Fish' and SMODS.add_to_pool(v, { source = 'omega_crimsonfang'}) then
+            local a
+            if v.ppu_artist then
+                for i, v in pairs(v.ppu_artist) do
+                    for _, j in pairs(cent.ppu_artist or {}) do
+                        if j == v then a = true; break end
+                    end
+                    if a then break end
                 end
-                if a then break end
             end
-        end
-        if v.ppu_coder then
-            for i, v in pairs(v.ppu_coder) do
-                for _, j in pairs(cent.ppu_coder or {}) do
-                    if j == v then a = true; break end
+            if v.ppu_coder then
+                for i, v in pairs(v.ppu_coder) do
+                    for _, j in pairs(cent.ppu_coder or {}) do
+                        if j == v then a = true; break end
+                    end
+                    if a then break end
                 end
-                if a then break end
             end
-        end
-        if a then
-            av[#av+1] = v.key
+            if a then
+                av[#av+1] = v.key
+            end
         end
     end
     return pseudorandom_element(av, pseudoseed("omegabitchkill"))
