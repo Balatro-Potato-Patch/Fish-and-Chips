@@ -1934,11 +1934,13 @@ FishAndChips.Fish {
     end,
     use = function()
         local c = G.fac_fish_area.cards[#G.fac_fish_area.cards]
-        G.GAME.fac_forced_fish = FishAndChips.crimsonseraphim.omega_next_fish(c.config.center)
-        SMODS.destroy_cards(c, nil, true)
+        if not SMODS.is_eternal(c) then
+            G.GAME.fac_forced_fish = FishAndChips.crimsonseraphim.omega_next_fish(c.config.center)
+            SMODS.destroy_cards(c, nil, true)
+        end
     end,
     can_use = function()
-        return true
+        return not SMODS.is_eternal(G.fac_fish_area.cards[#G.fac_fish_area.cards])
     end,
     keep_on_use = function()
         return true
