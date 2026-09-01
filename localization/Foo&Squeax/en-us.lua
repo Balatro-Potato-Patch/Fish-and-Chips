@@ -258,9 +258,9 @@ return {
 					"Don't krill, and don't be krilled, alright?"
 				},
 				text = {
-					"{C:mult}+#1#{} Mult per unique",
+					"{C:chips}+#1#{} Chips per unique",
 					"{C:fac_fish}Fish{} caught this run",
-					"{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+					"{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
 				}
 			},
 			fish_fac_fas_sardine = {
