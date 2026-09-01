@@ -42,6 +42,23 @@ return {
                     "{ppu_bubble:usable}"
                 }
             },
+            fish_fac_minty_seabass_anvil = {
+                name = "Sea Bass",
+                flavour = {
+                    "See? Bass!",
+                    "...",
+                    "... it's an invasive",
+                    "species, just 🔥FUCKING 🔥KILL🔥 it.", --todo someone who knows what they're doing put the `FUCKING KILL` gif here instead
+                },
+                text = {
+                    "Use for a {C:green}#1# in #2#{} chance",
+                    "to earn {C:fac_sand_dollars,f:fac_sand_dollars}$1{} and a {C:green}#3# in #4#{}",
+                    "chance to gain {C:attention}1{} Bait",
+                    "Also {C:red,E:2}culls the population{}",
+                    "of this invasive species",
+                    "{ppu_bubble:usable}"
+                }
+            },
             fish_fac_minty_fission = {
                 name = "Fission Chip",
                 flavour = {

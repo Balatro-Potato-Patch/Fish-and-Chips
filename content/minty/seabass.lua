@@ -56,6 +56,8 @@ FishAndChips.Fish{
         local key = self.key
         if card.ability.extra.native then
             key = key.."_alt"
+        elseif #SMODS.find_card("fish_fac_fo_anvil") > 0 then
+            key = key.."_anvil"
         end
 
         return {
@@ -63,6 +65,10 @@ FishAndChips.Fish{
         }
     end,
     use = function (self, card)
+        if #SMODS.find_card("fish_fac_fo_anvil") > 0 then
+            FountainOpeners.anvil_animation:play(card)
+        end
+
         SMODS.destroy_cards(card, {colours = {G.C.RED}, skip_calc = true})
         local luck = card.ability.extra.luck
         if card.ability.extra.native then
