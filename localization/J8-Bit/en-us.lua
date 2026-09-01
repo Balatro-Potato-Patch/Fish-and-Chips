@@ -330,7 +330,7 @@ return {
                 text = {
                     "Earn {C:money}+$#1#{} and {C:fac_sand_dollars,s:1.0,f:fac_sand_dollars}+$#2#{}",
                     "if {C:fac_fish}Fish{} is caught",
-                    "with unrelated {C:fac_bait}Bait{}"
+                    "with unrelated {C:fac_bait}Targeted Bait{}"
                 },
                 flavour = {
                     "{E:fac_j8_rainbow}#1#"

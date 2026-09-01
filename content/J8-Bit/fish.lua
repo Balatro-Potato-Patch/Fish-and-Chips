@@ -1685,7 +1685,7 @@ FishAndChips.Fish {
         if context.fac_fish_caught then
             local bait = G.P_CENTERS[G.GAME.fac_active_bait]
             --print(bait)
-            if bait.target then
+            if bait.target and bait.target ~= "" then
                 --print(bait.target)
                 local bait_matches = false
                 local attributes = {}
