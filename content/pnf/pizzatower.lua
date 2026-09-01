@@ -508,12 +508,9 @@ FishAndChips.Fish {
         city_river = 1,
         garden = 1
     },
-    add_to_deck = function(self, card, from_debuff)
-        G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base + 2
-    end,
-    remove_from_deck = function(self, card, from_debuff)
-        G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base - 2
-    end,
+    config = {
+        card_limit = 2
+    },
     calculate = function(self, card, context)
         local current_index
         for i = 1, #G.fac_fish_area.cards do

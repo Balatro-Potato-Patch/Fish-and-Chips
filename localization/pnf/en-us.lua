@@ -90,10 +90,9 @@ return {
             fish_fac_froggychair = {
                 name = "Froggy Chair",
                 text = {
-                    {"{C:dark_edition}+2{} Bucket slots",},
-                    {"{C:mult}Destroys{} {C:attention}1 adjacent{} Fish at the",
+                    "{C:mult}Destroys{} {C:attention}1 adjacent{} Fish at the",
                     "start of the round",
-                    "{C:inactive}(Prioritises Fish to the right)",},
+                    "{C:inactive}(Prioritises Fish to the right)",
                 },
                 flavor = {
                     "When you seen this in the water, you",
