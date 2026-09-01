@@ -1,5 +1,5 @@
-local all_other_minty_fish_weights = 14
-local invasive_weight = 75 - all_other_minty_fish_weights
+local all_other_minty_fish_weights = 42                     --x1 = 14, x2 = 28, x3 = 42
+local invasive_weight = 75 - all_other_minty_fish_weights   --x1 = 61, x2 = 47, x3 = 33
 
 FishAndChips.Fish{
     key = "minty_seabass",

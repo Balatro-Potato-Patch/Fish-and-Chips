@@ -5,7 +5,7 @@ FishAndChips.Fish{
     key = "minty_elder_tuna",
     atlas = atlas,
     pos = pos,
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     environments = { --Maximum 6
