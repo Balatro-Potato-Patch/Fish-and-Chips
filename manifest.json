@@ -1,7 +1,7 @@
 {
 	"name": "Fish and Chips",
 	"description": "FISHING EVENT",
-	"version_number": "1.0.2",
+	"version_number": "1.0.3",
 	"website_url": "https://github.com/Balatro-Potato-Patch/Fish-and-Chips",
 	"dependencies": [
 		"Steamodded-Steamodded-26.829.0",
