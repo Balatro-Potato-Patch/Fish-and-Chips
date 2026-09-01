@@ -80,8 +80,8 @@ FishAndChips.Fish{
         if caught_env and caught_env ~= "pier" then
             G.GAME.minty_seabass_chummed[caught_env] = (G.GAME.minty_seabass_chummed[caught_env] or 0) + 1
 
-            if G.GAME.minty_seabass_chummed[caught_env] > 7 then
-                if SMODS.pseudorandom_probability(card, "minty_seabass_eradication_"..caught_env, 1, 7, nil, true) then
+            if G.GAME.minty_seabass_chummed[caught_env] > 3 then
+                if SMODS.pseudorandom_probability(card, "minty_seabass_eradication_"..caught_env, 1, 3, nil, true) then
                     G.GAME.minty_seabass_eradicated[caught_env] = true
                 end
             end
