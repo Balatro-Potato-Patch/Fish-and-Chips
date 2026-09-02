@@ -336,7 +336,7 @@ FishAndChips.Fish { --Doctor Sharktred
 	weight = 20,
 	ppu_coder = { "CampfireCollective" },
 	ppu_artist = { "DottyKitty" },
-	attributes = { 'nothing' },
+	attributes = { 'passive' },
 	config = {
 		extra = {
 		}
