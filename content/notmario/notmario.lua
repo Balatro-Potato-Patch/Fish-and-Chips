@@ -369,7 +369,6 @@ FishAndChips.Fish {
 	attributes = FishAndChips.mf_redherring_attributes,
 	config = {
 		card_limit = 1,
-		extra = { fish_slot = 1, },
 	},
 	stats = {
 		weight = {min = 4, max = 6},
@@ -382,7 +381,7 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.fish_slot } }
+		return { vars = { card.ability.card_limit } }
 	end,
 }
 
