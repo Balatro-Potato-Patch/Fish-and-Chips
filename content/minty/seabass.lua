@@ -1,6 +1,37 @@
 local all_other_minty_fish_weights = 42                     --x1 = 14, x2 = 28, x3 = 42
 local invasive_weight = 75 - all_other_minty_fish_weights   --x1 = 61, x2 = 47, x3 = 33
 
+SMODS.Atlas {
+    key = "minty_fucking_chum",
+    path = "minty/fkn chum.png",
+    px = 484,
+    py = 107,
+    frames = 5,
+    atlas_table = "ANIMATION_ATLAS"
+}
+
+SMODS.Atlas {
+    key = "minty_fucking_chum_alt",
+    path = "minty/fkn chum alt.png",
+    px = 495,
+    py = 107,
+    frames = 5,
+    atlas_table = "ANIMATION_ATLAS"
+}
+
+local function fkn_chum_sprite(scale)
+    scale = scale or 1
+    return SMODS.create_sprite(
+        0, 0,
+        (FishAndChips.mod.config.family_friendly and 378 or 377) / 255 * scale,
+        105 / 255 * scale,
+        FishAndChips.mod.config.family_friendly and
+            "fac_minty_fucking_chum_alt"
+            or "fac_minty_fucking_chum",
+        {x = 0, y = 0}
+    )
+end
+
 FishAndChips.Fish{
     key = "minty_seabass",
     atlas = "minty_fish",
@@ -23,7 +54,12 @@ FishAndChips.Fish{
     cost = 0,
     blueprint_compat = false,
     eternal_compat = false,
-    use_colour = G.C.RED,
+    use_colour = function()
+        if #SMODS.find_card("fish_fac_fo_anvil") > 0 then
+            return G.C.UI.TEXT_LIGHT
+        end
+        return G.C.RED
+    end,
     config = {
         extra = {
             luck = 1,
@@ -61,7 +97,7 @@ FishAndChips.Fish{
             key = key.."_anvil"
             vars = {
                 elements = {
-                    FountainOpeners.fucking_kill_sprite(1)
+                    fkn_chum_sprite(1)
                 }
             }
         end
@@ -127,6 +163,13 @@ local use_and_sell = G.UIDEF.use_and_sell_buttons
 function G.UIDEF.use_and_sell_buttons(card)
 	local ret = use_and_sell(card)
 	if card.config.center.key == "fish_fac_minty_seabass" and card.area.config.type == "joker" then
+        local text_node
+        if #SMODS.find_card("fish_fac_fo_anvil") > 0 then
+            text_node = {n=G.UIT.O, config={object = fkn_chum_sprite(1)}}
+        else
+            text_node = { n = G.UIT.T, config = { text = localize("b_fac_minty_chum"), colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true } }
+        end
+
 		local use = {
             n = G.UIT.C,
             config = { align = "cr" },
@@ -137,7 +180,7 @@ function G.UIDEF.use_and_sell_buttons(card)
                     config = { ref_table = card, align = "cr", maxw = 1.25, padding = 0.1, r = 0.08, minw = 1.25, minh = (card.area and card.area.config.type == "joker") and 0 or 1, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = "fac_use_fish", func = "fac_can_use_fish" },
                     nodes = {
                         { n = G.UIT.B, config = { w = 0.1, h = 0.6 } },
-                        { n = G.UIT.T, config = { text = localize("b_fac_minty_chum"), colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true } }
+                        text_node
                     }
                 }
             }

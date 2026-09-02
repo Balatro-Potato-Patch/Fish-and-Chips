@@ -437,7 +437,7 @@ G.FUNCS.fac_can_use_fish = function(e)
 
 	local colour = G.C.ORANGE
 	if center.use_colour then
-		colour = center.use_colour
+		colour = center:use_colour()
 	end
 
 	card._fac_use_key = localize("b_use")
