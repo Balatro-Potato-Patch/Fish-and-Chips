@@ -356,7 +356,7 @@ local uasb = G.UIDEF.use_and_sell_buttons
 function G.UIDEF.use_and_sell_buttons(card)
     local ret = uasb(card)
 
-     if card.ability.set == 'fac_Fish' and card.config.center.key ~= "fish_fac_fo_anvil" and #SMODS.find_card("fish_fac_fo_anvil") > 0 then
+     if card.ability.set == 'fac_Fish' and card.config.center.key ~= "fish_fac_fo_anvil" and not SMODS.is_eternal(card) and #SMODS.find_card("fish_fac_fo_anvil") > 0 then
         local kill = {n=G.UIT.C, config={align = "cr"}, nodes={
             {n=G.UIT.R, config = {
                 ref_table = card, r = 0.08, padding = 0.1, align = 'cl',
