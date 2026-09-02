@@ -68,6 +68,7 @@ return {
                 text = {
                     "This {C:fac_fish}Fish{} gains {C:mult}+#2#{} Mult when",
                     "a hand type is played {C:attention}#3#{} {C:inactive}[#4#]{} times",
+                    "in a row",
                     "{C:inactive}(Current hand: {C:attention}#5#{C:inactive})",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult){}"
                 },
