@@ -292,7 +292,7 @@ FishAndChips.Fish {
     can_use = function(self, card)
         local cae = card.ability.extra
         local valid_area = (card.area and not card.area.config.fac_catch_area)
-        return not cae.storyActive and valid_area
+        return not cae.storyComplete and valid_area
     end,
 
     keep_on_use = function(self,card)
