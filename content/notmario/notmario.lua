@@ -368,6 +368,7 @@ FishAndChips.Fish {
 	ppu_artist = { "notmario" },
 	attributes = FishAndChips.mf_redherring_attributes,
 	config = {
+		card_limit = 1,
 		extra = { fish_slot = 1, },
 	},
 	stats = {
@@ -382,22 +383,6 @@ FishAndChips.Fish {
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.fish_slot } }
-	end,
-	add_to_deck = function(self, card, from_debuff)
-		G.E_MANAGER:add_event(Event({
-			func = function()
-				G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base + 1
-				return true
-			end,
-		}))
-	end,
-	remove_from_deck = function(self, card, from_debuff)
-		G.E_MANAGER:add_event(Event({
-			func = function()
-				G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base - 1
-				return true
-			end,
-		}))
 	end,
 }
 
