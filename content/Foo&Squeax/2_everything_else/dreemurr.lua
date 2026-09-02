@@ -19,7 +19,7 @@ FishAndChips.Fish{
 	disable_visual_scaling = true,
 	config = {
 		extra = {
-			chips = 5
+			mult = 2
 		}
 	},
 	update = function(self, card, dt)
@@ -32,14 +32,14 @@ FishAndChips.Fish{
 			card.fac_last_stored = G.TIMERS.REAL
 		end
 	end,
- attributes = {"chips", "undertale", "utdr"},
+ attributes = {"mult", "undertale", "utdr"},
 	loc_vars = function(self, info_queue, card)
-		return {vars = {card.ability.extra.chips, card.ability.extra.chips * SMODS.table_size(G.GAME.fac_FooSqueax and G.GAME.fac_FooSqueax.fish_caught or {})}}
+		return {vars = {card.ability.extra.mult, card.ability.extra.mult * SMODS.table_size(G.GAME.fac_FooSqueax and G.GAME.fac_FooSqueax.fish_caught or {})}}
 	end,
 	calculate = function (self, card, context)
 		if context.joker_main then
 			return {
-				mult = card.ability.extra.chips * SMODS.table_size(G.GAME.fac_FooSqueax.fish_caught)
+				mult = card.ability.extra.mult * SMODS.table_size(G.GAME.fac_FooSqueax.fish_caught)
 			}
 		end
 	end
