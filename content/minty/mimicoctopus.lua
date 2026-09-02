@@ -111,7 +111,7 @@ FishAndChips.Fish{
                 local target_key = target_center.key
                 local target_set = target_center.set
                 local target_vars = target_center.loc_vars and (target_center:loc_vars({}, target_card) or {})
-                target_name = localize{type= "name_text", key = target_key, set = target_set, vars = target_vars.vars or {}}
+                target_name = localize{type= "name_text", key = target_key, set = target_set, vars = (target_vars or {}).vars or {}}
                 --info_queue[#info_queue+1] = {key = target_key, set = target_set, config = target_vars, vars = target_vars.vars}
                 info_queue[#info_queue+1] = G.P_CENTERS[target_key]
                 --swap these info queues if smods doesn't accept my pr in time. sad but we'll live
