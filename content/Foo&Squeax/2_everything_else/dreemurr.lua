@@ -19,7 +19,7 @@ FishAndChips.Fish{
 	disable_visual_scaling = true,
 	config = {
 		extra = {
-			mult = 2
+			mult = 1
 		}
 	},
 	update = function(self, card, dt)
