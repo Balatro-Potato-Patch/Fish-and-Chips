@@ -1463,13 +1463,13 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.modify_scoring_hand and not context.blueprint and context.other_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id then
+        if context.modify_scoring_hand and not context.blueprint and context.other_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id and not context.retrigger_joker then
             return {
                 add_to_hand = true
             }
         end
 
-        if context.debuff_card and context.debuff_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id then
+        if context.debuff_card and context.debuff_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id and not context.retrigger_joker then
             return {
                 prevent_debuff = true
             }
