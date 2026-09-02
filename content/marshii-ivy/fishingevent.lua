@@ -152,7 +152,7 @@ FishAndChips.Fish {
     can_use = function(self, card)
         if card.ability.extra.used then return false end
         for _, fih in pairs(G.fac_fish_area.cards) do
-            if fih.config.center.set == "fac_Fish" and fih ~= card then
+            if fih.config.center.set == "fac_Fish" and fih ~= card and not SMODS.is_eternal(fih) then
                 return true
             end
         end
@@ -162,7 +162,7 @@ FishAndChips.Fish {
         card.ability.extra.used = true
         local other_fish = {}
         for _, fih in pairs(G.fac_fish_area.cards) do
-            if fih.config.center.set == "fac_Fish" and fih ~= card then
+            if fih.config.center.set == "fac_Fish" and fih ~= card and not SMODS.is_eternal(fih) then
                 table.insert(other_fish, fih)
             end
         end
