@@ -151,7 +151,7 @@ FishAndChips.Fish { -- Ineffa
 	end,
 
 	calculate = function(self, card, context)
-		if context.perfect and context.fac_end_fishing then
+		if context.perfect and context.fac_end_fishing and not context.blueprint then
 		    SMODS.scale_card ( card, {
 				ref_table = card.ability.extra,
 				ref_value = "ucount",
@@ -171,7 +171,7 @@ FishAndChips.Fish { -- Ineffa
                 card = card
             }
 		end
-		if context.after and card.ability.extra.ucount > 0 then
+		if context.after and card.ability.extra.ucount > 0 and not context.blueprint then
 			card.ability.extra.ucount = card.ability.extra.ucount-1
 			return {
 				message = localize {
