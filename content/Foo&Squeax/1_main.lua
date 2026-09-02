@@ -68,9 +68,6 @@ PotatoPatchUtils.Developer{
 	fac_partner = "fac_squeax09",
 	loc = true,
 	calculate = function(self, context)
-		if context.fac_end_fishing and context.fish then
-			G.GAME.fac_FooSqueax.fish_caught[context.fish] = true
-		end
 
 		if context.end_of_round and context.main_eval then
 			if G.GAME.fac_FooSqueax.tobies > 0 then
@@ -206,7 +203,6 @@ function FishAndChips.mod.reset_game_globals (run_start)
 			},
 			wormholes = {},
 			tobies = 0,
-			fish_caught = {},
 			nyon = 0,
 		}
 	end

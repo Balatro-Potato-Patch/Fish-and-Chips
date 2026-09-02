@@ -8,8 +8,8 @@ FishAndChips.Fish{
 	pos = {x=5,y=0},
 	--pixel_size = {w=63,h=90},
 	stats = {
-		weight = {min = 1e308, max = 1e308, units = {format = "k_fac_fas_infinity", scale = 1, precision = 0}},
-		length = {min = 1e308, max = 1e308, units = {format = "k_fac_fas_infinity", scale = 1, precision = 0}}
+		weight = {min = 99, max = 99, units = {format = "k_fac_fas_infinity", scale = 1, precision = 0}},
+		length = {min = 2.5, max = 2.5, units = {format = "k_fac_fas_infinity", scale = 1, precision = 0}}
 	},
 	environments = {
 		aquifer = 1,
@@ -19,7 +19,8 @@ FishAndChips.Fish{
 	disable_visual_scaling = true,
 	config = {
 		extra = {
-			mult = 1
+			mult = 1,
+			fish_caught = 0
 		}
 	},
 	update = function(self, card, dt)
@@ -34,12 +35,19 @@ FishAndChips.Fish{
 	end,
  attributes = {"mult", "undertale", "utdr"},
 	loc_vars = function(self, info_queue, card)
-		return {vars = {card.ability.extra.mult, card.ability.extra.mult * SMODS.table_size(G.GAME.fac_FooSqueax and G.GAME.fac_FooSqueax.fish_caught or {})}}
+		return {vars = {card.ability.extra.mult, card.ability.extra.mult * card.ability.extra.fish_caught}}
 	end,
 	calculate = function (self, card, context)
+		if context.fac_end_fishing and context.fish then
+			card.ability.extra.fish_caught = card.ability.extra.fish_caught + 1
+			return {
+				message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult * card.ability.extra.fish_caught}}
+			}
+		end
+
 		if context.joker_main then
 			return {
-				mult = card.ability.extra.mult * SMODS.table_size(G.GAME.fac_FooSqueax.fish_caught)
+				mult = card.ability.extra.mult * card.ability.extra.fish_caught
 			}
 		end
 	end

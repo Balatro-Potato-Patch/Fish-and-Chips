@@ -258,8 +258,8 @@ return {
 					"Don't krill, and don't be krilled, alright?"
 				},
 				text = {
-					"{C:mult}+#1#{} Mult per unique",
-					"{C:fac_fish}Fish{} caught this run",
+					"This {C:fac_fish}Fish{} gains {C:mult}+#1#{} Mult",
+					"when another {C:fac_fish}Fish{} is caught",
 					"{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
 				}
 			},
