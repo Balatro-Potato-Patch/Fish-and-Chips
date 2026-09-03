@@ -677,7 +677,7 @@ FishAndChips.Fish {
     environments = facp.addEnvs(),
 
     in_pool = function (self, args)
-        return #SMODS.find_card("fac_proto_noir") > 0
+        return #SMODS.find_card("fish_fac_proto_noir") > 0
     end,
 
     can_use = function (self, card)
