@@ -977,7 +977,7 @@ FishAndChips.Fish({
 			card.click = miku_click
 		end
 		if card.added_to_deck then
-			card.fac_thu_aik_timer = (card.fac_thu_aik_timer or 0) + (dt / G.SETTINGS.GAMESPEED)
+			card.fac_thu_aik_timer = (card.fac_thu_aik_timer or 0) + G.real_dt
 			if card.fac_thu_aik_timer >= 20 then
 				local playsoundornot = pseudorandom("miku_fish.play_random_miku_sound")
 				if playsoundornot >= 0.9 then
