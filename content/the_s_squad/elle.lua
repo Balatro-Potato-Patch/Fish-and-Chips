@@ -191,10 +191,14 @@ FishAndChips.Fish {
 					local a = false
 					if G.P_CENTERS[v.key] then
 						for _, dev in ipairs(devs) do
-							a = a or  G.P_CENTERS[v.key].ppu_coder[1] == dev.name
+							a = a or  G.P_CENTERS[v.key].ppu_coder[1] == dev.name and v.key ~= target.config.center_key
 						end
 					end
 					newTable[#newTable+1] = a and v or nil
+				end
+
+				if not next(newTable) then
+					newTable = { target.config.center }
 				end
 
 				return newTable
