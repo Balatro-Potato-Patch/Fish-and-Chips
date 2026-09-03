@@ -4,7 +4,7 @@
 	"display_name": "Fish and Chips",
 	"no_marquee": true,
 	"author": ["The Potato Patch"],
-	"description": "FISHING EVENT",
+	"description": "What if Balatro had a fishing aspect? Let 89 different developers answer for you!",
 	"prefix": "fac",
 	"main_file": "main.lua",
 	"priority": 0,
