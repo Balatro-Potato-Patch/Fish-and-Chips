@@ -32,24 +32,45 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.rerolls, card.ability.extra.remaining } }
 	end,
 	calculate = function(self, card, context)
-		if not context.blueprint then
-			if context.starting_shop then
-				card.ability.extra.old_remaining = card.ability.extra.remaining
-			end
+		if context.starting_shop then
+			card.ability.extra.old_remaining = card.ability.extra.remaining
+		end
 
-			if context.ending_shop then
-				SMODS.change_free_rerolls(card.ability.extra.remaining - card.ability.extra.old_remaining)
+		if context.reroll_shop and card.ability.extra.remaining > 0 then
+			for _, v in pairs(G.fac_fish_area.cards) do
+				if v.ability.extra.i_rerolled and v ~= card then
+					print(v.config.center_key .. ' rerolled before ' .. self.key)
+					return
+				end
 			end
+			card.ability.extra.i_rerolled = true
 
-			if context.ante_change and context.ante_end then
-				local mod = card.ability.extra.rerolls - card.ability.extra.remaining
-				card.ability.extra.remaining = card.ability.extra.rerolls
-				SMODS.change_free_rerolls(mod)
+			card.ability.extra.remaining = card.ability.extra.remaining - 1
+			
+			return {
+                func = function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            card.ability.extra.i_rerolled = nil
+                            return true
+                        end
+                    }))
+                end
+            }
+		end
 
-				return {
-					message = localize("k_reset")
-				}
-			end
+		if context.ending_shop then
+			SMODS.change_free_rerolls(card.ability.extra.remaining - card.ability.extra.old_remaining)
+		end
+
+		if context.ante_change and context.ante_end then
+			local mod = card.ability.extra.rerolls - card.ability.extra.remaining
+			card.ability.extra.remaining = card.ability.extra.rerolls
+			SMODS.change_free_rerolls(mod)
+
+			return {
+				message = localize("k_reset")
+			}
 		end
 	end,
     add_to_deck = function(self, card, from_debuff)

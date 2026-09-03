@@ -747,6 +747,7 @@ FishAndChips.Fish {
     config = {
         extra = {
             rerolls = 0,
+            remaining = 0,
             percent = 100,
             max = 5,
         }
@@ -761,7 +762,7 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
 
-        return { vars = { stg.percent, stg.rerolls, stg.max } }
+        return { vars = { stg.percent, stg.rerolls, stg.remaining, stg.max } }
     end,
     calculate = function(self, card, context)
         local stg = card.ability.extra
@@ -770,16 +771,42 @@ FishAndChips.Fish {
             SMODS.change_free_rerolls(stg.rerolls)
         end
 
+        if context.reroll_shop and card.ability.extra.remaining > 0 then
+			for _, v in pairs(G.fac_fish_area.cards) do
+				if v.ability.extra.i_rerolled and v ~= card then
+					print(v.config.center_key .. ' rerolled before ' .. self.key)
+					return
+				end
+			end
+			card.ability.extra.i_rerolled = true
+
+			card.ability.extra.remaining = card.ability.extra.remaining - 1
+
+            return {
+                func = function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            card.ability.extra.i_rerolled = nil
+                            return true
+                        end
+                    }))
+                end
+            }
+		end
+
         if context.ending_shop and not context.blueprint then
             SMODS.change_free_rerolls(-stg.rerolls)
+            stg.remaining = 0
             stg.rerolls = 0
         end
 
         if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
             stg.rerolls = math.min(math.floor((G.GAME.chips / G.GAME.blind.chips) / (stg.percent / 100)), stg.max)
             if stg.rerolls > 0 then
+                stg.remaining = stg.rerolls
                 return {
-                    message = localize { type = 'variable', key = 'a_fac_am_rerolls', vars = { stg.rerolls } }
+                    message = localize { type = 'variable', key = 'a_fac_am_rerolls', vars = { stg.rerolls } },
+                    colour = G.C.GREEN
                 }
             end
         end

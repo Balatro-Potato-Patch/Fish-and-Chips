@@ -193,8 +193,8 @@ return {
                     "{C:attention}1{} free {C:green}Reroll{} for",
                     "every {C:attention}#1#%{} of score",
                     "overshot each round",
-                    "{C:inactive}(Currently {C:green}#2#{C:inactive} Rerolls)",
-                    "{C:inactive,s:0.8}(Max #3# Rerolls)",
+                    "{C:inactive}(Currently {C:green}#2# {C:inactive}[#3#] Rerolls)",
+                    "{C:inactive,s:0.8}(Max #4# Rerolls)",
                 },
                 flavor = {
                     "It seems like this Fish came",
