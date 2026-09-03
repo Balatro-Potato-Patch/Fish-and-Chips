@@ -51,14 +51,24 @@ local function get_wish(args)
         end
     end
 
+    local wish, iter = nil, 0
     if args.force_set == "Voucher" or pseudorandom("fac_minty_jeal_choose_set", 1, 10) == 10 then
-        local wish = pseudorandom_element(vouchers, "fac_minty_jeal_choose_card" .. append)
+        repeat
+            iter = iter+1
+            wish = pseudorandom_element(vouchers, "fac_minty_jeal_choose_card" .. append..iter)
+        until wish ~= "UNAVAILABLE"
         return wish, "Voucher", G.P_CENTERS[wish].cost * 1.5
     elseif args.force_set and args.force_set ~= "Joker" then
-        local wish = pseudorandom_element(etc, "fac_minty_jeal_choose_card" .. append)
+        repeat
+            iter = iter+1
+            wish = pseudorandom_element(etc, "fac_minty_jeal_choose_card" .. append..iter)
+        until wish ~= "UNAVAILABLE"
         return wish, args.force_set, G.P_CENTERS[wish].cost * (args.cost_multiplier or 2)
     else
-        local wish = pseudorandom_element(jokers, "fac_minty_jeal_choose_card" .. append)
+        repeat
+            iter = iter+1
+            wish = pseudorandom_element(jokers, "fac_minty_jeal_choose_card" .. append..iter)
+        until wish ~= "UNAVAILABLE"
         return wish, "Joker", G.P_CENTERS[wish].cost * 2
     end
 end
