@@ -70,10 +70,10 @@ FishAndChips.Fish {
 		return { vars = { elements = el } }
 	end,
 	calculate = function(_, _, context)
-		if context.modify_scoring_hand and context.other_card.fac_bagels_a_for_effish then
+		if context.modify_scoring_hand and context.other_card.fac_bagels_a_for_effish and not context.retrigger_joker then
 			return { add_to_hand = true }
 		end
-		if context.individual and context.other_card.fac_bagels_a_for_effish then
+		if context.individual and context.other_card.fac_bagels_a_for_effish and not context.retrigger_joker then
 			context.other_card.fac_bagels_a_for_effish = nil
 			return {
 				message = localize 'k_fac_bagels_a',

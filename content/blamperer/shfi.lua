@@ -17,7 +17,7 @@ FishAndChips.Fish {
     },
     blueprint_compat = false,
     calculate = function(self, card, context)
-        if context.initial_scoring_step and not context.blueprint then
+        if context.initial_scoring_step and not context.blueprint and not context.retrigger_joker then
             return { swap = true }
         end
     end

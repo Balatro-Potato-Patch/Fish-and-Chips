@@ -80,6 +80,7 @@ FishAndChips.Fish {
 				ref_value = "x_chips",
 				scalar_value = "chipsmodifier",
 			})
+            return nil, true
         end
         if context.joker_main then
             return {
@@ -250,7 +251,7 @@ FishAndChips.Fish {
                 repetitions = 1
             }
         end
-        if context.individual and context.cardarea == G.play and context.other_card:is_suit_shade('light') then
+        if context.individual and context.cardarea == G.play and context.other_card:is_suit_shade('light') and not context.retrigger_joker then
             SMODS.debuff_card(card, true, 'sunlight')
             return {
                 message = "Zzzzz....", -- TODO: localize

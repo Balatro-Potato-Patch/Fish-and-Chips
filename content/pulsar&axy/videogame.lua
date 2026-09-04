@@ -30,6 +30,7 @@ FishAndChips.Fish {
                 ref_value = "xmult",
                 scalar_value = "xmult_gain"
             })
+			return nil, true
         end
 
 		if context.joker_main then

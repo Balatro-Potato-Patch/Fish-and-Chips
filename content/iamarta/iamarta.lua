@@ -83,7 +83,7 @@ FishAndChips.Fish{
         if context.joker_main and card.ability.extra.xmult > 1 then
             return {xmult = card.ability.extra.xmult}
         elseif context.fac_fish_caught then
-            if not context.blueprint and context.perfect and FishAndChips.get_bait_inventory_item(G.GAME.fac_active_bait).amt > 1 then
+            if not context.blueprint and not context.retrigger_joker and context.perfect and FishAndChips.get_bait_inventory_item(G.GAME.fac_active_bait).amt > 1 then
 
                 G.E_MANAGER:add_event(Event({
                     func = function()
@@ -284,7 +284,7 @@ FishAndChips.Fish{
         }
     },
     calculate = function(self, card, context)
-        if not context.blueprint then
+        if not context.blueprint and not context.retrigger_joker then
             if context.fac_cast_rod then
                 card.ability.extra.target = nil
                 for i = 1, #G.fac_fish_area.cards do
@@ -350,7 +350,7 @@ FishAndChips.Fish{
         if context.joker_main and card.ability.extra.active then
             return {xmult = card.ability.extra.xmult}
         end
-        if context.end_of_round and context.main_eval and not context.blueprint then
+        if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
             if card.ability.extra.uses <= 0 then
                 SMODS.destroy_cards(card, nil, nil, true)
                 return {
@@ -462,7 +462,7 @@ FishAndChips.Fish{
         if context.setting_blind and not context.blueprint then
             return { xblindsize = card.ability.extra.xblindsize }
         end
-        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and card.ability.extra.rounds <= card.ability.extra.total_rounds then
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker and card.ability.extra.rounds <= card.ability.extra.total_rounds then
             card.ability.extra.rounds = card.ability.extra.rounds + 1
             if card.ability.extra.rounds == card.ability.extra.total_rounds then
                 local eval = function(card) return not card.REMOVED end

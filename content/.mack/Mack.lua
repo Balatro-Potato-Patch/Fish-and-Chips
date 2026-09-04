@@ -195,7 +195,7 @@ FishAndChips.Fish {
 			juice_card_until(card, eval, true)
 		end
 
-		if context.after and G.GAME.current_round.hands_played == 0 then
+		if context.after and G.GAME.current_round.hands_played == 0 and not context.retrigger_joker then
 			G.E_MANAGER:add_event(Event({
 				func = function()
 					card:juice_up(0.8, 0.8)
@@ -225,7 +225,7 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = false,
 	calculate = function(self, card, context)
-		if context.setting_blind and context.blind.boss and not G.GAME.blind.disabled then
+		if context.setting_blind and context.blind.boss and not G.GAME.blind.disabled and not context.retrigger_joker then
 			G.E_MANAGER:add_event(Event({
 				func = function()
 					G.GAME.blind:disable()
@@ -380,7 +380,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.levels, card.ability.extra.dec } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			SMODS.upgrade_poker_hands { level_up = -card.ability.extra.dec, instant = true }
 			SMODS.scale_card(card, {
 				ref_table = card.ability.extra,
@@ -599,7 +599,7 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = false,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.game_over and context.main_eval then
+		if context.end_of_round and context.game_over and context.main_eval and not context.retrigger_joker then
 			if G.GAME.chips / G.GAME.blind.chips >= 0.25 then
 				G.E_MANAGER:add_event(Event({
 					func = function()
@@ -651,7 +651,7 @@ FishAndChips.Fish {
 		card.ability.immutable.suit = pseudorandom_element(SMODS.Suits, "fac_milkfin").key
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			card.ability.immutable.suit = pseudorandom_element(SMODS.Suits, "fac_milkfin").key
 		end
 		if context.individual and context.cardarea == G.hand and not context.end_of_round and context.other_card:is_suit(card.ability.immutable.suit) then

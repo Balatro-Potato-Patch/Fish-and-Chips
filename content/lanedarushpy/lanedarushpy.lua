@@ -234,7 +234,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main and not card.ability.immutable.cant_flop then return { Xmult = card.ability.extra.Xmult > 1.0 and card.ability.extra.Xmult or nil } end
-        local context_check = not context.blueprint and (context.end_of_round or context.first_hand_drawn or context.after or (context.fac_fish_hooked and pseudorandom("laneda_floppy_fuckyou", 1, 10) < 3))
+        local context_check = not context.blueprint and not context.retrigger_joker and (context.end_of_round or context.first_hand_drawn or context.after or (context.fac_fish_hooked and pseudorandom("laneda_floppy_fuckyou", 1, 10) < 3))
         if context_check and card.ability.immutable.flop_flag then
             G.E_MANAGER:add_event(Event({
                 func = function ()
@@ -767,7 +767,7 @@ FishAndChips.Fish {
 		return { vars = { 1, card.ability.extra.cap, ppu_bubbles = { card.ability.extra.usable and "usable" or "used" } } }
 	end,
 	calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker then
             G.E_MANAGER:add_event(Event({
                 func = function(e)
                     card.ability.immutable.usable = true
@@ -1012,7 +1012,7 @@ FishAndChips.Fish {
         card.children.center:set_sprite_pos(card.ability.immutable.sprite_pos[card.ability.immutable.state])
     end,
     calculate = function (self, card, context)
-        if context.joker_type_destroyed and context.card == card and not context.blueprint then
+        if context.joker_type_destroyed and context.card == card and not context.blueprint and not context.retrigger_joker then
             if not (card.ability.immutable.state == "larva" or card.ability.immutable.state == "polyp") then
                 G.E_MANAGER:add_event(Event({
                     func = function()
@@ -1120,7 +1120,7 @@ FishAndChips.Fish {
     end,
 
     calculate = function (self, card, context)
-        if context.before and context.main_eval and not context.blueprint then
+        if context.before and context.main_eval and not context.blueprint and not context.retrigger_joker then
             if #G.jokers.cards < 1 then card.ability.immutable.current_bubble_joker = -1 end
             if card.ability.immutable.current_bubble_joker < 0 then
                 local picked_joker = pseudorandom_element(G.jokers.cards, "fac_lizie_toxikarp_choice")
@@ -1258,7 +1258,7 @@ FishAndChips.Fish {
     end,
 
     calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker then
             G.E_MANAGER:add_event(Event({
                 func = function(e)
                     card.ability.immutable.used_this_round = false
@@ -1290,7 +1290,7 @@ FishAndChips.Fish {
             }
         end
 
-        if context.end_of_round and context.main_eval and not context.blueprint then
+        if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
             G.E_MANAGER:add_event(Event({
                 func = function(e)
                     card.ability.immutable.used_this_round = true

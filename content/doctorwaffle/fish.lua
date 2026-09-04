@@ -342,7 +342,7 @@ FishAndChips.Fish {
         return true
     end,
     calculate = function(self, card, context)
-        if not context.blueprint then
+        if not context.blueprint and not context.retrigger_joker then
             if context.end_of_round and context.main_eval and not context.game_over and card.ability.extra.used_this_round then
                 card.ability.extra.used_this_round = false
                 card:juice_up()
@@ -602,7 +602,7 @@ FishAndChips.Fish {
                 message = localize('k_fac_waffle_tag')
             }
         end
-        if context.ending_fishing and not context.blueprint then
+        if context.ending_fishing and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.tag_created = false
         end
     end,
@@ -631,7 +631,7 @@ FishAndChips.Fish {
     },
     attributes = { "passive" },
     calculate = function(self, card, context)
-        if context.fac_end_fishing and not context.failed and not context.blueprint then
+        if context.fac_end_fishing and not context.failed and not context.blueprint and not context.retrigger_joker then
             -- THIS IS ALL TEMPORARY UNTIL THE BUTTON CALLBACK IS NO LONGER HARDCODED
             -- COPYPASTING HARDCODED CODE IS STINKY AND BAD BUT I LIKE THIS FISH CONCEPT
             G.E_MANAGER:add_event(Event({
@@ -722,7 +722,7 @@ FishAndChips.Fish {
     end,
     blueprint_compat = false,
     calculate = function(self, card, context)
-        if not context.blueprint then
+        if not context.blueprint and not context.retrigger_joker then
             if context.mod_probability and card.ability.extra.active then
                 return {
                     numerator = context.numerator * card.ability.extra.boost
@@ -933,7 +933,7 @@ FishAndChips.Fish {
                 if card.ability.extra.cards_remaining > 0 and not SMODS.has_no_rank(played_card) then
                     affectedCards[#affectedCards + 1] = played_card
 
-                    if not context.blueprint then
+                    if not context.blueprint and not context.retrigger_joker then
                         SMODS.scale_card(card, {
                             ref_table = card.ability.extra,
                             ref_value = "cards_remaining",
@@ -949,7 +949,7 @@ FishAndChips.Fish {
                 SMODS.modify_rank(modify_card, -1)
             end)
             delay(0.875)
-            if not context.blueprint then
+            if not context.blueprint and not context.retrigger_joker then
                 if card.ability.extra.cards_remaining > 0 then
                     return {
                         message = tostring(card.ability.extra.cards_remaining)
@@ -957,7 +957,7 @@ FishAndChips.Fish {
                 end
             end
         end
-        if context.after and not context.blueprint and card.ability.extra.cards_remaining <= 0 then
+        if context.after and not context.blueprint and not context.retrigger_joker and card.ability.extra.cards_remaining <= 0 then
             SMODS.destroy_cards(card, nil, nil, true)
             return {
                 message = localize("k_eaten_ex")
@@ -1276,7 +1276,7 @@ FishAndChips.Fish {
     blueprint_compat = false,
     eternal_compat = false,
     calculate = function(self, card, context)
-        if context.hand_drawn and context.first_hand_drawn and G.GAME.blind and G.GAME.blind.boss and not G.GAME.fac_waffle_snail_activated then
+        if context.hand_drawn and context.first_hand_drawn and G.GAME.blind and G.GAME.blind.boss and not G.GAME.fac_waffle_snail_activated and not context.retrigger_joker then
             G.GAME.fac_waffle_snail_activated = true
             G.E_MANAGER:add_event(Event {
                 func = function()

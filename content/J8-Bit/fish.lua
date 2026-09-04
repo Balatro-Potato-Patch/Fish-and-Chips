@@ -52,7 +52,7 @@ FishAndChips.Fish {
         if context.individual and context.cardarea == G.hand and not context.end_of_round then
             if context.other_card:is_suit(card.ability.extra.suit) and
                 SMODS.pseudorandom_probability(card, 'fac_J8-Bit_money_mola_mola', 1, card.ability.extra.odds) then
-                if context.other_card.debuff then
+                if context.other_card.debuff and not context.retrigger_joker then
                     return {
                         message = localize('k_debuffed'),
                         colour = G.C.RED
@@ -190,14 +190,14 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.mod_probability and not context.blueprint and G.GAME.blind and G.GAME.blind.in_blind then
+        if context.mod_probability and not context.blueprint and not context.retrigger_joker and G.GAME.blind and G.GAME.blind.in_blind then
             if card.ability.extra.hands_counter >= card.ability.extra.hands_needed then
                 return {
                     numerator = context.numerator * card.ability.extra.odds_mult
                 }
             end
         end
-        if context.setting_blind and not context.blueprint and G.GAME.blind and G.GAME.blind.in_blind then
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker and G.GAME.blind and G.GAME.blind.in_blind then
             if card.ability.extra.hands_counter >= card.ability.extra.hands_needed then
                 return {
                     message = localize("k_active_ex"),
@@ -213,7 +213,7 @@ FishAndChips.Fish {
                 }
             end
         end
-        if context.after and not context.blueprint then
+        if context.after and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.hands_counter = (card.ability.extra.hands_counter + 1) %
                 (card.ability.extra.hands_needed + 1)
             if card.ability.extra.hands_counter >= card.ability.extra.hands_needed then
@@ -712,7 +712,7 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.round_counter = card.ability.extra.round_counter + 1
             return {
                 message = (card.ability.extra.round_counter < card.ability.extra.round_max) and
@@ -1070,7 +1070,7 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.fishing_profile and not context.blueprint then
+        if context.fishing_profile and not context.blueprint and not context.retrigger_joker then
             context.fishing_profile.vel_limit = context.fishing_profile.vel_limit * card.ability.extra.fish_cocaine
             context.fishing_profile.impulse_min = context.fishing_profile.impulse_min * card.ability.extra.fish_cocaine
             context.fishing_profile.impulse_max = context.fishing_profile.impulse_max * card.ability.extra.fish_cocaine
@@ -1079,7 +1079,7 @@ FishAndChips.Fish {
             context.fishing_profile.decision_max = math.max(context.fishing_profile.decision_min,
                 context.fishing_profile.decision_max / card.ability.extra.fish_cocaine)
         end
-        if context.fac_treasure_reward and not context.blueprint then
+        if context.fac_treasure_reward and not context.blueprint and not context.retrigger_joker then
             context.fac_treasure_reward = context.fac_treasure_reward * card.ability.extra.treasure_reward
         end
     end
@@ -1463,13 +1463,13 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.modify_scoring_hand and not context.blueprint and context.other_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id and not context.retrigger_joker then
+        if context.modify_scoring_hand and not context.blueprint and context.other_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id and not context.retrigger_joker and not context.retrigger_joker then
             return {
                 add_to_hand = true
             }
         end
 
-        if context.debuff_card and context.debuff_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id and not context.retrigger_joker then
+        if context.debuff_card and context.debuff_card:get_id() == SMODS.Ranks[card.ability.extra.rank].id and not context.retrigger_joker and not context.retrigger_joker then
             return {
                 prevent_debuff = true
             }
@@ -1572,7 +1572,7 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker then
             return {
                 message = localize("k_J8-Bit_ts_active"),
                 colour = G.C.GREEN,

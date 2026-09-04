@@ -308,340 +308,341 @@ FishAndChips.Fish {
 
     calculate = function(self, card, context)
         local cae = card.ability.extra
+        if not context.retrigger_joker then
+            if context.remove_playing_cards then
+                for i, v in ipairs(context.removed) do
+                    if v.ability.noir_mark then
+                        local noirflags = {}
+                        for kk, vv in pairs(v.ability) do
+                            if string.find(kk, "noir") then
+                                noirflags[kk] = vv
+                            end
+                        end
 
-        if context.remove_playing_cards then
-            for i, v in ipairs(context.removed) do
-                if v.ability.noir_mark then
-                    local noirflags = {}
-                    for kk, vv in pairs(v.ability) do
-                        if string.find(kk, "noir") then
-                            noirflags[kk] = vv
+                        local unmarked_cards = {}
+                        for ii,vv in ipairs(G.playing_cards) do
+                            if not vv.ability.noir_mark then
+                                unmarked_cards[#unmarked_cards+1] = vv
+                            end
+                        end
+
+                        local new_card = pseudorandom_element(unmarked_cards, "fac_move_noir_mark")
+                        for kk,vv in pairs(noirflags) do
+                            new_card.ability[kk] = vv
                         end
                     end
+                end
+            end
 
-                    local unmarked_cards = {}
-                    for ii,vv in ipairs(G.playing_cards) do
-                        if not vv.ability.noir_mark then
-                            unmarked_cards[#unmarked_cards+1] = vv
+            if context.fac_proto_progressing_noir_story then
+                if context.noir_level then
+                    cae.level = context.noir_level
+                    local oldstate = cae.storyState
+                    cae.storyState = cae.new_noir_levels[context.noir_level].state
+                    if cae.storyState ~= oldstate then
+                        if cae.storyState == noir_states.warehouse then
+                            G.GAME.proto_q_music = "noir2"
+                        elseif cae.storyState == noir_states.timed_search then
+                            cae.final_investigation = 1
+                            cae.hand_limit = 20
+                        elseif cae.storyState == noir_states.hearing then
+                            cae.final_court = 1
+                            cae.hand_limit = 7
+                            G.GAME.noir_pts = 0
+                        elseif cae.storyState == noir_states.chase then
+                            cae.hand_limit = 3
+                        elseif cae.storyState == noir_states.finished then
+                            cae.storyActive = false
+                            cae.storyComplete = true
+                            card.ability.eternal = false
                         end
                     end
-
-                    local new_card = pseudorandom_element(unmarked_cards, "fac_move_noir_mark")
-                    for kk,vv in pairs(noirflags) do
-                        new_card.ability[kk] = vv
+                    if cae.final_court then
+                        local court_items = {}
+                        for i, jtem in ipairs(cae.noir_inv) do
+                            court_items[#court_items+1] = { key = jtem }
+                        end
+                        court_items.state = cae.new_noir_levels[12].state
+                        cae.new_noir_levels[12] = court_items
                     end
+                    facp.loadLevel(card, context.noir_level)
+                end
+
+                if context.noir_flag then
+                    G.FUNCS.overlay_menu { definition = facp.noirDialog(context.noir_flag) }
                 end
             end
-        end
 
-        if context.fac_proto_progressing_noir_story then
-            if context.noir_level then
-                cae.level = context.noir_level
-                local oldstate = cae.storyState
-                cae.storyState = cae.new_noir_levels[context.noir_level].state
-                if cae.storyState ~= oldstate then
-                    if cae.storyState == noir_states.warehouse then
-                        G.GAME.proto_q_music = "noir2"
-                    elseif cae.storyState == noir_states.timed_search then
-                        cae.final_investigation = 1
-                        cae.hand_limit = 20
-                    elseif cae.storyState == noir_states.hearing then
-                        cae.final_court = 1
-                        cae.hand_limit = 7
-                        G.GAME.noir_pts = 0
-                    elseif cae.storyState == noir_states.chase then
-                        cae.hand_limit = 3
-                    elseif cae.storyState == noir_states.finished then
-                        cae.storyActive = false
-                        cae.storyComplete = true
-                        card.ability.eternal = false
+            --#region helper functions
+            local function noir_trigger(triggered_card)
+                triggered_card.noir_triggered = true
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        triggered_card.ability.noir_triggered = nil --kinda an artifact, this is handled in the dev object now, but probably better to leave it
+                        triggered_card:juice_up()
+                        return true;
                     end
-                end
-                if cae.final_court then
-                    local court_items = {}
-                    for i, jtem in ipairs(cae.noir_inv) do
-                        court_items[#court_items+1] = { key = jtem }
-                    end
-                    court_items.state = cae.new_noir_levels[12].state
-                    cae.new_noir_levels[12] = court_items
-                end
-                facp.loadLevel(card, context.noir_level)
+                }))
             end
 
-            if context.noir_flag then
-                G.FUNCS.overlay_menu { definition = facp.noirDialog(context.noir_flag) }
-            end
-        end
-
-        --#region helper functions
-        local function noir_trigger(triggered_card)
-            triggered_card.noir_triggered = true
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    triggered_card.ability.noir_triggered = nil --kinda an artifact, this is handled in the dev object now, but probably better to leave it
-                    triggered_card:juice_up()
-                    return true;
-                end
-            }))
-        end
-
-        local function remove_item_from_current_level(item_key)
-            dprint"Removing item"
-            local removed
-            for i, item_data in ipairs(cae.new_noir_levels[cae.level]) do
-                if item_key == item_data.key then
-                    removed = table.remove(cae.new_noir_levels[cae.level], i)
-                    break
-                end
-            end
-            if removed then
-                for _,v in ipairs(G.playing_cards) do
-                    if v.noir_mark == removed.key and v.noir_plot == v.plot and v.noir_level == v.level then
-                        v.noir_mark = nil
-                        v.noir_plot = nil
-                        v.noir_level = nil
+            local function remove_item_from_current_level(item_key)
+                dprint"Removing item"
+                local removed
+                for i, item_data in ipairs(cae.new_noir_levels[cae.level]) do
+                    if item_key == item_data.key then
+                        removed = table.remove(cae.new_noir_levels[cae.level], i)
                         break
                     end
                 end
-            end
-        end
-
-        local function use_door(door_card)
-            local doormark = door_card.ability.noir_mark
-            if not string.find(doormark or "", "door") then
-                return false
-            end
-            noir_trigger(door_card)
-            dprint"Using door"
-            if (cae.noir_keys <= 0 and doormark == "lockdoor") or doormark == "truedoor" then
-                dprint"Locked, no key"
-                SMODS.calculate_effect{message = localize("proot_noir_locked"), card = door_card}
-                return false
-            elseif cae.noir_keys > 0 and doormark == "lockdoor" then
-                dprint"Unlocking"
-                cae.noir_keys = cae.noir_keys - 1
-                door_card.ability.noir_mark = "door"
-                for i,v in ipairs(cae.new_noir_levels[cae.level]) do
-                    if v.level == door_card.ability.noir_level then
-                        v.key = "door"
-                    end
-                end
-                SMODS.calculate_effect{message = localize("proot_noir_unlocked"), card = door_card}
-            end
-
-            local flag, level = door_card.ability.noir_plot, door_card.ability.noir_level
-            facp.noirProg({ flg = flag, lvl = level })
-            return true
-        end
-
-        local function claim_item(item_card)
-            dprint"Claiming item"
-            local mark = item_card.ability.noir_mark
-            if cae.storyState == noir_states.chase then
-                cae.hand_limit = cae.hand_limit + 2
-            else
-                if not item_card.ability.aux then
-                    if mark == "key" then
-                        cae.noir_keys = cae.noir_keys + 1
-                    else
-                        cae.noir_inv[#cae.noir_inv+1] = mark
-                    end
-                end
-            end
-            if not item_card.ability.aux then
-                G.E_MANAGER:add_event(Event{
-                    func = function ()
-                        remove_item_from_current_level(mark)
-                        item_card.ability.noir_mark = nil
-                        return true
-                    end
-                })
-            end
-            noir_trigger(item_card)
-            if cae.storyState ~= noir_states.chase then
-                use_door(item_card)
-            end
-        end
-        --#endregion
-
-        local storyState = cae.storyState
-
-        if storyState == noir_states.finished then
-
-            if cae.finalScore > 144 and context.joker_main then
-                local ret = {}
-                ret.chips = cae.finalScore * 2
-                if cae.finalScore > 184 then
-                    ret.xmult = cae.finalScore/100
-                end
-
-                return ret
-            end
-        end
-
-        if context.setting_blind and G.GAME.noir_popup then
-            G.GAME.noir_popup = false
-        end
-
-        if context.retrigger_joker or not cae.storyActive then return end
-
-        if storyState == noir_states.drink then
-            if context.individual and context.cardarea == G.play and not context.other_card.noir_triggered and context.other_card.ability.noir_mark == "soda" and context.other_card.ability.noir_level then
-                G.GAME.proto_q_music = "noir2"
-                noir_trigger(context.other_card)
-                facp.noirProg({ flg = context.other_card.ability.noir_plot, lvl = context.other_card.ability.noir_level })
-            end
-        end
-
-        if storyState == noir_states.warehouse then
-            if context.individual and context.cardarea == G.play and context.other_card.ability.noir_mark and not context.other_card.noir_triggered then
-                claim_item(context.other_card)
-            end
-
-            if context.after then
-                local need = {
-                    fabric = true,
-                    bcard = true,
-                    pen = true,
-                }
-                local total = 0
-                for _,item in pairs(cae.noir_inv) do
-                    if need[item] then total = total + 1 end
-                end
-                if total > 2 then
-                    facp.noirProg({ flg = 3, lvl = 4 })
-                    G.GAME.noir_popup = true
-                end
-            end
-        end
-
-        if storyState == noir_states.go_home then
-            if context.end_of_round and context.main_eval and not G.GAME.noir_popup then
-                facp.noirProg({ flg = 4, lvl = 5 })
-            end
-        end
-
-        if storyState == noir_states.call then
-            if context.individual and context.cardarea == G.play and context.other_card.ability.noir_mark == "booth" and not context.other_card.noir_triggered then
-                dprint("Calling the lady...")
-                noir_trigger(context.other_card)
-                remove_item_from_current_level(context.other_card.ability.noir_mark)
-                facp.noirProg({ flg = context.other_card.ability.noir_plot, lvl = context.other_card.ability.noir_level })
-            end
-        end
-
-        if storyState == noir_states.timed_search then
-            if context.press_play then
-                cae.hand_limit = cae.hand_limit - 1
-                return {
-                    message = cae.hand_limit.." "..localize("proot_noir_hands")
-                }
-            end
-
-            if context.individual and context.cardarea == G.play and context.other_card.ability.noir_mark and not context.other_card.noir_triggered then
-                claim_item(context.other_card)
-            end
-            if context.after then
-                local should_progress = cae.hand_limit <= 0
-                if not should_progress then
-                    local true_memo_needed = (G.GAME.fac_proto_noir_lockpick_used or next(SMODS.find_card("fish_fac_proto_lockpick")))
-                    local needed = {
-                        gun = true,
-                        ledger = true,
-                        knife = true,
-                        true_memo = true_memo_needed
-                    }
-                    local unfound = true_memo_needed and 4 or 3
-                    for _,v in ipairs(cae.noir_inv) do
-                        if needed[v] then
-                            unfound = unfound - 1
+                if removed then
+                    for _,v in ipairs(G.playing_cards) do
+                        if v.noir_mark == removed.key and v.noir_plot == v.plot and v.noir_level == v.level then
+                            v.noir_mark = nil
+                            v.noir_plot = nil
+                            v.noir_level = nil
+                            break
                         end
                     end
-                    if unfound <= 0 then should_progress = true end
-                end
-                if should_progress then
-                    facp.noirProg({flg = 6, lvl = 12})
                 end
             end
-        end
 
-        if storyState == noir_states.hearing then
-            if context.press_play then
-                cae.hand_limit = cae.hand_limit - 1
-                return {
-                    message = cae.hand_limit.." "..localize("proot_noir_hands")
-                }
+            local function use_door(door_card)
+                local doormark = door_card.ability.noir_mark
+                if not string.find(doormark or "", "door") then
+                    return false
+                end
+                noir_trigger(door_card)
+                dprint"Using door"
+                if (cae.noir_keys <= 0 and doormark == "lockdoor") or doormark == "truedoor" then
+                    dprint"Locked, no key"
+                    SMODS.calculate_effect{message = localize("proot_noir_locked"), card = door_card}
+                    return false
+                elseif cae.noir_keys > 0 and doormark == "lockdoor" then
+                    dprint"Unlocking"
+                    cae.noir_keys = cae.noir_keys - 1
+                    door_card.ability.noir_mark = "door"
+                    for i,v in ipairs(cae.new_noir_levels[cae.level]) do
+                        if v.level == door_card.ability.noir_level then
+                            v.key = "door"
+                        end
+                    end
+                    SMODS.calculate_effect{message = localize("proot_noir_unlocked"), card = door_card}
+                end
+
+                local flag, level = door_card.ability.noir_plot, door_card.ability.noir_level
+                facp.noirProg({ flg = flag, lvl = level })
+                return true
             end
 
-            if context.individual and context.cardarea == G.play and context.other_card.ability.noir_mark and not context.other_card.noir_triggered and #cae.evidence_presented < 3 then
-                noir_trigger(context.other_card)
-                print"Presenting evidence"
-                local mark = context.other_card.ability.noir_mark
-                G.GAME.noir_pts = G.GAME.noir_pts + facp.itemScores[mark].Pts
-                G.GAME.noir_pts = G.GAME.noir_pts * facp.itemScores[mark].xPts
-                cae.evidence_presented[#cae.evidence_presented+1] = mark
-            end
-
-            if context.after then
-                if #cae.evidence_presented >= 3 then
-                    cae.noir_inv = {}
-                    for i,v in ipairs(cae.evidence_presented) do
-                        if i>3 then
-                            cae.evidence_presented[i] = nil
+            local function claim_item(item_card)
+                dprint"Claiming item"
+                local mark = item_card.ability.noir_mark
+                if cae.storyState == noir_states.chase then
+                    cae.hand_limit = cae.hand_limit + 2
+                else
+                    if not item_card.ability.aux then
+                        if mark == "key" then
+                            cae.noir_keys = cae.noir_keys + 1
                         else
-                            cae.noir_inv[i] = v
+                            cae.noir_inv[#cae.noir_inv+1] = mark
                         end
                     end
+                end
+                if not item_card.ability.aux then
+                    G.E_MANAGER:add_event(Event{
+                        func = function ()
+                            remove_item_from_current_level(mark)
+                            item_card.ability.noir_mark = nil
+                            return true
+                        end
+                    })
+                end
+                noir_trigger(item_card)
+                if cae.storyState ~= noir_states.chase then
+                    use_door(item_card)
+                end
+            end
+            --#endregion
 
-                    local level = 14
-                    local flag = 7
-                    
-                    for i,v in ipairs(cae.noir_inv) do
-                        dprint(v)
-                        if v == "true_memo" then
-                            dprint("Beginning true ending!")
-                            flag = 8
-                            level = 13
-                            cae.trueEnd = true
-                        end --Is it still absolute cinema if there's a line break in between...?
+            local storyState = cae.storyState
+
+            if storyState == noir_states.finished then
+
+                if cae.finalScore > 144 and context.joker_main then
+                    local ret = {}
+                    ret.chips = cae.finalScore * 2
+                    if cae.finalScore > 184 then
+                        ret.xmult = cae.finalScore/100
                     end
-                    facp.noirProg({ flg = flag, lvl = level })
-                end
 
-                if cae.hand_limit <= 0 and not cae.trueEnd then
-                    facp.noirProg({flg = 7, lvl = 14})
+                    return ret
                 end
             end
-        end
 
-        if storyState == noir_states.chase then
-            if context.press_play then
-                cae.hand_limit = cae.hand_limit - 1
-                return {
-                    message = cae.hand_limit.." / 10"
-                }
+            if context.setting_blind and G.GAME.noir_popup then
+                G.GAME.noir_popup = false
             end
 
-            if context.hand_drawn then
-                for _,pcard in ipairs(G.hand.cards) do
-                    pcard.ability.noir_mark = nil
+            if context.retrigger_joker or not cae.storyActive then return end
+
+            if storyState == noir_states.drink then
+                if context.individual and context.cardarea == G.play and not context.other_card.noir_triggered and context.other_card.ability.noir_mark == "soda" and context.other_card.ability.noir_level then
+                    G.GAME.proto_q_music = "noir2"
+                    noir_trigger(context.other_card)
+                    facp.noirProg({ flg = context.other_card.ability.noir_plot, lvl = context.other_card.ability.noir_level })
                 end
-                local item_card = pseudorandom_element(G.hand.cards,"noir_item")
-                item_card.ability.noir_mark = pseudorandom_element(item_keys,"noir_mark_item")
             end
 
-            if context.individual and context.cardarea == G.play and context.other_card.ability.noir_mark and not context.other_card.noir_triggered then
-                claim_item(context.other_card)
+            if storyState == noir_states.warehouse then
+                if context.individual and context.cardarea == G.play and context.other_card.ability.noir_mark and not context.other_card.noir_triggered then
+                    claim_item(context.other_card)
+                end
+
+                if context.after then
+                    local need = {
+                        fabric = true,
+                        bcard = true,
+                        pen = true,
+                    }
+                    local total = 0
+                    for _,item in pairs(cae.noir_inv) do
+                        if need[item] then total = total + 1 end
+                    end
+                    if total > 2 then
+                        facp.noirProg({ flg = 3, lvl = 4 })
+                        G.GAME.noir_popup = true
+                    end
+                end
             end
 
-            if context.after then
-                if cae.hand_limit >= 10 then
-                    cae.storyActive = false
-                    cae.storyComplete = true
-                    cae.finalScore = G.GAME.noir_pts or 0
-                    facp.noirProg({flg = 7, lvl = 14})
-                elseif cae.hand_limit <= 0 then
-                    SMODS.destroy_cards(card, {pinch_anim = true, bypass_eternal = true})
+            if storyState == noir_states.go_home then
+                if context.end_of_round and context.main_eval and not G.GAME.noir_popup then
+                    facp.noirProg({ flg = 4, lvl = 5 })
+                end
+            end
+
+            if storyState == noir_states.call then
+                if context.individual and context.cardarea == G.play and context.other_card.ability.noir_mark == "booth" and not context.other_card.noir_triggered then
+                    dprint("Calling the lady...")
+                    noir_trigger(context.other_card)
+                    remove_item_from_current_level(context.other_card.ability.noir_mark)
+                    facp.noirProg({ flg = context.other_card.ability.noir_plot, lvl = context.other_card.ability.noir_level })
+                end
+            end
+
+            if storyState == noir_states.timed_search then
+                if context.press_play then
+                    cae.hand_limit = cae.hand_limit - 1
+                    return {
+                        message = cae.hand_limit.." "..localize("proot_noir_hands")
+                    }
+                end
+
+                if context.individual and context.cardarea == G.play and context.other_card.ability.noir_mark and not context.other_card.noir_triggered then
+                    claim_item(context.other_card)
+                end
+                if context.after then
+                    local should_progress = cae.hand_limit <= 0
+                    if not should_progress then
+                        local true_memo_needed = (G.GAME.fac_proto_noir_lockpick_used or next(SMODS.find_card("fish_fac_proto_lockpick")))
+                        local needed = {
+                            gun = true,
+                            ledger = true,
+                            knife = true,
+                            true_memo = true_memo_needed
+                        }
+                        local unfound = true_memo_needed and 4 or 3
+                        for _,v in ipairs(cae.noir_inv) do
+                            if needed[v] then
+                                unfound = unfound - 1
+                            end
+                        end
+                        if unfound <= 0 then should_progress = true end
+                    end
+                    if should_progress then
+                        facp.noirProg({flg = 6, lvl = 12})
+                    end
+                end
+            end
+
+            if storyState == noir_states.hearing then
+                if context.press_play then
+                    cae.hand_limit = cae.hand_limit - 1
+                    return {
+                        message = cae.hand_limit.." "..localize("proot_noir_hands")
+                    }
+                end
+
+                if context.individual and context.cardarea == G.play and context.other_card.ability.noir_mark and not context.other_card.noir_triggered and #cae.evidence_presented < 3 then
+                    noir_trigger(context.other_card)
+                    print"Presenting evidence"
+                    local mark = context.other_card.ability.noir_mark
+                    G.GAME.noir_pts = G.GAME.noir_pts + facp.itemScores[mark].Pts
+                    G.GAME.noir_pts = G.GAME.noir_pts * facp.itemScores[mark].xPts
+                    cae.evidence_presented[#cae.evidence_presented+1] = mark
+                end
+
+                if context.after then
+                    if #cae.evidence_presented >= 3 then
+                        cae.noir_inv = {}
+                        for i,v in ipairs(cae.evidence_presented) do
+                            if i>3 then
+                                cae.evidence_presented[i] = nil
+                            else
+                                cae.noir_inv[i] = v
+                            end
+                        end
+
+                        local level = 14
+                        local flag = 7
+                        
+                        for i,v in ipairs(cae.noir_inv) do
+                            dprint(v)
+                            if v == "true_memo" then
+                                dprint("Beginning true ending!")
+                                flag = 8
+                                level = 13
+                                cae.trueEnd = true
+                            end --Is it still absolute cinema if there's a line break in between...?
+                        end
+                        facp.noirProg({ flg = flag, lvl = level })
+                    end
+
+                    if cae.hand_limit <= 0 and not cae.trueEnd then
+                        facp.noirProg({flg = 7, lvl = 14})
+                    end
+                end
+            end
+
+            if storyState == noir_states.chase then
+                if context.press_play then
+                    cae.hand_limit = cae.hand_limit - 1
+                    return {
+                        message = cae.hand_limit.." / 10"
+                    }
+                end
+
+                if context.hand_drawn then
+                    for _,pcard in ipairs(G.hand.cards) do
+                        pcard.ability.noir_mark = nil
+                    end
+                    local item_card = pseudorandom_element(G.hand.cards,"noir_item")
+                    item_card.ability.noir_mark = pseudorandom_element(item_keys,"noir_mark_item")
+                end
+
+                if context.individual and context.cardarea == G.play and context.other_card.ability.noir_mark and not context.other_card.noir_triggered then
+                    claim_item(context.other_card)
+                end
+
+                if context.after then
+                    if cae.hand_limit >= 10 then
+                        cae.storyActive = false
+                        cae.storyComplete = true
+                        cae.finalScore = G.GAME.noir_pts or 0
+                        facp.noirProg({flg = 7, lvl = 14})
+                    elseif cae.hand_limit <= 0 then
+                        SMODS.destroy_cards(card, {pinch_anim = true, bypass_eternal = true})
+                    end
                 end
             end
         end
@@ -711,7 +712,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         local cae = card.ability.extra
 
-        if context.hand_drawn then
+        if context.hand_drawn and not context.retrigger_joker then
             dprint"Checking for true door..."
             G.E_MANAGER:add_event(Event{
                 func = function ()

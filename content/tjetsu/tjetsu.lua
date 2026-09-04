@@ -164,6 +164,7 @@ FishAndChips.Fish { -- Ineffa
 					}
 				}
 			})
+			return nil, true
 		end
 		if context.repetition and context.cardarea == G.play and card.ability.extra.ucount > 0 then
 			return {
@@ -210,11 +211,12 @@ FishAndChips.Fish { --Sans
 			card.ability.extra.flag = true
 		end
 		if context.failed and context.fac_end_fishing then
-		SMODS.scale_card (card, {
-            ref_table = card.ability.extra,
-            ref_value = "chipscale",
-            scalar_value = "chipfailscale",
-        })
+			SMODS.scale_card (card, {
+				ref_table = card.ability.extra,
+				ref_value = "chipscale",
+				scalar_value = "chipfailscale",
+			})
+			return nil, true
 		end
 		if context.hand_drawn then
 			for i, v in ipairs(context.hand_drawn) do
@@ -226,6 +228,7 @@ FishAndChips.Fish { --Sans
 					})
 				end
 			end
+			return nil, true
 		end
 		if context.joker_main then
 			return {

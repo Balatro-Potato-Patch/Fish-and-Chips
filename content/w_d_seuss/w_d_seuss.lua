@@ -420,7 +420,7 @@ FishAndChips.Fish {
 				xblindsize = card.ability.extra.blind
 			}
 		end
-		if context.final_scoring_step then
+		if context.final_scoring_step and not context.retrigger_joker then
 			SMODS.destroy_cards(card, nil, nil, true)
 			return {
 				message = localize('k_extinct_ex'),
@@ -458,7 +458,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.xmult, card.ability.extra.rounds_total, card.ability.extra.rounds, ppu_bubbles = { card.ability.extra.rounds == 0 and "active" or "inactive" } } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			if card.ability.extra.rounds <= 0 then
 			else
 				card.ability.extra.rounds = card.ability.extra.rounds - 1
@@ -1045,7 +1045,7 @@ FishAndChips.Fish {
 				message = localize('k_bigtrout'),
 			}
 		end
-		if context.end_of_round and context.game_over == false and context.main_eval and card.ability.extra.f1 == false then
+		if context.end_of_round and context.game_over == false and context.main_eval and card.ability.extra.f1 == false and not context.retrigger_joker then
 			card.ability.extra.f1 = true
 			local eval = function(card) return card.ability.extra.f1 == true and not card.REMOVED end
 			juice_card_until(card, eval, true)

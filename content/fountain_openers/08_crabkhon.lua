@@ -32,11 +32,11 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.rerolls, card.ability.extra.remaining } }
 	end,
 	calculate = function(self, card, context)
-		if context.starting_shop then
+		if context.starting_shop and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.old_remaining = card.ability.extra.remaining
 		end
 
-		if context.reroll_shop and card.ability.extra.remaining > 0 then
+		if context.reroll_shop and card.ability.extra.remaining > 0 and not context.blueprint and not context.retrigger_joker then
 			for _, v in pairs(G.fac_fish_area.cards) do
 				if v.ability.extra.i_rerolled and v ~= card then
 					print(v.config.center_key .. ' rerolled before ' .. self.key)
@@ -59,11 +59,11 @@ FishAndChips.Fish {
             }
 		end
 
-		if context.ending_shop then
+		if context.ending_shop and not context.blueprint and not context.retrigger_joker then
 			SMODS.change_free_rerolls(card.ability.extra.remaining - card.ability.extra.old_remaining)
 		end
 
-		if context.ante_change and context.ante_end then
+		if context.ante_change and context.ante_end and not context.blueprint and not context.retrigger_joker then
 			local mod = card.ability.extra.rerolls - card.ability.extra.remaining
 			card.ability.extra.remaining = card.ability.extra.rerolls
 			SMODS.change_free_rerolls(mod)

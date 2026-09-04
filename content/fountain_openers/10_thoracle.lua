@@ -54,7 +54,7 @@ FishAndChips.Fish {
         }
 	end,
     calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.active = true
             return {
                 message = localize{

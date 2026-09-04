@@ -317,11 +317,11 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.face_down_x_chips, total } }
 	end,
 	calculate = function(self, card, context)
-		if context.stay_flipped and not context.blueprint and context.from_area == G.deck and context.to_area == G.hand and G.GAME.current_round.hands_played == 0 then
+		if context.stay_flipped and not context.blueprint and context.from_area == G.deck and context.to_area == G.hand and G.GAME.current_round.hands_played == 0 and not context.retrigger_joker then
 			return {
 				stay_flipped = true,
 			}
-		elseif context.first_hand_drawn and not context.blueprint then
+		elseif context.first_hand_drawn and not context.blueprint and not context.retrigger_joker then
 			return {
 				message = localize("k_aureallu_blooper"),
 				colour = G.C.BLACK
@@ -469,7 +469,7 @@ FishAndChips.Fish {
 		return { vars = { zero_signed(card.ability.extra.mult_gain), card.ability.immutable.last_slots_max, zero_signed(card.ability.extra.total_mult) } }
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint then
+		if context.before and not context.blueprint and not context.retrigger_joker then
 			local same_slot = false
 			local slot = table_find(G.fac_fish_area.cards, card)
 			for _, prev_slot in ipairs(card.ability.immutable.last_slots) do
@@ -641,7 +641,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		-- Thanks once more, Vanillaremade !!
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			if SMODS.pseudorandom_probability(card, 'fac_aureallu_gouramichel', 1, card.ability.extra.michel_odds) then
 				SMODS.destroy_cards(card, nil, nil, true)
 				G.GAME.pool_flags.fac_aureallu_gouramichel = true
@@ -694,7 +694,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		-- Thanks once more, Vanillaremade !!
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			if SMODS.pseudorandom_probability(card, 'fac_aureallu_cavenfish', 1, card.ability.extra.cavenfish_odds) then
 				SMODS.destroy_cards(card, nil, nil, true)
 				return {
@@ -816,9 +816,9 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.x_treasure } }
 	end,
 	calculate = function(self, card, context)
-		if context.fishing_profile then
+		if context.fishing_profile and not context.retrigger_joker then
 			context.fishing_profile.treasure_gain = context.fishing_profile.treasure_gain * card.ability.extra.x_treasure
-		elseif context.fac_treasure_reward then
+		elseif context.fac_treasure_reward and not context.retrigger_joker then
 			context.fac_treasure_reward = math.floor(context.fac_treasure_reward * card.ability.extra.x_treasure)
 		end
 	end,
@@ -853,7 +853,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.max_cards, card.ability.extra.remaining_uses, card.ability.extra.max_uses } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and not context.game_over and context.main_eval then
+		if context.end_of_round and not context.game_over and context.main_eval and not context.retrigger_joker then
 			local before = card.ability.extra.remaining_uses
 			card.ability.extra.remaining_uses = card.ability.extra.max_uses
 			if before < card.ability.extra.max_uses then
@@ -943,7 +943,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.rounds_total, card.ability.extra.rounds_needed } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and not context.game_over and context.main_eval then
+		if context.end_of_round and not context.game_over and context.main_eval and not context.retrigger_joker then
 			card.ability.extra.rounds_total = card.ability.extra.rounds_total + 1
 			if card.ability.extra.rounds_total >= card.ability.extra.rounds_needed then
 				juice_card_until(card, function()
@@ -1013,7 +1013,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.extra_draw, card.ability.extra.cost + (card.ability.used_this_round and card.ability.extra.cost_increase or 0), card.ability.extra.cost_increase } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and not context.game_over and context.main_eval then
+		if context.end_of_round and not context.game_over and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			card.ability.used_this_round = nil
 		end
 	end,
@@ -1579,7 +1579,7 @@ FishAndChips.Fish {
 		return { main_end = main_end, vars = { ppu_bubbles = { card.ability.extra.active and "active" or "inactive" } } }
 	end,
 	calculate = function(self, card, context)
-		if not card.ability.extra.active and context.before and next(context.poker_hands["Flush"]) and next(context.poker_hands["Pair"]) then
+		if not card.ability.extra.active and context.before and next(context.poker_hands["Flush"]) and next(context.poker_hands["Pair"]) and not context.blueprint and not context.retrigger_joker then
 			local has_wild = false
 			for i, pcard in ipairs(context.full_hand) do
 				if SMODS.has_enhancement(pcard, "m_wild") then
@@ -1740,7 +1740,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.x_sell_cost, card.ability.extra.remaining_uses, card.ability.extra.max_uses } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and not context.game_over and context.main_eval and not context.blueprint then
+		if context.end_of_round and not context.game_over and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			local before = card.ability.extra.remaining_uses
 			card.ability.extra.remaining_uses = card.ability.extra.max_uses
 			if before < card.ability.extra.max_uses then
@@ -1872,7 +1872,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.max_cards, card.ability.extra.remaining_uses, card.ability.extra.max_uses } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and not context.game_over and context.main_eval then
+		if context.end_of_round and not context.game_over and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			local before = card.ability.extra.remaining_uses
 			card.ability.extra.remaining_uses = card.ability.extra.max_uses
 			if before < card.ability.extra.max_uses then
@@ -2107,7 +2107,7 @@ FishAndChips.Fish {
 		return { vars = { numerator_disable, denominator_disable, numerator_boom, denominator_boom, card.ability.extra.remaining_uses, card.ability.extra.max_uses } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and not context.game_over and context.main_eval and not context.blueprint then
+		if context.end_of_round and not context.game_over and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			local before = card.ability.extra.remaining_uses
 			card.ability.extra.remaining_uses = card.ability.extra.max_uses
 			if before < card.ability.extra.max_uses then
@@ -2271,7 +2271,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.mult_per_weight, card.ability.weight_step, 1 + math.floor((card.ability.stats or { weight = 100 }).weight / card.ability.weight_step) * card.ability.mult_per_weight } }
 	end,
 	calculate = function(self, card, context)
-		if context.setting_blind and not context.blueprint then
+		if context.setting_blind and not context.blueprint and not context.retrigger_joker then
 			local my_pos = nil
 			for i = 1, #G.fac_fish_area.cards do
 				if G.fac_fish_area.cards[i] == card then

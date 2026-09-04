@@ -408,7 +408,7 @@ FishAndChips.Fish {
 		return { vars = { numerator, denominator, card.ability.extra.repetitions, card.ability.extra.numerator_increase } }
 	end,
 	calculate = function(self, card, context)
-		if context.fac_fish_caught and not context.blueprint then
+		if context.fac_fish_caught and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.unique_fish[context.fish] = true
 		elseif context.repetition and context.cardarea == G.hand then
 			local unique_fish = table_length(card.ability.extra.unique_fish)

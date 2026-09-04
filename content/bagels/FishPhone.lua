@@ -51,7 +51,7 @@ FishAndChips.Fish {
 		})
 	end,
 	calculate = function(_, card, context)
-		if context.reroll_shop and not context.blueprint then
+		if context.reroll_shop and not context.blueprint and not context.retrigger_joker then
 			local cards = {}
 			for _, v in ipairs(G.jokers.cards) do
 				cards[#cards + 1] = v

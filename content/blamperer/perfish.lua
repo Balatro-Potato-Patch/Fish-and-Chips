@@ -38,7 +38,7 @@ FishAndChips.Fish {
         pier = 10,
     },
     calculate = function(self, card, context)
-        if context.fac_end_fishing and not context.blueprint then
+        if context.fac_end_fishing and not context.blueprint and not context.retrigger_joker then
             local break_streak = true
             if not context.failed then
                 if context.perfect then

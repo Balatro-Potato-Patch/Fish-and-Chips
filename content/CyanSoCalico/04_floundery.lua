@@ -185,10 +185,10 @@ FishAndChips.Fish {
 				card = context.blueprint and context.blueprint_card or card
 			}
 		end
-		if context.selling_self and not context.blueprint then
+		if context.selling_self and not context.blueprint and not context.retrigger_joker then
 			play_sound("fac_floundery_goodbye")
 		end
-		if context.joker_type_destroyed and context.card == card and not context.blueprint then
+		if context.joker_type_destroyed and context.card == card and not context.blueprint and not context.retrigger_joker then
 			play_sound("fac_floundery_goodbye")
 			play_sound("fac_floundery_explosion", nil, 0.3)
 		end

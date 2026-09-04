@@ -69,7 +69,7 @@ FishAndChips.Fish {
         end
     end,
     calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.play and context.other_card:get_id() == 2 and not context.blueprint then
+		if context.individual and context.cardarea == G.play and context.other_card:get_id() == 2 and not context.blueprint and not context.retrigger_joker then
             if card.ability.extra.count_cards > 1 then
                 card.ability.extra.count_cards = card.ability.extra.count_cards - 1
                 return {
@@ -389,7 +389,7 @@ FishAndChips.Fish {
                 end
             }
         end
-        if context.fac_end_fishing and context.missed_treasure and not context.blueprint and card.ability.extra.xmult ~= 1 then
+        if context.fac_end_fishing and context.missed_treasure and not context.blueprint and not context.retrigger_joker and card.ability.extra.xmult ~= 1 then
             local reset_xmult = -card.ability.extra.xmult + 1
 			return {
 				card = card,

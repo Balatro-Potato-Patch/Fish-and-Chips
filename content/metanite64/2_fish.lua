@@ -319,7 +319,7 @@ FishAndChips.Fish {
     blueprint_compat = false,
 
     calculate = function(self, card, context)
-        if context.before then
+        if context.before and not context.retrigger_joker then
             local queens = {}
             local kings = {}
             local yuri = false
@@ -384,7 +384,7 @@ FishAndChips.Fish {
     blueprint_compat = false,
 
     calculate = function(self, card, context)
-        if context.fishing_profile and not context.blueprint then
+        if context.fishing_profile and not context.blueprint and not context.retrigger_joker then
             local fp = context.fishing_profile
             fp.treasure_gain = fp.treasure_gain * 3
             fp.vel_limit = fp.vel_limit * 2

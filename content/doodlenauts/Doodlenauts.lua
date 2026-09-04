@@ -304,7 +304,7 @@ FishAndChips.Fish {
         info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
     end,
 	calculate = function(self, card, context)
-		if context.mod_probability and (context.identifier == "lucky_mult" or context.identifier == "lucky_money") then
+		if context.mod_probability and (context.identifier == "lucky_mult" or context.identifier == "lucky_money") and not context.retrigger_joker then
 			return { numerator = 3 }
 		end
 	end
@@ -403,7 +403,7 @@ FishAndChips.Fish {
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			local selectable_suits = {}
 			for k, v in pairs(SMODS.Suits) do
 				if k ~= card.ability.extra.suit then selectable_suits[#selectable_suits + 1] = k end
@@ -497,7 +497,7 @@ FishAndChips.Fish {
         }))
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.game_over == false and card.ability.extra.loanshark_current_debt > 0 and not context.blueprint then
+		if context.end_of_round and context.game_over == false and card.ability.extra.loanshark_current_debt > 0 and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.loanshark_current_debt = card.ability.extra.loanshark_current_debt - card.ability.extra.payback_per_round
 			if card.ability.extra.loanshark_current_debt <= 0 then
 				G.E_MANAGER:add_event(Event({
@@ -631,7 +631,7 @@ FishAndChips.Fish {
 				sell_mult = card.ability.extra.legendary_mult
 			end
 			if sell_mult > 0 then
-				if not context.blueprint then
+				if not context.blueprint and not context.retrigger_joker then
 					SMODS.destroy_cards(card, nil, nil, true)
 				end
 				return {
@@ -684,7 +684,7 @@ FishAndChips.Fish {
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint then
+		if context.before and not context.blueprint and not context.retrigger_joker then
 			for i, playing_card in ipairs(context.scoring_hand) do
 				if not playing_card:get_seal() and card.ability.extra.gold_seals > 0 then
 					playing_card:set_seal('Gold')
@@ -954,7 +954,7 @@ FishAndChips.Fish {
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint then
+		if context.before and not context.blueprint and not context.retrigger_joker then
 			return {
 				dollars = -card.ability.extra.money_per_hand
 			}
@@ -1182,14 +1182,13 @@ FishAndChips.Fish {
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.starting_shop then
+		if context.starting_shop and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.old_remaining = card.ability.extra.remaining
 		end
 
-		if context.reroll_shop and card.ability.extra.remaining > 0 then
+		if context.reroll_shop and card.ability.extra.remaining > 0 and not context.blueprint and not context.retrigger_joker then
 			for _, v in pairs(G.fac_fish_area.cards) do
 				if v.ability.extra.i_rerolled and v ~= card then
-					print(v.config.center_key .. ' rerolled before ' .. self.key)
 					return
 				end
 			end
@@ -1209,11 +1208,11 @@ FishAndChips.Fish {
             }
 		end
 
-		if context.ending_shop then
+		if context.ending_shop and not context.blueprint and not context.retrigger_joker then
 			SMODS.change_free_rerolls(card.ability.extra.remaining - card.ability.extra.old_remaining)
 		end
 
-		if context.ante_change and context.ante_end then
+		if context.ante_change and context.ante_end and not context.blueprint and not context.retrigger_joker then
 			local mod = card.ability.extra.rerolls - card.ability.extra.remaining
 			card.ability.extra.remaining = card.ability.extra.rerolls
 			SMODS.change_free_rerolls(mod)

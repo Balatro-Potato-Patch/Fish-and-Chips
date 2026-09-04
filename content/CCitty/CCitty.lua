@@ -365,7 +365,7 @@ FishAndChips.Fish { --Doctor Sharktred
 	end,
 
 	calculate = function(self, card, context)
-		if not context.blueprint then
+		if not context.blueprint and not context.retrigger_joker then
 			if context.end_of_round and not context.repetition and not context.individual then --end of round options
 				if G.GAME.chips == G.GAME.blind.chips then
 					card:CCitty_add_dialogue('CCitty_Potassium', { 'fac_CCitty_Potassium' })
@@ -628,11 +628,11 @@ FishAndChips.Fish { --Seiun Sky seahorse
 			if card.ability.extra.freeroll > 0 and (G.GAME.chips + math.floor(mult * hand_chips)) - G.GAME.blind.chips < 0 then
 				ease_hands_played(1)
 				card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, { message = localize { type = 'variable', key = 'a_hand', vars = { 1 } } })
-				if not context.blueprint then
+				if not context.blueprint and not context.retrigger_joker then
 					card.ability.extra.freeroll = card.ability.extra.freeroll - 1
 				end
 			end
-		elseif context.ending_fishing and not context.blueprint then
+		elseif context.ending_fishing and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.freeroll = card.ability.extra.freeroll + 1
 		end
 	end,
@@ -871,7 +871,7 @@ FishAndChips.Fish { --Garfield Phone
 	end,
 
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval and G.GAME.blind.boss and not context.blueprint then
+		if context.end_of_round and context.main_eval and G.GAME.blind.boss and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.can_call = true
 			return {
 				message = localize('k_reset')
@@ -906,7 +906,7 @@ FishAndChips.Fish { --Bluebell Angler
 	end,
 	calculate = function(self, card, context)
 		if (context.first_hand_drawn or context.hand_drawn) and G.GAME.current_round.hands_played == 0 then
-			if not context.blueprint then
+			if not context.blueprint and not context.retrigger_joker then
 				local any_forced = nil
 				for k, v in ipairs(G.hand.cards) do
 					if v.ability.forced_selection then
@@ -1036,7 +1036,7 @@ FishAndChips.Fish { --Solin the Sea Slug
 	calculate = function(self, card, context)
 		if context.selling_card and context.card ~= card then
 			if context.card.ability.set == 'fac_Fish' then
-				if not context.blueprint then
+				if not context.blueprint and not context.retrigger_joker then
 					card.ability.extra.remaining = card.ability.extra.remaining - 1
 					if card.ability.extra.remaining <= 0 then
 						SMODS.destroy_cards(card)

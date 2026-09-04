@@ -101,7 +101,8 @@ FishAndChips.Fish {
             context.game_over == false and
             context.main_eval and
             context.beat_boss and
-            not context.blueprint
+            not context.blueprint and
+            not context.retrigger_joker
         ) then
             card.ability.extra.counter = card.ability.extra.counter + 1
             if card.ability.extra.counter >= card.ability.immutable.target_counter then
@@ -166,7 +167,8 @@ FishAndChips.Fish {
             context.game_over == false and
             context.main_eval and
             context.beat_boss and
-            not context.blueprint
+            not context.blueprint and
+            not context.retrigger_joker
         ) then
             card.ability.extra.counter = card.ability.extra.counter + 1
             if card.ability.extra.counter >= card.ability.immutable.target_counter then
@@ -232,6 +234,7 @@ FishAndChips.Fish {
             context.main_eval and
             context.beat_boss and
             not context.blueprint
+            and not context.retrigger_joker
         ) then
             card.ability.extra.counter = card.ability.extra.counter + 1
             if card.ability.extra.counter >= card.ability.immutable.target_counter then
@@ -302,6 +305,7 @@ FishAndChips.Fish {
             context.main_eval and
             context.beat_boss and
             not context.blueprint
+            and not context.retrigger_joker
         ) then
             SMODS.scale_card(card, {
                 ref_table = card.ability.extra,
@@ -372,6 +376,7 @@ FishAndChips.Fish {
             context.main_eval and
             context.beat_boss and
             not context.blueprint
+            and not context.retrigger_joker
         ) then
             SMODS.scale_card(card, {
                 ref_table = card.ability.extra,

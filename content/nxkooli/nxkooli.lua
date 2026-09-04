@@ -547,7 +547,7 @@ FishAndChips.Fish {
 			return ret
 		end
 
-		if context.after and not context.blueprint then
+		if context.after and not context.blueprint and not context.retrigger_joker then
 			G.E_MANAGER:add_event(Event({
 			func = function()
 				local back = nxkooli_pick(types, pseudorandom(pseudoseed("nxkooli_pp_tile_after")))

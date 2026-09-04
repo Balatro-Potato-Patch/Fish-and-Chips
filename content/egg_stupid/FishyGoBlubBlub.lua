@@ -610,7 +610,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.chips, card.ability.extra.chips_mod, } }
 	end,
 	calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
             SMODS.scale_card(card, {
                 ref_value = "chips",
                 scalar_value = "chips_mod",

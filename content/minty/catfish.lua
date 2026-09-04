@@ -39,7 +39,7 @@ FishAndChips.Fish{
         PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
     end,
     calculate = function (self, card, context)
-        if context.mod_probability and not context.blueprint then
+        if context.mod_probability and not context.blueprint and not context.retrigger_joker then
             return {
                 denominator = math.max(context.denominator - card.ability.extra.oddshelp, 1)
             }

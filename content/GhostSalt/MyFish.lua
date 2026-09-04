@@ -238,7 +238,7 @@ FishAndChips.Fish {
 			}
 		end
 
-		if context.end_of_round and not context.individual and not context.repetition and not context.game_over and not context.blueprint then
+		if context.end_of_round and not context.individual and not context.repetition and not context.game_over and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.current_triggers = 0
 		end
 	end,
@@ -272,7 +272,7 @@ FishAndChips.Fish {
 		return { vars = { ppu_bubbles = { card.ability.fac_ghostsalt_tap_cod_used and "used" or "usable" } } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and not context.invididual and not context.repetition and not context.game_over and not context.blueprint then
+		if context.end_of_round and not context.invididual and not context.repetition and not context.game_over and not context.blueprint and not context.retrigger_joker then
 			local old = card.ability.fac_ghostsalt_tap_cod_used
 			card.ability.fac_ghostsalt_tap_cod_used = false
 			if old then return { message = localize("k_fac_ghostsalt_tapcod_reactive") } end
@@ -773,7 +773,7 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = false,
 	calculate = function(self, card, context)
-		if context.before and next(context.scoring_hand) and not context.blueprint then
+		if context.before and next(context.scoring_hand) and not context.blueprint and not context.retrigger_joker then
 			local _card = context.scoring_hand[1]
 			G.E_MANAGER:add_event(Event({
 				func = function()

@@ -38,7 +38,7 @@ FishAndChips.Fish{
 		return {vars = {card.ability.extra.mult, card.ability.extra.mult * card.ability.extra.fish_caught}}
 	end,
 	calculate = function (self, card, context)
-		if context.fac_end_fishing and context.fish then
+		if context.fac_end_fishing and context.fish and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.fish_caught = card.ability.extra.fish_caught + 1
 			return {
 				message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult * card.ability.extra.fish_caught}}

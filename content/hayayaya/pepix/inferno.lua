@@ -27,7 +27,7 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.fac_cast_rod and not context.blueprint then
+		if context.fac_cast_rod and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.active_bait = G.GAME.fac_active_bait
 		end
 		if context.fac_end_fishing and not context.failed and card.ability.extra.active_bait and not context.blueprint then

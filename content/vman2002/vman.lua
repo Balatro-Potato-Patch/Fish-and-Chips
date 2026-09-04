@@ -172,7 +172,7 @@ FishAndChips.Fish { --Trust
 		return { vars = { ex.odds_add, ex.odds_add + 1 } }
 	end,
     calculate = function(self, card, context)
-		if context.mod_probability and G.STATE == G.STATES.HAND_PLAYED and G.GAME.current_round.hands_played == 0 then
+		if context.mod_probability and G.STATE == G.STATES.HAND_PLAYED and G.GAME.current_round.hands_played == 0 and not context.retrigger_joker then
 			return {numerator = context.numerator + card.ability.extra.odds_add}
 		end
     end,
@@ -247,7 +247,7 @@ FishAndChips.Fish { --Manos
 		local ex = card.ability.extra
 		if not ex.active then return end
 		if not context.blueprint then
-			if context.joker_main then
+			if context.joker_main and not context.retrigger_joker then
 				local c = false
 				if next(context.poker_hands.Straight) and ex.straights_current < ex.straights_goal then
 					SMODS.scale_card(card, {ref_value = "straights_current", no_message = true})
@@ -476,7 +476,7 @@ FishAndChips.Fish { --Timothy
 			else
 				SMODS.scale_card(card, {ref_value = "xmult", scalar_value = "xmult_gain",})
 			end
-			return
+			return nil, true
 		end
 		if context.joker_main then
 			return {xmult = card.ability.extra.xmult}
@@ -533,7 +533,7 @@ FishAndChips.Fish { --Blackbody
 	end,
 	calculate = function(self, card, context)
 		local ex = card.ability.extra
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			ex.rounds = ex.rounds + 1
 			return {message = ex.rounds .. "/" .. ex.rounds_goal}
 		end
@@ -576,7 +576,7 @@ FishAndChips.Fish { --Navy Blade
 		}, card)
 	end,
 	calculate = function(self, card, context)
-		if context.ante_change and context.ante_end and card.ability.extra.uses ~= 0 then
+		if context.ante_change and context.ante_end and card.ability.extra.uses ~= 0 and not context.retrigger_joker then
 			card.ability.extra.uses = 0
 			return {message = localize("k_reset")}
 		end

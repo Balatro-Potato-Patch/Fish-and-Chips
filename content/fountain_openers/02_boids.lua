@@ -348,7 +348,7 @@ FishAndChips.Fish {
 				chips = card.ability.extra.chips
 			}
 		end
-		if context.fac_end_fishing and not context.blueprint then
+		if context.fac_end_fishing and not context.blueprint and not context.retrigger_joker then
 			G.E_MANAGER:add_event(Event({
 				func = function()
 					FountainOpeners.boids_game:add_boids(card, card.ability.immutable.fish_killed)

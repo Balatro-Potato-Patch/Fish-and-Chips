@@ -41,7 +41,7 @@ FishAndChips.Fish{
         PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
     end,
     calculate = function (self, card, context)
-        if context.individual and SMODS.has_enhancement(context.other_card, "m_lucky") and not context.blueprint then
+        if context.individual and SMODS.has_enhancement(context.other_card, "m_lucky") and not context.blueprint and not context.retrigger_joker then
             context.other_card.nommed_by_dogfish = true
         end
 

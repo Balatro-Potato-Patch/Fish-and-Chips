@@ -484,7 +484,6 @@ FishAndChips.Fish({
 	ppu_artist = { "aikoyori" },
 	calculate = function(self, card, context)
 		if context.fac_end_fishing and context.fish then
-			local count = #G.fac_fish_area.cards
 			if G.fac_fish_area:has_space() then
 				G.fac_fish_area:buffer(1)
 				G.E_MANAGER:add_event(Event({
@@ -495,6 +494,7 @@ FishAndChips.Fish({
 					end,
 				}))
 			end
+			return nil, true
 		end
 	end,
 })

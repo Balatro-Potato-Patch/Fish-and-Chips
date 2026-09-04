@@ -36,7 +36,7 @@ FishAndChips.Fish {
                 operation = '-',
                 no_message = true
             })
-            if card.ability.extra.cards_left <= 0 and not context.blueprint then
+            if card.ability.extra.cards_left <= 0 and not context.blueprint and not context.retrigger_joker then
                 SMODS.destroy_cards(card, { pinch_anim = true })
             end
 

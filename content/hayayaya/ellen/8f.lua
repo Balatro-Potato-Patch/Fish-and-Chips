@@ -265,7 +265,7 @@ FishAndChips.Fish({
 		delay(0.5)
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval and card.ability.immutable.count < card.ability.immutable.max and not context.blueprint then
+		if context.end_of_round and context.main_eval and card.ability.immutable.count < card.ability.immutable.max and not context.blueprint and not context.retrigger_joker then
 			card.ability.immutable.count = card.ability.immutable.count + 1
 			return {
 				message = string.format("%i/%i", card.ability.immutable.count, card.ability.immutable.max),

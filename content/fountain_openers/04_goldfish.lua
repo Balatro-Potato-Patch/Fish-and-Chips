@@ -36,7 +36,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
         if context.starting_shop and not context.blueprint then
-            if card.ability.extra.amt - card.ability.extra.dec <= 0 then
+            if card.ability.extra.amt - card.ability.extra.dec <= 0 and not context.retrigger_joker then
                 SMODS.destroy_cards(card, nil, nil, true)
                 return {
                     message = localize('k_eaten_ex'),

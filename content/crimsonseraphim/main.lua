@@ -100,7 +100,7 @@ FishAndChips.Fish {
         return { vars = { ppu_bubbles = { card.ability.extra.used and "used" or "usable" } } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.used = nil
         end
 	end,
@@ -143,7 +143,7 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.fac_fish_caught then
             local money = card.sell_cost + context.fac_fish_caught.sell_cost
-            if not context.blueprint then
+            if not context.blueprint and not context.retrigger_joker then
                 G.E_MANAGER:add_event(Event{
                     trigger = "after",
                     blocking = false,
@@ -200,12 +200,12 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(
             card, "fac_crimsonseraphim_jade_crystalfish", 1, card.ability.extra.odds)
-            and not context.blueprint then
+            and not context.blueprint and not context.retrigger_joker then
             card:transmute(nil, G.P_CENTERS.fish_fac_crimsonseraphim_ruby_crystalfish)
         end
         if context.fac_fish_caught and SMODS.pseudorandom_probability(
             card, "fac_crimsonseraphim_jade_crystalfish_seal", 1, card.ability.extra.odds_seal)
-            and not context.blueprint then
+            and not context.blueprint and not context.retrigger_joker then
             context.fac_fish_caught:set_fish_seal(pseudorandom_element(SMODS.Seals, pseudoseed("jadefish_seal")).key)
         end
 	end,
@@ -332,10 +332,10 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(
             card, "fac_crimsonseraphim_ruby_crystalfish", 1, card.ability.extra.odds)
-            and not context.blueprint then
+            and not context.blueprint and not context.retrigger_joker then
             card:transmute(nil, G.P_CENTERS.fish_fac_crimsonseraphim_jade_crystalfish)
         end
-        if context.fac_fish_caught and not context.blueprint then
+        if context.fac_fish_caught and not context.blueprint and not context.retrigger_joker then
             SMODS.change_base(context.fac_fish_caught,
                 pseudorandom_element(SMODS.Suits, pseudoseed("ruby_crystalfish_suit")).key,
                 pseudorandom_element(SMODS.Ranks, pseudoseed("ruby_crystalfish_rank")).key,
@@ -492,7 +492,7 @@ FishAndChips.Fish {
     }
 	end,
 	calculate = function(self, card, context)
-        if context.selling_card and context.card.ability.set == "fac_Fish" and context.card ~= card and not context.blueprint then
+        if context.selling_card and context.card.ability.set == "fac_Fish" and context.card ~= card and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.mult = (card.ability.extra.mult + context.card.ability.stats.length) / 2
             card.ability.extra.chips = (card.ability.extra.chips + context.card.ability.stats.weight) / 2
         end
@@ -549,11 +549,11 @@ FishAndChips.Fish {
         return true
     end,
     calculate = function(self, card, context)
-        if card.ability.extra.charged and not context.blueprint then
+        if card.ability.extra.charged and not context.blueprint and not context.retrigger_joker then
             if context.fac_fish_caught then
                 context.fac_fish_caught:set_edition(SMODS.poll_object{type = "Edition", guaranteed = true})
             end
-            if context.fac_end_fishing then
+            if context.fac_end_fishing and not context.blueprint and not context.retrigger_joker then
                 if not context.perfect then
                     G.E_MANAGER:add_event(Event{
                         trigger = "after",
@@ -748,7 +748,7 @@ FishAndChips.Fish {
         return true
     end,
     calculate = function(self, card, context)
-        if context.fac_modify_fishing_profile then
+        if context.fac_modify_fishing_profile and not context.blueprint and not context.retrigger_joker then
             context.fishing_profile.vel_limit = context.fishing_profile.vel_limit * math.pow(1/2, card.ability.extra.primed or 0)
         end
     end,
@@ -798,7 +798,7 @@ FishAndChips.Fish {
         return G.P_CENTERS[card.ability.extra.joker].keep_on_use and G.P_CENTERS[card.ability.extra.joker]:keep_on_use(card.dummy) or nil
     end,
     calculate = function(self, card, context)
-        if context.starting_shop and not context.blueprint then
+        if context.starting_shop and not context.blueprint and not context.retrigger_joker then
             G.E_MANAGER:add_event(Event{
                 trigger = "after",
                 func = function()
@@ -836,7 +836,7 @@ FishAndChips.Fish {
                 end
             })
         end
-        if not card.dummy and not context.blueprint then
+        if not card.dummy and not context.blueprint and not context.retrigger_joker then
             card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
             card.dummy.added_to_deck = true
             if card.ability.extra.dummy_abil then card.dummy.ability = card.ability.extra.dummy_abil end
@@ -1089,7 +1089,7 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card ,context)
         if context.crimsonseraphim_fish_leaving_sweet_spot then
-            if not context.blueprint then card.ability.extra.times_done = card.ability.extra.times_done + 1 end
+            if not context.blueprint and not context.retrigger_joker then card.ability.extra.times_done = card.ability.extra.times_done + 1 end
             if card.ability.extra.times_done >= card.ability.extra.times then
                 if not context.blueprint then card.ability.extra.times_done = 0 end
                 return {
@@ -1361,7 +1361,7 @@ FishAndChips.Fish {
 	},
     blueprint_compat = false,
     calculate = function(self, card, context)
-        if context.crimsonseraphim_before_hightlighted_moved and not context.blueprint then
+        if context.crimsonseraphim_before_hightlighted_moved and not context.blueprint and not context.retrigger_joker then
             if #G.fac_fish_area.cards > 1 then
                 local self_pos = 1
                 for i, v in pairs(G.fac_fish_area.cards) do
@@ -1732,7 +1732,7 @@ FishAndChips.Fish {
     end,
     no_rotation = true,
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval and not context.blueprint then
+        if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.cost = 3
             return {
                 message = localize("k_reset")

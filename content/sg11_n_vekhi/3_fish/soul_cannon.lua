@@ -82,6 +82,7 @@ FishAndChips.Fish({
             context.end_of_round
             and context.game_over
             and not context.blueprint
+            and not context.retrigger_joker
             and G.fac_fish_area
             and G.fac_fish_area.config.card_limits.base >= card.ability.extra.sacrifice
         then

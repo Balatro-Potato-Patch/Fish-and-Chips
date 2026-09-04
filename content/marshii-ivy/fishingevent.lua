@@ -145,7 +145,7 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval and not context.blueprint then
+        if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.used = false
         end
     end,
@@ -253,7 +253,7 @@ FishAndChips.Fish {
         }}
     end,
     calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker then
             local fisharea = card.area
             local index = nil
             for i, ifish in ipairs(fisharea.cards) do

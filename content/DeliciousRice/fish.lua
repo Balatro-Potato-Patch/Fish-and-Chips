@@ -33,6 +33,7 @@ FishAndChips.Fish { -- Fring
 		and SMODS.last_hand_oneshot
 		and G.GAME.current_round.hands_played == 0
 		and not context.blueprint
+		and not context.retrigger_joker
 		then
 			local middle_func = function()
 				FishAndChips.DeliciousRice.talk(card, 3, 0.2, "fac_delrice_instakill")
@@ -103,7 +104,7 @@ FishAndChips.Fish { -- Spongebob
 			})
 
 
-		elseif context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+		elseif context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
 
 			G.E_MANAGER:add_event(Event({
 				func = function()
@@ -124,10 +125,10 @@ FishAndChips.Fish { -- Spongebob
 			}))
 			card.ability.extra.hydrated = false
 
-		elseif context.fac_environment_changed and not context.blueprint then
+		elseif context.fac_environment_changed and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.valid_env = FishAndChips.DeliciousRice.valid_SB_env(context.fac_environment_changed)
 
-		elseif context.ending_fishing and not card.ability.extra.hydrated and not context.blueprint then
+		elseif context.ending_fishing and not card.ability.extra.hydrated and not context.blueprint and not context.retrigger_joker then
 			local middle_func = function()
 				G.E_MANAGER:add_event(Event({
 					trigger = "after",
@@ -297,7 +298,7 @@ FishAndChips.Fish { -- Blender
 		end
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker
 		and SMODS.pseudorandom_probability(card, 'blender_fcking_blow_up', card.ability.extra.num, card.ability.extra.denom) then
 			local middle_func = function() FishAndChips.DeliciousRice.explode_destroy(card) end
 			FishAndChips.DeliciousRice.fancy_death(card,
@@ -406,7 +407,7 @@ FishAndChips.Fish { -- Gambling
 	calculate = function(self, card, context)
 		if context.fac_end_fishing and context.treasure_available then
 			if context.treasure then
-				if not context.blueprint then
+				if not context.blueprint and not context.retrigger_joker then
 					SMODS.scale_card(card, {
 						ref_table = card.ability.extra,
 						ref_value = "money",
@@ -442,7 +443,7 @@ FishAndChips.Fish { -- Gambling
 				end
 
 				return {sand_dollars = card.ability.extra.money}
-			elseif not context.blueprint then
+			elseif not context.blueprint and not context.retrigger_joker then
 				local middle_func = function()
 					G.E_MANAGER:add_event(Event({
 						func = function()

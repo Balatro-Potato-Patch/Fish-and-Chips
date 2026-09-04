@@ -45,7 +45,7 @@ FishAndChips.Fish{
 		G.fac_fas_tsunderfish_ui = FishAndChips.FooSqueax.tsunderfish.create_act_uibox(card)
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			if card.ability.immutable.used and not card.ability.immutable.active then card.ability.immutable.used = false end
 		end
 	end

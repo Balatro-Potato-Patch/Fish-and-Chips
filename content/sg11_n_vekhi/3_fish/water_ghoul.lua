@@ -49,7 +49,7 @@ FishAndChips.Fish({
         }
     end,
     calculate = function(self, card, context)
-        if context.fac_fish_caught and card.ability.extra.primed and not context.blueprint then
+        if context.fac_fish_caught and card.ability.extra.primed and not context.blueprint and not context.retrigger_joker then
             local reward = context.fac_fish_caught
             if not (reward.edition and reward.edition.key == "e_negative") then
                 reward:set_edition("e_negative", true, true)

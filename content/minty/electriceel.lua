@@ -84,7 +84,7 @@ FishAndChips.Fish{
             }
         end
 
-        if context.end_of_round and context.main_eval then
+        if context.end_of_round and context.main_eval and not context.retrigger_joker then
             local reset, charge = {}, {}
             if card.ability.extra.ready > 0 then
                 card.ability.extra.ready = 0

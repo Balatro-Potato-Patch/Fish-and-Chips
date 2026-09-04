@@ -99,7 +99,7 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint then
+		if context.before and not context.blueprint and not context.retrigger_joker then
 			for k, v in ipairs(context.full_hand) do
 				G.E_MANAGER:add_event(Event({
 					func = function()
@@ -111,7 +111,7 @@ FishAndChips.Fish({
 			end
 		end
 
-		if context.end_of_round and context.main_eval and not context.game_over and not context.blueprint then
+		if context.end_of_round and context.main_eval and not context.game_over and not context.blueprint and not context.retrigger_joker then
 			local all_suits = {}
 			for _, v in pairs(SMODS.Suits) do
 				if (not v.in_pool or v:in_pool()) and card.ability.extra.suit ~= v.key then all_suits[#all_suits + 1] = v.key end
@@ -416,7 +416,7 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint then
+		if context.before and not context.blueprint and not context.retrigger_joker then
 			if not card.ability.extra.caught then
 				card.ability.extra.caught = true
 			end
@@ -535,7 +535,7 @@ FishAndChips.Fish({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.initial_scoring_step and not context.blueprint then
+		if context.initial_scoring_step and not context.blueprint and not context.retrigger_joker then
 			if #context.scoring_hand == 4 and #context.scoring_hand == #context.full_hand then
 				assert(SMODS.change_base(context.scoring_hand[1], nil, "Ace"))
 				context.scoring_hand[1]:juice_up()

@@ -259,7 +259,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.odds, card.ability.extra.odds_decrease } }
 	end,
     calculate = function(self, card, context)
-		if context.mod_probability and (context.identifier == 'lucky_mult' or context.identifier == 'lucky_money') and not context.blueprint then
+		if context.mod_probability and (context.identifier == 'lucky_mult' or context.identifier == 'lucky_money') and not context.blueprint and not context.retrigger_joker then
             return {
                 numerator = context.numerator + card.ability.extra.odds
             }
@@ -424,7 +424,7 @@ FishAndChips.Fish {
 		return { vars = { } }
 	end,
     calculate = function(self, card, context)
-		if (context.joker_type_destroyed or context.check_eternal) and context.other_card and context.other_card.ability.set == 'Joker' and not context.blueprint then
+		if (context.joker_type_destroyed or context.check_eternal) and context.other_card and context.other_card.ability.set == 'Joker' and not context.blueprint and not context.retrigger_joker then
             return {
                 no_destroy = { override_compat = true }
             }
@@ -496,7 +496,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.scaling } }
 	end,
     calculate = function(self, card, context)
-		if context.scaling_card and context.card and not context.blueprint then
+		if context.scaling_card and context.card and not context.blueprint and not context.retrigger_joker then
             return {
                 override_scalar = math.ceil(context.scalar * card.ability.extra.scaling)
             }

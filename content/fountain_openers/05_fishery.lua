@@ -58,7 +58,7 @@ FishAndChips.Fish {
         }}
 	end,
 	calculate = function(self, card, context)
-        if context.after and not context.blueprint then
+        if context.after and not context.blueprint and not context.retrigger_joker then
             local jacks = false
             for _, scored_card in ipairs(context.scoring_hand) do
                 if scored_card:get_id() == 11 then
@@ -121,7 +121,7 @@ FishAndChips.Fish {
             end
         end
 
-        if not context.blueprint then
+        if not context.blueprint and not context.retrigger_joker then
             if context.joker_type_destroyed and context.card == card then
                 FountainOpeners.flowery_sound("theyre_eating_my_flesh")
             elseif context.selling_self then
