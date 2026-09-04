@@ -80,10 +80,8 @@ function G.FUNCS.fac_fas_tsunderfish_button (e)
 		do_progress = true
 		if card.ability.immutable.progress > #progress then
 			card.ability.immutable.active = true
-			-- TODO: we have functions for this don't we ? (mf)
-			G.hand.config.highlighted_limit = G.hand.config.highlighted_limit + card.ability.extra.selection
-			G.GAME.starting_params.play_limit = G.GAME.starting_params.play_limit + card.ability.extra.selection
-			G.GAME.starting_params.discard_limit = G.GAME.starting_params.discard_limit + card.ability.extra.selection
+			SMODS.change_play_limit(card.ability.extra.selection)
+			SMODS.change_discard_limit(card.ability.extra.selection)
 		end
 	end
 	card.ability.immutable.result = card.ability.immutable.option == 1 and 0 or do_progress and 1 or 2 -- check, success, failure

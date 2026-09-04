@@ -23,7 +23,7 @@ SMODS.Atlas({
 
 FishAndChips.Fish {
 	key = "otter",
-	weight = 10, -- TODO: could this be 75 weight ?
+	weight = 10,
 	atlas = "stoatskifish",
 	pos = { x = 0, y = 0 },
 	-- I belive this is correct but may need other attributes -- Yeah (mf)

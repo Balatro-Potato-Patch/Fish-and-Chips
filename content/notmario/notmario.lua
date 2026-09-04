@@ -2113,7 +2113,6 @@ FishAndChips.Fish {
 
 SMODS.Attribute {
     key = "fac_mf_pearl",
-    -- todo : add a loc thing :p -- I did this (mf) -- Woah who's that (mf) -- Hiiiii (mf)
 }
 
 FishAndChips.Fish {

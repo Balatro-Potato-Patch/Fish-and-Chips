@@ -457,7 +457,6 @@ function G.UIDEF.card_h_popup(card)
 	return ret
 end
 
--- TODO: fix sprite reset when going in bucket (Main FAC issue)
 FishAndChips.Fish({
     key = 'r_e_clam',
     atlas = 'r_e_fish',

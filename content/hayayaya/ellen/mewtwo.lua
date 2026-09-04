@@ -15,7 +15,6 @@ FishAndChips.Fish({
 	eternal_compat = false,
 	atlas = "hayayaya_fih",
 	pos = { x = 0, y = 0 },
-	-- TODO: Possibly tweak this????
 	config = { extra = { min = 0.5, max = 2 } },
 	stats = {
 		length = { min = 0.4, max = 1.0 },

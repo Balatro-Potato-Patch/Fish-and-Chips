@@ -294,7 +294,10 @@ return {
 			fac_tss_good_news = "Good News!",
 			fac_tss_na1 = "#1#",
 			fac_tss_na2 = "#2#",
-			fac_tss_bloon = "Bloon"
+			fac_tss_bloon = "Bloon",
+			fac_tss_mercenary = 'Mercenary',
+			fac_tss_fish_quoted = '"Fish"',
+			fac_tss_food = 'Food',
 		},
 		v_dictionary = {
 			k_fac_tss_again_ex_multi = "Again! x#1#"

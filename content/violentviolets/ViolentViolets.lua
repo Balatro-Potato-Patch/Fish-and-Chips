@@ -254,7 +254,7 @@ FishAndChips.Fish {
         if context.individual and context.cardarea == G.play and context.other_card:is_suit_shade('light') and not context.retrigger_joker then
             SMODS.debuff_card(card, true, 'sunlight')
             return {
-                message = "Zzzzz....", -- TODO: localize
+                message = localize('k_fac_vv_sleep'),
                 colour = G.C.DARK_EDITION
             }
         end

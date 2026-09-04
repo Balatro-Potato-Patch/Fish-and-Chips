@@ -149,5 +149,10 @@ return {
                     }
                 },
         }
+    },
+    misc = {
+        dictionary = {
+            k_fac_vv_sleep = "Zzzzz...."
+        }
     }
 }

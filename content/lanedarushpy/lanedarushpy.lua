@@ -128,8 +128,7 @@ SMODS.Atlas {
 
 PotatoPatchUtils.Developer({
 	name = 'lanedarushpy',
-	-- atlas = 'fac_cards', -- TODO: add card for it
-	atlas = 'fac_lizie_credits', -- TODO: add atlas
+	atlas = 'fac_lizie_credits',
 	pos = {x = 1, y = 0},
 	colour = HEX("713a91"),
     loc = true,
@@ -139,7 +138,7 @@ PotatoPatchUtils.Developer({
 
 PotatoPatchUtils.Developer({
 	name = 'pangaea47',
-	atlas = 'fac_lizie_credits', -- TODO: add atlas
+	atlas = 'fac_lizie_credits',
 	pos = {x = 0, y = 0},
 	colour = G.C.YELLOW,
     loc = true,

@@ -439,7 +439,7 @@ FishAndChips.Fish {
 		weight = {min = 0.6, max = 15},
 		length = {min = 0.1, max = 2}
 	},
-    attributes = { "economy", "usable", "chance", "lose_economy", }, -- TODO: is an empty can a Food card?
+    attributes = { "economy", "usable", "chance", "lose_economy", },
 	config = {
 		extra = {
 			odds = 10, eor_sand = 20, use_sand = 10, use_dollars = 20

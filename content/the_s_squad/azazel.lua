@@ -1,4 +1,3 @@
--- TODO: Port all uses of set_card_type_badge to badge_key
 FishAndChips.Fish {
 	key = "tss_shadow_cryscarp",
 	atlas = "tss_azfish",
@@ -65,7 +64,7 @@ FishAndChips.Fish {
 		card.children.center:set_sprite_pos({x=card.ability.extra.blu and 1 or 0, y=1})
 	end,
 	set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge("Mercenary", FishAndChips.C[card.ability.extra.blu and "FISH" or "ROD"], G.C.WHITE, 1.2)
+		badges[#badges + 1] = create_badge(localize('fac_tss_mercenary'), FishAndChips.C[card.ability.extra.blu and "FISH" or "ROD"], G.C.WHITE, 1.2)
 	end
 }
 
@@ -115,9 +114,7 @@ FishAndChips.Fish {
 			}
 		end
 	end,
-	set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge(localize("fac_tss_bloon"), FishAndChips.C.ROD, G.C.WHITE, 1.2)
-	end
+	badge_key = 'fac_tss_bloon'
 }
 
 FishAndChips.Fish {
@@ -156,9 +153,7 @@ FishAndChips.Fish {
 			}
 		end
 	end,
-	set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge(localize("fac_tss_bloon"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
-	end
+	badge_key = 'fac_tss_bloon'
 }
 
 FishAndChips.Fish {

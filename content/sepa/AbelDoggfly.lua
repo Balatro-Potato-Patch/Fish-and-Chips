@@ -275,7 +275,6 @@ FishAndChips.Fish {
 }
 
 
--- TODO: There's a few things that need to be localized here
 -- Im gonna be honest, half of this wouldnt have been possible without Vanilla remade
 FishAndChips.Fish {
 	key = "bombfish",
@@ -306,7 +305,7 @@ FishAndChips.Fish {
 	},
 	loc_vars = function(self, info_queue, card)
 	        info_queue[#info_queue+1] = {key = "fac_sepa_Tarot_infovar", set = "Other"}
-		return { vars = { card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, card.ability.extra.poker_hand, card.ability.extra.tarot_amount} }
+		return { vars = { card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, localize(card.ability.extra.poker_hand, 'poker_hands'), card.ability.extra.tarot_amount} }
 	end,
 
     calculate = function(self, card, context)
@@ -377,7 +376,7 @@ FishAndChips.Fish {
             	card.ability.extra.poker_hand = pseudorandom_element(_poker_hands, 'pezbombastico')
 
 				return {
-					message = "-1 Attempt",
+					message = localize('k_fac_sepa_minus_attempt'),
 					colour = G.C.RED
 				}
 			end
@@ -410,7 +409,6 @@ FishAndChips.Fish {
     end
 }
 
--- TODO: ditto
 FishAndChips.Fish {
 	key = "icbf",
 	atlas = pez,
@@ -443,7 +441,7 @@ FishAndChips.Fish {
 	treasure = true,
 	loc_vars = function(self, info_queue, card)
 	        info_queue[#info_queue+1] = {key = "fac_sepa_Spectral_infovar", set = "Other"}
-		return { vars = { card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, card.ability.extra.poker_hand, card.ability.extra.tarot_amount} }
+		return { vars = { card.ability.extra.defuse, card.ability.extra.goal, card.ability.extra.attempts, localize(card.ability.extra.poker_hand, 'poker_hands'), card.ability.extra.tarot_amount} }
 	end,
 
     calculate = function(self, card, context)
@@ -510,7 +508,7 @@ FishAndChips.Fish {
             	card.ability.extra.poker_hand = pseudorandom_element(_poker_hands, 'pezbombastico')
 
 				return {
-					message = "-1 Attempt",
+					message = localize('k_fac_sepa_minus_attempt'),
 					colour = G.C.RED
 				}
 			end
@@ -594,10 +592,7 @@ FishAndChips.Fish {
         return card.ability.extra.dollars
     end,
 
- 	set_badges = function(self, card, badges)
-        -- TODO: Localize. Halucination btw.
- 		badges[#badges+1] = create_badge("Halucination...?", G.C.RED, G.C.WHITE, 1 )
- 	end,
+	badge_key = 'k_fac_sepa_hallucination'
 
 }
 
@@ -653,8 +648,7 @@ FishAndChips.Fish {
     end,
 
  	set_badges = function(self, card, badges)
-        -- TODO: localize
- 		badges[#badges+1] = create_badge("Darkner", G.C.BLACK, G.C.WHITE, 1 )
+ 		badges[#badges+1] = create_badge(localize('k_fac_sepa_darkner'), G.C.BLACK, G.C.WHITE, 1 )
  	end,
 
 }
@@ -682,14 +676,14 @@ FishAndChips.Fish {
 	},
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'j_rom_cosmonautjester')
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'fish_fac_bagrehumo')
         return {vars = {new_numerator, new_denominator}}
     end,
 
 	calculate = function(self, card, context)
 		if context.end_of_round and context.game_over == false and context.main_eval then
             if true then
-                if SMODS.pseudorandom_probability(card, 'randoseed', 1, card.ability.extra.odds, 'j_rom_cosmonautjester') then --Im to lazy to change the og name :p -- TODO: Don't be lazy then (mf)
+                if SMODS.pseudorandom_probability(card, 'randoseed', 1, card.ability.extra.odds, 'fish_fac_bagrehumo') then
                     local hand, tally = nil, 0
                         for _, handname in ipairs(G.handlist) do
                             if SMODS.is_poker_hand_visible(handname) and G.GAME.hands[handname].played > tally then

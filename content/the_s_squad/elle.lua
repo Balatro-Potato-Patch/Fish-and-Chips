@@ -1,4 +1,3 @@
--- TODO: Port all uses of set_card_type_badge to badge_key
 FishAndChips.Fish {
 	key = "tss_chesh",
 	atlas = "tss_ellefish",
@@ -26,9 +25,7 @@ FishAndChips.Fish {
 		-- Chesh eating handled in dev calculate so they can all flock at once like hungry pirahnas
 		if context.joker_main and card.ability.extra.xmult ~= 1 then return { xmult = card.ability.extra.xmult } end
 	end,
-	set_card_type_badge = function(self, card, badges) -- TODO: Make its own loc_key
-		badges[#badges + 1] = create_badge('"'..localize("k_fac_fish")..'"', FishAndChips.C.FISH, G.C.WHITE, 1.2)
-	end,
+	badge_key = 'fac_tss_fish_quoted'
 }
 
 local emplace_hook = CardArea.emplace
@@ -250,9 +247,7 @@ FishAndChips.Fish {
             return nil, true
 		end
 	end,
-	set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge("Food", FishAndChips.C.FISH, G.C.WHITE, 1.2)
-	end
+	badge_key = 'fac_tss_food'
 }
 
 FishAndChips.Fish {
@@ -346,9 +341,7 @@ FishAndChips.Fish {
 			end
 		end
 	end,
-	set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge(localize("k_fac_rod"), FishAndChips.C.ROD, G.C.WHITE, 1.2)
-	end,
+	badge_key = 'k_fac_rod'
 }
 
 G.E_MANAGER:add_event(Event({blocking = false, blockable = false, func = function()

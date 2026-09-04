@@ -1,5 +1,3 @@
--- TODO: port stuff to badge_key
-
 -- Atlas
 SMODS.Atlas {
     key = "waffle_fish",
@@ -384,11 +382,7 @@ FishAndChips.Fish {
             end
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_conch'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_conch',
     attributes = { "generation", "joker", "chance", "usable" }
 }
 
@@ -550,11 +544,7 @@ FishAndChips.Fish {
     impulse_min = 0.62,
     decision_min = 0.75,
     decision_max = 0.95,
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_cookie'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_cookie'
 }
 
 -- Mudskipper
@@ -666,11 +656,7 @@ FishAndChips.Fish {
             }))
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_echinoderm'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_echinoderm'
 }
 
 -- Double Dicefin
@@ -786,11 +772,7 @@ FishAndChips.Fish {
             end
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_invertebrate'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_invertebrate'
 }
 
 -- Bonus Duck
@@ -856,11 +838,7 @@ FishAndChips.Fish {
         end
     end,
     attributes = { "chips", "scaling" },
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_duck'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_duck'
 }
 local shuffle_ref = CardArea.shuffle
 function CardArea:shuffle(_seed)
@@ -1127,11 +1105,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_maybe_fish'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_maybe_fish',
     attributes = { "generation", "usable", "enhancements", },
     impulse_max = 0.18,
     vel_limit = 0.32
@@ -1221,11 +1195,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_mollusc'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_mollusc',
     attributes = { "xmult", "lose_economy", "scaling", },
 }
 -- Unemployster hook
@@ -1299,11 +1269,7 @@ FishAndChips.Fish {
         end
     end,
     attributes = { "boss_blind", "enhancements", },
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_gastropod'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_gastropod'
 }
 
 -- Pyukumuku
@@ -1365,11 +1331,7 @@ FishAndChips.Fish {
         end
     end,
     attributes = { "chips", "perma_bonus", "modify_card", "reset", },
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_pokemon'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_pokemon'
 }
 
 -- Self-Finsert
