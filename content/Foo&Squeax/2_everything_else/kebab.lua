@@ -284,7 +284,15 @@ SMODS.DrawStep {
                 FishAndChips.FooSqueax.kebab_top = Sprite(0, 0, G.CARD_W, G.CARD_H, G.ASSET_ATLAS['fac_fas_fish_kebab'], { x = 1, y = 0 })
             end
             FishAndChips.FooSqueax.kebab_top.role.draw_major = self
-			FishAndChips.FooSqueax.kebab_top:draw_shader('dissolve', nil, nil, nil, self.children.center)
+
+			local should_draw = true
+			if self.area and self.area.config.fac_compendium then
+				should_draw = false
+			elseif self.config.center.discovered or self.bypass_discovery_center then
+				FishAndChips.FooSqueax.kebab_top:draw_shader('dissolve', nil, nil, nil, self.children.center)
+			else
+				should_draw = false
+			end
 			
 			-- edition handling i yoinked from absinthe wormhole - gabby 
             if self.edition and not self.delay_edition then
@@ -302,7 +310,7 @@ SMODS.DrawStep {
                 end
             elseif not self:should_draw_base_shader() then
             	-- Don't render base dissolve shader.
-            elseif not self.greyed then
+            elseif not self.greyed and should_draw then
 				FishAndChips.FooSqueax.kebab_top:draw_shader('dissolve', nil, nil, nil, self.children.center)
             end
         end
