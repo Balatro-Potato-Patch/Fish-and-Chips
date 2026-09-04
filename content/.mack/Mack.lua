@@ -360,6 +360,7 @@ FishAndChips.Fish {
 	atlas = "fish",
 	pos = { x = 3, y = 2 },
 	ppu_coder = { "Mack" },
+	ppu_artist = { "Gappie" },
 	attributes = { "passive", "scaling", "hand_level", "food" },
 	environments = {
 		backroom = 1
