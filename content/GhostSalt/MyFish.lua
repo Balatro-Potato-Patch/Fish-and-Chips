@@ -1260,7 +1260,7 @@ FishAndChips.Fish {
 			local key = context.other_main.config.center.key
 			if context.other_main.config.center.loc_vars then
 				local loc_vars = context.other_main.config.center:loc_vars({}, context.other_main)
-				if loc_vars.key then key = loc_vars.key end
+				if loc_vars and loc_vars.key then key = loc_vars.key end
 			end
 			local words = fac_ghostsalt_mezepheles_wordify_fish(key)
 			for _, word in ipairs(words) do
