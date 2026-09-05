@@ -218,7 +218,7 @@ FishAndChips.Fish {
     end,
 
  	set_badges = function(self, card, badges)
- 		badges[#badges+1] = create_badge("Darkner", G.C.BLACK, G.C.WHITE, 1 )
+ 		badges[#badges+1] = create_badge(localize('k_fac_sepa_darkner'), G.C.BLACK, G.C.WHITE, 1 )
  	end,
 }
 
@@ -700,7 +700,7 @@ FishAndChips.Fish {
 	end,
 
  	set_badges = function(self, card, badges)
- 		badges[#badges+1] = create_badge("Smoke", G.C.BLACK, G.C.WHITE, 1 )
+ 		badges[#badges+1] = create_badge(localize('k_fac_sepa_smoke'), G.C.BLACK, G.C.WHITE, 1 )
  	end,
 
 }

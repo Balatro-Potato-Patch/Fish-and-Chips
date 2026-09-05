@@ -64,7 +64,5 @@ FishAndChips.Fish {
 			}
 		end
 	end,
-	set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge(localize("k_fac_fo_hydra"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
-	end,
+	badge_key = 'k_fac_fo_hydra'
 }

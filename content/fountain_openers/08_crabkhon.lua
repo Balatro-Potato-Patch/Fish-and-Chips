@@ -79,7 +79,5 @@ FishAndChips.Fish {
     remove_from_deck = function(self, card, from_debuff)
         SMODS.change_free_rerolls(-card.ability.extra.remaining)
     end,
-	set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge(localize("k_fac_fo_crab"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
-	end,
+	badge_key = 'k_fac_fo_crab'
 }

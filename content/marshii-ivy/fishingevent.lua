@@ -177,9 +177,7 @@ FishAndChips.Fish {
     pos = { x = 0, y = 0 },
     pixel_size = { w = 95, h = 71 },
     display_size = { w = 95, h = 71 },
-    set_card_type_badge = function(self, card, badges)
-        table.insert(badges, create_badge(localize("k_ivy_not_a_fish"), G.C.SET.fac_Fish))
-    end,
+    badge_key = 'k_ivy_not_a_fish',
     attributes = { "modify_card", "usable", "joker" }
 }
 

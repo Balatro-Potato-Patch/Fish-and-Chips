@@ -210,7 +210,8 @@ return {
         dictionary = {
             k_fac_sepa_minus_attempt = '-1 Attempt',
             k_fac_sepa_hallucination = 'Hallucination...?',
-            k_fac_sepa_darkner = 'Darkner'
+            k_fac_sepa_darkner = 'Darkner',
+            k_fac_sepa_smoke = 'Smoke'
         }
     }
 }
