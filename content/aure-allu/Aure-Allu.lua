@@ -745,6 +745,7 @@ FishAndChips.Fish {
 	use = function(self, card)
 		--Thanks https://github.com/nh6574/VanillaRemade/blob/main/src/tarots.lua The Hanged Man
 		local number = #G.hand.highlighted
+		local space_before_destroy = G.hand.config.card_limit - #G.hand.cards
 		G.E_MANAGER:add_event(Event({
 			trigger = "after",
 			delay = 0.1,
@@ -767,7 +768,7 @@ FishAndChips.Fish {
 			trigger = "after",
 			delay = 0.5,
 			func = function()
-				local count = G.hand.config.card_limit - #G.hand.cards + number
+				local count = space_before_destroy + number
 				if count <= 0 then return true end
 				for i = 1, count do
 					local percent = 1.15 - (i - 0.999) / (count - 0.998) * 0.3
