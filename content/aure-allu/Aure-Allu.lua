@@ -1164,7 +1164,7 @@ FishAndChips.Fish {
 	weight = 1,
 	ppu_coder = { "AllUniversal" },
 	ppu_artist = { "AllUniversal" },
-	attributes = { "copy", "position", "joker", },
+	attributes = { "copying", "position", "joker", },
 	stats = {weight = {min = 0.06, max = 0.4}, length = {min = 0.05, max = 0.12}},
 	config = {
 		extra = {

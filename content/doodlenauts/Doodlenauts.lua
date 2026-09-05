@@ -985,7 +985,7 @@ FishAndChips.Fish {
 	weight = 3, --uncommon/rare
 	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
-	attributes = { 'useable', 'generation', 'enhancements', 'seals' , 'edition', },
+	attributes = { 'useable', 'generation', 'enhancements', 'seals' , 'edition', 'playing_card' },
 	treasure = true,
 	stats = {
 		weight = {
