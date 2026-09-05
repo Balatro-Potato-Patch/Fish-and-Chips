@@ -305,6 +305,9 @@ FishAndChips.Fish({
     can_use = function() return true end,
     use = function(self, card)
         card.ability.extra.active = not card.ability.extra.active
+        if not card.ability.extra.active then
+            card.ability.extra.scale_down = false
+        end
         card.children.center:set_sprite_pos({x= card.ability.extra.active and 4 or 3, y = 2})
     end
 })
