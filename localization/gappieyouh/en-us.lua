@@ -2,7 +2,6 @@ return {
     misc = {
         dictionary = {
             k_fac_fish_mafia_reset = 'Reset!',
-            k_fac_fish_compass_new = 'New location!'
         },
         v_dictionary = {
             k_fac_fish_mafia_mod = '+X#1# Mult',
