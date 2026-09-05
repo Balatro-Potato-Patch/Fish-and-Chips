@@ -217,6 +217,11 @@ FishAndChips.Fish {
 			if card.ability.extra[environment] == false then
 				card.ability.extra[environment] = true
 				card.ability.extra.visited = card.ability.extra.visited + 1
+				return {
+					message = '+' .. localize('$') .. '1',
+					font = SMODS.Fonts["fac_sand_dollars"],
+					colour = FishAndChips.C.SAND_DOLLAR
+				}
 			end
 		end
 	end,
