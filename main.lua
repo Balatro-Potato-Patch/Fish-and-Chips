@@ -1,6 +1,10 @@
 FishAndChips = FishAndChips or {}
 FishAndChips.mod = SMODS.current_mod
 
+assert(SMODS.current_mod.lovely,
+    "Lovely modules were not loaded.\nMake sure your Fish and Chips folder is not nested (there should be a bunch of files in the Fish and Chips folder and not just another folder).")
+
+
 FishAndChips.mod_badge = {
 	x = 0,
 	y = 0,
