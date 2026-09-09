@@ -78,6 +78,7 @@ FishAndChips.Fish{
 					end
 					if fih.T.x + fih.T.w / 2 >= card.T.x and fih.T.y + fih.T.h / 2 >= card.T.y then
 						-- timer based system cause I can't use events within events while delaying future events
+						-- future me now knows how to do this, might refactor later
 						if not FishAndChips.FooSqueax.fat_chud.timer then
 							FishAndChips.FooSqueax.fat_chud.timer = G.TIMERS.REAL
 						end
@@ -98,6 +99,10 @@ FishAndChips.Fish{
 									message = localize("k_fac_fas_nom")
 								}
 							})
+							if not FishAndChips.mod.config.shrink_sprites then
+								card.T.w = card.T.w + card._fac_bucketed and 0.125 or 0.25
+							end
+							-- this not persisting across saves is intentional
 							FishAndChips.FooSqueax.fat_chud.active = false
 							FishAndChips.FooSqueax.fat_chud.timer = nil
 							card.disable_align = false
