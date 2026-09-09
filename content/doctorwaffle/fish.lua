@@ -1,5 +1,3 @@
--- TODO: port stuff to badge_key
-
 -- Atlas
 SMODS.Atlas {
     key = "waffle_fish",
@@ -342,7 +340,7 @@ FishAndChips.Fish {
         return true
     end,
     calculate = function(self, card, context)
-        if not context.blueprint then
+        if not context.blueprint and not context.retrigger_joker then
             if context.end_of_round and context.main_eval and not context.game_over and card.ability.extra.used_this_round then
                 card.ability.extra.used_this_round = false
                 card:juice_up()
@@ -384,11 +382,7 @@ FishAndChips.Fish {
             end
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_conch'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_conch',
     attributes = { "generation", "joker", "chance", "usable" }
 }
 
@@ -550,11 +544,7 @@ FishAndChips.Fish {
     impulse_min = 0.62,
     decision_min = 0.75,
     decision_max = 0.95,
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_cookie'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_cookie'
 }
 
 -- Mudskipper
@@ -602,7 +592,7 @@ FishAndChips.Fish {
                 message = localize('k_fac_waffle_tag')
             }
         end
-        if context.ending_fishing and not context.blueprint then
+        if context.ending_fishing and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.tag_created = false
         end
     end,
@@ -631,7 +621,7 @@ FishAndChips.Fish {
     },
     attributes = { "passive" },
     calculate = function(self, card, context)
-        if context.fac_end_fishing and not context.failed and not context.blueprint then
+        if context.fac_end_fishing and not context.failed and not context.blueprint and not context.retrigger_joker then
             -- THIS IS ALL TEMPORARY UNTIL THE BUTTON CALLBACK IS NO LONGER HARDCODED
             -- COPYPASTING HARDCODED CODE IS STINKY AND BAD BUT I LIKE THIS FISH CONCEPT
             G.E_MANAGER:add_event(Event({
@@ -666,11 +656,7 @@ FishAndChips.Fish {
             }))
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_echinoderm'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_echinoderm'
 }
 
 -- Double Dicefin
@@ -722,7 +708,7 @@ FishAndChips.Fish {
     end,
     blueprint_compat = false,
     calculate = function(self, card, context)
-        if not context.blueprint then
+        if not context.blueprint and not context.retrigger_joker then
             if context.mod_probability and card.ability.extra.active then
                 return {
                     numerator = context.numerator * card.ability.extra.boost
@@ -786,11 +772,7 @@ FishAndChips.Fish {
             end
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_invertebrate'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_invertebrate'
 }
 
 -- Bonus Duck
@@ -856,11 +838,7 @@ FishAndChips.Fish {
         end
     end,
     attributes = { "chips", "scaling" },
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_duck'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_duck'
 }
 local shuffle_ref = CardArea.shuffle
 function CardArea:shuffle(_seed)
@@ -933,7 +911,7 @@ FishAndChips.Fish {
                 if card.ability.extra.cards_remaining > 0 and not SMODS.has_no_rank(played_card) then
                     affectedCards[#affectedCards + 1] = played_card
 
-                    if not context.blueprint then
+                    if not context.blueprint and not context.retrigger_joker then
                         SMODS.scale_card(card, {
                             ref_table = card.ability.extra,
                             ref_value = "cards_remaining",
@@ -949,7 +927,7 @@ FishAndChips.Fish {
                 SMODS.modify_rank(modify_card, -1)
             end)
             delay(0.875)
-            if not context.blueprint then
+            if not context.blueprint and not context.retrigger_joker then
                 if card.ability.extra.cards_remaining > 0 then
                     return {
                         message = tostring(card.ability.extra.cards_remaining)
@@ -957,7 +935,7 @@ FishAndChips.Fish {
                 end
             end
         end
-        if context.after and not context.blueprint and card.ability.extra.cards_remaining <= 0 then
+        if context.after and not context.blueprint and not context.retrigger_joker and card.ability.extra.cards_remaining <= 0 then
             SMODS.destroy_cards(card, nil, nil, true)
             return {
                 message = localize("k_eaten_ex")
@@ -1127,11 +1105,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_maybe_fish'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_maybe_fish',
     attributes = { "generation", "usable", "enhancements", },
     impulse_max = 0.18,
     vel_limit = 0.32
@@ -1221,11 +1195,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_mollusc'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_mollusc',
     attributes = { "xmult", "lose_economy", "scaling", },
 }
 -- Unemployster hook
@@ -1276,7 +1246,7 @@ FishAndChips.Fish {
     blueprint_compat = false,
     eternal_compat = false,
     calculate = function(self, card, context)
-        if context.hand_drawn and context.first_hand_drawn and G.GAME.blind and G.GAME.blind.boss and not G.GAME.fac_waffle_snail_activated then
+        if context.hand_drawn and context.first_hand_drawn and G.GAME.blind and G.GAME.blind.boss and not G.GAME.fac_waffle_snail_activated and not context.retrigger_joker then
             G.GAME.fac_waffle_snail_activated = true
             G.E_MANAGER:add_event(Event {
                 func = function()
@@ -1299,11 +1269,7 @@ FishAndChips.Fish {
         end
     end,
     attributes = { "boss_blind", "enhancements", },
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_gastropod'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_gastropod'
 }
 
 -- Pyukumuku
@@ -1365,11 +1331,7 @@ FishAndChips.Fish {
         end
     end,
     attributes = { "chips", "perma_bonus", "modify_card", "reset", },
-    set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_fac_waffle_pokemon'),
-            G.C.SECONDARY_SET.fac_Fish, G.C.WHITE,
-            1.2)
-    end,
+    badge_key = 'k_fac_waffle_pokemon'
 }
 
 -- Self-Finsert

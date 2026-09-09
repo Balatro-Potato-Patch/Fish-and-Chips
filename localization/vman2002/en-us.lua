@@ -153,7 +153,7 @@ return {
 		},
 		TopUpLib_Music = {
 			fac_calm_pond_music = {
-				name = "Calm Pond", --TODO: replace this with the actual song name
+				name = "Fishing Music",
 				text = {
 					q("While {~f}Fishing"),
 					"By GhostSalt"

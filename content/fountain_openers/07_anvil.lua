@@ -56,7 +56,7 @@ SMODS.ScreenShader {
 	order = math.huge
 }
 
-local function fucking_kill_sprite(scale)
+function FountainOpeners.fucking_kill_sprite(scale)
     scale = scale or 1
     return SMODS.create_sprite(
         0, 0,
@@ -69,7 +69,7 @@ local function fucking_kill_sprite(scale)
     )
 end
 
-local function fucking_killed_sprite(scale)
+function FountainOpeners.fucking_killed_sprite(scale)
     scale = scale or 1
     return SMODS.create_sprite(
         0, 0,
@@ -291,12 +291,12 @@ FishAndChips.Fish {
                 elements = {
                     { n=G.UIT.R, config = { align="cm" }, nodes = {
                         { n=G.UIT.O, config={ object=
-                            fucking_killed_sprite(2)
+                            FountainOpeners.fucking_killed_sprite(2)
                         }}
                     }},
                     { n=G.UIT.R, config = { align="cm" }, nodes = {
                         { n=G.UIT.O, config={ object=
-                            fucking_kill_sprite(2)
+                            FountainOpeners.fucking_kill_sprite(2)
                         }}
                     }}
                 }
@@ -310,9 +310,7 @@ FishAndChips.Fish {
 			}
 		end
 	end,
-    set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge(localize("k_fac_fo_anvil"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
-	end,
+    badge_key = 'k_fac_fo_anvil'
 }
 
 G.FUNCS.fac_fo_can_fucking_kill_fish = function(e)
@@ -356,14 +354,14 @@ local uasb = G.UIDEF.use_and_sell_buttons
 function G.UIDEF.use_and_sell_buttons(card)
     local ret = uasb(card)
 
-     if card.ability.set == 'fac_Fish' and card.config.center.key ~= "fish_fac_fo_anvil" and #SMODS.find_card("fish_fac_fo_anvil") > 0 then
+     if card.ability.set == 'fac_Fish' and card.config.center.key ~= "fish_fac_fo_anvil" and not SMODS.is_eternal(card) and #SMODS.find_card("fish_fac_fo_anvil") > 0 then
         local kill = {n=G.UIT.C, config={align = "cr"}, nodes={
             {n=G.UIT.R, config = {
                 ref_table = card, r = 0.08, padding = 0.1, align = 'cl',
                 minw = 0.5*card.T.w - 0.15, maxw = 0.9*card.T.w - 0.15, minh = 0.3*card.T.h, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE,
                 one_press = true, button = 'fac_fo_fucking_kill_fish', func = 'fac_fo_can_fucking_kill_fish'
             }, nodes = {
-                {n=G.UIT.O, config={object = fucking_kill_sprite()}}
+                {n=G.UIT.O, config={object = FountainOpeners.fucking_kill_sprite()}}
             }},
         }}
         local use = {n=G.UIT.C, config={align = "cr"}, nodes={

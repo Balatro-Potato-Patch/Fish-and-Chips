@@ -5,7 +5,7 @@ FishAndChips.Fish{
     key = "minty_mimic_octopus",
     atlas = atlas,
     pos = pos,
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     environments = { --Maximum 6
@@ -14,15 +14,6 @@ FishAndChips.Fish{
         wormhole = 10,
         volcano = 10,
         garden = 10,
-        --[[
-        calm_pond = 10,
-        chocolate_river = 10,
-        styx = 10,
-        swamp = 10,
-        aquifer = 10,
-        city_river = 10,
-        soup = 10,
-        --]]
     },
     attributes = {
         "copying", "usable"
@@ -120,7 +111,7 @@ FishAndChips.Fish{
                 local target_key = target_center.key
                 local target_set = target_center.set
                 local target_vars = target_center.loc_vars and (target_center:loc_vars({}, target_card) or {})
-                target_name = localize{type= "name_text", key = target_key, set = target_set, vars = target_vars.vars or {}}
+                target_name = localize{type= "name_text", key = target_key, set = target_set, vars = (target_vars or {}).vars or {}}
                 --info_queue[#info_queue+1] = {key = target_key, set = target_set, config = target_vars, vars = target_vars.vars}
                 info_queue[#info_queue+1] = G.P_CENTERS[target_key]
                 --swap these info queues if smods doesn't accept my pr in time. sad but we'll live

@@ -3,24 +3,13 @@ FishAndChips.Fish{
     atlas = "minty_fish",
     pos = {x=2, y=0},
     badge_key = "k_fac_maybe_fish",
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"Trauma Center devteam"},
     environments = { --Maximum 6
         styx = 10,
         backroom = 10,
         wormhole = 10,
-        --[[
-        calm_pond = 10,
-        chocolate_river = 10,
-        pier = 10,
-        swamp = 10,
-        aquifer = 10,
-        volcano = 10,
-        city_river = 10,
-        soup = 10,
-        garden = 10,
-        --]]
     },
     attributes = {
         "xblindsize", "hands",
@@ -50,7 +39,7 @@ FishAndChips.Fish{
             }
         end
 
-        if context.joker_type_destroyed and context.card == card and not context.blueprint then
+        if context.joker_type_destroyed and context.card == card and not context.blueprint and not context.retrigger_joker then
             return {
                 message = "Defeat",
                 sound = "fac_minty_defeat"

@@ -47,18 +47,20 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
         if context.final_scoring_step and card.ability.extra.active and not context.blueprint then
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    SMODS.calculate_effect({
-                        message = localize("k_drank_ex")
-                    }, card)
-                    SMODS.destroy_cards(card, {
-                        bypass_eternal = true,
-                        pinch_anim = true
-                    })
-                    return true
-                end
-            }))
+            if not context.retrigger_joker then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        SMODS.calculate_effect({
+                            message = localize("k_drank_ex")
+                        }, card)
+                        SMODS.destroy_cards(card, {
+                            bypass_eternal = true,
+                            pinch_anim = true
+                        })
+                        return true
+                    end
+                }))
+            end
             return {
                 xmult = card.ability.extra.xmult
             }
@@ -92,7 +94,5 @@ FishAndChips.Fish {
     keep_on_use = function(self, card)
         return true
     end,
-    set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge(localize("k_fac_fo_vodka"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
-	end,
+    badge_key = 'k_fac_fo_vodka'
 }

@@ -100,7 +100,7 @@ FishAndChips.Fish {
         return { vars = { ppu_bubbles = { card.ability.extra.used and "used" or "usable" } } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.used = nil
         end
 	end,
@@ -143,7 +143,7 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.fac_fish_caught then
             local money = card.sell_cost + context.fac_fish_caught.sell_cost
-            if not context.blueprint then
+            if not context.blueprint and not context.retrigger_joker then
                 G.E_MANAGER:add_event(Event{
                     trigger = "after",
                     blocking = false,
@@ -160,9 +160,7 @@ FishAndChips.Fish {
             end
         end
 	end,
-    set_card_type_badge = function(self, card, badges)
-		badges[1] = create_badge(localize("k_fac_crimsonseraephim_fruit"), get_type_colour(self or card.config, card), nil, 1.2)
-	end,
+    badge_key = 'k_fac_crimsonseraephim_fruit'
 }
 
 
@@ -200,12 +198,12 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(
             card, "fac_crimsonseraphim_jade_crystalfish", 1, card.ability.extra.odds)
-            and not context.blueprint then
+            and not context.blueprint and not context.retrigger_joker then
             card:transmute(nil, G.P_CENTERS.fish_fac_crimsonseraphim_ruby_crystalfish)
         end
         if context.fac_fish_caught and SMODS.pseudorandom_probability(
             card, "fac_crimsonseraphim_jade_crystalfish_seal", 1, card.ability.extra.odds_seal)
-            and not context.blueprint then
+            and not context.blueprint and not context.retrigger_joker then
             context.fac_fish_caught:set_fish_seal(pseudorandom_element(SMODS.Seals, pseudoseed("jadefish_seal")).key)
         end
 	end,
@@ -332,10 +330,24 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(
             card, "fac_crimsonseraphim_ruby_crystalfish", 1, card.ability.extra.odds)
-            and not context.blueprint then
+            and not context.blueprint and not context.retrigger_joker then
             card:transmute(nil, G.P_CENTERS.fish_fac_crimsonseraphim_jade_crystalfish)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    if #SMODS.find_card("fish_fac_crimsonseraphim_ruby_crystalfish") <= 0 then
+                        for i, v in pairs(G.I.CARD) do
+                            if v.config and v.config.center and v.config.center.set == "fac_Fish" and v ~= card then
+                                v.base.suit = nil
+                                v.base.value = nil
+                                v.children.front = nil
+                            end
+                        end
+                    end
+                    return true;
+                end
+            }))
         end
-        if context.fac_fish_caught and not context.blueprint then
+        if context.fac_fish_caught and not context.blueprint and not context.retrigger_joker then
             SMODS.change_base(context.fac_fish_caught,
                 pseudorandom_element(SMODS.Suits, pseudoseed("ruby_crystalfish_suit")).key,
                 pseudorandom_element(SMODS.Ranks, pseudoseed("ruby_crystalfish_rank")).key,
@@ -343,7 +355,7 @@ FishAndChips.Fish {
         end
 	end,
     add_to_deck = function(self, card)
-        if #SMODS.find_card("fish_fac_ruby_crystalfish") <= 0 then
+        if #SMODS.find_card("fish_fac_crimsonseraphim_ruby_crystalfish") <= 0 then
             for i, v in pairs(G.I.CARD) do
                 if v.config and v.config.center and v.config.center.set == "fac_Fish" and v ~= card then
                     SMODS.change_base(v,
@@ -353,7 +365,18 @@ FishAndChips.Fish {
                 end
             end
         end
-    end
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        if #SMODS.find_card("fish_fac_crimsonseraphim_ruby_crystalfish") <= 0 then
+            for i, v in pairs(G.I.CARD) do
+                if v.config and v.config.center and v.config.center.set == "fac_Fish" and v ~= card then
+                    v.base.suit = nil
+                    v.base.value = nil
+                    v.children.front = nil
+                end
+            end
+        end
+    end,
 }
 
 FishAndChips.Fish {
@@ -492,7 +515,7 @@ FishAndChips.Fish {
     }
 	end,
 	calculate = function(self, card, context)
-        if context.selling_card and context.card.ability.set == "fac_Fish" and context.card ~= card and not context.blueprint then
+        if context.selling_card and context.card.ability.set == "fac_Fish" and context.card ~= card and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.mult = (card.ability.extra.mult + context.card.ability.stats.length) / 2
             card.ability.extra.chips = (card.ability.extra.chips + context.card.ability.stats.weight) / 2
         end
@@ -549,11 +572,11 @@ FishAndChips.Fish {
         return true
     end,
     calculate = function(self, card, context)
-        if card.ability.extra.charged and not context.blueprint then
+        if card.ability.extra.charged and not context.blueprint and not context.retrigger_joker then
             if context.fac_fish_caught then
                 context.fac_fish_caught:set_edition(SMODS.poll_object{type = "Edition", guaranteed = true})
             end
-            if context.fac_end_fishing then
+            if context.fac_end_fishing and not context.blueprint and not context.retrigger_joker then
                 if not context.perfect then
                     G.E_MANAGER:add_event(Event{
                         trigger = "after",
@@ -577,9 +600,7 @@ FishAndChips.Fish {
             end
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-		badges[1] = create_badge(localize("k_fac_crimsonseraephim_heavenly_artefact"), get_type_colour(self or card.config, card), nil, 1.2)
-	end,
+    badge_key = 'k_fac_crimsonseraephim_heavenly_artefact'
 }
 
 FishAndChips.Fish {
@@ -697,9 +718,7 @@ FishAndChips.Fish {
     keep_on_use = function()
         return true
     end,
-    set_card_type_badge = function(self, card, badges)
-		badges[1] = create_badge(localize("k_fac_crimsonseraephim_game_object"), get_type_colour(self or card.config, card), nil, 1.2)
-	end,
+    badge_key = 'k_fac_crimsonseraephim_game_object'
 }
 
 FishAndChips.Fish {
@@ -748,13 +767,11 @@ FishAndChips.Fish {
         return true
     end,
     calculate = function(self, card, context)
-        if context.fac_modify_fishing_profile then
+        if context.fac_modify_fishing_profile and not context.blueprint and not context.retrigger_joker then
             context.fishing_profile.vel_limit = context.fishing_profile.vel_limit * math.pow(1/2, card.ability.extra.primed or 0)
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-		badges[1] = create_badge(localize("k_fac_crimsonseraephim_weapon"), get_type_colour(self or card.config, card), nil, 1.2)
-	end,
+    badge_key = 'k_fac_crimsonseraephim_weapon'
 }
 
 FishAndChips.Fish {
@@ -798,7 +815,7 @@ FishAndChips.Fish {
         return G.P_CENTERS[card.ability.extra.joker].keep_on_use and G.P_CENTERS[card.ability.extra.joker]:keep_on_use(card.dummy) or nil
     end,
     calculate = function(self, card, context)
-        if context.starting_shop and not context.blueprint then
+        if context.starting_shop and not context.blueprint and not context.retrigger_joker then
             G.E_MANAGER:add_event(Event{
                 trigger = "after",
                 func = function()
@@ -836,7 +853,7 @@ FishAndChips.Fish {
                 end
             })
         end
-        if not card.dummy and not context.blueprint then
+        if not card.dummy and not context.blueprint and not context.retrigger_joker then
             card.dummy = FishAndChips.crimsonseraphim.get_dummy(G.P_CENTERS[card.ability.extra.joker], G.fac_fish_area, card)
             card.dummy.added_to_deck = true
             if card.ability.extra.dummy_abil then card.dummy.ability = card.ability.extra.dummy_abil end
@@ -1051,9 +1068,7 @@ FishAndChips.Fish {
         return G.GAME.crimsonseraphim_obtained_fish
     end,
     treasure = true,
-    set_card_type_badge = function(self, card, badges)
-		badges[1] = create_badge(localize("k_fac_crimsonseraephim_weapon"), get_type_colour(self or card.config, card), nil, 1.2)
-	end,
+    badge_key = 'k_fac_crimsonseraephim_weapon'
 }
 
 FishAndChips.Fish {
@@ -1089,7 +1104,7 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card ,context)
         if context.crimsonseraphim_fish_leaving_sweet_spot then
-            if not context.blueprint then card.ability.extra.times_done = card.ability.extra.times_done + 1 end
+            if not context.blueprint and not context.retrigger_joker then card.ability.extra.times_done = card.ability.extra.times_done + 1 end
             if card.ability.extra.times_done >= card.ability.extra.times then
                 if not context.blueprint then card.ability.extra.times_done = 0 end
                 return {
@@ -1101,9 +1116,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-		badges[1] = create_badge(localize("k_fac_crimsonseraephim_fruit"), get_type_colour(self or card.config, card), nil, 1.2)
-	end,
+    badge_key = 'k_fac_crimsonseraephim_fruit'
 }
 
 FishAndChips.Fish {
@@ -1361,7 +1374,7 @@ FishAndChips.Fish {
 	},
     blueprint_compat = false,
     calculate = function(self, card, context)
-        if context.crimsonseraphim_before_hightlighted_moved and not context.blueprint then
+        if context.crimsonseraphim_before_hightlighted_moved and not context.blueprint and not context.retrigger_joker then
             if #G.fac_fish_area.cards > 1 then
                 local self_pos = 1
                 for i, v in pairs(G.fac_fish_area.cards) do
@@ -1384,9 +1397,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-		badges[1] = create_badge(localize("k_fac_maybe_fish"), get_type_colour(self or card.config, card), nil, 1.2)
-	end,
+    badge_key = 'k_fac_maybe_fish'
 }
 
 FishAndChips.Fish {
@@ -1543,9 +1554,7 @@ FishAndChips.Fish {
     can_use = function()
         return true
     end,
-    set_card_type_badge = function(self, card, badges)
-		badges[1] = create_badge(localize("k_planet"), get_type_colour(self or card.config, card), nil, 1.2)
-	end,
+    badge_key = 'k_planet'
 }
 
 FishAndChips.crimsonseraphim.lotus_alts = {
@@ -1668,9 +1677,7 @@ FishAndChips.Fish {
             }
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-		badges[1] = create_badge(localize("k_fac_crimsonseraephim_questionmarks"), get_type_colour(self or card.config, card), nil, 1.2)
-	end,
+    badge_key = 'k_fac_crimsonseraephim_questionmarks'
 }
 
 FishAndChips.Fish {
@@ -1732,16 +1739,14 @@ FishAndChips.Fish {
     end,
     no_rotation = true,
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval and not context.blueprint then
+        if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.cost = 3
             return {
                 message = localize("k_reset")
             }
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-		badges[1] = create_badge(localize("k_fac_crimsonseraephim_game_object"), get_type_colour(self or card.config, card), nil, 1.2)
-	end,
+    badge_key = 'k_fac_crimsonseraephim_game_object'
 }
 
 SMODS.draw_ignore_keys.crimsonseraphim_sans_door_canvas = true
@@ -1840,26 +1845,28 @@ FishAndChips.Fish {
 
 function FishAndChips.crimsonseraphim.omega_next_fish(cent)
     local av = {}
-    for i, v in pairs(G.P_CENTERS) do
-        local a
-        if v.ppu_artist then
-            for i, v in pairs(v.ppu_artist) do
-                for _, j in pairs(cent.ppu_artist or {}) do
-                    if j == v then a = true; break end
+    for i, v in pairs(G.P_CENTER_POOLS) do
+        if v.set == 'fac_Fish' and SMODS.add_to_pool(v, { source = 'omega_crimsonfang'}) then
+            local a
+            if v.ppu_artist then
+                for i, v in pairs(v.ppu_artist) do
+                    for _, j in pairs(cent.ppu_artist or {}) do
+                        if j == v then a = true; break end
+                    end
+                    if a then break end
                 end
-                if a then break end
             end
-        end
-        if v.ppu_coder then
-            for i, v in pairs(v.ppu_coder) do
-                for _, j in pairs(cent.ppu_coder or {}) do
-                    if j == v then a = true; break end
+            if v.ppu_coder then
+                for i, v in pairs(v.ppu_coder) do
+                    for _, j in pairs(cent.ppu_coder or {}) do
+                        if j == v then a = true; break end
+                    end
+                    if a then break end
                 end
-                if a then break end
             end
-        end
-        if a then
-            av[#av+1] = v.key
+            if a then
+                av[#av+1] = v.key
+            end
         end
     end
     return pseudorandom_element(av, pseudoseed("omegabitchkill"))
@@ -1932,11 +1939,13 @@ FishAndChips.Fish {
     end,
     use = function()
         local c = G.fac_fish_area.cards[#G.fac_fish_area.cards]
-        G.GAME.fac_forced_fish = FishAndChips.crimsonseraphim.omega_next_fish(c.config.center)
-        SMODS.destroy_cards(c, nil, true)
+        if not SMODS.is_eternal(c) then
+            G.GAME.fac_forced_fish = FishAndChips.crimsonseraphim.omega_next_fish(c.config.center)
+            SMODS.destroy_cards(c, nil, true)
+        end
     end,
     can_use = function()
-        return true
+        return not SMODS.is_eternal(G.fac_fish_area.cards[#G.fac_fish_area.cards])
     end,
     keep_on_use = function()
         return true
@@ -1947,9 +1956,7 @@ FishAndChips.Fish {
             G.PROFILES[G.SETTINGS.profile].omega_crimsonfang_obtained = true
         end
     end,
-    set_card_type_badge = function(self, card, badges)
-		badges[1] = create_badge(localize("k_fac_crimsonseraephim_omega"), get_type_colour(self or card.config, card), nil, 1.2)
-	end,
+    badge_key = 'k_fac_crimsonseraephim_omega'
 }
 
 function create_UIBox_omega_game_over()

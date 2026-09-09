@@ -272,7 +272,7 @@ FishAndChips.Fish {
             }
         end
 
-        if context.before and not context.blueprint then
+        if context.before and not context.blueprint and not context.retrigger_joker then
             if stg.hand then
                 if context.scoring_name == stg.hand then
                     stg.times = stg.times + 1
@@ -432,7 +432,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         local stg = card.ability.extra
 
-        if context.before and not context.blueprint then
+        if context.before and not context.blueprint and not context.retrigger_joker then
             local cards_to_destroy = {}
             for k, v in pairs(context.scoring_hand) do
                 if v:is_suit('Diamonds') and not v.getting_sliced then
@@ -558,11 +558,11 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         local stg = card.ability.extra
 
-        if context.ending_shop and SMODS.pseudorandom_probability(card, "fac_am_mola", stg.prob, stg.odds) and not context.blueprint then
+        if context.ending_shop and SMODS.pseudorandom_probability(card, "fac_am_mola", stg.prob, stg.odds) and not context.blueprint and not context.retrigger_joker then
             SMODS.destroy_cards(card, { pinch_anim = true })
         end
 
-        if context.setting_blind and not card.getting_sliced and context.blind.boss and not context.blueprint then
+        if context.setting_blind and not card.getting_sliced and context.blind.boss and not context.blueprint and not context.retrigger_joker then
             G.E_MANAGER:add_event(Event({
                 func = function()
                     G.E_MANAGER:add_event(Event({
@@ -577,7 +577,6 @@ FishAndChips.Fish {
                 end
             }))
             SMODS.calculate_effect({ message = localize('ph_boss_disabled') }, card)
-            return nil, true
         end
     end,
     add_to_deck = function(self, card, from_debuff)
@@ -624,7 +623,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         local stg = card.ability.extra
 
-        if context.setting_blind and not context.blueprint then
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker then
             local cards_to_destroy = {}
 
             for i = 1, #G.fac_fish_area.cards do
@@ -715,7 +714,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         local stg = card.ability.extra
 
-        if context.before and not context.blueprint then
+        if context.before and not context.blueprint and not context.retrigger_joker then
             stg.last_hand = context.scoring_name
         end
     end,
@@ -747,6 +746,7 @@ FishAndChips.Fish {
     config = {
         extra = {
             rerolls = 0,
+            remaining = 0,
             percent = 100,
             max = 5,
         }
@@ -761,25 +761,50 @@ FishAndChips.Fish {
     loc_vars = function(self, info_queue, card)
         local stg = card.ability.extra
 
-        return { vars = { stg.percent, stg.rerolls, stg.max } }
+        return { vars = { stg.percent, stg.rerolls, stg.remaining, stg.max } }
     end,
     calculate = function(self, card, context)
         local stg = card.ability.extra
 
-        if context.starting_shop and not context.blueprint then
+        if context.starting_shop and not context.blueprint and not context.retrigger_joker then
             SMODS.change_free_rerolls(stg.rerolls)
         end
 
-        if context.ending_shop and not context.blueprint then
+        if context.reroll_shop and card.ability.extra.remaining > 0 and not context.blueprint and not context.retrigger_joker then
+			for _, v in pairs(G.fac_fish_area.cards) do
+				if v.ability.extra.i_rerolled and v ~= card then
+					return
+				end
+			end
+			card.ability.extra.i_rerolled = true
+
+			card.ability.extra.remaining = card.ability.extra.remaining - 1
+
+            return {
+                func = function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            card.ability.extra.i_rerolled = nil
+                            return true
+                        end
+                    }))
+                end
+            }
+		end
+
+        if context.ending_shop and not context.blueprint and not context.retrigger_joker then
             SMODS.change_free_rerolls(-stg.rerolls)
+            stg.remaining = 0
             stg.rerolls = 0
         end
 
-        if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+        if context.end_of_round and not context.individual and not context.repetition and not context.blueprint and not context.retrigger_joker then
             stg.rerolls = math.min(math.floor((G.GAME.chips / G.GAME.blind.chips) / (stg.percent / 100)), stg.max)
             if stg.rerolls > 0 then
+                stg.remaining = stg.rerolls
                 return {
-                    message = localize { type = 'variable', key = 'a_fac_am_rerolls', vars = { stg.rerolls } }
+                    message = localize { type = 'variable', key = 'a_fac_am_rerolls', vars = { stg.rerolls } },
+                    colour = G.C.GREEN
                 }
             end
         end
@@ -828,7 +853,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         local stg = card.ability.extra
 
-        if context.fac_end_fishing and context.perfect and not context.blueprint then
+        if context.fac_end_fishing and context.perfect and not context.blueprint and not context.retrigger_joker then
             if not context.fish_obj.fac_getting_am_chocolat then
                 context.fish_obj.fac_getting_am_chocolat = true
                 G.E_MANAGER:add_event(Event({

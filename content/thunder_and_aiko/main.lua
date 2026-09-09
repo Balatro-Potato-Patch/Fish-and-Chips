@@ -484,7 +484,6 @@ FishAndChips.Fish({
 	ppu_artist = { "aikoyori" },
 	calculate = function(self, card, context)
 		if context.fac_end_fishing and context.fish then
-			local count = #G.fac_fish_area.cards
 			if G.fac_fish_area:has_space() then
 				G.fac_fish_area:buffer(1)
 				G.E_MANAGER:add_event(Event({
@@ -495,6 +494,7 @@ FishAndChips.Fish({
 					end,
 				}))
 			end
+			return nil, true
 		end
 	end,
 })
@@ -977,7 +977,7 @@ FishAndChips.Fish({
 			card.click = miku_click
 		end
 		if card.added_to_deck then
-			card.fac_thu_aik_timer = (card.fac_thu_aik_timer or 0) + (dt / G.SETTINGS.GAMESPEED)
+			card.fac_thu_aik_timer = (card.fac_thu_aik_timer or 0) + G.real_dt
 			if card.fac_thu_aik_timer >= 20 then
 				local playsoundornot = pseudorandom("miku_fish.play_random_miku_sound")
 				if playsoundornot >= 0.9 then

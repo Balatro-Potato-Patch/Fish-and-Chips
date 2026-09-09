@@ -27,14 +27,14 @@ FishAndChips.Fish {
 	calculate = function(_, card, context)
 		if context.joker_main then
 			if mult > card.ability.extra.last_mult then
-				if not context.blueprint then
+				if not context.blueprint and not context.retrigger_joker then
 					card.ability.extra.last_mult = mult
 				end
 				return {
 					xmult = card.ability.extra.xmult,
 				}
 			else
-				if not context.blueprint then
+				if not context.blueprint and not context.retrigger_joker then
 					card.ability.extra.last_mult = 0
 				end
 				return {

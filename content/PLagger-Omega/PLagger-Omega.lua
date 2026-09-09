@@ -82,35 +82,19 @@ FishAndChips.Fish{ --Hawaii Fish
     blueprint_compat = true,
     config = {extra = {xmult = 3, housed = false, poker_hand = 'Full House'}},
 
-    -- TODO: ppu_bubble
     loc_vars = function (self, info_queue, card)
-      local main_end = nil
-      main_end = {
-                {
-                    n = G.UIT.C,
-                    config = { align = "bm", minh = 0.4 },
-                    nodes = {
-                        {
-                            n = G.UIT.C,
-                            config = { ref_table = card, align = "m", colour = card.ability.extra.housed and G.C.GREEN or G.C.RED, r = 0.05, padding = 0.06 },
-                            nodes = {
-                                { n = G.UIT.T, config = { text = ' ' .. localize(card.ability.extra.housed and 'fac_plaggeromega_active_ex' or 'fac_plaggeromega_inactive') .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.9 } },
-                            }
-                        }
-                    }
-                }
-            }
+      local bubble = card.ability.extra.housed and 'active' or 'inactive'
       return{
-        main_end = main_end,
         vars = {
           card.ability.extra.xmult,
           localize(card.ability.extra.poker_hand, 'poker_hands'),
+          ppu_bubbles = { bubble }
         }
       }
     end,
 
     calculate = function (self, card, context)
-      if context.pre_discard and not context.hook and not card.ability.extra.housed
+      if context.pre_discard and not context.hook and not card.ability.extra.housed and not context.retrigger_joker and not context.blueprint
           and G.FUNCS.get_poker_hand_info(G.hand.highlighted) == card.ability.extra.poker_hand then
           card.ability.extra.housed = true
           local eval = function () return card.ability.extra.housed and not G.RESET_JIGGLES end
@@ -126,7 +110,7 @@ FishAndChips.Fish{ --Hawaii Fish
           }
       end
 
-      if context.end_of_round then
+      if context.end_of_round and not context.retrigger_joker then
         card.ability.extra.housed = false
       end
     end
@@ -296,7 +280,7 @@ FishAndChips.Fish{ --Stewfish
         return{
           message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra.mult}}
         }
-      elseif card.ability.extra.mult > 0 then
+      elseif card.ability.extra.mult > 0 and not context.retrigger_joker then
         SMODS.reset_card (card, {
             ref_value = "mult",
             reset_value = 0,
@@ -428,7 +412,7 @@ FishAndChips.Fish{ --Relicanth
   end,
 
   calculate = function (self, card, context)
-    if context.before and not context.blueprint then
+    if context.before and not context.blueprint and not context.retrigger_joker then
       local cards = 0
       for _, scored_card in ipairs(context.scoring_hand) do
         cards = cards + 1
@@ -483,7 +467,7 @@ FishAndChips.Fish{ --Gummigoo
           repetitions = 1
           }
       end
-      if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+      if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
         if card.ability.extra.rounds - 1 <= 0 then
           SMODS.destroy_cards(card, nil, nil, true)
           return{
@@ -584,11 +568,11 @@ FishAndChips.Fish{ --Mystic Remora
   end,
 
   can_sell = function (self, card, context)
-    return false
+    return card.area ~= G.fac_fish_area -- Kinda stinky hardcoding but w/e
   end,
 
   calculate = function (self, card, context)
-    if context.setting_blind and not context.blueprint then
+    if context.setting_blind and not context.blueprint and not context.retrigger_joker then
       card.ability.extra.upkeep = card.ability.extra.upkeep + card.ability.extra.cumulative_upkeep
       --Create the cumulative upkeep choice menu
       G.E_MANAGER:add_event(Event({
@@ -639,7 +623,7 @@ FishAndChips.Fish{  --Chi-Yu
   cost = 5,
 
   calculate = function (self, card, context)
-    if G.GAME.current_round.discards_left == 2 and not context.blueprint then --stole this from TOGA
+    if G.GAME.current_round.discards_left == 2 and not context.blueprint and not context.retrigger_joker then --stole this from TOGA
 			local eval = function() return G.GAME.current_round.discards_left == 1 and not G.RESET_JIGGLES end
 			juice_card_until(card, eval, true)
 		end
@@ -672,17 +656,6 @@ FishAndChips.Fish{  --Fish in a Birdcage
   config = {extra = {xmult = 4}, freed = false},
 
   loc_vars = function (self, info_queue, card) -- TODO: Do we need to specify what they are? It doesnt *give* them and they're vanilla anyways. Could be better used to specify what it does when unlocked (mf)
-    info_queue[#info_queue + 1] = G.P_CENTERS.m_steel
-    info_queue[#info_queue + 1] = G.P_SEALS.Blue
-
-    info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
-    info_queue[#info_queue + 1] = G.P_SEALS.Red
-
-    info_queue[#info_queue + 1] = G.P_CENTERS.m_gold
-    info_queue[#info_queue + 1] = G.P_SEALS.Purple
-
-    info_queue[#info_queue + 1] = G.P_CENTERS.m_bonus
-    info_queue[#info_queue + 1] = G.P_SEALS.Gold
 
     if G.playing_cards then
       local blue_steel_club_4 = false
@@ -708,6 +681,12 @@ FishAndChips.Fish{  --Fish in a Birdcage
         card.ability.freed = true
       end
     end
+
+    -- This is giving an empty info_queue for some reason so if someone could figure out why that'd be cool (astra)
+    -- if not card.ability.freed then
+    --   info_queue[#info_queue + 1] = { set = 'fac_Fish', key = 'fish_fac_plaggeromega_freedfish', vars = { card.ability.extra.xmult } }
+    -- end
+
     return{
       vars = {card.ability.extra.xmult},
       key = card.ability.freed and 'fish_fac_plaggeromega_freedfish' or nil

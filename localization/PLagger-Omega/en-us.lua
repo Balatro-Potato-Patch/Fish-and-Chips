@@ -6,7 +6,8 @@ return {
                 text = {
                     '{X:mult,C:white}X#1#{} Mult if a',
                     '{C:attention}#2#{} was',
-                    '{C:attention}discarded{} this round'
+                    '{C:attention}discarded{} this round',
+                    '{ppu_bubble:1}'
                 },
                 flavour = {
                     'Why did fire erupted',

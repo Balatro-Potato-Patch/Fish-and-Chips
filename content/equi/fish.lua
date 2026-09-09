@@ -222,11 +222,11 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
         if context.failed and card.ability.extra.baits_this_round < card.ability.extra.max_per_round then
             local temp_fails = card.ability.extra.current_fails + 1
-            if not context.blueprint then
+            if not context.blueprint and not context.retrigger_joker then
                 card.ability.extra.current_fails = temp_fails
             end
             if temp_fails >= card.ability.extra.required_fails then
-                if not context.blueprint then
+                if not context.blueprint and not context.retrigger_joker then
                     card.ability.extra.current_fails = 0
                     card.ability.extra.baits_this_round = card.ability.extra.baits_this_round + 1
                 end
@@ -238,7 +238,7 @@ FishAndChips.Fish {
                         vars = { card.ability.extra.bait_given }
                     }
                 }
-            elseif not context.blueprint then
+            elseif not context.blueprint and not context.retrigger_joker then
                 return {
                     message = card.ability.extra.current_fails .. "/" .. card.ability.extra.required_fails
                 }
@@ -412,7 +412,7 @@ FishAndChips.Fish {
     end,
 
     calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.current_rank = pseudorandom_element(SMODS.Ranks, "equi_gofish").key
             return {
                 message = localize {
@@ -629,7 +629,7 @@ FishAndChips.Fish {
     end,
 
     calculate = function(self, card, context)
-        if context.press_play and not context.blueprint then
+        if context.press_play and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.leftright = pseudorandom_element({"left", "right"}, "equi_mutekimaruchannellr")
             card.ability.extra.target = pseudorandom_element({"joker", "fish", "card"}, "equi_mutekimaruchanneltarget")
             card.ability.extra.reward = pseudorandom_element({"chips", "mult", "xmult"}, "equi_mutekimaruchannelreward")

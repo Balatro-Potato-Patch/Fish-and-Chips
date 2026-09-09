@@ -25,7 +25,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.modifier } }
 	end,
 	calculate = function(self, card, context)
-        if context.fac_modify_fishing_profile then
+        if context.fac_modify_fishing_profile and not context.retrigger_joker then
 			context.fishing_profile.vel_limit = context.fishing_profile.vel_limit / card.ability.extra.modifier
 		end
 	end,

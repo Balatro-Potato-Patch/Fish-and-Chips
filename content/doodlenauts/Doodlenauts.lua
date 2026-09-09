@@ -304,7 +304,7 @@ FishAndChips.Fish {
         info_queue[#info_queue + 1] = G.P_CENTERS.m_lucky
     end,
 	calculate = function(self, card, context)
-		if context.mod_probability and (context.identifier == "lucky_mult" or context.identifier == "lucky_money") then
+		if context.mod_probability and (context.identifier == "lucky_mult" or context.identifier == "lucky_money") and not context.retrigger_joker then
 			return { numerator = 3 }
 		end
 	end
@@ -403,7 +403,7 @@ FishAndChips.Fish {
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			local selectable_suits = {}
 			for k, v in pairs(SMODS.Suits) do
 				if k ~= card.ability.extra.suit then selectable_suits[#selectable_suits + 1] = k end
@@ -497,7 +497,7 @@ FishAndChips.Fish {
         }))
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.game_over == false and card.ability.extra.loanshark_current_debt > 0 and not context.blueprint then
+		if context.end_of_round and context.game_over == false and card.ability.extra.loanshark_current_debt > 0 and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.loanshark_current_debt = card.ability.extra.loanshark_current_debt - card.ability.extra.payback_per_round
 			if card.ability.extra.loanshark_current_debt <= 0 then
 				G.E_MANAGER:add_event(Event({
@@ -631,7 +631,7 @@ FishAndChips.Fish {
 				sell_mult = card.ability.extra.legendary_mult
 			end
 			if sell_mult > 0 then
-				if not context.blueprint then
+				if not context.blueprint and not context.retrigger_joker then
 					SMODS.destroy_cards(card, nil, nil, true)
 				end
 				return {
@@ -684,7 +684,7 @@ FishAndChips.Fish {
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint then
+		if context.before and not context.blueprint and not context.retrigger_joker then
 			for i, playing_card in ipairs(context.scoring_hand) do
 				if not playing_card:get_seal() and card.ability.extra.gold_seals > 0 then
 					playing_card:set_seal('Gold')
@@ -954,7 +954,7 @@ FishAndChips.Fish {
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint then
+		if context.before and not context.blueprint and not context.retrigger_joker then
 			return {
 				dollars = -card.ability.extra.money_per_hand
 			}
@@ -985,7 +985,7 @@ FishAndChips.Fish {
 	weight = 3, --uncommon/rare
 	ppu_coder = { 'Buckaroodle' },
 	ppu_artist = { 'F404' },
-	attributes = { 'useable', 'generation', 'enhancements', 'seals' , 'edition', },
+	attributes = { 'useable', 'generation', 'enhancements', 'seals' , 'edition', 'playing_card' },
 	treasure = true,
 	stats = {
 		weight = {
@@ -1164,10 +1164,10 @@ FishAndChips.Fish {
 	cost = 0,
 	config = {
 		extra = {
-			freerolls = 3,
-			cached_freerolls = 0,
-			used_freerolls = 0
-		}
+			rerolls = 3,
+            remaining = 3,
+            old_remaining = 3,
+		},
 	},
 	environments = {
 		city_river = 1,
@@ -1176,53 +1176,58 @@ FishAndChips.Fish {
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
-				card.ability.extra.freerolls,
-				card.ability.extra.freerolls - card.ability.extra.used_freerolls
+				card.ability.extra.rerolls,
+				card.ability.extra.remaining
 			}
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.reroll_shop and not context.blueprint and card.ability.extra.used_freerolls < card.ability.extra.freerolls then
-			for _, v in ipairs(G.fac_fish_area.cards) do	-- this is to allow multiple tires to work together (ghostsalt)
-				if v.config.center.key == "fish_fac_oldtire" and v.ability.extra.i_rerolled then
+		if context.starting_shop and not context.blueprint and not context.retrigger_joker then
+			card.ability.extra.old_remaining = card.ability.extra.remaining
+		end
+
+		if context.reroll_shop and card.ability.extra.remaining > 0 and not context.blueprint and not context.retrigger_joker then
+			for _, v in pairs(G.fac_fish_area.cards) do
+				if v.ability.extra.i_rerolled and v ~= card then
 					return
 				end
 			end
 			card.ability.extra.i_rerolled = true
 
-			card.ability.extra.used_freerolls = card.ability.extra.used_freerolls + 1
-			card.ability.extra.cached_freerolls = card.ability.extra.cached_freerolls + 1
+			card.ability.extra.remaining = card.ability.extra.remaining - 1
 			
-			G.E_MANAGER:add_event(Event({
+			return {
                 func = function()
-					card.ability.extra.i_rerolled = nil
-					return true
-				end
-			}))
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            card.ability.extra.i_rerolled = nil
+                            return true
+                        end
+                    }))
+                end
+            }
 		end
 
-		if context.ending_shop and not context.blueprint then
-			SMODS.change_free_rerolls(-card.ability.extra.cached_freerolls)
-			card.ability.extra.cached_freerolls = 0
+		if context.ending_shop and not context.blueprint and not context.retrigger_joker then
+			SMODS.change_free_rerolls(card.ability.extra.remaining - card.ability.extra.old_remaining)
 		end
 
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-			if context.beat_boss then
-				if card.ability.extra.used_freerolls > 0 then
-					SMODS.change_free_rerolls(card.ability.extra.used_freerolls)
-				end
-				card.ability.extra.used_freerolls = 0
-			end
+		if context.ante_change and context.ante_end and not context.blueprint and not context.retrigger_joker then
+			local mod = card.ability.extra.rerolls - card.ability.extra.remaining
+			card.ability.extra.remaining = card.ability.extra.rerolls
+			SMODS.change_free_rerolls(mod)
+
+			return {
+				message = localize("k_reset")
+			}
 		end
 	end,
-	add_to_deck = function(self, card, from_debuff)
-        SMODS.change_free_rerolls(card.ability.extra.freerolls)
+    add_to_deck = function(self, card, from_debuff)
+        SMODS.change_free_rerolls(card.ability.extra.remaining)
     end,
     remove_from_deck = function(self, card, from_debuff)
-		if card.ability.extra.used_freerolls < card.ability.extra.freerolls or card.ability.extra.cached_freerolls > 0 then
-        	SMODS.change_free_rerolls(-(card.ability.extra.freerolls - card.ability.extra.used_freerolls + card.ability.extra.cached_freerolls))
-		end
-    end
+        SMODS.change_free_rerolls(-card.ability.extra.remaining)
+    end,
 }
 
 -- Live Ammunition

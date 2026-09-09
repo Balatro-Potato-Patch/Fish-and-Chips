@@ -52,7 +52,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.mult, letter_count * card.ability.extra.mult } }
 	end,
 	calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.chosen_hand = pseudorandom("pa_F", 0, G.GAME.current_round.hands_left)
         end
 

@@ -68,9 +68,6 @@ PotatoPatchUtils.Developer{
 	fac_partner = "fac_squeax09",
 	loc = true,
 	calculate = function(self, context)
-		if context.fac_end_fishing and context.fish then
-			G.GAME.fac_FooSqueax.fish_caught[context.fish] = true
-		end
 
 		if context.end_of_round and context.main_eval then
 			if G.GAME.fac_FooSqueax.tobies > 0 then
@@ -206,7 +203,6 @@ function FishAndChips.mod.reset_game_globals (run_start)
 			},
 			wormholes = {},
 			tobies = 0,
-			fish_caught = {},
 			nyon = 0,
 		}
 	end
@@ -355,6 +351,9 @@ function FishAndChips.mod.custom_card_areas(game)
 	G.fac_fas_kine_areas = {}
 	function G.fac_fas_kine_areas:align_cards()
 		if G.GAME and #G.fac_fas_kine_areas > 0 and G.fac_fish_area then
+			for i, area in ipairs(G.fac_fas_kine_areas) do
+				if not area.config.card_limits.extra_slots_used then area.config.card_limits.extra_slots_used = 0 end
+			end
 			for j, fish in ipairs(G.fac_fish_area.cards) do
 				if fish.config.center.key == "fish_fac_fas_kine" and fish.ability.area_num then
 					local j = fish.ability.area_num

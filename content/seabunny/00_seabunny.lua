@@ -37,23 +37,6 @@ SMODS.Sound {
     path = "seabunny/enchant.ogg"
 }
 
--- TODO: Port to dev calculate
-local Scmc_ref = SMODS.current_mod.calculate
-SMODS.current_mod.calculate = function(self, context)
-    if context.selling_card and context.card.ability.set == "fac_Fish" then
-        G.GAME.current_round.fish_sold = true
-    elseif context.round_eval then
-        G.GAME.current_round.fish_sold = false
-        for k, v in ipairs(G.deck.cards) do
-            if v.ability.temp_repetitions then
-                v.ability.perma_repetitions = v.ability.perma_repetitions - v.ability.temp_repetitions
-                v.ability.temp_repetitions = 0
-            end
-        end
-    end
-    Scmc_ref(self, context)
-end
-
 -- Potato Patch Utils
 SMODS.Atlas {
     key = "seabunny_credits",
@@ -78,6 +61,19 @@ PotatoPatchUtils.Developer {
             font = SMODS.Fonts.fac_collection
             }
         }}}
+    end,
+    calculate = function(self, context)
+        if context.selling_card and context.card.ability.set == "fac_Fish" then
+            G.GAME.current_round.fish_sold = true
+        elseif context.round_eval then
+            G.GAME.current_round.fish_sold = false
+            for k, v in ipairs(G.deck.cards) do
+                if v.ability.temp_repetitions then
+                    v.ability.perma_repetitions = v.ability.perma_repetitions - v.ability.temp_repetitions
+                    v.ability.temp_repetitions = 0
+                end
+            end
+        end
     end
 }
 

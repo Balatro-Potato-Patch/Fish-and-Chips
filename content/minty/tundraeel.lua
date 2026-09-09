@@ -5,7 +5,7 @@ FishAndChips.Fish{
     key = "minty_tundra_eel",
     atlas = atlas,
     pos = pos,
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     environments = { --Maximum 6
@@ -13,16 +13,6 @@ FishAndChips.Fish{
         aquifer = 10,
         city_river = 10,
         backroom = 10,
-        --[[
-        calm_pond = 10,
-        chocolate_river = 10,
-        styx = 10,
-        swamp = 10,
-        volcano = 10,
-        soup = 10,
-        garden = 10,
-        wormhole = 10,
-        --]]
     },
     attributes = {
         "balance"

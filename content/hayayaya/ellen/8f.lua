@@ -174,15 +174,12 @@ FishAndChips.Fish({
 		return G.STATE == G.STATES.BLIND_SELECT and card.ability.immutable.count >= card.ability.immutable.max
 	end,
 	use = function(self, card)
-		-- TODO sound
 		HayayayaUtils.stop_music(true)
 
 		card:highlight(false)
 
 		play_sound("fac_hayayaya_rainer")
 
-		-- TODO Honestly, do the fucking animation here where a black bar appears in the center like in firered
-		-- That would be really cool.
 		G.E_MANAGER:add_event(Event({
 			delay = 0.5 * G.SPEEDFACTOR,
 			trigger = "after",
@@ -265,7 +262,7 @@ FishAndChips.Fish({
 		delay(0.5)
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.main_eval and card.ability.immutable.count < card.ability.immutable.max and not context.blueprint then
+		if context.end_of_round and context.main_eval and card.ability.immutable.count < card.ability.immutable.max and not context.blueprint and not context.retrigger_joker then
 			card.ability.immutable.count = card.ability.immutable.count + 1
 			return {
 				message = string.format("%i/%i", card.ability.immutable.count, card.ability.immutable.max),

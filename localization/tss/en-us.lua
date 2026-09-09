@@ -224,6 +224,7 @@ return {
 					"chance to retrigger {C:attention}repeatedly",
 					"until the probability fails",
 					"{C:red,s:.8}Toggle Low Performance Mode in Mod Settings",
+					"{C:red,s:.8}to disable the jpeg filter",
 					"{C:inactive,s:.7}...but if you can read this, it's already off"
 				},
 				flavour = {
@@ -293,7 +294,13 @@ return {
 			fac_tss_good_news = "Good News!",
 			fac_tss_na1 = "#1#",
 			fac_tss_na2 = "#2#",
-			fac_tss_bloon = "Bloon"
+			fac_tss_bloon = "Bloon",
+			fac_tss_mercenary = 'Mercenary',
+			fac_tss_fish_quoted = '"Fish"',
+			fac_tss_food = 'Food',
+		},
+		v_dictionary = {
+			k_fac_tss_again_ex_multi = "Again! x#1#"
 		}
 	}
 }

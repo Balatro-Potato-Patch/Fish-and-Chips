@@ -128,8 +128,7 @@ SMODS.Atlas {
 
 PotatoPatchUtils.Developer({
 	name = 'lanedarushpy',
-	-- atlas = 'fac_cards', -- TODO: add card for it
-	atlas = 'fac_lizie_credits', -- TODO: add atlas
+	atlas = 'fac_lizie_credits',
 	pos = {x = 1, y = 0},
 	colour = HEX("713a91"),
     loc = true,
@@ -139,7 +138,7 @@ PotatoPatchUtils.Developer({
 
 PotatoPatchUtils.Developer({
 	name = 'pangaea47',
-	atlas = 'fac_lizie_credits', -- TODO: add atlas
+	atlas = 'fac_lizie_credits',
 	pos = {x = 0, y = 0},
 	colour = G.C.YELLOW,
     loc = true,
@@ -234,7 +233,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main and not card.ability.immutable.cant_flop then return { Xmult = card.ability.extra.Xmult > 1.0 and card.ability.extra.Xmult or nil } end
-        local context_check = not context.blueprint and (context.end_of_round or context.first_hand_drawn or context.after or (context.fac_fish_hooked and pseudorandom("laneda_floppy_fuckyou", 1, 10) < 3))
+        local context_check = not context.blueprint and not context.retrigger_joker and (context.end_of_round or context.first_hand_drawn or context.after or (context.fac_fish_hooked and pseudorandom("laneda_floppy_fuckyou", 1, 10) < 3))
         if context_check and card.ability.immutable.flop_flag then
             G.E_MANAGER:add_event(Event({
                 func = function ()
@@ -447,11 +446,17 @@ SMODS.Sound {
     path = "lanedarushpy/music_findows_shop.ogg",
     pitch = 1.0,
     volume = 0.75,
-    -- sync = {
-    --     ['music_findows_booster'] = true,
-    --     ['music_findows_main'] = true,
-    --     ['music_findows_boss'] = true,
-    -- },
+	sync = {
+		['music1'] = true,
+		['music2'] = true,
+		['music3'] = true,
+		['music4'] = true,
+		['music5'] = true,
+        ['fac_music_findows_booster'] = true,
+        ['fac_music_findows_main'] = true,
+        ['fac_music_findows_boss'] = true,
+        ['fac_calm_pond_music'] = true,
+    },
 
     select_music_track = function (self)
         local play_condition = G.STATE == G.STATES.SHOP
@@ -466,11 +471,17 @@ SMODS.Sound {
     path = "lanedarushpy/music_findows_main.ogg",
     pitch = 1.0,
     volume = 0.75,
-    -- sync = {
-    --     ['music_findows_booster'] = true,
-    --     ['music_findows_shop'] = true,
-    --     ['music_findows_boss'] = true,
-    -- },
+	sync = {
+		['music1'] = true,
+		['music2'] = true,
+		['music3'] = true,
+		['music4'] = true,
+		['music5'] = true,
+        ['fac_music_findows_booster'] = true,
+        ['fac_music_findows_shop'] = true,
+        ['fac_music_findows_boss'] = true,
+        ['fac_calm_pond_music'] = true,
+    },
 
     select_music_track = function (self)
         local has_findows = not not next(SMODS.find_card("fish_fac_argel_findows", true))
@@ -484,11 +495,17 @@ SMODS.Sound {
     path = "lanedarushpy/music_findows_boosters.ogg",
     pitch = 1.0,
     volume = 0.75,
-    -- sync = {
-    --     ['music_findows_main'] = true,
-    --     ['music_findows_shop'] = true,
-    --     ['music_findows_boss'] = true,
-    -- },
+	sync = {
+		['music1'] = true,
+		['music2'] = true,
+		['music3'] = true,
+		['music4'] = true,
+		['music5'] = true,
+        ['fac_music_findows_main'] = true,
+        ['fac_music_findows_shop'] = true,
+        ['fac_music_findows_boss'] = true,
+        ['fac_calm_pond_music'] = true,
+    },
 
     select_music_track = function (self)
         local play_condition = G.STATE == G.STATES.SMODS_BOOSTER_OPENED;
@@ -503,11 +520,18 @@ SMODS.Sound {
     path = "lanedarushpy/music_findows_boss.ogg",
     pitch = 1.0,
     volume = 0.75,
-    -- sync = {
-    --     ['music_findows_main'] = true,
-    --     ['music_findows_shop'] = true,
-    --     ['music_findows_booster'] = true,
-    -- },
+
+	sync = {
+		['music1'] = true,
+		['music2'] = true,
+		['music3'] = true,
+		['music4'] = true,
+		['music5'] = true,
+        ['fac_music_findows_main'] = true,
+        ['fac_music_findows_shop'] = true,
+        ['fac_music_findows_booster'] = true,
+        ['fac_calm_pond_music'] = true,
+    },
 
     select_music_track = function (self)
         local play_condition = G.GAME.blind and (G.GAME.blind.in_blind and not not G.GAME.blind.boss);
@@ -742,7 +766,7 @@ FishAndChips.Fish {
 		return { vars = { 1, card.ability.extra.cap, ppu_bubbles = { card.ability.extra.usable and "usable" or "used" } } }
 	end,
 	calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker then
             G.E_MANAGER:add_event(Event({
                 func = function(e)
                     card.ability.immutable.usable = true
@@ -987,7 +1011,7 @@ FishAndChips.Fish {
         card.children.center:set_sprite_pos(card.ability.immutable.sprite_pos[card.ability.immutable.state])
     end,
     calculate = function (self, card, context)
-        if context.joker_type_destroyed and context.card == card and not context.blueprint then
+        if context.joker_type_destroyed and context.card == card and not context.blueprint and not context.retrigger_joker then
             if not (card.ability.immutable.state == "larva" or card.ability.immutable.state == "polyp") then
                 G.E_MANAGER:add_event(Event({
                     func = function()
@@ -1095,7 +1119,7 @@ FishAndChips.Fish {
     end,
 
     calculate = function (self, card, context)
-        if context.before and context.main_eval and not context.blueprint then
+        if context.before and context.main_eval and not context.blueprint and not context.retrigger_joker then
             if #G.jokers.cards < 1 then card.ability.immutable.current_bubble_joker = -1 end
             if card.ability.immutable.current_bubble_joker < 0 then
                 local picked_joker = pseudorandom_element(G.jokers.cards, "fac_lizie_toxikarp_choice")
@@ -1232,8 +1256,8 @@ FishAndChips.Fish {
         card.ability.immutable.used_this_round = true
     end,
 
-    calculate = function (self,card,context)
-        if context.setting_blind and not context.blueprint then
+    calculate = function(self, card, context)
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker then
             G.E_MANAGER:add_event(Event({
                 func = function(e)
                     card.ability.immutable.used_this_round = false
@@ -1243,31 +1267,29 @@ FishAndChips.Fish {
             }))
         end
 
-        if context.joker_main and card.ability.immutable.active and not context.blueprint then
-            for _, v in ipairs(G.play.cards) do
-                if v:is_suit("Hearts") then
+        if context.destroy_card and context.destroy_card:is_suit("Hearts") and context.cardarea == G.play and card.ability.immutable.active and not context.blueprint then
+            card.ability.immutable.active = false
+            return {
+                xblindsize = card.ability.extra.Xblindsize,
+                remove = true,
+                func = function()
                     G.E_MANAGER:add_event(Event({
                         func = function(e)
                             card:juice_up(0.8, 0.8)
                             play_sound('slice1', 0.96 + math.random() * 0.08)
-                            SMODS.destroy_cards(v, { immediate = true })
-                            card.ability.immutable.active = false
-                            card.T.h = (card.T.h / (self.alt_d_size.h/95)) * (self.display_size.h/95)
+                            card.T.h = (card.T.h / (self.alt_d_size.h / 95)) * (self.display_size.h / 95)
                             card.children.center:remove()
-                            card.children.center = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, self.atlas, {x=0,y=0}, {})
+                            card.children.center = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, self.atlas,{ x = 0, y = 0 }, {})
                             card.children.center.scale.y = 152
-                            card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
+                            card.children.center:set_role({ major = card, role_type = 'Glued', draw_major = card })
                             return true;
                         end
                     }))
-                    return {
-                        xblindsize = card.ability.extra.Xblindsize
-                    }
                 end
-            end
+            }
         end
 
-        if context.end_of_round and context.main_eval and not context.blueprint then
+        if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
             G.E_MANAGER:add_event(Event({
                 func = function(e)
                     card.ability.immutable.used_this_round = true

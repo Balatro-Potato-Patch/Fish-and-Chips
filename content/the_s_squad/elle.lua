@@ -1,4 +1,3 @@
--- TODO: Port all uses of set_card_type_badge to badge_key
 FishAndChips.Fish {
 	key = "tss_chesh",
 	atlas = "tss_ellefish",
@@ -26,9 +25,7 @@ FishAndChips.Fish {
 		-- Chesh eating handled in dev calculate so they can all flock at once like hungry pirahnas
 		if context.joker_main and card.ability.extra.xmult ~= 1 then return { xmult = card.ability.extra.xmult } end
 	end,
-	set_card_type_badge = function(self, card, badges) -- TODO: Make its own loc_key
-		badges[#badges + 1] = create_badge('"'..localize("k_fac_fish")..'"', FishAndChips.C.FISH, G.C.WHITE, 1.2)
-	end,
+	badge_key = 'fac_tss_fish_quoted'
 }
 
 local emplace_hook = CardArea.emplace
@@ -80,7 +77,7 @@ local function create_guppy_uibox(key)
 	FishAndChips.TheShitSquad.guppy_fish = fish
 	return UIBox{definition={n=G.UIT.ROOT, config={colour=G.C.CLEAR}, nodes = {
 		{n = G.UIT.O, config = {object=fish}}
-	}},config={major = G.FISHING.fishing_bait_inventory, align = "cr", offset = { x = 1.6, y = -G.CARD_H/2-.45 }}}
+	}},config={major = G.fac_bait_area, align = "cr", offset = { x = 1.6, y = 0 }, instance_type = 'CARD'}}
 end
 
 FishAndChips.Fish {
@@ -191,10 +188,14 @@ FishAndChips.Fish {
 					local a = false
 					if G.P_CENTERS[v.key] then
 						for _, dev in ipairs(devs) do
-							a = a or  G.P_CENTERS[v.key].ppu_coder[1] == dev.name
+							a = a or  G.P_CENTERS[v.key].ppu_coder[1] == dev.name and v.key ~= target.config.center_key
 						end
 					end
 					newTable[#newTable+1] = a and v or nil
+				end
+
+				if not next(newTable) then
+					newTable = { target.config.center }
 				end
 
 				return newTable
@@ -246,9 +247,7 @@ FishAndChips.Fish {
             return nil, true
 		end
 	end,
-	set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge("Food", FishAndChips.C.FISH, G.C.WHITE, 1.2)
-	end
+	badge_key = 'fac_tss_food'
 }
 
 FishAndChips.Fish {
@@ -342,9 +341,7 @@ FishAndChips.Fish {
 			end
 		end
 	end,
-	set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge(localize("k_fac_rod"), FishAndChips.C.ROD, G.C.WHITE, 1.2)
-	end,
+	badge_key = 'k_fac_rod'
 }
 
 G.E_MANAGER:add_event(Event({blocking = false, blockable = false, func = function()
@@ -394,7 +391,7 @@ FishAndChips.Fish {
 	ppu_coder = { "slimestuff" },
 	ppu_artist = { "slimestuff" },
 	attributes = { "retrigger", "chance", },
-	config = { immutable = { num = 2, den = 3 } },
+	config = { immutable = { num = 1, den = 3 } },
 	environments = {},
 	treasure = true,
 	loc_vars = function(self, info_queue, card)
@@ -402,16 +399,21 @@ FishAndChips.Fish {
 		return { vars = { num, den } }
 	end,
 	calculate = function(self, card, context)
-	    -- TODO: If a Joker somehow ends up in Fish area then this will retrigger it. Same for if a Fish ends up in a non-Fish area
-		if context.retrigger_joker_check and context.other_card.area == G.fac_fish_area and context.other_card.config.center_key ~= "fish_fac_tss_slop" then
+		if
+			context.retrigger_joker_check
+			and not context.retrigger_joker
+			and context.other_card
+			and context.other_card:is(Card)
+			and context.other_card.config.center.set == "fac_Fish"
+		then
 			local count = 0
-			while SMODS.pseudorandom_probability(card,"fac_tss_slop", card.ability.immutable.num, card.ability.immutable.den, nil, true) do
+			while SMODS.pseudorandom_probability(card, "fac_tss_slop", card.ability.immutable.num, card.ability.immutable.den, nil, true) do
 				count = count + 1
 			end
 			if count>0 then
 				return {
 					repetitions = count,
-					message = localize("k_again_ex") .. " x" .. count
+					fac_fishingslop_end_msg = localize{ type = 'variable', key = 'k_fac_tss_again_ex_multi', vars = {count} },
 				}
 			end
 		end

@@ -1099,6 +1099,9 @@ function G.FUNCS.fac_set_active_bait(e)
 	end
 
 	local bait = SMODS.add_card({ key = e.config.key, area = G.fac_bait_area, skip_materialize = true })
+	if G.CONTROLLER.HID.controller then
+		G.CONTROLLER:snap_to{node = bait}
+	end
 
 	if G.FISHING then FishAndChips.update_bait_counter(bait) end
 	FishAndChips.rebuild_bait_inventory(e.config.inventory_swap and previous_active_bait or nil)

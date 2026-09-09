@@ -136,7 +136,7 @@
 		blockable = false,
 		blocking = false,
 		func = function()
-			G.GAME.proto_q_music = false
+			G.GAME.proto_dj_music = nil
 			G.ARGS.push.type = 'restart_music'
 			G.SOUND_MANAGER.channel:push(G.ARGS.push)
 			return true
@@ -172,12 +172,11 @@
 
 		use = function(self,card)
 			FishAndChips.create_baits_from_card(card, card.ability.extra.bait)
-			G.GAME.proto_q_music = "jclub"
+			G.GAME.proto_dj_music = true
 			G.E_MANAGER:add_event(Event(playlistEvent))
 		end,
 		can_use = function(self,card)
-			local noirFish = SMODS.find_card("fish_fac_proto_noir")[1]
-			return noirFish == nil or (noirFish and not noirFish.ability.extra.storyActive)
+			return true
 		end
 
 	}

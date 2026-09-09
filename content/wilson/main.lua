@@ -57,7 +57,7 @@ FishAndChips.Fish {
 	end,
 	calculate = function(self, card, context)
 		if context.joker_main then return { xmult = card.ability.extra.xmult } end
-		if context.setting_blind and not context.blueprint then
+		if context.setting_blind and not context.blueprint and not context.retrigger_joker then
 			local my_pos = nil
 			for i = 1, #G.fac_fish_area.cards do
 				if G.fac_fish_area.cards[i] == card then

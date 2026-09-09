@@ -3,11 +3,9 @@ local atlas, pos = PotatoPatchUtils.Developers.fac_minty:get_lineboil_atlas_info
 
 FishAndChips.Fish{
     key = "minty_electric_eel",
-    --[[
     atlas = atlas,
     pos = pos,
-    --]]
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     environments = { --Maximum 6
@@ -15,16 +13,6 @@ FishAndChips.Fish{
         calm_pond = 10,
         city_river = 10,
         styx = 1,
-        --[[
-        chocolate_river = 10,
-        pier = 10,
-        aquifer = 10,
-        volcano = 10,
-        soup = 10,
-        garden = 10,
-        backroom = 10,
-        wormhole = 10,
-        --]]
     },
     attributes = {
         "usable", "retrigger", "boss_blind",
@@ -96,7 +84,7 @@ FishAndChips.Fish{
             }
         end
 
-        if context.end_of_round and context.main_eval then
+        if context.end_of_round and context.main_eval and not context.retrigger_joker then
             local reset, charge = {}, {}
             if card.ability.extra.ready > 0 then
                 card.ability.extra.ready = 0

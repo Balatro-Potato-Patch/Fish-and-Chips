@@ -4,17 +4,20 @@
 	"display_name": "Fish and Chips",
 	"no_marquee": true,
 	"author": ["The Potato Patch"],
-	"description": "FISHING EVENT",
+	"description": "What if Balatro had a fishing aspect? Let 89 different developers answer for you!",
 	"prefix": "fac",
 	"main_file": "main.lua",
 	"priority": 0,
 	"badge_colour": "66d0e7",
 	"badge_text_colour": "fdeab7",
-	"version": "1.0.1",
+	"version": "1.0.5",
 	"dependencies": [
 		"Steamodded (>=26.829.0)",
 		"Lovely (>=0.9.0)",
-		"PotatoPatchUtils (>=1.0.14)"
+		"PotatoPatchUtils (>=1.0.16)"
+	],
+	"conflicts": [
+		"SilkTouch (<<1.2.5b)"
 	],
 	"allow_redistribution": true,
 	"icon_path": "core/modicon.png",

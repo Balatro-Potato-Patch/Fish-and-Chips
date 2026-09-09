@@ -25,14 +25,14 @@ FishAndChips.Fish{
 	attributes = {"usable", "deltarune", "utdr", "editions",},
 	blueprint_compat = false,
 	calculate = function(self, card, context)
-		if context.fac_fish_caught and not context.blueprint then
+		if context.fac_fish_caught and not context.blueprint and not context.retrigger_joker then
 			if card.ability.immutable.primed then
 				context.fac_fish_caught:set_edition(SMODS.poll_edition{no_negative = true, guaranteed = true})
 				card.ability.immutable.primed = false
 				card.ability.immutable.used = true
 			end
 		end
-		if context.ante_end and not context.blueprint then
+		if context.ante_end and not context.blueprint and not context.retrigger_joker then
 			card.ability.immutable.used = false
 		end
 	end,

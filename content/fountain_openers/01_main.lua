@@ -331,28 +331,7 @@ PotatoPatchUtils.Developer {
     loc = true,
     click = function(self)
         play_sound("fac_fo_knight_cut2", 1)
-    end,
-
-    -- still done by alexi but. it's grahkon's fish.
-    -- handles decreasing the amount of rerolls for when there's multiple crabkhons
-    calculate = function(self, context)
-        if context.reroll_shop then
-            local crabkhons = SMODS.find_card("fish_fac_fo_crabkhon")
-            if #crabkhons > 0 then
-                local target_crab
-                for _, crab in ipairs(crabkhons) do
-                    if crab.ability.extra.remaining > 0 then
-                        target_crab = crab
-                        break
-                    end
-                end
-
-                if target_crab then
-                    target_crab.ability.extra.remaining = math.max(0, target_crab.ability.extra.remaining - 1)
-                end
-            end
-        end
-    end,
+    end
 }
 
 -- also used by the shit squad; shader by slimestuff

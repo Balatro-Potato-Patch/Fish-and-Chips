@@ -161,8 +161,7 @@ FishAndChips.Rod {
 	end,
 	modify_pool = function(self, card, pool)
 		if pseudorandom("fac_extradimensional") < 0.125 then
-			local to_add = SMODS.create_poll_pool(self.additional_pools, {})
-			return SMODS.merge_lists({ pool, to_add })
+			return SMODS.create_poll_pool(self.additional_pools, {})
 		end
 	end
 }
@@ -233,7 +232,7 @@ FishAndChips.Rod {
 		fishing = {
 			catch_loss = 0,
 			catch_gain = 0,
-			bar_size = 0.05
+			bar_size = 0.07
 		}
 	},
 	ppu_artist = { "DottyKitty" },

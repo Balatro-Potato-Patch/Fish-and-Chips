@@ -51,14 +51,24 @@ local function get_wish(args)
         end
     end
 
+    local wish, iter = nil, 0
     if args.force_set == "Voucher" or pseudorandom("fac_minty_jeal_choose_set", 1, 10) == 10 then
-        local wish = pseudorandom_element(vouchers, "fac_minty_jeal_choose_card" .. append)
+        repeat
+            iter = iter+1
+            wish = pseudorandom_element(vouchers, "fac_minty_jeal_choose_card" .. append..iter)
+        until wish ~= "UNAVAILABLE"
         return wish, "Voucher", G.P_CENTERS[wish].cost * 1.5
     elseif args.force_set and args.force_set ~= "Joker" then
-        local wish = pseudorandom_element(etc, "fac_minty_jeal_choose_card" .. append)
+        repeat
+            iter = iter+1
+            wish = pseudorandom_element(etc, "fac_minty_jeal_choose_card" .. append..iter)
+        until wish ~= "UNAVAILABLE"
         return wish, args.force_set, G.P_CENTERS[wish].cost * (args.cost_multiplier or 2)
     else
-        local wish = pseudorandom_element(jokers, "fac_minty_jeal_choose_card" .. append)
+        repeat
+            iter = iter+1
+            wish = pseudorandom_element(jokers, "fac_minty_jeal_choose_card" .. append..iter)
+        until wish ~= "UNAVAILABLE"
         return wish, "Joker", G.P_CENTERS[wish].cost * 2
     end
 end
@@ -69,7 +79,7 @@ FishAndChips.Fish{
     atlas = "minty_fish",
     pos = {x=3, y=0},
     badge_key = "k_fac_maybe_fish",
-    weight = 1,
+    weight = 3,
     blueprint_compat = false,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
@@ -80,14 +90,6 @@ FishAndChips.Fish{
         garden = 10,
         backroom = 10,
         wormhole = 10,
-        --[[
-        calm_pond = 10,
-        pier = 10,
-        swamp = 10,
-        aquifer = 10,
-        volcano = 10,
-        soup = 10,
-        --]]
     },
     attributes = {
         "usable", "generation", "lose_economy", "joker",

@@ -27,7 +27,7 @@ FishAndChips.Fish({
 	impulse_min = 0.0,
 	impulse_max = 0.5,
 	calculate = function(self, card, context)
-		if context.game_over and not context.blueprint then
+		if context.game_over and not context.blueprint and not context.retrigger_joker then
 			G.E_MANAGER:add_event(Event({
 				func = function()
 					play_sound("tarot1")

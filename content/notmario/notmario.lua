@@ -368,7 +368,7 @@ FishAndChips.Fish {
 	ppu_artist = { "notmario" },
 	attributes = FishAndChips.mf_redherring_attributes,
 	config = {
-		extra = { fish_slot = 1, },
+		card_limit = 1,
 	},
 	stats = {
 		weight = {min = 4, max = 6},
@@ -381,23 +381,7 @@ FishAndChips.Fish {
 	},
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.fish_slot } }
-	end,
-	add_to_deck = function(self, card, from_debuff)
-		G.E_MANAGER:add_event(Event({
-			func = function()
-				G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base + 1
-				return true
-			end,
-		}))
-	end,
-	remove_from_deck = function(self, card, from_debuff)
-		G.E_MANAGER:add_event(Event({
-			func = function()
-				G.fac_fish_area.config.card_limits.base = G.fac_fish_area.config.card_limits.base - 1
-				return true
-			end,
-		}))
+		return { vars = { card.ability.card_limit } }
 	end,
 }
 
@@ -631,7 +615,7 @@ FishAndChips.Fish {
 		end
     end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.cardarea == G.fac_fish_area and not context.blueprint and not card.ability.extra.available then
+		if context.end_of_round and context.cardarea == G.fac_fish_area and not context.blueprint and not card.ability.extra.available and not context.retrigger_joker then
 			card.ability.extra.available = true
 			return {
 				message = localize("k_reset"),
@@ -1234,7 +1218,7 @@ FishAndChips.Fish {
 				xblindsize = card.ability.extra.xblindsize
 			}
 		end
-		if context.fac_environment_changed and G.GAME.fac_fishing_environment ~= "pier" and not context.blueprint then
+		if context.fac_environment_changed and G.GAME.fac_fishing_environment ~= "pier" and not context.blueprint and not context.retrigger_joker then
 			SMODS.destroy_cards(card, nil, nil, true)
 			return {
 				message = localize('k_lost_ex'),
@@ -1325,7 +1309,7 @@ FishAndChips.Fish {
 		length = {min = 0.10, max = 0.13}
 	},
 	calculate = function(self, card, context)
-		if context.fac_modify_fishing_profile and not context.blueprint then
+		if context.fac_modify_fishing_profile and not context.blueprint and not context.retrigger_joker then
 				-- context.fishing_profile.decision_min = context.fishing_profile.decision_min / 2.0
 				-- context.fishing_profile.decision_max = context.fishing_profile.decision_max / 2.0
 
@@ -1334,7 +1318,7 @@ FishAndChips.Fish {
 
 				context.fishing_profile.vel_limit = context.fishing_profile.vel_limit * 4.0
 		end
-		if context.fac_fish_caught and not context.blueprint then
+		if context.fac_fish_caught and not context.blueprint and not context.retrigger_joker then
 			local edition = SMODS.poll_edition {
 				no_negative = true,
 				guaranteed = true,
@@ -1418,7 +1402,7 @@ FishAndChips.Fish {
 		end
     end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.cardarea == G.fac_fish_area and not context.blueprint and not card.ability.extra.available then
+		if context.end_of_round and context.cardarea == G.fac_fish_area and not context.blueprint and not context.retrigger_joker and not card.ability.extra.available then
 			card.ability.extra.available = true
 			return {
 				message = localize("k_reset"),
@@ -1530,7 +1514,7 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.mod_chance, 2 + card.ability.extra.mod_chance, card.ability.extra.mod_mod_chance }}
 	end,
 	calculate = function(self, card, context)
-		if context.mod_probability and not context.blueprint then
+		if context.mod_probability and not context.blueprint and not context.retrigger_joker then
 			local new_denominator = context.denominator
 			if context.denominator >= 1 and context.denominator < 1 + card.ability.extra.mod_chance then
 				new_denominator = 1
@@ -1739,7 +1723,7 @@ FishAndChips.Fish {
 		card.ability.extra.rank_two = ranks[2]
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.cardarea == G.fac_fish_area and not context.blueprint then
+		if context.end_of_round and context.cardarea == G.fac_fish_area and not context.blueprint and not context.retrigger_joker then
 			local ranks = choose_a_few(SMODS.Rank.obj_buffer, "dominnows", 2)
 			card.ability.extra.rank_one = ranks[1]
 			card.ability.extra.rank_two = ranks[2]
@@ -1848,14 +1832,14 @@ FishAndChips.Fish {
 		return { vars = { card.ability.extra.scaling_mod, localize(card.ability.extra.preventing_scaling and "k_preventing" or "k_not_preventing") } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.preventing_scaling = false
 			return {
 				message = localize('k_reset'),
 				colour = mix_colours(G.C.GREEN, G.C.FILTER, 0.7),
 			}
 		end
-		if context.scaling_card and not context.blueprint then
+		if context.scaling_card and not context.blueprint and not context.retrigger_joker then
 		    card.ability.extra.preventing_scaling = true
     		if context.operation == "X" then
     			return {
@@ -2085,7 +2069,7 @@ FishAndChips.Fish {
 	    return { vars = { card.ability.extra.money, ppu_bubbles = {card.ability.extra.available and 'usable' or 'used'} } }
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and G.GAME.blind.boss then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker and G.GAME.blind.boss then
 			card.ability.extra.available = true
 			return {
 				message = localize('k_reset'),
@@ -2129,7 +2113,6 @@ FishAndChips.Fish {
 
 SMODS.Attribute {
     key = "fac_mf_pearl",
-    -- todo : add a loc thing :p -- I did this (mf) -- Woah who's that (mf) -- Hiiiii (mf)
 }
 
 FishAndChips.Fish {

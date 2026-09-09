@@ -139,8 +139,8 @@ return {
                     name = "Jetfish",
                     text = {
                         {
-                            "If all played cards score on {C:attention}last played hand",
-                            "Each card gives {C:mult}+#1#{} Mult"
+                            "If {C:attention}all{} played cards are scoring,",
+                            "each played card gives {C:mult}+#1#{} Mult"
                         }
                     },
                     flavour = {
@@ -148,6 +148,11 @@ return {
                         "You can carry it back to water."
                     }
                 },
+        }
+    },
+    misc = {
+        dictionary = {
+            k_fac_vv_sleep = "Zzzzz...."
         }
     }
 }

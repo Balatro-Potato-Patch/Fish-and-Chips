@@ -56,6 +56,21 @@ FishAndChips.Fish {
                         local x = (1 - i) * card.T.w * 31 / 71
                         card.children[key]:draw_shader("dissolve", 0, nil, nil, card.children.center, card.VT.scale * (1 - 0.2 * card.shadow_height) - 1, nil, x - card.shadow_parrallax.x * card.shadow_height, -card.shadow_parrallax.y * card.shadow_height)
                         card.children[key]:draw_shader("dissolve", nil, nil, nil, card.children.center, card.VT.scale - 1, nil, x)
+                        
+                        if card.edition and not card.delay_edition then
+                            for k, v in pairs(G.P_CENTER_POOLS.Edition) do
+                                if card.edition[v.key:sub(3)] and v.shader then
+                                    if type(v.draw) == 'function' then
+                                        v:draw(card.children[key], layer)
+                                    else
+                                        card.children[key]:draw_shader(v.shader, nil, nil, nil, card.children.center, card.VT.scale - 1, nil, x)
+                                    end
+                                end
+                            end
+                            if card.edition.negative then
+                                card.children[key]:draw_shader('negative_shine', nil, nil, nil, card.children.center, card.VT.scale - 1, nil, x)
+                            end
+                        end
                     end
                 elseif card.ability.stats.length * 10 >= i then
                     card.children[key] = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, card.children.center.atlas, card.children.center.sprite_pos)

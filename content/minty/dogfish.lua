@@ -5,7 +5,7 @@ FishAndChips.Fish{
     key = "minty_dogfish",
     atlas = atlas,
     pos = pos,
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     perishable_compat = false,
@@ -14,16 +14,6 @@ FishAndChips.Fish{
         city_river = 10,
         aquifer = 10,
         chocolate_river = 1,
-        --[[
-        calm_pond = 10,
-        styx = 10,
-        swamp = 10,
-        volcano = 10,
-        soup = 10,
-        garden = 10,
-        backroom = 10,
-        wormhole = 10,
-        --]]
     },
     attributes = {
         "destroy_card", "xmult", "scaling", "enhancements",
@@ -51,7 +41,7 @@ FishAndChips.Fish{
         PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
     end,
     calculate = function (self, card, context)
-        if context.individual and SMODS.has_enhancement(context.other_card, "m_lucky") and not context.blueprint then
+        if context.individual and SMODS.has_enhancement(context.other_card, "m_lucky") and not context.blueprint and not context.retrigger_joker then
             context.other_card.nommed_by_dogfish = true
         end
 

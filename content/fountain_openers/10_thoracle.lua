@@ -54,7 +54,7 @@ FishAndChips.Fish {
         }
 	end,
     calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.active = true
             return {
                 message = localize{
@@ -86,7 +86,5 @@ FishAndChips.Fish {
     keep_on_use = function(self, card)
         return true
     end,
-    set_card_type_badge = function(self, card, badges)
-		badges[#badges + 1] = create_badge(localize("k_fac_fo_merfolk_wizard"), FishAndChips.C.FISH, G.C.WHITE, 1.2)
-	end,
+    badge_key = 'k_fac_fo_merfolk_wizard'
 }

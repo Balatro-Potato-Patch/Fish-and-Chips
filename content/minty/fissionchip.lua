@@ -6,7 +6,7 @@ FishAndChips.Fish{
     atlas = atlas,
     pos = pos,
     badge_key = "k_fac_maybe_fish",
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     environments = { --Maximum 6
@@ -14,16 +14,6 @@ FishAndChips.Fish{
         backroom = 10,
         wormhole = 10,
         city_river = 5,
-        --[[
-        calm_pond = 10,
-        chocolate_river = 10,
-        styx = 10,
-        pier = 10,
-        swamp = 10,
-        volcano = 10,
-        soup = 10,
-        garden = 10,
-        --]]
     },
     attributes = {
         "retrigger", "chance"
@@ -59,8 +49,9 @@ FishAndChips.Fish{
     end,
     calculate = function (self, card, context)
         if context.retrigger_joker_check
-        and context.other_card ~= card
-        and context.other_card.config
+        and not context.retrigger_joker
+        and context.other_card
+		and context.other_card:is(Card)
         and context.other_card.config.center.set == "fac_Fish"
         and SMODS.pseudorandom_probability(card, "minty_fac_fission_retrigger", card.ability.extra.luck, card.ability.extra.odds) then
             return {

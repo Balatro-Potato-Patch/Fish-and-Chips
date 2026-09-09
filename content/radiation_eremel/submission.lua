@@ -305,6 +305,9 @@ FishAndChips.Fish({
     can_use = function() return true end,
     use = function(self, card)
         card.ability.extra.active = not card.ability.extra.active
+        if not card.ability.extra.active then
+            card.ability.extra.scale_down = false
+        end
         card.children.center:set_sprite_pos({x= card.ability.extra.active and 4 or 3, y = 2})
     end
 })
@@ -381,6 +384,10 @@ FishAndChips.Fish({
         for _, fish in ipairs(targets.high) do
             SMODS.add_card{key = fish.config.center.key, no_edition = true, area = fish.area}
         end
+        G.GAME.fac_flowerhorn_extinct = true
+    end,
+    in_pool = function()
+        return not G.GAME.fac_flowerhorn_extinct
     end
 })
 
@@ -453,7 +460,6 @@ function G.UIDEF.card_h_popup(card)
 	return ret
 end
 
--- TODO: fix sprite reset when going in bucket (Main FAC issue)
 FishAndChips.Fish({
     key = 'r_e_clam',
     atlas = 'r_e_fish',

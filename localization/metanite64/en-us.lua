@@ -148,7 +148,7 @@ return {
                 text = {
                     "Gains {C:chips}+#1#{} Chips every",
                     "time an adjacent {C:fac_fish}Fish{}",
-                    "{C:attention}triggers{} or is {C:attention}used{}",
+                    "{C:attention}triggers{}",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips){}"
                 },
                 flavour = {

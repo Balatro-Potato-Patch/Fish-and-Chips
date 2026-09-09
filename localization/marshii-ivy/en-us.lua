@@ -40,7 +40,7 @@ return {
             fish_fac_tsnefish = {
                 name = "This is not a fish.",
                 text = {
-                    "Transform another {C:fac_fish}Fish{}",
+                    "Transform a random held {C:fac_fish}Fish{}",
                     "into a random {C:attention}Joker{}",
                     "{C:inactive}(Once per round)",
                     "{ppu_bubble:1}"

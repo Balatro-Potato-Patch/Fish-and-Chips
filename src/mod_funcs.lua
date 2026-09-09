@@ -337,11 +337,13 @@ function FishAndChips.init_custom_menu(change_context)
         G.SPLASH_FAC_LOGO.dissolve = 1
 
         G.SPLASH_FAC_LOGO.states.collide.can = true
+		G.SPLASH_FAC_LOGO.always_focusable = true
 
         -- Define node functions for FAC Logo
         function G.SPLASH_FAC_LOGO:click()
             play_sound('button', 1, 0.3)
             SMODS.LAST_SELECTED_MOD_TAB = nil
+			G.SETTINGS.paused = true
             G.FUNCS['openModUI_FishAndChips']()
             G.OVERLAY_MENU:get_UIE_by_ID("overlay_menu_back_button").config.button = "exit_overlay_menu_fac"
         end

@@ -44,7 +44,8 @@ FishAndChips.Fish{
 							type = "joker",
 							card_limit = 1,
 							highlighted_limit = 1,
-							highlight_limit = 1
+							highlight_limit = 1,
+							fixed_limit = true,
 						}
 					)
 					G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
@@ -57,7 +58,8 @@ FishAndChips.Fish{
 							type = "joker",
 							card_limit = 1,
 							highlighted_limit = 1,
-							highlight_limit = 1
+							highlight_limit = 1,
+							fixed_limit = true,
 						}
 					)
 					G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
@@ -214,7 +216,8 @@ FishAndChips.Fish{
 					type = "joker",
 					card_limit = 1,
 					highlighted_limit = 1,
-					highlight_limit = 1
+					highlight_limit = 1,
+					fixed_limit = true,
 				}
 			)
 			G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
@@ -227,7 +230,8 @@ FishAndChips.Fish{
 					type = "joker",
 					card_limit = 1,
 					highlighted_limit = 1,
-					highlight_limit = 1
+					highlight_limit = 1,
+					fixed_limit = true,
 				}
 			)
 			G.fac_fas_kine_areas[card.ability.area_num].states.visible = false
@@ -326,7 +330,11 @@ function copy_card(other, new_card, card_scale, playing_card, strip_edition)
 		copied_card.pinned = other.pinned
 		if other.edition and strip_edition then
 			copied_card.ability.card_limit = copied_card.ability.card_limit - (other.edition.card_limit or 0)
-			copied_card.ability.extra_slots_used = copied_card.ability.extra_slots_used - (other.edition.extra_slots_used or 0)
+			if copied_card.ability.extra_slots_used then
+				copied_card.ability.extra_slots_used = copied_card.ability.extra_slots_used - (other.edition.extra_slots_used or 0)
+			else
+				copied_card.ability.extra_slots_used = 0
+			end
 		end
 		if other.ability.stored_center then copied_card.ability.stored_center = other.ability.stored_center end
 		copied_card:set_cost()

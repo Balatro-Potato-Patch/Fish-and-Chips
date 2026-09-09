@@ -25,6 +25,7 @@ FishAndChips.Fish {
 		},
 		max_highlighted = 1
 	},
+	requires_consumables = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips_gain, card.ability.extra.chips } }
 	end,

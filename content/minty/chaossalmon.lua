@@ -6,7 +6,7 @@ FishAndChips.Fish{
     key = "minty_chaos_salmon",
     atlas = atlas,
     pos = pos,
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     environments = { --Maximum 6
@@ -15,15 +15,6 @@ FishAndChips.Fish{
         city_river = 10,
         backroom = 1,
         wormhole = 1,
-        --[[
-        calm_pond = 10,
-        pier = 10,
-        swamp = 10,
-        aquifer = 10,
-        volcano = 10,
-        soup = 10,
-        garden = 10,
-        --]]
     },
     attributes = {
         "xmult", "meta"
@@ -61,7 +52,7 @@ FishAndChips.Fish{
             end
 
             for i,v in ipairs{othername, othercenter.original_key, localize{type = "name_text", key = otherkey, set = "fac_Fish"}} do
-                if string.find(v:lower(), "fish") then -- TODO: potentially localize "fish"? so that other languages don't get screwed over. That implies the mod will get localized at all though so :shrug: (mf)
+                if string.find(v:lower(), localize('k_fac_fish')) then
                     PotatoPatchUtils.Developers.fac_minty.fish_named_fish[otherkey] = true
                     return {
                         xmult = card.ability.extra.xmult

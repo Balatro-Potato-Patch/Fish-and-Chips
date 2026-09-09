@@ -69,7 +69,7 @@ FishAndChips.Fish {
         end
     end,
     calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.play and context.other_card:get_id() == 2 and not context.blueprint then
+		if context.individual and context.cardarea == G.play and context.other_card:get_id() == 2 and not context.blueprint and not context.retrigger_joker then
             if card.ability.extra.count_cards > 1 then
                 card.ability.extra.count_cards = card.ability.extra.count_cards - 1
                 return {
@@ -389,7 +389,7 @@ FishAndChips.Fish {
                 end
             }
         end
-        if context.fac_end_fishing and context.missed_treasure and not context.blueprint and card.ability.extra.xmult ~= 1 then
+        if context.fac_end_fishing and context.missed_treasure and not context.blueprint and not context.retrigger_joker and card.ability.extra.xmult ~= 1 then
             local reset_xmult = -card.ability.extra.xmult + 1
 			return {
 				card = card,
@@ -439,7 +439,7 @@ FishAndChips.Fish {
 		weight = {min = 0.6, max = 15},
 		length = {min = 0.1, max = 2}
 	},
-    attributes = { "economy", "usable", "chance", "lose_economy", }, -- TODO: is an empty can a Food card?
+    attributes = { "economy", "usable", "chance", "lose_economy", },
 	config = {
 		extra = {
 			odds = 10, eor_sand = 20, use_sand = 10, use_dollars = 20

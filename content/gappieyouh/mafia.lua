@@ -53,7 +53,7 @@ FishAndChips.Fish {
         end
 
         -- sleep logic
-        if context.end_of_round and not context.game_over and context.main_eval and not context.blueprint then
+        if context.end_of_round and not context.game_over and context.main_eval and not context.blueprint and not context.retrigger_joker then
             if not card.ability.extra.awake then
                 card.ability.extra.rounds_slept = card.ability.extra.rounds_slept + 1
                 return {message = localize { type = 'variable', key = 'k_fac_fish_mafia_mod', vars = { card.ability.extra.xmult_mod } }, colour = G.C.RED}

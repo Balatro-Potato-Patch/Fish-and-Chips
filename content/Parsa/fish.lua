@@ -61,7 +61,7 @@ FishAndChips.Fish {
     end,
 calculate = function(self, card, context)
 
-    if context.before and not context.blueprint then
+    if context.before and not context.blueprint and not context.retrigger_joker then
         if G.GAME.dollars - card.ability.extra.dollar_cost >= G.GAME.bankrupt_at then
             ease_dollars(-card.ability.extra.dollar_cost, true)
             card.ability.extra.underpaid = false
@@ -70,7 +70,7 @@ calculate = function(self, card, context)
         end
 
 
-        if not card.ability.extra.hand_played then
+        if not card.ability.extra.hand_played and not context.retrigger_joker then
             card.ability.extra.hand_played = true
         end
     end

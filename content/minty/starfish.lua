@@ -5,7 +5,7 @@ FishAndChips.Fish{
     key = "minty_starfish",
     atlas = atlas,
     pos = pos,
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     environments = { --Maximum 6
@@ -13,16 +13,6 @@ FishAndChips.Fish{
         backroom = 3,
         wormhole = 1,
         swamp = 1,
-        --[[
-        calm_pond = 10,
-        chocolate_river = 10,
-        styx = 10,
-        aquifer = 10,
-        volcano = 10,
-        city_river = 10,
-        soup = 10,
-        garden = 10,
-        --]]
     },
     attributes = {
         "space", "hand_level"

@@ -10,6 +10,10 @@ SMODS.Sound{
 		['music3'] = true,
 		['music4'] = true,
 		['music5'] = true,
+        ['fac_music_findows_main'] = true,
+        ['fac_music_findows_shop'] = true,
+        ['fac_music_findows_boss'] = true,
+        ['fac_music_findows_booster'] = true,
 	},
 	select_music_track = function(self) 
 		return G.STATE == G.STATES.FAC_FISHING and 110 or nil

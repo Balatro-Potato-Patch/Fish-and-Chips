@@ -5,7 +5,7 @@ FishAndChips.Fish{
     key = "minty_catfish",
     atlas = atlas,
     pos = pos,
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     blueprint_compat = false,
@@ -14,16 +14,6 @@ FishAndChips.Fish{
         city_river = 10,
         chocolate_river = 1,
         soup = 1,
-        --[[
-        styx = 10,
-        pier = 10,
-        swamp = 10,
-        aquifer = 10,
-        volcano = 10,
-        garden = 10,
-        backroom = 10,
-        wormhole = 10,
-        --]]
     },
     attributes = {
         "passive", "mod_chance"
@@ -49,7 +39,7 @@ FishAndChips.Fish{
         PotatoPatchUtils.Developers.fac_minty:set_line_boil(self, card, row)
     end,
     calculate = function (self, card, context)
-        if context.mod_probability and not context.blueprint then
+        if context.mod_probability and not context.blueprint and not context.retrigger_joker then
             return {
                 denominator = math.max(context.denominator - card.ability.extra.oddshelp, 1)
             }

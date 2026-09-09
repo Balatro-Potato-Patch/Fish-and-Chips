@@ -139,7 +139,7 @@ FishAndChips.Fish {
 		end
 	end,
 	calculate = function(self, card, context)
-		if context.starting_shop and card.ability.extra.ate_booster then
+		if context.starting_shop and card.ability.extra.ate_booster and not context.retrigger_joker then
 			card.ability.extra.ate_booster = false
 		end
 	end,

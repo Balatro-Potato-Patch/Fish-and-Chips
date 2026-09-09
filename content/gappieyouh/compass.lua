@@ -2,13 +2,13 @@ FishAndChips.Fish {
     key = 'gappieyouh_compass',
     atlas = 'gy_fish',
     weight = 3,
-    pos = {x=2,y=0},
+    pos = { x = 2, y = 0 },
     ppu_coder = { 'Youh' },
     ppu_artist = { 'Gappie' },
     attributes = { 'usable' },
     stats = {
-        weight = {min = 0.5, max = 0.5},
-        length = {min = 1, max = 1}
+        weight = { min = 0.5, max = 0.5 },
+        length = { min = 1, max = 1 }
     },
     environments = {
         calm_pond = 0.25,
@@ -25,30 +25,43 @@ FishAndChips.Fish {
     end,
     use = function(self, card, area, copier)
         local envirotable = {}
-        for _,fish in ipairs(G.fac_fish_area.cards) do
+        for _, fish in ipairs(G.fac_fish_area.cards) do
             if fish.config.center.key ~= 'fish_fac_gappieyouh_compass' then
-                for k,_ in pairs(fish.config.center.environments) do
+                for k, _ in pairs(fish.config.center.environments) do
                     envirotable[k] = (envirotable[k] or 0) + 1
                 end
             end
         end
-        local highest = 'calm_pond'
-        for environment,values in pairs(envirotable) do
-            if values > (envirotable[highest] or 0) then
-                highest = environment
+        local highest_list = { 'calm_pond' }
+        for environment, values in pairs(envirotable) do
+            if values > (envirotable[highest_list[1]] or 0) then
+                highest_list = { environment }
+            elseif values == (envirotable[highest_list[1]] or 0) then
+                table.insert(highest_list, environment)
             end
         end
-        G.GAME.fac_next_environment = highest
 
-        G.E_MANAGER:add_event(Event{
+        G.GAME.fac_next_environment = #highest_list > 1 and pseudorandom_element(highest_list, 'compass_rng') or highest_list[1]
+
+        G.E_MANAGER:add_event(Event {
             trigger = 'after',
             delay = 0.4,
             func = function()
+                attention_text({
+                    text = localize { set = 'fac_Env', type = 'name_text', key = G.GAME.fac_next_environment },
+                    scale = 1.3,
+                    hold = 1.4,
+                    major = card,
+                    backdrop_colour = G.C.SPECTRAL,
+                    align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and
+                    'tm' or 'cm',
+                    offset = { x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and -0.2 or 0 },
+                    silent = true
+                })
                 play_sound('timpani')
-                card:juice_up(0.3,0.5)
+                card:juice_up(0.3, 0.5)
                 return true
             end
         })
-        return {message = localize('k_fac_fish_compass_new'), colour = G.C.SPECTRAL}
     end,
 }

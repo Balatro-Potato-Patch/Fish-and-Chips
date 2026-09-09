@@ -5,24 +5,13 @@ FishAndChips.Fish{
     key = "minty_elder_tuna",
     atlas = atlas,
     pos = pos,
-    weight = 1,
+    weight = 3,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
     environments = { --Maximum 6
         pier = 10,
         soup = 10,
         styx = 10,
-        --[[
-        calm_pond = 10,
-        chocolate_river = 10,
-        swamp = 10,
-        aquifer = 10,
-        volcano = 10,
-        city_river = 10,
-        garden = 10,
-        backroom = 10,
-        wormhole = 10,
-        --]]
     },
     attributes = {
         "hand_level", "hand_type",

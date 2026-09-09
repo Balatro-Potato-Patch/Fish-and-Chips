@@ -145,14 +145,14 @@ FishAndChips.Fish {
         }
     end,
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval and not context.blueprint then
+        if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.used = false
         end
     end,
     can_use = function(self, card)
         if card.ability.extra.used then return false end
         for _, fih in pairs(G.fac_fish_area.cards) do
-            if fih.config.center.set == "fac_Fish" and fih ~= card then
+            if fih.config.center.set == "fac_Fish" and fih ~= card and not SMODS.is_eternal(fih) then
                 return true
             end
         end
@@ -162,7 +162,7 @@ FishAndChips.Fish {
         card.ability.extra.used = true
         local other_fish = {}
         for _, fih in pairs(G.fac_fish_area.cards) do
-            if fih.config.center.set == "fac_Fish" and fih ~= card then
+            if fih.config.center.set == "fac_Fish" and fih ~= card and not SMODS.is_eternal(fih) then
                 table.insert(other_fish, fih)
             end
         end
@@ -177,9 +177,7 @@ FishAndChips.Fish {
     pos = { x = 0, y = 0 },
     pixel_size = { w = 95, h = 71 },
     display_size = { w = 95, h = 71 },
-    set_card_type_badge = function(self, card, badges)
-        table.insert(badges, create_badge(localize("k_ivy_not_a_fish"), G.C.SET.fac_Fish))
-    end,
+    badge_key = 'k_ivy_not_a_fish',
     attributes = { "modify_card", "usable", "joker" }
 }
 
@@ -253,7 +251,7 @@ FishAndChips.Fish {
         }}
     end,
     calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
+        if context.setting_blind and not context.blueprint and not context.retrigger_joker then
             local fisharea = card.area
             local index = nil
             for i, ifish in ipairs(fisharea.cards) do

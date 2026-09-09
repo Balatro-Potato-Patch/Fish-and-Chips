@@ -5,7 +5,7 @@ FishAndChips.Fish{
     key = "minty_goldfish",
     atlas = atlas,
     pos = pos,
-    weight = 1,
+    weight = 3,
     blueprint_compat = false,
     ppu_coder = {"minty"},
     ppu_artist = {"minty"},
@@ -15,15 +15,6 @@ FishAndChips.Fish{
         chocolate_river = 1,
         swamp = 5,
         backroom = 3,
-        --[[
-        styx = 10,
-        pier = 10,
-        aquifer = 10,
-        volcano = 10,
-        soup = 10,
-        garden = 10,
-        wormhole = 10,
-        --]]
     },
     attributes = {
         "economy", "sell_value",

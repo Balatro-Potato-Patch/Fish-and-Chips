@@ -125,7 +125,7 @@ FishAndChips.Fish {
 			ret = SMODS.blueprint_effect(card, joker, context)
 		end
 
-		if context.end_of_round and context.main_eval then
+		if context.end_of_round and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			if #G.jokers.cards > 0 then
 				local old_slot = card.ability.extra.slot
 				repeat
@@ -136,7 +136,7 @@ FishAndChips.Fish {
 			end
 		end
 
-		if #G.jokers.cards < card.ability.extra.slot then
+		if #G.jokers.cards < card.ability.extra.slot and not context.blueprint and not context.retrigger_joker then
 			if #G.jokers.cards > 0 then
 				local old_slot = card.ability.extra.slot
 				repeat
@@ -212,11 +212,16 @@ FishAndChips.Fish {
 		end
 	end,
 	calculate = function(self, card, context)
-		if context.fac_environment_changed and not context.blueprint then
+		if context.fac_environment_changed and not context.blueprint and not context.retrigger_joker then
 			local environment = G.GAME.fac_fishing_environment
 			if card.ability.extra[environment] == false then
 				card.ability.extra[environment] = true
 				card.ability.extra.visited = card.ability.extra.visited + 1
+				return {
+					message = '+' .. localize('$') .. '1',
+					font = SMODS.Fonts["fac_sand_dollars"],
+					colour = FishAndChips.C.SAND_DOLLAR
+				}
 			end
 		end
 	end,

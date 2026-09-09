@@ -48,7 +48,7 @@ FishAndChips.Fish {
 		disp(self, card)
 	end,
 	calculate = function(self, card, context)
-		if context.end_of_round and not context.repetition and not context.individual and not context.game_over and not context.blueprint then
+		if context.end_of_round and not context.repetition and not context.individual and not context.game_over and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.cards = pseudorandom('fac_fish_bagels_seven_salmon_display', 1, 5)
 			G.E_MANAGER:add_event(Event {
 				func = function()
