@@ -388,7 +388,7 @@ FishAndChips.Fish {
     calculate = function(self, card, context)
 		if context.ending_fishing then
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-                local _card = SMODS.add_card({set = "Consumeables"})
+                local _card = SMODS.add_card({set = "Consumeables", discover = true, bypass_discovery_center = true})
                 return {
                     message = localize('fish_sophie_plus_consumable'),
                     colour = G.C.SECONDARY_SET[_card.config.center.set] or G.C.FILTER,
