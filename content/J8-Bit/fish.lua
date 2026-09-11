@@ -1683,7 +1683,7 @@ FishAndChips.Fish {
     end,
     calculate = function(self, card, context)
         if context.fac_fish_caught then
-            local bait = G.P_CENTERS[G.GAME.fac_active_bait]
+            local bait = G.P_CENTERS[G.GAME.fac_last_used_bait]
             --print(bait)
             if bait.target and bait.target ~= "" then
                 --print(bait.target)
