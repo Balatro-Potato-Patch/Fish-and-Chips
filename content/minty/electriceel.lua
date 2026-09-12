@@ -93,7 +93,7 @@ FishAndChips.Fish{
                 }
             end
 
-            if context.beat_boss then
+            if context.beat_boss and not context.blueprint and not context.retrigger_joker then
                 card.ability.extra.stored = card.ability.extra.stored + 1
                 charge = {
                     message = localize("k_fac_minty_charged_ex")
