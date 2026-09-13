@@ -92,7 +92,7 @@ FishAndChips.Fish {
 	calculate = function(self, card, context)
 		if context.selling_self then
 			for i = 1, card.ability.extra.count do
-				local c = SMODS.create_card({area = G.fac_fish_area, key = "fish_fac_tss_moab"})
+				local c = SMODS.create_card({area = G.fac_fish_area, key = "fish_fac_tss_moab", discover = true, bypass_discovery_center = true})
 				G.fac_fish_area:emplace(c)
 			end
 		end

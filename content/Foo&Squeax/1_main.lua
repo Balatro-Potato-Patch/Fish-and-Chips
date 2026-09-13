@@ -206,7 +206,13 @@ function FishAndChips.mod.reset_game_globals (run_start)
 			nyon = 0,
 		}
 	end
-	G.GAME.fac_FooSqueax.wormholes.target = pseudorandom_element(PotatoPatchUtils.Developers).name
+	local fac_devs = {}
+	for _, dev in pairs(PotatoPatchUtils.Developers) do
+		if dev.mod_id == 'FishAndChips' then
+			table.insert(fac_devs, dev.name)
+		end
+	end
+	G.GAME.fac_FooSqueax.wormholes.target = pseudorandom_element(fac_devs)
 end
 
 SMODS.Sound{
