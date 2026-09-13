@@ -1127,7 +1127,8 @@ function G:update_fac_fishing_hooking(dt)
         state.fish_goal_vel = fac_clamp(state.fish_goal_vel + impulse, -profile.vel_limit, profile.vel_limit)
         state.fish_decision_timer = fac_rand(profile.decision_min, profile.decision_max)
     end
-    state.fish_vel = state.fish_vel + (state.fish_goal_vel - state.fish_vel) * (6.5 * dt)
+    local velocity_blend = 1 - math.exp(-6.5 * dt)
+    state.fish_vel = state.fish_vel + (state.fish_goal_vel - state.fish_vel) * velocity_blend
     state.fish_pos = state.fish_pos + state.fish_vel * dt
     if state.fish_pos < 0 then
         state.fish_pos = 0
