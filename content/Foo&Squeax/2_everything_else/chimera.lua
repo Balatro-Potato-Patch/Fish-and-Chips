@@ -100,7 +100,7 @@ FishAndChips.Fish{
 								}
 							})
 							if not FishAndChips.mod.config.shrink_sprites then
-								card.T.w = card.T.w + card._fac_bucketed and 0.125 or 0.25
+								card.T.w = card.T.w + (card._fac_bucketed and 0.125 or 0.25)
 							end
 							-- this not persisting across saves is intentional
 							FishAndChips.FooSqueax.fat_chud.active = false
