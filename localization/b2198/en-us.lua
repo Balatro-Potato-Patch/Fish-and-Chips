@@ -1,5 +1,20 @@
 return {
     descriptions = {
+        PotatoPatch = {
+            PotatoPatchDev_b2198 = {
+                name = "b2198",
+                text = {
+                    {
+                        "Green"
+                    },
+                    {
+                        "First time working on adding",
+                        "content to a mod.",
+                        "Learned a lot during it."
+                    }
+                }
+            }
+        },
         fac_Fish = {
             fish_fac_0dgreenfish = {
                 name = "0D Greenfish",

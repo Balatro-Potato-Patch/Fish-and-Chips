@@ -1,6 +1,15 @@
 PotatoPatchUtils.Developer({
 	name = 'b2198',
-	colour = HEX("00FF00")
+	colour = HEX("00FF00"),
+    atlas = "fac_b2198_credits",
+    loc = true
+})
+
+SMODS.Atlas({
+	key = "b2198_credits",
+	path = "b2198/credits.png",
+	px = 71,
+	py = 95,
 })
 
 SMODS.Atlas({
