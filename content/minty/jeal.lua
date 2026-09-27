@@ -7,7 +7,7 @@ local once = true
 PotatoPatchUtils.Bubble_Colours["minty_jealusable"] = G.C.ETERNAL
 PotatoPatchUtils.Bubble_Colours["minty_jealused"] = adjust_alpha(G.C.ETERNAL, 0.6)
 
----Add rarity keys to this table to prevent Jeal from creating them for wishes (e.g. rarities that indicate a joker is never meant to spawn EVER)
+---Add rarity keys to this map to prevent Jeal from creating them for wishes (e.g. rarities that indicate a joker is never meant to spawn EVER) (allowing legendaries is intentional though)
 SMODS.current_mod.jeal_rarity_blacklist = {
     biblio_unavailable = true,
     minty_challenge = true
