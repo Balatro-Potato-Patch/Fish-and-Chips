@@ -7,6 +7,14 @@ local once = true
 PotatoPatchUtils.Bubble_Colours["minty_jealusable"] = G.C.ETERNAL
 PotatoPatchUtils.Bubble_Colours["minty_jealused"] = adjust_alpha(G.C.ETERNAL, 0.6)
 
+---Add rarity keys to this table to prevent Jeal from creating them for wishes (e.g. rarities that indicate a joker is never meant to spawn EVER)
+SMODS.current_mod.jeal_rarity_blacklist = {
+    biblio_unavailable = true,
+    minty_challenge = true
+}
+
+local joker_rarity_blacklist = SMODS.current_mod.jeal_rarity_blacklist
+
 ---@param args table I forget how to spell this shit out lmao. not that anything uses it i'm just future-proofing
 ---@return string wish_key Key in G.P_CENTERS of the available item
 ---@return string wish_set Set of the available item
@@ -35,36 +43,46 @@ local function get_wish(args)
         return wish, args.force_set or G.P_CENTERS[wish].set, G.P_CENTERS[wish].cost * (args.cost_multiplier or 2)
     end
 
-    local jokers, vouchers, etc = {}, {}, {}
+    local function get_all_joker_rarity_pools()
+        local all_jokers = {}
 
-    for k, v in pairs(G.P_CENTERS) do
-        local atp = false
-        if (v.set == "Joker" or v.set == "Voucher" or v.set == args.force_set) and not (v.in_pool and not v:in_pool()) and SMODS.add_to_pool(v, { source = "fac_minty_jeal" .. append }) then
-            atp = true
-        end
-        if v.set == "Joker" then
-            jokers[#jokers + 1] = atp and k or "UNAVAILABLE"
-        elseif v.set == "Voucher" then
-            vouchers[#vouchers + 1] = atp and k or "UNAVAILABLE"
-        elseif v.set == args.force_set then
-            etc[#etc + 1] = atp and k or "UNAVAILABLE"
+        for k, v in pairs(G.P_JOKER_RARITY_POOLS) do
+            if not joker_rarity_blacklist[k] and type(k) ~= "number" then
+                local succ,rarity_pool = pcall(function ()
+                    return get_current_pool("Joker", k)
+                end)
+                if succ and type(rarity_pool) == "table" then
+                    local real = false
+                    for ii,vv in ipairs(rarity_pool) do
+                        if vv ~= "j_joker" and vv ~= "UNAVAILABLE" then real = true break end
+                    end
+                    if real then
+                        for ii,vv in ipairs(rarity_pool) do
+                            all_jokers[#jokers+1] = vv
+                        end
+                    end
+                end
+            end
         end
     end
 
     local wish, iter = nil, 0
     if args.force_set == "Voucher" or pseudorandom("fac_minty_jeal_choose_set", 1, 10) == 10 then
+        local vouchers = get_current_pool("Voucher")
         repeat
             iter = iter+1
             wish = pseudorandom_element(vouchers, "fac_minty_jeal_choose_card" .. append..iter)
         until wish ~= "UNAVAILABLE"
         return wish, "Voucher", G.P_CENTERS[wish].cost * 1.5
     elseif args.force_set and args.force_set ~= "Joker" then
+        local etc = get_current_pool(args.force_set)
         repeat
             iter = iter+1
             wish = pseudorandom_element(etc, "fac_minty_jeal_choose_card" .. append..iter)
         until wish ~= "UNAVAILABLE"
         return wish, args.force_set, G.P_CENTERS[wish].cost * (args.cost_multiplier or 2)
     else
+        local jokers = get_all_joker_rarity_pools()
         repeat
             iter = iter+1
             wish = pseudorandom_element(jokers, "fac_minty_jeal_choose_card" .. append..iter)
@@ -208,7 +226,6 @@ FishAndChips.Fish{
             card.ability.extra.wish, card.ability.extra.set, card.ability.extra.cost = get_wish{}
         end
 
-        local once
         if card.area and card.area.config.collection then
             event(function ()
                 function card:click()
