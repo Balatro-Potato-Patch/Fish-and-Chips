@@ -46,7 +46,7 @@ local function get_wish(args)
     local function get_all_joker_rarity_pools()
         local all_jokers = {}
 
-        for k, v in pairs(G.P_JOKER_RARITY_POOLS) do
+        for k in pairs(SMODS.Rarities) do
             if not joker_rarity_blacklist[k] and type(k) ~= "number" then
                 local succ,rarity_pool = pcall(function ()
                     return get_current_pool("Joker", k)
