@@ -58,12 +58,14 @@ local function get_wish(args)
                     end
                     if real then
                         for ii,vv in ipairs(rarity_pool) do
-                            all_jokers[#jokers+1] = vv
+                            all_jokers[#all_jokers+1] = vv
                         end
                     end
                 end
             end
         end
+
+        return all_jokers
     end
 
     local wish, iter = nil, 0
@@ -90,6 +92,8 @@ local function get_wish(args)
         return wish, "Joker", G.P_CENTERS[wish].cost * 2
     end
 end
+
+G.testingthegettingofwishesrq = get_wish
 
 FishAndChips.Fish{
     key = "minty_jeal",
