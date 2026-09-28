@@ -93,7 +93,7 @@ local function get_wish(args)
     end
 end
 
-G.testingthegettingofwishesrq = get_wish
+--G.testingthegettingofwishesrq = get_wish
 
 FishAndChips.Fish{
     key = "minty_jeal",
