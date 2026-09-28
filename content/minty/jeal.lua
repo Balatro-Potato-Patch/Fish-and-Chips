@@ -1,6 +1,10 @@
 ---@param data function
-local event = function (data)
-    G.E_MANAGER:add_event(Event{func = data})
+---@param args? table
+local event = function (data, args)
+    args = args or {}
+    args.func = args.func or data
+
+    G.E_MANAGER:add_event(Event(args))
 end
 local once = true
 
@@ -228,10 +232,11 @@ FishAndChips.Fish{
         if not G.SETTINGS.paused then
             card.ability.extra.unset = nil
             card.ability.extra.wish, card.ability.extra.set, card.ability.extra.cost = get_wish{}
-        end
-
-        if card.area and card.area.config.collection then
+        else
             event(function ()
+                if not card.area then return false end
+                if card.area and not card.area.config.collection then return true end
+                
                 function card:click()
                     if once then
                         once = false
@@ -240,7 +245,7 @@ FishAndChips.Fish{
                     return Card.click(card)
                 end
                 return true
-            end)
+            end, {blockable = false, blocking = false})
         end
     end,
     calculate = function (self, card, context)
