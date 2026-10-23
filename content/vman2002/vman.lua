@@ -75,7 +75,7 @@ FishAndChips.Fish { --Chips
 	key = "vman2002_chips",
 	atlas = "vman2002_chips",
 	pos = { x = 2, y = 0 },
-	weight = 4,
+	weight = 20,
 	ppu_coder = { "VMan_2002" },
 	ppu_artist = { "VMan_2002" },
 	attributes = { "xchips", "score" },--i did this knowingly
@@ -143,9 +143,17 @@ FishAndChips.Fish { --Chips
 	end,
 	in_pool = function()
 		--because +score is so powerful in early antes
-		local a = (G.GAME.fac_chips_attempts or 0) + 0.4
+		local a = (G.GAME.fac_chips_attempts or (pseudorandom("fac_vman2002_chips_chance",0,11) * 0.1)) + 0.3
 		G.GAME.fac_chips_attempts = a
-		return a >= 4 - G.GAME.round_resets.ante
+		return a >= 3.5 - G.GAME.round_resets.ante
+	end,
+	add_to_deck = function(self, card, from_debuff)
+		if not from_debuff then
+			if G.GAME.fac_chips_attempts > 0 then
+				G.GAME.fac_chips_attempts = math.floor(G.GAME.fac_chips_attempts * 0.5)
+			end
+			G.GAME.fac_chips_attempts = G.GAME.fac_chips_attempts - pseudorandom("fac_vman2002_chips_chance",3,8)
+		end
 	end,
 	impulse_min = 0.1,
 	impulse_max = 0.2,
