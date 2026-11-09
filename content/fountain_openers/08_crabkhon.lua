@@ -38,7 +38,7 @@ FishAndChips.Fish {
 
 		if context.reroll_shop and card.ability.extra.remaining > 0 and not context.blueprint and not context.retrigger_joker then
 			for _, v in pairs(G.fac_fish_area.cards) do
-				if v.ability.extra.i_rerolled and v ~= card then
+				if v.ability.extra and v.ability.extra.i_rerolled and v ~= card then
 					print(v.config.center_key .. ' rerolled before ' .. self.key)
 					return
 				end
